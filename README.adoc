@@ -1,0 +1,50 @@
+= Kobiton Documentation
+
+This repository contains all the docs-as-code for Kobiton's Products. From this repository, all Standalone and Cloud Deployment documentation is generated to be packaged up for the Cloud or for the Standalone installer.
+
+= Style Guide and Other Guidelines
+
+This document instructs the technical writer and other contributors to Kobiton's help documentation on the styles to be used. Some styles are enforced by css and Asciidoc, while others -- what is detailed in this guideline -- ensures the look and feel of the Kobiton documentation is consistent.
+
+== Styles
+
+=== Product Hierarchy
+
+Kobiton's overall product is called Kobiton; the company name and the product name are one in the same. Within Kobiton, there are three _Components_: *Device Lab Management*, *Intelligent Quality Suite*, and *Kobiton Desktop*. Each _Component_ contains many _Modules_. An example of a _Module_ within *Intelligent Quality Suite* is *Scriptless*. A _Module_ contains _Features_. For example, a _Feature_ of *Scriptless* is *Data Driven Testing*. In the case that a _Feature_ belongs to multiple _Modules_, the _Feature_ is included in each of the _Module_ documentation pages.
+
+image::Documentation.png[]
+
+=== CSS Styles
+
+The `site.css` file formats the overall site and structure. 
+
+=== Text
+
+==== Section Names
+
+All section names are to be capitalized when referencing the section and not capitalized when writing about the topic. For example, both of these are correct:
+
+> This Manual Testing section will teach you all there is to know about how to test manually.
+
+> Manual testing on Kobiton is a breeze.
+
+=== Images
+
+Images may be either application / device screenshots or diagrams created in Figma.
+
+==== Application and Device Screenshots
+
+Application screenshots should horizontally cover the content area of the screen; text should not wrap around application screenshots. The width to height ratio should be between 1.74 and 1.80.
+
+==== Diagrams
+
+Diagrams should use the same font as the documentation site, Roboto, at 32pt font size. The _font color_ is the `Primary/Default` color from the *Kobiton Style Guide* Figma file. The _background color_ is `Primary/Light` color from the *Kobiton Style Guide* Figma file. The `Soft Dropshadow` is used on shapes. Lines and arrows are `Primary/Default` color.
+
+== Other Guidelines
+
+=== Figma
+
+The name of the frame should include the full directory name as it will be placed into the Antora directory structure within the `docs` folder. For example, `manual-testing/modules/ROOT/images/manual_testing_flow`.
+
+All Figma files should be exported in `svg` format.
+
