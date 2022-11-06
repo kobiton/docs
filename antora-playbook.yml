@@ -1,12 +1,16 @@
 site:
   title: Kobiton Documentation
+
 content:
   sources:
   - url: .
     start_paths: docs/*
     branches: HEAD
+
 antora:
   extensions:
+    - require: '@antora/lunr-extension'
+      index_latest_only: true
     - require: '@sntke/antora-mermaid-extension'
       mermaid_library_url: https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js
       script_stem: header-scripts
