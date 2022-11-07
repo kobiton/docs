@@ -1,0 +1,132 @@
+= Content style guide [WIP]
+
+== General guidelines
+
+Our documentation's spelling, grammar, and formatting style adheres to the standards found within https://www.ahdictionary.com/[The American Heritage Dictionary] and the https://learn.microsoft.com/en-us/style-guide/welcome/[Microsoft Style Guide] -- aside from some <<_kobiton_specific,key exceptions>> below.
+
+[#_kobiton_specific]
+== Kobiton-specific guidelines
+
+=== CSS styles
+
+The `site.css` file formats the overall site and structure.
+
+=== File names
+
+Ensure your filenames follow these formatting rules. *Example:* "THIS is my TITLE: i LOVE c++ & C#!" becomes `this-is-my-title-i-love-cpp-and-csharp`.
+
+[cols="1,1"]
+|===
+|Formatting Rule|Example
+
+|All lowercase letters
+|Change this: +
+`This Is My TITLE` +
+_To this:_ +
+`this is my title`
+
+|Replace unique special characters
+|Change this: +
+`i love c++ & c#` +
+To this: +
+`i love cpp and csharp`
+
+|Remove non-unique special characters
+|Change this: +
+`this: is my title!` +
+To this: +
+`this is my title`
+
+|Replace spaces with dashes
+|Change this: +
+`this is my title` +
+To this: +
+`this-is-my-title`
+|===
+
+=== Content reuse
+
+Sometimes a section of documentation, or an entire document itself, belongs to multiple sections within the documentation site.
+
+At Kobiton, there are three primary products, (also called components): *Device Lab Management*, *Intelligent Quality Suite*, and *Kobiton Desktop*. Each component contains a variety of modules, and each module contains a variety of features.
+
+In the case that a feature belongs to _multiple_ modules (and, therefore multiple components), documentation related to that feature should be included in each related module's documentation.
+
+This requires content reuse, which you can learn more about xref:reusing-content.adoc[here].
+
+=== Embedded media
+
+Our documentation hosts a variety of embedded media, including <<_screenshots, screenshots>>, <<_diagrams, diagrams>>, and <<_video, video>> content.
+
+==== Figma
+
+The following section outlines the style and naming guidelines for Figma. If, instead, you'd like to learn _how_ to create screenshots using Figma, check out xref:creating-screenshots.adoc[our tutorial].
+
+[cols="1,1"]
+|===
+|Formatting rule |Example
+
+|The name of the frame should include the full directory name as it will be placed into the Antora directory structure within the `docs` folder.
+|`manual-testing/modules/ROOT/images/manual-testing-flow`
+
+|Export your Figma file as an `.svg`.
+|This
+
+|===
+
+[#_screenshots]
+==== Screenshots
+
+Screenshots are ...
+
+[cols="1,1"]
+|===
+|Formatting rule |Example
+
+|Application screenshots should horizontally cover the content area of the screen; text should not wrap around application screenshots.
+|This
+
+|The width to height ratio should be between 1.74 and 1.80.
+|This
+
+|===
+
+[#_diagrams]
+==== Diagrams
+
+The following section outlines the style guidelines for diagrams. If, instead, you'd like to learn _how_ to create diagrams using Mermaid, check out xref:creating-diagrams.adoc[our tutorial].
+
+[cols="1,1"]
+|===
+|Formatting rule |Example
+
+|Use the font Roboto at 32pt font size.
+|This
+
+|Use the color `Primary/Default` for fonts, lines, and arrows found in the *Kobiton Style Guide* Figma file.
+|This
+
+|Use the background color `Primary/Light` color found in the *Kobiton Style Guide* Figma file.
+|This
+
+|Use the `Soft Dropshadow` on shapes.
+|This
+
+|===
+
+[#_video]
+==== Video
+
+In progress.
+
+[cols="1,1"]
+|===
+|Formatting rule |Example
+
+|This
+|This
+
+|This
+|This
+
+|===
