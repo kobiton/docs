@@ -1,0 +1,96 @@
+= v.3.24 | October 15, 2022
+:navtitle: v.3.24 | October 15, 2022
+
+Earlier this year, we introduced you to a smarter, faster Kobiton with the easy-to-remember name: Kobiton.
+
+As we roll out this new Kobiton to existing customers, we will continue to offer some updates to our original Kobiton product - which we refer to as Legacy Kobiton. But, the majority of our new features and updates will be found in the new Kobiton. So, when you review the release notes below, please keep in mind that some changes are only in Kobiton and some are in both Kobiton and Legacy Kobiton. We'll note which items apply to Legacy Kobiton.
+
+As always, we are here to help! If you have any questions or would like to update your Kobiton system, please reach us at support@kobiton.com or contact your salesperson.
+
+== New iOS and iPhone support
+
+The following OS versions are now supported on both Kobiton and Legacy Kobiton:
+
+** iOS 16
+
+** iOS 16.0.2
+
+The following OS versions are also supported on Kobiton:
+
+** iOS 15.6.1
+
+** iOS 15.7
+
+** iOS 16
+
+** iOS 16.0.1
+
+** iOS 16.0.2
+
+** iOS 16.1 Beta 4
+
+** iPadOS 15.7
+
+** iPadOS 16
+
+** iPadOS 16 Beta 11
+
+Kobiton and Legacy Kobiton both support for the following new device models:
+
+** iPhone 14
+
+** iPhone 14 Pro
+
+** iPhone 14 Pro Max
+
+For customers hosting Kobiton, please note that from iOS 16, all iOS 16 and higher devices must enable Developer Mode manually on physical devices. Previously, it was auto-enabled by plugging into Xcode.
+
+Furthermore, please note that Xcode 14, released last month and necessary to support iOS 16, no longer supports building apps for iOS 9 and iOS 10. With this change, Kobiton now supports apps iOS 11 and higher.
+
+== Biometrics authentication for iOS automation and mixed sessions
+
+Many apps support the use of biometrics - fingerprint or FaceID - to login to the app. In our last release, we provided biometrics support for iOS manual sessions. In this release, we've added biometrics support for iOS automation and mixed sessions.
+
+In order to use this feature, the app to be tested must incorporate a Kobiton-provided customer library. (We're publishing instructions soon - please reach out to support@kobiton.com if you need assistance before then.)
+
+In future releases, we will update this feature to include Android manual and automation test sessions.
+
+== Apple M1 support
+
+The Apple M1 chip has become more prolific and is the only option in some areas of the world. For those customers hosting Kobiton, we're pleased to offer support for running the latest Kobiton on Apple's M1, M1 Pro, and M1 Max with macOS version Catalina or higher and Xcode 13.1 or higher.
+
+== Enhanced error messaging and handling of iOS app signing issues
+
+iOS app signing is not for the faint of heart as the rules can be a bit confusing and change based on how you are testing. We reviewed a number of errors that our users encounter due to app signing mismatches or issues and updated our error messaging to provide clear instructions. For example, instead of simply stating that an App BundleID is invalid, we'll provide the format that is required in the error message. We are also able to resign some Apple Distribution Apps as Development Apps to simplify the process and get you testing your apps faster.
+
+== Cleanup Policy: Enhanced error logs and faster cleanup time
+
+Our cleanup policy is very powerful and allows you to have a fresh device for testing. Every once in a while, the cleanup policy may experience an issue due to an unexpected popup or settings changes. So, we've enhanced our logging to provide better error messaging, handled some items that have caused errors in the past, and we've shortened the time it takes to run the cleanup policy.
+
+== Ability to trigger scriptless from TestFlight apps {Beta}
+
+Up until now, scriptless (and Appium Export) has been available for apps installed via Kobiton's App Repo and for mobile browser sessions. We know that many of our customers use TestFlight, MDMs, or an app store to install apps. With this release, users are now able to trigger scriptless functionality on test sessions for apps that are installed on a device via TestFlight.
+
+We've released this as a Beta feature and welcome your feedback via support@kobiton.com!
+
+== View Accessibility Validations within Session Explorer
+
+Previously, users could benefit from Kobiton's Accessibility validations for Touch Target Size and Color Contrast only after running Scriptless manual sessions. With this feature,users will be able to view Accessibility validation results within Session Explorer after any manual session for native apps installed via the Kobiton App Repository.
+
+Accessibility issues will show up in the Session Explorer timeline as yellow dots. When the user clicks on a dot, they will see a detail section like the below example and are able to navigate to each of the accessibility issues.
+
+== Initiate Accessibility Validations via Appium
+
+Previously, users could benefit from Kobiton's Accessibility validations for Touch Target Size and Color Contrast only when running Scriptless manual sessions. With this feature, users will be able to initiate Accessibility Validations on native apps installed via the Kobiton App Repo via Appium scripts using the "scriptlessEnable = True" DesiredCapability.
+
+== Scriptless: Ability to set predefined OTP phone numbers for an organization
+
+For customers who have one-time-passcodes (OTP) in their apps and want to run Scriptless automation, we can now assign a dedicated list of Kobiton predefined phone number to your organization to utilize OTP. Please contact support if you need this feature.
+
+== IP Address Change
+
+For those that whitelist, please note the IP address of https://www.hub.kobiton.com[hub.kobiton.com] changed from 34.233.234.136 to 23.21.172.250 with this release.
+
+== Additional enhancements and bug fixes
+
+In addition to the above, this release includes a number of minor bug fixes and enhancements, including measures to reduce latency, increase device stability, and improve the accuracy of our Intelligent Quality Suite.
