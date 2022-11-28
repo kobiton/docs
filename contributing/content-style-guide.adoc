@@ -2,18 +2,20 @@
 
 == General guidelines
 
-Our documentation's spelling, grammar, and formatting style adheres to the standards found within https://www.ahdictionary.com/[The American Heritage Dictionary] and the https://learn.microsoft.com/en-us/style-guide/welcome/[Microsoft Style Guide] -- aside from some <<_kobiton_specific,key exceptions>> below.
+Aside from a few <<_kobiton_specific_guidelines,Kobiton-specific guidelines>>, our documentation's spelling, grammar, and formatting adheres to the standards found within https://www.ahdictionary.com/[The American Heritage Dictionary] and the https://learn.microsoft.com/en-us/style-guide/welcome/[Microsoft Style Guide].
 
-[#_kobiton_specific]
+If you're unsure about a particular spelling, grammar, or formatting rule, check out the xref:_faq[frequently asked questions] below.
+
+[#_kobiton_specific_guidelines]
 == Kobiton-specific guidelines
 
 === CSS styles
 
-The `site.css` file formats the overall site and structure.
+The xref:../ui-bundle/css/site.css[`site.css`] file formats the overall site and structure. Only admins and repository owners should be updating this file.
 
 === File names
 
-Ensure your filenames follow these formatting rules. *Example:* "THIS is my TITLE: i LOVE c++ & C#!" becomes `this-is-my-title-i-love-cpp-and-csharp`.
+Ensure your filenames follow these formatting rules:
 
 [cols="1,1"]
 |===
@@ -44,13 +46,13 @@ To this: +
 `this-is-my-title`
 |===
 
-=== Content reuse [WIP]
+=== Content reuse
 
 Sometimes a section of documentation, or an entire document itself, belongs to multiple sections within the documentation site.
 
 At Kobiton, there are three primary products, (also called components): *Device Lab Management*, *Intelligent Quality Suite*, and *Kobiton Desktop*. Each component contains a variety of modules, and each module contains a variety of features.
 
-In the case that a feature belongs to _multiple_ modules (and, therefore multiple components), documentation related to that feature should be included in each related module's documentation.
+In the case that a feature belongs to _several_ modules (and, likewise several components), documentation related to that feature should be included in each related module's documentation.
 
 This requires content reuse, which you can learn more about xref:reusing-content.adoc[here].
 
@@ -60,18 +62,17 @@ Our documentation hosts a variety of embedded media, including <<_screenshots, s
 
 ==== Figma
 
-The following section outlines the style and naming guidelines for Figma. If, instead, you'd like to learn _how_ to create screenshots using Figma, check out xref:creating-screenshots.adoc[our tutorial].
+The following section outlines the style and naming guidelines for Figma files. If, instead, you'd like to learn _how_ to create screenshots using Figma, check out xref:creating-screenshots.adoc[this tutorial].
 
 [cols="1,1"]
 |===
 |Formatting rule |Example
 
-|The name of the frame should include the full directory name as it will be placed into the Antora directory structure within the `docs` folder.
+|Figma file names should mirror the full directory path.
 |`manual-testing/modules/ROOT/images/manual-testing-flow`
 
-|Export your Figma file as an `.svg`.
-|This
-
+|Figma files should be exported as an `.svg`.
+|`manual-testing-flow.svg`
 |===
 
 [#_screenshots]
@@ -83,12 +84,14 @@ Screenshots are ...
 |===
 |Formatting rule |Example
 
-|Application screenshots should horizontally cover the content area of the screen; text should not wrap around application screenshots.
+|App screenshots should horizontally cover the content area of the screen.
 |This
 
-|The width to height ratio should be between 1.74 and 1.80.
+|Text should not wrap around screenshots.
 |This
 
+|The width-to-height ratio should be between 1.74 and 1.80.
+|This
 |===
 
 [#_diagrams]
@@ -103,15 +106,14 @@ The following section outlines the style guidelines for diagrams. If, instead, y
 |Use the font Roboto at 32pt font size.
 |This
 
-|Use the color `Primary/Default` for fonts, lines, and arrows found in the *Kobiton Style Guide* Figma file.
+|Use the color `Primary/Default` for fonts, lines, and arrows (located in the Figma file: *Kobiton Style Guide*).
 |This
 
-|Use the background color `Primary/Light` color found in the *Kobiton Style Guide* Figma file.
+|Use the background color `Primary/Light` color (located in the Figma file: *Kobiton Style Guide*).
 |This
 
-|Use the `Soft Dropshadow` on shapes.
+|Use a *soft drop shadow* on shapes.
 |This
-
 |===
 
 [#_video]
@@ -128,5 +130,31 @@ Videos are ...
 
 |This
 |This
-
 |===
+
+[#_faq]
+== Frequently asked questions (FAQ)
+
+=== This?
+
+This.
+
+=== This?
+
+This.
+
+=== This?
+
+This.
+
+=== This?
+
+This.
+
+=== This?
+
+This.
+
+=== This?
+
+This.

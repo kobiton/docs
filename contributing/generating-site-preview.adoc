@@ -20,6 +20,13 @@ Learn how to generate a site preview using Antora.
 cd ~/kobiton/documentation
 ----
 
+. Checkout the `main` branch and confirm you're local repository is up-to-date: +
++
+[,terminal]
+----
+git checkout main && git pull
+----
+
 . Checkout the branch you'd like to generate a preview for. +
 +
 .*Example:*
@@ -29,9 +36,8 @@ git checkout migrating-manual-testing
 ----
 +
 [TIP]
-Any *Open* or *Draft* branch on https://github.com/kobiton/documentation/branches[GitHub] can be checked out  and used to generate a site preview.
+Any https://github.com/kobiton/documentation/branches[*Open* or *Draft*] branch on GitHub can be checked out  and used to generate a site preview.
 
-[start=4]
 . Run the following command: +
 +
 [,terminal]
@@ -49,12 +55,11 @@ Site generation complete!
 Open file:///home/user/kobiton/documentation/build/site in a browser to view your site.
 ----
 +
-Click the link or paste it in your web browser to open the site index.
+Paste the file path into your web browser to open the site index.
 
-[start=6]
-. Select the section you'd like to preview, select the version number, then choose a page. Once you've opened a site preview, you can use the in-site navigation to view other sections and pages. +
-+
-[TIP]
-Bookmark the index so you can easily access it later!
+. Select a section, then a version number, then choose the page you'd like to preview. Once you've opened a site preview, you can use the in-site navigation to view other sections and pages. +
 +
 image::images/site-preview-index.png[Index for site preview]
++
+[TIP]
+Bookmark the index page, so you can easily access it later!
