@@ -1,12 +1,45 @@
 = Reviewing pull requests
 // additional information: https://docs.github.com/en/organizations/organizing-members-into-teams/about-teams
 
-This.
+Learn how to contribute to our documentation by reviewing pull requests (PRs).
 
 == Prerequisites
 
 * Member of the *doc-review* team
-* This
 
-== Reviewing pull requests
+== Confirm you're the reviewer
 
+Before you review a PR, confirm you or your GitHub team has been tagged as reviewer.
+
+. Open https://github.com/[GitHub].
+
+. Select the *notification bell*.
+
+. Filter your notifications by *Review requested* to find PRs you're a reviewer for.
+
+. Select a PR and xref:_reviewing_the_pull_request[start reviewing]!
+
+[#_reviewing_the_pull_request]
+== Reviewing the pull request
+
+. Read through the PR summary. It's ok for a PR to have a single change or many, but every change should be noted in the summary.
+
+. xref:generating-site-preview.adoc[Generate a site preview] to see the PR changes in your test environment.
+
+. Use the xref:content-style-guide.adoc[content style guide] to review the PR.
+
+. If you find an issue, repeat these steps for each issue you find:
+
+* Select *Files changed*.
+* Find the line with the issue.
+* Select the *blue plus sign*.
+* Write a short, descriptive comment.
+* Select *Start a review* for the first issue, and *Add review comment* for subsequent ones.
++
+Once you've noted each issue, select *Finish your review*.
+
+. If the PR had no issues, select *Approve* > *Submit review*.
++
+Otherwise, select *Request changes* > *Submit review*.
+
+. Once the requester applies your requested changes, they will tag you again for you to re-review their updates.
