@@ -6,71 +6,70 @@ Learn how to create screenshots using Figma.
 
 * https://help.figma.com/hc/en-us/articles/360039811114-Create-a-Figma-account[A Figma account]
 * The https://www.figma.com/downloads/[Figma desktop app] _(optional)_
-* Access to Kobiton's Figma team and the *Documentation* file
+* Access to Kobiton's Figma team and *Documentation* file
 
-== Shortcuts
+== Creating simple screenshots
 
-[cols="3"]
-|===
-|Action |MacOS |Windows
-
-|Zoom in
-|This
-|This
-
-|Zoom out
-|This
-|This
-
-|Pan
-|This
-|This
-
-|Copy
-|This
-|This
-
-|Paste
-|This
-|This
-
-|Cut
-|This
-|This
-
-|Group
-|This
-|This
-|===
-
-== Creating basic screenshots
+A simple screenshot is ...
 
 . This
 . This
 . This
 
-== Creating screenshots
+== Creating highlighted screenshots
 
-[TIP]
-.Ensure your measurements are equal
-====
-* Press *R* to create a square.
-* Place square on all sides to make sure top/bottom and left/right are consistent.
-* Top/Bottom need to match each other, and Left/Right need to match each other, but all four do not need to match.
-====
+A highlighted screenshot is ...
 
-. Copy the "subtract" layer. This allows you to subtract the outside layer from the inside layer to create a blurred effect to focus on a particular item.
+. Take screenshot using shortcut.
 
-. Size the "subtract" layer to match your current screenshot.
+. Resize width to 1662.
 
-. crtl + alt + g to group the layers into one layer / "Frame".
+. Crop web browser info.
 
-. Center the "big" version. (If it happens to block the smaller version, feel free to move it as needed).
+. Frame the screenshots.
 
-. Boarders of "big" are at 20.
+. Duplicate screenshot. We'll need the duplicate for later.
 
-. Drop shadow for "big" at:
-* X:0
-* Y:150
-* Blur:250
-* %:12.
+. Create rectangle (press *R*) and resize to perfectly fit screenshot.
+
+. Change fill to 00000 (all black) and opacity to 20% (located on right hand side). Change background blur to 8.
+
+. Create second rectangle (press *R*) and place it over the section you'd like to highlight.
+
+. Hold *CTRL* and select both rectangle layers. At the top of the screen, select *Subtract selection*.
+
+. Select the subtracted section and press *Shift + 2* to zoom into the section.
+
+. Resize the subtracted section to perfectly fit the element you'd like to highlight.
++
+[NOTE]
+If the element is rounded, select *Corner Radius* under *Design* and adjust the radius until it fits the rounded element you'd like to highlight.
+
+. Now that you've highlighted your element, you're ready to create a zoomed-in version using the duplicate screenshot we created in step 5.
++
+Select *Crop* and place the crop tool around the duplicate version of the element. Then press *Shift + 2* to zoom into the section.
+
+. Resize the crop tool to perfectly fit around the element you'd like to zoom in on.
++
+[NOTE]
+If the element is rounded, select *Corner Radius* under *Design* and adjust the radius until it fits the rounded element you'd like to highlight.
+
+. Once the crop tool is properly fit around the element, press *Enter*.
+
+. Move the element over your original screenshot and drag a corner of the crop tool to resize it. Typically, zoomed-in elements should be X%RATIO, but feel free to do what's best to increase readability.
+
+. Center the element over the original screenshot.
+
+. Select *Drop shadow*, and set it's values to the following:
+* *X:* 0
+* *Y:* 150
+* *Spread:* 0
+* *Blur:* 250
+* *Color:* 000000
+* *Opacity:* 15%
+
+. Click the current name and change it to a short, descriptive title.
+
+. Select *Export* on the right side, confirm the file extension is set to *.png*, and click *Save*.
+
+. You've successfully created a highlighted screenshot!
