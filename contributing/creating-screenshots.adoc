@@ -1,66 +1,61 @@
-= Creating screenshots [WIP]
+= [WIP] Creating screenshots
 
-Learn how to create screenshots using Figma.
+Learn how to create xref:_establishing_screenshots[establishing], xref:_creating_map_screenshots[map], and xref:_simple_screenshots[simple] screenshots using Figma. If you don't have access to Figma, you can use Photoshop, Gimp, or any other image editor instead.
 
-== Prerequisites
+[#_establishing_screenshots]
+== Establishing screenshots
 
-* https://help.figma.com/hc/en-us/articles/360039811114-Create-a-Figma-account[A Figma account]
-* The https://www.figma.com/downloads/[Figma desktop app] _(optional)_
-* Access to Kobiton's Figma team and *Documentation* file
+*Establishing screenshots* offer visual context to the end-user. You can think of these like the https://wikipedia.org/wiki/Establishing_shot[establishing shot] at the beginning of a movie. Once you've established the context, feel free to use xref:_simple_screenshots[simple screenshots] instead.
 
-== Creating simple screenshots
+. Open Figma.
 
-A simple screenshot is ...
+. Select *File*, then *Place image* to import your screenshot.
 
-. This
-. This
-. This
+. Resize the width to 1662.
 
-== Creating highlighted screenshots
+. Crop the window title bar, web browser toolbar, and any other non-essential information by selecting *Crop*, dragging a corner of the crop tool, and pressing *Enter*.
++
+[TIP]
+Press *Shift + 2* to zoom in on the section you're cropping to make sure the crop is pixel perfect.
 
-A highlighted screenshot is ...
+. Select your screenshot and frame it by pressing *F*.
 
-. Take screenshot using shortcut.
+. Later we'll need a duplicate, so *Right-Click* and select *Copy* and *Paste* to create one.
 
-. Resize width to 1662.
+. Next we'll create a blur effect. Press *R* to create a square and use it to cover the screenshot.
 
-. Crop web browser info.
+. Modify the square to match the following settings:
+* *Fill:* 00000
+* *Opacity:* 20%
+* *Blur:* 8
 
-. Frame the screenshots.
+. Create second rectangle by pressing *R* and place it over the section you'd like to highlight.
 
-. Duplicate screenshot. We'll need the duplicate for later.
+. Hold *CTRL* and select both rectangle layers. Then select *Subtract selection*.
 
-. Create rectangle (press *R*) and resize to perfectly fit screenshot.
+. Select your newly subtracted section and press *Shift + 2* to zoom in.
 
-. Change fill to 00000 (all black) and opacity to 20% (located on right hand side). Change background blur to 8.
+. Resize the subtracted section to fit the element you'd like to highlight.
++
+[NOTE]
+If the element is rounded, select *Corner Radius* under *Design* and adjust the radius until it fits the element.
 
-. Create second rectangle (press *R*) and place it over the section you'd like to highlight.
+. Now that you've highlighted your element, you're ready to create a zoomed-in version using the duplicate screenshot we created in step 6.
++
+Select *Crop* and place the crop tool around the duplicate element. Then press *Shift + 2* to zoom in.
 
-. Hold *CTRL* and select both rectangle layers. At the top of the screen, select *Subtract selection*.
-
-. Select the subtracted section and press *Shift + 2* to zoom into the section.
-
-. Resize the subtracted section to perfectly fit the element you'd like to highlight.
+. Resize the tool to crop the element you'd like to zoom in on.
 +
 [NOTE]
 If the element is rounded, select *Corner Radius* under *Design* and adjust the radius until it fits the rounded element you'd like to highlight.
 
-. Now that you've highlighted your element, you're ready to create a zoomed-in version using the duplicate screenshot we created in step 5.
-+
-Select *Crop* and place the crop tool around the duplicate version of the element. Then press *Shift + 2* to zoom into the section.
+. Once the crop tool is fit to the element, press *Enter*.
 
-. Resize the crop tool to perfectly fit around the element you'd like to zoom in on.
-+
-[NOTE]
-If the element is rounded, select *Corner Radius* under *Design* and adjust the radius until it fits the rounded element you'd like to highlight.
-
-. Once the crop tool is properly fit around the element, press *Enter*.
-
-. Move the element over your original screenshot and drag a corner of the crop tool to resize it. Typically, zoomed-in elements should be X%RATIO, but feel free to do what's best to increase readability.
+. Move your new zoomed-in element over your original screenshot and resize it. Typically, zoomed-in elements should be X%RATIO, but feel free to do what looks best.
 
 . Center the element over the original screenshot.
 
-. Select *Drop shadow*, and set it's values to the following:
+. Select *Drop shadow* and set its values to the following:
 * *X:* 0
 * *Y:* 150
 * *Spread:* 0
@@ -68,8 +63,41 @@ If the element is rounded, select *Corner Radius* under *Design* and adjust the 
 * *Color:* 000000
 * *Opacity:* 15%
 
-. Click the current name and change it to a short, descriptive title.
+. Click the default frame name and change it to a short, descriptive one.
 
-. Select *Export* on the right side, confirm the file extension is set to *.png*, and click *Save*.
+. Select *Export*, confirm the file extension is set to *.png*, then click *Save*.
 
-. You've successfully created a highlighted screenshot!
+. You've successfully created an establishing screenshot!
+
+[#_creating_map_screenshots]
+== Creating map screenshots
+
+. This
+
+. This
+
+. This
+
+[#_simple_screenshots]
+== Creating simple screenshots
+
+Simple screenshots are a cropped portion of the screen, rather than the full screen. Use simple screenshots after using an xref:_establishing_screenshots[establishing] one.
+
+. Open Figma.
+
+. Select *File*, then *Place image* to import your screenshot.
+
+. Resize the width to 1662.
+
+. Crop the window title bar, web browser toolbar, and any other non-essential information by selecting *Crop*, dragging a corner of the crop tool, and pressing *Enter*.
++
+[TIP]
+Press *Shift + 2* to zoom in on the section you're cropping to make sure the crop is pixel perfect.
+
+. Select your screenshot and frame it by pressing *F*.
+
+. Click the default frame name and change it to a short, descriptive one.
+
+. Select *Export*, confirm the file extension is set to *.png*, then click *Save*.
+
+. You've successfully created a simple screenshot!
