@@ -15,8 +15,8 @@ RUN apk --no-cache add curl findutils jq \
     && rm -rf $(yarn global dir)/node_modules/moment/min \
     && rm -rf $(yarn global dir)/node_modules/moment/src \
     && rm -rf $(yarn global dir)/node_modules/source-map/dist \
-    && rm -rf /tmp/*
-
+    && rm -rf /tmp/* \
+    && yarn install
 
 WORKDIR /antora
 
