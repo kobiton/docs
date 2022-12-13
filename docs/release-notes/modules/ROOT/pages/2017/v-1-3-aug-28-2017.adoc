@@ -1,0 +1,75 @@
+= v1.3 | August 28, 2017
+:navtitle: v1.3 | August 28, 2017
+
+== Improvements
+
+=== Subscription Enhancements
+
+Trial users can now create organizations, invite users and use our Device Lab Management feature.
+
+We also support plan upgrading for paid users:
+
+* Indie users can now upgrade to Business plan
+* Business users can now upgrade from monthly to annual plan as well as adjust minutes and device slots
+
+=== Manual Test Enhancements
+
+* Support iOS 11 Beta on https://support.kobiton.com/devices-list/[these devices]
+* Support video player in the Session Details page
+* Support changing device timezone for Android
+* Support changing device location for IOS
+
+=== Automation Test Enhancements
+
+* https://support.kobiton.com/automation-testing/get-Kobiton-session-id/[Retrieve Kobiton Session ID] through 02 requests `GET /session/:sessionId` and `POST /session`
+* Finish a test session immediately after `DELETE /session/:sessionId` instead of waiting for device cleanup
+
+=== API Enhancements
+
+* Endpoint to retrieve user subscription info
+* Endpoint to set a session status
+
+=== Other Enhancements
+
+* Allow users to delete unused in-house devices from Portal and Desktop application
+* Better clean up of iOS devices at the end of a manual session:
+** Clear recent apps
+** Sign out of iTunes account
+
+== Customers update
+
+*Upgrade notes for customers plugging in their own devices*
+
+1. Enter the following command: +
++
+`brew install libplist`
+
+2. If you don't see the following message, move onto step 3. If you do, then your installation was successful. +
++
+
+`==> Upgrading 1 outdated package, with result: libplist 2.0.0 ==>`
+`Upgrading libplist ==> Downloading https://homebrew.bintray.com/bottles/libplist-2.0.0.sierra.bottle.tar.gz`
+`######################################################################## 100.0% ==> Pouring libplist-2.0.0.sierra.bottle.tar.gz ==> Using the sandbox /usr/local/Cellar/libplist/2.0.0: 31 files, 728.8KB`
+
+3. Since your installation wasn't successful, you should see the following message: +
++
+`Error: libplist 1.12 is already installed To upgrade to 2.0.0, run 'brew upgrade libplist'`
+
+4. To fix this, run the following command: +
++
+`brew upgrade libplist`
+
+*Upgrade note for customers who plug in their own devices and want to use their iOS 11 beta device*
+
+* Install Xcode 9 beta 4
+* Make sure iOS 11 beta 4 installed on the device, Kobiton doesn't work with a newer version at the moment
+
+== Known Limitations
+
+=== Manual Test
+* Not support “Long Press Home Button” in iOS 10.0.x - 10.2.x
+* Not support “Double Press Home Button” in iOS >= 10.3
+* Not support Zoom function on 32-bit iOS devices
+
+=== Automation Test
+* Not support automation test on iOS 11 Beta

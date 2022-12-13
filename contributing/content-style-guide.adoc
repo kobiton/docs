@@ -1,0 +1,177 @@
+= [WIP] Content style guide
+
+== General guidelines
+
+Aside from a few <<_kobiton_specific_guidelines,Kobiton-specific guidelines>>, our documentation's spelling, grammar, and formatting adheres to the standards found within https://www.ahdictionary.com/[The American Heritage Dictionary] and https://learn.microsoft.com/en-us/style-guide/welcome/[Microsoft Style Guide].
+
+=== Table of contents
+
+* xref:_css_styles[CSS styles]
+* xref:_text_formatting[Text formatting]
+* xref:_file_names[File names]
+* xref:_content_reuse[Content reuse]
+* xref:_embedded_media_wip[Embedded media]
+* xref:_faq[Frequently asked questions (FAQ)]
+
+[#_kobiton_specific_guidelines]
+== Kobiton-specific guidelines
+
+[#_css_styles]
+=== CSS styles
+
+The xref:../ui-bundle/css/site.css[`site.css`] file formats the overall site and structure. Only admins and repository owners should be updating this file.
+
+[#_text_formatting]
+=== Text formatting [WIP]
+
+Ensure the text in your documentation follows these formatting rules:
+
+[cols="1,1"]
+|===
+|Formatting Rule |Example
+
+|This
+|This
+
+|This
+|This
+
+|This
+|This
+
+|This
+|This
+|===
+
+[#_file_names]
+=== File names
+
+Ensure your filenames follow these formatting rules:
+
+[cols="1,1"]
+|===
+|Formatting Rule|Example
+
+|All lowercase letters
+|Change this: +
+`This Is My TITLE` +
+_To this:_ +
+`this is my title`
+
+|Replace unique special characters
+|Change this: +
+`i love c++ & c#` +
+To this: +
+`i love cpp and csharp`
+
+|Remove non-unique special characters
+|Change this: +
+`this: is my title!` +
+To this: +
+`this is my title`
+
+|Replace spaces with dashes
+|Change this: +
+`this is my title` +
+To this: +
+`this-is-my-title`
+|===
+
+[#_content_reuse]
+=== Content reuse
+
+Sometimes a section of documentation, or an entire document itself, belongs to multiple sections within the documentation site.
+
+At Kobiton, there are three primary products, (also called components): *Device Lab Management*, *Intelligent Quality Suite*, and *Kobiton Desktop*. Each component contains a variety of modules, and each module contains a variety of features.
+
+In the case that a feature belongs to _several_ modules (and, likewise several components), documentation related to that feature should be included in each related module's documentation.
+
+This requires content reuse, which you can learn more about xref:reusing-content.adoc[here].
+
+[#_embedded_media_wip]
+=== Embedded media [WIP]
+// Migrate from google doc: https://docs.google.com/document/d/1TJuRQO4uof6NW94AIP0MVWtjYr9vEykgO1yddv6WDoY/edit#heading=h.e4wvl4myvq6w
+
+Our documentation hosts a variety of embedded media, including <<_screenshots, screenshots>>, <<_diagrams, diagrams>>, and <<_videos, video>> content.
+
+==== Figma
+
+The following section outlines the naming guidelines for Figma files. If you'd like to learn _how_ to create screenshots using Figma instead, check out xref:creating-screenshots.adoc[this tutorial].
+
+[cols="1,4"]
+|===
+|Key |Value
+
+|File names
+a|
+Figma file names should mirror the full directory path. +
+*Example:* `manual-testing/modules/ROOT/images/manual-testing-flow`
+
+|File extensions
+a|
+Figma files should be exported as an `.svg`. +
+*Example:* `manual-testing-flow.svg`
+|===
+
+[#_screenshots]
+==== Screenshots [WIP]
+
+The following section outlines the style guidelines for screenshots. If you'd like to learn _how_ to create screenshots using Figma instead, check out xref:creating-screenshots.adoc[this tutorial].
+
+[cols="1,2"]
+|===
+|Key |Value
+
+|This
+|This
+
+|This
+|This
+|===
+
+[#_diagrams]
+==== Diagrams [WIP]
+
+The following section outlines the style guidelines for diagrams. If you'd like to learn _how_ to create diagrams using Mermaid instead, check out xref:creating-diagrams.adoc[this tutorial].
+
+[cols="1,2"]
+|===
+|Key |Value
+
+|This
+|This
+
+|This
+|This
+|===
+
+[#_videos]
+==== Videos [WIP]
+
+The following section outlines the style guidelines for videos. If you'd like to learn _how_ to create videos instead, check out xref:creating-videos.adoc[this tutorial].
+
+[cols="1,2"]
+|===
+|Key |Value
+
+|This
+|This
+
+|This
+|This
+|===
+
+[#_faq]
+== Frequently asked questions (FAQ) [WIP]
+
+=== This?
+
+This.
+
+=== This?
+
+This.
+
+=== This?
+
+This.
