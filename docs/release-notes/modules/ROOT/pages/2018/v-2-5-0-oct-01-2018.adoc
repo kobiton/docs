@@ -1,0 +1,21 @@
+= v2.5 | October 01, 2018
+:navtitle: v2.5 | October 01, 2018
+
+== Organization management
+
+Now a user can manually:
+
+* Create multiple groups
+* Assign users to groups
+* Assign devices (Kobiton device & Organization device) to groups
+
+[NOTE]
+For new users invited into an organization, they can only see their hosted devices (if any), therefore, you need to create groups, then manually assign users and devices into its group so that users can see more devices and execute the test properly.
+
+== Known limitations
+
+The new user interface and business logic of the automation test execution are not fully delivered for this scope. You can still run the automation test normally as a group level, the automation test will be based on the devices of your first assigned group and generated sessions will be also stored in that group
+
+== Enhancements
+
+* Fix the problem that all the linked provision profile of all existing apps are automatically removed by the cleanup policy

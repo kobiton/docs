@@ -1,0 +1,106 @@
+= v3.20 | May 7, 2022
+:navtitle: v3.20 | May 7, 2022
+
+In March, we introduced you to a smarter, faster Kobiton with the easy-to-remember name: Kobiton.
+
+As we roll out this new Kobiton to existing customers, we will continue to offer some updates to our original Kobiton product - which we now refer to as Legacy Kobiton. But the majority of our new features and updates will be found in the new Kobiton. So, when you review the release notes below, please keep in mind that some changes are only in Kobiton and some are in both Kobiton and Legacy Kobiton.
+
+As always, we are here to help! If you have any questions, would like to update your Kobiton system, or get an understanding of what this all means for your Kobiton system, please contact your salesperson or send us an email at support@kobiton.com.
+
+== What's New in both Kobiton and Legacy Kobiton
+
+=== New OS Support
+
+The following OS versions are now supported:
+
+** iOS 15.4
+** iOS 15.4.1
+** iOS 15.5 beta 2
+** iOS 15.5 beta 3
+** iOS 15.5 beta 4
+** Android 13 DP 2
+** Android 13 beta 1
+
+=== Org Management Enhancements
+
+Org Owners can now edit their own settings within the User detail page of the Portal vs. submitting a support ticket.
+
+Admins can view the Team Owners from the list of Teams instead of clicking on Team details to find that information.
+
+=== Introducing the Usage Report
+
+We've added a new report: Usage Report. This report displays up to 3 months of Org information about the number of and minutes spent on manual sessions, automation sessions, the number and types of validations reported, flexCorrect corrections, and more.
+
+== What's New in Kobiton
+
+=== Image Injection Updates
+
+We have made a few changes to the image injection flow.
+
+* You can now access the feature from the left-side navigation menu during a Manual Session instead of on the right-side.
+* On the Session Details page, you can view where the image was injected on the timeline plus see a pop-up of the injected image.
+
+=== XCUITest Support
+
+Run your XCUITest automation on the latest version of Kobiton!
+
+=== Network Payload Capture & Configurations
+
+The latest version of Kobiton supports Network Payload Capture on iOS and Android devices.
+
+We've also introduced Configurations in this release. With custom configurations, users can define multiple sets of configurations (base domains + advanced settings) to be used during testing in Settings>Configurations.
+
+For manual testing, the user selects the custom configuration from the Device card prior to launching a test to see network payload capture information.
+
+[NOTE]
+Network Payload Capture requires each device to have a certificate installed before using this feature. See https://support.kobiton.com/hc/en-us/articles/360055590932[here] for more information.
+
+=== Enhancements when installing an app without launching a session
+
+Previously, a device needed to have no cleanup policy in order to install an app on it outside a test session. Now, a Local or Private device can have any cleanup policy and still allow an app to be installed outside a session.
+
+Users can also now close the install modal during an installation without stopping the install process.
+
+=== Device Inspector Enhancements
+
+As a visual representation of the apps code structure, Kobiton's Inspector within a manual session can help identify paths and technical identifiers to get scripts right. Previously, there were two buttons—Capture and Refresh—to operate this feature. In this release, we now automatically capture and display data when you click on the Inspector tab. Plus, we merged the two buttons into just "Refresh" to simplify the process.
+
+=== Battery Drain Metrics
+
+For customers with devices connected to a Cambrionix Hub, battery information will be gathered and displayed as part of the metrics data displayed in Session Explorer. Simply select Battery Drain from the dropdown menu under CPU to see the information.
+
+=== Passcode Support for Android Devices
+
+Some apps or tests require that a device have a passcode. The latest Kobiton now supports passcodes for Local and Private Android devices.
+
+=== Swipe and Touch Support
+
+Swipe and touch indicators will display on the camera roll after a manual test is completed and on the Session Explorer timeline.
+
+== Intelligent Quality Suite
+
+The following changes are focused on improving our Intelligent Quality Suite which encompasses features for Scriptless Automation, Test Case Management, and Validations.
+
+=== flexCorrect Enhancements
+
+When flexCorrect encounters an "element not found" error, it self-heals and determines the next best technical identifier to keep the test running. With this release, the portal indicates how many corrections flexCorrect made on your tests in Session Overview as well as shows you Expected and Corrected Selectors (if any) on the timeline of the Session Details page.
+
+=== Ability to Delete a Step in a Test Case
+
+After a manual session has been completed, a user may convert the session to a Test Case. With this release, the user may delete inadvertent test steps. This feature eliminates having to run a test over again when an accidental test step was performed.
+
+=== Trigger Scriptless from Automation Script: Support for iOS
+
+Testers can use an automation script as the baseline to run scriptless automation for iOS native/webview/hybrid apps via API calls and via the Kobiton portal. To use this feature, testers must include the desiredCap scriptlessEnable = true in the automation script.
+
+=== Scriptless Automation will stop recording when endpoint is unsupported
+
+There are some actions/endpoints that are not supported by Scriptless functionality. Previously, the entire test would not be usable for Scriptless if one of these were encountered. With this release, we will record the actions/endpoints up to the step that is not supported. All the steps after the unsupported actions would still be displayed in Session Details, but not recorded or included for Scriptless reruns.
+
+=== Improvements to Multi-Scroll Visual Comparisons
+
+We've improved how we capture screen images for visual comparisons. The changes are especially helpful for long scrolling pages and will return more accurate data when comparing visuals from one device/OS to another.
+
+=== Eliminating Long Waits and Time-outs on Exported Scripts
+
+By including a waitForElement on exported script commands, we've eliminated common wait times and timeouts on exported Appium scripts.
