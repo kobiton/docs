@@ -1,0 +1,30 @@
+<article class="doc">
+  <div class="sub-doc-title">
+    {{#with page.title}}
+    <div class="title-container">
+      <div class="back-previous-page">
+        {{#if (ne this 'Reference Resources')}}
+        <div class="back-icon" onclick="history.back()"></div>
+        {{/if}}
+      </div>
+      <h1 class="title">{{{this}}}</h1>
+      <div class="close-page">
+        <div class="close-icon"></div>
+      </div>
+    </div>
+    {{/with}}
+    {{#if env.SITE_SEARCH_PROVIDER}}
+    <div class="search hide-for-print">
+      <div id="search-field" class="field">
+        <input id="search-input" type="text" placeholder="Search" {{#if page.home}} autofocus{{/if}}>
+      </div>
+    </div>
+    {{/if}}
+    <div class="break-line"></div>
+  </div>
+
+  <div class="document-details">
+    {{{page.contents}}}
+  </div>
+  {{> pagination}}
+</article>
