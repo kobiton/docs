@@ -28,7 +28,7 @@
   border-radius: 4px;
   overflow: auto;
   padding: 8px;
-  max-height: calc(100vh - 5.25rem);
+  max-height: calc(100vh - 8.25rem);
   line-height: 1.5;
 }
 
@@ -43,6 +43,7 @@
   margin-right: 0.5em;
   padding-top: 0.25em;
   padding-bottom: 0.25em;
+  font-size: 14px;
 }
 
 .search-result-document-title {
@@ -55,11 +56,12 @@
   text-align: right;
   position: relative;
   word-wrap: break-word;
+  font-size: 12px;
 }
 
 .search-result-document-hit {
   flex: 1;
-  font-size: 0.75rem;
+  font-size: 12px;
   color: #63676d;
 }
 
@@ -89,14 +91,14 @@
 
 #search-input {
   color: black;
-  border: 1px solid #DDD;
-  border-radius: 0.2em;
-  padding: 0.6em 0.4em 0.6em 2.8em;
+  border: 1px solid #EAEDF6;
+  border-radius: 2px;
+  padding: 0.6em 0.4em 0.6em 3.8em;
   font-weight: 100;
   font-size: 14px;
   width: 100%;
   min-height: 40px;
-  background: transparent url(../img/search.svg) no-repeat 8px;
+  background: transparent url(../img/search.svg) no-repeat 10px;
 }
 
 
@@ -106,28 +108,39 @@
 }
 
 #search-input::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
-  color: #DDD;
-  font-weight: 100;
-  opacity: 1; /* Firefox */
+  font-family: 'Poppins';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 24px;
+  color: #8C8C8C;
 }
 
 #search-input:-ms-input-placeholder { /* Internet Explorer 10-11 */
-  color: #DDD;
-  font-weight: 100;
+  font-family: 'Poppins';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 24px;
+  color: #8C8C8C;
 }
 
 #search-input::-ms-input-placeholder { /* Microsoft Edge */
-  color: #DDD;
-  font-weight: 100;
+  font-family: 'Poppins';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 24px;
+  color: #8C8C8C;
 }
 
 #search-field .filter {
-  border: 1px solid #DDD;
+  border: 1px solid #8C8C8C;
   border-left: none;
   border-radius: 0 0.1em 0.1em 0;
   color: #02060c;
   cursor: pointer;
-  font-size: .875em;
+  font-size: 14px;
   display: flex;
   align-items: center;
   padding: 0 0.5rem;

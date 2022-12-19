@@ -14,8 +14,8 @@ Kobiton Help Documentation
   Open web browser with http://localhost:70
 
 # 3. Run antora in a container
-- Build docker image from local: `docker build --pull -t antora/antora .`
-- Run `docker run -v $PWD:/antora:Z --rm -it antora/antora antora antora-playbook-portal-help.yml ` to generate portal help documentation.
-- Run `docker run -v $PWD:/antora:Z --rm -it antora/antora antora antora-playbook.yml ` to generate documentation.
+- Build docker image from local: `docker build -t kobiton/documentation:1.0 .`
+- Run `docker run -v $PWD:/antora:Z --rm -it kobiton/documentation:1.0 antora antora-playbook-portal-help.yml ` to generate portal help documentation.
+- Run `docker run -v $PWD:/antora:Z --rm -it kobiton/documentation:1.0 antora antora-playbook.yml ` to generate documentation.
 - See more: https://docs.antora.org/antora/latest/antora-container/#docker-image-for-antora 
 
