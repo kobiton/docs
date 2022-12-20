@@ -8,7 +8,7 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "npx antora --fetch antora-playbook.yml && npx antora --fetch antora-playbook-portal-help.yml",
+    "build": "antora antora-playbook.yml && antora antora-playbook-portal-help.yml",
     "start-docs": "open ./build/documentation/release-notes/3.24",
     "start-portal-help": "open ./build/portal-help/release-notes/3.24"
   },

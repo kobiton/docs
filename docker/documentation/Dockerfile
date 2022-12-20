@@ -4,11 +4,11 @@ RUN mkdir -p /documentation
 WORKDIR /documentation
 
 COPY docker/documentation/nginx.conf /etc/nginx
-COPY docker/documentation/mime.types /etc/nginx
+COPY docker/mime.types /etc/nginx
 
 COPY build/documentation .
 
-EXPOSE 60
+EXPOSE 80
 
 CMD ["nginx", "-g", "daemon off;"]
 

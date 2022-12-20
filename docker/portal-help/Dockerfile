@@ -4,7 +4,7 @@ RUN mkdir -p /portal-help
 WORKDIR /portal-help
 
 COPY docker/portal-help/nginx.conf /etc/nginx
-COPY docker/portal-help/mime.types /etc/nginx
+COPY docker/mime.types /etc/nginx
 
 COPY build/portal-help .
 
