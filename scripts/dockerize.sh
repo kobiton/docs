@@ -1,6 +1,5 @@
-#!/bin/bash  
-npm install --global yarn 
-nvm install node
+#!/bin/bash   
+apt install nodejs npm
 yarn install
 yarn build
  
