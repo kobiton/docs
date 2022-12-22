@@ -1,5 +1,6 @@
 #!/bin/bash   
-apt install nodejs npm
+curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.34.0/install.sh | bash
+nvm install node 
 yarn install
 yarn build
  
