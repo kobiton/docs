@@ -8,7 +8,7 @@ COPY docker/mime.types /etc/nginx
 
 CMD ls -la
 CMD pwd
-COPY build/documentation .
+COPY /home/builder/src/documentation/build/documentation .
 
 EXPOSE 80
 
