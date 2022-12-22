@@ -6,9 +6,7 @@ WORKDIR /documentation
 COPY docker/documentation/nginx.conf /etc/nginx
 COPY docker/mime.types /etc/nginx
 
-CMD ls -la
-CMD pwd
-COPY /home/builder/src/documentation/build/documentation .
+COPY build/documentation .
 
 EXPOSE 80
 
