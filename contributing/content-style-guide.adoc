@@ -7,11 +7,11 @@ Aside from a few <<_kobiton_specific_guidelines,Kobiton-specific guidelines>>, o
 === Table of contents
 
 * xref:_css_styles[CSS styles]
-* xref:_text_formatting[Text formatting]
+* xref:_product_names[Product names]
 * xref:_file_names[File names]
+* xref:_file_structure[File structure]
 * xref:_content_reuse[Content reuse]
 * xref:_embedded_media_wip[Embedded media]
-* xref:_faq[Frequently asked questions (FAQ)]
 
 [#_kobiton_specific_guidelines]
 == Kobiton-specific guidelines
@@ -19,29 +19,13 @@ Aside from a few <<_kobiton_specific_guidelines,Kobiton-specific guidelines>>, o
 [#_css_styles]
 === CSS styles
 
-The xref:../ui-bundle/css/site.css[`site.css`] file formats the overall site and structure. Only admins and repository owners should be updating this file.
+The xref:../ui-bundle/css/site.css[`site.css`] file formats the overall site and structure. Changes to this file require a review from our repository admins.
 
-[#_text_formatting]
-=== Text formatting [WIP]
+[#_product_names]
+=== Product names [WIP]
+// Update link to public-facing documentation site once the site is live.
 
-Ensure the text in your documentation follows these formatting rules:
-
-[cols="1,1"]
-|===
-|Formatting Rule |Example
-
-|This
-|This
-
-|This
-|This
-
-|This
-|This
-
-|This
-|This
-|===
+Check out our xref:../docs/modules/glossary/index.adoc[product glossary].
 
 [#_file_names]
 === File names
@@ -77,16 +61,53 @@ To this: +
 `this-is-my-title`
 |===
 
+
+[#_file_structure]
+=== File structure
+
+Our docs repository hosts a single `modules` folder containing an `antora.yml` file and several components, where each component represents a particular topic, e.g. manual testing, release notes, APIs, etc. This means each Kobiton product shares the same `antora.yml` file for versioning and nav bar configuration.
+
+Here's an example file structure:
+
+[listing]
+----
+📒 repository
+  📂 docs
+    📂 modules
+        📂 .partials
+        📂 component-a
+            📂 images
+            📂 pages
+            📄 nav.adoc
+        📂 component-b
+            📂 images
+            📂 pages
+            📄 nav.adoc
+        📂 component-c
+            📂 images
+            📂 pages
+            📄 nav.adoc
+----
+
+To configure the navigation for a particular section, you'll edit the section's corresponding `nav.adoc` file, then add its relative path to the `antora.yml` file, like so:
+
+[listing]
+.antora.yml
+----
+nav:
+  - modules/ROOT/nav.adoc
+  - modules/release-notes/nav.adoc
+  - modules/supported-platforms/nav.adoc
+----
+
+If a piece of documentation needs to be added to several components, check out our guidelines for xref:_content_reuse[content reuse].
+
 [#_content_reuse]
 === Content reuse
 
-Sometimes a section of documentation, or an entire document itself, belongs to multiple sections within the documentation site.
+If a piece of documentation needs to be added to several components, you'll need to reuse content using https://docs.antora.org/antora/latest/page/partials/[partials]. The `.partials` folder found within `modules` contains a variety of partials including, product descriptions, callouts, role requirements, and more. If a there's already a partial for a commonly used piece of writing, use its corresponding partial.
 
-At Kobiton, there are three primary products, (also called components): *Device Lab Management*, *Intelligent Quality Suite*, and *Kobiton Desktop*. Each component contains a variety of modules, and each module contains a variety of features.
-
-In the case that a feature belongs to _several_ modules (and, likewise several components), documentation related to that feature should be included in each related module's documentation.
-
-This requires content reuse, which you can learn more about xref:reusing-content.adoc[here].
+If you want to learn how to reuse content, checkout our guide for xref:reusing-content.adoc[reusing content].
 
 [#_embedded_media_wip]
 === Embedded media [WIP]
@@ -160,18 +181,3 @@ The following section outlines the style guidelines for videos. If you'd like to
 |This
 |This
 |===
-
-[#_faq]
-== Frequently asked questions (FAQ) [WIP]
-
-=== This?
-
-This.
-
-=== This?
-
-This.
-
-=== This?
-
-This.

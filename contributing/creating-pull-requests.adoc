@@ -1,0 +1,89 @@
+= Creating pull requests
+
+Learn how to contribute changes to our documentation by creating pull requests (PRs).
+
+== Prerequisites
+
+* Clone the https://github.com/kobiton/documentation[documentation repository]
+* https://docs.antora.org/antora/latest/install-and-run-quickstart/#install-nodejs[Install Node.js]
+* https://docs.antora.org/antora/latest/install-and-run-quickstart/#install-antora[Install Antora]
+
+== Creating pull requests
+
+. Open your terminal.
+
+. Navigate to the documentation repository. +
++
+.*Example:*
+[,terminal]
+----
+cd ~/kobiton/documentation
+----
+
+. Checkout the `main` branch and confirm your local repository is up-to-date: +
++
+[,terminal]
+----
+git checkout main && git pull
+----
+
+. Create a new branch with the `-b` flag and check it out. +
++
+.*Example:*
+[,terminal]
+----
+git checkout -b migrating-manual-testing
+----
++
+. Now that you've checked out your new branch, you can start editing files using your preferred text editor.
++
+[NOTE]
+Use our content style guide to ensure xref:content-style-guide.adoc#_product_names[product names], xref:content-style-guide.adoc#_file_structure[file structure], and xref:content-style-guide.adoc[all other formatting] is inline with our standards.
+
+. Once you're satisfied with your work, open terminal and enter the following command: +
++
+[,terminal]
+----
+git add --all
+----
++
+[TIP]
+If you only want to push changes for one of the files you're working on, you can use `git add <FILENAME>` instead.
+
+. Create a commit containing your added changes. You'll also add the `-m` flag to add a short, descriptive message to your commit: +
++
+[,terminal]
+.*Example:*
+----
+git commit -m "Updating the nav file for manual testing"
+----
+
+. Now you'll push your branch to GitHub using the following command. Replace `<BRANCH-NAME>` with the name of your branch from step 4. +
++
+[,terminal]
+.*Example:*
+----
+git push -u origin <BRANCH-NAME>
+----
+
+. Open our https://www.github.com/kobiton/documentation[documentation repository] on GitHub and log in.
+
+. At the top of the screen, you'll see the following message. Within the message, select *compare & pull request*. +
++
+image::images/compare-and-pull-request.png[]
+
+. Use the instructions found within markdown comments (notated as `<!-- NOTE -\->`) to create your pull request. Be sure to assign the PR to yourself and add a descriptive label. +
++
+image::images/create-pull-request.png[]
+
+. When you're finished filling out your PR, select *Create draft pull request*.
+
+. Before you assign a reviewer, xref:generating-site-preview.adoc[gerate a site preview], so you can see what your changes will look like once they're added to the site.
+
+. If you need to make any changes, simply repeat steps 5 through 8 and regenerate your site preview to see your changes.
+
+. Once you're satisfied with your work, add *Isaiah Robinson* as a reviewer and select *Ready for review*.
+
+. After your work is reviewed, you'll receive a notification indicating whether your PR can be merged or if it needs changes.
+
+. Once your PR is approved, select *Merge pull request* and delete your branch.
