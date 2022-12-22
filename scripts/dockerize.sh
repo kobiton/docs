@@ -1,5 +1,5 @@
 #!/bin/bash   
-sudo apt install nodejs
+nvm use 16
 yarn install
 yarn build
  
