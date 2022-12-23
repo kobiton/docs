@@ -1,6 +1,6 @@
 = Creating pull requests
 
-Learn how to contribute changes to our documentation by creating pull requests (PRs).
+Learn how to contribute to our documentation by xref:_developing_a_working_branch[developing a working branch] and xref:_creating_a_pull_request[creating a pull request (PR)].
 
 == Prerequisites
 
@@ -8,7 +8,8 @@ Learn how to contribute changes to our documentation by creating pull requests (
 * https://docs.antora.org/antora/latest/install-and-run-quickstart/#install-nodejs[Install Node.js]
 * https://docs.antora.org/antora/latest/install-and-run-quickstart/#install-antora[Install Antora]
 
-== Creating pull requests
+[#_developing_a_working_branch]
+== Developing a working branch
 
 . Open your terminal.
 
@@ -40,7 +41,12 @@ git checkout -b migrating-manual-testing
 [NOTE]
 Use our content style guide to ensure xref:content-style-guide.adoc#_product_names[product names], xref:content-style-guide.adoc#_file_structure[file structure], and xref:content-style-guide.adoc[all other formatting] is inline with our standards.
 
-. Once you're satisfied with your work, open terminal and enter the following command: +
+. When you're finished making changes to your branch, you can xref:_creating_a_pull_request[create a pull request].
+
+[#_creating_a_pull_request]
+== Creating a pull request
+
+. If you're finished creating, editing, and removing files, open terminal and enter the following command: +
 +
 [,terminal]
 ----
@@ -48,9 +54,9 @@ git add --all
 ----
 +
 [TIP]
-If you only want to push changes for one of the files you're working on, you can use `git add <FILENAME>` instead.
+If you only want to push changes for a single file, you can use `git add <FILENAME>` instead.
 
-. Create a commit containing your added changes. You'll also add the `-m` flag to add a short, descriptive message to your commit: +
+. Create a commit using the `-m` flag, so you can include a short, descriptive message with your staged changes: +
 +
 [,terminal]
 .*Example:*
@@ -58,12 +64,12 @@ If you only want to push changes for one of the files you're working on, you can
 git commit -m "Updating the nav file for manual testing"
 ----
 
-. Now you'll push your branch to GitHub using the following command. Replace `<BRANCH-NAME>` with the name of your branch from step 4. +
+. Now you'll push your branch to GitHub using the following command. Replace `<BRANCHNAME>` with the name of your branch. +
 +
 [,terminal]
 .*Example:*
 ----
-git push -u origin <BRANCH-NAME>
+git push -u origin <BRANCHNAME>
 ----
 
 . Open our https://www.github.com/kobiton/documentation[documentation repository] on GitHub and log in.
