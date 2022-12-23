@@ -6,7 +6,7 @@ WORKDIR /portal-help
 COPY nginx.conf /etc/nginx
 COPY ../mime.types /etc/nginx
 
-COPY ./build/portal-help .
+COPY ../../build/portal-help .
 
 EXPOSE 80
 
