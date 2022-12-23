@@ -6,7 +6,13 @@ npm install --global yarn
 yarn install
 yarn build
  
+# These params are for CI to control the output docker image
+docker_image_name1="${KOBITON_CI_DOCKER_IMAGE_NAME:-documentation}"
+docker_image_tag1="${KOBITON_CI_DOCKER_IMAGE_TAG:-latest}"
 
-docker build -t kobiton/documentation:1.0 -f docker/documentation/Dockerfile .
+docker_image_name2="${KOBITON_CI_DOCKER_IMAGE_NAME:-portal-help}"
+docker_image_tag2="${KOBITON_CI_DOCKER_IMAGE_TAG:-latest}"
 
-docker build -t kobiton/portal-help:1.0 -f docker/portal-help/Dockerfile .
+
+docker build -t $docker_image_name1:$docker_image_tag1 -f docker/documentation/Dockerfile .
+docker build -t $docker_image_name2:$docker_image_tag2 -f docker/portal-help/Dockerfile .
