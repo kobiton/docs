@@ -3,10 +3,10 @@ FROM nginx:1.12.2-alpine
 RUN mkdir -p /documentation
 WORKDIR /documentation
 
-COPY docker/documentation/nginx.conf /etc/nginx
-COPY docker/mime.types /etc/nginx
+COPY nginx.conf /etc/nginx
+COPY ../mime.types /etc/nginx
 
-COPY build/documentation .
+COPY ./build/documentation .
 
 EXPOSE 80
 
