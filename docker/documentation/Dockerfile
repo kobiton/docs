@@ -6,7 +6,7 @@ WORKDIR /documentation
 COPY nginx.conf /etc/nginx
 COPY ../mime.types /etc/nginx
 
-COPY ./build/documentation .
+COPY ../../build/documentation .
 
 EXPOSE 80
 
