@@ -1,9 +1,96 @@
-= Reusing content [WIP]
+= Reusing content
 
-Learn how to reuse content throughout our docs. If you'd like to learn more about content reuse using AsciiDoc, you can read more at https://docs.asciidoctor.org/asciidoc/latest/directives/include/[Asciidoctor Docs].
+Learn how to reuse content by xref:_creating_a_partial[creating] and xref:_using_a_partial[using] partials. If you'd like to learn more about partials in relation to Antora, check out https://docs.antora.org/antora/latest/page/include-a-partial/[Antora Docs].
 
-== Reusing content
+== Prerequisites
 
-1. This
-2. This
-3. This
+* Clone the https://github.com/kobiton/documentation[documentation repository]
+* https://docs.antora.org/antora/latest/install-and-run-quickstart/#install-nodejs[Install Node.js]
+* https://docs.antora.org/antora/latest/install-and-run-quickstart/#install-antora[Install Antora]
+
+[#_creating_a_partial]
+== Creating a partial
+
+. Open your terminal.
+
+. Navigate to the documentation repository. +
++
+.*Example:*
+[,terminal]
+----
+cd ~/kobiton/documentation
+----
+
+. Checkout the `main` branch and confirm your local repository is up-to-date: +
++
+[,terminal]
+----
+git checkout main && git pull
+----
+
+. Create a new branch with the `-b` flag and check it out. +
++
+.*Example:*
+[,terminal]
+----
+git checkout -b migrating-manual-testing
+----
++
+. Now that you've checked out your new branch, you can start creating partials using your preferred text editor.
+
+. The `partials` folder found within `ROOT` contains a variety of global partials (like product descriptions, role requirements, etc.), while component-specific partials are located within their own `partials` folder. +
++
+Create a new `.adoc` file within the global or component-specific `partials` folder.
+
+. Draft the content of your partial. +
++
+[,text]
+.*Example*
+----
+[NOTE,caption=Who can use this feature?]
+====
+* *Admins*, *Testers*, and *Project Owners* (by default)
+* Available on https://www.kobiton.com/pricing[*all plans*]
+====
+----
++
+. When you're finished making changes to your branch, you can xref:creating-pull-requests.adoc#_creating_a_pull_request[create a pull request].
+
+[#_using_a_partial]
+== Using a partial
+
+. Open your terminal.
+
+. Navigate to the documentation repository. +
++
+.*Example:*
+[,terminal]
+----
+cd ~/kobiton/documentation
+----
+
+. Checkout the `main` branch and confirm your local repository is up-to-date: +
++
+[,terminal]
+----
+git checkout main && git pull
+----
+
+. Next, checkout an existing branch or create a new branch using the `-b` flag. +
++
+.*Example:*
+[,terminal]
+----
+git checkout -b migrating-manual-testing
+----
++
+. Now that you're on a working branch, you can use your preferred text editor to add partials to your content.
+
+. The `partials` folder found within `ROOT` contains a variety of global partials (like product descriptions, role requirements, etc.), while component-specific partials are located within their own `partials` folder. +
++
+Use the following syntax to add a global or component-specific partials: +
++
+* *Global:* `include::ROOT:partial$<FOLDERNAME>/<FILENAME>`
+* *Component-specific:* `include::<COMPONENTNAME>:partial$<FOLDERNAME>/<FILENAME>`
+
+. When you're finished making changes to your branch, you can xref:creating-pull-requests.adoc#_creating_a_pull_request[create a pull request].

@@ -7,11 +7,11 @@ Aside from a few <<_kobiton_specific_guidelines,Kobiton-specific guidelines>>, o
 === Table of contents
 
 * xref:_css_styles[CSS styles]
-* xref:_text_formatting[Text formatting]
+* xref:_product_names[Product names]
 * xref:_file_names[File names]
+* xref:_file_structure[File structure]
 * xref:_content_reuse[Content reuse]
 * xref:_embedded_media_wip[Embedded media]
-* xref:_faq[Frequently asked questions (FAQ)]
 
 [#_kobiton_specific_guidelines]
 == Kobiton-specific guidelines
@@ -19,29 +19,13 @@ Aside from a few <<_kobiton_specific_guidelines,Kobiton-specific guidelines>>, o
 [#_css_styles]
 === CSS styles
 
-The xref:../ui-bundle/css/site.css[`site.css`] file formats the overall site and structure. Only admins and repository owners should be updating this file.
+The xref:../ui-bundle/css/site.css[`site.css`] file formats the overall site and structure. Changes to this file require a review from our repository admins.
 
-[#_text_formatting]
-=== Text formatting [WIP]
+[#_product_names]
+=== Product names
+// Update link to public-facing documentation site once the site is live.
 
-Ensure the text in your documentation follows these formatting rules:
-
-[cols="1,1"]
-|===
-|Formatting Rule |Example
-
-|This
-|This
-
-|This
-|This
-
-|This
-|This
-
-|This
-|This
-|===
+Use our xref:../docs/modules/glossary/index.adoc[product glossary] for up-to-date spelling, abbreviations, and styling.
 
 [#_file_names]
 === File names
@@ -77,41 +61,75 @@ To this: +
 `this-is-my-title`
 |===
 
+
+[#_file_structure]
+=== File structure
+
+Our docs repository uses a single `modules` folder containing an `antora.yml` file and several components, where each component represents a particular topic, e.g. manual testing, release notes, APIs, etc. This means each Kobiton product shares the same `antora.yml` file for versioning and nav bar configuration.
+
+Here's an example file structure:
+
+[listing]
+----
+📒 repository
+  📂 docs
+    📂 modules
+        📂 component-a
+            📂 images
+            📂 pages
+                📄 index.adoc
+            📂 partials
+            📄 nav.adoc
+        📂 component-b
+            📂 images
+            📂 pages
+                📄 index.adoc
+                📄 other-page.adoc
+            📂 partials
+            📄 nav.adoc
+        📂 ROOT
+            📂 images
+            📂 pages
+                📄 index.adoc
+            📂 partials
+            📄 nav.adoc
+----
+
+[NOTE]
+Antora requires a `ROOT` folder. For our purposes, this folder will only contain the site's landing page and site-wide xref:_content_reuse[partials].
+
+To configure the navigation for a particular section, you'll edit the section's corresponding `nav.adoc` file, then add its relative path to the global `antora.yml` file, like so:
+
+[listing]
+.*Example*
+----
+nav:
+  - modules/ROOT/nav.adoc
+  - modules/release-notes/nav.adoc
+  - modules/supported-platforms/nav.adoc
+----
+
+If a piece of documentation needs to be added to several components, check out our guidelines for xref:_content_reuse[content reuse].
+
 [#_content_reuse]
 === Content reuse
 
-Sometimes a section of documentation, or an entire document itself, belongs to multiple sections within the documentation site.
+If a piece of documentation needs to be added to several components, you can reuse content using https://docs.antora.org/antora/latest/page/partials/[partials].
 
-At Kobiton, there are three primary products, (also called components): *Device Lab Management*, *Intelligent Quality Suite*, and *Kobiton Desktop*. Each component contains a variety of modules, and each module contains a variety of features.
+The `partials` folder found within `ROOT` contains a variety of global partials (like product descriptions, role requirements, etc.), while component-specific partials are located within their own `partials` folder.
 
-In the case that a feature belongs to _several_ modules (and, likewise several components), documentation related to that feature should be included in each related module's documentation.
+Use the following syntax to add a global or component-specific partials:
 
-This requires content reuse, which you can learn more about xref:reusing-content.adoc[here].
+* *Global:* `include::ROOT:partial$<FOLDERNAME>/<FILENAME>`
+* *Component-specific:* `include::<COMPONENTNAME>:partial$<FOLDERNAME>/<FILENAME>`
+
+If you'd like a more in-depth tutorial for content reuse, checkout our xref:reusing-content.adoc[reusing content] guide.
 
 [#_embedded_media_wip]
 === Embedded media [WIP]
 // Migrate from google doc: https://docs.google.com/document/d/1TJuRQO4uof6NW94AIP0MVWtjYr9vEykgO1yddv6WDoY/edit#heading=h.e4wvl4myvq6w
 
 Our documentation hosts a variety of embedded media, including <<_screenshots, screenshots>>, <<_diagrams, diagrams>>, and <<_videos, video>> content.
-
-==== Figma
-
-The following section outlines the naming guidelines for Figma files. If you'd like to learn _how_ to create screenshots using Figma instead, check out xref:creating-screenshots.adoc[this tutorial].
-
-[cols="1,4"]
-|===
-|Key |Value
-
-|File names
-a|
-Figma file names should mirror the full directory path. +
-*Example:* `manual-testing/modules/ROOT/images/manual-testing-flow`
-
-|File extensions
-a|
-Figma files should be exported as an `.svg`. +
-*Example:* `manual-testing-flow.svg`
-|===
 
 [#_screenshots]
 ==== Screenshots [WIP]
@@ -160,18 +178,3 @@ The following section outlines the style guidelines for videos. If you'd like to
 |This
 |This
 |===
-
-[#_faq]
-== Frequently asked questions (FAQ) [WIP]
-
-=== This?
-
-This.
-
-=== This?
-
-This.
-
-=== This?
-
-This.
