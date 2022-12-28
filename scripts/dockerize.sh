@@ -14,7 +14,7 @@ docker_image_name2="${KOBITON_CI_DOCKER_IMAGE_NAME:-portal-help}"
 docker_image_tag2="${KOBITON_CI_DOCKER_IMAGE_TAG:-latest}"
 
 
-docker build -t $docker_image_name1:$docker_image_tag1 --build-arg COMMIT_ID=`git rev-parse --short HEAD` -f docker/documentation/Dockerfile .
+docker build -t documentation:$GIT_COMMIT_ID --build-arg COMMIT_ID=`git rev-parse --short HEAD` -f docker/documentation/Dockerfile .
 
 
-docker build -t $docker_image_name2:$docker_image_tag2 --build-arg COMMIT_ID=`git rev-parse --short HEAD` -f docker/portal-help/Dockerfile .
+docker build -t portal-help:$GIT_COMMIT_ID --build-arg COMMIT_ID=`git rev-parse --short HEAD` -f docker/portal-help/Dockerfile .
