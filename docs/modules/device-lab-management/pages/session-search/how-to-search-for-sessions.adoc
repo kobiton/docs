@@ -1,0 +1,116 @@
+= How to Search for Sessions Within Kobiton
+:navtitle: How to Search for Sessions Within Kobiton
+
+== Session Search Guidelines
+
+Being able to locate and review data from previously executed tests is essential to your business, and Kobiton is here to make it painless! Since Kobiton's session search mechanism is set up query-style--meaning you can search for specific outcomes using specific conditions--you may need to use some of the query structure rules outlined below for more efficient and accurate queries. Our current set up supports the *"AND" condition*: all specific search categories listed will be combined in the search process, and search results will appear if they satisfy all of those same conditions.
+
+Below is a chart of our supported search categories and respective structures for test session searches. These structured queries are useful for searching for groups of sessions that share similar conditions, such as all tests on a certain OS or all tests conducted by a specific user.
+
+_Table 1: Structured Search Categories_
+
+[cols="1,1,1,1]
+|===
+
+|*Search Category*| *Structure*|*Description*|*How to input in search box*
+
+|*Type*
+|type: [name of session type] or scriptless session, the structure would be: *is:scriptless*
+|Show all sessions matching specific session types as input
+|type:manual
+type:appium is:scriptless
+
+|*Device Model*
+|model: [device model code]
+|Show all sessions having device model as input
+|model:“redmi note 7”
+model:mq9d2
+
+|*OS*
+|os: [operation system name]
+|Show all sessions having devices running operating system as input
+|os:android
+os:ios
+
+|*OS version*
+|os_version: [version]
+|Show all sessions having devices running operating system version as input
+|os_version:14.7.1
+os_version:10
+
+|*User*
+|user: [name of user]
+|Show all sessions executed by specific user as input
+|user:kobiton
+user:kobitonadmin
+
+|*Status*
+|status: [name of status]
+|Show all sessions with specific status as input
+|status:running
+status:passed
+
+|*Application*
+|application: [application name]
+|Show all sessions executed using specific application as input
+|application:“wingman api”
+application:guardian
+
+|*UDID*
+|udid: [udid code]
+|Show all sessions with specific device’s UDID as input
+|udid:6ec7ca0e
+
+|*Resolution*
+|resolution: [screen resolution]
+|Show all sessions run on devices having specific screen resolution as input
+|resolution:720x1080 resolution:1080x2340
+
+|*Manufacturer*
+|manufacturer: [name of manufacturer]
+|Show all sessions run on devices having specific manufacturer as input
+|manufacturer:samsung
+manufacturer:apple
+
+|===
+
+For the above categories, it is necessary to enter the correct structure in your search input. You also have the option of making search queries that do not require this attention to structure; instead, you need only input the exact value you want to be returned in the search. The search process will return any sessions that contain the specific value you entered. These unstructured queries are more useful for pinpointing specific sessions, such as when you know the specific session you want to review and input the session ID.
+
+_Table 2: Unstructured Search Category_
+
+[cols="1,1,1,1"]
+|===
+
+|*Search Category*| *Value*|*Description*|*How to input in search box*
+
+|*ID*
+|231456
+|Show all sessions containing “231456” in session information
+|231456
+
+|*Name*
+|Appium test session
+|Show all sessions containing “Appium test session” in session information
+|Appium test session
+
+|*Date*
+|08/26/2021
+08-26-2021
+|Show all sessions containing “08/26/2021” in session information
+|08/26/2021
+08-26-2021
+|===
+
+== Search Query Examples
+
+Below is an example of a correct query structure searching for sessions using structured categories. This query shows indicates that the Kobiton search mechanism will identify only sessions that are manual, used devices operating Android 10 OS, and with a status of Complete. As a result, a list of respective sessions is displayed. Note that the items returned match all of the conditions, not just one or two.
+
+image::custom1.png[500,500,align="center"]
+
+As another example, we add *“Flydubai”* as an unstructured query parameter in the previous query to narrow down the returned search results. Since *“Flydubai”* is entered as a keyword and does not match any of the defined structures in Table 1, the Kobiton search mechanism looks for all session information that contains this phrase (in this case, it is considered a session name.) The "AND" function still applies, so the respective search result returns only one matched session.
+
+image::custom2.png[500,500,align="center"]
+
+Besides searching your sessions with query inputs, you can also search by session status or session type by using the search panel picture below. This panel is more limited in its search conditions, but is also useful as a kind of search shortcut. To access this search panel, click on the standard search box you see at the top of Sessions page; the panel will appear beneath the search bar and will display a list of icons you can choose from to perform your search. Click an icon from the panel and Kobiton will immediately execute a search using that icon as your search condition and list the results as normal.
+
+image::custom3.png[1000,1000,align="center"]

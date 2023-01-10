@@ -1,0 +1,32 @@
+= Device Cleanup
+:navtitle: Device Cleanup
+
+To protect your testing data, Kobiton provides a number of options to clean up a device once your time using this device is complete. Private devices on the Kobiton platform are protected and inaccessible to another user while a device is in use and immediately after, while the cleanup policy runs on the device. Public devices automatically have our default cleanup policy applied to them and are likewise unavailable immediately after use while the policy runs.
+
+Cleanup policies are applied to devices at the Team level. Admins (Or other members that has permission: “org_management.modify”) of a device lab are given default cleanup policies provided by Kobiton, which are "Thorough" and "No Policy". No policy will leave the device in whatever state it was in when a user last quit a session on that device, and no cleanup will be performed. Thorough is Kobiton's default policy, which performs the following actions:
+
+* Removing applications installed within a session
+
+* Removing browser cache and history
+
+* Reset device settings, i.e.: WiFi, USB debugging, disabling airplane mode
+
+* Remove accounts that were signed into i.e.: Gmail, Facebook
+
+NOTE: Apple ID is NOT included as part of the target of any cleanup policy. If you use an Apple ID or log into an Apple account, you MUST remove/log out of the Apple-associated accounts before ending your session to ensure proper security.
+
+You can also select from various settings to create your own personalized cleanup policies. You can mix and match these settings and create several cleanup policies to apply to different teams, and those teams' device bundles, as befits your organization's workflow. Below is a sample of the settings you can apply to your customized cleanup policy:
+
+image:configure-cleanup.png[500,500]
+
+image:configure-cleanup1.png[500,500]
+
+You can view your organization's cleanup policies by navigating to the Settings menu (listed in the dropdown menu of the user modal in the upper right corner), then clicking the "Cleanup Policy" tab in the bar running across the top of the screen.
+
+image::cleanup-policy.png[500,500,align="center"]
+
+Every organization needs to have a default policy; this default policy will apply if/when user launch devices from the Org level (rather than a team level), if/when an automation session is launched against a device that does not define a groupID, and if a device is launched without a specific team-level cleanup policy assigned. In the Cleanup Policies view, the default policy will be designated by a purple checkmark icon beside the policy, as displayed in the Default Policy column pictured above. To change which policy becomes the universal default for your organization, click on the desired policy to highlight it, then select "Mark as Default"; please note that only an Org Admin can make this change.
+
+To view the list of teams to whom a cleanup policy is applied, click on "View Teams" next to the policy you'd like to view. The teams who use that cleanup policy will be displayed in a context box. You can then click on a team included in that list to be taken to that team's details page.
+
+For more information on teams and device cleanup, please review our xref:admin-organization-management:user-management/role-based-access-control.adoc[Role-Based Access Controls documentation].

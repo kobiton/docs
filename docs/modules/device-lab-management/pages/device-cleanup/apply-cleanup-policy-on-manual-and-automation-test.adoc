@@ -1,0 +1,88 @@
+= Apply Cleanup Policy on Manual and Automation Tests
+:navtitle: Apply Cleanup Policy on Manual and Automation Tests
+
+== Manual Test
+
+During the testing session, users will be provided the “Clean up device on exit” option to follow / unfollow the cleanup policy at Team level for that private device.
+
+1. If *Checked*, when ending a session, the device will execute the cleanup policy set at Team level (set by Admin)
+
+2. If *Unchecked*, when ending a session, the device will not execute the cleanup policy set at Team level but will perform these following mandatory tasks:
+
+** Unlock Screen
+** Go to Home Screen
+** Set orientation to Portrait
+** Disable background process
+
+image::manual-cleanup.png[500,500,align="center"]
+
+== Automation Test
+
+The Cleanup policy applied for automation test is similar to manual test. Kobiton, however, is using the Appium automation testing framework so Kobiton always respects the Appium’s cleanup policy (which is executed via noReset and fullReset capabilities) over the Kobiton’s cleanup policy.
+
+User can use the Appium’s noReset and fullReset capabilities to assure the following cleanup tasks are executed:
+
+    + noReset = false
+        - Clear app data
+        - Clear Chrome browser's cache and history
+
+   + fullReset = true
+    - Remove apps installed within a session
+
+Other policies of the Kobiton’s cleanup policy (refer to the list below) are not affected by the noReset and fullReset capabilities, so ending an automation session, Kobiton will execute these policies (if checked / set by admin):
+
+* "Signed in account will be removed”
+* "Device settings will be reset"
+* “All apps installed within a session will be removed”
+
+[cols="1,1"]
+|===
+
+*In the Desired Capabilities*| *Description*
+
+|noReset = True
+
+fullReset = False
+|Follow the xref:device-lab-management:device-cleanup/device-cleanup.adoc[cleanup policy set at Team level] (set up by Admin)
+
+|noReset = False
+
+fullReset = True
+|*1. Follow Appium’s cleanup policy on*:
+
+- Clear app data
+
+- Clear Chrome browser’s cache and history
+
+- Remove apps installed within a session
+
+*2. Follow other cleanup tasks of cleanup policy set at Team level (if set / checked by admin):*
+
+- Signed in account will be removed
+
+- Device settings will be reset
+
+|noReset = False
+
+fullReset = False
+|*1. Follow Appium’s cleanup policy on*:
+
+- Clear app data
+
+- Clear Chrome browser’s cache and history
+
+*2. Follow other cleanup tasks of cleanup policy set at Team level (if set / checked by admin)*:
+
+- Signed in account will be removed
+
+- Device settings will be reset
+
+- Remove apps installed within a session
+
+|noReset and fullReset
+
+are not in DesiredCap
+|Follow the *cleanup policy set at Team level* (set up by Admin)
+|===
+
+image::automation.png[1000,1000,align="center"]

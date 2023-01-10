@@ -1,0 +1,83 @@
+= Device Passcodes
+:navtitle: Device Passcodes
+
+_Note: This feature describes the passcode feature on the latest version of Kobiton_
+
+Some apps or MDMs require a passcode to be set on a device. So in order to test them, Kobiton must support the ability to add a passcode to a device. The device passcode feature is available for Private and Local devices.
+
+There are three modes of the passcode feature:
+
+* *CUSTOM mode*: Admins can choose which devices require a passcode and which don't by choosing the passcode toggle in each device modal. For devices where a passcode is required, a user will be asked to set a passcode upon launching a session or enter a passcode if it is already set.
+
+* *PASSWORD mode*: all devices are automatically set with system-generated alphabetic text password. Users will not see the passcode when interacting with the device and there will not be a passcode toggle button in the device modal.
+
+* *PIN mode*: all devices are automatically set with system-generated PIN number passcode. Users will not see the passcode when interacting with the device and there will not be a passcode toggle button in the device modal.
+
+In order to use these features on Private and Local devices, please make a request via Kobiton Support. We will enable this feature as an org-level permission.
+
+Regardless of the mode, passcodes should NOT be added/changed/removed within a test session using the Settings menu of the device or a popup within the device. If an MDM requires a stronger passcode than the one set by the user at the outset of a manual session, the user must close the session and remove the passcode via the exit modal. Then, start a new session and create a new stronger passcode.
+
+== CUSTOM mode
+
+=== Manual session
+
+First, an admin must enable the Passcode Feature Enforced toggle button in the Device Details modal.
+
+image::manual session.png[500,500,align="center"]
+
+After that, launch a manual session. Before entering the manual session, you will be asked to set a passcode. You can choose between PIN number or text password.
+
+image::manual session 2.png[500,500,align="center"]
+
+Upon exiting the session, you can choose to keep the passcode or remove it. If you remove the passcode, you will need to set a new one in your next session. If you keep the passcode, you will need to enter it the next time you launch a session.
+
+NOTE: The passcode will be visible to admins in the Device Details modal.
+
+image::manual session 3.png[500,500,align="center"]
+
+=== Automation Session with CUSTOM mode enabled
+
+To set passcode for device via an automation session, input in the automation script
+
+ passcode and removePasscodeOnExit desiredCapability. For example:
+  passcode:‘1234’,
+   removePasscodeOnExit: true,
+
+If there isn't a passcode set to the device yet, the system will set the device's passcode using the value of
+passcode desiredCapability. If the device already has a passcode, the desiredCap passcode must match the device’s passcode.
+
+If removePasscodeOnExit = true, the device’s passcode will be removed at the end of the session. If removePasscodeOnExit = false, the device's passcode will be kept.
+
+=== PIN mode and PASSWORD mode
+
+As mentioned above, the PIN and PASSWORD passcode mode must be activated for you by the Kobiton team. Once the device is enabled with pin or password, you will launch the device from the Portal without the need to enter the the passcode. When in a manual session, you can check the device passcode by turning off the screen and turning it on again. By doing this, you'll see the device *automatically* filling in the passcode and unlocking the device.
+
+image::pin mode and passcode mode.gif[500,500,align="center"]
+
+=== Automation session with PIN or PASSWORD mode enabled
+
+You don't need to input the desiredCap passcode, the system will automatically bypass the passcode when executing the script. However, you must input the udid desiredCap.
+
+    // Specify UDID of the device you want to use
+udid: 'cafb43d67468a5b5a559ecd77f02602f3973780d',
+
+     sessionName: 'Kobiton',
+     sessionDescription: '',
+     deviceOrientation: 'portrait',
+     noReset: true,
+     fullReset: false,
+     captureScreenshots: true,
+     useConfiguration: '',
+     autoWebview: true,
+     browserName: 'safari',
+     deviceGroup: 'ORGANIZATION',
+
+== Limitations
+
+1. In the manual session, when unlocking the screen, the system reveals the passcode.
+
+2. The latest version of Kobiton does not support passcode renewal at this time. Thus, if users create an MDM profile, the maximum passcode age is 730 days.
+
+3. If the device is hosted with a GEM, the video playback reveals the passcode when the system is unlocking the device in a manual session. Any user who can view the session overview would see the passcode. Kobiton is investigating how to hide/obfuscate the passcode.
+
+4. Public devices are not able to have a passcode at this time.

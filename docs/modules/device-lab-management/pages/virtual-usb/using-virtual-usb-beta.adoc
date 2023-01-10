@@ -1,0 +1,115 @@
+= Using virtualUSB {beta}
+:navtitle: Using virtualUSB{beta}
+
+virtualUSB allows users to develop, debug, and test apps on Private and Local mobile devices hosted on the Kobiton Portal.
+
+virtualUSB is available as an option for the Enterprise plan. Please contact support@kobiton.com or your Account Executive if you are interested in adding this feature.
+
+See xref:virtual-usb/virtualusbbeta-installation-and-configuration-guide.adoc[this guide] for how to set up and configure virtualUSB. Once the setup is done, open virtualUSB and start exploring the features below.
+
+== Device list
+
+The first thing you'll see when you sign into virtualUSB is the list of the Private and Local online devices assigned to you (from all of your assigned teams):
+
+image::device-list.png[500,500,align="center"]
+
+With the above list, you can:
+
+* Use the search bar on top of the device list to find devices by Display Name, Model Name, or UDID.
+
+* Hover on a device's Display Name, Model Name, or UDID to show the full text when the text is long. You can also copy the information by clicking the *Copy* icon:
+
+image::udid.png[500,500,align="center"]
+
+== Connect to a device
+
+On the device list, select the *Connect* button for a device:
+
+image::connect.png[500,500,align="center"]
+
+Once connected:
+
+* The device status changes to *Retained*. This status persists for 24 hours unless the device is disconnected sooner.
+
+* The *Connection Status* column displays the value *Connected*.
+
+image:connect-status.png[]
+
+Repeat the above step to connect to additional devices.
+
+To filter and view the list currently connected devices, select the *Show Connected Devices* checkbox on the right of the search bar. Unselect the checkbox to clear the filter and view all devices.
+
+image:show-connect-device.png[]
+
+== Check connected devices
+
+=== Android devices
+
+In Android Studio, select *Device Manager* from the run configurations dropdown menu:
+
+image::device-manager.png[500,500,align="center"]
+
+Select the *Physical* tab to see the list of connected devices:
+
+image::physical-tab.png[500,500,align="center"]
+
+=== iOS devices
+
+You can check iOS devices two ways.
+
+First, open Finder. The connected devices are listed under *Locations*:
+
+image::location.png[500,500,align="center"]
+
+The other way is to view connected iOS devices in Xcode:
+
+image::device-in-xcode.png[500,500,align="center"]
+
+== Launch a manual session
+
+To observe what is happening on the device screen while connected to a device via virtualUSB, sign in to the Kobiton Portal, find the device, and launch a manual session with a virtualUSB. (Hint: copy the device UDID from virtualUSB and paste it in the search bar of the Kobiton Portal Device List.)
+
+Manual sessions will end after staying idle for a certain period of time. To prevent an accidental session end, open the *Manual Session Settings* while in the manual session, uncheck *Quit session after staying idle for 10 minutes* in the pop-up, and click *Apply*.
+
+image::setting.png[500,500,align="center"]
+
+image::quit.png[500,500,align="center"]
+
+== Disconnect a device
+
+To disconnect and release a device back to the team, go to virtualUSB and click *Disconnect* under the *Action* column:
+
+image::disconnect.png[500,500,align="center"]
+
+Confirm the action by selecting Disconnect in the next dialog:
+
+image::disconnect-device.png[500,500,align="center"]
+
+== Save log
+
+To save a log of activities in virtualUSB, click the *Save Logs* icon on the left side of the user's avatar:
+
+image::save-log.png[500,500,align="center"]
+
+In the next dialog, choose a time period from the dropdown list and click *Save*. A zip archive containing all the logs in the selected period will be downloaded.
+
+image::save-log-2.png[500,500,align="center"]
+
+== Limitations
+
+* Kobiton does not provide support for admins to terminate the virtualUSB connection of another user. Admins can cancel a retained device while it is connected via virtualUSB, but this is not recommended as other users will see those devices with *Online* status but not be able connect to them, i.e. users will receive an error when trying to connect via virtualUSB.
+
+* After clicking the *Connect* button, users may occasionally see the connection status changes to *Offline* or *Error* before showing *Connected*. Kobiton will address this behavior in an upcoming release.
+
+* If a user right-clicks on any part of the virtualUSB app and selects *Reload*, the user will be directed back to the login page and need to sign in again.
+
+* You cannot run virtualUSB from a Mac that has deviceConnect or Kobiton Desktop installed.
+
+* Device connection status is not synced across machines when a user logs in virtualUSB on different machines simultaneously.
+
+* When a device is connected via virtualUSB and you restart the device:
+
+** the virtualUSB connection will be re-established.
+
+** the device status will be back to *Online* and you should manually retain that device to avoid interruption.
+

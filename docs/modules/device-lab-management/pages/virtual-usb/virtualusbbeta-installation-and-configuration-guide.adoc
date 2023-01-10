@@ -1,0 +1,221 @@
+= virtualUSB {beta} - Installation and configuration guide
+:navtitle: virtualUSB {beta} - Installation and configuration guide
+
+== About virtualUSB
+
+_NOTE: virtualUSB is currently in beta. We welcome your feedback at support@kobiton.com_
+
+virtualUSB allows users to develop, debug, and test apps on Private and Local mobile devices hosted on the Kobiton Portal.
+
+virtualUSB is available as an option for the Enterprise plan. Please contact support@kobiton.com or your Account Executive if you are interested in adding this feature.
+
+This is the guide to install and configure virtualUSB. See xref:virtual-usb/using-virtual-usb-beta.adoc[this guide] for how to use virtualUSB.
+
+== Prerequisites
+
+=== Hardware and software requirements
+
+* End-user Mac machine with M1 or Intel processor
+
+* macOS version: Monterey 12 or above
+
+* Xcode version: Xcode 13 or above (version depends on the iOS of the devices you are testing)
+
+NOTE: You cannot run virtualUSB from a Mac that has deviceConnect or Kobiton Desktop installed.
+
+=== Set up Android Studio and adb
+
+To connect to Android devices via virtualUSB, the following software is required on your Mac:
+
+* Android Studio: if you don't already have it, go to the link:https://developer.android.com/studio[Android Studio download page] and download the suitable version for your Mac’s processor:
+
+image::version-android-studio.png[500,500,align="center"]
+
+* Android Debug Bridge (adb) from Android SDK Platform-Tools package: it should be automatically downloaded by Android Studio with the link:https://developer.android.com/studio/intro/update#sdk-manager[SDK Manager] or can be downloaded link:https://developer.android.com/studio/releases/platform-tools[here].
+
+Follow link:https://developer.android.com/studio/command-line/variables[the official Android developer guide] to set up the required environment variables for adb.
+
+On your Mac running MacOS Monterey with the default Zsh shell, add the following lines to the ~/.zshrc file (create the file if it doesn't exist) where path/to/Android/sdk is the location of SDK installation directory:
+
+    export ANDROID_HOME=path/to/Android/sdk
+    export PATH=$PATH:$ANDROID_HOME/tools:$ANDROID_HOME/tools/bin:$ANDROID_HOME/platform-tools
+
+=== Prepare debug symbols for iOS devices
+
+Fetching debug symbol files for Xcode via virtualUSB can be slow and unreliable if your network has a low bandwidth. If this is your case, you'll need to manually prepare the debug symbols, which are specific to the device’s iOS version. If needed, contact our Support team and request the debug symbols for your devices. Then, copy the debug symbols to your local Mac folder:
+
+_/Users/<your username>/Library/Developer/Xcode/iOS DeviceSupport/_
+
+=== Clean up previous virtualUSB version before installing new version
+
+If you have installed virtualUSB previously, we recommend uninstalling the old version before installing a new one.
+
+See <<Uninstall virtualUSB>>
+
+== Download virtualUSB
+
+In the Kobiton Portal, click the *Download* button on the left navigation bar, then select *virtualUSB*:
+
+
+image::download-virtualu.png[500,500, align="center""]
+
+
+This will download a file named *virtualUSB.dmg* to the local machine.
+
+== Install and launch virtualUSB
+
+NOTE: virtualUSB cannot coexist on a Mac that has deviceConnect or Kobiton Desktop. They must be on separate machines.
+
+Open the downloaded *virtualUSB.dmg* file, drag and drop the *virtualUSB icon* to the *Applications* folder for easy access:
+
+image::application.png[500,500,align="center"]
+
+Go to the *Applications* folder in Finder, and open *VirtualUSB*:
+
+image::vu-in-finder.png[500,500,align="center"]
+
+Note: When double-clicking the above file, the user will encounter the below warning:
+
+image::warning.png[500,500,align="center"]
+
+Click *Cancel*, go back to the *Applications* folder, right-click *virtualUSB*, then click *Open*:
+
+image::click-open.png[500,500,align="center"]
+
+Another warning pop-up will appear, but this time click *Open*:
+
+image::another-warning.png[500,500,align="center"]
+
+If this is the first launch, provide the admin password or Touch ID (if enabled) to install the required daemon. Click *Use Password*... or scan fingerprint to allow it:
+
+image::passcode.png[500,500,align="center"]
+
+When the virtualUSB login screen appears, sign in using your Kobiton Portal credentials:
+
+image::login-vu.png[500,500,align="center"]
+
+== Additional configurations for Kobiton Cloud customer-hosted environment
+
+Cloud customers that host their own devices must update the configurations file to point virtualUSB to their customer-hosted environment.
+
+Navigate to the folder _~/Library/Application Support/virtualUSB_, open the *config.ini* file and edit the following values by replacing <custom-domain> with the customer's domain name:
+
+* _Kobiton.ApiBaseUrl: https://api.<custom-domain>.com_
+
+* _Kobiton.ApiGrpcBaseUrl: https://proxy-api-public-grpc-server.<custom-domain>.com_
+
+Restart the virtualUSB app to apply the changes.
+
+== Additional configurations for Standalone environments
+
+Using virtualUSB with Kobiton Standalone requires configurations on the following machines:
+
+* *Mac mini hosts*: these are the Mac mini machines where deviceConnect is installed and that host the mobile devices
+
+* *End-user workstation*: The users' Mac machine where virtualUSB is installed
+
+No configuration is required on the Dell server that hosts the Kobiton Portal, referred to as on-premises server (*OP server*). However, it is important to note down the following information:
+
+* whether the server uses HTTP or HTTPS protocol
+
+* IP address or domain of the Dell server
+
+* username and password to access the server's files
+
+=== Configure Mac mini hosts for Kobiton Standalone
+On every Mac mini host using Kobiton Standalone, perform the following:
+
+Open /usr/local/deviceconnect/dc.ini and make sure these fields are listed:
+
+    GatewayPublicAddress=<Private IP|Outbound IP>
+    ExternalAirstreamTlsPort=<10161|Outbound port>
+
+Example:
+
+    GatewayPublicAddress=192.168.36.36
+    ExternalAirstreamTlsPort=10161
+
+Run the following command in terminal to apply the changes:
+
+    sudo sv restart dc-services dc-webviewer dc-watchdog
+
+=== Configure end-user workstation for Kobiton Standalone
+
+HTTPS and self-signed SSL cert
+
+This section is only applicable if the OP server is set up to use HTTPS and the SSL cert is a self-signed cert. Otherwise, skip to the next section.
+
+These steps only need to be performed once on the first time installing virtualUSB.
+
+* Download the self-sign certificate from the standalone server by using the below command (remember to turn on the VPN to the standalone server):
+
+    scp <server-username>@<server-ip>:/path/to/ssl.crt /path/to/local-dir
+
+*** _<server-username>_ is the username to access the server
+
+*** _<server-ip>_ is the IP address of the server
+
+*** _/path/to/ssl.crt_ is the location of the certificate file on the server, which is _/ml/var/kobiton-op/config/ssl.crt_ by default
+
+*** _/path/to/local-dir_ is where to save the certificate file on the end-user workstation
+
+* Enter the password used to access the standalone server. The *ssl.crt* file will be then downloaded
+
+* Open the *Keychain Access* application
+
+* Open *Finder*, go to _/path/to/local-dir_ folder, and then drag and drop the *ssl.crt* file into the *Keychain Access* application
+
+* Double-click on the newly added certificate file. In the dialog below, choose the *Always Trust* option from the dropdown list for the two fields:
+
+*** *Secure Sockets Layer (SSL)*
+
+*** *X.509 Basic Policy*
+
+image::ssl.png[500,500,align="center"]
+
+* Close the dialog and enter the admin password of the user workstation to save the changes
+
+==== Update the end-user workstation config file for Standalone
+
+This section applies to both HTTP and HTTPS protocols. Make sure virtualUSB is installed on the end-user workstation before continuing.
+
+Navigate to the folder _~/Library/Application Support/virtualUSB_ on the end-user workstation. Open the *config.ini* file and edit the value of the following parameters:
+
+    Kobiton.ApiBaseUrl=<http/https>://<OP server private domain or IP>:<REST API port>
+    Kobiton.ApiGrpcBaseUrl=<http/https>://<OP server private domain or IP>:<REST API port>
+
+* <http/https>: if the OP server uses HTTPS, then use *https*. Else, use *http*.
+
+* _<OP server private domain or IP>_: If the OP server has a private domain then use its private domain. Otherwise, use the OP server’s IP address.
+
+* _<REST API port>:_
+
+*** For _Kobiton.ApiBaseUrl_, check if there is the field rest_api_ingress_advertised_port in the file *config/app.yaml* in the OP server. If yes, use its value for the <REST API port>; else, use “3000”.
+
+*** For _Kobiton.ApiGrpcBaseUrl_, check if there is the field _grpc_ingress_gateway_public_advertised_port_ in the file *config/app.yaml* in the OP server. If yes, use its value for the _<REST API port>_; else, use “3001”.
+
+Below is an example:
+
+    Kobiton.ApiBaseUrl=https://192.168.36.24:3000
+    Kobiton.ApiGrpcBaseUrl=https://192.168.36.24:3001
+
+Once done, save the *config.ini* file and you can launch the virtualUSB application.
+
+== Uninstall virtualUSB
+
+Go to the *Applications* folder in Finder and drag the *virtualUSB* to the trash.
+
+Run the following command to clean up:
+
+    sudo dcb uninstall && sudo rm -rf /usr/local/var/dcb /usr/local/bin/dcb ~/.dcbridgerc ~/Library/Application\ Support/virtualUSB
+
+== Limitations
+
+* virtualUSB does not work on machines with the deviceConnect or Kobiton Desktop software already installed.
+
+
+
+
+
+
+
