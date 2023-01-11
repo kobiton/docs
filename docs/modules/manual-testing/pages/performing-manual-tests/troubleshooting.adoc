@@ -1,0 +1,79 @@
+= Troubleshooting
+:navtitle: Troubleshooting
+
+== Resume test upon device disruption
+
+Currently, when there is disruption during a manual test session (browser is accidentally closed, network is disconnected), you have no ways to resume your work, hence you need to redo the whole setup and start again. Introducing a 10-minute time-out when there is disruption during the manual session so that you can still go back and pick up where you left when disruption arises.
+
+=== How to use
+
+When there is disruption during your manual session, there is a 10-minute time-out. Within this period, you can launch the device and continue your session. To connect, simply go to the Device list, find your device and click on the “Connect” button:Connect.png
+
+You will then be able to continue your session.
+
+10-minute time-out is applied for these cases:
+
+- Browser is hard-closed/crashed
+
+- Network disconnect
+
+- Your PC/Laptop is shutdown
+
+=== Notes
+
+- You will be charged minutes on Public devices during this 10-minute time-out. To avoid the unexpected charge, make sure to exit your session gracefully (instead of hard closing the browser)
+
+- This 10-minute time-out will be applied for both Public and Private/local devices.
+
+- If your idle time-out setting to less than 10 minutes, the session will be kept for that amount of time.
+- This feature is only available on Latest Kobiton, not Legacy Kobiton.
+
+== iOS device - Workaround for hidden location prompt
+
+From iOS 13, Apple started hiding the Location Permission prompt from the streaming device screen interface. Because of this change, Kobiton users won't be able to see the location prompt in the Manual session interface.
+
+Note - this issue only occurs in the Kobiton Manual session's Lightning mode.
+
+=== In manual session
+
+During the Manual session (with Lightning mode on), if Kobiton detects a location permission prompt, it’ll display a workaround dialog: image-20220307-100031__1_.png
+
+On this dialog, you can:
+
+- Interact with the location permission prompt that is hidden by Apple mechanism, choosing among Allow Once/Allow While Using App/Don’t Allow.
+
+- Take a device screenshot (it will work similarly to the screenshot feature on the right-side toolbar)image-20220307-100054.png
+
+=== On Session Details
+
+The option you choose from the workaround dialog during the manual session will be treated and displayed as a “Touch” action made to the location permission prompt.
+
+== iOS device - Workaround for hidden password field
+
+From iOS 13, Apple started hiding the password field when streaming the device screen. Because of this, when testing with iOS devices on Kobiton users:
+
+- Not able to use the soft keyboard on iOS device, although users can still input data to the password field by typing on the keyboard of the computer that launches Kobiton Portal.
+- Not able to see what they inputted in a password field (the asterisks are not shown, the password field just blanks even though the user types the keyboard of the computer).
+
+We introduce the Workaround Dialog that enables users to see what they type in the iOS password field.
+
+=== In manual session
+
+During Manual sessions on iOS devices, when users tap on the password field, Kobiton will display the Workaround Dialog as below.
+
+On this dialog, you can:
+
+- Input your password and click Submit button to enter it into the iOS device password field
+
+- Click on the Eye icon image-20220307-094223.png to reveal/hide the input password
+
+- Choose whether to input as sensitive data or not - once chosen as sensitive data, the password input would not be visible to other Organization users in the Session Details video, screenshots.image-20220307-094257.png
+
+The input data will be appended to existing data in the field (if any). For example:
+
+- First, you input “Sample123” on the Workaround Dialog and Submit → Sample123 is inputted to the device password field. Then, recalling the password is "abc" instead, you then input “abc” and Submit → the value passed to the device password field will be "Sample123abc". You have to remove "Sample123" by tapping and deleting directly on the device password field.
+
+=== On the Session Details
+
+- The data you inputted via the Workaround Dialog will be displayed on Session Details as “Type” action.
+- If you enabled “Input as sensitive data”, the password will be shown as asterisks, otherwise, the password will be shown as plain normal text data.

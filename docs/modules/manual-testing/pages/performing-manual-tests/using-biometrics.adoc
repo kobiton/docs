@@ -1,0 +1,49 @@
+= Using biometrics
+:navtitle: Using biometrics
+
+== Biometrics authentication
+
+Biometrics Authentication is available for manual and automation testing as follows:
+
+* iOS devices with iOS 11 or higher and are iPhone 5s or newer
+* Android devices with Android 9 or higher. Also note, we only support Android's official API for  BiometricPrompt
+
+This feature is not available for Legacy Kobiton devices.
+
+== Prerequisites
+
+In order to test an application that requires biometrics via Kobiton, you will need to alter your app to use a custom Kobiton library:
+
+* iOS instructions for integrating the Kobiton biometrics library to an app
+* Android instructions for integrating the Kobiton biometrics library to an app (coming soon)
+
+Once your application is ready, upload it to Kobiton App Repo and install it during your testing.
+Biometrics in a manual session
+
+In a manual session, you will see a fingerprint icon in the left toolbar. This represents biometrics.
+
+When you install your altered app and it requests biometric authentication, Kobiton detects this request and prompts a dialog box for you to choose a response. You can either choose Pass or Fail.
+
+The Portal will display a message confirming your selection.
+
+Additional information about this feature:
+
+* While the device is waiting for your biometric authentication response, you won't be able to:
+** Touch/type/swipe on the device
+** Use these features on left toolbar: set timezone, location, sensitive data, image injection, multi gesture
+* While the device is waiting for your biometric authentication response, you will be able to use these features:
+** Adjust volume
+** Click to return to Home screen
+** Turn off/on screen
+** Rotate
+* If you don't choose a response within 20 seconds, a Fail response will be sent to the device.
+
+Biometrics in an automation session
+
+Use the following commands to trigger a successful or failed authentication in response to a biometric prompt:
+
+* driver.execute('mobile:biometrics-authenticate', {result: 'passed'}) passes a successful authentication to the prompt
+
+* driver.execute('mobile:biometrics-authenticate', {result: 'failed'}) passes a failed authentication to the prompt
+
+The following sample test script show how to use the command.

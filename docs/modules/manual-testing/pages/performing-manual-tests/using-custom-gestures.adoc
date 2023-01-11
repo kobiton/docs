@@ -1,0 +1,122 @@
+= Using custom gestures
+:navtitle: Using custom gestures
+
+Kobiton's custom gesture functionality mimics a device's single or multi-touch gesture using text input. These custom gestures can be used in a manual session on Public, Private, and Local devices.
+
+== Draw a custom gesture.
+
+To write and perform a custom gesture:
+
+. Launch a device on the Kobiton Portal through a manual session.
+. Select Draw a custom gesture from the toolbar.
+. In the Draw a custom gesture modal, enter the text to create the gesture using the samples. See the custom gesture convention and supported units in the following sections for more information. Select Perform. In the example below, the text creates a one-finger swipe from bottom to top.
+
+== Save a custom gesture
+
+After drawing a custom gesture, you can save it to reuse in your other manual sessions.
+
+[NOTE]
+The saved custom gesture is only visible to the user who created it. It is not shared with the org.
+
+. To save, select the star icon within the input box.
+
+. Enter a name for the custom gesture (required), then select Save.
+
+. To use a saved custom gesture, select the Saved gestures list to expand it and choose a gesture.
+
+. To delete a saved gesture, find the gesture and select the trash bin icon.
+
+== Custom gesture convention
+
+[cols="1,6"]
+|===
+|Parameter |Description
+
+|Input
+|Required. A string value.
+Draw accepts a single string parameter of a list of commands to execute by using a turtle graphics style path drawing API. Each command in the list takes a list of arguments, enclosed in parentheses and separated by commas. Coordinates are relative to the top left corner of the screen. Arguments can be explicitly named.
+|===
+
+== Supported units
+
+The values passed to Draw can have a unit of measure attached to them, the default unit of measure for coordinates is px, and the default unit of measure for duration is ms.
+
+[cols="1,6"]
+|===
+|Parameter |Description
+
+|px
+|On-screen (desktop) pixels. px is not scale-invariant, different viewer scales may affect the values.
+
+|dp
+|Device-independent pixels. These correspond to "logical" units on the device, that is, they should not change when the viewer scale changes, or when the pixel density of the device (retina vs non-retina) are changed.
+
+|%
+|Percentage. The percentage is interpreted on context: coordinates are determined by multiplying the length of the device screen by the relevant axis.
+
+|s
+|Seconds. Used for durations.
+
+|ms
+|Milliseconds. Used for durations.
+|===
+
+== Command descriptions
+
+[cols="1,6"]
+|===
+|Parameter |Description
+
+|`down(x, y, [finger])`
+|Puts a finger down at the location given by x, y. If finger is specified, the user's Nth finger, starting from 0, is put down. Depending on the device, between 1 and 11 fingers may be supported. The default finger is 0.
+
+|`move(x, y, [finger], [duration])`
+|Moves a finger to the location given by x, y. If finger had not previously called down(), nothing happens but it takes a duration to execute. If finger is specified, the Nth finger is used. The default finger is 0. If duration is specified, the finger is moved at a constant speed to the target position over the amount of time specified. The default will be a velocity computed from the speed of 2 seconds per diagonal screen distance (0%,0% to 100%,100%).
+
+|`arc(centerX, centerY, sweepAngle, [finger] [duration])`
+|Moves a finger in an arc around centerX/centerY, starting from its current position and proceeding by sweepAngle degrees around the circle. If sweepAngle is positive, the arc moves in a clockwise direction. If it's negative, the arc moves in a counter-clockwise direction. The default duration is computed from the parameter's length in the same manor as move instructions. This results in down(0%, 0%) arc(50%, 50%, 180), which travels from the upper left to the bottom right, as an arc, having the default duration of Pi. Only circular arcs are supported at this time.
+
+|`up([finger])`
+|Lifts up a finger. If finger is specified, the Nth finger is used, otherwise 0 is the default. At the end of any sequence of Draw commands, if any fingers are still down, they are implicitly lifted as if up() had been called on them, so this method is only needed for complex gestures.
+
+|`wait(duration)`
+|Waits for the given duration before proceeding.
+
+|`sync(duration)`
+|Waits for all previously issued commands to finish executing before continuing. If finger is specified, wait for commands on finger N to finish executing before continuing.
+|===
+
+== Complex Gesture Examples
+
+Now that you understand the basic supported commands, let's try some complex gestures.
+
+Examples:
+
+[cols="1,2"]
+|===
+|Goal |Method
+
+|Swipe the screen from the position 250px, 250px to 350px, 350px
+|`down(250,250) move(350,350)`
+
+|Using explicit arguments x,y
+|`down(x=50%, y=50%) move(x=30%, y=30%)`
+
+|Two-finger swipe (left to right)
+|`down(20%, 40%, 0) down(20%, 60%, 1) sync() move(80%, 40%, 0, 1s) move(80%, 60%, 1, 1s)`
+
+|Three-finger swipe (left to right)
+|`down(20%, 40%, 0) down(20%, 60%, 1) down(20%, 80%, 2) sync() move(80%, 40%, 0, 1s) move(80%, 60%, 1, 1s) move(80%, 80%, 2, 1s)`
+
+|Draw an arc
+|`down(10%, 50%) arc(50%, 50%, 180)`
+
+|Draw a line, an arch around, and then another line
+|`down(20%, 20%) move(50%,50%) arc(25%, 25%, 50, duration=1s) move(75%, 75%) up()`
+
+|Two-finger zoom gestures
+|`down(45%, 45%, 0) down(55%, 55%, 1) sync() move(15%, 15%, 0, 2s) move(75%, 75%, 1, 2s)`
+
+|Three-finger long press
+|`down(20%, 20%, 0) down(35%, 50%, 1) down(40%, 20%, 2) wait(5s)`
+|===

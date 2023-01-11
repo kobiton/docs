@@ -1,0 +1,65 @@
+= Using ADB shell commands
+:navtitle: Using ADB shell commands
+
+Android Debug Bridge (adb) is a command-tool that allows you to explore a device. It provides access to a Unix shell that you can run multiple commands on a device.
+
+In Kobiton, we allow users to run adb shell commands directly on our real devices from the manual session.
+
+To read more about adb shell commands, refer to this document from Google Developers.
+
+== Supported ADB shell commands
+
+Step 1: Launch a manual session. Click on Adb Shell icon on the toolbar.
+
+Step 2: Input the adb shell command. The command will look like dumpsys battery instead of adb shell dumpsys battery.
+
+Step 3: Press Return (or Enter).
+
+
+== Unsupported ADB shell commands
+
+=== Public devices:
+
+On public devices, Kobiton ONLY allow these 3 commands at the moment:
+
+* dumpsys display
+
+* dumpsys battery
+
+* pm list packages -3
+
+=== In-house devices:
+
+Almost all adb shell commands are allowed, except some that may harm the devices or produce the live result. Some examples:
+
+* kobiton/i
+
+* logcat/i
+
+* monkey/i
+
+* top/i
+
+* com.domobile.applock/i
+
+* com.domobile.applockwatcher/i
+
+* com.sp.protector.free/i
+
+* com.manageengine.mdm.android/i
+
+* com.manageengine.mdm.samsung.knox/i
+
+* com.manageengine.mdm.samsung/i
+
+* com.manageengine.admp/i
+
+* com.android.systemui/i
+
+* com.android.settings/i
+
+* com.android.vending/i
+
+* com.google.android.webview/i
+
+* monkey -p com.myAppPackage -v 10000 -s 100
