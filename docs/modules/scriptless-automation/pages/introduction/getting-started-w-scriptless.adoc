@@ -1,0 +1,106 @@
+= Getting Started
+:navtitle: Getting Started
+
+1. Select a device and launch a manual session on the Kobiton Portal’s.
++
+NOTE: iOS Scriptless Automation supported iPhone with iOS version 11+ and Android devices.
++
+image::launch-device.jpg[]
++
+2. Install an application from Apps Repo
++
+NOTE: The Scriptless Automation will only be triggered on list of apps that have already been uploaded into the App Repo - Apps uploaded from “Upload File” or “Install from URL” are currently not supported.
++
+image::install-app.jpg[]
+image::install-app2.jpg[]
++
+3. Perform some manual test steps (at least 1 step)
++
+Now you can do the manual execution again on Kobiton device to prepare the test case, which is going to be an input (test step) for the automated test on multiple devices.
++
+NOTE: There are some limitations regarding to test steps (please visit the section “Scriptless Automation’s Limitations” section below)
++
+
+4. Select the device bundles
++
+In the Session Overview, select *Automated Test Case*.
++
+image::click-automated-test-case.jpg[]
++
+If the test case does not support the scriptless, you will see the message as below
++
+image::unavailable for scriptless.jpg[]
++
+If your test case is valid for the scriptless automation, the Automated Test Case window appears, click *Rerun*
++
+image::rerun.jpg[]
++
+You encounter a *Rerun Configuration* window to select the device bundles for automated testing. Select the devices you want to re-run the test with.
++
+image::device-bundle.jpg[]
++
+5. See the Scriptless Automation’s result
++
+Behind the scenes, Kobiton will do preparation for the process of running a massive number of devices. The process will take around an hour before generating a list of automated sessions from Scriptless Automation.
++
+* In the Session List, click on the automated session start with the Appium icon.
++
+image::automated session.jpg[]
+* In the Session Overview window, select the Nova icon on the upper right corner
++
+image::nova.jpg[]
++
+NOTE: Sometimes you will see the error icon within the manual session’s row, which means there are some problems with the process of generating automated sessions. For this situation, you can either use the re-run icon or you can directly contact us for support at: support@kobiton.com.
+
+** In the Test Run window:
++
+By the time, in the session details of the manual session triggered Scriptless Automation, you will see there are test steps with purple, which mean those are the qualified test case for Scriptless Automation. Other steps will be considered as normal test steps within a manual session and will not be executed for Scriptless Automation.
++
+image::test run.jpg[]
+The “borderline” between qualified Scriptless Automation test steps and nonqualified is the ‘Scriptless Automation Interrupted’, the reason might be some unexpected errors occurred like device and network issues or you might have violated some current Scriptless Automation unsupported actions.
++
+Don’t worry! Your qualified test steps will be executed properly for Scriptless Automation. In case, you want to have a test case more properly, you can perform another test or you can send the *sessionID* for us to troubleshoot at: support@kobiton.com.
++
+** Execution List
++
+image::pass-scriptless-test.jpg[]
+The execution list is underneath the Test Case section.
++
+[cols="1,1"]
+|===
+
+|*Execution Status*|*Description*
+
+|Passed
+|Successful revisit session on the selected device
+
+|Failed
+|Failed revisit session on the selected devices.
+
+Failed issues may include:
+
+* Device not available
+
+* Device's problems: network, cpu, etc
+
+* The device does not support the installed app
+
+|Enqueued
+|Revisit session is queued and waiting for the execution
+
+
+|Running
+|Revisit session has been triggered
+
+|Blocked
+|The revisit session has been blocked because Scriptless Automation is unable to detect an element to continue the test on. For more information, please “Remediation” section below
+
+Note: This state of status is different with Failed, the revisit is not failed yet, but there are some issues that blocking the process of test steps during the execution.
+|===
+
+
+
+
+
+
+
