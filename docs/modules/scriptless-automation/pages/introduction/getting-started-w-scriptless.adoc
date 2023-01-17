@@ -9,31 +9,35 @@ image::launch-device.jpg[]
 +
 2. Install an application from Apps Repo
 +
-NOTE: The Scriptless Automation will only be triggered on list of apps that have already been uploaded into the App Repo - Apps uploaded from “Upload File” or “Install from URL” are currently not supported.
-+
+
 image::install-app.jpg[]
 image::install-app2.jpg[]
 +
 3. Perform some manual test steps (at least 1 step)
 +
-Now you can do the manual execution again on Kobiton device to prepare the test case, which is going to be an input (test step) for the automated test on multiple devices.
-+
-NOTE: There are some limitations regarding to test steps (please visit the section “Scriptless Automation’s Limitations” section below)
+Carry out test steps in the Manual session, make sure the actions not listed in link:https://support.kobiton.com/hc/en-us/articles/360056068371-Scriptless-Automation-Limitations-#supported-android-actions-0-0[scriptless unsupported actions].
 +
 
-4. Select the device bundles
+4. Exit the Manual session
++
+To end the session, select *Exit Session*
++
+image::exit.png[]
+5. Navigate the Automation Test case
 +
 In the Session Overview, select *Automated Test Case*.
 +
 image::click-automated-test-case.jpg[]
 +
-If the test case does not support the scriptless, you will see the message as below
+If the test case does not support the scriptless, you will see the below message
 +
 image::unavailable for scriptless.jpg[]
 +
 If your test case is valid for the scriptless automation test, the Automated Test Case window appears, click *Rerun*
 +
 image::rerun.jpg[]
++
+6. Select a device bundle
 +
 You encounter a Rerun Configuration window to select the device bundles for automated testing. Select the devices you want to re-run the test with.
 +
@@ -50,9 +54,7 @@ image::automated session.jpg[]
 +
 image::nova.jpg[]
 +
-NOTE: Sometimes you will see the error icon within the manual session’s row, which means there are some problems with the process of generating automated sessions. For this situation, you can either use the re-run icon or you can directly contact us for support at: support@kobiton.com.
-
-** In the Test Run window:
+** In the Test Run (Test Execution) window:
 +
 You will see there are test steps with purple, which mean those are the qualified test case for Scriptless Automation. Other steps will be considered as normal test steps within a manual session and will not be executed for Scriptless Automation.
 +
@@ -63,8 +65,9 @@ Don’t worry! Your qualified test steps will be executed properly for Scriptles
 +
 ** Execution List
 +
+The execution list helps you manage and keep track of automated session. You can access the Execution list underneath the Test Case section in the Test Run (Test Execution) window.
++
 image::pass-scriptless-test.jpg[]
-The execution list is underneath the Test Case section.
 +
 [cols="3,5a"]
 |===
