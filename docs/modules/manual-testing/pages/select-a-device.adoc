@@ -1,9 +1,9 @@
 = Select a device
 :navtitle: Select a device
 
-Before you start testing, you'll need to select and launch a device. If you're looking for a specific device, use xref:_device_types[device types], xref:_views[views], xref:_device_statuses[device statuses], and xref:_custom_columns[custom columns] to narrow down your search.
+Before you start testing, you'll need to select and launch a device. If you're looking for a specific device, use xref:_views[views], xref:_device_types[device types], xref:_device_statuses[device statuses], and xref:_custom_columns[custom columns] to narrow down your search.
 
-== Select and launch a device
+== Select a device
 
 . Open the https://portal.kobiton.com/login[Kobiton portal].
 . Select *Devices*.
@@ -11,45 +11,6 @@ Before you start testing, you'll need to select and launch a device. If you're l
 . Select a xref:_views[view].
 . Sort and customize your view.
 . Select *Launch* and begin testing.
-
-[#_device_types]
-== Device types
-
-// Related video: https://training.kobiton.com/unit/view/id:2346
-// Related reading: https://info.kobiton.com/hubfs/Datasheets/Kobiton%20Deployment%20and%20DLM%20Datasheet%20v1.pdf?_ga=2.220921564.555976490.1652193275-678489127.1647533120&_gac=1.221304042.1649942696.Cj0KCQjwjN-SBhCkARIsACsrBz4TziWdaniKxlIc0kU17CBe7jwzjpL69E2iEKyy1iSSaf5KS5qMaaoaApXLEALw_wcB
-
-* *Public devices:* This.
-* *Private & local devices:* This.
-
-.Device location
-[cols="1,1"]
-|===
-|Public |Private & local
-
-|This
-|This
-
-|This
-|This
-
-|This
-|This
-|===
-
-.Network location
-[cols="1,1"]
-|===
-|Cloud |Stand-alone
-
-|This
-|This
-
-|This
-|This
-
-|This
-|This
-|===
 
 [#_views]
 == Views
@@ -61,6 +22,18 @@ Before you start testing, you'll need to select and launch a device. If you're l
 
 |List view
 |A detailed view displaying information like UDID, resolution, xref:_device_statuses[device status], and more. Select *Edit Column* to customize your view and add up to nine xref:_custom_columns[custom columns].
+|===
+
+[#_device_types]
+== Device types
+
+[cols="1h,4",autowidth"]
+|===
+|Public devices
+|Devices shared between all Kobiton customers. Perfect for edge case testing or for broad market coverage testing.
+
+|Private & local devices
+|Devices reserved for your team. Great for those who need unrestricted access or those want to leverage xref:scriptless-automation:index.adoc[scriptless automation].
 |===
 
 [#_device_statuses]

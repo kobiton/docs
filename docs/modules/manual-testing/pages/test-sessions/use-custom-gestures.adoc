@@ -1,32 +1,29 @@
-= Create custom gestures
-:navtitle: Create custom gestures
+= Use custom gestures
+:navtitle: Use custom gestures
 
-Kobiton's custom gesture functionality mimics a device's single or multi-touch gesture using text input. These custom gestures can be used in a manual session on Public, Private, and Local devices.
+Kobiton's custom gesture functionality mimics a device's single or multi-touch gesture using text input.
 
-== Draw a custom gesture.
+[#_use_a_custom_gesture]
+== Use a custom gesture
 
-To write and perform a custom gesture:
+. Open the https://portal.kobiton.com/login[Kobiton portal].
+. xref:select-a-device.adoc[Launch a device].
+. Select *Draw a custom gesture* on the session controls.
+. Use the xref:_custom_gesture_syntax[custom gesture syntax] to draw a new gesture or choose one of your xref:_save_a_custom_gesture[saved gestures] from the *Saved gestures list*.
+. Select *Perform*.
 
-. Launch a device on the Kobiton Portal through a manual session.
-. Select Draw a custom gesture from the toolbar.
-. In the Draw a custom gesture modal, enter the text to create the gesture using the samples. See the custom gesture convention and supported units in the following sections for more information. Select Perform. In the example below, the text creates a one-finger swipe from bottom to top.
-
+[#_save_a_custom_gesture]
 == Save a custom gesture
 
-After drawing a custom gesture, you can save it to reuse in your other manual sessions.
-
 [NOTE]
-The saved custom gesture is only visible to the user who created it. It is not shared with the org.
+A saved gesture is only available to the user who created it.
 
-. To save, select the star icon within the input box.
+. After you xref:_use_a_custom_gesture[draw a gesture], select the *star icon*.
+. Enter a name for your custom gesture, then select *Save*.
+. To delete a gesture, select the *trash icon* next to its name.
 
-. Enter a name for the custom gesture (required), then select Save.
-
-. To use a saved custom gesture, select the Saved gestures list to expand it and choose a gesture.
-
-. To delete a saved gesture, find the gesture and select the trash bin icon.
-
-== Custom gesture convention
+[#_custom_gesture_syntax]
+== Custom gesture syntax
 
 [cols="1,6"]
 |===
@@ -86,11 +83,7 @@ The values passed to Draw can have a unit of measure attached to them, the defau
 |Waits for all previously issued commands to finish executing before continuing. If finger is specified, wait for commands on finger N to finish executing before continuing.
 |===
 
-== Complex Gesture Examples
-
-Now that you understand the basic supported commands, let's try some complex gestures.
-
-Examples:
+== Custom gesture examples
 
 [cols="1,2"]
 |===
