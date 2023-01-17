@@ -1,0 +1,81 @@
+= Running Scriptless automation with Kobiton Legacy
+:navtitle: Running Scriptless automation with Kobiton Legacy
+
+1. Launch a Manual session as the baseline
++
+Select a device and launch a manual session on the Kobiton Portal’s
++
+image:select-devices-legacy.jpg[]
+
+2. Install an application from Apps Repo
+
+3. Perform some manual test steps (at least 1 step)
++
+Now you can do the manual execution again on Kobiton device to prepare the test case, which is going to be an input (test step) for the automated test on multiple devices.
+
+4. Select the device bundles
++
+You are all set! After exiting this manual session, you will encounter with the pop-up for the select a device bundles for the automated testing. Your manual test case above will be used to re-run on these selected set of devices.
++
+image::yes-pop-up.jpg[]
++
+image::select-device-bundle.jpg[]
++
+NOTE: Note:Currently, Scriptless Automation could be triggered on any Kobiton Android devices but we recommend to run with the option “Top 10 Global” for the best stability. In case you don’t receive the pop-up for selecting the device bundles, you might have violated some limitations of Scriptless Automation (unsupported test actions, some corner cases that Scriptless Automation does not supported yet, etc.). We are sorry for this inconvenience, you will need to perform a manual session again.
++
+5. See the Scriptless Automation's result
++
+In the Session List, click  on an automated session start with the Appium icon.
++
+image::automated session.jpg[]
++
+* In the Session Overview window, select the Nova icon on the upper right corner.
++
+image::nova.jpg[]
++
+** In the Test Run (Test Execution) window:
++
+You will see there are test steps with purple, which mean those are the qualified test case for Scriptless Automation. Other steps will be considered as normal test steps within a manual session and will not be executed for Scriptless Automation.
++
+image::test run.jpg[]
++
+** Execution List
++
+The execution list helps you manage and keep track of automated session. You can access the Execution list underneath the Test Case section in the Test Run (Test Execution) window.
++
+image::pass-scriptless-test.jpg[]
++
+[cols="2,5a"]
+|===
+
+|*Execution Status*|*Description*
+
+|Passed
+|Successful revisit session on the selected device
+
+|Failed
+|Failed revisit session on the selected devices.
+
+Failed issues may include:
+
+* Device not available
+
+* Device’s problems: network, cpu, etc
+
+* The device does not support the installed app
+
+|Enqueued
+|Revisit session is queued and waiting for the execution.
+
+|Running
+|Revisit session has been triggered
+
+|Blocked
+|The revisit session has been blocked because Scriptless Automation is unable to detect an element to continue the test on. For more information, please “Remediation” section below
+
+Note: This state of status is different with Failed, the revisit is not failed yet, but there are some issues that blocking the process of test steps during the execution.
+
+
+
+
+
