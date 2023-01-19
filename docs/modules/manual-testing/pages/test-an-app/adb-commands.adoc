@@ -1,14 +1,14 @@
-= Run adb commands
-:navtitle: Run adb commands
+= adb commands
+:navtitle: adb commands
 
 Learn how to run https://developer.android.com/studio/command-line/adb[Android Debug Bridge] (`adb`) commands during a test session. The device type you use will determine xref:_supported_and_unsupported_commands[which commands you have access to].
 
 == Run adb commands
 
 . Open the https://portal.kobiton.com/login[Kobiton portal].
-. xref:select-a-device.adoc[Launch a device].
-. Select `adb` on the session controls.
-. Enter an `adb` command.Use our list of xref:_supported_and_unsupported_commands[supported and unsupported commands] for guidance.
+. xref:start-a-session.adoc[Launch a device].
+. Select `adb`.
+. Enter an `adb` command using our list of xref:_supported_and_unsupported_commands[supported and unsupported commands].
 [NOTE]
 The command will be styled like dumpsys battery rather than adb shell dumpsys battery.
 
@@ -17,7 +17,7 @@ The command will be styled like dumpsys battery rather than adb shell dumpsys ba
 [#_supported_and_unsupported_commands]
 == Supported and unsupported commands
 
-Supported and unsupported commands vary on different xref:select-a-device.adoc#_device_types[device types].
+Supported and unsupported commands vary on different xref:start-a-session.adoc#_device_types[device types].
 
 [cols="1h,4",autowidth"]
 |===

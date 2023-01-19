@@ -1,0 +1,81 @@
+= VoiceOver
+:navtitle: VoiceOver
+
+VoiceOver is a device screen reader that provides audible descriptions of what is on a device's screen - from battery level, to the name of the person calling, to which app your "finger" is on.
+
+VoiceOver assists with testing your app for accessibility functionality through a bluetooth connection between the device and the Kobiton Mac mini.
+
+If your system is not setup for VoiceOver gestures on iOS devices as described below, please open a ticket.
+VoiceOver Prerequisites
+
+* iOS 12.0 and later
+* Device must be physically connected to the host machine (Mac mini)
+* Kobiton GEM or Orion Audio Board Card
+
+== Bluetooth pairing for on-premises iOS devices
+
+* On the Mac mini, open System Preferences, enable Bluetooth toggle button. Leave the Bluetooth window open as you'll need it for pairing discoverability.
+* On the Kobiton Portal, launch a session with an iOS device.
+* On the iOS device, navigate to Settings > Bluetooth and enable bluetooth.
+* On the Bluetooth screen, under MY DEVICES, select the Mac mini the device is connected to.
+* accesibility-my-device.png
+* On the Mac mini, click Pair on the prompt confirming to pair the device to the virtual keyboard.
+
+If the device is not pairing, try the following to establish a connection:
+
+* Instead of initiating the pairing from the device, initiate the pairing from the Mac mini.
+
+* Disconnect and disable Bluetooth on other devices.
+
+* If the device had successfully paired to the Mac mini, but won't reconnect, click the information icon, select Forget This Device, and re-pair the device.
+
+== VoiceOver setup
+
+To set up voiceOver on your iOS device:
+
+* Navigate to Settings > General > Accessibility > VoiceOver and toggle to On.
+
+[NOTE]
+VoiceOver overrides common gestures used to navigate a device. When VoiceOver is enabled, you must use VoiceOver gestures on the device. For a list of common VoiceOver gestures, click here.
+
+== VoiceOver on Kobiton devices
+
+* On the physical device, navigate to Settings > Bluetooth; enable Bluetooth.
+* On the physical device, navigate to Settings > Accessibility > VoiceOver; enable VoiceOver.
+* Scroll down, click Audio and enable Send to HDMI.
+* audio-HDMI-toggle.png
+* Back on the Kobiton portal, enable the VoiceOver icon.
+* VoiceOver-on-the-portal.png
+* Start testing.
+
+Supported Commands
+VoiceOver gesture 	On-screen equivalent
+Activate selected item 	double-tap
+Double-tap selected item 	triple-tap
+Select next item 	swipe right
+Select previous item 	swipe left
+perform or move to the next selected option 	swipe up or down
+Pause/resume speech 	two-finger tap
+Special action 	two-finger double tap
+Open item chooser 	two-finger triple tap
+Read all content from the first object in selected area 	two-finger swipe up
+Read all content from selected item 	two-finger swipe down
+Go back, cancel, close pop-up 	two-finger scrub back-and-forth
+Select / deselect 	two-finger pinch out/in
+Speak current page number and position 	three-finger tap
+Toggle speech on/off 	three-finger double-tap
+Toggle screen curtain on/off 	three-finger triple-tap
+Move to next horizontal screen page 	three-finger swipe left
+Move to previous horizontal screen page 	three-finger swipe right
+Move/scroll down a page 	three-finger swipe up
+Move/scroll up a page 	three-finger swipe down
+Switch to next/previous app 	four-finger swipe left/right
+Open or close multitask pane 	four-finger swipe up/down
+Go to home screen 	four-finger pinch in
+
+== Known Limitations
+
+* VoiceOver gestures are not available on Android devices.
+* VoiceOver is only available on iOS 12.0 and later as the devices must have the the Send to HDMI option.
+* A macOS GEM connects to a limited number of Bluetooth devices. In practice, VoiceOver works best when only two to three devices are connected at a time.
+* Currently, you cannot perform mixed actions between Rotor Commands. We can only perform one action at a time.

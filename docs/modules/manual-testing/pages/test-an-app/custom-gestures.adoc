@@ -1,49 +1,45 @@
-= Use custom gestures
-:navtitle: Use custom gestures
+= Custom gestures
+:navtitle: Custom gestures
 
-Kobiton's custom gesture functionality mimics a device's single or multi-touch gesture using text input.
+Learn how to create and use custom gestures during a test session. Use our xref:_guidelines[guidelines] to help build your first gesture.
 
-[#_use_a_custom_gesture]
-== Use a custom gesture
+[#_create_a_custom_gesture]
+== Create a custom gesture
 
 . Open the https://portal.kobiton.com/login[Kobiton portal].
-. xref:select-a-device.adoc[Launch a device].
-. Select *Draw a custom gesture* on the session controls.
-. Use the xref:_custom_gesture_syntax[custom gesture syntax] to draw a new gesture or choose one of your xref:_save_a_custom_gesture[saved gestures] from the *Saved gestures list*.
+. xref:start-a-session.adoc[Launch a device].
+. Select *Draw a custom gesture*.
+. Choose a saved gesture using the *Saved gestures list*, or create a custom gesture using our xref:_guidelines[guidelines].
 . Select *Perform*.
 
 [#_save_a_custom_gesture]
 == Save a custom gesture
 
-[NOTE]
-A saved gesture is only available to the user who created it.
+[IMPORTANT]
+Only the user who creates a gesture can use it.
 
-. After you xref:_use_a_custom_gesture[draw a gesture], select the *star icon*.
-. Enter a name for your custom gesture, then select *Save*.
+. After you xref:_create_a_custom_gesture[create a gesture], select *Save Custom Gesture*.
+. Enter a name for your gesture.
+. Select *Save*.
 . To delete a gesture, select the *trash icon* next to its name.
 
-[#_custom_gesture_syntax]
-== Custom gesture syntax
+[#_guidelines]
+== Guidelines
 
-[cols="1,6"]
-|===
-|Parameter |Description
+Use xref:_units[units] and xref:_functions[functions] to create custom gestures. To get started, check out our xref:_examples[examples].
 
-|Input
-|Required. A string value.
-Draw accepts a single string parameter of a list of commands to execute by using a turtle graphics style path drawing API. Each command in the list takes a list of arguments, enclosed in parentheses and separated by commas. Coordinates are relative to the top left corner of the screen. Arguments can be explicitly named.
+[#_units]
+=== Units
+[cols="1h,3"]
 |===
 
-== Supported units
-
-The values passed to Draw can have a unit of measure attached to them, the default unit of measure for coordinates is px, and the default unit of measure for duration is ms.
-
-[cols="1,6"]
-|===
-|Parameter |Description
-
-|px
+|px +
+(default for coordinates)
 |On-screen (desktop) pixels. px is not scale-invariant, different viewer scales may affect the values.
+
+|ms +
+(default for time)
+| Milliseconds. Used for durations.
 
 |dp
 |Device-independent pixels. These correspond to "logical" units on the device, that is, they should not change when the viewer scale changes, or when the pixel density of the device (retina vs non-retina) are changed.
@@ -53,16 +49,13 @@ The values passed to Draw can have a unit of measure attached to them, the defau
 
 |s
 |Seconds. Used for durations.
-
-|ms
-|Milliseconds. Used for durations.
 |===
 
-== Command descriptions
+[#_functions]
+=== Functions
 
-[cols="1,6"]
+[cols="1h,6"]
 |===
-|Parameter |Description
 
 |`down(x, y, [finger])`
 |Puts a finger down at the location given by x, y. If finger is specified, the user's Nth finger, starting from 0, is put down. Depending on the device, between 1 and 11 fingers may be supported. The default finger is 0.
@@ -83,11 +76,11 @@ The values passed to Draw can have a unit of measure attached to them, the defau
 |Waits for all previously issued commands to finish executing before continuing. If finger is specified, wait for commands on finger N to finish executing before continuing.
 |===
 
-== Custom gesture examples
+[#_examples]
+=== Examples
 
-[cols="1,2"]
+[cols="1h,2"]
 |===
-|Goal |Method
 
 |Swipe the screen from the position 250px, 250px to 350px, 350px
 |`down(250,250) move(350,350)`
