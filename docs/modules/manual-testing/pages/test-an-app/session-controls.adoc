@@ -3,7 +3,15 @@
 
 Learn how to use session controls to interact with your device during a test session.
 
-== Session controls
+== Use session controls
+
+. Open the https://portal.kobiton.com/login[Kobiton portal].
+. xref:start-a-session.adoc[Launch a device].
+. xref:install-an-app.adoc[Install an app].
+. Select and use a xref:_list_of_session_controls[session control].
+
+[#_list_of_session_controls]
+== List of session controls
 
 [cols="1h,3"]
 |===
@@ -28,6 +36,9 @@ Learn how to use session controls to interact with your device during a test ses
 |Biometric authentication
 |Pass or fail authentication requests detected during your test session. Learn more about biometric authentication xref:test-an-app/biometric-authentication.adoc[here].
 
+|Adb Shell (Android only)
+|Enter xref:test-an-app/adb-commands.adoc#_supported_and_unsupported_commands[supported commands] into the `adb` shell. Learn more about `adb` commands xref:test-an-app/adb-commands.adoc[here].
+
 |Draw custom gesture
 |Select a saved gesture or create a new one, then select *Preform*. Learn more about custom gestures xref:test-an-app/custom-gestures.adoc[here].
 
@@ -45,4 +56,10 @@ Learn how to use session controls to interact with your device during a test ses
 
 |Home Button
 |*Single* or *double-click* to interact with the device home button.
+
+|Recent apps (Android only)
+|Simulate the *find all open apps* gesture https://support.google.com/android/answer/9079644?[supported on Android].
+
+|Back (Android only)
+|Simulate the *go back* gesture https://support.google.com/android/answer/9079644?[supported on Android].
 |===
