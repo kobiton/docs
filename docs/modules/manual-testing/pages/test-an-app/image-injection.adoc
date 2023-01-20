@@ -1,32 +1,33 @@
 = Image injection
 :navtitle: Image injection
 
-Users can inject images to Kobiton mobile devices to simulate mobile device camera capturing. When the simulated image is injected, the device will interpret the image as captured by the device camera. This is useful for testing applications that feature reading barcodes or scanning documents without a physical mobile device in hand.
+Learn how to simulate your device's camera using image injection.
 
-The maximum image file size is 5MB and the image format can be JPG, JPEG, or PNG.
+== Use image injection
 
-If image injection is not enabled on your system, please contact us for more information.
+. Open the https://portal.kobiton.com/login[Kobiton portal].
+. xref:start-a-session.adoc[Launch a device].
+. xref:install-an-app.adoc[Install an app] and turn on *Instrument application for camera injection*.
+. When the installation finishes, your app will automatically launch.
+. Open the camera in your app.
+. Select *Image Injection*
+. Select *Set Simulated Image*.
+. Upload one or more `.jpg`, `.jpeg`, or `.png` files with a maximum size of 5MB to create an image library.
+. Choose an image in your library and select *Inject*.
 
-== To test a simulated image:
+== Image injection controls
 
-* On the Kobiton portal, launch an iOS or Android device.
-* Click Install Apps to install the application to test.
-* On the Install Apps modal, enable the toggle Instrument application for camera injection. Then click Install to install the app to upload on the device.
+[cols="1h,3"]
+|===
+|Set simulated image
+|Upload one or more `.jpg`, `.jpeg`, or `.png` files with a maximum size of 5MB to create an image library.
 
-* Launch the instrumented app. Navigate to the Image Injection on the left-side toolbar menu and import your images. Click Inject to use that image for the camera. You can import multiple images at a time.
-* To change your current injected image, click Reset Camera & choose another image, then click Inject to use it for the camera. Your Camera will use your injected image until you click Reset Camera to release it. ReplaceInjectionStep.gif
-* To delete images in your gallery, you can delete them one by one by selecting the image and then clicking Clear Image. To delete all images, simply click Clear Image.
-* When going to Session Details, we will have a popup along with every step with an injected image.
-* This pop-up also indicates the life cycle of an injected image in a session. The camera will keep using the injected image until there’s a Reset Camera step. Life-Cycle.gif
+|Clear image
+|Choose an image and select *clear image* to remove it from your image library.
 
-== Limitations for Image Injection on Android:
+|Reset camera
+|After injecting an image, use *reset camera* to un-inject it.
 
-* Images cannot be injected into some Android applications due to the immense number of required libraries, we currently support the most common libraries. If you encounter issues, please contact our Support team through support@kobiton.com.
-
-* App instrumentation is not working on a few Android applications, especially those applications that are obfuscated with DexGuard. Make sure to upload and use a non-obfuscated app.
-
-* When using the instrumenting app with Android devices on Latest Kobiton, the injected image is rotated.
-
-* The injected image is zoomed a little when in use, compared to the actual size.
-
-* We will add the image’s size & name for the Injected Image Pop-up in coming versions.
+|Inject
+|Send an image to the current app to simulate your device's camera.
+|===
