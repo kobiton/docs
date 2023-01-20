@@ -2,7 +2,7 @@
 :navtitle: Session information
 :table-caption!:
 
-Learn how to use session information like the xref:_device_log[device log], xref:_inspector[inspector], and session xref:_metrics[metrics] to gain insights into your app's performance.
+Learn how to use session information like the xref:_device_log[device log], xref:_inspector[inspector], and session xref:_metrics[metrics] to gain insights into your app.
 
 == Use session information
 
@@ -10,12 +10,10 @@ Learn how to use session information like the xref:_device_log[device log], xref
 . xref:start-a-session.adoc[Launch a device].
 . xref:install-an-app.adoc[Install an app].
 . Select xref:_device_log[Device Log], xref:_inspector[Inspector], or xref:_metrics[Metrics].
-. Gain insights into your app's performance.
+. Gain insights into your app.
 
 [#_device_log]
 == Device log
-
-*Device logs* contain information about your app during a test session.
 
 [cols="1h,3"]
 |===
@@ -23,86 +21,79 @@ Learn how to use session information like the xref:_device_log[device log], xref
 |Erase the current stream of logs.
 
 |Pause/Play
-|Stop or continue the current stream of logs.
+|Pause or play the current stream of logs.
 
 |Download logs
 |Download the current stream of logs as a `.log` file.
 
 |Dropdown
-|Display logs with a *Notice*, *Warning*, or *Error*.
+|Only display logs with a *Notice*, *Warning*, or *Error* message.
 
 |Search bar
-|Filter your logs by any criteria using the *search bar*.
+|Only display logs matching your search.
 |===
 
 
 [#_inspector]
 == Inspector
-// Start around 3:30
-// https://training.kobiton.com/unit/view/id:2211
 
 [cols="1h,3"]
 |===
 |Refresh inventory
-|This
+|Reset the *Hierarchy*, removing all filters and searchers.
 
 |Inspect elements
-|This
+|Hover over an element on the device screen and highlight its XML data.
 
 |Download inventory
-|This
+|Download the current inventory as an `.xml` file.
 
 |Dropdown
-|This
+|Choose a specific WebView to display. The default WebView is `NATIVE_APP`.
 
 |Search bar
-|This
-
-|Hierarchy
-|This
+|Only display elements in the *Hierarchy* that match your search.
 
 |Attributes
-|This
+|Select an element and display a list of related attributes, like `type`, `name`, `xpath`, and more.
 |===
 
 [#_metrics]
 == Metrics
 
-*Metrics* this. Current, average, min, and max.
-
 .Memory
 [cols="1h,3"]
 |===
 |Used
-|This
+|The amount of memory the device is using.
 |===
 
 .CPU
 [cols="1h,3"]
 |===
 |Load
-|This
+|The amount of work the device's CPU is performing.
 |===
 
 .Network
 [cols="1h,3"]
 |===
 |Bytes in
-|This
+|The amount of bytes the device is receiving over the network.
 
 |Bytes out
-|This
+|The amount of bytes the device is sending over the network.
 
 |Bytes in per second
-|This
+|The amount of bytes the device is receiving over the network per second.
 
 |Bytes out per second
-|This
+|The amount of bytes the device is sending over the network per second.
 |===
 
 .Battery drain
 [cols="1h,3"]
 |===
 |Used
-|This
+|The speed at which the device's battery is draining.
 |===
