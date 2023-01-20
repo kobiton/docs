@@ -16,7 +16,7 @@ Learn how to create and use custom gestures during a test session. Use our xref:
 == Save a custom gesture
 
 [IMPORTANT]
-Only the user who created the custom gesture can use it.
+Only the user who created the gesture can use it.
 
 . After you xref:_create_a_custom_gesture[create a gesture], select *Save Custom Gesture*.
 . Enter a name for your gesture.
@@ -26,29 +26,26 @@ Only the user who created the custom gesture can use it.
 [#_guidelines]
 == Guidelines
 
-Use xref:_units[units] and xref:_functions[functions] to create custom gestures. To get started, check out our xref:_examples[examples].
+Use xref:_units[units] and xref:_functions[functions] to create custom gestures. Check out some xref:_examples[examples] to get started.
 
 [#_units]
 === Units
 [cols="1h,3"]
 |===
+|`px` (default for coordinates)
+|Refers to the pixels used for desktop-screen coordinates. `px` is not scale-invariant--different viewer scales may affect the values.
 
-|px +
-(default for coordinates)
-|On-screen (desktop) pixels. px is not scale-invariant, different viewer scales may affect the values.
+|`dp`
+|Refers to device-independent pixels. Unlike `px`, the `dp` will not change if the viewer scale changes or the pixel density of the device (retina vs non-retina) changes.
 
-|ms +
-(default for time)
-| Milliseconds. Used for durations.
+|`%`
+|Refers to the percentage used for desktop-screen coordinates by multiplying the length of the device screen by the relevant axis.
 
-|dp
-|Device-independent pixels. These correspond to "logical" units on the device, that is, they should not change when the viewer scale changes, or when the pixel density of the device (retina vs non-retina) are changed.
+|`ms` (default for duration)
+|Refers to milliseconds of duration.
 
-|%
-|Percentage. The percentage is interpreted on context: coordinates are determined by multiplying the length of the device screen by the relevant axis.
-
-|s
-|Seconds. Used for durations.
+|`s`
+|Refers to seconds of duration.
 |===
 
 [#_functions]
@@ -58,7 +55,7 @@ Use xref:_units[units] and xref:_functions[functions] to create custom gestures.
 |===
 
 |`down(x, y, [finger])`
-|Puts a finger down at the location given by x, y. If finger is specified, the user's Nth finger, starting from 0, is put down. Depending on the device, between 1 and 11 fingers may be supported. The default finger is 0.
+|Puts a finger down at the location given by x, y. If a finger is specified, the user's Nth finger, starting from 0, is put down. Depending on the device, between 1 and 11 fingers may be supported. The default finger is 0.
 
 |`move(x, y, [finger], [duration])`
 |Moves a finger to the location given by x, y. If finger had not previously called down(), nothing happens but it takes a duration to execute. If finger is specified, the Nth finger is used. The default finger is 0. If duration is specified, the finger is moved at a constant speed to the target position over the amount of time specified. The default will be a velocity computed from the speed of 2 seconds per diagonal screen distance (0%,0% to 100%,100%).
