@@ -1,7 +1,7 @@
 = Session explorer
 :navtitle: Session explorer
 
-Learn how to use the session explorer to export appium scripts, review device logs, compare UI design, and more.
+Learn how to use the session explorer to export appium scripts, review device logs, compare UI design, and xref:_session_explorer_controls[more].
 
 == Launch the session explorer
 
@@ -9,35 +9,143 @@ Learn how to use the session explorer to export appium scripts, review device lo
 . Select *Sessions*.
 . Use the *search bar*, *date ranges*, and *filters* to find and select a session.
 . Select *Explorer*.
-. Use the xref:_session_explorer_controls[session explorer controls] to gain insights.
+. Select the *drop-down* to use different  xref:_session_explorer_controls[session explorer controls].
 
 [#_session_explorer_controls]
 == Session explorer controls
 
 === Review system metrics
 
-This.
+[cols="1h,4",autowidth"]
+|===
+|CPU
+|The amount of work the device's CPU is performing displayed as a graph.
+
+|Memory
+|The amount of work the device's CPU is performing displayed as a graph.
+
+|Network
+|The amount of bytes the device is sending and receiving over the network displayed as a graph.
+
+|Battery drain
+|The speed at which the device's battery is draining displayed as a graph.
+|===
+
+=== Select element
+
+[cols="1h,4",autowidth"]
+|===
+|This
+|That
+
+|This
+|That
+|===
+
+=== View crash logs
+
+[cols="1h,4",autowidth"]
+|===
+|Search bar
+|Only display crash logs matching your search.
+
+|Copy logs
+|Copy the crash logs to your clip board.
+|===
 
 === Appium inspector
 
-This.
+[cols="1h,3"]
+|===
+|Refresh inventory
+|Reset the *Hierarchy*, removing all filters and searchers.
 
-Export appium scripts.
+|Inspect elements
+|Hover over an element on the device screen and highlight its XML data.
+
+|Download inventory
+|Download the current inventory as an `.xml` file.
+
+|Dropdown
+|Choose a specific WebView to display. The default WebView is `NATIVE_APP`.
+
+|Search bar
+|Only display elements in the *Hierarchy* that match your search.
+
+|Attributes
+|Select an element and display a list of related attributes, like `type`, `name`, `xpath`, and more.
+|===
+
 
 === Review device logs
 
-This.
+[cols="1h,4",autowidth"]
+|===
+|Dropdown
+|Only display logs with a *Notice*, *Warning*, or *Error* message.
+
+|Search bar
+|Only display logs matching your search.
+
+|Copy logs
+|Copy the full session log to your clip board.
+|===
 
 === Compare UI design
 
-This.
+[cols="1h,4",autowidth"]
+|===
+|Session drop-down
+|That
+
+|This
+|That
+
+|Page drop-down
+|That
+
+|Resolutions drop-down
+|That
+
+|Search bar
+|That
+
+|Upload images
+|That
+|===
 
 [#_session_timeline]
 === Session timeline
 
-This.
+[cols="1h,4",autowidth"]
+|===
+|Test steps
+|Located at the bottom of the session timeline. Select a *test step* to skip to that action.
+
+|Play/Pause
+|Play or pause the test session recording.
+
+|Previous/Next
+|Skip to the previous or next test step.
+
+|Zoom in/out
+|Zoom in or out of the session timeline.
+
+|Copy link
+|Instead of manually writing reproduction steps, copy and send a link to that specific test step.
+
+|Copy command id
+|A unique id associated with that specific test step.
+|===
 
 [#_screenshots_panel]
 === Screenshots panel
 
-This.
+[cols="1h,4",autowidth"]
+|===
+|Red dot
+|A visual indicator of the current action being preformed. The red dot is not visible on downloaded screenshots.
+
+|Download
+|Download a screenshot to your local machine. Learn more about screenshots xref:test-an-app/screenshots.adoc[here].
+|===
