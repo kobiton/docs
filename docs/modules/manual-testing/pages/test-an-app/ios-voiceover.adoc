@@ -3,6 +3,14 @@
 
 Learn how to use VoiceOver to test your app's accessibility features.
 
+My understanding is that both the bluetooth AND the HDMI are required for VoiceOver setup.
+
+Bluetooth is connecting the device to a Mac mini as if the mini is a Bluetooth keyboard. The HDMI part will make the audio output available for streaming.
+
+We have a new limitation to add that the functionality is
+
+a prereq to make sure that the Kobiton Mac mini software is installed and running before trying to pair devices. If the software isn't running, then the Mac won't be "advertising" any Bluetooth services, which might explain why devices can't connect to anything.
+
 [IMPORTANT]
 This feature is only available through iOS and MacOS.
 
@@ -10,6 +18,17 @@ This feature is only available through iOS and MacOS.
 * iOS 12.0 and later
 * Device must be physically connected to the host machine (Mac mini)
 * Kobiton GEM or Orion Audio Board Card
+* currently not available for iOS 16+ due to changes from Apple. We are actively working to support
+
+. Open the [desktop version] of Kobiton on your macOS device.
+. [Start a test session].
+. On your macOS device, turn on bluetooth.
+. Open your iOS device and turn on bluetooth.
+. Pair devices.
+. Turn on VoiceOver on your iOS device.
+. Turn on *Send to HDMI*.
+. `Plug in iOS device via HDMI?`
+. In your test session, select *Preform VoiceOver*.
 
 == Set up VoiceOver
 
