@@ -1,7 +1,7 @@
 = Custom gestures
 :navtitle: Custom gestures
 
-Learn how to create and use custom gestures during a test session. Use our xref:_guidelines[guidelines] to help build your first gesture.
+Learn how to create and use custom gestures during a test session. Use our xref:_guidelines[guidelines] to build your first gesture.
 
 [#_create_a_custom_gesture]
 == Create a custom gesture
@@ -26,7 +26,7 @@ Only the user who created the gesture can use it.
 [#_guidelines]
 == Guidelines
 
-Use xref:_units[units] and xref:_functions[functions] to create custom gestures. Check out some xref:_examples[examples] to get started.
+Use xref:_units[units] and xref:_functions[functions] to create custom gestures. Check out some xref:_examples[examples] for inspiration.
 
 [#_units]
 === Units
@@ -55,22 +55,22 @@ Use xref:_units[units] and xref:_functions[functions] to create custom gestures.
 |===
 
 |`down(x, y, [finger])`
-|Puts a finger down at the location given by x, y. If a finger is specified, the user's Nth finger, starting from 0, is put down. Depending on the device, between 1 and 11 fingers may be supported. The default finger is 0.
+|Puts a finger down at the location given by `x`, `y`. If a finger is specified, the user's Nth finger, starting from `0`, is put down. Depending on the device, between 1 and 11 fingers may be supported. The default finger is `0`.
 
 |`move(x, y, [finger], [duration])`
-|Moves a finger to the location given by x, y. If finger had not previously called down(), nothing happens but it takes a duration to execute. If finger is specified, the Nth finger is used. The default finger is 0. If duration is specified, the finger is moved at a constant speed to the target position over the amount of time specified. The default will be a velocity computed from the speed of 2 seconds per diagonal screen distance (0%,0% to 100%,100%).
+|Moves a finger to the location given by `x`, `y`. If `finger` had not previously called `down()`, nothing happens but it takes a duration to execute. If `finger` is specified, the Nth finger is used. The default finger is `0`. If `duration` is specified, the finger is moved at a constant speed to the target position over the amount of time specified. The default will be a velocity computed from the speed of 2 seconds per diagonal screen distance (`0%,0%` to `100%,100%`).
 
 |`arc(centerX, centerY, sweepAngle, [finger] [duration])`
-|Moves a finger in an arc around centerX/centerY, starting from its current position and proceeding by sweepAngle degrees around the circle. If sweepAngle is positive, the arc moves in a clockwise direction. If it's negative, the arc moves in a counter-clockwise direction. The default duration is computed from the parameter's length in the same manor as move instructions. This results in down(0%, 0%) arc(50%, 50%, 180), which travels from the upper left to the bottom right, as an arc, having the default duration of Pi. Only circular arcs are supported at this time.
+|Moves a finger in an arc around `centerX` and `centerY`, starting from its current position and proceeding by `sweepAngle` degrees around the circle. If `sweepAngle` is positive, the arc moves in a clockwise direction. If it's negative, the arc moves in a counter-clockwise direction. If `duration` is specified, the finger is moved at a constant speed to the target position over the amount of time specified. This results in `down(0%, 0%) arc(50%, 50%, 180)`, which travels from the upper left to the bottom right, as an arc, having the default duration of Pi. _Only circular arcs are supported at this time._
 
 |`up([finger])`
-|Lifts up a finger. If finger is specified, the Nth finger is used, otherwise 0 is the default. At the end of any sequence of Draw commands, if any fingers are still down, they are implicitly lifted as if up() had been called on them, so this method is only needed for complex gestures.
+|Lifts up a finger. If `finger` is specified, the Nth finger is used, otherwise `0` is the default. At the end of any sequence of Draw commands, if any fingers are still down, they are implicitly lifted as if `up()` had been called on them, so this method is only needed for complex gestures.
 
 |`wait(duration)`
 |Waits for the given duration before proceeding.
 
 |`sync(duration)`
-|Waits for all previously issued commands to finish executing before continuing. If finger is specified, wait for commands on finger N to finish executing before continuing.
+|Waits for all previously issued commands to finish executing before continuing. If `finger` is specified, wait for commands on finger N to finish executing before continuing.
 |===
 
 [#_examples]

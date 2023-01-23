@@ -1,0 +1,23 @@
+= VoiceOver (iOS)
+:navtitle: VoiceOver (iOS)
+
+Learn how to set up VoiceOver to test your app's accessibility features. Before you begin, be sure you have the following:
+
+* A Mac-mini-hosted, Kobiton server with a Kobiton GEM or Orion Audio Board Card installed.
+* An iOS device running iOS 12.0 or later.
+[IMPORTANT]
+This feature is currently unavailable for iOS 16.0 and later due to updates from Apple. We are actively working to fix this issue.
+
+== Set up VoiceOver
+
+. Log in to your Mac-mini-hosted, kobiton server.
+. Open *System Preferences* and turn on *Bluetooth*.
+. Plug your physical iOS device into your Mac mini's USB port.
+. On the iOS device, select *Settings* and turn on *Bluetooth*. Then select the Mac mini below *My Devices*.
+. On the Mac mini, accept the paring request.
+. Back on the iOS device, select *Settings*.
+. Within settings, select *Accessibility* and turn on *VoiceOver*. Then select *Audio* and turn on *Send to HDMI*.
+[NOTE]
+You will not use an HDMI connection during testing, however this setting is still required for full VoiceOver functionality.
+
+. xref:manual-testing:test-an-app/session-controls.adoc#_list_of_session_controls[Use VoiceOver] during a test session.
