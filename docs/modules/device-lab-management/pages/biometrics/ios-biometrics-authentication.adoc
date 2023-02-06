@@ -1,0 +1,65 @@
+= iOS biometrics authentication
+:navtitle: iOS biometrics authentication
+
+Before testing an iOS app with biometrics authentication, called Face ID or Touch ID, in a Kobiton manual or automation session, the app must be updated to use a Kobiton custom biometrics library.
+
+This guide starts with demonstrating how Face ID or Touch ID typically works on an iOS app, then details the steps to alter the app to include Kobiton's custom biometrics library.
+
+All of the above will be performed on the sample Authenticator app, available in the sample code downloaded from Apple's official Face ID or Touch ID developer guide. The experience should be similar in customer-developed applications.
+
+== Biometrics authentication with Apple framework
+
+This guide starts with demonstrating how Face ID or Touch ID typically works on an iOS app. To skip to the actual steps to import Kobiton custom biometrics library, click here.
+
+Set up Face ID or Touch ID on an iOS device.
+
+Download the Authenticator sample code and extract the content. Open Authenticator.xcodeproj and build or run on the device.
+
+While running the Authenticator app, tap Log In:
+
+The app then tries to authenticate using Face ID or Touch ID:
+
+If successful, the screen border turns green and the Log Out link displays. Tap Log Out to restart the flow:
+
+== Biometrics authentication with Kobiton
+
+NOTE: Face ID or Touch ID do NOT need to be setup on devices in order to test an app requiring biometrics through the Kobiton Portal.
+
+This section describes how to incorporate the Kobiton biometrics library into an iOS app using Apple's sample Authenticator app. Replace Authenticator with your app information as you follow along with these steps.
+
+Download the Authenticator sample code and extract the content if not already done above. Afterwards, download KobitonLAContext.zip, extract to the KobitonLAContext.framework folder and copy it to the Authenticator project folder.
+
+Open Authenticator.xcodeproj. Double-click the project root folder in Xcode, select Authenticator under TARGETS, click the General tab and scroll down to Frameworks, Libraries, and Embedded Content as highlighted below.
+
+Under Frameworks, Libraries, and Embedded Content, click the + button. In the dialog box, select Add Other... and choose Add Files... from the dropdown list:
+
+Select the KobitonLAContext.framework folder and click Open:
+
+The above framework is now added under Frameworks, Libraries, and Embedded Content. Make sure Embed & Sign is selected under the Embed column:
+
+In the project navigator, replace the text in the project code as follows:
+
+* Find all lines with "import LocalAuthentication" and change them to "import KobitonLAContext"
+* Find all lines with "context = LAContext()" and change them to "context = KobitonLAContext()"
+
+For devices running iOS versions lower than 15, additional parameters need to be added to the info.plist file. To do this, double-click the project root folder in Xcode, select Authenticator under TARGETS, then click the Info tab:
+
+Under Custom iOS Target Properties, click the + button while hovering over any property to add a new one, then choose App Transport Security Settings from the dropdown list:
+
+Expand the newly created App Transport Security Settings property, click the + button, and choose Allow Arbitrary Loads:
+
+
+Set the value of the above to YES:
+
+The above changes complete the requirements for supporting devices with iOS versions lower than 15.
+
+Save the changes. Build or run the altered app on Kobiton hosted devices. To quickly verify that the altered app works:
+
+* Launch a Kobiton manual session and open the app.
+* Tap Log In on the first screen. If there is a Biometrics Authentication dialog from Kobiton like the screenshot below, the feature is working as expected:
+
+* Clicking Pass on the dialog should show the screen with the green border:
+
+* Clicking Fail should keep the user in the login screen:
+
+Go back to the main biometrics help page to learn more about using biometrics authentication during Kobiton manual or automation sessions.

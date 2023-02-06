@@ -1,0 +1,9 @@
+Biometrics in an automation session
+
+Use the following commands to trigger a successful or failed authentication in response to a biometric prompt:
+
+* driver.execute('mobile:biometrics-authenticate', {result: 'passed'}) passes a successful authentication to the prompt
+
+* driver.execute('mobile:biometrics-authenticate', {result: 'failed'}) passes a failed authentication to the prompt
+
+The following sample test script show how to use the command.

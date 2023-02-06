@@ -1,0 +1,110 @@
+= Start a test session
+:navtitle: Start a test session
+
+Learn how to launch a device and start a test session. If you're looking for a specific device, use xref:_views[views], xref:_device_types[device types], xref:_device_statuses[device statuses], and xref:_custom_columns[custom columns] to narrow your search.
+
+== Launch a device
+
+. Open the https://portal.kobiton.com/login[Kobiton portal].
+. Select *Devices*.
+. Select a xref:_views[view].
+. Select a xref:_device_types[device type].
+. Sort and customize your view.
+. Choose a device and select *Launch*.
+
+[TIP]
+xref:install-an-app.adoc[Install an app] to test next!
+
+[#_views]
+== Views
+
+[cols="1h,4",autowidth"]
+|===
+|Card view (default)
+|Displays essential information about your devices. Sort by xref:_device_statuses[device status], device health, device name, friendly name, or OS version.
+
+|List view
+|Displays detailed information about your devices. Select *Edit Column* to customize the view and add up to nine xref:_custom_columns[custom columns].
+|===
+
+[#_device_types]
+== Device types
+
+[cols="1h,4",autowidth"]
+|===
+|Public devices
+|Devices shared between all Kobiton customers. Perfect for edge case testing and broad market coverage testing.
+
+|Private & local devices
+|Devices reserved for your team. Perfect for those leveraging xref:scriptless-automation:index.adoc[scriptless automation].
+|===
+
+[#_device_statuses]
+== Device statuses
+
+[cols="1h,4a",autowidth"]
+|===
+|Online
+|
+* The device is available for a testing session.
+
+|Busy
+|
+* A busy device can be *utilized* or *retained*.
+** *Utilized:* Currently in a test session.
+** *Retained:* Reserved by a user, but may or may not be in a test session (_xref:_device_types[private and local devices only]_).
+
+|Offline
+|
+* An offline device can be *connected* or *unplugged*.
+** *Connected:* Offline, but physically connected to the hardware.
+** *Unplugged:* Offline and physically disconnected from the hardware.
+|===
+
+[#_custom_columns]
+== Custom columns
+
+[NOTE]
+*Custom columns* are only available using the xref:_views[list view]. Select *List View* then *Edit Column* to add up to nine custom columns.
+
+[cols="1h,4a",autowidth"]
+|===
+|Device Name
+|The official name of the device, like Galaxy S10, iPhone 11 Pro, or iPhone XS.
+
+|Operating System
+|The operating system, like Android or iOS.
+
+|OS Version
+|The operating system version, like Android 10, Android 8.0.0, or iOS 15.5.
+
+|UDID
+|The unique device identifier (UDID) used to identify iOS devices.
+
+|Manufacturer
+|The manufacturer, like Apple, Google, or Samsung.
+
+|Resolution
+|The screen resolution, like 1080x2220 or 1125x2436.
+
+|Tag
+|Custom device tags xref:device-lab-management:device-tags.adoc[you can create] to find devices more easily.
+
+|Browser
+|The installed web browser, like Chrome 95, Safari, or Firefox.
+
+|CPU Platform
+|The CPU platform, like 32 or 64 bit.
+
+|Total Memory
+|The memory volume, like 1380.47 GB or 1974.86 GB.
+
+|Device Model
+|The device model, like D10Ap, Lenovo TB-8705F, or SM-G970U.
+
+|Location
+|The location selected in the device settings like, Atlanta, US or Paris, France. You can change the location during your test session using xref:test-an-app/session-controls.adoc[session controls].
+
+|Used By
+|The tester who last used the device.
+|===

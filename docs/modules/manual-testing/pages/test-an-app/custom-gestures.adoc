@@ -1,0 +1,105 @@
+= Custom gestures
+:navtitle: Custom gestures
+
+Learn how to create and use custom gestures during a test session. Use our xref:_guidelines[guidelines] to build your first gesture.
+
+[#_create_a_custom_gesture]
+== Create a custom gesture
+
+. Open the https://portal.kobiton.com/login[Kobiton portal].
+. xref:start-a-session.adoc[Launch a device].
+. On the *session tools*, select *Draw a custom gesture*.
+. Choose a saved gesture using the *Saved gestures list*, or create a custom gesture using our xref:_guidelines[guidelines].
+. Select *Perform*.
+
+[#_save_a_custom_gesture]
+== Save a custom gesture
+
+[IMPORTANT]
+Only the user who created the gesture can use it.
+
+. After you xref:_create_a_custom_gesture[create a gesture], select *Save Custom Gesture*.
+. Enter a name for your gesture.
+. Select *Save*.
+. To delete a gesture, select the *trash icon* next to its name.
+
+[#_guidelines]
+== Guidelines
+
+Use xref:_units[units] and xref:_functions[functions] to create custom gestures. Check out some xref:_examples[examples] for inspiration.
+
+[#_units]
+=== Units
+[cols="1h,3"]
+|===
+|`px` (default for coordinates)
+|Refers to the pixels used for desktop-screen coordinates. `px` is not scale-invariant--different viewer scales may affect the values.
+
+|`dp`
+|Refers to device-independent pixels. Unlike `px`, the `dp` will not change if the viewer scale changes or the pixel density of the device (retina vs non-retina) changes.
+
+|`%`
+|Refers to the percentage used for desktop-screen coordinates by multiplying the length of the device screen by the relevant axis.
+
+|`ms` (default for duration)
+|Refers to milliseconds of duration.
+
+|`s`
+|Refers to seconds of duration.
+|===
+
+[#_functions]
+=== Functions
+
+[cols="1h,6"]
+|===
+
+|`down(x, y, [finger])`
+|Puts a finger down at the location given by `x`, `y`. If a finger is specified, the user's Nth finger, starting from `0`, is put down. Depending on the device, between 1 and 11 fingers may be supported. The default finger is `0`.
+
+|`move(x, y, [finger], [duration])`
+|Moves a finger to the location given by `x`, `y`. If `finger` had not previously called `down()`, nothing happens but it takes a duration to execute. If `finger` is specified, the Nth finger is used. The default finger is `0`. If `duration` is specified, the finger is moved at a constant speed to the target position over the amount of time specified. The default will be a velocity computed from the speed of 2 seconds per diagonal screen distance (`0%,0%` to `100%,100%`).
+
+|`arc(centerX, centerY, sweepAngle, [finger] [duration])`
+|Moves a finger in an arc around `centerX` and `centerY`, starting from its current position and proceeding by `sweepAngle` degrees around the circle. If `sweepAngle` is positive, the arc moves in a clockwise direction. If it's negative, the arc moves in a counter-clockwise direction. If `duration` is specified, the finger is moved at a constant speed to the target position over the amount of time specified. This results in `down(0%, 0%) arc(50%, 50%, 180)`, which travels from the upper left to the bottom right, as an arc, having the default duration of Pi. _Only circular arcs are supported at this time._
+
+|`up([finger])`
+|Lifts up a finger. If `finger` is specified, the Nth finger is used, otherwise `0` is the default. At the end of any sequence of Draw commands, if any fingers are still down, they are implicitly lifted as if `up()` had been called on them, so this method is only needed for complex gestures.
+
+|`wait(duration)`
+|Waits for the given duration before proceeding.
+
+|`sync(duration)`
+|Waits for all previously issued commands to finish executing before continuing. If `finger` is specified, wait for commands on finger N to finish executing before continuing.
+|===
+
+[#_examples]
+=== Examples
+
+[cols="1h,2"]
+|===
+
+|Swipe the screen from the position 250px, 250px to 350px, 350px
+|`down(250,250) move(350,350)`
+
+|Using explicit arguments x,y
+|`down(x=50%, y=50%) move(x=30%, y=30%)`
+
+|Two-finger swipe (left to right)
+|`down(20%, 40%, 0) down(20%, 60%, 1) sync() move(80%, 40%, 0, 1s) move(80%, 60%, 1, 1s)`
+
+|Three-finger swipe (left to right)
+|`down(20%, 40%, 0) down(20%, 60%, 1) down(20%, 80%, 2) sync() move(80%, 40%, 0, 1s) move(80%, 60%, 1, 1s) move(80%, 80%, 2, 1s)`
+
+|Draw an arc
+|`down(10%, 50%) arc(50%, 50%, 180)`
+
+|Draw a line, an arch around, and then another line
+|`down(20%, 20%) move(50%,50%) arc(25%, 25%, 50, duration=1s) move(75%, 75%) up()`
+
+|Two-finger zoom gestures
+|`down(45%, 45%, 0) down(55%, 55%, 1) sync() move(15%, 15%, 0, 2s) move(75%, 75%, 1, 2s)`
+
+|Three-finger long press
+|`down(20%, 20%, 0) down(35%, 50%, 1) down(40%, 20%, 2) wait(5s)`
+|===

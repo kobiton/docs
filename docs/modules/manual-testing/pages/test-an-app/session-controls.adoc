@@ -1,0 +1,68 @@
+= Session controls
+:navtitle: Session controls
+
+Learn how to use session controls to interact with your device during a test session.
+
+== Use session controls
+
+. Open the https://portal.kobiton.com/login[Kobiton portal].
+. xref:start-a-session.adoc[Launch a device].
+. xref:install-an-app.adoc[Install an app].
+. Select and use a xref:_list_of_session_controls[session control].
+
+[#_list_of_session_controls]
+== List of session controls
+
+[cols="1h,3"]
+|===
+|Speedometer
+|Displays the session runtime along with the connection speed between your browser and test device. Use the *dropdown* to turn on *lightning mode* and increase your FPS to 30 (https://kobiton.com/pricing/[plan dependent]).
+
+|Touch
+|*Left click* to tap and swipe the device screen.
+
+|Pinch/zoom
+|Place the center circle on your desired target, then *left click* and *drag* an outer circle to preform a *pinch/zoom*.
+
+|Set device location
+|Enter the *latitude/longitude coordinates* or use the *search bar* to choose a location, then select *Set location*.
+
+|Set device timezone
+|Select the *dropdown* to choose a timezone, then select *Set Time Zone*.
+
+|Rotate screen
+|Select *rotate screen* to flip the screen horizontally or vertically.
+
+|Volume
+|Select *volume up* and *volume down* to adjust the device volume.
+
+|Biometric authentication
+|Pass or fail authentication requests detected during your test session. Learn more about biometric authentication xref:test-an-app/biometric-authentication.adoc[here].
+
+|Adb Shell (Android only)
+|Enter xref:test-an-app/adb-commands.adoc#_supported_and_unsupported_commands[supported commands] into the `adb` shell. Learn more about `adb` commands xref:test-an-app/adb-commands.adoc[here].
+
+|Draw custom gesture
+|Select a saved gesture or create a new one, then select *Preform*. Learn more about custom gestures xref:test-an-app/custom-gestures.adoc[here].
+
+|Preform voiceover
+|Before you can preform a VoiceOver gesture, you'll need to xref:device-lab-management:voiceover-ios.adoc[set up VoiceOver] on your Mac-mini-hosted, Kobiton server. Once you've finished, select a *VoiceOver Gesture* to test your app's accessibility features. To learn more about VoiceOver gestures, check out https://support.apple.com/guide/iphone/learn-voiceover-gestures-iph3e2e2281/16.0/ios/16.0[Apple's documentation].
+
+|Input sensitive data
+|Enter your sensitive data into the field, then select *Save*. This will paste your data to the device without your keystrokes being recorded during the test session.
+
+|Image injection
+|Select *Set Simulated Image* to simulate your device's camera, then select *Clear Image* to remove it when you're finished. Learn more about image injection xref:test-an-app/image-injection.adoc[here].
+
+|Power
+|Select *Power* to restart the device.
+
+|Home Button
+|*Single* or *double-click* to interact with the device home button.
+
+|Recent apps (Android only)
+|Simulate the *find all open apps* gesture https://support.google.com/android/answer/9079644?[supported on Android].
+
+|Back (Android only)
+|Simulate the *go back* gesture https://support.google.com/android/answer/9079644?[supported on Android].
+|===
