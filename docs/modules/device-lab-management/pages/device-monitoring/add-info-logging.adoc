@@ -1,0 +1,50 @@
+= Add Info logging filter for iOS devices
+:navtitle: Add Info logging filter for iOS devices
+
+Device Log is provided by Kobiton portal to help users better debug. Previously, there is no info logging for iOS in Device Log.  Recently, Kobiton adds the info logging filter on iOS devices. Users of Kobiton Legacy or Kobiton Latest can see this feature.
+
+NOTE: The info logging type is not default, this feature is requested by the client and depends on the app the client provides.
+
+== Prerequisites
+
+* Devices with iOS 14.0+.
+
+* The app must include info logging.
+
+== Navigate to Info logging type
+
+To check the info logging type, launch a Manual session with an iOS 14.0+ device.
+
+Click on iOS icon to filter iOS devices.
+
+image::device list - ios.png[1000,1000]
+
+Click *Launch* button under an iOS device.
+
+image::launch an ios device.png[1000,1000]
+
+After the device has been successfully launched, click *Install Apps* button to install the app to the device.
+
+image::install app.png[1000,1000]
+
+In this example, we install the *Test Log* app. Click *Install*.
+
+image::test log app.png[1000,1000]
+
+Click *Device Log* tab, choose *Info* option.
+
+image::click info.png[1000,1000]
+
+Since the *Test Log* app includes info logging, the information is displayed as the image below. Otherwise, the info logging will be blank.
+
+image::device log.png[1000,1000]
+
+== Limitations
+
+* The info logging will be blank when users install the app not including info logging.
++
+image::info log empty.png[1000,1000]
+
+* If the app includes info logging but the device is under iOS 14.0+, this feature is also not supported and  users will see the error message: *“This device doesn't meet minimum OS version that the app ‘TestLog’ required. Please try another device instead”*.
++
+image::error message.png[1000,1000]
