@@ -1,9 +1,20 @@
-= Make a GEM-bootable USB stick
-:navtitle: Make a GEM-bootable USB stick
+= Process to make a GEM-bootable USB stick
+:navtitle: Process to make a GEM-bootable USB stick
 
-This document describes steps to create a bootable USB stick having the GEM firmware which will be used to install the GEM into the Dell server. You need to have a USB stick with a minimum 4GB size, a Mac computer, and a USB adapter so that you can plug the USB stick into the Mac computer
+This document describes stepp-by-step instruction to create a bootable USB stick having the GEM firmware which will be used to install the GEM into the Dell server.
 
-1. Download the GEM base image at https://kobiton-operation.s3.ap-southeast-1.amazonaws.com/operation-software/gem-installer-4.0.b9e78fe.img on your local machine. Note: this URL is downloadable only in TV, Norcross, and Databank locations. Let’s say the downloaded file is at ~/Downloads/gem-installer.img
+== Prerequisites
+* USB stick with a miminum 4GB size
+
+* A Mac computer
+
+* A USB adapter to plug the USB stick to the Mac.
+
+== Getting started
+
+1. Download the GEM base image at https://kobiton-operation.s3.ap-southeast-1.amazonaws.com/operation-software/gem-installer-4.0.b9e78fe.img on your local machine.
++
+NOTE: this URL is downloadable only in TV, Norcross, and Databank locations. Let’s say the downloaded file is at ~/Downloads/gem-installer.img
 
 +
 2. Make sure the USB stick is unplugged, run the below command line (with sample output), and note down the list of /dev/disk*
@@ -29,7 +40,7 @@ This document describes steps to create a bootable USB stick having the GEM firm
 17  5:                APFS Volume Data                    334.9 GB   dis
 ----
 +
-3. Plug the USB stick, and re-run the above command, you will see one extra disk item which is the USB stick, use that device name from now e.g. /dev/disk4 as below example.
+3. Plug the USB stick, and re-run the above command, you will see one extra disk item which is the USB stick, use that device name from now (for example: /dev/disk4) as below example.
 +
 [source,ruby]
 ----
