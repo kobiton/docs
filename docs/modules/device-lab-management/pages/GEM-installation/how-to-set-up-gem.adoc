@@ -1,0 +1,76 @@
+= How to setup a Dell server with GEM firmware installed
+:navtitle: How to setup a Dell server with GEM firmware installed
+
+== 1. Prerequisites
+
+* Dell PowerEdge R740 Server (GEM Server)
+
+* a Mac Mini was configured dC server
+
+* USB stick  (4GB or above)
+
+== 2.Manufacture the Dell server
+
+CAUTION: You need to plug-in network cable CORRECTLY into port 1 on GEM server. It will not work if plug-in wrong port. Make sure your server is on the network and has an IP address.
+
+1. By default, it is expected that the GEM will receive a DHCP address from the network on which it is installed.
++
+image::1.png[]
+
+2. Ensure the RAID controller is set to HBA mode in the BIOS.
+
+* At the server initiation sequence, press F2 to enter the BIOS settings
+
+* Select Device Settings
+
+* RAID Controller in Slot X
+
+* Controller Management
+
+* Advanced Controller Management
+
+* Switch to HBA
++
+image::2.png[]
+
+
+3. Ensure Physical Disk in selected boot device
+
+* Still in BIOS Settings
+
+* Select Device Settings
+
+* RAID Controller in Slot X
+
+* Controller Management
+
+* Select your hard disk as a Boot Device
++
+image:3.png[]
+
+4. Ensure the system is set to UEFI boot mode in BIOS
+
+* Still in BIOS Settings
+
+* Select Boot Settings
+
+* Boot Mode
+
+* Select UEFI
++
+image:4.png[]
+
+5. Done, shutdown the Dell server.
+
+== 3.  Install the GEM into the Dell server
+
+1. Create a GEM bootable USB stick, see xref:GEM-installation/make-a-gem-bootable.adoc[Make a GEM-bootable USB stick].
+
+2. Follow xref:GEM-installation/how-to-set-up-gem-in-dell-server.adoc[How to setup GEM in a blank Dell server i.e. no existing OS in the disk drive]
+
+3. Follow the section Server Configuration in Gigacap Server Build.
+
+
+
+
+

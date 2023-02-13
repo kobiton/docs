@@ -1,0 +1,56 @@
+=  How to setup GEM in a blank Dell server i.e. no existing OS in the disk drive
+:navtitle: How to setup GEM in a blank Dell server i.e. no existing OS in the disk drive
+
+This document describes how to install the GEM to a blank Dell server so that we can remote access to the Dell (i.e. ssh) for installing Standalone or configuring peering with deviceConnect.
+
+1. This section requires interacting physically with the server, so please plug the monitor and keyboard into the Dell server.
+
+2. Plug the GEM bootable USB stick into the Dell, see xref:GEM-installation/make-a-gem-bootable.adoc[Make a GEM-bootable USB stick] for creating a GEM bootable USB stick.
+
+3. Power on the Dell,  press F11 to get into Boot menu.
+
+4. Select One-Shot UEFI Boot Menu > Select the USB stick
+to boot from and wait for NixOS Boot sequence completed.
++
+image::5.png[]
++
+5. Log in as *root,* no password is needed.
+
+6. Run the install-gem command, it will prompt you for the disk drive that you want to install GEM firmware. It’s usually /dev/sda while the /dev/sdb is the USB stick
++
+[source,ruby]
+----
+1. install-gem ↵
+2. Please enter the option number to select disk that you want to install GEM firmware:
+3. 1) /dev/sda
+4. 2) /dev/sdb
+5. #? 1 ↵
+6. You have chosen disk /dev/sda
+7. [Continue execution....]
+----
+
+7. After execution, the server will reboot.
+
+8. Once the GEM is ready after the reboot. Login as root and get the private IP address
++
+[source,ruby]
+----
+1. ip -f inet address show eno1np0
+----
++
+It shows as belows:
++
+[source,ruby]
+----
+1. 2: eno1np0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc mq state UP group default qlen 1000
+2.    inet 192.168.35.86/24 brd 192.168.35.255 scope global eno1np0
+3.      valid_lft forever preferred_lft forever
+----
++
+Note down the IP
+
+9. Now the Dell server has GEM installed and we can remote access to the server with the internal IP.
+
+
+
+
