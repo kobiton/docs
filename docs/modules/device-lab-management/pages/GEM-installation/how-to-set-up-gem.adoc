@@ -1,7 +1,7 @@
 = How to setup a Dell server with GEM firmware installed
 :navtitle: How to setup a Dell server with GEM firmware installed
 
-== 1. Prerequisites
+== Prerequisites
 
 * Dell PowerEdge R740 Server (GEM Server)
 
@@ -9,7 +9,7 @@
 
 * USB stick  (4GB or above)
 
-== 2.Manufacture the Dell server
+== Manufacture the Dell server
 
 CAUTION: You need to plug-in network cable CORRECTLY into port 1 on GEM server. It will not work if plug-in wrong port. Make sure your server is on the network and has an IP address.
 
@@ -62,13 +62,27 @@ image:4.png[]
 
 5. When the set up is done, shutdown the Dell server.
 
-== 3.  Install the GEM into the Dell server
+== Install the GEM into the Dell server
 
-1. Create a GEM bootable USB stick, see xref:GEM-installation/make-a-gem-bootable.adoc[Make a GEM-bootable USB stick].
+Create a GEM bootable USB stick, see xref:GEM-installation/make-a-gem-bootable.adoc[Process to make a GEM-bootable USB stick].
 
-2. Follow xref:GEM-installation/how-to-set-up-gem-in-dell-server.adoc[How to setup GEM in a blank Dell server i.e. no existing OS in the disk drive]
+include::device-lab-management:GEM-installation/make-a-gem-bootable.adoc[leveloffset=2,indent=0]
 
-3. Follow the section Server Configuration in Gigacap Server Build.
+Follow xref:GEM-installation/how-to-set-up-gem-in-dell-server.adoc[How to setup GEM in a blank Dell server i.e. no existing OS in the disk drive]
+
+include::device-lab-management:GEM-installation/how-to-set-up-gem-in-dell-server.adoc[leveloffset=2,linesindent=0]
+
+3.3. Follow the section Server Configuration in Gigacap Server Build.
+
+include::device-lab-management:GEM-installation/make-a-gem-bootable.adoc[leveloffset=2,lines=1]
+
+include::device-lab-management:GEM-installation/make-a-gem-bootable.adoc[leveloffset=2,lines=5..120]
+
+
+
+
+
+
 
 
 

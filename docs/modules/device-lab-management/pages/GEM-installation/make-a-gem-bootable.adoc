@@ -1,14 +1,22 @@
+// tag::introduction[]
+
 = Process to make a GEM-bootable USB stick
 :navtitle: Process to make a GEM-bootable USB stick
 
-This document describes stepp-by-step instruction to create a bootable USB stick having the GEM firmware which will be used to install the GEM into the Dell server.
+This document describes step-by-step instruction to create a bootable USB stick having the GEM firmware which will be used to install the GEM into the Dell server.
+
+// end::introduction[]
+
+// tag::prerequisites[]
 
 == Prerequisites
-* USB stick with a miminum 4GB size
+* USB stick with a minimum 4GB size.
 
-* A Mac computer
+* A Mac computer.
 
 * A USB adapter to plug the USB stick to the Mac.
+
+// end::prerequisites[]
 
 == Getting started
 
@@ -21,78 +29,80 @@ NOTE: this URL is downloadable only in TV, Norcross, and Databank locations. Let
 +
 [source,ruby]
 ----
-1 % diskutil list
-2 /dev/disk0 (internal, physical):
-3   #:                       TYPE NAME                    SIZE       IDENTIFIER
-4   0:      GUID_partition_scheme                        *500.3 GB   disk0
-5   1:             Apple_APFS_ISC Container disk1         524.3 MB   disk0s1
-6   2:                 Apple_APFS Container disk3         494.4 GB   disk0s2
-7   3:        Apple_APFS_Recovery Container disk2         5.4 GB     disk0s3
-8
-9 /dev/disk3 (synthesized):
-10  #:                       TYPE NAME                    SIZE       IDENTIFIER
-11  0:      APFS Container Scheme -                      +494.4 GB   disk3
-12  Physical Store disk0s2
-13  1:                APFS Volume Macintosh HD            8.9 GB     disk3s1
-14  2:              APFS Snapshot com.apple.os.update-... 8.9 GB     disk3s1s1
-15  3:                APFS Volume Preboot                 4.7 GB     disk3s2
-16  4:                APFS Volume Recovery                763.5 MB   disk3s3
-17  5:                APFS Volume Data                    334.9 GB   dis
+% diskutil list
+/dev/disk0 (internal, physical):
+   #:                       TYPE NAME                    SIZE       IDENTIFIER
+   0:      GUID_partition_scheme                        *500.3 GB   disk0
+   1:             Apple_APFS_ISC Container disk1         524.3 MB   disk0s1
+   2:                 Apple_APFS Container disk3         494.4 GB   disk0s2
+   3:        Apple_APFS_Recovery Container disk2         5.4 GB     disk0s3
+
+/dev/disk3 (synthesized):
+   #:                       TYPE NAME                    SIZE       IDENTIFIER
+   0:      APFS Container Scheme -                      +494.4 GB   disk3
+                                 Physical Store disk0s2
+   1:                APFS Volume Macintosh HD            8.9 GB     disk3s1
+   2:              APFS Snapshot com.apple.os.update-... 8.9 GB     disk3s1s1
+   3:                APFS Volume Preboot                 4.7 GB     disk3s2
+   4:                APFS Volume Recovery                763.5 MB   disk3s3
+   5:                APFS Volume Data                    334.9 GB   dis
 ----
-+
 3. Plug the USB stick, and re-run the above command, you will see one extra disk item which is the USB stick, use that device name from now (for example: /dev/disk4) as below example.
 +
 [source,ruby]
 ----
-1. % diskutil list
-2. /dev/disk0 (internal, physical):
-3.   #:                       TYPE NAME                    SIZE       IDENTIFIER
-4.  0:      GUID_partition_scheme                        *500.3 GB   disk0
-5.  1:             Apple_APFS_ISC Container disk1         524.3 MB   disk0s1
-6.  2:                 Apple_APFS Container disk3         494.4 GB   disk0s2
-7.  3:        Apple_APFS_Recovery Container disk2         5.4 GB     disk0s3
-8.
-9. /dev/disk3 (synthesized):
-10. #:                       TYPE NAME                    SIZE       IDENTIFIER
-11. 0:      APFS Container Scheme -                      +494.4 GB   disk3
-12. Physical Store disk0s2
-13, 1:                APFS Volume Macintosh HD            8.9 GB     disk3s1
-14. 2:              APFS Snapshot com.apple.os.update-... 8.9 GB     disk3s1s1
-15. 3:                APFS Volume Preboot                 4.7 GB     disk3s2
-16. 4:                APFS Volume Recovery                763.5 MB   disk3s3
-17. 5:                APFS Volume Data                    334.9 GB   disk3s5
-18. 6:                APFS Volume VM                      6.4 GB     disk3s6
-19.
-20. /dev/disk4 (external, physical):
-21. #:                       TYPE NAME                    SIZE       IDENTIFIER
-22. 0:      GUID_partition_scheme                        *15.5 GB    disk4
-23. 1:                        EFI EFI                     209.7 MB   disk4s1
-24. 2:                  Apple_HFS Install macOS Big Sur   15.1 GB    disk4s2
+% diskutil list
+/dev/disk0 (internal, physical):
+   #:                       TYPE NAME                    SIZE       IDENTIFIER
+   0:      GUID_partition_scheme                        *500.3 GB   disk0
+   1:             Apple_APFS_ISC Container disk1         524.3 MB   disk0s1
+   2:                 Apple_APFS Container disk3         494.4 GB   disk0s2
+   3:        Apple_APFS_Recovery Container disk2         5.4 GB     disk0s3
+
+/dev/disk3 (synthesized):
+   #:                       TYPE NAME                    SIZE       IDENTIFIER
+   0:      APFS Container Scheme -                      +494.4 GB   disk3
+                                 Physical Store disk0s2
+   1:                APFS Volume Macintosh HD            8.9 GB     disk3s1
+   2:              APFS Snapshot com.apple.os.update-... 8.9 GB     disk3s1s1
+   3:                APFS Volume Preboot                 4.7 GB     disk3s2
+   4:                APFS Volume Recovery                763.5 MB   disk3s3
+   5:                APFS Volume Data                    334.9 GB   disk3s5
+   6:                APFS Volume VM                      6.4 GB     disk3s6
+
+/dev/disk4 (external, physical):
+   #:                       TYPE NAME                    SIZE       IDENTIFIER
+   0:      GUID_partition_scheme                        *15.5 GB    disk4
+   1:                        EFI EFI                     209.7 MB   disk4s1
+   2:                  Apple_HFS Install macOS Big Sur   15.1 GB    disk4s2
 ----
 +
 4. Unmount the partitions in the USB stick, do many times until we only have /dev/disk4 mounted.
 
-    1.diskutil unmount /dev/disk4s2
+    diskutil unmount /dev/disk4s2
 +
 5. Write the GEM base image into the USB stick, enter the password of your macOS user.
 
-    1.sudo dd if=$HOME/Downloads/gem-installer.img of=/dev/rdisk4 bs=8m
+    sudo dd if=$HOME/Downloads/gem-installer.img of=/dev/rdisk4 bs=8m
 
 6. Once the above command completes, run
 
-    1.sync
+    sync
 
 7. If the writing image is correct, the output is as below.
++
+[source,ruby]
+----
+% diskutil list
+....
 
-    1.% diskutil list
-    2.....
-    3
-    4/dev/disk6 (external, physical):
-    5  #:                       TYPE NAME                    SIZE       IDENTIFIER
-    6  0:      GUID_partition_scheme                        *61.5 GB    disk6
-    7  1:                        EFI GIGACAP                 1.1 GB     disk6s1
+/dev/disk6 (external, physical):
+   #:                       TYPE NAME                    SIZE       IDENTIFIER
+   0:      GUID_partition_scheme                        *61.5 GB    disk6
+   1:                        EFI GIGACAP                 1.1 GB     disk6s1
 
+----
 
 8. Finally, run the below command and unplug the USB stick. It’s ready to be used on the Dell server.
 
-    1.diskutil eject /dev/disk4
+    diskutil eject /dev/disk4
