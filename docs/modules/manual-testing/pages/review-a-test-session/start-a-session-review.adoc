@@ -1,0 +1,176 @@
+= Start a session review
+:navtitle: Start a session review
+
+Learn how to find and launch a test session to review. If you're looking for a specific session, adjust the date range, use the xref:_search_bar[search bar], select a xref:_saved_searches[saved search] to narrow your search.
+
+[IMPORTANT]
+Only the user who created the saved search can use it.
+
+== Find and launch a session
+
+. Select *Sessions*.
+. Select two dates from the calendar to adjust the date range of the search.
+[NOTE]
+The session list will automatically update after you select a date.
+
+. Select *Users* and choose a user to display their test sessions.
+. Select a xref:_saved_searches[saved search] or use the xref:_search_bar[search bar] to narrow your search.
+. Select the *session ID* to open the xref:review-a-test-session/session-overview.adoc[Session Overview] for the session you'd like to review.
+
+[#_saved_searches]
+== Saved searches
+
+[cols="1h,4",autowidth"]
+|===
+|Create a saved search
+|After you create a search using xref:_search_filters[search filters] and xref:_custom_query_syntax[custom queries], select *Add Saved Search* and select *Save* to save your search for later.
+
+|Using a saved search
+|Once a query has been added to your saved searches, select the *Saved Searches* dropdown and choose a saved search to display.
+|===
+
+[TIP]
+Use a brief and descriptive name to easily find your saved search later.
+
+[#_search_bar]
+== Search bar
+
+[#_manual_search]
+=== Manual search
+
+Use the *search bar* to manually search for a session by entering the session name, ID, test date, or by choosing a xref:_search_filters[search filter].
+
+[cols="1h,4",autowidth"]
+|===
+|ID
+|Display sessions matching the session ID you entered, like 231456.
+
+|Name
+|Display sessions matching the session name you entered, like Appium test session.
+|Date
+|Display sessions that took place on the date you entered, like 08/26/2021.
+
+|Search filters
+|Select the *search bar* then select a search filter like *Passed,* *Complete* *Running*, or xref:_search_filters[more].
+|===
+
+[#_search_filters]
+=== Search filters
+
+Use search filters when you're creating xref:_custom_query_syntax[custom search queries] or simply xref:_manual_search[manually searching].
+
+[cols="1h,4",autowidth"]
+|===
+|Passed
+|Display sessions that passed the test session.
+
+|Complete
+|Display sessions that have been completed.
+
+|Running
+|Display sessions that are currently running.
+
+|Error
+|Display sessions that contained an error.
+
+|Failed
+|Display sessions that failed the test session.
+
+|Timeout
+|Display sessions that timed-out during the test session due to inactivity.
+
+|Terminated
+|Display sessions that were terminated prematurely.
+
+|Scriptless
+|Display scriptless automation test sessions.
+
+|Manual
+|Display manual test sessions.
+
+|Appium
+|Display sessions that were automated using the Appium testing framework.
+
+|Espresso
+|Display sessions that were automated using the Espresso testing framework.
+
+|XCUITest +
+(iOS only)
+|Display sessions that were automated using the XCUITest testing framework.
+
+|Mixed
+|Display sessions that used a mix of manual and automated testing.
+|===
+
+[#_custom_query_syntax]
+=== Custom query syntax
+
+[NOTE]
+You can learn more about the categories used for custom queries xref:start-a-session.adoc#_custom_columns[here].
+
+[cols="1h, 2, 2, 2"]
+|===
+|Category |Syntax |Description |Examples
+
+|Type
+|`type: [name of session type]`
+|Displays sessions matching this session type. +
+(Scriptless uses slightly different syntax. Reference the example to the right).
+|`type:manual` +
+`type:appium` +
+`is:scriptless`
+
+|Device Model
+|`model: [device model code]`
+|Displays sessions that used this device model during the session.
+|`model:"redmi note 7"` +
+`model:mq9d2`
+
+|OS
+|`os: [operation system name]`
+|Displays sessions that used a device with this operating system (OS) during the session.
+|`os:android` +
+`os:ios`
+
+|OS version
+|`os_version: [version]`
+|Displays sessions that used a device with this operating system version (OS version) during the session.
+|`os_version:14.7.1` +
+`os_version:10`
+
+|User
+|`user: [name of user]`
+|Displays sessions that were started by this user. This member must be a member of your Kobiton team.
+|`user:kobiton` +
+`user:kobitonadmin`
+
+|Status
+|`status: [name of status]`
+|Displays sessions matching this status. +
+(xref:_search_filters[List of statuses]).
+|`status:running` +
+`status:passed`
+
+|Application
+|`application: [application name]`
+|Displays sessions that were started using this application.
+|`application:"wingman api"` +
+`application:guardian`
+
+|UDID
+|`udid: [udid code]`
+|Displays sessions that used a device with this UDID during the session.
+|`udid:6ec7ca0e`
+
+|Resolution
+|`resolution: [screen resolution]`
+|Displays sessions that used devices with this screen resolution.
+|`resolution:720x1080` +
+`resolution:1080x2340`
+
+|Manufacturer
+|`manufacturer: [name of manufacturer]`
+|Displays sessions that used devices with this manufacturer.
+|`manufacturer:samsung` +
+`manufacturer:apple`
+|===

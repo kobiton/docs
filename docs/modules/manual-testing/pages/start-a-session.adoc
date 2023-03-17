@@ -1,19 +1,18 @@
 = Start a test session
 :navtitle: Start a test session
 
-Learn how to launch a device and start a test session. If you're looking for a specific device, use xref:_views[views], xref:_device_types[device types], xref:_device_statuses[device statuses], and xref:_custom_columns[custom columns] to narrow your search.
+Learn how to find and launch a device for your manual test session. If you're looking for a specific device, use xref:_views[views], xref:_device_categories[device categories], xref:_device_statuses[device statuses], and xref:_custom_columns[custom columns] to narrow your search.
 
-== Launch a device
+== Find and launch a device
 
-. Open the https://portal.kobiton.com/login[Kobiton portal].
 . Select *Devices*.
 . Select a xref:_views[view].
-. Select a xref:_device_types[device type].
-. Sort and customize your view.
+. Select a xref:_device_categories[device category].
+. xref:_custom_columns[Customize your view].
 . Choose a device and select *Launch*.
 
 [TIP]
-xref:install-an-app.adoc[Install an app] to test next!
+After you start a session, you can xref:install-an-app.adoc[install an app to test] or test a website using a pre-installed web browser.
 
 [#_views]
 == Views
@@ -27,11 +26,14 @@ xref:install-an-app.adoc[Install an app] to test next!
 |Displays detailed information about your devices. Select *Edit Column* to customize the view and add up to nine xref:_custom_columns[custom columns].
 |===
 
-[#_device_types]
-== Device types
+[#_device_categories]
+== Device categories
 
 [cols="1h,4",autowidth"]
 |===
+|Favorite
+|A list of your favorite devices. To favorite a device, select the *vertical ellipses* next to the device, then click the *star icon*.
+
 |Public devices
 |Devices shared between all Kobiton customers. Perfect for edge case testing and broad market coverage testing.
 
@@ -69,16 +71,16 @@ xref:install-an-app.adoc[Install an app] to test next!
 
 [cols="1h,4a",autowidth"]
 |===
-|Device Name
+|Device Name (default)
 |The official name of the device, like Galaxy S10, iPhone 11 Pro, or iPhone XS.
 
-|Operating System
+|Operating System (default)
 |The operating system, like Android or iOS.
 
-|OS Version
+|OS Version (default)
 |The operating system version, like Android 10, Android 8.0.0, or iOS 15.5.
 
-|UDID
+|UDID (default)
 |The unique device identifier (UDID) used to identify iOS devices.
 
 |Manufacturer
@@ -93,18 +95,57 @@ xref:install-an-app.adoc[Install an app] to test next!
 |Browser
 |The installed web browser, like Chrome 95, Safari, or Firefox.
 
+|Serial Number
+|This
+
 |CPU Platform
 |The CPU platform, like 32 or 64 bit.
 
 |Total Memory
 |The memory volume, like 1380.47 GB or 1974.86 GB.
 
+|Phone IMEI
+|This
+
+|Phone ICCID
+|This
+
+|Phone IMSI
+|This
+
+|Security Patch
+|This
+
+|Carrier
+|This
+
+|Network Type
+|This
+
+|Battery Temp
+|This
+
+|Battery Health
+|This
+
+|Mobile Number
+|This
+
+|Used By
+|The tester currently using the device.
+
+|Usage Duration
+|This
+
+|Device Health
+|This
+
+|Network Status
+|This
+
 |Device Model
 |The device model, like D10Ap, Lenovo TB-8705F, or SM-G970U.
 
 |Location
-|The location selected in the device settings like, Atlanta, US or Paris, France. You can change the location during your test session using xref:test-an-app/session-controls.adoc[session controls].
-
-|Used By
-|The tester who last used the device.
+|The location where the device is physically located.
 |===
