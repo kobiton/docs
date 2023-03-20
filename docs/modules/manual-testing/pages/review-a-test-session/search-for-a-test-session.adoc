@@ -1,44 +1,28 @@
-= Start a session review
-:navtitle: Start a session review
+= Search for a test session
+:navtitle: Search for a test session
 
-Learn how to find and launch a test session to review. If you're looking for a specific session, adjust the date range, use the xref:_search_bar[search bar], select a xref:_saved_searches[saved search] to narrow your search.
+Learn how to search for a test session using search tags, custom queries, and xref:_search_methods[more]. Once you find a session to review, launch the xref:./session-overview.adoc[Session Overview] to get started.
 
-[IMPORTANT]
-Only the user who created the saved search can use it.
-
-== Find and launch a session
+== Search for a session
 
 . Select *Sessions*.
-. Select two dates from the calendar to adjust the date range of the search.
+. Adjust the date range by selecting two dates within the past year.
 [NOTE]
-The session list will automatically update after you select a date.
+Your search results will automatically update after you select a date.
 
-. Select *Users* and choose a user to display their test sessions.
-. Select a xref:_saved_searches[saved search] or use the xref:_search_bar[search bar] to narrow your search.
-. Select the *session ID* to open the xref:review-a-test-session/session-overview.adoc[Session Overview] for the session you'd like to review.
+. Use the *search bar* to enter xref:_basic_session_information[basic session information] or select a pre-defined xref:_search_tags[search tag]. Alternatively, run a previously-saved xref:_custom_queries[custom query] by selecting the *Saved Searches* dropdown.
+. Once you've found a session, select the *session ID* to launch the xref:review-a-test-session/session-overview.adoc[Session Overview].
 
-[#_saved_searches]
-== Saved searches
+[#_search_methods]
+== Search methods
 
-[cols="1h,4",autowidth"]
-|===
-|Create a saved search
-|After you create a search using xref:_search_filters[search filters] and xref:_custom_query_syntax[custom queries], select *Add Saved Search* and select *Save* to save your search for later.
+[#_basic_session_information]
+=== Basic session information
 
-|Using a saved search
-|Once a query has been added to your saved searches, select the *Saved Searches* dropdown and choose a saved search to display.
-|===
+You can use the *search bar* to enter the basic session to filter your results.
 
 [TIP]
-Use a brief and descriptive name to easily find your saved search later.
-
-[#_search_bar]
-== Search bar
-
-[#_manual_search]
-=== Manual search
-
-Use the *search bar* to manually search for a session by entering the session name, ID, test date, or by choosing a xref:_search_filters[search filter].
+From here you can also select a xref:_search_tags[search tag].
 
 [cols="1h,4",autowidth"]
 |===
@@ -50,14 +34,14 @@ Use the *search bar* to manually search for a session by entering the session na
 |Date
 |Display sessions that took place on the date you entered, like 08/26/2021.
 
-|Search filters
-|Select the *search bar* then select a search filter like *Passed,* *Complete* *Running*, or xref:_search_filters[more].
+|Search tags
+|Select the *search bar* then select a search tag like *Passed,* *Complete* *Running*, or xref:_search_tags[more].
 |===
 
-[#_search_filters]
-=== Search filters
+[#_search_tags]
+=== Search tags
 
-Use search filters when you're creating xref:_custom_query_syntax[custom search queries] or simply xref:_manual_search[manually searching].
+Choose a search tag from the *search bar* to filter your results or begin building a xref:_custom_queries[custom query].
 
 [cols="1h,4",autowidth"]
 |===
@@ -102,15 +86,17 @@ Use search filters when you're creating xref:_custom_query_syntax[custom search 
 |Display sessions that used a mix of manual and automated testing.
 |===
 
-[#_custom_query_syntax]
-=== Custom query syntax
+[#_custom_queries]
+=== Custom queries
 
-[NOTE]
-You can learn more about the categories used for custom queries xref:start-a-session.adoc#_custom_columns[here].
+Enter one or more parameters in the *search bar* to build a custom query and filter your results even further. For queries you use regularly, easily add them to your xref:_saved_searches[saved searches].
+
+[IMPORTANT]
+Parameters in your query are *always* joined by an "and" operator. At this time, this feature does not support operators like "or" and "not".
 
 [cols="1h, 2, 2, 2"]
 |===
-|Category |Syntax |Description |Examples
+|Parameter |Syntax |Description |Examples
 
 |Type
 |`type: [name of session type]`
@@ -146,8 +132,7 @@ You can learn more about the categories used for custom queries xref:start-a-ses
 
 |Status
 |`status: [name of status]`
-|Displays sessions matching this status. +
-(xref:_search_filters[List of statuses]).
+|Displays sessions matching this status, also called xref:_search_tags[search tags].
 |`status:running` +
 `status:passed`
 
@@ -173,4 +158,20 @@ You can learn more about the categories used for custom queries xref:start-a-ses
 |Displays sessions that used devices with this manufacturer.
 |`manufacturer:samsung` +
 `manufacturer:apple`
+|===
+
+[#_saved_searches]
+=== Saved searches
+
+[IMPORTANT]
+You can only save and run xref:_custom_queries[custom queries you create].
+
+[cols="1h,4",autowidth"]
+|===
+|Save a new search
+|After you create a xref:_custom_queries[custom query], select *Add Saved Search* and select *Save* to save the results. +
+_Tip: Enter a short and descriptive name that'll be easy to identify later._
+
+|Run a saved search
+|Once a query has been added to your saved searches, select the *Saved Searches* dropdown and choose a saved search to display.
 |===

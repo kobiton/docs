@@ -1,7 +1,7 @@
 = Start a test session
 :navtitle: Start a test session
 
-Learn how to find and launch a device for your manual test session. If you're looking for a specific device, use xref:_views[views], xref:_device_categories[device categories], xref:_device_statuses[device statuses], and xref:_custom_columns[custom columns] to narrow your search.
+Learn how to find and launch a device for your manual test session. If you're looking for a specific device, use xref:_views[views], xref:_device_categories[device categories], xref:_device_statuses[device statuses], and xref:_custom_columns[custom columns] to narrow your search. Use the device overview to learn more about a device, and when you're ready, select *Launch* to start testing.
 
 == Find and launch a device
 
@@ -9,7 +9,8 @@ Learn how to find and launch a device for your manual test session. If you're lo
 . Select a xref:_views[view].
 . Select a xref:_device_categories[device category].
 . xref:_custom_columns[Customize your view].
-. Choose a device and select *Launch*.
+. If you'd like to learn more about a specific device, select the *vertical ellipses* to open a device overview.
+. When you're ready to start testing, select *Launch* to start testing.
 
 [TIP]
 After you start a session, you can xref:install-an-app.adoc[install an app to test] or test a website using a pre-installed web browser.
@@ -54,7 +55,7 @@ After you start a session, you can xref:install-an-app.adoc[install an app to te
 |
 * A busy device can be *utilized* or *retained*.
 ** *Utilized:* Currently in a test session.
-** *Retained:* Reserved by a user, but may or may not be in a test session (_xref:_device_types[private and local devices only]_).
+** *Retained:* Reserved by a user, but may or may not be in a test session. This feature is only available for xref:_device_categories[private and local devices].
 
 |Offline
 |
@@ -105,47 +106,73 @@ After you start a session, you can xref:install-an-app.adoc[install an app to te
 |The memory volume, like 1380.47 GB or 1974.86 GB.
 
 |Phone IMEI
-|This
+|The International Mobile Equipment Identity (IMEI) number used to identify devices on a cellular network, like 356412089347896.
 
 |Phone ICCID
-|This
+|The Integrated Circuit Card ID (ICCID) number used to identify a SIM card, like 8944500016116273525.
 
 |Phone IMSI
-|This
+|The International Mobile Subscriber Identity (IMSI) number used to identify the device user, like 310150123456789.
 
 |Security Patch
-|This
+|The current security patch installed on the device, like
 
 |Carrier
-|This
+|The mobile carrier, like Verizon or AT&T.
 
 |Network Type
-|This
+|The type of network being used, like 4G or Wi-Fi.
 
 |Battery Temp
-|This
+|The temperature of the device's battery, like 35°C or 95°F.
 
 |Battery Health
-|This
+|The overall health of the device's battery, like Good or Needs Service.
 
 |Mobile Number
-|This
+|The mobile phone number assigned to the device, like (718) 555-5678 or (213) 555-1234.
 
 |Used By
 |The tester currently using the device.
 
 |Usage Duration
-|This
+|The length of time the device has been in use, like 3 hours and 45 minutes or 1 day and 12 hours.
 
 |Device Health
-|This
+|The overall health of the device, like Good or Needs Service.
 
 |Network Status
-|This
+|The current status of the device's network connection, like Connected or Disconnected.
 
 |Device Model
 |The device model, like D10Ap, Lenovo TB-8705F, or SM-G970U.
 
 |Location
 |The location where the device is physically located.
+|===
+
+== Device overview
+
+[cols="1h,4a",autowidth"]
+|===
+|Details
+|Display details for the device. Check xref:_custom_columns[this list] for definitions.
+
+|Apps
+|Install or uninstall apps, or simply check what's already there. Learn more about installing apps xref:install-an-app.adoc[here].
+
+|Automation Settings
+|Configure automation settings for the device. Learn more about automation testing xref:automation-testing:index.adoc[here].
+
+|Favorite
+|Select the *star icon* to add the device to your favorites.
+
+|Configurations
+|Select *Use Configurations* and choose a configuration to apply. Learn more about configurations xref:device-lab-management:device-configurations.adoc[here].
+
+|Retain
+|Choose *Retain* to reserve the device for yourself and prevent other testers from using it. This feature is only available for xref:_device_categories[private and local devices].
+
+|Launch Device
+|Select *Launch Device* to use the device in a test session.
 |===
