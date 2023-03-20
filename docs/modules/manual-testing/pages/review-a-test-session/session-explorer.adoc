@@ -1,36 +1,39 @@
 = Session Explorer
 :navtitle: Session Explorer
 
-Learn how to use the Session Explorer to export appium scripts, review device logs, compare UI design, and xref:_list_of_session_explorer_controls[more].
+Learn how to use the Session Explorer to export appium scripts, review device logs, and xref:_session_explorer_controls[more] after a test session.
 
 == Launch the Session Explorer
 
 . Select *Sessions*.
 . Use the *search bar*, *date ranges*, and *filters* to find and select a session.
 . Select *Explorer*.
-. Use the *dropdown* to select different  xref:_list_of_session_explorer_controls[Session Explorer controls].
+. Use the *dropdown* to select different  xref:_session_explorer_controls[Session Explorer controls].
 
 [TIP]
 Select *Create Jira Ticket* to keep track of issues you find. Learn more about our Jira integration xref:integrations:jira/index.adoc[here].
 
-[#_list_of_session_explorer_controls]
-== List of Session Explorer controls
+[#_session_explorer_controls]
+== Session Explorer controls
 
 === Review system metrics
+
+[NOTE]
+The following metrics represent data _during_ the selected test session.
 
 [cols="1h,4",autowidth"]
 |===
 |CPU
-|The amount of work the device CPU performed during the test session.
+|The amount of work the device CPU performed.
 
 |Memory
-|The amount of memory the device used during the test session.
+|The amount of memory the device used.
 
 |Network
-|The amount of bytes the device sent and received over the network during the test session.
+|The amount of bytes the device sent and received over the network.
 
 |Battery drain
-|The speed at which the device's battery was drained during the test session.
+|The speed of the device's battery drain.
 |===
 
 === View crash logs
@@ -38,10 +41,10 @@ Select *Create Jira Ticket* to keep track of issues you find. Learn more about o
 [cols="1h,4",autowidth"]
 |===
 |Search bar
-|Only display crash logs matching your search.
+|Find crash logs matching your search.
 
 |Copy logs
-|Copy the crash logs to your clipboard.
+|Copy the crash logs for easy sharing.
 |===
 
 === Appium inspector
@@ -85,7 +88,7 @@ Select *Create Jira Ticket* to keep track of issues you find. Learn more about o
 === Compare UI design
 
 [IMPORTANT]
-Before you can use the full set of *compare UI design* features, you'll need to xref:integrations:figma.adoc[integrate Figma].
+Before you can use *compare UI design* fully, you'll need to xref:integrations:figma.adoc[integrate Figma].
 
 [cols="1h,4",autowidth"]
 |===
@@ -126,7 +129,7 @@ Before you can use the full set of *compare UI design* features, you'll need to 
 |A unique id associated with that specific test step.
 
 |Accessibility validation
-|Review general accessibility information by selecting one of then *yellow markers* in the session timeline. If you'd like more in-depth accessibility information, select *View Details* to open our xref:./accessibility-validation.adoc[Accessibility validation] tool.
+|Review general accessibility information by selecting one of then *yellow markers* in the session timeline. If you'd like more in-depth accessibility information, select *View Details* to open our xref:./review-accessibility-issues.adoc[Accessibility validation] tool.
 |===
 
 [#_screenshots_panel]
