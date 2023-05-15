@@ -1,0 +1,93 @@
+= Device controls
+:navtitle: Device controls
+
+During a manual session, you can interact with the test device using Kobiton's device controls. Most controls are xref:_default_controls[available by default], but others require xref:_additional_controls[additional setup].
+
+[#_default_controls]
+== Default controls
+
+=== Touch
+
+Tap and swipe the device screen using your mouse's *left-click*.
+
+=== Pinch/zoom
+
+Place the center circle where you want to pinch, then drag one of the outer circles to zoom in and out.
+
+=== Set device location
+
+Change the device's location by using the search bar or entering the latitude and longitude of your desired location.
+
+=== Set device timezone
+
+Change your timezone by selecting a new timezone from the dropdown.
+
+=== Rotate screen
+
+Use *Rotate Screen* to switch between portrait and landscape.
+
+=== Volume
+
+Change the volume of the device by selecting *Volume Up* or *Volume Down*.
+
+[NOTE]
+This won't change the volume coming from your computer. To fully test device audio, you'll need to ...
+
+[#_adb_shell_android_only]
+=== `adb` shell
+
+You can enter Android Debug Bridge (`adb`) commands to install or debug apps on your Android test device.
+
+[NOTE]
+To keep our devices healthy, we only allow xref:adb-commands.adoc[some `adb` commands].
+
+[#_draw_custom_gesture]
+=== Draw custom gesture
+
+You can draw custom gestures like three-finger swipes or two-finger taps. Start with a sample gesture or xref:custom-gestures.adoc[create your own]. Once a gesture's created, you can save it to your personal collection and use it whenever.
+
+=== Input sensitive data
+
+You can input sensitive data (like usernames and passwords) without it getting recorded in your test session. Enter your sensitive data in the tool, select the corresponding field on your device, then select *Save* to securely send it to your device.
+
+=== Image injection
+
+Use *Image Injection* to xref:test-your-in-app-camera.adoc[test your in-app camera].
+
+=== Power
+
+Use *Power* to restart the device. (Don't worry--this won't end your session).
+
+=== Home button
+
+You can single-click or double-click the *Home Button* to mimic the same feature in link:https://support.apple.com/en-us/HT208204[iOS] and link:https://support.google.com/android/answer/9079644[Android].
+
+=== Recent apps
+
+Mimic the link:https://support.google.com/android/answer/9079646[Android feature] to display your recent apps.
+
+=== Back
+
+Mimic the xref:https://support.google.com/android/answer/9079644[Android feature] to return to the previous page.
+
+=== Speedometer
+
+The Speedometer displays session runtime along with the speed between your browser and test device. Select the dropdown to turn on lightning mode and increase the test device screen to 30 frames per second (FPS).
+
+[NOTE]
+Lightning mode is only available on link:https://kobiton.com/pricing/[certain plans].
+
+=== Screenshots
+
+The number of screenshots you've taken is displayed on the *Screenshots* icon. Select *Take screenshot* to take a screenshot and *Screenshots* to download them.
+
+[#_additional_controls]
+== Additional controls
+
+=== Biometric authentication
+
+After you add our xref:integrations:biometric-authentication/about-our-library.adoc[biometrics authentication library] to your app, you can select *Pass* or *Fail* to test biometric authentication requests.
+
+=== Preform VoiceOver
+
+After you set up xref:devices:enable-voiceover-for-ios.adoc[VoiceOver for iOS], you can test your app's compatibility with screen readers.

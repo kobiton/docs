@@ -1,0 +1,244 @@
+= Session analytics controls
+:navtitle: Session analytics controls
+
+Learn how to use the Session Explorer to export appium scripts, review device logs, and xref:_session_explorer_controls[more] after a test session.
+
+[#_session_overview]
+== Session Overview
+
+=== Session video
+
+[cols="1h,4",autowidth"]
+|===
+|Play/Pause
+|Play or pause the test session recording.
+
+|Timeline
+|Scrub through the test session recording.
+
+|Mute/Unmute
+|Mute or unmute the test session recording.
+
+|Fullscreen
+|Set the test session recording to fullscreen.
+|===
+
+=== Session info
+
+[cols="1h,4",autowidth"]
+|===
+|Session name
+|Select *Edit* to change the session name. You can also change this name in xref:manual-testing:session-settings.adoc[during a test session].
+
+|Description
+|Select *Edit* to change the session description. You can also change the description xref:manual-testing:session-settings.adoc[during a test session].
+
+|Testing type
+|Indicates whether the test session was manual or automated.
+
+|User
+|The name of the user that performed the test session.
+
+|Duration
+|The length of the test session.
+
+|Status
+|Indicates whether the test session was completed.
+
+|Start/End time
+|The date and time the test session started and ended.
+|===
+
+=== Apps installed
+
+[cols="1h,4",autowidth"]
+|===
+|App name
+|The official name of the app, like Instagram or Gmail.
+
+|Size
+|The size of the app in MBs or GBs.
+
+|Version
+|The app version, like 268179862 or 1.0.0.
+
+|Package
+|The bundle identifier, like `com.burbn.instagram`.
+
+|Instrumentation
+|Instrumentation is required for xref:manual-testing:test-your-in-app-camera.adoc[image injection]. Indicates whether this feature was turned on during the test session.
+
+|Instrumentation status
+|Instrumentation is required for xref:manual-testing:test-your-in-app-camera.adoc[image injection]. Indicates whether instrumentation was successful during the test session.
+
+|Installation status
+|Indicates whether the app successfully installed during the test session.
+|===
+
+=== Device info
+
+[cols="1h,4",autowidth"]
+|===
+|Manufacturer
+|The manufacturer, like Apple, Google, or Samsung.
+
+|Operating system
+|The operating system, like Android or iOS.
+
+|Device name
+|The official name of the device, like Galaxy S10, iPhone 11 Pro, or iPhone XS.
+
+|Resolution
+|The screen resolution, like 1080x2220 or 1125x2436.
+
+|Model name
+|The device model, like D10Ap, Lenovo TB-8705F, or SM-G970U.
+
+|UDID
+|The unique device identifier (UDID) used to identify iOS devices.
+|===
+
+=== Logs
+
+[cols="1h,4",autowidth"]
+|===
+|Download
+|Select *Download* to save a copy of the device and crash logs.
+
+|Device
+|Select *Device* to open a preview of the device logs, then select *Download* to save a copy.
+
+|Crash
+|Select *Crash* to open a preview of the crash logs, then select *Download* to save a copy.
+|===
+
+[#_session_explorer]
+== Session Explorer
+
+=== Review system metrics
+
+[NOTE]
+The following metrics represent data _during_ the selected test session.
+
+[cols="1h,4",autowidth"]
+|===
+|CPU
+|The amount of work the device CPU performed.
+
+|Memory
+|The amount of memory the device used.
+
+|Network
+|The amount of bytes the device sent and received over the network.
+
+|Battery drain
+|The speed of the device's battery drain.
+|===
+
+=== View crash logs
+
+[cols="1h,4",autowidth"]
+|===
+|Search bar
+|Find crash logs matching your search.
+
+|Copy logs
+|Copy the crash logs for easy sharing.
+|===
+
+=== Appium inspector
+
+[cols="1h,3"]
+|===
+|Refresh inventory
+|Reset the *Hierarchy*, removing all filters and searches.
+
+|Inspect elements
+|Hover over an element on the device screen and highlight its XML data.
+
+|Download inventory
+|Download the current inventory as an `.xml` file.
+
+|Dropdown
+|Choose a specific WebView to display. The default WebView is `NATIVE_APP`.
+
+|Search bar
+|Only display elements in the *Hierarchy* that match your search.
+
+|Attributes
+|Select an element and display a list of related attributes, like `type`, `name`, `xpath`, and more.
+|===
+
+
+=== Review device logs
+
+[cols="1h,4",autowidth"]
+|===
+|Dropdown
+|Only display logs with a *Notice*, *Warning*, or *Error* message.
+
+|Search bar
+|Only display logs matching your search.
+
+|Copy logs
+|Copy the full session log to your clip board.
+|===
+
+=== Compare UI design
+
+[IMPORTANT]
+Before you can use *compare UI design* fully, you'll need to xref:integrations:figma/index.adoc[integrate Figma].
+
+[cols="1h,4",autowidth"]
+|===
+|Figma file dropdown
+|Use the *dropdown* to select a Figma project. From the gallery, choose an image, then select *Compare* to overlay your image.
+
+|Resolutions dropdown
+|Select a resolution, like 640x422, 1372x844, or 640x1280.
+
+|Search bar
+|Only display images matching your search.
+
+|Upload images
+|Use this feature without Figma. Select *upload image*, then choose an image to upload and overlay.
+|===
+
+[#_session_timeline]
+=== Session timeline
+
+[cols="1h,4",autowidth"]
+|===
+|Test steps
+|Located at the bottom of the Session Explorer. Select a *test step* to skip to that action.
+
+|Play/Pause
+|Play or pause the test session recording.
+
+|Previous/Next
+|Skip to the previous or next test step.
+
+|Zoom in/out
+|Zoom in or out of the session timeline.
+
+|Copy link
+|Instead of manually writing reproduction steps, copy and send a link to that specific test step.
+
+|Copy command id
+|A unique id associated with that specific test step.
+
+|Accessibility validation
+|Review general accessibility information by selecting one of then *yellow markers* in the session timeline. If you'd like more in-depth accessibility information, select *View Details* to open our xref:review-accessibility-issues.adoc[Accessibility validation] tool.
+|===
+
+[#_screenshots_panel]
+=== Screenshots panel
+
+[cols="1h,4",autowidth"]
+|===
+|Red dot
+|A visual indicator of the current action being preformed. The red dot is not visible on downloaded screenshots.
+
+|Download
+|Download a screenshot to your local machine.
+|===
