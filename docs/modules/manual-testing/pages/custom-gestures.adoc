@@ -1,13 +1,13 @@
 = Custom gestures
 :navtitle: Custom gestures
 
-During a manual session, you create scripts to xref:device-controls.adoc#_draw_custom_gesture[draw custom gestures].
+During a manual session, you can create scripts to xref:device-controls.adoc#_draw_custom_gesture[draw custom gestures].
 
 == Scripts
 
 Scripts contain one or more xref:_functions[functions] space-separated in a single line. Each function could contain zero or more xref:_parameters[parameters], depending on the specific function. If a parameter is required for a specific function, it'll be marked `<>`, otherwise it'll be marked `[]`.
 
-[source,javascript]
+[source,]
 ----
 down(0%, 0%, 3) move(50%, 50%, 3) up(3) // Places the 4th finger on the screen at 0%, 0%, moves the finger to 50%, 50%, and then removes the finger.
 ----
@@ -24,7 +24,7 @@ The xref:_x_and_y[`x`] and xref:_x_and_y[`y`] coordinates refer to the exact cen
 
 By default, `finger` is set to `0` and `duration` is set to `2s`.
 
-[source,javascript]
+[source,]
 ----
 down(50%, 50%) arc(50%, 50%, 180) //
 down(50%, 50%) arc(50%, 50%, 0) //
@@ -36,7 +36,7 @@ down(50%, 50%) arc(50%, 50%, 360) //
 
 Place a finger on the screen at the xref:_x_and_y[`x`] and xref:_x_and_y[`y`] coordinates. By default, xref:_finger[`finger`] will be set to `0`, unless you choose a different finger. The `finger` won't move unless called in another function.
 
-[source,javascript]
+[source,]
 ----
 down(1px, 400px) // Places a finger at 1px, 400px using the pixels of your computer monitor.
 down(400dp, 1dp) // Places a finger at 400px, 1px using the pixels of the mobile device screen.
@@ -51,7 +51,7 @@ Swipe a finger from its current location to the location specified in `move()`. 
 [NOTE]
 If there's no `finger` on the screen yet, xref:_down[`down()`] will be called instead.
 
-[source,javascript]
+[source,]
 ----
 down(50%, 50%) move() // This
 down(50%, 50%) move() // This
@@ -63,7 +63,7 @@ down(50%, 50%) move() // This
 
 Wait for all function calls to finish before calling more functions. If xref:_finger[`finger`] is assigned, `sync()` only applies to function calls using that `finger`.
 
-[source,javascript]
+[source,]
 ----
 down(0) sync() down(1) // Wait for all functions to finish before placing the 2nd finger down.
 down(0) sync(1) down(1) // Wait for the 1st finger to finish before placing the 2nd finger down.
@@ -75,7 +75,7 @@ down(0) sync(0) down(1) // Place the 2nd finger down immediately, since sync() w
 
 Remove a finger from the screen. By default, xref:_finger[`finger`] will be set to `0`, unless you choose a different finger.
 
-[source,javascript]
+[source,]
 ----
 up() // Removes the 1st finger from the screen since a finger wasn't specified.
 up(5) // Removes the 6th finger from the screen.
@@ -86,7 +86,7 @@ up(5) // Removes the 6th finger from the screen.
 
 Wait for `duration` before calling more functions.
 
-[source,javascript]
+[source,]
 ----
 wait(20ms) // Waits for 20 milliseconds before calling another function.
 wait(30s) // Waits for 30 seconds before calling another function.
@@ -99,7 +99,7 @@ wait(30s) // Waits for 30 seconds before calling another function.
 
 An integer ranging from `-360` to `360` that determines the angle of xref:_arc[`arc()`]. Positive integers are drawn clockwise, while negative integers are drawn in reverse.
 
-[source,javascript]
+[source,]
 ----
 down(50%, 50%) arc(50%, 50%, 180) //
 down(50%, 50%) arc(50%, 50%, 0) //
@@ -111,7 +111,7 @@ down(50%, 50%) arc(50%, 50%, 360) //
 
 A positive integer used to set the duration of a function. By default, `duration` is set to milliseconds, but you can append `ms` (milliseconds) or `s` (seconds) to manually change this.
 
-[source,javascript]
+[source,]
 ----
 wait(50) // Waits for 50 milliseconds.
 wait(30ms) // Waits for 30 milliseconds.
@@ -123,7 +123,7 @@ wait(8s) // Waits for 8 seconds.
 
 An integer ranging from `0` to `9` indicating _which_ finger to use in a gesture. By default, `finger` is set to `0`, but you can choose another integer up to `9`. Use different fingers with different functions to create multi-finger gestures, like a two-finger swipe or pinch.
 
-[source,javascript]
+[source,]
 ----
 down(50%, 50%, 0) // Places the first finger on the center of the screen.
 move(1px, 400px, 8) // Swipes the ninth finger from pixel 1 to pixel 400 on the screen.
@@ -135,7 +135,7 @@ up(4) // Removes the fifth finger from the screen.
 
 Two positive integers used to set a gesture's coordinates.By default, `x` and `y` refer to pixels, but you can append `px` (pixels), `dp` (device-independent pixels), or `%` (percent) override the coordinate type.
 
-[source,javascript]
+[source,]
 ----
 down(1px, 400px) // Places a finger at 1px, 400px using the pixels of your computer monitor.
 down(400dp, 1dp) // Places a finger at 400px, 1px using the pixels of the mobile device screen.

@@ -1,0 +1,76 @@
+= Run visual validations
+:navtitle: Run visual validations
+
+Visual Validations allows users to turn existing Appium scripts into functional and visual tests by configuring the following three desired capabilities included in the Appium export download:
+
+* `kobiton:visualValidation`: Set to `true`
+* `ensureWebviewsHavePages`: By default, set to `true`
+* `kobiton:referenceSessionId`: By default `kobiton:referenceSessionId` will reflect the session ID for the manual session used to create the downloaded Appium export script, but this can be modified to use a different session as baseline.
+
+Injecting and enabling these capabilities into an existing script provides support for content and layout structure validations while removing the need to script custom validations to cover a variety of test cases.
+
+As this feature is still somewhat new and continues to be improved upon with every release, please keep in mind that at this time there are a few limitations:
+
+* A manual session must run and the Appium session exported
+* The remediation page will only display in read-only mode
+* Support for Kobiton devices only (does not support Sauce Labs devices)
+
+Content and layout support does not include:
+* crash
+* color text
+* WBI
+* performance
+
+Content and layout support *does* include text currently, with the use of the desiredCap `kobiton:textValidation`
+
+== To run a Visual validation on a Kobiton device
+
+. Download the Appium export script from the manual session.
+. Open the file and navigate to: `manual > src > test > java > com > kobiton > scriptlessautomation > Config.java`
+
+[source,javascript]
+----
+package com.kobiton.scriptlessautomation;
+
+import io.appium.java_client.remote.MobileCapabilityType;
+import org.apache.commons.codec.binary.Base64;
+import org.openqa.selenium.remote.DesiredCapabilities;
+
+public class Config {
+  // code omitted for brevity
+}
+----
+If needed, update login credentials in `public class config {}`.
+
+In `public static DesiredCapabilities get{device-information}DesiredCapabilities()`, confirm the following capabilities are set `true`.
+
+[source,javascript]
+----
+capabilities.setCapability("ensureWebviewsHavePages", true);
+capabilities.setCapability("kobiton:visualValidation", true);
+----
+To run the script on the same device, run the project.
+
+== Parallel Visual Validation Executions
+
+Visual Validations can run in parallel on multiple devices, but does require additional setup.
+
+To run Visual Validations on parallel executions:
+
+. On `config.java`, add and configure the desired configuration for the additional devices.
+. Navigate to `manual > src > test > java > com > kobiton > scriptlessautomation > testApp.java`
+. Change `setup(capabilities, {# of executions});` to reflect the number of parallel executions the test will run.
+
+Example: to run two parallel executions:
+
+[source,javascript]
+----
+@Test
+public void [Your test function name]() throws Exception {
+   DesiredCapabilities capabilities = Config.[Your defined desired capabilities];
+   findOnlineDevice(capabilities);
+   setup(capabilities, 2);
+   runTest();
+}
+----
+Run the project to test on the defined devices.

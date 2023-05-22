@@ -1,0 +1,69 @@
+= Auto-generate desired capabilities
+:navtitle: Auto-generate desired capabilities
+
+Learn how to auto-generate a `DesiredCapabilities` object and add it to your test suite.
+
+== Auto-generate `DesiredCapabilities`
+
+After you xref:devices:find-a-device.adoc[find a device], select the *vertical ellipses*, the open the *Automation Settings*. Choose from our xref:desired-capabilities-options.adoc[list of desired capabilities] and start auto-generating your `DesiredCapabilities` object.
+
+Here's an example:
+
+[source,python]
+----
+kobitonServerUrl = 'https://isaiahrobinson:47e6eb8c-8afc-41bc-9856-849cd7e8ca11@api.kobiton.com/wd/hub'
+
+desired_caps = {
+  'sessionName':        'Automation test session',
+  'sessionDescription': '',
+  'deviceOrientation':  'portrait',
+  'noReset':            True,
+  'fullReset':          False,
+  'captureScreenshots': True,
+  'useConfiguration':   '',
+  'autoWebview':        True,
+  'browserName':        'safari',
+  # The given team is used for finding devices and the created session will be visible for all members within the team.
+  'groupId':            12247, # Group: Ngo-nocleanup
+  'deviceGroup':        'ORGANIZATION',
+  # For deviceName, platformVersion Kobiton supports wildcard
+  # character *, with 3 formats: *text, text* and *text*
+  # If there is no *, Kobiton will match the exact text provided
+  'deviceName':         'iPhone XS',
+  # The tag is used for finding devices and the user can input only one tag.
+  # For example, the data value will be inputted: tagName="TagName1"
+  'tagName':            '',
+  'platformName':       'iOS',
+  'platformVersion':    '15.5'
+}
+----
+
+When you're finished, select *Copy to Clipboard*.
+
+== Add `DesiredCapabilities` to your script
+
+Open your automation testing script and paste the auto-generated `DesiredCapabilities` object inside your relevant function.
+
+Here's an example:
+
+[source,python]
+----
+from appium import webdriver
+
+# Add your DesiredCapabilities object here.
+
+driver = webdriver.Remote(kobitonServerUrl, desired_caps)
+
+driver.get('https://your-website.com')
+
+username_field = driver.find_element_by_id('username')
+password_field = driver.find_element_by_id('password')
+
+username_field.send_keys('your-username')
+password_field.send_keys('your-password')
+
+login_button = driver.find_element_by_id('login')
+login_button.click()
+
+driver.quit()
+----
