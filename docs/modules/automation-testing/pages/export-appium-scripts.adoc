@@ -1,0 +1,54 @@
+= Export an Appium script
+:navtitle: Export an Appium script
+
+Learn how to export the Appium script automatically generated after your manual session.
+
+== Before you start
+
+Appium scripts are automatically generated after every _successful_ manual session, so check for xref:scriptless-automation:remediation-options.adoc[required remediations] before you begin.
+
+[#_export_your_script]
+== Export your script
+
+After your manual session, search for your session and open your session overview.Then select *Automated test case* to open test management.
+
+image::session-overview.png[alt="A session overview within Kobiton."]
+
+Next, select the *Export Appium Script* icon.If you don't see an icon, check if your session xref:scriptless-automation:remediation-options.adoc[requires remediation].
+
+image::export-appium-icon.png[alt="Session overview tabs, including Automated Test Case, Jira Integration, Rerun, and the Appium Export icon."]
+
+Choose a testing framework and select *Download*.When you're ready, xref:_verify_the_contents[verify your contents].
+
+image::download-appium-script.png[alt="The export Appium script diologue, allowing you to download the Appium script."]
+
+[#_verify_the_contents]
+== Verify the contents
+
+Download and unzip your script to verify the contents:
+
+[source]
+----
+manual
+├── src
+│   ├── test
+│   │   └── java
+│   │       └── com.company.scriptlessautomation
+│   │           ├── Config
+│   │           ├── OptService
+│   │           ├── ProxyServer
+│   │           ├── TestApp
+│   │           ├── TestBase
+│   │           ├── TestSuite
+│   │           └── Utils
+│   └── resources
+│       └── execute-script-on-web-element.js
+├── pom.xml
+├── README.md
+└── testing.xml
+----
+
+Now you can use these auto-generated Appium scripts to create automation tests for your test suite.
+
+[NOTE]
+You can also generate Appium scripts for xref:scriptless-automation:export-appium-scripts.adoc[scriptless sessions].
