@@ -52,7 +52,7 @@ You can input sensitive data (like usernames and passwords) without it getting r
 
 === Image injection
 
-Use *Image Injection* to xref:test-your-apps-camera.adoc[test your in-app camera].
+Use *Image Injection* to xref:test-in-app-camera.adoc[test your in-app camera].
 
 === Power
 
@@ -69,6 +69,12 @@ Mimic the link:https://support.google.com/android/answer/9079646[Android feature
 === Back
 
 Mimic the xref:https://support.google.com/android/answer/9079644[Android feature] to return to the previous page.
+
+=== Synchronous inventory capture
+
+Synchronous Inventory Capturing mode ascertains app inventory (elements, XML tree, etc) are synchronously captured with user's actions on the devices. This resolves a conventional problem: users actions on the devices are too fast (select elements after elements at a fast pace) while Kobiton system couldn't capture the action quick enough to keep up with.
+
+Now as you navigate the apps by selecting elements, the Capturing tooltip at the cursor will display the capturing progress indicator. The systems execute the next command (step) from users only when the previous command is fully captured, indicated by the tooltip.
 
 === Speedometer
 

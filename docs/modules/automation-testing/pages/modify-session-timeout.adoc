@@ -1,0 +1,56 @@
+= Session timeouts
+:navtitle: Session timeouts
+
+Learn how to modify your automation session timeout.
+
+== Kobiton defaults
+
+There are a few timeout rules that the Kobiton platform follows for Appium automation:
+
+- On the first request to initialize a session (e.g. "POST /wd/hub/session"), Kobiton will terminate the session if there is no response to the test script after a timeout.
+- If the test session is *web testing* (i.e. use _browser_ in desired Capabilities), the timeout is *10 minutes*.
+- If the test session is *app testing* (i.e. use _app_ in desired Capabilities), the timeout is *30 minutes*.
+- On subsequent requests, Kobiton will terminate the session if there is no response to the test script after *10 minutes*.
+
+== Modify your timeout
+
+Kobiton also supports user-specified Appium implicit/explicit wait timeouts in automation scripts. Testers are able to use Appium/Selenium commands to specify (implicit/explicit) wait timeout duration during a running Automation session. When a wait timeout is provided in test script, Kobiton ensures that it matches with a Kobiton-specific value range.
+
+- The minimum wait timeout is *10 seconds*, if given value is lower, Kobiton will use *10 seconds*.
+- The maximum wait timeout is *30 minutes*, if given value is higher, Kobiton will use *30 minutes*.
+
+For more information about wait timeout, consult the link:http://www.seleniumhq.org/docs/04_webdriver_advanced.jsp[Selenium documentation^].
+
+== Override HTTP timeout for client libraries
+
+The HTTP library used by various client libraries usually has a timeout of *2 minutes*. That is, when the HTTP library is used to send an HTTP request, it will wait for the response in a certain timeout before terminating the request. However, an _app test session (i.e. use _app_ in desired capabilities) may need more than *2 minutes* to initialize because it needs to download and install the app. Therefore, to prevent the client libraries from ending prematurely, users should extend the timeout, which should not exceed *30 minutes* (the max timeout used by Kobiton).
+
+== Try/catch loop
+
+When you run your script and try to connect Kobiton for any device, if that device is not available then you can retry with a try/catch loop from your code. It will keep trying for 15 minutes and then we can check the available device in every 30 sec.
+
+For example:
+
+[source,java]
+----
+try {
+  System.out.println("Creating Driver Test1");
+  int cnt=30;
+  boolean IsSessionCreated=false;
+
+  while(!IsSessionCreated)
+  {
+    try {
+      driver = new RemoteWebDriver(new URL(kobitonServerUrl), capabilities);
+      IsSessionCreated=true;
+      }catch(SessionNotCreatedException snce) {
+        IsSessionCreated=false;
+        TimeUnit.SECONDS.sleep(30);
+
+    }
+    if (cnt<=0) {
+      break;
+      }
+    cnt--;
+}
+----

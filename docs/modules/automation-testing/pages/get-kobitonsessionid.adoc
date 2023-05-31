@@ -1,12 +1,12 @@
-= Fetch `kobitonSessionId`
-:navtitle: Fetch `kobitonSessionId`
+= Get `kobitonSessionId`
+:navtitle: Get `kobitonSessionId`
 
-Learn how to fetch a session's `kobitonSessionId`, so you can use the link:https://api.kobiton.com/docs/#kobiton-api-v2[Kobiton API] to get session details, collect logs, capture screenshots, and more.
+Learn how to get the `kobitonSessionId` of a completed session, so you can use the link:https://api.kobiton.com/docs/#kobiton-api-v2[Kobiton API] to get session details, collect logs, capture screenshots, and more.
 
 [NOTE]
 Check out our xref:supported-client-libraries.adoc[supported client libraries].
 
-== Use C#
+== C#
 
 === Appium
 
@@ -28,7 +28,7 @@ string kobitonSessionId = driver.Capabilities.GetCapability("kobitonSessionId").
 Console.WriteLine("kobitonSessionId: " + kobitonSessionId);
 ----
 
-== Use Java
+== Java
 
 === Appium
 
@@ -50,7 +50,7 @@ String kobitonSessionId = driver.getCapabilities().getCapability("kobitonSession
 System.out.println("kobitonSessionId: " + kobitonSessionId);
 ----
 
-== Use JavaScript
+== JavaScript
 
 === Protractor
 
@@ -87,7 +87,7 @@ const sessionInfo = await client.getSession()
 console.log('kobitonSessionId', sessionInfo.kobitonSessionId)
 ----
 
-== Use PHP
+== PHP
 
 === Appium
 
@@ -111,7 +111,7 @@ $kobitonSessionId = $getCapabilities['kobitonSessionId'];
 print($kobitonSessionId);
 ----
 
-== Use Python
+== Python
 
 === Appium
 
@@ -133,7 +133,7 @@ kobitonSessionId = self.driver.desired_capabilities.get('kobitonSessionId')
 print(kobitonSessionId)
 ----
 
-== Use Ruby
+== Ruby
 
 === Appium
 

@@ -1,0 +1,20 @@
+= About `flexCorrect`
+:navtitle: About `flexCorrect`
+
+== The problem
+
+In writing Appium automation scripts, locating elements relies on the Element Selector like XPath, Accessibility, ID. An app element might have an inconsistent locator among various device models. Due to this inconsistency, the script with locator strategy for one particular device doesn't work across other devices. The most common error encountered is "Cannot Find Element". To overcome this problem, automation testers need to do the laborious task of inspecting element selectors on every device under test and write multiple tailored locators scripts for different devices.
+
+At Kobiton, in our efforts to make apps better everywhere, we’re introducing `flexCorrect` to alleviate this problem.
+
+== What is `flexCorrect`?
+
+`flexCorrect` helps testers identify app elements not solely by element selector but with the help of our AI engine - NOVA. `flexCorrect`, by the power of image processing from NOVA, scans and identifies elements across a mobile device screen (from a sample Kobiton test session, namely a baseline session).
+
+Then in the case when the Appium script (using element selector) fails to identify elements on a different device due to selector inconsistency, `flexCorrect` aids recommending those new elements selection with the reference from memorized baseline session elements.
+
+== How `flexCorrect` help testers?
+
+`flexCorrect` allows testers to remediate the test script on the Kobiton portal, or, generate a report with correct element identifiers and remediate on test scripts later.
+
+`flexCorrect` acts as a self-healing, fall-back solution for the "Cannot Find Element" error due to variance in Element Selector among mobile devices.

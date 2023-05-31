@@ -97,14 +97,14 @@ As with any code change, you’ll want to verify your new library works. First, 
 
 If you add our library to your app and send `BiometricPrompt.AuthenticationCallback` during authentication link:https://developer.android.com/guide/topics/ui/notifiers/toasts[using toasts], your app may crash during your test session. If this happens, you'll find the following error in your crash logs:
 
-[,java]
+[source,java]
 ----
 java.lang.NullPointerException: Can't toast on a thread that has not called Looper.prepare()
 ----
 
 Here’s an example that could lead to a crash:
 
-[,java]
+[source,java]
 ----
 private BiometricPrompt.AuthenticationCallback getAuthenticationCallback() {
     return new BiometricPrompt.AuthenticationCallback() {

@@ -1,0 +1,64 @@
+= Add desired capabilities
+:navtitle: Add desired capabilities
+
+Learn how to add desired capabilities to your test suite so you can ...
+
+== Locate config file
+
+First you'll open your xref:automation-testing:auto-generate-an-appium-script.adoc[auto-generated Appium script] and locate the config file in the `test` directory. The exact location and name of the config file will depend on your testing framework. Here's where you may find it:
+
+[source,bash]
+----
+root
+└── src
+    └── test
+        └── Config # Java TestNG
+        └── Config.java # Java JUnit
+        └── config.js # NodeJS Mocha
+----
+
+== Add capability
+
+In the config file, locate `DesiredCapabilities` and ...
+
+You can add individual desired capabilities or paste the `DesiredCapabilities` block you auto-generated.
+
+Here's an example:
+
+[source,java]
+----
+// Located in test/scriptlessautomation/Config in the Java's TestNG framework.
+
+public static DesiredCapabilities getIPhone11ProIOS146DesiredCapabilities() {
+
+    String kobitonServerUrl = "https://docsWriter:000abc123@api.kobiton.com/wd/hub";
+
+    // Manually added
+
+    capabilities.setCapability("ensureWebviewsHavePages", true);
+    capabilities.setCapability("kobiton:visualValidation", true);
+    capabilities.setCapability("kobiton:referenceSessionId", 0000011);
+
+    // Auto-generated
+
+    desiredCapabilities.put("sessionName", "Biometric authentication");
+    desiredCapabilities.put("sessionDescription", "Testing biometric authentication for the login screen.");
+    desiredCapabilities.put("deviceOrientation", "portrait");
+    desiredCapabilities.put("noReset", true);
+    desiredCapabilities.put("fullReset", false);
+    desiredCapabilities.put("captureScreenshots", true);
+    desiredCapabilities.put("useConfiguration", "");
+    desiredCapabilities.put("autoWebview", true);
+    desiredCapabilities.put("browserName", "safari");
+    desiredCapabilities.put("groupId", 0011);
+    desiredCapabilities.put("deviceGroup", "ORGANIZATION");
+    desiredCapabilities.put("deviceName", "iPhone XS");
+    desiredCapabilities.put("tagName", "");
+    desiredCapabilities.put("platformName", "iOS");
+    desiredCapabilities.put("platformVersion", "15.5");
+
+    return capabilities;
+}
+----
+
+When you're finished, save your changes. Now you can ...

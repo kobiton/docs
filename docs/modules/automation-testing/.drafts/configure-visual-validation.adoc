@@ -1,0 +1,84 @@
+= Configure visual validation
+:navtitle: Configure visual validation
+
+Learn how to configure visual validation for your test suite. After your xref:_modify_desired_capabilities[initial set up], you can also run visual validations on similar devices xref:_run_in_parallel[in parallel].
+
+[#_modify_desired_capabilities]
+== Modify desired capabilities
+
+First, download your xref:automation-testing:auto-generate-an-appium-script.adoc[auto-generated Appium script] and open the config file in the `test` directory. The exact location and name of the config file will depend on your testing framework. Here's where you may find it:
+
+[source,bash]
+----
+root
+└── src
+    └── test
+        └── Config # Java TestNG
+        └── Config.java # Java JUnit
+        └── config.js # NodeJS Mocha
+----
+
+Next, locate `DesiredCapabilities` and set both `"ensureWebviewsHavePages"` and `"kobiton:visualValidation"` to `true`. You can also choose a specific reference session for `visualValidation` by assigning the session's xref:get-kobitonsessionid.adoc[`kobitonSessionId`] to `"kobiton::baselineSessionId"` instead.
+
+Here's an example:
+
+[source,java]
+----
+// Located in test/scriptlessautomation/Config in the Java's TestNG framework.
+
+public static DesiredCapabilities getIPhone11ProIOS146DesiredCapabilities() {
+        DesiredCapabilities capabilities = new DesiredCapabilities();
+
+        // Change these capabilities:
+
+        capabilities.setCapability("ensureWebviewsHavePages", true); // Set to true.
+        capabilities.setCapability("kobiton:visualValidation", true);  // Set to true.
+        capabilities.setCapability("kobiton:referenceSessionId", 0000011); // (Optional) Choose a different reference session by assigning its kobitonSessionId.
+
+    return capabilities;
+}
+----
+
+Now you can run visual validation scripts on an individual device. If you'd like to run your script in parallel, also xref:_run_in_parallel[modify the `setup()` function].
+
+[#_run_in_parallel]
+== Run in parallel
+
+You can run visual validation scripts in parallel by modifying the `setup()` function in your `test` directory. The exact file and location of `setup()` will depend on your testing framework. Here's where you may find it:
+
+[source,bash]
+----
+root
+└── src
+    └── test
+        └── TestSuite # Java TestNG
+        └── TestApp.java # Java JUnit
+        └── mocha.spec.js # NodeJS Mocha
+----
+
+Once you locate the `setup()` function, assign how many devices you want to run in parallel to the second parameter.
+
+[source,java]
+----
+testApp.setup(capabilities, <device-count>); // Assign how many devices you want to run in parallel to <device-count>.
+----
+
+For example:
+
+[source,java]
+----
+// Located in test/scriptlessautomation/TestSuite in the Java's TestNG framework.
+
+public class TestSuite {
+    @Test
+    public void testOnIPhone11ProIOS146() throws Exception {
+        TestApp testApp = new TestApp();
+        DesiredCapabilities capabilities = Config.getIPhone11ProIOS146DesiredCapabilities();
+        testApp.findOnlineDevice(capabilities);
+        testApp.setup(capabilities, 3); // Run this test on 3 similar devices in parallel.
+        testApp.runTest();
+    }
+}
+----
+
+Now you can run visual validation scripts on similar devices in parallel.
