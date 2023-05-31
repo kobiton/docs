@@ -1,31 +1,23 @@
 = Test in-app camera
 :navtitle: Test in-app camera
 
-Learn how to test your app's camera during a manual session using image injection.
-
-image::manual-testing:image-injection-feature.jpg[Image injection feature on the left-side navigation bar,800,500]
+Learn how to add and remove images to the injeciton library so you can inject them into your in-app camera during a manual test session.
 
 == Before you start
 
-To test your in-app camera, you'll need to enable *Instrument application for camera injection* before you xref:install-an-app.adoc[install your app].
-
-image::manual-testing:instrument-app-toggle.jpg[Toggle the instrument application for camera injection,800,500]
+You'll need to enable *Instrument application for camera injection* when xref:install-an-app.adoc[installing your app] before you can test your in-app camera.
 
 == Add an image
 
-First you'll add one or more images to your injection library. From your xref:device-controls.adoc[device controls], select *Image Injection*.
+You can add an image to the injection library by opening *Image Injection*, selecting *Set Simulated Image*, then uploading one or more `.jpg`, `.jpeg`, or `.png` files from your computer.
 
-image::image-injection-icon.jpg[alt="A device and its available controls during a manual test session. The mouse curser is hovering over the image injection icon, displaying its name."]
-
-Select *Set Simulated Image* and upload one or more `.jpg`, `.jpeg`, or `.png` files from your computer.
-
-image::manual-testing:set-simulated-image-v1.jpg[Set simulated image in the image injection modal,500,500]
+image::manual-testing:set-simulated-image-v1.jpg[alt="A device with image injection opened during a manual test session."]
 
 == Inject an image
 
-Now that you've added some images to your library, launch your app and select your in-app camera. Choose an image from the library and select *Inject* to test your in-app camera.
+Now that you've added some images to your library, launch your app and select the in-app camera. Choose an image from the library and select *Inject* to test your app's camera.
 
-image::manual-testing:inject-image-v1.jpg[A selected image in the image injection modal,500,500]
+image::manual-testing:inject-image-v1.jpg[alt="A close-up of the image injection library containing two images."]
 
 When you're finished, select *reset camera* to stop injection.
 
