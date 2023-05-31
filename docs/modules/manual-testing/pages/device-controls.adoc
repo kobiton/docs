@@ -1,99 +1,126 @@
 = Device controls
 :navtitle: Device controls
+:numbered:
 
-During a manual session, you can interact with the test device using Kobiton's device controls. Most controls are xref:_default_controls[available by default], while some need to be xref:_additional_controls[setup].
+You can interact with the test device using these controls during a manual session.
 
-[#_default_controls]
-== Default controls
+image:$NEEDSIMAGE$[alt="A manual session with each device control numbered in red."]
 
-=== Touch
+== Touch
 
-Use *left-click* to tap and swipe the device screen.
+You can interact with your device by using *left-click* to tap and swipe the screen.
 
-=== Pinch/zoom
+== Pinch/zoom
 
-Place the center circle where you want to pinch, then drag one of the outer circles to zoom in and out.
+You can zoom or pinch the device screen by placing the center circle on your target location and dragging an outer circle closer or farther away.
 
-=== Set device location
+image:$NEEDSIMAGE$[alt=""]
 
-Change the device's location by using the search bar or entering the latitude and longitude of your desired location.
+== Set device location
 
-=== Set device timezone
+You can change the device location by either searching for a location or entering a longitude and latitude.
 
-Change your timezone by selecting a new timezone from the dropdown.
+image:$NEEDSIMAGE$[alt=""]
 
-=== Rotate screen
+== Set device timezone
 
-Use *Rotate Screen* to switch between portrait and landscape.
+You can change the device timezone by selecting a new timezone from the dropdown.
 
-=== Volume
+image:$NEEDSIMAGE$[alt=""]
 
-Change the volume of the device by selecting *Volume Up* or *Volume Down*.
+== Rotate screen
+
+You can rotate the device screen between portrait and landscape.
+
+image:$NEEDSIMAGE$[alt=""]
+
+== Volume
+
+You can change the device volume by selecting *Volume Up* or *Volume Down*.
 
 [NOTE]
-This won't change the volume coming from your computer. To fully test device audio, you'll need to ...
+This won't change the volume coming from your computer, only...
 
-[#_adb_shell_android_only]
-=== `adb` shell
+[#_adb_shell]
+== `adb` shell
 
 You can enter Android Debug Bridge (`adb`) commands to install or debug apps on your Android test device.
 
 [NOTE]
-To keep our devices healthy, we only allow xref:adb-commands.adoc[some `adb` commands].
+We only allow xref:adb-commands.adoc[specific `adb` commands] so we can continue keeping test devices in excellent condition.
+
+== Preform VoiceOver
+
+After you set up xref:devices:enable-voiceover-for-ios.adoc[VoiceOver for iOS], you can test screen reader compatibility.
+
+== Biometric authentication
+
+After you add our xref:integrations:biometric-authentication/about-our-library.adoc[biometrics authentication library] to your app, you can select *Pass* or *Fail* to test biometric authentication requests.
 
 [#_draw_custom_gesture]
-=== Draw custom gesture
+== Draw custom gesture
 
-You can draw custom gestures like three-finger swipes or two-finger taps. Start with a sample gesture or xref:custom-gestures.adoc[create your own]. Once a gesture's created, you can save it to your personal collection and use it whenever.
+You can draw custom gestures like three-finger swipes or two-finger taps by choosing a sample gesture or xref:custom-gestures.adoc[creating your own].
 
-=== Input sensitive data
+image:$NEEDSIMAGE$[alt=""]
 
-You can input sensitive data (like usernames and passwords) without it getting recorded in your test session. Enter your sensitive data in the tool, select the corresponding field on your device, then select *Save* to securely send it to your device.
+After you create a gesture, you can save it for future sessions.
 
-=== Image injection
+== Input sensitive data
 
-Use *Image Injection* to xref:test-in-app-camera.adoc[test your in-app camera].
+You can input sensitive data (like usernames and passwords) without recording it in the xref:session-analytics:session-overview.adoc#_session_video[session video]. Enter your sensitive data, tap the related field on your device, then select *Save* to send it securely.
 
-=== Power
+image:$NEEDSIMAGE$[alt=""]
 
-Use *Power* to restart the device. (Don't worry--this won't end your session).
+== Image injection
 
-=== Home button
+You can xref:test-in-app-camera.adoc[test your in-app camera] by adding an image to the injection library and selecting *Set Image*.
 
-You can single-click or double-click the *Home Button* to mimic the same feature in link:https://support.apple.com/en-us/HT208204[iOS] and link:https://support.google.com/android/answer/9079644[Android].
+image:$NEEDSIMAGE$[alt=""]
 
-=== Recent apps
+== Power
 
-Mimic the link:https://support.google.com/android/answer/9079646[Android feature] to display your recent apps.
+You can restart your device by selecting the *Power* button. (Don't worry--this won't end your session).
 
-=== Back
+image:$NEEDSIMAGE$[alt=""]
 
-Mimic the xref:https://support.google.com/android/answer/9079644[Android feature] to return to the previous page.
+== Home button
 
-=== Synchronous inventory capture
+You can single-click or double-click the *Home Button* to replicate the link:https://support.apple.com/en-us/HT208204[iOS] or link:https://support.google.com/android/answer/9079644[Android] home button.
 
-Synchronous Inventory Capturing mode ascertains app inventory (elements, XML tree, etc) are synchronously captured with user's actions on the devices. This resolves a conventional problem: users actions on the devices are too fast (select elements after elements at a fast pace) while Kobiton system couldn't capture the action quick enough to keep up with.
+== Recent apps
 
-Now as you navigate the apps by selecting elements, the Capturing tooltip at the cursor will display the capturing progress indicator. The systems execute the next command (step) from users only when the previous command is fully captured, indicated by the tooltip.
+While using an Android device, select *Recent Apps* to link:https://support.google.com/android/answer/9079646[display your recent apps].
 
-=== Speedometer
+image:$NEEDSIMAGE$[alt=""]
 
-The Speedometer displays session runtime along with the speed between your browser and test device. Select the dropdown to turn on lightning mode and increase the test device screen to 30 frames per second (FPS).
+== Back
+
+While using an Android device, select *Back* to xref:https://support.google.com/android/answer/9079644[return to the previous page].
+
+image:$NEEDSIMAGE$[alt=""]
+
+== Synchronous inventory capture
+
+If any device interactions are missing from your xref:session-analytics:index.adoc[session analytics], enable *Synchronous Inventory Capture* to prevent interactions from moving faster than the inventory capture.
+
+image:$NEEDSIMAGE$[alt=""]
+
+Now you'll have to wait for each interaction to be captured before attempting a new one.
+
+image:$NEEDSIMAGE$[alt=""]
+
+== Speedometer
+
+You can increase the test device screen to 30 frames per second (FPS) by enabling *Lightning Mode*. You can also check your session runtime, latency, and resolution.
+
+image:$NEEDSIMAGE$[alt=""]
 
 [NOTE]
 Lightning mode is only available on link:https://kobiton.com/pricing/[certain plans].
 
-=== Screenshots
+== Screenshots
 
-The number of screenshots you've taken is displayed on the *Screenshots* icon. Select *Take screenshot* to take a screenshot and *Screenshots* to download them.
+You can select *Take Screenshot* to take a screenshot and select *Screenshots* to download them. Your total number of screenshots will be displayed on the *Screenshots* icon.
 
-[#_additional_controls]
-== Additional controls
-
-=== Biometric authentication
-
-After you add our xref:integrations:biometric-authentication/about-our-library.adoc[biometrics authentication library] to your app, you can select *Pass* or *Fail* to test biometric authentication requests.
-
-=== Preform VoiceOver
-
-After you set up xref:devices:enable-voiceover-for-ios.adoc[VoiceOver for iOS], you can test your app's compatibility with screen readers.
+image:$NEEDSIMAGE$[alt=""]
