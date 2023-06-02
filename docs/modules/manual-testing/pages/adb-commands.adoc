@@ -1,13 +1,21 @@
 = `adb` commands
 :navtitle: `adb` commands
 
-During a manual session, you can xref:device-controls.adoc#_adb_shell[run Android Debug Bridge (`adb`) commands] on your private and local devices, as well as your public ones.
+During a manual session, you can xref:device-controls.adoc#_adb_shell[run Android Debug Bridge (`adb`) commands] on public devices, as well as private and local ones.
 
-image:adb-shell-command-example.png[width=750, alt="A manual session's `adb` shell running the command `adb shell dumpsys display`."]
+image:adb-shell-context.png[width=1100, alt="A manual session with the `adb` shell open."]
+
+== Public
+
+Since public devices can be accessed by anyone using Kobiton, we limit the amount of `adb` commands you can run on public devices. For now, these are the only supported commands:
+
+* `dumpsys display`
+* `dumpsys battery`
+* `pm list packages -3`
 
 == Private and local
 
-You can run most `adb` commands on private and local devices--unless they could harm the device or alter device systems in real-time. Here's some examples of commands we *don't* allow:
+You can run most `adb` commands on private and local devices--unless they could harm the device or alter device systems in real-time. Here are the kinds of commands we *don't* allow:
 
 * `kobiton/i`
 * `logcat/i`
@@ -25,14 +33,3 @@ You can run most `adb` commands on private and local devices--unless they could 
 * `com.android.vending/i`
 * `com.google.android.webview/i`
 * `monkey -p com.myAppPackage -v 10000 -s 100`
-
-== Public
-
-Since public devices can be accessed by anyone using Kobiton, we limit the amount of `adb` commands you can run on public devices. For now, these are the only supported commands:
-
-* `dumpsys display`
-* `dumpsys battery`
-* `pm list packages -3`
-
-
-

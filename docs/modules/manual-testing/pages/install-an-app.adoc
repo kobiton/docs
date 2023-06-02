@@ -3,23 +3,21 @@
 
 Learn how to install an app on a test device during a manual session.
 
+[#_supported_filetypes]
+== Supported filetypes
+
+include::apps:partial$supported-filetypes.adoc[]
+
 [#_install_an_app]
 == Install an app
 
 After you start a manual session, select *Install Apps*.
 
-image:install-apps-context.png[width=1000,alt="A manual test session with the "Install Apps" button highlighted"]
+image:install-apps-context.png[width=1100,alt="A manual test session with the "Install Apps" button highlighted."]
 
-[NOTE]
-If you test your in-app camera, enable *Instrument application for camera injection* before installing your app.
+You can upload a xref:_supported_filetypes[supported file], install from a URL, or choose an app from xref:apps:manage-an-app.adoc[your app library]. If you plan on testing your in-app camera, be sure to enable *Instrument application for camera injection* before you install.
 
-Install an app by uploading a supported app file, installing from a URL, or choosing an app from xref:apps:manage-an-app.adoc[from your library].
-
-image:manual-testing:install-apps-closeup.png[width=500, alt="A close-up of the different app installation options during a manual session."]
-
-You'll be notified when your installation is finished.
-
-image:manual-testing:install-apps-closeup2.png[width=500, alt="A close-up of the installation finished" notification"]
+image:manual-testing:install-apps-closeup.png[width=750, alt="A close-up of the different app installation options during a manual session."]
 
 [NOTE]
 Depending on your xref:organization:your-organization/create-a-device-cleanup-policy.adoc[cleanup policy], your app may automatically uninstall after the session.

@@ -1,11 +1,11 @@
-= Add desired capabilities
-:navtitle: Add desired capabilities
+= Modify desired capabilities
+:navtitle: Modify desired capabilities
 
-Learn how to add desired capabilities to your test suite so you can ...
+Learn how to modify your desired capabilities by replacing it with the one you xref:auto-generate-desired-capabilities.adoc[auto-generated] or adding individual capabilities from xref:list-of-desired-capabilities.adoc[our list].
 
 == Locate config file
 
-First you'll open your xref:automation-testing:auto-generate-an-appium-script.adoc[auto-generated Appium script] and locate the config file in the `test` directory. The exact location and name of the config file will depend on your testing framework. Here's where you may find it:
+First you'll open your test suite or your xref:automation-testing:auto-generate-an-appium-script.adoc[auto-generated Appium script] and locate your config file. The exact name and location of the file may vary, but you can start here:
 
 [source,bash]
 ----
@@ -17,29 +17,21 @@ root
         └── config.js # NodeJS Mocha
 ----
 
-== Add capability
+== Modify capabilities
 
-In the config file, locate `DesiredCapabilities` and ...
-
-You can add individual desired capabilities or paste the `DesiredCapabilities` block you auto-generated.
+In your config file, locate the `DesiredCapabilities` object. You can replace it with the one you xref:auto-generate-desired-capabilities.adoc[auto-generated] or add individual capabilities from xref:list-of-desired-capabilities.adoc[our list].
 
 Here's an example:
 
 [source,java]
 ----
-// Located in test/scriptlessautomation/Config in the Java's TestNG framework.
+// Located in ~/test/scriptlessautomation/Config in the Java's TestNG framework.
 
 public static DesiredCapabilities getIPhone11ProIOS146DesiredCapabilities() {
 
     String kobitonServerUrl = "https://docsWriter:000abc123@api.kobiton.com/wd/hub";
 
-    // Manually added
-
-    capabilities.setCapability("ensureWebviewsHavePages", true);
-    capabilities.setCapability("kobiton:visualValidation", true);
-    capabilities.setCapability("kobiton:referenceSessionId", 0000011);
-
-    // Auto-generated
+    // Auto-generated capabilities
 
     desiredCapabilities.put("sessionName", "Biometric authentication");
     desiredCapabilities.put("sessionDescription", "Testing biometric authentication for the login screen.");
@@ -57,8 +49,14 @@ public static DesiredCapabilities getIPhone11ProIOS146DesiredCapabilities() {
     desiredCapabilities.put("platformName", "iOS");
     desiredCapabilities.put("platformVersion", "15.5");
 
+     // Individual capabilities
+
+    capabilities.setCapability("ensureWebviewsHavePages", true);
+    capabilities.setCapability("kobiton:visualValidation", true);
+    capabilities.setCapability("kobiton:referenceSessionId", 0000011);
+
     return capabilities;
 }
 ----
 
-When you're finished, save your changes. Now you can ...
+When you're finished, save your changes.

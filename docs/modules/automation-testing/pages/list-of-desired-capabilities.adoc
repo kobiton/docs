@@ -1,7 +1,7 @@
-= Available desired capabilities
-:navtitle: Available desired capabilities
+= List of desired capabilities
+:navtitle: List of desired capabilities
 
-These are the available frameworks, languages, and parameters you can add to your desired capabilities.
+These are the available frameworks, languages, and parameters you can use to xref:modify-desired-capabilities.adoc[modify your desired capabilities].
 
 == Framework
 
@@ -11,7 +11,7 @@ Select *Framework* and choose Appium, UIAutomator, Espresso, or XCUITest to chan
 
 Select *Language* and choose Java, .NET (C#), NodeJS, Ruby, Python, or PHP to change the language of your `DesiredCapabilities` object.
 
-== Parameters
+== Auto-generated parameters
 
 === `sessionName`
 
@@ -191,18 +191,21 @@ The current version is automatically assigned to `platformVersion` as an `intege
 
 === `kobitonServerUrl`
 
-Choose a key from *API Key* to assign a specific API Key to `kobitonServerUrl` as a `string`. We'll use your default API key unless you assign one manually to `kobitonServerUrl`.
+Choose a key from *API Key* to assign a specific API Key to `kobitonServerUrl` as a `string`.We'll use your default API key unless you assign one manually to `kobitonServerUrl`.
 
 [source,python]
 ----
 kobitonServerUrl = 'https://<name>:<id>@api.kobiton.com/wd/hub' # Use the default API key to connect the Appium and Kobiton servers.
 ----
 
+[#_manually_added_parameters]
+== Manually-added parameters
+
 === `kobiton:visualValidation`
 
-Set both `"ensureWebviewsHavePages"` and `"kobiton:visualValidation"` to `true`. You can also choose a specific reference session for `visualValidation` by assigning the session's xref:get-kobitonsessionid.adoc[`kobitonSessionId`] to `"kobiton::baselineSessionId"` instead.
+Set both `"ensureWebviewsHavePages"` and `"kobiton:visualValidation"` to `true`.You can also choose a specific reference session for `visualValidation` by assigning the session's xref:get-kobitonsessionid.adoc[`kobitonSessionId`] to `"kobiton::baselineSessionId"` instead.
 
-Now you can run visual validation scripts on an individual device. If you'd like to run your script in parallel, also xref:_run_in_parallel[modify the `setup()` function].
+Now you can run visual validation scripts on an individual device.If you'd like to run your script in parallel, also xref:_run_in_parallel[modify the `setup()` function].
 
 [source,java]
 ----

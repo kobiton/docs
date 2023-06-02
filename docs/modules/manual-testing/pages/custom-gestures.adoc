@@ -3,9 +3,11 @@
 
 During a manual session, you can create scripts to xref:device-controls.adoc#_draw_custom_gesture[draw custom gestures].
 
+image:$NEEDSIMAGE$[width=, alt="A manual session with gestures open."]
+
 == Scripts
 
-Scripts contain one or more xref:_functions[functions] space-separated in a single line. Each function could contain zero or more xref:_parameters[parameters], depending on the specific function. If a parameter is required for a specific function, it'll be marked `<>`, otherwise it'll be marked `[]`.
+Scripts contain one or more space-separated xref:_functions[functions] in a single line. Each function may contain zero or more xref:_parameters[parameters], depending on the specific function. If a parameter is required for a specific function, it'll be marked with `<>`. If it's optional, it'll be marked with `[]`.
 
 [source,]
 ----
@@ -20,15 +22,15 @@ down(0%, 0%, 3) move(50%, 50%, 3) up(3) // Places the 4th finger on the screen a
 
 Draws an elliptical shape starting from the current location of `finger` and finishing at the same location.
 
-The xref:_x_and_y[`x`] and xref:_x_and_y[`y`] coordinates refer to the exact center of the shape--the arc's path never passes through `x` and `y`, rather it goes _around_ in a symmetrical path.Set the `angle` to determine how wide or narrow the shape should be.
+The xref:_x_and_y[`x`] and xref:_x_and_y[`y`] coordinates refer to the exact center of the shape--the arc's path never passes through `x` and `y`, rather it goes _around_ in a symmetrical path. Set the `angle` to determine how wide or narrow the shape should be.
 
 By default, `finger` is set to `0` and `duration` is set to `2s`.
 
 [source,]
 ----
-down(50%, 50%) arc(50%, 50%, 180) //
-down(50%, 50%) arc(50%, 50%, 0) //
-down(50%, 50%) arc(50%, 50%, 360) //
+down(50%, 50%) arc(50%, 50%, 180) // Draws a semi-circle starting and ending at the center of the screen.
+down(50%, 50%) arc(50%, 50%, 0) // Draws a point at the center of the screen.
+down(50%, 50%) arc(50%, 50%, 360) // Draws a full circle starting and ending at the center of the screen.
 ----
 
 [#_down]
@@ -40,7 +42,7 @@ Place a finger on the screen at the xref:_x_and_y[`x`] and xref:_x_and_y[`y`] co
 ----
 down(1px, 400px) // Places a finger at 1px, 400px using the pixels of your computer monitor.
 down(400dp, 1dp) // Places a finger at 400px, 1px using the pixels of the mobile device screen.
-down(1%, 100%) // Places a finger at 1%, 100% by multiplying the length of the mobile device screen by its relavant axis.
+down(1%, 100%) // Places a finger at 1%, 100% by multiplying the length of the mobile device screen by its relevant axis.
 ----
 
 [#_move]
@@ -53,9 +55,9 @@ If there's no `finger` on the screen yet, xref:_down[`down()`] will be called in
 
 [source,]
 ----
-down(50%, 50%) move() // This
-down(50%, 50%) move() // This
-down(50%, 50%) move() // This
+down(50%, 50%) move(75%, 75%) // Places a finger at 50%, 50% then moves it to 75%, 75%.
+down(50%, 50%) move(25%, 25%) // Places a finger at 50%, 50% then moves it to 25%, 25%.
+down(50%, 50%) move(100%, 0%) // Places a finger at 50%, 50% then moves it to 100%, 0%.
 ----
 
 [#_sync]
@@ -101,9 +103,9 @@ An integer ranging from `-360` to `360` that determines the angle of xref:_arc[`
 
 [source,]
 ----
-down(50%, 50%) arc(50%, 50%, 180) //
-down(50%, 50%) arc(50%, 50%, 0) //
-down(50%, 50%) arc(50%, 50%, 360) //
+down(50%, 50%) arc(50%, 50%, 180) // Draws a semi-circle starting and ending at the center of the screen.
+down(50%, 50%) arc(50%, 50%, 0) // Draws a point at the center of the screen.
+down(50%, 50%) arc(50%, 50%, 360) // Draws a full circle starting and ending at the center of the screen.
 ----
 
 [#_duration]
@@ -133,11 +135,11 @@ up(4) // Removes the fifth finger from the screen.
 [#_x_and_y]
 === `x` and `y`
 
-Two positive integers used to set a gesture's coordinates.By default, `x` and `y` refer to pixels, but you can append `px` (pixels), `dp` (device-independent pixels), or `%` (percent) override the coordinate type.
+Two positive integers used to set a gesture's coordinates. By default, `x` and `y` refer to pixels, but you can append `px` (pixels), `dp` (device-independent pixels), or `%` (percent) to override the coordinate type.
 
 [source,]
 ----
 down(1px, 400px) // Places a finger at 1px, 400px using the pixels of your computer monitor.
 down(400dp, 1dp) // Places a finger at 400px, 1px using the pixels of the mobile device screen.
-down(1%, 100%) // Places a finger at 1%, 100% by multiplying the length of the mobile device screen by its relavant axis.
+down(1%, 100%) // Places a finger at 1%, 100% by multiplying the length of the mobile device screen by its relevant axis.
 ----
