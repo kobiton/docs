@@ -1,10 +1,10 @@
 = Auto-generate desired capabilities
 :navtitle: Auto-generate desired capabilities
 
-Learn how to auto-generate desired capabilities for one of your test devices. When you're finished, you can xref:modify-desired-capabilities.adoc[add them to your test suite].
+Learn how to auto-generate desired capabilities for one of your test devices. When you're finished, you can xref:modify-your-desired-capabilities.adoc[add them to your test suite].
 
 [NOTE]
-xref:list-of-desired-capabilities.adoc#_manually_added_parameters[Some desired capabilities], like `flexCorrect` and `visualValidation`, will need to be added manually.
+xref:list-of-desired-capabilities.adoc#_manual_capabilities[Some desired capabilities], like `flexCorrect` and `visualValidation`, will need to be added manually.
 
 == Open the automation settings
 
@@ -20,7 +20,7 @@ image:device-overview-closeup.png[width=750, alt=""]
 
 Select a capability from each dropdown to start auto-generated your `DesiredCapabilities` object. You can learn about each of our capabilities by xref:list-of-desired-capabilities.adoc[referencing the list].
 
-image:auto-generate-desired-capabilities-context.png[width=1200, alt=""]
+image:automation-settings-closeup.png[width=1200, alt=""]
 
 Here's an example:
 
@@ -47,6 +47,6 @@ desiredCapabilities.put("platformName", "iOS");
 desiredCapabilities.put("platformVersion", "15.5");
 ----
 
-When you're finished, select the *Copy to clipboard* icon and xref:modify-desired-capabilities.adoc[add the capabilities to your test suite].
+When you're finished, select the *Copy to clipboard* icon and xref:modify-your-desired-capabilities.adoc[add the capabilities to your test suite].
 
-image:auto-generate-desired-capabilities-closeup.png[width=750, alt=""]
+image:copy-desired-capabilities-closeup.png[width=750, alt=""]

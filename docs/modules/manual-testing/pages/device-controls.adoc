@@ -14,44 +14,43 @@ You can interact with your device by using *left-click* to tap and swipe the scr
 
 You can zoom or pinch the device screen by placing the center circle on your target location and dragging an outer circle closer or farther away.
 
-image:$NEEDSIMAGE$[width=, alt=""]
+image:$NEEDSIMAGE$[width=, alt="A manual session with a closeup of a device using pinch/zoom."]
 
 == Set device location
 
 You can change the device location by either searching for a location or entering a longitude and latitude.
 
-image:$NEEDSIMAGE$[width=, alt=""]
+image:$NEEDSIMAGE$[width=, alt="A manual session with a closeup of the location controls."]
 
 == Set device timezone
 
 You can change the device timezone by selecting a new timezone from the dropdown.
 
-image:$NEEDSIMAGE$[width=, alt=""]
+image:$NEEDSIMAGE$[width=, alt="A manual session with a closeup of the timezone controls."]
 
 == Rotate screen
 
 You can rotate the device screen between portrait and landscape.
 
-image:$NEEDSIMAGE$[width=, alt=""]
+image:$NEEDSIMAGE$[width=, alt="A manual session with a closeup of a device set to landscape."]
 
 == Volume
 
 You can change the device volume by selecting *Volume Up* or *Volume Down*.
-
-[NOTE]
-This won't change the volume coming from your computer, only...
 
 [#_adb_shell]
 == `adb` shell
 
 You can enter Android Debug Bridge (`adb`) commands to install or debug apps on your Android test device.
 
+image:adb-shell-closeup.png[width="750", alt="A manual session with a closeup of the adb shell running `adb shell dumpsys display`."]
+
 [NOTE]
 We only allow xref:adb-commands.adoc[specific `adb` commands] so we can continue keeping test devices in excellent condition.
 
 == Preform VoiceOver
 
-After you set up xref:devices:enable-voiceover-for-ios.adoc[VoiceOver for iOS], you can test screen reader compatibility.
+After you set up xref:devices:enable-voiceover-for-ios.adoc[VoiceOver for iOS], you can test your app's screen reader compatibility.
 
 == Biometric authentication
 
@@ -62,7 +61,7 @@ After you add our xref:integrations:biometric-authentication/about-our-library.a
 
 You can draw custom gestures like three-finger swipes or two-finger taps by choosing a sample gesture or xref:custom-gestures.adoc[creating your own].
 
-image:$NEEDSIMAGE$[width=, alt=""]
+image:$NEEDSIMAGE$[width=, alt="A manual session with a closeup of the gesture controls."]
 
 After you create a gesture, you can save it for future sessions.
 
@@ -70,19 +69,17 @@ After you create a gesture, you can save it for future sessions.
 
 You can input sensitive data (like usernames and passwords) without recording it in the xref:session-analytics:session-overview.adoc#_session_video[session video]. Enter your sensitive data, tap the related field on your device, then select *Save* to send it securely.
 
-image:$NEEDSIMAGE$[width=, alt=""]
+image:$NEEDSIMAGE$[width=, alt="A manual session with a closeup of the sensitive data controls."]
 
 == Image injection
 
-You can xref:test-in-app-camera.adoc[test your in-app camera] by adding an image to the injection library and selecting *Set Image*.
+You can xref:test-your-apps-camera.adoc[test your in-app camera] by adding an image to the injection library and selecting *Set Image*.
 
-image:$NEEDSIMAGE$[width=, alt=""]
+image:image-injection-closeup.png[width=500, alt="A manual session with a closeup of image injection."]
 
 == Power
 
 You can restart your device by selecting the *Power* button. (Don't worry--this won't end your session).
-
-image:$NEEDSIMAGE$[width=, alt=""]
 
 == Home button
 
@@ -98,29 +95,25 @@ image:$NEEDSIMAGE$[width=, alt=""]
 
 While using an Android device, select *Back* to xref:https://support.google.com/android/answer/9079644[return to the previous page].
 
-image:$NEEDSIMAGE$[width=, alt=""]
+image:$NEEDSIMAGE$[width=, alt="A manual session with a close up of the device display its recent apps."]
 
 == Synchronous inventory capture
 
-If any device interactions are missing from your xref:session-analytics:index.adoc[session analytics], enable *Synchronous Inventory Capture* to prevent interactions from moving faster than the inventory capture.
+If any device interactions are missing from your xref:session-analytics:index.adoc[session analytics], enable *Synchronous Inventory Capture* to prevent interactions from moving faster than the inventory capture. Now you'll have to wait for each interaction to be captured before attempting a new one.
 
-image:$NEEDSIMAGE$[width=, alt=""]
-
-Now you'll have to wait for each interaction to be captured before attempting a new one.
-
-image:$NEEDSIMAGE$[width=, alt=""]
+image:$NEEDSIMAGE$[width=, alt="A manual session with a closeup of the device with synchronous inventory capture enabled."]
 
 == Speedometer
 
 You can increase the test device screen to 30 frames per second (FPS) by enabling *Lightning Mode*. You can also check your session runtime, latency, and resolution.
 
-image:$NEEDSIMAGE$[width=, alt=""]
+image:$NEEDSIMAGE$[width=, alt="A manual sesion with a closeup of the speedometer opened."]
 
 [NOTE]
-Lightning mode is only available on link:https://kobiton.com/pricing/[certain plans].
+Lightning mode is only available for link:https://kobiton.com/pricing/[certain plans].
 
 == Screenshots
 
 You can select *Take Screenshot* to take a screenshot and select *Screenshots* to download them. Your total number of screenshots will be displayed on the *Screenshots* icon.
 
-image:$NEEDSIMAGE$[width=, alt=""]
+image:screenshot-context.png[width=750, alt="A manual session with a closeup of a device and the screenshot conter set to 3 highlighted in red."]
