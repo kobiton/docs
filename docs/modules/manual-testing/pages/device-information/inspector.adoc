@@ -1,46 +1,49 @@
 = Inspector
 :navtitle: Inspector
 
-During a manual session you inspect a device's UI elements in realtime.
+During a manual session, you can select *Inspector* to copy specific xpath values, inspect UI elements, and download your device inventory.
 
-image:inspector-context.png[width=, alt=""]
+image:inspector-context.png[width=, alt="A manual session displaying a device and the device inspector."]
 
 == Refresh inventory
 
-After navigating to a new page in your app or web browser, select *Refresh inventory* to display that page's *Hierarchy*. *Refresh inventory* also resets your current filters and searchers.
+You can select the *Refresh inventory* icon to display the XML hierarchy of the current device screen. Select a specific element from the hierarchy to highlight it on the device.
 
 image:refresh-inventory-closeup.png[width=, alt=""]
 
+[NOTE]
+*Refresh inventory* resets all filters and searches.
+
 == Inspect elements
 
-Hover over an element on the device screen and highlight its XML data.
+You can select the *Inspect elements* icon then hover over on-screen elements to highlight them in the XML hierarchy.
 
 image:inspect-elements-closeup.png[width=, alt=""]
 
 == Download inventory
 
-Download the current inventory as an `.xml` file.
+You can select the *Download inventory* icon to download the current XML hierarchy as an `.xml` file.
 
 image:download-inventory-closeup.png[width=, alt=""]
 
 == WebView
 
-Choose a specific WebView to display. The default WebView is `NATIVE_APP`.
+You can choose a WebView from the dropdown to filter the XML hierarchy by that WebView. The default filter is `NATIVE_APP`.
 
 image:inspector-dropdown-closeup.png[width=, alt=""]
 
 == Search bar
 
-Only display elements in the *Hierarchy* that match your search.
+You can use the search bar to filter the XML hierarchy by a specific element.
 
 image:inspector-search-closeup.png[width=, alt=""]
 
 == Attributes
 
-Select an element to display a list of related attributes, like `type`, `name`, `xpath`, and more.
+You can highlight an element, then select *Show attributes* to display an element's attributes.
 
 image:hierarchy-closeup.png[width=, alt=""]
 
-You hover over an attribute and select the *Copy* icon to easily add it to your Appium script.
+Hover over a specific attribute and select the *Copy* icon to add it to your clipboard.
 
 image:attributes-closeup.png[width=, alt=""]

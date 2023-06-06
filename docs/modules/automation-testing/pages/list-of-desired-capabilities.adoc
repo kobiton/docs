@@ -101,7 +101,7 @@ Only available for private and local devices.
 
 === `captureScreenshots`
 
-Check *Capture screen after every step* to assign `True` to `captureScreenshots` as a `boolean`. Screenshots will be available in your session analytics.
+Check *Capture screen after every step* to assign `True` to `captureScreenshots` as a `boolean`.Screenshots will be available in your session analytics.
 
 [source,java]
 ----
@@ -109,28 +109,12 @@ capabilities.setCapability("captureScreenshots", true); // Take a screenshot aft
 ----
 
 [NOTE]
-Unavailable on native and hybrid apps, as well as devices on Android 6.0 or earlier.
+Unavailable for native and hybrid apps, as well as devices on Android 6.0 or earlier.
 
-=== `autoWebview`
+[#_app_testing]
+=== App testing
 
-Select the *Web* app type to assign `True` to `autoWebview` as a `boolean`. When `autoWebview` is set to true, the webview context will be automatically selected during your test session.
-
-[source,java]
-----
-capabilities.setCapability("autoWebview", true); // Automatically select the webview context.
-----
-
-=== `browserName`
-
-Select the *Web* app type to assign a web browser to `browserName` as a `string`. `safari` will be used for iOS and `chrome` will be used for Android.
-
-[source,java]
-----
-capabilities.setCapability("browserName", "safari"); // Use Safari for web testing on iOS.
-capabilities.setCapability("browserName", "chrome"); // Use Chrome for web testing on Android.
-----
-
-=== `app`
+==== `app`
 
 Select *Apps* and xref:apps:index.adoc[choose an app] or select *URL* and enter an *Application URL* to assign your app's source to `app` as a `string`.
 
@@ -140,13 +124,35 @@ capabilities.setCapability("app", "kobiton-store:000111"); // Install the app us
 capabilities.setCapability("app", "https://kobiton.docsapp.net/apps/app_id"); // Install the app using a direct download link.
 ----
 
-=== useConfiguration
+[#_web_testing]
+=== Web testing
 
-Choose a configuration from *Configuration* and assign a configuration file to `useConfiguration` as a `string`. By default, no configuration will be used, but you can choose one by selecting any of the configurations you previously created.
+==== useConfiguration
+
+Choose a configuration from *Configuration* and assign a configuration file to `useConfiguration` as a `string`.By default, no configuration will be used, but you can choose one by selecting any of the configurations you previously created.
 
 [source,java]
 ----
 capabilities.setCapability("useConfiguration", "kobiton"); // Use this pre-defined configuration for the test session.
+----
+
+==== `autoWebview`
+
+Select the *Web* app type to assign `True` to `autoWebview` as a `boolean`. When `autoWebview` is set to true, the webview context will be automatically selected during your test session.
+
+[source,java]
+----
+capabilities.setCapability("autoWebview", true); // Automatically select the webview context.
+----
+
+==== `browserName`
+
+Select the *Web* app type to assign a web browser to `browserName` as a `string`. `safari` will be used for iOS and `chrome` will be used for Android.
+
+[source,java]
+----
+capabilities.setCapability("browserName", "safari"); // Use Safari for web testing on iOS.
+capabilities.setCapability("browserName", "chrome"); // Use Chrome for web testing on Android.
 ----
 
 === `deviceOrientation`
