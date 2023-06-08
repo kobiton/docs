@@ -8,11 +8,20 @@ This repository contains the source files for link:https://docs.kobiton.com/[doc
 
 == Build the docs
 
-To build the docs locally, link:https://docs.docker.com/get-docker/[install Docker] and run the following in `kobiton-documentation`:
+To build the docs locally, you'll need Node.js and Yarn installed. Run the following commands to check if they're installed:
 
 [source,shell]
 ----
-docker build -t kobiton/documentation:1.0 -f docker/documentation/Dockerfile .
+node --version
+yarn --version
+----
+
+If Node.js and Yarn are installed, you can install the dependencies and start a local preview:
+
+[source,shell]
+----
+yarn install
+yarn build
 ----
 
 == Code of Conduct
