@@ -184,10 +184,11 @@ The following metrics represent data _during_ the selected test session.
 |Copy the full session log to your clip board.
 |===
 
+[#_compare_ui_design]
 === Compare UI design
 
 [IMPORTANT]
-Before you can use *compare UI design* fully, you'll need to xref:integrations:figma/index.adoc[integrate Figma].
+Before you can use *compare UI design* fully, you'll need to xref:integrations:figma/enable-figma-integration.adoc[integrate Figma].
 
 [cols="1h,4",autowidth"]
 |===
@@ -203,6 +204,8 @@ Before you can use *compare UI design* fully, you'll need to xref:integrations:f
 |Upload images
 |Use this feature without Figma. Select *upload image*, then choose an image to upload and overlay.
 |===
+
+IMPORTANT: In some cases, you may encounter issues using the Figma visual validation. If your selected Figma file is too large, break your file into separate pages to decrease the size. If you see a query timeout (this usually happens by adjusting the filter, which sends too many unexpected requests to the server) you should follow our recommended filter settings (e.g. select a single page, set depth = 2, etc.)
 
 [#_session_timeline]
 === Session timeline

@@ -3,21 +3,23 @@
 
 These are the available frameworks, languages, and parameters you can use to xref:modify-your-desired-capabilities.adoc[modify your desired capabilities].
 
-== Framework
-
-Select *Framework* and choose Appium, UIAutomator, Espresso, or XCUITest to change the framework of your `DesiredCapabilities` object.
-
-== Language
-
-Select *Language* and choose Java, .NET (C#), NodeJS, Ruby, Python, or PHP to change the language of your `DesiredCapabilities` object.
-
 == Auto-generated capabilities
 
-You can xref:auto-generate-desired-capabilities.adoc[auto-generate desired capabilities] by choosing capabilities from a device's automation settings.
+You can xref:auto-generate-desired-capabilities.adoc[auto-generate desired capabilities] by selecting capabilities from the device automation settings.
 
 image:automation-settings-closeup.png[]
 
-=== `sessionName`
+=== Framework
+
+Select *Framework* and choose Appium, UIAutomator, Espresso, or XCUITest to change the framework of your `DesiredCapabilities` object.
+
+=== Language
+
+Select *Language* and choose Java, .NET (C#), NodeJS, Ruby, Python, or PHP to change the language of your `DesiredCapabilities` object.
+
+=== Parameters
+
+==== `sessionName`
 
 Enter a *Session Name* to assign it to `sessionName` as a `string`. Session names are visible in search results and session analytics.
 
@@ -26,7 +28,7 @@ Enter a *Session Name* to assign it to `sessionName` as a `string`. Session name
 capabilities.setCapability("sessionName", "Automation test session"); // Set the session name.
 ----
 
-=== `sessionDescription`
+==== `sessionDescription`
 
 Enter a *Description* to assign it to `sessionDescription` as a `string`. We recommend using a clear and precise description between 50-72 characters. Descriptions are visible in the session analytics.
 
@@ -35,7 +37,7 @@ Enter a *Description* to assign it to `sessionDescription` as a `string`. We rec
 capabilities.setCapability("sessionDescription", "Testing biometric authentication for login."); // Set the session description.
 ----
 
-=== `groupId`
+==== `groupId`
 
 Choose a team from *User Team* to assign your team to `groupId` as a `string`. Teams are visible in search results and session analytics.
 
@@ -44,7 +46,7 @@ Choose a team from *User Team* to assign your team to `groupId` as a `string`. T
 capabilities.setCapability("groupId", "0011"); // Group: Docs Team
 ----
 
-=== `deviceGroup`
+==== `deviceGroup`
 
 Choose a team from *Device Team* to assign a device team to `deviceGroup` as a `string`. Otherwise, select *Any* to remove it completely.
 
@@ -53,7 +55,7 @@ Choose a team from *Device Team* to assign a device team to `deviceGroup` as a `
 capabilities.setCapability("deviceGroup", "ORGANIZATION"); // Set the device team.
 ----
 
-=== `tagName`
+==== `tagName`
 
 Choose a team from *Device Team* to assign tag to `tagName` as a `string`. Alternatively, you can manually assign a tag to `tagName` instead.
 
@@ -62,7 +64,7 @@ Choose a team from *Device Team* to assign tag to `tagName` as a `string`. Alter
 capabilities.setCapability("tagName", "TagName1"); // Use the device(s) with matching tag name(s).
 ----
 
-=== `udid`
+==== `udid`
 
 Check *Use Specific Device* to assign your device's Unique Device Identifier (UDID) to `udid` as a `string`. If left unchecked, your `DesiredCapabilities` object will work with any device UDID.
 
@@ -72,7 +74,7 @@ capabilities.setCapability("udid", "01234567-89ab-cdef-0123-456789abcdef"); // U
 ----
 
 [#_noreset]
-=== `noReset`
+==== `noReset`
 
 Check *Clean up device on exit* to assign `False` to `noReset` as a `boolean`. When `noReset` is set to `False`, apps installed during the session will remain on the device, but their data will be removed. To uninstall the apps, use xref:_fullreset[`fullReset`] instead.
 
@@ -86,7 +88,7 @@ capabilities.setCapability("fullReset", false); // Keep the app installed.
 Only available for private and local devices.
 
 [#_fullreset]
-=== `fullReset`
+==== `fullReset`
 
 Check *Clean up device on exit* to assign `True` to `fullReset` as a `boolean`. When `fullReset` is set to `True`, apps installed during your session will be removed from the device. To keep the apps and remove their data instead, use xref:_noreset[`noReset`].
 
@@ -99,7 +101,7 @@ capabilities.setCapability("noReset", false); // Keep the app installed.
 [NOTE]
 Only available for private and local devices.
 
-=== `captureScreenshots`
+==== `captureScreenshots`
 
 Check *Capture screen after every step* to assign `True` to `captureScreenshots` as a `boolean`.Screenshots will be available in your session analytics.
 
@@ -111,10 +113,9 @@ capabilities.setCapability("captureScreenshots", true); // Take a screenshot aft
 [NOTE]
 Unavailable for native and hybrid apps, as well as devices on Android 6.0 or earlier.
 
-[#_app_testing]
-=== App testing
-
 ==== `app`
+
+App testing
 
 Select *Apps* and xref:apps:index.adoc[choose an app] or select *URL* and enter an *Application URL* to assign your app's source to `app` as a `string`.
 
@@ -124,10 +125,9 @@ capabilities.setCapability("app", "kobiton-store:000111"); // Install the app us
 capabilities.setCapability("app", "https://kobiton.docsapp.net/apps/app_id"); // Install the app using a direct download link.
 ----
 
-[#_web_testing]
-=== Web testing
+==== `useConfiguration`
 
-==== useConfiguration
+Web testing
 
 Choose a configuration from *Configuration* and assign a configuration file to `useConfiguration` as a `string`.By default, no configuration will be used, but you can choose one by selecting any of the configurations you previously created.
 
@@ -138,6 +138,8 @@ capabilities.setCapability("useConfiguration", "kobiton"); // Use this pre-defin
 
 ==== `autoWebview`
 
+Web testing
+
 Select the *Web* app type to assign `True` to `autoWebview` as a `boolean`. When `autoWebview` is set to true, the webview context will be automatically selected during your test session.
 
 [source,java]
@@ -147,6 +149,8 @@ capabilities.setCapability("autoWebview", true); // Automatically select the web
 
 ==== `browserName`
 
+Web testing
+
 Select the *Web* app type to assign a web browser to `browserName` as a `string`. `safari` will be used for iOS and `chrome` will be used for Android.
 
 [source,java]
@@ -155,7 +159,7 @@ capabilities.setCapability("browserName", "safari"); // Use Safari for web testi
 capabilities.setCapability("browserName", "chrome"); // Use Chrome for web testing on Android.
 ----
 
-=== `deviceOrientation`
+==== `deviceOrientation`
 
 Choose an *Orientation* to assign portrait or landscape to `deviceOrientation` as an integer. This sets the starting orientation for the device in your test session.
 
@@ -165,7 +169,7 @@ capabilities.setCapability("deviceOrientation", "portrait"); // Set the device's
 capabilities.setCapability("deviceOrientation", "landscape"); // Set the device's starting orientation to landscape.
 ----
 
-=== `deviceName`
+==== `deviceName`
 
 The current device is automatically assigned to `deviceName` as an `integer`. However, you can manually choose a different device by assigning a specific device to `deviceName` or using wildcards (`*`) to assign multiple.
 
@@ -176,7 +180,7 @@ capabilities.setCapability("deviceName", "*Pro"); // Use any device name ending 
 capabilities.setCapability("deviceName", "iPhone 11*"); // Use any device name starting with 'iPhone 11'.
 ----
 
-=== `platformName`
+==== `platformName`
 
 The current platform is automatically assigned to `platformName` as an `integer`. However, you can manually choose a different platform by assigning a platform to `platformName`.
 
@@ -186,7 +190,7 @@ capabilities.setCapability("platformName", "iOS"); // Use the iOS platform for t
 capabilities.setCapability("platformName", "Android"); // Use the Android platform for the test session.
 ----
 
-=== `platformVersion`
+==== `platformVersion`
 
 The current version is automatically assigned to `platformVersion` as an `integer`. However, you can manually choose a different version by assigning a specific version to `platformVersion` or using wildcards (`*`) to assign multiple.
 
@@ -197,7 +201,7 @@ capabilities.setCapability("platformVersion", "14.*"); // Uses any platform vers
 capabilities.setCapability("platformVersion", "*.6"); // Uses any platform version ending with '.6'.
 ----
 
-=== `kobitonServerUrl`
+==== `kobitonServerUrl`
 
 Choose a key from *API Key* to assign a specific API Key to `kobitonServerUrl` as a `string`. We'll use your default API key unless you assign one manually to `kobitonServerUrl`.
 
@@ -209,7 +213,9 @@ String kobitonServerUrl = "https://<name>:<id>@api.kobiton.com/wd/hub"; // Use t
 [#_manual_capabilities]
 == Manual capabilities
 
-=== `kobiton:visualValidation`
+=== Parameters
+
+==== `kobiton:visualValidation`
 
 Set both `"ensureWebviewsHavePages"` and `"kobiton:visualValidation"` to `true`.You can also choose a specific reference session for `visualValidation` by assigning the session's xref:get-kobitonsessionid.adoc[`kobitonSessionId`] to `"kobiton::baselineSessionId"` instead.
 
@@ -222,7 +228,7 @@ capabilities.setCapability("kobiton:visualValidation", true);  // Set to true.
 capabilities.setCapability("kobiton:referenceSessionId", 0000011); // (Optional) Choose a different reference session by assigning its kobitonSessionId.
 ----
 
-=== `kobiton:flexCorrect`
+==== `kobiton:flexCorrect`
 
 Set `"kobiton:flexCorrect"` to `true`. You can also choose a specific baseline session for `flexCorrect` by assigning the session's xref:get-kobitonsessionid.adoc[`kobitonSessionId`] to `"kobiton::baselineSessionId"` instead.
 
