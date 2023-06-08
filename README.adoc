@@ -1,13 +1,21 @@
-= Kobiton Documentation
+= Welcome to Kobiton docs
 
-Welcome to Kobiton's documentation repository! Here you'll find everything we use to build our https://support.kobiton.com/hc/[documentation site] -- which is manged as docs-as-code. If you're new, here's a few places to get started:
+This repository contains the source files for link:https://docs.kobiton.com/[docs.kobiton.com], the documentation site for Kobiton's mobile-testing platform. If you'd like to help improve our docs, you can:
 
-- xref:contributing/README.adoc[Contribute to our documentation]
-- https://github.com/kobiton/documentation/issues/new?assignees=&labels=&template=bug_report.md&title=[Submit a feature request]
-- https://github.com/kobiton/documentation/issues/new?assignees=&labels=&template=feature_request.md&title=[Submit a bug]
+- link:https://github.com/kobiton/documentation/issues/new?assignees=&labels=&template=feature_request.md&title=[Submit an issue]
+- link:https://github.com/kobiton/documentation/issues/new?assignees=&labels=&template=bug_report.md&title=[Request a feature]
+- xref:contribute/README.adoc[Contribute]
+
+== Build the docs
+
+To build the docs locally, link:https://docs.docker.com/get-docker/[install Docker] and run the following in `kobiton-documentation`:
+
+[source,shell]
+----
+docker build -t kobiton/documentation:1.0 -f docker/documentation/Dockerfile .
+----
 
 == Code of Conduct
 
 At Kobiton, we pledge to make participation in our
-community a harassment-free experience for everyone. To learn more about our Code of Conduct, read more xref:contributing/code-of-conduct.adoc[here].
-
+community a harassment-free experience for everyone. You can learn more about our pledge in the full xref:contribute/code-of-conduct.adoc[Code of Conduct].

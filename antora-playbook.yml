@@ -25,5 +25,10 @@ ui:
     url: ui-bundle
     snapshot: true
   supplemental_files: './ui-bundle/supplemental_ui'
+
 output:
-  dir: ./build/documentation
+  destinations:
+    - provider: fs
+      path: ./build/documentation
+    - provider: fs
+      path: ./build/portal-help
