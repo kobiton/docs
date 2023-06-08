@@ -1,0 +1,28 @@
+= Set up Single Sign-On (SSO) authentication
+:navtitle: Set up Single Sign-On (SSO) authentication
+
+== What is SSO and SAML?
+
+=== Single Sign-On (SSO)
+Single Sign-On (SSO) is an authentication process that allows a user to log in to multiple independent software systems using a single ID and password. SSO ensures a secure method to access Kobiton and helps increase cybersecurity by reducing attack surfaces and risks. It also simplifies user management practice by requiring a single credential set from a user to access a suite of software. Currently, Kobiton supports SAML as an SSO option.
+
+=== SAML
+
+Security Assertion Markup Language (known as SAML) is an open standard for data exchange that enables SSO for a user base. SAML verifies and authenticates a user by transferring the user’s identity from the identity provider (also known as an IdP) to the service provider via digitally signed XML documents.
+
+The user only needs to enter one set of credentials, specifically for the identity provider, and the IdP takes care of the rest. SAML therefore provides an SSO-like experience from an end-user view, with less effort and possibility of security threats on the user’s part.
+
+Currently, Kobiton supports SAML 2.0 protocol and uses OneLogin, Okta, Azure AD and GSuite as identity providers.
+
+== How to configure SAML
+
+The configuration of SAML includes two parts:
+
+* Configure the SAML web application on the chosen IdP using information users provide on Kobiton portal.
+
+* Provide the information supplied by the IdP back to Kobiton to complete the SSO loop.
+
+To complete the configuration, users need both IdP configuration page and Kobiton portal.
+
+Below is the configuration process:
+
