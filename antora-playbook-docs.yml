@@ -1,5 +1,5 @@
 site:
-  title: Kobiton Documentation
+  title: Kobiton Docs
 
 content:
   sources:
@@ -22,13 +22,8 @@ antora:
       mermaid_initialize_options: { startOnLoad: true }
 ui:
   bundle:
-    url: ui-bundle
+    url: ui-bundle-docs
     snapshot: true
-  supplemental_files: './ui-bundle/supplemental_ui'
-
+  supplemental_files: './ui-bundle-docs/supplemental_ui'
 output:
-  destinations:
-    - provider: fs
-      path: ./build/documentation
-    - provider: fs
-      path: ./build/portal-help
+  dir: ./build/docs
