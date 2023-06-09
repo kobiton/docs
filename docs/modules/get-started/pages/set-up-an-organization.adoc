@@ -1,29 +1,32 @@
 = Set up an organization
 :navtitle: Set up an organization
 
-An organization comprises collective teams and is automatically created once the first user registers an account with Kobiton. Users use an organization to modify their access to devices, sessions.
+An organization comprises collective teams and is automatically created once the first user registers an account with Kobiton. Users can join the organization via request for a trial account from Kobiton team or invitation of the Org Owner/ Team Admin. With the Org Management feature, users can  modify their access to devices, sessions.
 
-NOTE:
+NOTE: Each user belongs to only one organization. Users cannot create a new organization.
 
-* Each user belongs to only one organization, they cannot create a new organization.
+== Org-level permissions
+* The first user to join an organization is also the Org Owner. Later, the Org Owner can transfer this role to another admin user.
 
-* Only admins have access to the Org Management and edit Teams, Roles, Users, Devices & Devices Bundles.This feature is not visible for non-admin accounts. Admins are those who have Team Owner/ Admin role, Predefined Admin or customize roles with admin-level permissions.
-+
-Learn more about RBAC permissions _here_.
+* The Org Management feature is enabled for the Org Owner, RBAC Admins, Team Owner/ Admin and is not visible in Member accounts.
+
+* Org Owner/ RBAC Admins can access all Teams and edit organization’s information.
+
+* Team Owner/ Admin *without Org Owner/ RBAC Admin roles* can only access and edit the Team they are assigned to.
 
 == Edit an Organization
 
 Users can change the Organization name and description by doing the following:
 
-1. Go to Org Management, click the pencil icon.
+1. Go to the *Org Management*, click the pencil icon.
 +
-image::get-started:edit org.jpg[alt="click the pencil icon to edit the org information",500,500]
+image::get-started:set-up-org-closeup1.png[width=500,alt="Click the Pencil icon to edit org's information"]
 +
 2. In the *Edit Organization* modal, type the new name and description.
 +
 NOTE: The name must be between 5 and 80 characters & can contain alphabet, alphanumeric, space,.+-_)
 +
-image::get-started:edit org box.jpg[alt="Edit Organization modal",500,500]
+image::get-started:set-up-org-closeup.png[width=300,alt="Edit Organization modal"]
 
 3. Click *Update*.
 
@@ -31,23 +34,28 @@ image::get-started:edit org box.jpg[alt="Edit Organization modal",500,500]
 
 To add a member to the organization:
 
-1. On the *Org Management* page, select the *Users* tab.
-
-2. Click the *+Invite* button.
-
-3. Enter the person’s email address.
+1. Go to the *Org Management*, select the *Users* tab and
 +
-image::get-started:send invitation.jpg[alt="Invitation to a new user to join the org",500,500]
-
-4. Select a role in the dropdown list: Member (Predefined) or Admin (Predefined).
+image::get-started:set-up-org-closeup8.png[width=500, alt="Click Users in the Org Management"]
+2. Click the *Invite* button.
 +
-Those with the Member role can only access devices, Teams they’re assigned to, while the Admin role can access to all devices, Teams, sessions and have the managerial abilities.
+image:get-started:set-up-org-closeup6.png[width=2000,alt="click Invite button"]
 
-5. Optional: select a Team in the dropdown list.
+2. Enter the person’s email address.
++
+image::get-started:set-up-org-context.png[width=1000,alt="The Invite Users modal"]
+3. Select Roles and Teams.
 
-6. Click *Send Invitation*. Members will be notified about the invitation via their emails.
+* The Default role is Member (Predefined), which enables users only access devices, Teams they are assigned to. You can add or change roles by selecting options in the dropdown list.
+* The new user is assigned to the Default Team. Similar to Roles, expanding the dropdown list to change/add teams.
+
+image::get-started:set-up-org-closeup5.png[width=2000,alt="Select Roles and Teams for a new user"]
+4. Click *Send Invitation*. Members will be notified about the invitation via their emails.
+
 
 NOTE: Invited members must be new and not belong to other existing organizations.
+
+You can also enable SSO for the user (if any)
 
 
 
