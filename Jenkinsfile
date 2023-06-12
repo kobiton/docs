@@ -57,7 +57,7 @@ pipeline {
                 docker-ci:latest \
                   --git-url $env.GIT_URL \
                   --commit-id $GIT_COMMIT_ID \
-                  build --docker --docker-centralized --docker-image-name portal-help \
+                  build --docker --docker-centralized --docker-image-name widget \
                   --docker-image-tag $GIT_COMMIT_ID")
           sh("docker run --rm \
                 -v /var/run/docker.sock:/var/run/docker.sock \
@@ -69,7 +69,7 @@ pipeline {
           sh("docker run --rm \
                 -v /var/run/docker.sock:/var/run/docker.sock \
                 docker-ci:latest archive --docker-registry \
-                --docker-image-name portal-help \
+                --docker-image-name widget \
                 --docker-image-tag $GIT_COMMIT_ID")
           sh("docker run --rm \
                 -v /var/run/docker.sock:/var/run/docker.sock \
