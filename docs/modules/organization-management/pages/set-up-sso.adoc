@@ -1,12 +1,12 @@
 = Set up Single Sign-On (SSO) authentication
 :navtitle: Set up Single Sign-On (SSO) authentication
 
-== What is SSO and SAML?
+== 1. What is SSO and SAML?
 
-=== Single Sign-On (SSO)
+=== 1.1 Single Sign-On (SSO)
 Single Sign-On (SSO) is an authentication process that allows a user to log in to multiple independent software systems using a single ID and password. SSO ensures a secure method to access Kobiton and helps increase cybersecurity by reducing attack surfaces and risks. It also simplifies user management practice by requiring a single credential set from a user to access a suite of software. Currently, Kobiton supports SAML as an SSO option.
 
-=== SAML
+=== 1.2 SAML
 
 Security Assertion Markup Language (known as SAML) is an open standard for data exchange that enables SSO for a user base. SAML verifies and authenticates a user by transferring the user’s identity from the identity provider (also known as an IdP) to the service provider via digitally signed XML documents.
 
@@ -14,7 +14,7 @@ The user only needs to enter one set of credentials, specifically for the identi
 
 Currently, Kobiton supports SAML 2.0 protocol and uses OneLogin, Okta, Azure AD and GSuite as identity providers.
 
-== How to configure SAML
+== 2. How to configure SAML
 
 The configuration of SAML includes two parts:
 
@@ -25,4 +25,131 @@ The configuration of SAML includes two parts:
 To complete the configuration, users need both IdP configuration page and Kobiton portal.
 
 Below is the configuration process:
+
+1. Log in to the Kobiton portal. Click the Account dropdown arrow, select *Settings*.
+
+2. On the top navigation menu, click *SSO Settings*.
+
+3. In *section 1: Basic configuration*, copy the *Audience URL* and *Reply URL* and paste them in the appropriate fields in your chosen IdP. Input your desired name in the *“Domain name”* field and click *Generate* to generate a *Default Relay State*. You might need this one for your IdP’s configuration.
+
+4. In *section 2: User attributes (or parameters)*, fill in attributes for mapping that you can then copy and paste into the corresponding fields with your IdP.
+
+5. In *section 3: Set up at Kobiton side*, copy the corresponding information from your chosen IdP’s configuration page to these fields. Upload the *Identity Provider Certificate* granted by the IdP.
++
+NOTE: Please find specific configuration instructions for each IdP in 3,4, 5 and 6 of this article.
+
+6. In *section 4: Verify Configuration*, click *Verify* to have Kobiton test your SSO configuration. Enable the toggle to *Enforce users to login to Kobiton only through SSO* (optional) in case you want to make SSO mandatory across your organization.
+
+7. If you enable the toggle in the previous step, a fifth section is activated. In *section 5: Specify Organization Access Restrictions*, define the assertion specifying an admin role.
++
+You can then test to make sure this admin role can successfully log in using your SSO/SAML configuration. There is also an optional toggle that allows you to pass your role/team assignments between your IdP and Kobiton to sync them. There is no continual or scheduled synchronization of data, but if this toggle is enabled, synchronization will occur at the time of user login.
+
+8.Once all your configuration changes are made, click *Save* to confirm and apply your changes.
+
+NOTE:
+
+* If you choose to enforce SSO and you wish to reverse that setting for some or all of your users, please have the affected users go to the Kobiton log in page and click *Forgot Password* to have a new password set for their account.
+
+* Configure SSO is only eligible on accounts that subscribe to the Kobiton plan, not trial accounts.
+
+== 3. Custom SAML 2.0 - OneLogin
+
+1. In the OneLogin Applications page, click *Applications* on the top navigation menu. Then, click *Add App*.
+
+2. In the *Find Applications* section, search for *‘SAML Test Connector’*. From the results list, select *SAML Test Connector (Advanced)*.
+
+3. Edit the Display Name and logo for the portal and click *Save*.
+
+4. The page will update to display the Info tab. Navigate to the *Configuration* tab. Enter your Kobiton service provider details here, copied from the information in *Section 1: Basic configuration* on the Kobiton portal *SSO settings* page. Click *Save*.
++
+Below is an example of the mapped fields for configuration between Kobiton and OneLogin to assist with the previous step.
+
+5. Navigate to the *Parameters* tab. Add a new field by clicking the blue (+) icon in the *SAML Test Connector Field* box.
+
+6. In the New Field pop-out box, edit the *Field name* to contain the desired field attribute and click *Save*.
+
+7.  Repeat steps 5 and 6 until your parameters are complete, as seen in the image in Step 5 above. Examples of the fields you should now have are listed below.
+
+8. Navigate to the *SSO* tab in the OneLogin left-side menu. Copy the *Issuer URL, SAML 2.0 Endpoint (HTTP)*, *SLO Endpoint (HTTP)* and *X.509 Certificate* data from this page to fields of *Section 3: Set up at Kobiton side*.
++
+Users need to download the Certificate by clicking *View Details* to be redirected to the *Standard Strength Certificate* page. Once ensure the X.509 PEM certificate is selected and click *Download*.
+
+9. Please remember to save any changes or additions made to your OneLogin configuration before exiting the page. Please also complete the steps in the *SSO Settings* page in Kobiton portal to verify that your configuration is functional.
+
+== 4. Custom SAML 2.0 - OKTA
+1. Navigate to OKTA and sign in with an admin account. On the OKTA admin home page, click the Applications tab in the top navigation menu.
+
+2. On the Applications page, click *Add Application*.
+
+3. Click *Create New App*. In the *Create a New Application Integration* prompt, select *Web* in the Platform dropdown box, then select *SAML 2.0* for the Sign on method. Click *Create*.
+
+4. In the *General Settings* box, fill in the name and logo for your application.
+
+5. In the SAML Settings box, fill in the information with the matching values from *Section 1: Basic configuration* of the Kobiton portal *SSO settings* page. The *Name ID format* and *Application username* fields are optional and can be set according to your own preferences.
++
+When this information is completed, click the *Download Okta Certificate* button. This certificate needs to be uploaded to your Kobiton portal SSO settings page in *Section 3: Set up at Kobiton side*. In Kobiton portal, click *Upload* beneath the *Identity Provider Certificate** header. In your Okta configuration page, fill out Group Attribute Statements here, as in the example provided below:
+
+6. Click *Next*, then click *Finish*.
+
+7. Within your SAML application’s configuration, navigate to the *Sign On* tab within the Application view. Click *View Setup Instructions* and supply the information from this page to the appropriate fields in Section 3 of your Kobiton portal *SSO settings* page.
+
+8. On your Kobiton portal *SSO settings* page, confirm that all data looks correct and follow the steps outlined to verify your configuration is functional.
+
+== 5. Custom SAML 2.0 - Azure AD
+1. Sign in to Azure management portal using an Azure Active Directory administrator account.
+
+2. Navigate to Azure Active Directory > [Directory].
+
+3.  Under *Sign Ins/Create*, select *Enterprise Application*, select *New Application*.
+
+4. Select *Non-gallery application*.
+
+5. In the *Add from the gallery* section, type the name of the application and click *Add*.
+
+6.  Assign a test user to the application. (Please note that this step is required).
+
+7. Set up single sign-on. Select *SAML*.
+
+8. Edit the configuration with the appropriate information. For Azure AD's *Section 1: Basic SAML Configuration*, use the information from *Section 1: Basic Configuration* of your Kobiton portal *SSO settings* page. For Azure AD's *Section 2: User Attributes & Claims*, you can copy the values from *section 2: User attributes (or parameters)* of your Kobiton portal *SSO settings* page to complete the fields. The *Unique User Identifier* is an optional value; all other values are required.
++
+When this information is complete, *please make sure to download the "Certificate (Base64)"* from the link located in *Section 3: SAML Signing Certificate* of the Azure AD setup page and click *Save*.
++
+NOTE: On the User Attributes & Claims > Manage Claim page, the namespace field needs to be removed as reflected in the image below for each _mapping_.
++
+The attribute mapping for users should look like the image below when done:
+
+9. After the above steps are completed, please fill in your IdP’s information to the appropriate fields in section 3 of the Kobiton portal *SSO settings* page. This is also where users will upload the certificate downloaded in the previous step. Complete the verification steps as outlined in the *How to configure SAML* section of this article. Users are also welcome to use Azure AD's configuration test, but please note that the configuration on Kobiton's portal page must be complete for the SSO settings to be verifiable.
+
+== 6. Custom SAML 2.0 - GSuite
+1. From the Google Admin console, select the *Apps* tile.
+
+2. On the *Apps* page, select *SAML* apps tile.
+
+3. You are now on the Apps > Web and mobile apps page. From here, click the *Add App* tab to toggle a dropdown menu, then select *Add custom SAML app*. GSuite offers you a step-by-step checklist for this next part of the process; we also include those steps below as part of this guide.
+
+* Step 1: App details: Fill in the name for the app.
+
+* Step 2: Google Identity Provider Details: Copy and save all of the information contained in this step, including downloading the certificate (all boxes have a copy function button, and the Certificate box has a download function button.) Paste this information and upload the certificate to the corresponding fields in *Section 3* of the Kobiton portal *SSO settings* page.
+
+* Step 3: Service Provider Details: Fill in the appropriate fields with the matching information from Box 1 of the Kobiton portal *SSO settings* page.
+
+* Step 4:  Attribute Mapping: Fill out the attribute sections as indicated in the image below:
+
+If you have any questions or issues with configuring your SSO/SAML setup with Kobiton, please submit a support ticket at support.kobiton.com.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
