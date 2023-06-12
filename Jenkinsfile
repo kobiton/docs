@@ -19,8 +19,8 @@ pipeline {
   }
 
   environment {
-    CI_DEPLOY_APP_NAME = "documentation"
-    CI_DOCKER_IMAGE_NAME = "documentation"
+    CI_DEPLOY_APP_NAME = "docs"
+    CI_DOCKER_IMAGE_NAME = "docs"
     REPO_NAME = "kobiton/documentation"
   }
 
@@ -57,24 +57,24 @@ pipeline {
                 docker-ci:latest \
                   --git-url $env.GIT_URL \
                   --commit-id $GIT_COMMIT_ID \
-                  build --docker --docker-centralized --docker-image-name portal-help \
+                  build --docker --docker-centralized --docker-image-name widget \
                   --docker-image-tag $GIT_COMMIT_ID")
           sh("docker run --rm \
                 -v /var/run/docker.sock:/var/run/docker.sock \
                 docker-ci:latest \
                   --git-url $env.GIT_URL \
                   --commit-id $GIT_COMMIT_ID \
-                  build --docker --docker-centralized --docker-image-name documentation \
+                  build --docker --docker-centralized --docker-image-name docs \
                   --docker-image-tag $GIT_COMMIT_ID")
           sh("docker run --rm \
                 -v /var/run/docker.sock:/var/run/docker.sock \
                 docker-ci:latest archive --docker-registry \
-                --docker-image-name portal-help \
+                --docker-image-name widget \
                 --docker-image-tag $GIT_COMMIT_ID")
           sh("docker run --rm \
                 -v /var/run/docker.sock:/var/run/docker.sock \
                 docker-ci:latest archive --docker-registry \
-                --docker-image-name documentation \
+                --docker-image-name docs \
                 --docker-image-tag $GIT_COMMIT_ID")
         }
       }
@@ -93,7 +93,7 @@ pipeline {
           sh("docker run --rm \
             -v /var/run/docker.sock:/var/run/docker.sock \
             docker-ci:latest deploy \
-            --env-name kobiton-test --app-name documentation \
+            --env-name kobiton-test --app-name docs \
             ${params.APPLY_K8S_VIRTUAL_SERVICE_MANIFEST? "--extra-k8s-apply-virtual-service" : ''} \
             ${params.DEPLOY_REPO_CODEBASE_ID ? "--env-codebase-id $params.DEPLOY_REPO_CODEBASE_ID" : ''} \
             --docker-image-tag $GIT_COMMIT_ID")
