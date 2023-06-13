@@ -1,13 +1,30 @@
-= Kobiton Documentation
+= Welcome to Kobiton Docs
 
-Welcome to Kobiton's documentation repository! Here you'll find everything we use to build our https://support.kobiton.com/hc/[documentation site] -- which is manged as docs-as-code. If you're new, here's a few places to get started:
+This repository contains the source files for link:https://docs.kobiton.com/[docs.kobiton.com], the docs site for our mobile-testing platform. If you'd like to help improve our docs, you can:
 
-- xref:contributing/README.adoc[Contribute to our documentation]
-- https://github.com/kobiton/documentation/issues/new?assignees=&labels=&template=bug_report.md&title=[Submit a feature request]
-- https://github.com/kobiton/documentation/issues/new?assignees=&labels=&template=feature_request.md&title=[Submit a bug]
+- link:https://github.com/kobiton/documentation/issues/new?assignees=&labels=&template=report-an-issue.md&title=[Report an issue]
+- link:https://github.com/kobiton/documentation/issues/new?assignees=&labels=&template=request-a-feature.md&title=[Request a feature]
+- xref:CONTRIBUTE.adoc[Contribute]
+
+== Build the docs
+
+To build the docs locally, you'll need link:https://nodejs.org/[Node.js] and link:https://yarnpkg.com/[Yarn]. Run the following commands to check if they're installed:
+
+[source,shell]
+----
+node --version
+yarn --version
+----
+
+If Node.js and Yarn are installed, you can install our project dependencies and build the docs locally by running the following commands:
+
+[source,shell]
+----
+yarn install
+yarn build
+----
 
 == Code of Conduct
 
 At Kobiton, we pledge to make participation in our
-community a harassment-free experience for everyone. To learn more about our Code of Conduct, read more xref:contributing/code-of-conduct.adoc[here].
-
+community a harassment-free experience for everyone. You can learn more about our pledge in the full xref:CODE_OF_CONDUCT.adoc[Code of Conduct].
