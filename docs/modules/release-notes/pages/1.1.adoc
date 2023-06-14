@@ -1,0 +1,54 @@
+= Kobiton 1.1 release notes (Legacy)
+:navtitle: Kobiton 1.1 release notes
+
+_May 30, 2017_
+
+== Improvements
+
+=== Automation Testing
+
+* Support for Appium 1.6.4, support for iOS 10.3, support for Android 7.1+
+
+=== Manual Testing
+
+* Support for iOS 10.3, support for Android 7.1+
+* Improved screen streaming to reduce bandwidth consumption by 50%
+
+=== Security
+
+* Prevents downloading .apk and .ipa inside the device
+
+=== Others
+
+* Ability to display session in user-configured timezone
+* Kobiton Desktop App now shows detailed steps when initializing devices
+* Documented the https://support.kobiton.com/faq/local-testing-vpn[whitelist approach] for app testing behind the firewall
+* Many bug fixes
+
+== Customers update
+
+*Upgrade notes for customers hosting their own devices*
+
+The new Kobiton Desktop app (v1.9.1) requires a few extra steps during the setup process up on a Mac machine. Please follow the instructions below to update the Mac machine to run the new Kobiton Desktop app.
+
+1. Upgrade Xcode
+** This version of the Kobiton Desktop App requires Xcode 8.3.2. Please download and install this exact version.
+*** Launch the Terminal app and run the following commands:
+*** Accept the new license: +
+`$ sudo xcodebuild -license accept`
+*** Enable Development Mode: +
+`$ DevToolsSecurity -enable`
+*** Update Command Line tools: +
+`$ xcode-select --install`
+*** Confirm you're using the correct version of Xcode (8.3.2): +
+`$ xcodebuild -version`
+
+2. Install ffmpeg
+** Launch the Terminal app and enter the following command: +
+`$ brew install ffmpeg --with-x264`
+
+3. Install Kobiton Desktop
+** Quit the Kobiton Desktop App (if actively running)
+** Login to https://portal.kobiton.com/login[Kobiton]
+** Click Download to re-download the Kobiton Desktop App
+** Install and launch it

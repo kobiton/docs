@@ -1,0 +1,64 @@
+= Kobiton 3.11 release notes (Legacy)
+:navtitle: Kobiton 3.11 release notes
+
+_April 19, 2021_
+
+== Updates to the Kobiton Platform
+
+=== Kobiton Intelligent Quality Suite and Scriptless Automation
+
+* Performance remediation tests now include support for Performance assertions- in addition to the already released crash, visual, and text assertions. NOVA will identify each test step that takes longer than the set baseline time and will identify them on the session explorer.
+* Data from a scroll wheel gesture is now captured and can be played back and simulated when run against multiple devices.
+* Scriptless automation sessions can be https://support.kobiton.com/hc/articles/360060086051[set to run on different device bundles from the Kobiton UI]. This improves automated testing sessions in a few ways:
+** You no longer need to use Kobiton's API to select different bundles to run a session on
+** Instead of running a second manual session, just choose a different bundle on the UI's bundle list
+** Tests on bundles can be run in parallel
+* Automation scripts can be set by desired capabilities rather than just being able to run those tests from the the portal
+* https://support.kobiton.com/hc/articles/360059922911[Appium Export Script Flow]: there can be a bit of a learning curve when going from manual testing to testing with Appium. Although Kobiton does lesson the curve by exporting an appium script based on a manual session, they were only available when using Scriptless Automation. Now, users can access those scripts after a manual session and are available on all scriptless revisit sessions.
+* This release introduces the ability to https://support.kobiton.com/hc/articles/360060029671[edit the manual session] meant to be used as the baseline session for NOVA's scriptless automation runs. This will provide you with more flexibility, allows for the removal of unnecessary or redundant test steps which will give you a much better testing experience.
+
+=== Script-based Test Automation
+
+Our previous release introduced Visual Assertion to catch visual issues apps may experience across different releases, but was limited to scripts that were exported using NOVA's Appium export capability. This release extends Visual Assertion testing by:
+
+* Allowing previously run Appium sessions to be set as the baseline session
+* Adds the ability to run Visual comparisons against mobile browsers and webview components
+
+=== Session Explorer
+
+* With the addition of background services, crash log files will be available on the Session Explorer Insights Panel. For the tester, this means you'll be able to pinpoint when an application crashed and why.
+
+==== Kobiton Portal
+
+* Kobiton users already have the ability to spoof a device's location, but can now set it by using map markers and search. This eliminates having  to look up the exact latitude and longitude of the location you want to spoof. You can learn more https://support.kobiton.com/hc/en-us/articles/360055622512[here].
+* Device list groups can now be changed right on the UI's Group dropdown list.
+* Users will now see a confirmation popup before deleting a user from an organization with a reminder that once a user is removed you'll need to contact support for that user to be added back into the user base.
+* While waiting for a device to load on the portal for a manual session, check out our Tips and Tricks panel.  In addition to short blurbs that will help keep you up-to-date on Kobiton capabilities, watch out for videos and images to call out Kobiton features.
+* New device support! We've added these devices to the Kobiton public cloud:
+** Xiaomi Redmi Note 8 Pro
+** Xiaomi Redmi Note 9
+** Samsung Galaxy S10
+** Xiaomi Redmi Note 7
+** Galaxy J3
+** Pixel 2 XL
+** HUAWEI P20 Lite
+** OnePlus 8
+* New Android OS Support! We now support Android 12 Developer Preview.
+* The device's details modal will now include information on when a device was last utilized. This will help give insight on whether a device was currently in use or if it may be in a hung state and needs to be restarted.  
+* We are deprecating docs.kobiton.com, but documentation and support issues can be found and reported on support.kobiton.com
+
+==== REST API
+
+* Our REST API documentation now includes:
+** `GET /users/me` retrieves the user's information.
+** `GET /organizations/\{organizationId}/groups/own` retrieves the group(s) the user is a part of.
+
+== Bug Fixes and Enhancements
+
+=== Kobiton Intelligent Quality Suite and Scriptless Automation
+
+* Revisit session live views now display the latest state- without having to reload any session pages.
+* By increasing the pixel comparison size, we've improved NOVA's Text Color Assertion remediation which will help prevent false positive remediation results when testing text color.
+* Improvements to the Session List search capability will:
+** significantly reduce the time it takes to return results
+** returns sessions by specified terms, i.e., "iPhoneX Jack.H Espresso passed" will only return passed Espresso sessions Jack.H ran on an iPhone X.

@@ -1,0 +1,121 @@
+= Kobiton 4.4 release notes
+:navtitle: Kobiton 4.4 release notes
+
+_May 13, 2023_
+
+These release notes pertain to Kobiton 4.4.
+
+As a reminder, in our November release, we started using 4.0+ as the numbering for releases of the new Kobiton, while Legacy Kobiton will continue with numbering starting with 3.25 and above. If you are using Legacy Kobiton, see the v3.29 release notes.
+
+== New iOS and device support
+
+Kobiton 4.4 supports the following:
+
+* iOS/iPadOS 16.4
+* iOS/iPadOS 16.4.1
+* iOS/iPadOS Security Response 16.4.1 (a) (NOTE: passcodes are not currently supported with this release)
+* iOS/iPadOS 15.7.5
+* Zebra Technologies TC21
+
+== Retain device without launching a Manual session
+
+Users can now retain a Private or Local device without having to launch a Manual session. Just open the *Device Details* of an available device in the *Device List*, and select a retain period from the drop-down list to retain the device.
+
+_NOTE:_
+
+* _Only Private or Local devices can be retained this way. For Public devices, launch the session and retain the device upon exit._
+
+== Download Appium logs for automated sessions
+
+Kobiton 4 utilizes Xium to run your Appium tests 2-3x faster than Appium. Similar to the download Appium logs feature in Legacy Kobiton, testers running Appium automated sessions can now download automation logs. Look for the *Xium* button in the *Logs* area of *Session Overview*. Note that the structure of the Appium logs from Xium is a little different from standard Appium logs.
+
+== Various UI/UX improvements
+
+We introduced several enhancements to the UI/UX below:
+
+* For Customer-hosted Local and Kobiton-hosted Private devices, display the version and build number of the deviceConnect software in the Device Management page of the Portal.
+* For Cloud customers, we included the link to API v2 in the API v1 documentation site to allow better navigation between them.
+* For long UDIDs, hover the mouse on the partial UDID in the *Device Details* modal to show and copy the full UDID.
+* Accessibility validation findings now show immediately in Session Explorer after a session.
+
+== virtualUSB: automatically release device after a period of inactivity
+
+If a user stops utilizing a device in the virtualUSB app but forgets to close virtualUSB properly, the device is retained and not available to other users for 24 hours. To prevent this issue, we introduced a mechanism to automatically release the device if virtualUSB app is inactive for a certain amount of time. The virtualUSB is set as inactive under any of the conditions below:
+
+* The computer shut downs, sleeps or hibernates while virtualUSB is running.
+* The network connection of the computer running virtualUSB is interrupted.
+
+After the device is released, the status of the device changes from *Retained* to *Online* and other users can now utilize the device.
+
+_NOTE:_
+
+* _Requires an active virtualUSB subscription and the latest version of the virtualUSB app._
+* _The default inactivity timeout is 1 hours. This can be changed by contacting Support._
+* _If virtualUSB is active again after a device is automatically released, the connection is displayed as Error instead of Online. Close the app and open it again to fix this issue._
+
+== virtualUSB: save logs without logging in
+
+Before this release, the *Save Logs* button in virtualUSB was only accessible after the user logged in. Now, this option is under *Help* in the menu bar for both MacOS and Windows, so users can download logs even if they cannot log in.
+
+_NOTE:_
+
+* _Requires an active virtualUSB subscription and the latest version of the virtualUSB app._
+
+== Accessibility Validation: Touch Target Size on the Ionic Framework
+
+We introduced Touch Target Size validations for hybrid apps in link:https://support.kobiton.com/hc/en-us/articles/13680922974605-v4-2-March-4-2023#accessibility-validations-touch-target-size-and-color-contrast-validations-on-web-and-hybrid-applications-0-7[Release 4.2] with limited support for Ionic Framework. We now leverage the Shadow DOM Inspector feature in link:https://support.kobiton.com/hc/en-us/articles/14465128994445-v4-3-April-1-2023#Kobiton-Inspector:-ability-to-inspect-Shadow-DOM-data[Release 4.3] to bring better support for the Touch Target Size validation for Ionic Framework.
+
+_NOTE:_
+
+* _Requires an Enterprise subscription with Validations._
+
+== Passcode: display passcode during a Manual session
+
+When performing some tasks such as enrolling devices to an MDM or testing Apple Pay, users are required to input the passcode during a manual session. For organizations with passcode mode 1 or 2 enabled, where a random passcode is generated for each device, these tasks can be difficult as users have to contact Support to retrieve the device passcode.
+
+To make the process easier, we now display the device passcode in the session information area of a Manual session.
+
+_NOTE:_
+
+* _Do not use the passcode displayed to remove or change the device passcode in a manual session. This prevents other users from using the devices._
+* _Applies to orgs with any passcode modes enabled._
+* _Only displays passcode that are set by the Kobiton platform. Passcodes set manually on the device cannot be shown._
+
+== Passcode mode 3: remove passcode on session exit unless device is retained
+
+Prior to this release, users of organizations with passcode mode 3 enabled can choose to keep or remove the device passcode when they exit a session. To prevent cases where users forget to remove the device passcode and make the device unavailable for others, we removed this option and applied the following rules instead:
+
+* Device passcode is removed after a session ended, unless the device is retained.
+* If the device is retained, the passcode is only kept until the retainment expires.
+
+_NOTE:_
+
+* _Only applies to org with passcode mode 3 enabled._
+* _Some MDM policies prevent the removal of passcode in the device. In this case, Kobiton cannot remove the passcode and users must remove the MDM from the device for others to use the device._
+
+== Passcode mode 3: increase minimum required length for PIN
+
+To increase the security of devices with passcode, devices in organizations with passcode mode 3 enabled are required to have 8 to 10 digits for PIN instead of 6 to 10 digits as before.
+
+This new rule only applies for PIN that are set after the release. PINs with less than 8 digits set before this release will be kept until they are removed.
+
+_NOTE:_
+
+* _Only applies to orgs with passcode mode 3 enabled._
+
+== Restart services in deviceConnect machine from the Portal
+
+Administrators of customer-hosted Local devices and Kobiton-hosted Private devices need to restart the services on the deviceConnect machine to fix device issues and apply software updates. This action can now be done from the Kobiton Portal instead of logging into the deviceConnect machine.
+
+To restart services, Admins navigate to *Settings>Device Management* and click *Restart Services* button next to a specific deviceConnect host Mac mini.
+
+Restarting services will interrupt all running sessions on the affected devices, so make sure there are no running sessions on the machine or inform the affected users before restarting.
+
+_NOTES:_
+
+* _Requires a user with ADMIN predefined role._
+* _Customer-hosted Local or Private devices only._
+
+== Additional enhancements and bug fixes
+
+In addition to the above, this release includes a number of minor bug fixes and enhancements to improve your day-to-day testing.

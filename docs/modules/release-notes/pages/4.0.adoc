@@ -1,0 +1,101 @@
+= Kobiton 4 release notes
+:navtitle: Kobiton 4 release notes
+
+_November 19, 2022_
+
+Earlier this year, we introduced you to a smarter, faster Kobiton with the easy-to-remember name: Kobiton.
+
+To further differentiate the new Kobiton from Legacy Kobiton, we are changing the release numbering. With this release, we have started using 4.0+ as the numbering for releases of the new Kobiton going forward, while Legacy Kobiton will continue with numbering starting with 3.25 and above.
+
+The majority of our new features and updates will be found in the Kobiton 4.0+.
+
+As always, we are here to help! If you have any questions or would like to update your Kobiton system, please send us an email at support@kobiton.com or contact your Account Executive.
+
+== New iOS and macOS support
+
+Kobiton 4.0 supports the following:
+
+* iOS 16.1
+* iPadOS 16.1
+* macOS 13 Ventura for running Kobiton
+
+For customers hosting Kobiton, please note that from iOS 16, all iOS 16 and higher devices must enable Developer Mode manually on physical devices. Previously, it was auto-enabled by plugging into Xcode.
+
+Furthermore, please note that Xcode 14, released last month and necessary to support iOS 16 and above, no longer supports building apps for iOS 9 and iOS 10. With this change, Kobiton supports apps iOS 11 and higher.
+
+== Biometrics authentication for Android manual and automation sessions
+
+Many apps support the use of biometrics - fingerprint or FaceID - to login to the app. In previous releases, we provided biometrics support for iOS devices. With this release, we've added biometrics support for manual and automation test sessions for Android 9 and above.
+
+In order to use this feature, the app to be tested must incorporate a Kobiton-provided customer library. Check back soon for detailed instructions.
+
+[NOTE]
+--
+* Biometrics support is for Android 9 and above
+* We support only the official API for https://developer.android.com/reference/android/hardware/biometrics/BiometricPrompt#authenticate[BiometricPrompt]
+--
+
+== App Signing: Ability for customers to re-sign iOS app when hosting
+
+We enhanced the functionality for customers to re-sign their iOS app with their own iOS profile when they are hosting devices on-premises.
+
+== Enhanced error messaging and handling of iOS app signing issues
+
+iOS app signing is not for the faint of heart as the rules can be a bit confusing and change based on how you are testing. With this release, we continued to enhance our error catching and error messaging to help users navigate the complexity of errors that can occur due to iOS app signing. Users will see informative messages and unique error codes that will be helpful to provide our support team.
+
+== virtualUSB updates \{Beta}
+
+If you are using our virtualUSB, please be sure to download the latest version from the Portal to ensure you are getting the best experience. Older versions may not work properly with the current release.
+
+== Ability to trigger scriptless from TestFlight native apps \{GA}
+
+The ability to trigger scriptless and generate Appium Export for apps installed via TestFlight is now considered General Availability (GA)!
+
+== Ability to trigger scriptless from App Store/Play Store native apps \{Beta}
+
+Up until now, scriptless has been available for apps installed via Kobiton's App Repo, for mobile browser sessions, and via TestFlight. With this release, users are now able to trigger scriptless functionality on test sessions for native apps that are installed on a device via Apple's App Store or Google Play Store.
+
+We've released this as a Beta feature and welcome your feedback via support@kobiton.com!
+
+== Intelligent Quality Suite: support for two new endpoints
+
+This feature adds support for the following endpoints for customers using Intelligent Quality Suite features with their script-based automation scripts:
+
+* /element/click
+* /element/active
+
+== Accessibility Validations: new desiredCapability
+
+If Accessibility Validations are included in your subscription, you can use the following desiredCapabilities to run our supported accessibility checks on your script-based automated sessions:
+
+* kobiton:scriptlessEnable = true
+* kobiton:accessibilityValidation = true
+
+[NOTE]
+The default value for the accessibility desiredCap is false.
+
+== New Accessibility validations for Content Labeling for Android
+
+Content Labels are not displayed on a screen. Assistive technologies, like screen readers, read these values aloud to the end user to help them understand elements and navigate an interface. With this release, we're introducing support for the following types of content labeling validations:
+
+=== Type 1: Content Label Missing:
+
+* Without the label, a screen reader cannot tell the user what the element is.
+* Validation message: This element is missing a label, so will not be read by screen readers.
+
+=== Type 2: Redundant Content:
+
+* Repeating content can be confusing to end users. For example, naming a button "button" could be read "button button".
+* Validation message: This element has redundant content.
+
+=== Type 3: Duplicate Description:
+
+* Similar to the above, if multiple items have the same descriptor, the end user may not know which one to select.
+* Validation message: This element has the same text as another element on the screen which may confuse the end user.
+
+[NOTE]
+This feature will initially be available for native apps for Android only. iOS support will be in a future release.
+
+== Additional enhancements and bug fixes
+
+In addition to the above, this release includes a number of minor bug fixes and enhancements to improve your day-to-day testing.

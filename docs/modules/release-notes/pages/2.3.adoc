@@ -1,0 +1,30 @@
+= Kobiton 2.3 release notes (Legacy)
+:navtitle: Kobiton 2.3 release notes
+
+_July 30, 2018_
+
+== Automation Test Enhancements
+
+On Android, if the automationName attribute is empty, Kobiton will set a default value for it as below:
+
+* Android version < 5: automationName = Appium
+
+* Android version >= 5: automationName = UiAutomator2
+
+== API
+
+* Kobiton now supports https://api.kobiton.com/docs/#get-metric-url-stream[Stream API] to fetch device system metrics: CPU, Memory (RAM), WIFI (ingoing / outgoing) of a running session on both iOS and Android.
+
+== Device Cleanup
+
+* Kobiton now offers users who use Device Lab Management to host / manage their own devices, a flexible method to control a cleanup process. Kobiton’s users are able to include / exclude the https://support.kobiton.com/device-lab-management/device-cleanup-policy/device-cleanup[Cleanup Activities] (refer to the list below) after exiting a manual / automation session:
+** Remove apps installed within a session
+** Remove browser’s cache and browsing history
+** Reset device settings (turn on WIFI, USB Debugging, turn off Airplane Mode…)
+** Remove signed-in accounts (Gmail, Facebook...)
+
+== Other Enhancements
+
+* Stop supporting Indie registration. All the existing Indie subscriptions still work normally.
+
+* Support manual / automation test for iOS 11.4.1
