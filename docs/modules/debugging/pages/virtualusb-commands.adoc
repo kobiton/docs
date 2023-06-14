@@ -1,0 +1,178 @@
+= VirtualUSB commands
+:navtitle: VirtualUSB commands
+
+The virtualUSB command-line interface (CLI) is a set of commands used to perform the core virtualUSB features, such as: login, logout, connect devices, disconnect devices, etc. It is designed to speed up virtualUSB usage, as well as enable automation through scripting.
+
+Using virtualUSB CLI requires the installation of the virtualUSB application. Refer to the virtualUSB installation guide for link:https://support.kobiton.com/hc/en-us/articles/12111002707341-virtualUSB-beta-Windows-installation-and-configuration-guide[Windows] and link:/hc/en-us/articles/10780607309197[MacOS] for instructions.
+
+== Determine how you will connect to virtualUSB CLI
+
+Once installed, virtualUSB resides in the following directories:
+
+* for Windows: `C:\Program Files\virtualUSB`
+* for macOS: `/Applications/virtualUSB.app/Contents/Resources`
+
+To start using virtualUSB CLI, determine how you will access it from the following options:
+
+* Open a terminal on the user workstation and cd to the directory as follows:
+** for Windows: `cd "C:\Program Files\virtualUSB"`
+** for macOS: `cd /Applications/virtualUSB.app/Contents/Resources`
+* Use the complete path to the virtualUSB command when invoking it.
+** Windows example: `"c:\Program Files/virtualUSB/vusb.exe" login --username MyName --password MySecretPassword`
+** macOS example: `/Applications/virtualUSB.app/Contents/Resources/vusb login --username MyName --password MySecretPassword`
+* Add the directory to the search PATH used by the shell
+
+== Log into virtualUSB
+
+Before using virtualUSB CLI, you must first login by entering the following command:
+
+[source,bash]
+----
+vusb login
+----
+
+Enter the username/email and the password or API key to login.
+
+Alternatively, you can specify the username and password directly in the login command:
+
+[source,bash]
+----
+vusb login --username <username> --password <password>
+----
+
+*Note:* the above login method will display the password in plain text, so make sure to keep the password secure while using.
+
+== View virtualUSB help
+
+To see a list of commands supported by virtualUSB, use the following command:
+
+[source,bash]
+----
+vusb --help
+----
+
+To get more information about a particular command, use the following where <command> is the name of the command:
+
+[source,bash]
+----
+vusb help <command>
+----
+
+== Connect to a device
+
+To connect to a device via virtualUSB, enter the following command where `<udid>` is the UDID of the device to be connected. Only one UDID can be specified here. Make sure the device you want to connect to is available to your Kobiton account.
+
+[source,bash]
+----
+vusb connect --udid <udid>
+----
+
+== Disconnect from a device
+
+To disconnect from a device, enter the following command where `<udid>` is the UDID of the device to be disconnected. Only one UDID can be specified here.
+
+[source,bash]
+----
+vusb disconnect --udid <udid>
+----
+
+== View connected device’s status
+
+To check the status of a currently connected device, enter this command:
+
+[source,bash]
+----
+vusb status
+----
+
+If there are devices connected, the command output will be similar to the below:
+
+[source,json]
+----
+{
+  "servers": [
+    {
+      "connectionStatus": "Connected", //Host connection status
+      "host": "virtualusb.example.com:10002", //URL of the virtualUSB host
+      "linkedDevices": [
+        {
+          "connectionStatus": "Connected", //Connection status of the device
+          "id": "0709C8D4-DD63-E500-8832", //ID of the device
+          "name": "Galaxy A11", //Name of the device
+          "os": "Android", //Operating system of the device
+          "osVersion": "12", // OS version of the device
+          "statusDescription": "Connected", //Description of the connection status
+          "vendorUniqueIdentifier": "R9JN615AACA" //UDID of the device
+        },
+        {
+          "connectionStatus": "Connected",
+          "id": "6A2266BE-F655-57A2-349C",
+          "name": "Galaxy Tab A",
+          "os": "Android",
+          "osVersion": "9",
+          "statusDescription": "Connected",
+          "vendorUniqueIdentifier": "R52N501VDSA"
+        }
+      ],
+      "name": "virtualusb.example.com:10002",
+      "statusDescription": "Connected"
+    }
+  ],
+  "version": "4.0.10924.1230.KOB-31816-vucli@1cb4dae" //virtualUSB version
+}
+----
+
+== Export logs
+
+To export logs of virtualUSB usage, enter the following command where:
+
+* `<out>` is the path to save the log file. If not specified, the file will be downloaded to the default location.
+* `<days>` is the number of days from the current day to retrieve the log. If not specified, the default value is 1.
+
+[source,bash]
+----
+vusb export-logs --out <out> --days <days>
+----
+
+When executed, a zip archive containing all the logs in the selected period will be downloaded. The file’s download location will be mentioned in the output as in the following example:
+
+[source,bash]
+----
+Please wait...
+Exported to /Users/john/Downloads/vulogs.zip
+----
+
+== Log out
+
+To log out, enter this command
+
+[source,bash]
+----
+vusb logout
+----
+
+== Set up iOS devices (Windows only)
+
+On Windows machines, extra configuration steps need to be performed to set up iOS devices. To do this, enter the following command in a terminal with *administrator privileges*:
+
+[source,bash]
+----
+vusb setup-ios
+----
+
+== Set up adb (Windows only)
+
+On Windows machines, extra configuration steps need to be performed to set up adb (Android Debug Bridge). To do this, enter the following command in a terminal with *administrator privileges*:
+
+[source,bash]
+----
+vusb setup-adb
+----
+
+== Limitations
+
+* The first time you run a `vusb connect` or `vusb disconnect` command on a macOS machine, make sure you run it on the physical machine or remote to it with full UI access to allow virtualUSB to install the daemon. The visual prompt to allow this permission does not appear if the command runs via ssh. This step is only required one time.
++
+image:./guide-media/01GWESRRVB66X7JEW4GY1HDW1X[width=, alt="Screen_Shot_2022-11-21_at_6.00.10_PM.png"]
+
+* Within the zip file exported using the command `vusb export-logs`, the created and modified date time of some of the files and folders are displayed incorrectly as January 1, 1980 at 12:00 AM.
