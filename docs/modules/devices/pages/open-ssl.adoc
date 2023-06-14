@@ -1,0 +1,110 @@
+= OpenSSL
+:navtitle: OpenSSL
+
+== How to install OpenSSL
+
+=== 1. Check the current OpenSSL version
+
+To check the OpenSSL version on your machine, use this command in Terminal (macOS) or Command Prompt (Windows):
+
+```
+openssl version
+```
+
+virtualUSB requires this version: **OpenSSL 1.0.2t 10 Sep 2019**
+
+=== 2. Check if .zshrc or .bashrc already exists:
+
+If you're not sure which shell you're using, use the following command:
+
+```
+echo $SHELL
+```
+
+If you get a response like `/bin/zsh`, then you're using the *zsh shell* on your Mac, and you will need to use `.zshrc`.
+
+To check if the `.zshrc` file already exists:
+
+```
+ll -a ~/ | grep zshrc
+```
+
+If you don't see any result, you will need to create a new one. To create a new `.zshrc` file in `/User/$USER/`, use this command:
+
+```
+touch ~/.zshrc
+```
+
+=== 3. How to install OpenSSL 1.0.2t
+
+First, install **Homebrew** and **wget** on your machine. If you have installed **Homebrew** and **wget**, skip the steps below.
+
+If you are using Mac with M1 processor (for Mac with Intel processor, please scroll down):
+
+- You need to install or update Rosetta:
++
+Go to `~/Applications` folder, duplicate your favorite terminal and rename the newly created terminal.
++
+Right-click on the newly created terminal, click Get Info and check the option “Open using Rosetta”:
+![Rosetta Terminal](/guide-media/01GWE1D5GNFWDD4EDAG5AXSRWE)
++
+Going onward, we'll always use the Rosetta terminal.
+- Install **Homebrew**:
+```
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+```
+- Add **Homebrew** shell configuration:
+```
+echo 'eval "$(/opt/homebrew/bin/brew shellenv)"' >> ~/.zshrc
+```
+- Source **zshrc**:
+```
+source ~/.zshrc
+```
+- Install **wget**:
+```
+brew install wget
+```
+
+If you are using Mac with Intel processor:
+
+- Install **Homebrew**:
+```
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+```
+- Source **zshrc**:
+```
+source ~/.zshrc
+```
+- Install **wget**:
+```
+brew install wget
+```
+
+Finally, to install OpenSSL, follow these steps:
+
+```
+wget https://raw.githubusercontent.com/rbenv/homebrew-tap/master/Formula/openssl%401.0.rb
+
+# Edit above file, remove this code `system "make", "test"` (line 42) and save
+
+brew install openssl@1.0.rb
+
+brew reinstall openssl@1.0.rb
+
+ln -sfn /usr/local/Cellar/openssl@1.0/1.0.2t/lib/libssl.dylib /usr/local/lib/libssl.dylib
+
+sudo cp /usr/local/Cellar/openssl@1.0/1.0.2t/bin/openssl /usr/local/bin/
+
+# Add these to .bashrc or .zshrc
+echo 'export LDFLAGS=-L/usr/local/opt/openssl@1.0/lib' >> ~/.zshrc
+echo 'export CPPFLAGS=-I/usr/local/opt/openssl@1.0/include'
+
+ >> ~/.zshrc
+
+# Source zshrc
+source ~/.zshrc
+
+# Close Rosetta terminal and open again to check openssl version
+openssl version
+```
