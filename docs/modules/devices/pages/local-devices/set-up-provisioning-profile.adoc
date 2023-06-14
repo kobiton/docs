@@ -1,0 +1,86 @@
+= Setup provisioning profile and certificate files for iOS devices
+
+:navtitle: Setup provisioning profile and certificate files for iOS devices
+
+This article guides you on how to prepare one (or many) .p12 files and one (or many) provisioning profile .mobileprovision files which are required for iOS devices.
+
+== 1. Create and submit .certSigningRequest to Apple Developer to create a .cert file
+
+*Step 1:* Launch _Keychain Access_ > select _Certificate Assistant_ > select _Request a Certificate From a Certification Authority._
+
+image::/guide-media/01GWE78BX8GB63RDX65NTKEW6F[]
+
+*Step 2:* Next, enter User Email Address and Common Name (any name of choice), leave CA Email Address blank. Select *Save to disk* option and click Continue.
+
+image::/guide-media/01GWEGNTQHQ6XPRMJMS73SQY4D[492,348]
+
+Choose the location to save the certificate and select Save.
+
+image::/guide-media/01GWE56MZCJF5Q1QY4Z1Z621RZ[491,352]
+
+*Step 3:* Next, go to link:http://www.developer.apple.com[www.developer.apple.com], login with your Apple Developer account and select *Certificate, Identifiers and Profiles*.
+
+image::/guide-media/01GWESRG7B7XTBH3NFYM8RHB0K[]
+
+Select create new Certificates.
+
+image::/guide-media/01GWEFY1NE304CN3K2MT8PGVFD[]
+
+Among the options, select Apple Development and select Continue.
+
+image::/guide-media/01GWEQTCEAABZ06A7VAK58P4YT[]
+
+Next, select Choose File to upload the Certificate Signing Request generated in step 2 from local machine.
+
+image::/guide-media/01GWE78CQWAZKWEW097F46BRMA[]
+
+Once the certificate is uploaded, select Download to download the .cert file.
+
+image::/guide-media/01GWE78DNQ72WNVFWFTY1EFQEN[]
+
+== 2. Install the .cer to Mac and export the .p12 file
+
+*Step 4:* Launch Keychain Access, select Certificates category and drag the downloaded .cert file into it.
+
+image::/guide-media/01GWEQTD94BJ2GGZA98B0FJJZK[]
+
+After dragging the .cert file into Certificates, right-click at it and select _Export "....cert file name...."_.
+
+image::/guide-media/01GWEMN24NCVD02G9B8QW182C1[]
+
+Select File Format as *Personal Information Exchange (.p12)*, select a location to save the file and select Save. The .p12 file is created.
+
+image::/guide-media/01GWEFY2NWC3S1BVWTMS93V3MN[522,350]
+
+== 3. Download .mobileprovision Provisioning Profile file
+
+*Step 1:* If you haven’t created an AppID before, here’s the guide to create one. Select create new Identifier.
+
+image::/guide-media/01GWE78EJ7PZT3C80RH14WBMGR[521,290]
+
+Select App IDs, then select Continue.
+
+image::/guide-media/01GWEMN32WP799Y0HAA3N0GF51[]
+
+Input descriptions for the App ID, for Bundle ID, input *com.** for Bundle ID and choose *Wildcard* option, then select Continue. The App ID is created
+
+image::/guide-media/01GWEYR52X2FSXPC42Y10T1Y6K[]
+
+*Step 2:* Add your iOS devices UDID to the mobile provisioning file. First, select Devices and Register a Device.
+
+Input Platform, Device Name and Device ID (UDID) for a device, select Continue, then select Register.
+
+You can repeat to add more than one device.
+
+*Step 3:* Once the device is added, select Generate a Profile.
+
+Select iOS App Development.
+
+Select the App ID that had just been created above and select Continue.
+
+Select the Certificate that had been submitted and select Continue.
+
+Select all devices that are going to be included in the Provisioning profile.
+
+Enter a chosen Provisioning Profile name and select Generate, after that select Download to download theProvisioning Profile file (.mobileprovisioning).
+
