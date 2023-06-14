@@ -9,7 +9,7 @@ If you're new to docs-as-code, start with xref:_first_time_contributors[], other
 
 * xref:_first_time_contributors[]
 * xref:_build_the_docs_locally[]
-* xref:_file_nameing[]
+* xref:_file_naming[]
 * xref:_directory_structure[]
 * xref:_antora_playbooks[]
 * xref:_navigation_bar[]
@@ -37,7 +37,7 @@ Plain text files only contain content--not design elements--allowing our team to
 
 * link:https://docs.asciidoctor.org/asciidoc/latest/[Learn about the AsciiDoc markup language]
 * link:https://asciidoctor.org/docs/asciidoc-writers-guide/[Get started with the AsciiDoc markup language]
-* xref:_file_nameing[How files in Kobiton Docs are named]
+* xref:_file_naming[How files in Kobiton Docs are named]
 * xref:_directory_structure[How files in Kobiton Docs are structured]
 
 === Static site generator
@@ -194,14 +194,14 @@ To reference a feature-specific partial, use the following `include` statement:
 `include::<feature>:partial$<filename>.adoc`
 ----
 
-[#_file_nameing]
+[#_file_naming]
 == File naming
 
-Files in Kobiton Docs should follow these guidelines:
+Files in Kobiton Docs follow these naming guidelines:
 
 [cols="5,3,3"]
 |===
-|Guideline|Before|After
+|Naming Guideline|Before|After
 
 |Only lowercase letters
 |`This Is My TITLE`
@@ -237,13 +237,13 @@ automation-testing
 
 We use the link:https://diataxis.fr/#[Diátaxis] framework to structure our docs. Each Diátaxis category corresponds to one of these templates. Add a template to your `.adoc` file to get started.
 
-=== Tutorial
+=== Tutorial page type
 
 Tutorial docs walk users through their first time attempting a task. Everything a user needs should be available in the tutorial.
 
 For example, a tutorial titled "Your first manual session" would state a learning objective, show the user how to start a session, offer an app for them to install, and walk them through a variety of test steps.
 
-==== Template
+==== Tutorial template
 
 [source,asciidoc]
 ----
@@ -269,13 +269,13 @@ Content.
 
 ----
 
-=== How-to
+=== How-to page type
 
 How-to docs outline the steps for solving a specific problem. Unlike tutorials, How-tos only focus on a specific problem--not an entire process.
 
 For example, a how-to doc titled "Download an app during a manual test session" would state the goal, give a line of context, and start step one assuming the user has _already_ launched a manual test session.
 
-==== Template
+==== How-to template
 
 [source,asciidoc]
 ----
@@ -297,13 +297,13 @@ Explain steps.
 
 ----
 
-=== Reference
+=== Reference page type
 
 Reference docs describe a _product_, not a _process_. They're for users who know how to complete a proccess, but need more details about the _tools_ they use to complete a process.
 
 For example, a reference doc titled "Desired capabilities" should list all desired capabilities along with their definition and a brief example. The reference doc shouldn't contain steps for modifying desired capabilities or walk users through their first automation session.
 
-==== Template
+==== Reference template
 
 [source,asciidoc]
 ----
@@ -336,13 +336,13 @@ Example.
 
 ----
 
-=== Explanation
+=== Explanation page type
 
 Explanation docs explore a topic, which could include its context within culture, its context within Kobiton, how it got here, and where it's headed.
 
 For example, an explanation doc titled "About biometric authentication" should explore a few key milestones in its global development, why It's important to test, and how Kobiton can help.
 
-==== Template
+==== Explanation template
 
 [source,asciidoc]
 ----
@@ -364,7 +364,7 @@ Content.
 [#_style_and_voice]
 == Style and voice
 
-One day we'll create our own, but for now we follow the link:https://learn.microsoft.com/en-us/style-guide/brand-voice-above-all-simple-human[Microsoft Style Guide] for style and voice.
+One day we'll create our own, but for now we follow the link:https://learn.microsoft.com/en-us/style-guide/brand-voice-above-all-simple-human[Microsoft Style Guide] for our style and voice.
 
 [#_docker_commands]
 == Docker commands
