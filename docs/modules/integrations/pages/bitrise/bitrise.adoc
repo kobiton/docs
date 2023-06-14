@@ -1,0 +1,93 @@
+= Bitrise
+:navtitle: Bitrise
+
+== About Bitrise
+
+Bitrise is a Continuous Integration and Delivery (CI/CD) Platform as a Service with a main focus on mobile app development with iOS, Android, React Native, Flutter, etc. Bitrise is a collection of tools and services to help you with the development and automation of your software projects.
+
+A Bitrise Workflow is a collection of Steps. When a build of an app is running, the Steps will be executed so that they are defined in the Workflow.
+
+To integrate with Bitrise - we're introducing *Kobiton Steps* to help user upload app and run test on Kobiton from Bitrise.
+
+== What Kobiton Steps does & How to use it
+
+=== 1- Upload new build of application to Kobiton App repo
+
+This Step will take your latest build and upload it to the Kobiton App Repo (it will either create a new app or upload a new version of the existing app).
+
+This step is already launched and available in the Bitrise Step library (see link:https://www.bitrise.io/integrations/steps/kobiton-app-upload[Integrations]).
+
+To use it, go to link:https://devcenter.bitrise.io/en/steps-and-workflows/adding-steps-to-a-workflow.html#adding-steps-to-a-workflow[Workflow editor], click *+* and search for Kobiton:
+
+image::/guide-media/01GWEGNMV8FJ1NACDT3HEK78DZ[]
+
+Click on the step to add it to your workflow - the added step will look like this:
+
+image::/guide-media/01GWESRBKJD9WF0JQJ68HT8X76[]
+
+Review and input your app info as well as your Kobiton credentials (to get your Kobiton Username and API Key, login to the Kobiton portal and go to link:https://portal.kobiton.com/settings/keys[https://portal.kobiton.com/settings/keys]).
+
+Some additional notes:
+
+* Input "App ID" if you want to upload a new version for an existing app.
+* You can choose the App Privacy setting: Public (available for all member users in an organization to access) or Private (only available for you to access).
+
+Once you're done inputting variables for the step, save the workflow, then start/schedule your build in Bitrise.
+
+=== 2- Execute automation test using Kobiton devices
+
+This step will execute an automated test script on the Kobiton service (see link:https://www.bitrise.io/integrations/steps/kobiton-execute-test[Integrations]).
+
+You can search for this step in the Workflow editor:
+
+image::/guide-media/01GWDZEAPKC6104PS1JSHRW8RE[]
+
+Once added, the step will look like this:
+
+image::/guide-media/01GWESRCDEE60P13DVBG9NNYS0[]
+
+To use this step, you will need the following information:
+
+==== A- Kobiton API Credentials
+
+To get your Kobiton Username and API Key, login to the Kobiton portal and go to link:https://portal.kobiton.com/settings/keys[https://portal.kobiton.com/settings/keys]
+
+==== B- Kobiton Executor Server Credentials
+We will provide you with credentials to access our TestNG Execution Server. This will be used to execute your automation test script. Fill in your information in these fields:
+
+* Executor Server URL
+* Kobiton Executor Username
+* Kobiton Executor Password
+
+==== C- Git repository contains your TestNG automation test script + SSH Key
+
+In order to execute your TestNG automation test script, we need to access your Git repository.
+
+For your security, we highly recommend setting your Git repository to Private and prepare an SSH key for it.
+
+If you do not know how to authenticate the key with Git, please follow the guide from link:https://docs.github.com/en/authentication/connecting-to-github-with-ssh/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent[Github create SSH key instruction] and link:https://docs.github.com/en/authentication/connecting-to-github-with-ssh/adding-a-new-ssh-key-to-your-github-account[Github adding the key to account instruction].
+
+Fill your Git repository info to these fields on the Bitrise Step:
+
+* Git Repository URL
+* SSH Key for Git Repository
+
+==== D- Execution Inputs
+* Root Directory: Root directory where the execution should start
+* Commands: List of commands that you want to execute
+* Wait for Execution: Wait for the execution to finish
+* Log type: Set the log type
+
+==== E- Use a custom device to execute your script
+
+If you haven’t set the device information in your script, use this section to choose a device to execute your test script. Set “Use Custom Device” to True and input below info:
+
+* Kobiton Cloud Device Name
+
+* Device Platform version
+
+* Device Platform (android/iOS)
+
+Please ignore this part if you already set above information in your desiredCapabilities.
+
+Once you’re done inputting all above info (from A to D/E) for the step - save the workflow then start/schedule your build in Bitrise.
