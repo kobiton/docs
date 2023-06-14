@@ -1,0 +1,38 @@
+= Data-driven testing for text
+:navtitle: Data-driven testing for text
+
+$DESCRIPTION$
+
+Right now, the execution of feature Dynamic Data is “first come first serve”, which means that if any revisit executions are ready first, then the data will be declared by ordering. In the upcoming release, we will enhance the approach to allow you to assign a specific device on a particular dataset.
+
+== Access the Test Execution plan of a specific manual session
+
+In the session list, click the Test Execution plan icon on a manual session
+
+image:./guide-media/01GWE55HBCRMYT4P8GEFXE7HCV[ita-plan.png]
+
+== Access the Dynamic Data section
+
+In the Dynamic Data section, you will see the “Manual” chipset, demonstrating the original values from your manual session and these values could not be modified.
+
+NOTE: Currently Scriptless Automation only supports defining a new dataset for the test action “Set_Text" only. Stay tuned! Scriptless Automation will provide an ability to define more advanced assertions for the dynamic test case like Text Validations, Element Visible, etc. in our upcoming release.
+
+image:./guide-media/01GWEGMM0EVDRDJ578N5B0AR66[ddt.png]
+
+== Define a new dataset
+
+Next to the “Manual” chipset, you will see the “+” icon for creating a new dataset for your revisit session.
+
+image:./guide-media/01GWECYFB062PQQ429BN5FG1M1[ddt2.png]
+
+== Set new value
+
+A created dataset will clone all values from a manual session as a default value, then you can modify these values again as your preferred set.
+
+NOTE: For any values that are different from a manual, you will see the indicator “Edited” to demonstrate a new value.
+
+image:./guide-media/01GWE6JJ7P4NMWHAP4G4KJ2CPB[ddt3.png]
+
+== Trigger revisit on new datasets
+
+After defining all needed values, you can trigger Scriptless Automation by clicking on the button “Run Scriptless Sessions” or “Re-run Scriptless Automation”, the new dataset will be automatically applied for your revisit executions.
