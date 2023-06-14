@@ -14,19 +14,49 @@ If you're new to docs-as-code, see xref:_get_started[], otherwise choose a topic
 * xref:_antora_playbooks[]
 * xref:_navigation_bar[]
 * xref:_partials[]
-* xref:_page_templates[]
+* xref:_page_types_and_templates[]
 * xref:_style_and_voice[]
 * xref:_publishing[]
 
 [#_get_started]
 == Get started
 
-Our docs are managed as docs-as-code, meaning each document is a plain text file stored in a version-controlled repository. Choose a topic to learn more:
+Our docs are managed as docs-as-code, meaning each document is a plain text file stored in a version-controlled repository. Learn more about each topic below:
 
-* *Version control:* link:https://docs.github.com/get-started/quickstart/hello-world[GitHub]
-* *Files:* `.adoc` files written in link:https://asciidoctor.org/docs/asciidoc-writers-guide/[AsciiDoc] markup
-* *Static site generator:* link:https://docs.antora.org/antora/latest/how-antora-works/[Antora]
-* *Publish:* link:https://docs.docker.com/get-started/[Docker]
+=== Version control
+
+Version control allows our team to work on documents simultaneously without accidently overwriting each others work.
+
+* link:https://docs.github.com/en/get-started/using-git/about-git[Learn about Git and GitHub]
+* link:https://docs.github.com/get-started/quickstart/hello-world[Get started with GitHub]
+* link:https://docs.github.com/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/creating-a-pull-request[Your first pull request]
+
+=== Files
+
+Plain text files only contain content--not design elements--allowing our team to seperate content-related tasks from design-related tasks.
+
+* link:https://docs.asciidoctor.org/asciidoc/latest/[Learn about the AsciiDoc markup language]
+* link:https://asciidoctor.org/docs/asciidoc-writers-guide/[Get started with the AsciiDoc markup language]
+* xref:_file_nameing[How files in Kobiton Docs are named]
+* xref:_directory_structure[How files in Kobiton Docs are structured]
+
+=== Static site generator
+
+The static site generator converts all plain text files to HTML and bundles them with our CSS when you xref:_build_the_docs[build the docs].
+
+* link:https://docs.antora.org/antora/latest/how-antora-works/[Learn about Antora]
+* link:https://docs.antora.org/antora/latest/install-and-run-quickstart/[Get started with Antora]
+* xref:_antora_playbooks[How Antora is configured for Kobiton Docs] 
+
+=== Publishing
+
+When a commit is merged to our `main` branch in GitHub, the site is automatically published using Docker and Jenkins.
+
+* link:https://docs.docker.com/get-started/overview/[Learn about Docker]
+* link:https://docs.docker.com/get-started/[Get started with Docker]
+* xref:_publishing[How to use Docker with Kobiton Docs]
+* link:https://www.jenkins.io/[Learn about Jenkins]
+* link:https://www.jenkins.io/doc/pipeline/tour/getting-started/[Get started with Jenkins]
 
 [#_build_the_docs]
 == Build the docs
@@ -202,8 +232,8 @@ automation-testing
     └── supported-client-libraries.adoc
 ----
 
-[#_page_templates]
-== Page templates
+[#_page_types_and_templates]
+== Page types and templates
 
 We use the link:https://diataxis.fr/#[Diátaxis] framework to structure our docs. Each Diátaxis category corresponds to one of these templates. Add a template to your `.adoc` file to get started.
 
@@ -334,7 +364,7 @@ Content.
 [#_style_and_voice]
 == Style and voice
 
-One day we'll create our own, but for now we use the https://learn.microsoft.com/en-us/style-guide/welcome/[Microsoft Style Guide] for our style and voice.
+One day we'll create our own, but for now we follow the link:https://learn.microsoft.com/en-us/style-guide/brand-voice-above-all-simple-human[Microsoft Style Guide] for style and voice.
 
 [#_publishing]
 == Publishing
