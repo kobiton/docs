@@ -1,0 +1,92 @@
+= Mixed session
+:navtitle: Mixed session
+
+You must have been familiar with the concept of Manual Session and Scripted Automation
+Session (Appium, Espresso, XCUITest) in Kobiton. We introduce a new session:
+Mixed Session. A mixed session allows you to launch both Manual and Automation
+sessions on one single device simultaneously.
+
+== Why you need Mixed Session
+
+* You want to observe your automation script during its run on Kobiton devices
+* There are cases where you want to debug your script or need manual interaction
+to fix unexpected issues during the automation run, eg. the "cannot find
+element" error.
+
+== How to use
+
+=== Launch Mixed Session
+
+The tool to enter the mixed session mode is *Session Viewer*.
+Simply start with a manual session or an automation session first, then launch
+the other session type on the same device while the first session is ongoing.
+Thus there are 2 ways to enter a Mixed session, launch Automation first, Manual
+second, or Manual first, Automation second.
+
+1. Start an Automation session first
+
+- Run an automation script on Kobiton devices
+- Manually interact with the automation session in real-time via
+*Session Viewer*. There are three ways to enter *Session Viewer*:
+
+- Method 1: From the *Device list*: select the Launch
+button while the device was running automation to enter Session Viewer.
++
+image::/guide-media/01GWE56AYGZSPGKTSRPVXA24JT[]
++
+- Method 2: From the *Session Overview* screen:
+Go to Session Overview of the ongoing automation session, and
+click on the *Session Viewer* button in the upper
+right corner.
++
+image::/guide-media/01GWEYQVW0X76A3TEVAJQX5T63[]
++
+- Method 3: From *Session List* screen:
+
+- Highlight the ongoing automation session (by clicking the
+session name) then click the *Session Viewer*
+icon on the action menu.
++
+image::/guide-media/01GWEMMNCFW4WQ113KK6VR9NSM[]
++
+- Alternatively, right-click on the session name, and select
+*Session Viewer*
++
+image::/guide-media/01GWEJZ2Z8AB41C006Q2YBS0VD[]
++
+2. Start a Manual session first
+
+Simply start a Manual session on a device, then run an automation script on the
+device while it is ongoing a Manual session. Once the automation script starts
+running, you will see a banner on the manual session “Automation Script is running
+on this device”. You will then be able to observe your automation run and interact
+with the screen.
+
+image::/guide-media/01GWDZE5JJSM0M5JD9A9T3TCCW[]
+
+=== Mixed session on Session List
+
+If you are observing from the Session list - once a session (Manual or Automation)
+is changed to a Mixed session, its icon will change accordingly.
+
+image::/guide-media/01GWDZE6FM73T6NXPBF3WR53HH[]
+
+You can also search for sessions with the session type *Mixed*:
+
+image::/guide-media/01GWE78381DWF2SCSJHP5ZAYMX[]
+
+=== Some additional notes
+
+* Only one user can launch a Mixed session. In other words, you cannot
+launch the Manual session, and your worker launching the Automation script
+on your Manual session device.
+* Mixed Session is only available for Latest Kobiton, not Legacy Kobiton.
+* We only support running Appium test in Mixed Session for now. Other automation
+frameworks eg. Espresso, XCUITest are not supported yet.
+* We don't support Session explorer for Mixed Session, i.e., you won't be
+able to view the detailed steps and screenshots during the mixed session.
+* We haven't supported Kobiton Scriptless and Appium Script Export for
+Mixed session yet.
+* If you use public devices for Mixed Session, you will be charged minutes
+for the total time usage on the device.
+////
