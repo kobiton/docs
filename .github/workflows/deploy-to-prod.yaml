@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - 'main'
+      - 'add-ci'
   pull_request:
     branches:
       - '*'
@@ -14,8 +15,14 @@ permissions:
   pull-requests: write
 
 jobs:
-  test-and-lint:
+  build-and-deploy:
+    timeout-minutes: 10
     runs-on: ubuntu-latest
+    env:
+      AWS_ACCOUNT_ID: ${{ vars.AWS_ACCOUNT_ID || '681314228305' }}
+      AWS_REGION: ${{ vars.AWS_REGION || 'ap-southeast-1' }}
+      DOCS_S3_HOSTING_BUCKET: ${{ vars.DOCS_S3_HOSTING_BUCKET || 'docs-test.kobiton.com' }}
+      DOCS_CLOUDFRONT_ID: ${{ vars.DOCS_CLOUDFRONT_ID || 'E1EVWSBO6PATYU' }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -44,4 +51,16 @@ jobs:
         run: |
           yarn install
           yarn build
-          
+      
+      - name: Configure AWS credentials from Test account
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          role-to-assume: arn:aws:iam::${{ env.AWS_ACCOUNT_ID }}:role/github-action-role
+          aws-region: ${{ env.AWS_REGION }}
+
+      - name: Deploy to TEST environment
+        run: |
+          aws s3 ls
+          cp ./ci/index.html ./build/docs
+          aws s3 sync ./build/docs s3://${{ env.DOCS_S3_HOSTING_BUCKET }}
+          aws cloudfront create-invalidation --distribution-id ${{ env.DOCS_CLOUDFRONT_ID }} --paths "/*"
