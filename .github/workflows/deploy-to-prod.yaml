@@ -19,10 +19,12 @@ jobs:
     timeout-minutes: 10
     runs-on: ubuntu-latest
     env:
-      AWS_ACCOUNT_ID: ${{ vars.AWS_ACCOUNT_ID || '681314228305' }}
-      AWS_REGION: ${{ vars.AWS_REGION || 'ap-southeast-1' }}
-      DOCS_S3_HOSTING_BUCKET: ${{ vars.DOCS_S3_HOSTING_BUCKET || 'docs-test.kobiton.com' }}
-      DOCS_CLOUDFRONT_ID: ${{ vars.DOCS_CLOUDFRONT_ID || 'E1EVWSBO6PATYU' }}
+      AWS_ACCOUNT_ID: ${{ vars.AWS_ACCOUNT_ID || '580359070243' }}
+      AWS_REGION: ${{ vars.AWS_REGION || 'us-east-1' }}
+      DOCS_S3_HOSTING_BUCKET: ${{ vars.DOCS_S3_HOSTING_BUCKET || 'docs.kobiton.com' }}
+      DOCS_CLOUDFRONT_ID: ${{ vars.DOCS_CLOUDFRONT_ID || 'EUD71SB42OFL1' }}
+      WIDGET_S3_HOSTING_BUCKET: ${{ vars.WIDGET_S3_HOSTING_BUCKET || 'widget.kobiton.com' }}
+      WIDGET_CLOUDFRONT_ID: ${{ vars.WIDGET_CLOUDFRONT_ID || 'E2JIGAHT81K3UG' }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -39,13 +41,6 @@ jobs:
           sudo apt-get update && \
           sudo apt-get install -y curl python3 python3-pip python-is-python3 python3-venv
           npm install -g yarn
-      
-      # - name: ssh-agent setup
-      #   uses: webfactory/ssh-agent@v0.8.0
-      #   with:
-      #     ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
-      #     ssh: |
-      #       default=${{ env.SSH_AUTH_SOCK }}
 
       - name: Yarn test/build
         run: |
@@ -64,3 +59,8 @@ jobs:
           cp ./ci/index.html ./build/docs
           aws s3 sync ./build/docs s3://${{ env.DOCS_S3_HOSTING_BUCKET }}
           aws cloudfront create-invalidation --distribution-id ${{ env.DOCS_CLOUDFRONT_ID }} --paths "/*"
+          echo "Docs is deployed!"
+          cp ./ci/index.html ./build/widget
+          aws s3 sync ./build/docs s3://${{ env.WIDGET_S3_HOSTING_BUCKET }}
+          aws cloudfront create-invalidation --distribution-id ${{ env.WIDGET_CLOUDFRONT_ID }} --paths "/*"
+          echo "Widget is deployed!"
