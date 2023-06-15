@@ -32,15 +32,8 @@ jobs:
           sudo apt-get update && \
           sudo apt-get install -y curl python3 python3-pip python-is-python3 python3-venv
           npm install -g yarn
-      
-      # - name: ssh-agent setup
-      #   uses: webfactory/ssh-agent@v0.8.0
-      #   with:
-      #     ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
-      #     ssh: |
-      #       default=${{ env.SSH_AUTH_SOCK }}
 
-      - name: Yarn test/build
+      - name: Yarn install/build
         run: |
           yarn install
           yarn build
