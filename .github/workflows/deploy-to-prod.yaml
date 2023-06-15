@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - 'main'
+      - 'add-ci'
   
 permissions:
   id-token: write   # This is required for requesting the JWT
@@ -56,6 +57,6 @@ jobs:
           aws cloudfront create-invalidation --distribution-id ${{ env.DOCS_CLOUDFRONT_ID }} --paths "/*"
           echo "Docs is deployed!"
           cp ./ci/index.html ./build/widget
-          aws s3 sync ./build/docs s3://${{ env.WIDGET_S3_HOSTING_BUCKET }}
+          aws s3 sync ./build/widget s3://${{ env.WIDGET_S3_HOSTING_BUCKET }}
           aws cloudfront create-invalidation --distribution-id ${{ env.WIDGET_CLOUDFRONT_ID }} --paths "/*"
           echo "Widget is deployed!"
