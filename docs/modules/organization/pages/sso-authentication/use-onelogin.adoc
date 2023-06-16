@@ -3,88 +3,99 @@
 
 Learn how to use link:https://www.onelogin.com/[OneLogin] for Single Sign-On (SSO) authentication so members of your organization can sign in to Kobiton using their OneLogin credentials.
 
-include::partial$kobiton-sso-settings.adoc[]
+[#_get_kobiton_parameters]
+== Get Kobiton parameters
 
-== Steps
+include::partial$get-kobiton-sso-parameters.adoc[]
 
-. Navigate to the Onelogin Applications page (click "Applications" in the tab banner across the top of the page). Click "Add App" in the upper-right corner.
-+
-image:./guide-media/01GWEFWNR75EPFZZG65062QVGF[width=, alt="SSO_OL_1o_.png"]
+== Create IdP application
 
-. In the "Find Applications" section, search for 'SAML Test Connector'. From the results list, select "SAML Test Connector (Advanced)".
-+
-image:./guide-media/01GWEGMD5N8TYVFQQ8KN0QS8RH[width=, alt="SSO_OL_2a.png"]
-+
-image:./guide-media/01GWE1CJ7RZS7KJX3G9WED3FFD[width=, alt="SSO_OL_2b.png"]
+In Onelogin, select *Applications*, then *Add App*.
 
-. Edit the Display Name and logo for the portal and click "Save".
-+
-image:./guide-media/01GWEFWPNH1GP0N9N7FRMYF0YJ[width=, alt="SSO_OL_3.png"]
+image:$OLD-IMAGE$[width=, alt=""]
 
-. The page will update to display the “Info” tab. Navigate to the “Configuration” tab. Enter your Kobiton service provider details here, copied from the information contained in Box 1 of the Kobiton portal SSO settings page. Click “Save” in the upper-right corner of the screen.
-+
-image:./guide-media/01GWE6JA2D7RBNRE37J9PBA9BG[width=, alt="SSO_OL_4a.png"]
-+
-Below is an example of the mapped fields for configuration between Kobiton and Onelogin to assist with the previous step:
-+
-image:./guide-media/01GWECY1MHKEBZT8KJ8MZH9MMM[width=, alt="SSO_OL_4b.png"]
+In the search bar, enter `SAML Test Connector`, then select *SAML Test Connector (Advanced)*.
 
-. Navigate to the “Parameters” tab. Add a new field by clicking the blue plus sign icon in the upper-right corner of the SAML Test Connector Field box.
-+
-image:./guide-media/01GWDYGZCQ6BZ921AMWHHSDJKM[width=638, alt="correct_memberof.png"]
+image:$OLD-IMAGE$[width=, alt=""]
 
-. In the "New Field" pop-out box, edit the “Field name” to contain the desired field attribute and click “Save”.
-+
-image:./guide-media/01GWE559WHRM2RXNHP3VV4BX9C[width=, alt="SSO_OL_6.png"]
+Enter a display name and add a logo to customize your sign-in portal, then select *Save*.
 
-. Repeat steps 5 and 6 until your parameters are complete, as seen in the image in Step 5 above. Examples of the fields you should now have are listed below.
-+
-image:./guide-media/01GWE1CN2FYRJ35ZBMVSK6QHPC[width=, alt="SSO_OL_7a.png"]
-+
-image:./guide-media/01GWEMKKT8S17R853D5HZXVEGJ[width=, alt="SSO_OL_7b.png"]
+image:$OLD-IMAGE$[width=, alt=""]
 
-. Navigate to the SSO tab in Onelogin (left sidebar) and copy the "Issuer URL", "SAML 2.0 Endpoint" (HTTP), “SLO Endpoint (HTTP)” and “X.509 Certificate” data from this page. The Issuer URL and Endpoints have direct copy function buttons beside them that you can use to accurately obtain this information; the certificate will need to be downloaded by clicking the “View Details” option beneath the Certificate information box, as shown below. You will be redirected to the Standard Strength Certificate page; ensure that you have the X.509 PEM certificate selected and click "Download". Paste this information into the corresponding fields in Box 3 of the Kobiton portal SSO settings page.
-+
-image:./guide-media/01GWEJY5T86AC4KFF0YE7RCWV0[width=, alt="SSO_OL_8.png"]
-+
-image:./guide-media/01GWE1CKBWDKBCB96R0JKFGY79[width=, alt="SSO_OL_8b.png"]
-+
-image:./guide-media/01GWE6JAY231NMWTZB1S0WCQFJ[width=, alt="SSO_OL_8c.png"]
+You'll be automatically redirected to your *Info* page. Select *Configuration* to go back to setting up OneLogin.
 
-. Please remember to save any changes or additions made to your Onelogin configuration before exiting the page. Please also complete the steps in the above section "Kobiton Portal and the SSO Settings page" to verify that your configuration is functional.
+image:$NEW-IMAGE$[width=, alt=""]
 
-. The page will update to display the “Info” tab. Navigate to the “Configuration” tab. Enter your Kobiton service provider details here, copied from the information contained in Box 1 of the Kobiton portal SSO settings page. Click “Save” in the upper-right corner of the screen.
-+
-image:./guide-media/01GWE6JA2D7RBNRE37J9PBA9BG[width=, alt="SSO_OL_4a.png"]
+Using your xref:_get_kobiton_parameters[Kobiton SSO parameters from earlier], fill out the *Application details*, then select *Save*.
 
-. Below is an example of the mapped fields for configuration between Kobiton and Onelogin to assist with the previous step:
-+
-image:./guide-media/01GWECY1MHKEBZT8KJ8MZH9MMM[width=, alt="SSO_OL_4b.png"]
+image:$OLD-IMAGE$[width=, alt=""]
 
-. Navigate to the “Parameters” tab. Add a new field by clicking the blue plus sign icon in the upper-right corner of the SAML Test Connector Field box.
-+
-image:./guide-media/01GWDYGZCQ6BZ921AMWHHSDJKM[width=, alt="correct_memberof.png"]
+== Map parameters
 
-. In the "New Field" pop-out box, edit the “Field name” to contain the desired field attribute and click “Save”.
-+
-image:./guide-media/01GWE559WHRM2RXNHP3VV4BX9C[width=, alt="SSO_OL_6.png"]
+Now that your IdP application is created, you'll need to create OneLogin SSO parameters mapped to Kobiton. Go to *Parameters* to get started.
 
-. Repeat steps 5 and 6 until your parameters are complete, as seen in the image in Step 5 above. Examples of the fields you should now have are listed below.&nbsp;
-+
-image:./guide-media/01GWE1CN2FYRJ35ZBMVSK6QHPC[width=, alt="SSO_OL_7a.png"]
-+
-image:./guide-media/01GWEMKKT8S17R853D5HZXVEGJ[width=, alt="SSO_OL_7b.png"]
+image:$OLD-IMAGE$[width=, alt=""]
 
-. Navigate to the SSO tab in Onelogin (left sidebar) and copy the "Issuer URL", "SAML 2.0 Endpoint" (HTTP), “SLO Endpoint (HTTP)” and “X.509 Certificate” data from this page. The Issuer URL and Endpoints have direct copy function buttons beside them that you can use to accurately obtain this information; the certificate will need to be downloaded by clicking the “View Details” option beneath the Certificate information box, as shown below. You will be redirected to the Standard Strength Certificate page; ensure that you have the X.509 PEM certificate selected and click "Download". Paste this information into the corresponding fields in Box 3 of the Kobiton portal SSO settings page.
-+
-image:./guide-media/01GWEJY5T86AC4KFF0YE7RCWV0[width=, alt="SSO_OL_8.png"]
-+
-image:./guide-media/01GWE1CKBWDKBCB96R0JKFGY79[width=, alt="SSO_OL_8b.png"]
-+
-image:./guide-media/01GWE6JAY231NMWTZB1S0WCQFJ[width=, alt="SSO_OL_8c.png"]
+Select the *blue + icon* to open the parameter creation form.
 
-. Please remember to save any changes or additions made to your Onelogin configuration before exiting the page. Please also complete the steps in the above section "Kobiton Portal and the SSO Settings page" to verify that your configuration is functional.
+image:$OLD-IMAGE$[width=, alt=""]
 
-. On your Kobiton portal SSO settings page, confirm that all data looks correct
-and follow the steps outlined in the "Kobiton Portal and the SSO Settings page"
-section of this document to verify your configuration is functional.
+Use the following information to create and map each parameter:
+
+Parameter 1::
+* *Field name:* `email`
+* *Value:* Email
+* *Include in SAML assertion*: &#9745;
+* *Multi-value parameter*: &#9744;
+Parameter 2::
+* *Field name:* `firstName`
+* *Value:* First Name
+* *Include in SAML assertion*: &#9744;
+* *Multi-value parameter*: &#9744;
+Parameter 3::
+* *Field name:* `lastName`
+* *Value:* Last Name
+* *Include in SAML assertion*: &#9745;
+* *Multi-value parameter*: &#9744;
+Parameter 4::
+* *Field name:* `memberOf`
+* *Value:* User Roles
+* *Include in SAML assertion*: &#9745;
+* *Multi-value parameter*: &#9744;
+Parameter 5::
+* *Field name:* `phoneNumber`
+* *Value:* Phone
+* *Include in SAML assertion*: &#9745;
+* *Multi-value parameter*: &#9744;
+
+When your finished, your five custom parameters will be listed beneath *SAML Test Connect (Advanced) Field*:
+
+image:organization:onelogin-custom-sso-parameters-context.png[width=, alt=""]
+
+== Get IdP parameters and download certificate
+
+Next you'll need to save a copy of your OneLogin paramters and download your X.509 certificate. Select *SSO* to get started.
+
+image:$OLD-IMAGE$[width=, alt=""]
+
+Copy the following values and save them to a note:
+
+* *Issuer URL*
+* *SAML 2.0 Endpoint (HTTP)*
+* *SLO Endpoint (HTTP)*
+
+Next, select *View Details*.
+
+image:$OLD-IMAGE$[width=, alt=""]
+
+Choose *X.509 PEM* from the dropdown, then select *Download* to download your X.509 certificate.
+
+image:$OLD-IMAGE$[width=, alt=""]
+
+== Add IdP parameters and certificate to Kobiton
+
+include::partial$add-idp-parameters-and-certificate-to-kobiton.adoc[]
+
+== Verify and save your configuration
+
+include::partial$verify-and-save-your-configuration.adoc[]
