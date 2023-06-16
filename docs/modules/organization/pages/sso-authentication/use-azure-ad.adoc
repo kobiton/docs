@@ -1,0 +1,40 @@
+= Use Azure AD for SSO authentication
+:navtitle: Use Azure AD
+
+Learn how to use link:https://azure.microsoft.com/solutions/active-directory-sso/[Azure Active Directory (Azure AD)] for Single Sign-On (SSO) authentication so members of your organization can sign in to Kobiton using their Microsoft credentials.
+
+include::partial$kobiton-sso-settings.adoc[]
+
+== Steps
+
+. Sign in to Azure management portal using an Azure Active Directory administrator account.
+. Navigate to Azure Active Directory > [Directory].
+. Under Sign Ins/Create, select "Enterprise Application". Select "New Application".
++
+image:./guide-media/01GWEGMC676T6XQPDKKRRS6FDA[width=, alt="SSO_AZURE_1o7.png"]
+. Select "Non-gallery application".
++
+image:./guide-media/01GWESQ5KAYNXM3RJRCQSZS8ZE[width=, alt="SSO_AZURE_2o7.png"]
+. In the "Add from the gallery" section, type the name of the application and click "Add".
+. Assign a test user to the application. (Please note that this step is required.)
++
+image:./guide-media/01GWEBXNRB7181D408GCSZW9VZ[width=, alt="SSO_AZURE_3o7.png"]
+. Set up single sign-on. Select "SAML".
++
+image:./guide-media/01GWDZ1759S42HK7C1K9NN81DR[width=, alt="SSO_AZURE_4o7.png"]
+. Edit the configuration with the appropriate information. For Azure AD's Box 1 "Basic SAML Configuration", use the information from Box 1 “Basic Configuration” of your Kobiton portal SSO settings page. For Azure AD's Box 2 "User Attributes & Claims", you can copy the values from Box 2: "User attributes (or parameters)" of your Kobiton portal SSO settings page to complete the fields. The Unique User Identifier is an optional value; all other values are required.
++
+When this information is complete, *please make sure to download the "Certificate (Base64)"* from the link located in Box 3 “SAML Signing Certificate” of the Azure AD setup page and click “Save”.
++
+image:./guide-media/01GWESQ7D44HW9XTVD8PF64AYH[width=, alt="SSO_AZURE_5o7.png"]
++
+[NOTE]
+On User Attributes & Claims > Manage Claim page, the namespace field needs to be removed as reflected in the image below *for each mapping*.
++
+image:./guide-media/01GWE1CHEMJZ5RTTFHEQRWZ1ZV[width=, alt="SSO_AZURE_6o7.png"]
++
+The attribute mapping for users should look like the image below when done:
++
+image:./guide-media/01GWDZ182596WMF5SNMK7JZ057[width=, alt="SSO_AZURE_7o7.png"]
+
+. After the above steps are completed, please fill in your IdP’s information to the appropriate fields in Box 3 of your Kobiton portal SSO settings page. This is also where you will upload the certificate downloaded in the previous step. Complete the verification steps as outlined in the "Kobiton Portal and the SSO Settings page" section of this document. You are also welcome to use Azure AD's configuration test, but please note that the configuration on Kobiton's portal page must be complete for the SSO settings to be verifiable.

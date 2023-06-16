@@ -1,0 +1,30 @@
+= Use Okta for SSO authentication
+:navtitle: Use Okta
+
+Learn how to use link:https://www.okta.com/[using Okta] for Single Sign-On (SSO) authentication so members of your organization can sign in to Kobiton using their Okta credentials.
+
+include::partial$kobiton-sso-settings.adoc[]
+
+== Custom SAML 2.0 - OKTA
+
+. Navigate to OKTA and sign in with an admin account. On the OKTA admin home page, click the Applications tab in the banner at the top of the screen.
+. On the Applications page, click “Add Application”.
++
+image:./guide-media/01GWEGMA41849WX8RXMWXTRWE8[width=, alt="SSO_OKTA_1o6.png"]
+. Click “Create New App”. In the Create a New Application Integration pop-up box, select “Web” in the Platform dropdown box, then select SAML 2.0 for the Sign on method. Click “Create”.
++
+image:./guide-media/01GWECY2KB1KZK1SN2S6QENQ4T[width=, alt="SSO_OKTA_2o6.png"]
+. In the General Settings box, fill in the name and logo for your application.
++
+image:./guide-media/01GWEMKK1WV8WCPJB3ASQAV3X4[width=, alt="SSO_OKTA_3o6.png"]
+. In the SAML Settings box, fill in the information with the matching values from Box 1 of the Kobiton portal SSO settings page. The Name ID format and Application username fields are optional and can be set according to your own preferences.
++
+image:./guide-media/01GWEGMB7M7FGAMY54H2915DV9[width=, alt="SSO_OKTA_4o6.png"]
+When this information is completed, *click the Download Okta Certificate button* in the sidebar on the right side of the page (as shown in the above image). This certificate needs to be uploaded to your Kobiton portal SSO settings page in Box 3 “Set up at Kobiton side”; you can do this by clicking the Upload button beneath the Identity Provider Certificate* header. In your Okta configuration page, you can also fill out Group Attribute Statements here, as in the example provided below:
++
+image:./guide-media/01GWEJY6N80FYTMK56ZS86TM38[width=, alt="SSO_OKTA_5o6.png"]
+. Click “Next”, then click “Finish”.
+. Within your SAML application’s configuration, navigate to the “Sign On” tab within the Application view. Click “View Setup Instructions” and supply the information from this page to the appropriate fields in Box 3 of your Kobiton portal SSO settings page.
++
+image:./guide-media/01GWDZ19TNCMBQQWV405DCAR7D[width=, alt="SSO_OKTA_6o6.png"]
+. On your Kobiton portal SSO settings page, confirm that all data looks correct and follow the steps outlined in the "Kobiton Portal and the SSO Settings page" section of this document to verify your configuration is functional.

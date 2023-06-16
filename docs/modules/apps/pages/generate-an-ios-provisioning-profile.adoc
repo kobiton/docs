@@ -1,0 +1,81 @@
+= Generate an iOS provisioning profile
+:navtitle: Generate an iOS provisioning profile
+
+Learn how to generate the `.mobileprovision` file used for your iOS app's provisioning profile. Provisioning profiles are required for Xcode.
+
+== Create an App ID
+
+If you don't have an App ID already, open link:http://www.developer.apple.com[Apple Developer], select *Certificate, Identifiers and Profiles*, then *Create new identifier*.
+
+image:$OLD-IMAGE$[width=, alt=""]
+
+Choose *App IDs*, then select *Continue*.
+
+image:$OLD-IMAGE$[width=, alt=""]
+
+Add a description, then choose *Wildcard* and enter `com.*`.
+
+image:$OLD-IMAGE$[width=, alt=""]
+
+When you're finished, select *Continue*.
+
+== Generate `.mobileprovision` file
+
+In link:http://www.developer.apple.com[Apple Developer], select *Certificate, Identifiers and Profiles*, *Devices*, then *Register a Device*.
+
+image:$OLD-IMAGE$[width=, alt=""]
+
+Enter the device *Platform*, *Name*, and *UDID*.
+
+image:$OLD-IMAGE$[width=, alt=""]
+
+When you're finished, select *Continue*, then *Register*.
+
+image:$OLD-IMAGE$[width=, alt=""]
+
+[NOTE]
+Repeat these steps to add more devices.
+
+Select *Profile*, then *Generate a Profile*.
+
+image:$OLD-IMAGE$[width=, alt=""]
+
+Choose *iOS App Development*, then select *Continue*.
+
+image:$OLD-IMAGE$[width=, alt=""]
+
+Choose an App ID from the dropdown, then select *Continue*.
+
+image:$OLD-IMAGE$[width=, alt=""]
+
+Choose the certificate you created from the dropdown, then select *Continue*.
+
+image:$OLD-IMAGE$[width=, alt=""]
+
+Select all devices you want to include in the provisioning profile.
+
+image:$OLD-IMAGE$[width=, alt=""]
+
+Enter a name for the provisioning profile, then select *Generate* to download your `.mobileprovision` file.
+
+== Add `.mobileprovision` file to Xcode project
+
+Launch Xcode and select your project. In the project menu, select *Signing & Capabilities*.
+
+image:$NEW-IMAGE$[width=, alt=""]
+
+Choose *Signing (Debug)* or *Signing (Release)*.
+
+image:$NEW-IMAGE$[width=, alt=""]
+
+In the *Signing Certificate dropdown*, select *Create*.
+
+image:$NEW-IMAGE$[width=, alt=""]
+
+Choose *Import an existing Certificate*.
+
+image:$NEW-IMAGE$[width=, alt=""]
+
+Select your `.mobileprovision` file.
+
+image:$NEW-IMAGE$[width=, alt=""]

@@ -1,0 +1,30 @@
+= Use Google Workspace for SSO authentication
+:navtitle: Use Google Workspace
+
+Learn how use link:https://support.google.com/a/answer/60224?hl=en[Google Workspace] for Single Sign-On (SSO) authentication so members of your organization can sign in to Kobiton using their Google credentials.
+
+include::partial$kobiton-sso-settings.adoc[]
+
+== Steps
+
+. From the Google Admin console, select the “Apps” tile.
++
+image:./guide-media/01GWE777KB4YTX5AF11HDTJJJE[width=, alt="SSO_GS_1o7.png"]
+. On the Apps page, select the ”SAML apps” tile.
++
+image:./guide-media/01GWE776NA8ZMWAQ1SXHKVDN7C[width=, alt="SSO_GS_2o7.png"]
+. You are now on the Apps > Web and mobile apps page. From here, click the “Add App” tab to toggle a dropdown menu, then select “Add custom SAML app”. GSuite offers you a step-by-step checklist for this next part of the process; we also include those steps below as part of this guide.
++
+image:./guide-media/01GWDZDAN173YZ53RZ9XW8WJYT[width=, alt="SSO_GS_3o7.png"]
+. Step 1: App details. Fill in the name for the app.
++
+image:./guide-media/01GWDZ18VGWY8ZV7K3VE7KCNX8[width=, alt="SSO_GS_4o7.png"]
+. Step 2: Google Identity Provider Details. Copy and save all of the information contained in this step, including downloading the certificate (all boxes have a copy function button, and the Certificate box has a download function button.) Paste this information and upload the certificate to the corresponding fields in Box 3 of the Kobiton portal SSO settings page.
++
+image:./guide-media/01GWECY3HCV0B3JR4EZVD2BQ58[width=, alt="SSO_GS_5o7.png"]
+. Step 3: Service Provider Details. Fill in the appropriate fields with the matching information from Box 1 of the Kobiton portal SSO settings page.
++
+image:./guide-media/01GWE1CM7W22NR3B7K9802D2AD[width=, alt="SSO_GS_6o7.png"]
+. Step 4: Attribute Mapping. Fill out the attribute sections as indicated in the image below:
++
+image:./guide-media/01GWDZDBF8RKRREMYJT2H8JQ1H[width=, alt="SSO_GS_7o7.png"]

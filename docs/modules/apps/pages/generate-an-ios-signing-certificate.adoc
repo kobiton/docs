@@ -1,0 +1,80 @@
+= Generate an iOS signing certificate
+:navtitle: Generate an iOS signing certificate
+
+Learn how to generate the `.p12` file used for signing your iOS app. Signing certificates are required for Xcode.
+
+== Generate `.certSigningRequest` file
+
+On your MacOS device, launch *Keychain Access*.
+
+image:$OLD-IMAGE$[width=, alt=""]
+
+From the Keychain Access menu, choose *Certificate Assistant*, then select *Request a Certificate From a Certification Authority.*
+
+image:$OLD-IMAGE$[width=, alt=""]
+
+Enter your email and name, but leave *CA Email Address* blank. Then choose *Save to disk* and select *Continue*.
+
+image:$OLD-IMAGE$[width=, alt=""]
+
+Select *Save* to download your `.certSigningRequest` file.
+
+image:$OLD-IMAGE$[width=, alt=""]
+
+== Generate `.cert` file
+
+Open link:http://www.developer.apple.com[Apple Developer], select *Certificate, Identifiers and Profiles*, then *Create new certificate*.
+
+image:$OLD-IMAGE$[width=, alt=""]
+
+Choose *Apple Development*, then select *Continue*.
+
+image:$OLD-IMAGE$[width=, alt=""]
+
+Select *Choose File*, choose the `.certSigningRequest` file, then select *Continue*.
+
+image:$OLD-IMAGE$[width=, alt=""]
+
+Select *Download* to download your `.cert` file.
+
+image:$OLD-IMAGE$[width=, alt=""]
+
+== Generate `.p12` file
+
+On your MacOS device, launch *Keychain Access*.
+
+image:$OLD-IMAGE$[width=, alt=""]
+
+Select *Certificates*, then drag and drop your `.cert` file into the Certificates page.
+
+image:$OLD-IMAGE$[width=, alt=""]
+
+Right-click your `.cert` file, then select *Export <your-cert-file>*.
+
+image:$OLD-IMAGE$[width=, alt=""]
+
+Choose the *Personal Information Exchange (.p12)* file format, then select *Save*.
+
+image:$OLD-IMAGE$[width=, alt=""]
+
+== Add `.p12` file to Xcode project
+
+Launch Xcode and select your project. In the project menu, select *Signing & Capabilities*.
+
+image:$NEW-IMAGE$[width=, alt=""]
+
+Choose *Signing (Debug)* or *Signing (Release)*.
+
+image:$NEW-IMAGE$[width=, alt=""]
+
+In the *Signing Certificate dropdown*, select *Create*.
+
+image:$NEW-IMAGE$[width=, alt=""]
+
+Choose *Import an existing Certificate*.
+
+image:$NEW-IMAGE$[width=, alt=""]
+
+Select your `.p12` file.
+
+image:$NEW-IMAGE$[width=, alt=""]
