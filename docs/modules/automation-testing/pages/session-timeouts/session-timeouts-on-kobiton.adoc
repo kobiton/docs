@@ -1,0 +1,82 @@
+= Session timeouts on Kobiton
+:navtitle: Session timeouts on Kobiton
+
+Learn about Kobiton's session timeouts for automation sessions.
+
+== Default session timeout
+
+After link:https://api.kobiton.com/v2/docs#tag/NativeFrameworkAPI/operation/NativeFrameworkAPI_InitiateNativeSession[initiating a session], for xref:desired-capabilities/available-capabilities.adoc#_web_testing[web apps], your initial HTTP request must be sent within 10 minutes, whereas for xref:desired-capabilities/available-capabilities.adoc#_app_testing[native/hybrid apps], the limit is 30 minutes. Every subsequent request, irrespective of the app type, must be sent within 10 minutes.
+
+Example:
+
+[source,java]
+----
+// Define desired capabilities for a native/hybrid app
+capabilities.setCapability("app", "kobiton-store:000111");
+// Set additional capabilities...
+
+// Start the session...
+
+// Send requests
+driver.findElement(By.id("com.mycompany.app:id/open_button")).click();  // This is a native/hybrid app; initial request should be sent within 30 minutes.
+driver.findElement(By.id("com.mycompany.app:id/login_button")).click();  // Subsequent requests should be sent within 10 minutes.
+driver.findElement(By.id("com.mycompany.app:id/enter_button")).click();  // All following requests should be sent within 10 minutes.
+----
+
+== Implicit and explicit waits
+
+Implicit and explicit waits can be used to modify the default session timeout. Wait durations less than 10 seconds or beyond 30 minutes are adjusted to the nearest permissible value within that range.
+
+Example:
+
+[source,java]
+----
+// Set desired capabilities for a web app
+capabilities.setCapability("useConfiguration", "kobiton");
+capabilities.setCapability("autoWebview", true);
+capabilities.setCapability("browserName", "safari");
+// Additional capabilities...
+
+// Start the session...
+
+// Define explicit wait
+WebDriverWait wait = new WebDriverWait(driver, 20 * 60);  // Typically, first HTTP request for web apps is sent within 10 minutes. Here, WebDriverWait is explicitly set to 30 minutes.
+
+// Send requests
+driver.findElement(By.id("com.mycompany.app:id/open_button")).click();  // This request should be sent within 20 minutes of the previous request.
+driver.manage().timeouts().implicitlyWait(45, TimeUnit.MINUTES);  // Sets implicit wait for next request to 45 minutes. However, Kobiton adjusts it to 30 minutes (maximum allowed).
+driver.findElement(By.id("com.mycompany.app:id/open_button")).click();  // This request should be sent within 30 minutes of the previous request.
+----
+
+== Unavailable devices
+
+If the device your trying to use is unavailable, your session may timeout before you can successfully connect. Consider using `try`/`catch` loop to regularly check device availability before your session times out.
+
+For example:
+
+[source,java]
+----
+try {
+  System.out.println("Creating Driver Test1");
+  int cnt = 30;  // Maximum number of attempts to create the session
+  boolean isSessionCreated = false;
+
+  // Loop until session is created or maximum attempts exhausted
+  while (!isSessionCreated) {
+    try {
+      // Attempt to create a new remote WebDriver session
+      driver = new RemoteWebDriver(new URL(kobitonServerUrl), capabilities);
+      isSessionCreated = true;  // Session created successfully
+    } catch(SessionNotCreatedException snce) {
+      isSessionCreated = false;  // Session creation failed
+      TimeUnit.SECONDS.sleep(30);  // Pause for 30 seconds before next attempt
+    }
+
+    // Check if maximum attempts have been exhausted
+    if (cnt <= 0) {
+      break;  // Exit the loop if maximum attempts have been exhausted
+    }
+
+    cnt--;  // Decrement the counter for each attempt
+  }
+----

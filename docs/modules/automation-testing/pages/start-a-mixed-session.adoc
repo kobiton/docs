@@ -1,0 +1,26 @@
+= Start a mixed session
+:navtitle: Start a mixed session
+
+Learn how to start a mixed session, so you can view your script running on your device and fix issues in realtime.
+
+== Start your first session
+
+First, choose to start a manual session by xref:devices:search-for-a-device.adoc[launching a device] or an automation session by link:https://api.kobiton.com/v2/docs#tag/NativeFrameworkAPI/operation/NativeFrameworkAPI_InitiateNativeSession[making a `POST` request].
+
+image:$NEW-IMAGE$[width=, alt=""]
+
+== Start your second session
+
+After your first session starts, start a second session using the other testing method on the same device. If you started with a manual session, start an automation session. If you started with an automation session, start a manual session.
+
+image:$NEW-IMAGE$[width=, alt=""]
+
+== Join your mixed session
+
+Once your first and second sessions are running simultaneously on the same device, you're ready to join your mixed session. In Kobiton, open *Sessions*, look for the session marked *Mixed*, and launch the session.
+
+image:$NEW-IMAGE$[width=, alt=""]
+
+Now you can view your script running on the device in realtime and fix issues on the fly.
+
+image:$NEW-IMAGE$[width=, alt=""]
