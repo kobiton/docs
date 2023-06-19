@@ -7,11 +7,13 @@ assignees: ''
 
 ---
 
-## Feature description
+### Feature description
 <!-- A clear and concise description of the feature. -->
 
-## Possible implementation (optional)
-<!-- One or two way this feature could be implemented. -->
+### Ways to implement (optional)
+<!-- One or two ways we could implement this feature. -->
+- N/A
 
-## Examples (optional)
-<!-- One or two real world examples for this feature with screenshots. -->
+### Examples (optional)
+<!-- One or two real-world examples for this feature. -->
+- N/A

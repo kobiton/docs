@@ -7,10 +7,10 @@ assignees: ''
 
 ---
 
-## Issue description
+### Issue description
 <!-- A clear and concise description of the issue. -->
 
-## Reproduce the issue
+### Reproduce the issue
 
 Here's how you reproduce the issue:
 
@@ -18,21 +18,23 @@ Here's how you reproduce the issue:
 2. <!-- Click on... -->
 3. <!-- See error. -->
 
-## Expected behavior
+### Expected behavior
 <!-- A clear and concise description of the expected behavior. -->
 
-## Additional information (optional)
+### Additional information (optional)
 
-### Screenshots:
+#### Screenshots:
 <!-- If applicable, add screenshots to help explain your problem. -->
+- N/A
 
-### Impacted desktop:
-- OS: <!-- [e.g. iOS] -->
-- Browser: <!-- [e.g. chrome, safari] -->
-- Version: <!-- [e.g. 22] -->
+#### Impacted computer:
+- Device: N/A
+- OS: N/A
+- Browser: N/A
+- Version: N/A
 
-### Impacted device:
-- Device: <!-- [e.g. iPhone6] -->
-- OS: <!-- [e.g. iOS8.1] -->
-- Browser: <!-- [e.g. stock browser, safari] -->
-- Version: <!-- [e.g. 22] -->
+#### Impacted mobile device:
+- Device: N/A
+- OS: N/A
+- Browser: N/A
+- Version: N/A
