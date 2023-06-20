@@ -1,0 +1,93 @@
+= v4.1 | January 7, 2023
+:navtitle: v4.1 | January 7, 2023
+
+These release notes pertain to Kobiton 4.1. As a reminder, in our November release, we started using 4.0+ as the numbering for releases of the new Kobiton, while Legacy Kobiton will continue with numbering starting with 3.25 and above. If you are using Legacy Kobiton, see the v3.26 release notes.
+
+== New iOS and Android support
+
+Kobiton 4.1 supports the following:
+
+[cols="1,1"]
+[%autowidth]
+|===
+|Hardware/Software |Full Support?
+
+|Pixel 7
+|&#10003;
+
+|iOS 16.2
+|&#10003;
+
+|iOS 16.1.2
+|&#10003;
+
+|iOS 16.1.1
+|&#10003;
+
+|iOS 15.7.1
+|&#10003;
+|===
+
+== virtualUSB \{Beta}: Support login using API key
+
+We now support using username/API key to sign in to the virtualUSB application for MacOS and Windows in addition to supporting username/password. If you are one of our virtualUSB Beta testers, download the latest version from the Portal.
+
+[NOTE]
+====
+* API key login is not supported on virtualUSB command-line interface
+* virtualUSB is an option for Enterprise plans and must be enabled for your org
+* virtualUSB for MacOS is currently experiencing an issue connecting to iOS devices. We are addressing the issue and will update it soon.
+====
+
+== virtualUSB for Windows \{Beta}
+
+We are pleased to announce that virtualUSB for Windows is now available. If you are one of our virtualUSB Beta testers, download the latest version from the Portal and start experiencing virtualUSB features on a Windows machine. Additional documentation will be posted later this week.
+
+== virtualUSB command-line interface (CLI) \{Beta}
+
+The core features of virtualUSB are now available as command lines via our new virtualUSB command-line interface. Plus, virtualUSB CLI allows for automation. This tool is included in the latest virtualUSB version for both Windows and MacOS. Additional documentation will be posted later this week.
+
+== Webhooks for device state
+
+Admins can now set up webhooks to receive automatic updates of device status changes for Private and Local devices, such as when a device goes offline or online.
+
+[NOTE]
+The webhook settings can be seen by admins of any org, but this feature only supports Private and Local devices. It will not report on Public devices.
+
+== Save custom gestures
+
+Previously, all users could create a custom gesture in a manual session, but there was not a way to save it. Now, you can save custom gestures and use them on future manual sessions. The saved gestures are only visible to the user who creates them.
+
+== Improve performance without lightning mode
+
+We have improved the visual responsiveness of manual sessions when the user is not running lightning mode.
+
+== Ability to remove unplugged devices from showing up in the Portal
+
+We heard you and understand that some users find it confusing that intentionally unplugged devices that are never being added back show up as offline devices in their Private device list. If you have Private devices and would like your unplugged devices removed, submit a support request.
+
+== New Accessibility validations for Content Labeling for iOS
+
+Content Labels are not displayed on a screen. Assistive technologies, like screen readers, read these values aloud to the end user to help them understand elements and navigate an interface. In the previous release, we added content labeling validations for Android native apps. Now, we support those validations for iOS native apps as well. When you run a manual, automation, or scriptless test, any accessibility validation issues for content labeling will display in the Session Explorer timeline as a yellow dot. Select the dot to view details of the accessibility issues found.
+
+[NOTE]
+====
+* Support for non-native apps is currently not available.
+* Accessibility validations are an option for Enterprise plans and must be enabled for your org.
+====
+
+== Ability to trigger Scriptless with multiple applications within a test case
+We understand that a test case might involve multiple applications, such as when testers need to navigate to the Settings app or open a web browser while using a mobile app. With this release, we support the ability to trigger Scriptless for test cases involving navigation through multiple applications.
+
+[NOTE]
+====
+* If the test case requires installation of an app from the Kobiton app library, make sure to install the app at the start of the test case before navigating to other apps.
+* Kobiton’s Scriptless Automation is an option for Enterprise plans and must be enabled for your org.
+====
+== Ability to trigger Scriptless from App Store/Play Store native apps \{GA}
+
+The ability to trigger Scriptless and generate Appium Export for apps installed via App Store/Play Store is now considered General Availability (GA)!
+
+== Additional enhancements and bug fixes
+
+In addition to the above, this release includes a number of minor bug fixes and enhancements to improve your day-to-day testing.
