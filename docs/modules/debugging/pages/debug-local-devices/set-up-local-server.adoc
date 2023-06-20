@@ -1,0 +1,82 @@
+= Set up local server for debugging local devices
+:navtitle: Set up local server
+
+Learn how to set up your local Kobiton server so users in your organization can debug local devices hosted on the server.
+
+[#_get_server_information_for_your_team]
+== Get server information for your team
+
+In order for users to xref:debugging:debug-local-devices/set-up-personal-computer.adoc[set up their personal computer to debug local devices], they'll need the server's web protocol, IP address, and REST API port number. Save this information to a secure location your team can easily access.
+
+=== Get web protocol
+
+To get the server's web protocol (`http` or `https`), run the following command in the terminal  and save the output to a secure location:
+
+[source,bash]
+----
+grep -i -r 'SSLEngine' /etc/apache2/
+grep -i -r 'ssl' /etc/nginx/
+----
+
+$DESCRIPTION$
+
+=== Get server IP address
+
+Users can use a private domain name _or_ a server IP address. If you prefer a server IP address, run the following command in the terminal  and save the output to a secure location:
+
+[source,bash]
+----
+hostname -I
+----
+
+=== Get REST API port number
+
+To get the REST API port number, open `~/config/app.yaml` and check for the following port keys:
+
+[source,plaintext]
+----
+rest_api_ingress_advertised_port: <port-number>
+grpc_ingress_gateway_public_advertised_port: <port-number>
+----
+
+If the keys are present, save their values to a secure location. If they're not, save this information instead:
+
+* Set the port number for `Kobiton.ApiBaseUrl` to `3000`.
+* Set the port number for `Kobiton.ApiGrpcBaseUrl` to `3001`.
+
+== Modify `dc.ini`
+
+[NOTE]
+The `dc.ini` file needs to be modified for *each Mac mini server*.
+
+In the terminal, open the `deviceconnect` directory:
+
+[source,bash]
+----
+cd ~/usr/local/deviceconnect
+----
+
+Open `dc.ini` and add the following environment variables:
+
+[source,plaintext]
+----
+GatewayPublicAddress=<ip-address> # Set to your private or public IP address.
+ExternalAirstreamTlsPort=<port-number> # Set to 10161 or public IP address.
+----
+
+For example:
+
+[source,bash]
+----
+GatewayPublicAddress=192.168.36.36
+ExternalAirstreamTlsPort=10161
+----
+
+Save your changes, then run the following command to restart your server:
+
+[source,bash]
+----
+sudo sv restart dc-services dc-webviewer dc-watchdog
+----
+
+Now users in your organization can debug local devices hosted on your local Kobiton server.
