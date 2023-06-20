@@ -1,18 +1,21 @@
-= Set up VirtualUSB
-:navtitle: Set up VirtualUSB
+= Set up virtualUSB
+:navtitle: Set up virtualUSB
 
-Learn how to set up VirtualUSB on your personal computer, so you can debug public and private devices. If your local Kobiton server was configured for VirtualUSB, you can also debug local devices
+Learn how to set up virtualUSB on your personal computer, so you can debug public and private devices. If you want to debug _local_ devices instead, after your initial set up, you'll also need to xref:debugging:debug-local-devices/configure-personal-computer.adoc[configure your personal computer for debugging local devices].
 
 == Before you start
 
-This
+You'll need a personal computer with the following system specifications:
+
+* *MacOS:* Monterey 12 or later, and Xcode 13 or later.
+* *Windows:* Windows 10 or later.
 
 [#_configure_openssl]
 == Configure OpenSSL
 
-If it's not installed already, install link:https://github.com/openssl/openssl[OpenSSL] using the following command:
+Install link:https://github.com/openssl/openssl[OpenSSL] using the following command:
 
-[source,bash]
+[source,shell]
 ----
 wget https://raw.githubusercontent.com/rbenv/homebrew-tap/master/Formula/openssl%401.0.rb
 ----
@@ -31,63 +34,56 @@ system "make", "install", "MANDIR=#{man}", "MANSUFFIX=ssl"
 Reinstall OpenSSL using the following command:
 
 .MacOS
-[source,bash]
+[source,shell]
 ----
 brew reinstall openssl@1.0.rb
 ----
 
 .Windows
-[source,bash]
+[source,powershell]
 ----
-$UPDATE$
-----
-
-Create a symlink to your `/usr/local/lib/` directory:
-
-.MacOS
-[source,bash]
-----
-ln -sfn /usr/local/Cellar/openssl@1.0/1.0.2t/lib/libssl.dylib /usr/local/lib/libssl.dylib
+Start-Process -FilePath "powershell" -ArgumentList "brew reinstall openssl@1.0.rb" -Verb RunAs
 ----
 
-.Windows
-[source,bash]
-----
-$UPDATE$
-----
-
-Copy the contents from `openssl` to your `/usr/local/bin/` directory:
+For MacOS only, virtualUSB will need to find your OpenSSL package, which is located in a non-standard location (brew's `Cellar` directory). Run the following command to link and copy the necessary files for virtualUSB:
 
 .MacOS
-[source,bash]
+[source,shell]
 ----
-sudo cp /usr/local/Cellar/openssl@1.0/1.0.2t/bin/openssl /usr/local/bin/
+ln -sfn /usr/local/Cellar/openssl@1.0/1.0.2t/lib/libssl.dylib /usr/local/lib/libssl.dylib && sudo cp /usr/local/Cellar/openssl@1.0/1.0.2t/bin/openssl /usr/local/bin/
+----
+
+Next, run the following command to add these two OpenSSL flags to your shell's config file:
+
+.MacOS
+[source,shell]
+----
+echo -e 'export LDFLAGS=-L/usr/local/opt/openssl@1.0/lib\nexport CPPFLAGS=-I/usr/local/opt/openssl@1.0/include' >> ~/.zshrc
 ----
 
 .Windows
 [source,powershell]
 ----
-$UPDATE$
+Add-Content -Path $PROFILE -Value 'n#OpenSSL Configsn$env:LDFLAGS="-LC:\Program Files\OpenSSL-Win64\lib"`n$env:CPPFLAGS="-IC:\Program Files\OpenSSL-Win64\include"'
 ----
 
-Add the following OpenSSL flags to your shell's config file:
+Apply the changes to your shell:
 
-[source,bash]
+.MacOS
+[source,shell]
 ----
-echo 'export LDFLAGS=-L/usr/local/opt/openssl@1.0/lib' >> ~/<config-file> # .zshrc for Z shell or .bashrc for Bash
-echo 'export CPPFLAGS=-I/usr/local/opt/openssl@1.0/include' >> ~/<config-file> # .zshrc for Z shell or .bashrc for Bash
+source ~/.zshrc
 ----
 
-Apply the changes to your configuration file:
-
-[source,bash]
+.Windows
+[source,shell]
 ----
-source ~/<config-file> # .zshrc for Z shell or .bashrc for Bash
+& $PROFILE
 ----
 
 Verify your OpenSSL version is *1.0.2t 10 Sep 2019* or later:
 
-[source,bash]
+[source,shell]
 ----
 openssl --version
 ----
@@ -111,15 +107,15 @@ set PATH=%PATH%;%ANDROID_HOME%\tools;%ANDROID_HOME%\platform-tools
 
 == Install iTunes and third-party libraries
 
-To debug iOS devices on Windows, first link:https://support.apple.com/en-us/HT210384[install iTunes], then consider installing a third-party library that lets Windows communicate with iOS devices natively.
+For Windows, link:https://support.apple.com/en-us/HT210384[install iTunes]. Also, consider installing a third-party library that lets your Windows computer communicate with iOS devices natively.
 
 == Install virtualUSB
 
-Download VirtualUSB from the link:https://portal.kobiton.com/[Kobiton portal].
+Download virtualUSB from the link:https://portal.kobiton.com/[Kobiton portal].
 
 image:$OLD-IMAGE$[width=, alt=""]
 
-When your installation is finished, on Windows, run the following commands:
+For Windows, run the following commands when your installation is finished:
 
 .Windows
 [source,powershell]
@@ -128,8 +124,8 @@ cd C:\Program Files\virtualUSB
 vusb setup-ios
 ----
 
-Finally, launch VirtualUSB and sign in using your email address and password or xref:profile:server-url-and-api-keys.adoc[Kobiton API key].
+Finally, launch virtualUSB and sign in using your email address and password or xref:profile:server-url-and-api-keys.adoc[Kobiton API key].
 
 image:$OLD-IMAGE$[width=, alt=""]
 
-Now you can debug cloud devices using VirtualUSB. If you want to use virtualUSB on local devices, you'll also need to...
+Now you can debug cloud devices using virtualUSB. If you plan on debugging _local_ devices using virtualUSB, you'll need to xref:debugging:debug-local-devices/configure-personal-computer.adoc[configure your personal computer for debugging local devices].

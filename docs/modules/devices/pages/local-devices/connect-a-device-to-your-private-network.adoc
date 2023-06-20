@@ -21,7 +21,7 @@ You can a connect Kobiton device to your private network by creating a firewall 
 
 For example, if you're using `iptables` to manage your firewall rules, open `/etc/iptables/rules.v4` in a text editor and create the following rule:
 
-[source,bash]
+[source,shell]
 ----
 -A PREROUTING -i eth0 -o eth1 -j DNAT --to-destination <public-static-ip-address>/<device-ip-address>
 ----
