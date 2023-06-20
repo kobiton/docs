@@ -1,0 +1,40 @@
+= Connect a device to your private network
+:navtitle: Connect a device to your private network
+
+Learn how to connect a Kobiton device to your private network, so you can access services behind your firewall during a test session.
+
+[#_before_you_start]
+== Before you start
+
+You'll need to contact your Internet Service Provider (ISP) and request a public static IP address.We'll use this IP address to configure your private network to allow Kobiton devices.
+
+[NOTE]
+If you're unable to request a public static IP address, you can try tunneling into your local machine using third-party software like link:https://ngrok.com[ngrok]
+or link:https://localtunnel.github.io/www[Localtunnel]. _Tunnel into your local machine at your own risk_.
+
+== Connection options
+
+[#_create_a_firewall_rerouting_rule]
+=== Option 1: Create a firewall rerouting rule
+
+You can a connect Kobiton device to your private network by creating a firewall rule that reroutes your xref:list-of-device-ip-addresses.adoc[device IP address] to your xref:_before_you_start[public static IP address].
+
+For example, if you're using `iptables` to manage your firewall rules, open `/etc/iptables/rules.v4` in a text editor and create the following rule:
+
+[source,shell]
+----
+-A PREROUTING -i eth0 -o eth1 -j DNAT --to-destination <public-static-ip-address>/<device-ip-address>
+----
+
+[#_create_a_new_subdomain]
+=== Option 2: Create a new subdomain
+
+You can connect a Kobiton device to your private network by creating a new subdomain with an Address (A) record connected to your xref:_before_you_start[public static IP address].
+
+For example, you would sign in to your domain provider, open your DNS settings, and create the following record:
+
+* *Subdomain:* Any subdomain name of your choice
+* *Record type:* Choose Address (A) record
+* *IP Address:* Enter your xref:_before_you_start[public static IP address]
+
+Now any Kobiton device can connect to your private network through your new subdomain.

@@ -1,0 +1,44 @@
+= Kobiton 1.4 release notes (Legacy)
+:navtitle: Kobiton 1.4 release notes
+
+_October 09, 2017_
+
+== Improvements
+
+=== More Devices
+
+* We've added 150 new devices! See list of https://support.kobiton.com/devices-list[all device models].
+
+=== Manual Test
+
+* Improve gestures: scroll and zoom with mouse or trackpad
+* Support changing device timezone for iOS
+* Support iOS 11
+* Support Android 8
+
+=== Automation Test
+
+* Support Appium 1.7.1
+* Support iOS 11
+* Support Android 8
+
+=== Other Improvements
+
+* Add statistics for sessions
+* Terminate a running session
+* Exit a manual session after long idle time
+* Require email verification for creating new account
+
+== Customers update
+
+*Upgrade notes for customers plugging in their own devices*
+
+_If you're plugging iOS devices, this step is required to be performed in all Mac machines having iOS devices._
+
+* Install *libimobiledevice* tool
+** `brew install --HEAD libimobiledevice`
+
+== Known Limitations
+
+* Android 8.0 doesn't support changing timezone yet
+* Changing timezone on iOS device may take up to 30 seconds

@@ -1,0 +1,59 @@
+= Remediate a session
+:navtitle: Remediate a session
+
+$DESCRIPTION$
+
+== Remediate a session
+
+* For any executions with “BLOCKED”, you will see an icon to access the Remediation Details
+
+image:./guide-media/01GWEFXGD634SDA450AKQ8FYK8[remediation_icon.png]
+
+* You will be able to select your preferred elements for setting a new baseline
+
+image:./guide-media/01GWEYQGJENW1C9QFHYZXPS32E[remediation_details.png]
+
+|===
+|No. |Section |Description
+
+|1 |Baseline |An image defines the expected appearance of your application at each step. +
++
+NOTE: In this case, the baseline is on Galaxy Note 9
+
+|2 |Screenshot |An image defines an output of a specific test steps on other devices. Moreover, you can inspect all elements within an image to set a new baseline for your test case. +
++
+NOTE: In this case, the screenshot is on Galaxy S6
+|===
+
+* Select the remediation’s scope and submit
+
+image:./guide-media/01GWE6JXKFA9CMGS26MFCYY0ZX[Submit.png]
+
+Description
+
+|===
+|Section |Description
+
+|Comparison Level |Scriptless Automation provides you an option to test the UI in 4 different comparison levels: +
+
+*Exact:* Compare and do not allow any difference (pixel-to-pixel comparison) +
+*Strict:* Compare and allow minor differences (up to the equivalent of 5% difference) +
+*Relaxed:* Compare and allow significant differences (up to the equivalent of 20% difference) +
+*Ignored:* Take the best matching element regardless there are similarities
+
+|Scope |Scriptless Automation provides you an option to select the scope to apply the “new baselines on”: +
+
+*Manufacture* +
+*Aspect ratio* +
+*Device model*
+
+|Noticed |For any remediations that could not remediated (Application crashed, missing element, etc.), you can this button to mark an execution as failed and it will be excluded for the next re-run. +
++
+NOTE: In the future, we will implement the Create Defect to allow report bug instantly on our platform
+
+|Submit |After you click the “Submit” button, the remediation will be applied right the way and the giving execution will be automatically run again.
+|===
+
+* You can access back your submitted remediation
+
+image:./guide-media/01GWEJYRNDKZ3N72DANX15EWX8[access-remediation.png]

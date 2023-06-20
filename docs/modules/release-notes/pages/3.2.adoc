@@ -1,0 +1,38 @@
+= Kobiton 3.2 release notes (Legacy)
+:navtitle: Kobiton 3.2 release notes
+
+_April 06, 2020_
+
+== Intelligent Test Automation (ITA)
+
+We are constantly working to improve the ITA usage experience, here’s a summary of what has updated:
+
+* U**X Improvements**: Steps that qualify for ITA will be in different color in the Session Details so that you can have more insights of your ITA test case.
+
+* *Virtual Keyboard (Android)*: Now you can use the virtual keyboard in your “test case” - manual session.
+
+[NOTE]
+The virtual keyboard might not work properly on the password field on the Android < 7
+
+* *Crash Remediation*: Now when a crash happens on any executions, ITA will automatically detect and bring-out the specific crash log within the remediation. In this case, ITA provides you with new remediation actions such as Ignore or Report Bug. Click https://support.kobiton.com/ita/remediation/crash-remediation/[here] to learn more.
+
+* *Bug fixes*: Fixed many critical bugs that blocked the ITA process, providing the better testing experience.
+
+== Kobiton
+
+=== New Features
+
+* *Crash Detection*: After ending any sessions (manual, automation or ITA), Kobiton will execute a “post process” to scan a session log to determine if that session has a crash on the application or not? If yes, Kobiton will immediately point-out the specific crashed log for you on the Session Details (Logs section)
+
+* *Enhance the Member Invitation Flow*: When inviting members to your organization, now you can also assign the group for your members in advance.
+
+* *Jira Integration Enhancement*: Now you can also attach the device logs, appium logs or crash logs (if any) on the ticket to Jira.
+
+* *Rooted Device*: Now you can plug your rooted devices into Kobiton Desktop (in-house devices only)
+
+=== Enhancements
+
+* Provide the sorting mechanism on the Members List (organization management)
+* If you have had a problem that cannot change the video quality in the session settings, you should no longer encounter this problem.
+* Improve the quality of the system for a better testing experience (fix problems with hubs, tcp socket, etc.)
+* For Kobiton current supported platforms, you can click https://support.kobiton.com/faq/supported-platforms/[here].

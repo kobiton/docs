@@ -1,0 +1,22 @@
+= Kobiton 2.6 release notes (Legacy)
+:navtitle: Kobiton 2.6 release notes
+
+_November 12, 2018_
+
+== Automation Enhancements
+
+If the groupID is not provided in the Desired Capabilities:
+
+* For picking up a device, Kobiton will get devices from all assigned groups of the user and hosted devices (if any)
+
+* The https://support.kobiton.com/organization-management/automation-for-groups/default-group-setting/[“Default Group”] in the Profile settings will be used to store all the generated automation sessions
+
+=== REST API
+
+* Auto return all assigned devices in Org when a groupID is missing in request parameter
+
+== Other Enhancements
+
+* Enhance the UI/UX of Organization Management feature
+
+* Improve the stability of the system for a better testing experience (cannot find or launch the device on Kobiton...)

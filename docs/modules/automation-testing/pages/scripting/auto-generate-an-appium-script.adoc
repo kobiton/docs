@@ -1,0 +1,41 @@
+= Auto-generate an Appium script
+:navtitle: Auto-generate an Appium script
+
+Learn how to auto-generate an Appium script from a manual session so you can start building your test suite.
+
+== Before you start
+
+Appium scripts are automatically generated after every _successful_ manual session. Before you start, check if your session xref:scriptless-automation:remediation-options.adoc[requires remediation].
+
+[#_export_your_script]
+== Export your script
+
+After your manual session, search for your session, open the session overview, and select *Automated test case*.
+
+image:export-appium-script-context.png[width=1200, alt="The automated test case for the selected session."]
+
+Next, select the *Export Appium Script* icon. If you don't see an icon, check if your session xref:scriptless-automation:remediation-options.adoc[requires remediation].
+
+image:export-appium-script-closeup.png[width=750, alt="Session overview tabs, including Automated Test Case, Jira Integration, Rerun, and the Appium Export icon."]
+
+Choose a testing framework and select *Download*.
+
+image:download-appium-script-closeup.png[width=750, alt="The export Appium script diologue, allowing you to download the Appium script."]
+
+While the exact contents of your Appium script may vary depending on your testing framework, you can use this template to find your way around:
+
+[source]
+----
+root
+├── src
+│   └── test
+│       ├── <resources>
+│       └── <test-suite>
+│           ├── <app-config>
+│           └── <other-files>
+├── README.md
+└── <testing-framework-config>
+----
+
+[NOTE]
+You can also use auto-generate Appium scripts for xref:scriptless-automation:export-appium-scripts.adoc[scriptless sessions].

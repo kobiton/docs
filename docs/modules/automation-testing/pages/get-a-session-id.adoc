@@ -1,0 +1,151 @@
+= Get a session ID
+:navtitle: Get a session ID
+
+Learn how to get the session ID for a completed session, so you can use the link:https://api.kobiton.com/docs/#kobiton-api-v2[Kobiton API] to get session details, collect logs, capture screenshots, and more.
+
+== C#
+
+=== Appium
+
+Run the following command using C#'s link:https://www.nuget.org/packages/Appium.WebDriver/[`Appium.WebDriver`] package:
+
+[source,c#]
+----
+string kobitonSessionId = driver.SessionDetails["kobitonSessionId"].ToString();
+Console.WriteLine("kobitonSessionId: " + kobitonSessionId);
+----
+
+=== Selenium
+
+Run the following command using C#'s link:https://www.nuget.org/packages/Selenium.WebDriver/[`Selenium.WebDriver`] package:
+
+[source,c#]
+----
+string kobitonSessionId = driver.Capabilities.GetCapability("kobitonSessionId").ToString();
+Console.WriteLine("kobitonSessionId: " + kobitonSessionId);
+----
+
+== Java
+
+=== Appium
+
+Run the following command using Java's link:https://github.com/appium/java-client/[`java-client`] dependency:
+
+[source,java]
+----
+String kobitonSessionId = driver.getSessionDetails().get("kobitonSessionId").toString();
+System.out.println("kobitonSessionId: " + kobitonSessionId);
+----
+
+=== Selenium
+
+Run the following command using Java's link:https://mvnrepository.com/artifact/org.seleniumhq.selenium/selenium-java/[`selenium-java`] dependency:
+
+[source,java]
+----
+String kobitonSessionId = driver.getCapabilities().getCapability("kobitonSessionId").toString();
+System.out.println("kobitonSessionId: " + kobitonSessionId);
+----
+
+== JavaScript
+
+=== Protractor
+
+Run the following command using JavaScript's link:https://www.protractortest.org/#/[`protractor`] test automation framework:
+
+[source,javascript]
+----
+browser.getSession().then((session) => {
+  let capabilities = new Map()
+  capabilities = session.caps_.map_
+  const kobitonSessionId = capabilities.get('kobitonSessionId')
+  console.log('kobitonSessionId', kobitonSessionId)
+})
+----
+
+=== Selenium
+
+Run the following command using JavaScript's link:https://www.selenium.dev/selenium/docs/api/javascript/index.html[`selenium-webdriver`] package:
+
+[source,javascript]
+----
+import BPromise from 'bluebird'
+const sessionCapabilities = await BPromise.fromCallback((done) => driver.sessionCapabilities(done))
+console.log(sessionCapabilities.kobitonSessionId)
+----
+
+=== WebDriverIO
+
+Run the following command using JavaScript's link:https://webdriver.io/docs/gettingstarted/[`wdio`] test automation framework:
+
+[source,javascript]
+----
+const sessionInfo = await client.getSession()
+console.log('kobitonSessionId', sessionInfo.kobitonSessionId)
+----
+
+== PHP
+
+=== Appium
+
+Run the following command using PHP's link:https://github.com/appium/php-client/[`appium-php`] library:
+
+[source,php]
+----
+$getCapabilities = $this->driver->getCapabilities()->toArray();
+$kobitonSessionId = $getCapabilities['kobitonSessionId'];
+print($kobitonSessionId);
+----
+
+=== Selenium
+
+Run the following command using PHP's link:https://github.com/php-webdriver/php-webdriver[`php-webdriver`] library:
+
+[source,php]
+----
+$getCapabilities = $this->driver->getCapabilities()->toArray();
+$kobitonSessionId = $getCapabilities['kobitonSessionId'];
+print($kobitonSessionId);
+----
+
+== Python
+
+=== Appium
+
+Run the following command using Python's link:https://pypi.org/project/Appium-Python-Client/[`Appium-Python-Client`] library:
+
+[source,python]
+----
+kobitonSessionId = self.driver.desired_capabilities.get('kobitonSessionId')
+print(kobitonSessionId)
+----
+
+=== Selenium
+
+Run the following command using Python's link:https://pypi.python.org/pypi/selenium/[`selenium`] package:
+
+[source,python]
+----
+kobitonSessionId = self.driver.desired_capabilities.get('kobitonSessionId')
+print(kobitonSessionId)
+----
+
+== Ruby
+
+=== Appium
+
+Run the following command using Ruby's link:https://rubygems.org/gems/appium_lib/[`appium_lib`] library:
+
+[source,ruby]
+----
+puts @driver.driver.capabilities['kobitonSessionId']
+----
+
+=== Selenium
+
+Run the following command using Ruby's link:https://rubygems.org/gems/selenium-webdriver/[`selenium-webdriver`] package:
+
+[source,ruby]
+----
+puts @driver.capabilities['kobitonSessionId']
+----

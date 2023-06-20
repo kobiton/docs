@@ -1,0 +1,118 @@
+= Device controls
+:navtitle: Device controls
+:numbered:
+
+You can interact with the test device using these controls during a manual session.
+
+image:manual-testing:device-controls-context.png[width=1000, alt="A manual session with each device control numbered in red."]
+
+== Touch
+
+You can interact with your device by using *left-click* to tap and swipe the screen.
+
+== Pinch/zoom
+
+You can zoom or pinch the device screen by placing the center circle on your target location and dragging an outer circle closer or farther away.
+
+image:manual-testing:device-controls-context3.png[width=1000,alt="A manual session with a closeup of a device using pinch/zoom."]
+
+== Set device location
+
+You can change the device location by either searching for a location or entering a longitude and latitude.
+
+image:manual-testing:device-controls-closeup4 (1).png[width=400,alt="A manual session with a closeup of the location controls."]
+
+== Set device timezone
+
+You can change the device timezone by selecting a new timezone from the dropdown.
+
+image:manual-testing:device-controls-closeup3.png[width=300,alt="A manual session with a closeup of a device set to landscape."]
+
+== Rotate screen
+
+You can rotate the device screen between portrait and landscape.
+
+image:manual-testing:device-controls-context2.png[width=1000,alt="A manual session with a rotate screen"]
+
+== Volume
+
+You can change the device volume by selecting *Volume Up* or *Volume Down*.
+
+[#_adb_shell]
+== `adb` shell
+
+You can enter Android Debug Bridge (`adb`) commands to install or debug apps on your Android test device.
+
+image:adb-shell-closeup.png[width="750", alt="A manual session with a closeup of the adb shell running `adb shell dumpsys display`."]
+
+[NOTE]
+We only allow xref:adb-commands.adoc[specific `adb` commands] so we can continue keeping test devices in excellent condition.
+
+== Preform VoiceOver
+
+After you set up xref:devices:local-devices/enable-ios-voiceover.adoc[VoiceOver for iOS], you can test your app's screen reader compatibility.
+
+== Biometric authentication
+
+After you add our xref:integrations:biometric-authentication/about-our-library.adoc[biometrics authentication library] to your app, you can select *Pass* or *Fail* to test biometric authentication requests.
+
+[#_draw_custom_gesture]
+== Draw custom gesture
+
+You can draw custom gestures like three-finger swipes or two-finger taps by choosing a sample gesture or xref:custom-gestures.adoc[creating your own].
+
+image:manual-testing:device-controls-closeup2.png[width=300,alt="A manual session with a closeup of the gesture controls."]
+
+After you create a gesture, you can save it for future sessions.
+
+== Input sensitive data
+
+You can input sensitive data (like usernames and passwords) without recording it in the xref:session-analytics:session-overview.adoc#_session_video[session video]. Enter your sensitive data, tap the related field on your device, then select *Save* to send it securely.
+
+image:manual-testing:device-controls-closeup.png[width=300,alt="A manual session with a closeup of the sensitive data controls."]
+
+== Image injection
+
+You can xref:test-your-apps-camera.adoc[test your in-app camera] by adding an image to the injection library and selecting *Inject*.
+
+image:image-injection-closeup.png[width=500, alt="A manual session with a closeup of image injection."]
+
+== Power
+
+You can restart your device by selecting the *Power* button. (Don't worry--this won't end your session).
+
+== Home button
+
+You can single-click or double-click the *Home Button* to replicate the link:https://support.apple.com/en-us/HT208204[iOS] or link:https://support.google.com/android/answer/9079644[Android] home button.
+
+== Recent apps
+
+While using an Android device, you can select *Recent Apps* to link:https://support.google.com/android/answer/9079646[display your recent apps].
+
+image:manual-testing:device-controls-context5.png[width=1000,alt="A manual session with a close up of the device display its recent apps."]
+
+
+== Back
+
+While using an Android device, you can select *Back* to xref:https://support.google.com/android/answer/9079644[return to the previous page].
+
+== Synchronous inventory capture
+
+If you're missing a few actions in your xref:session-analytics:index.adoc[session analytics], you may have been moving faster than your session's inventory capture. Enable *Synchronous Inventory Capture* to prevent test actions from running until your current action is fully captured.
+
+image:manual-testing:device-control-context6.png[width=1000,alt="A manual session with a closeup of the device with synchronous inventory capture enabled."]
+
+== Speedometer
+
+You can increase the test device screen to 30 frames per second (FPS) by enabling *Lightning Mode*. You can also check your session runtime, latency, and resolution.
+
+image:manual-testing:device-controls-context4 (1).png[width=1000,alt="A manual sesion with a closeup of the speedometer opened."]
+
+[NOTE]
+Lightning mode is only available for link:https://kobiton.com/pricing/[certain plans].
+
+== Screenshots
+
+You can select *Take Screenshot* to take a screenshot and select *Screenshots* to download them. Your total number of screenshots will be displayed on the *Screenshots* icon.
+
+image:screenshot-context.png[width=750, alt="A manual session with a closeup of a device and the screenshot conter set to 3 highlighted in red."]

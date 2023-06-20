@@ -1,0 +1,273 @@
+= Available capabilities
+:navtitle: Available capabilities
+
+These are the capabilities you can use to interact with the link:https://api.kobiton.com/v2/docs[Kobiton API] during an automation session.
+
+[NOTE]
+You can also xref:desired-capabilities/auto-generate-capabilities.adoc[auto-generate capabilities] for your test script.
+
+== Capabilities
+
+=== `sessionName`
+
+The name of the session.
+
+* *Type:* `string`
+* *Required:* Yes
+
+[source,java]
+----
+capabilities.setCapability("sessionName", "Automation test session"); // Specify the session name.
+----
+
+=== `sessionDescription`
+
+The session description, typically between 50-72 characters, but can be set to any length.
+
+* *Type:* `string`
+* *Required:* No
+
+[source,java]
+----
+capabilities.setCapability("sessionDescription", "This tests the login feature with biometric authentication."); // Provide the session description.
+----
+
+=== `groupId`
+
+The group ID linked in the session metadata.
+
+* *Type:* `string`
+* *Required:* Yes
+
+[source,java]
+----
+capabilities.setCapability("groupId", "0011"); // Assign to the Docs Team.
+----
+
+=== `deviceGroup`
+
+The device group linked to the session metadata.
+
+* *Type:* `string`
+* *Required:* No
+
+[source,java]
+----
+capabilities.setCapability("deviceGroup", "ORGANIZATION"); // Assign to the device team.
+----
+
+=== `tagName`
+
+The tag linked to the session metadata.
+
+* *Type:* `string`
+* *Required:* No
+
+[source,java]
+----
+capabilities.setCapability("tagName", "TagName1"); // Assign the tagName.
+----
+
+=== `udid`
+
+The device Unique Device Identifier (UDID).
+
+* *Type:* `string`
+* *Required:* No
+
+[source,java]
+----
+capabilities.setCapability("udid", "01234567-89ab-cdef-0123-456789abcdef"); // Use the device with this UDID.
+----
+
+[#_noreset]
+=== `noReset`
+
+Remove all app data from apps installed during the session. To remove the full app, use xref:_fullreset[`fullReset`] instead.
+
+* *Type:* `boolean`
+* *Required:* No
+
+[source,java]
+----
+capabilities.setCapability("noReset", false); // Delete the app data.
+capabilities.setCapability("fullReset", false); // Keep the app installed.
+----
+
+[NOTE]
+This is only available for private and local devices.
+
+[#_fullreset]
+=== `fullReset`
+
+Remove all apps installed during the session.To keep the apps and only remove their app data, use xref:_noreset[`noReset`] instead.
+
+* *Type:* `boolean`
+* *Required:* No
+
+[source,java]
+----
+capabilities.setCapability("fullReset", true); // Delete the app and its data.
+capabilities.setCapability("noReset", false); // Keep the app installed.
+----
+
+[NOTE]
+This is only available for private and local devices.
+
+=== `captureScreenshots`
+
+Screenshots will be captured after each test step automatically. They'll be available in the xref:session-analytics:session-overview.adoc[session overview] after the session.
+
+* *Type:* `boolean`
+* *Required:* No
+
+[source,java]
+----
+capabilities.setCapability("captureScreenshots", true); // Take a screenshot after each test step.
+----
+
+[NOTE]
+This is not available for native and hybrid apps, as well as devices on Android 6.0 and earlier.
+
+=== `app`
+
+The app to use during the session. If the app is not already installed on the device, the value of the second parameter will be used to download and install the app. *Only available for app testing*.
+
+* *Type:* `string`
+* *Required:* No
+
+[source,java]
+----
+capabilities.setCapability("app", "kobiton-store:000111"); // Install the app using the Kobiton app repository.
+capabilities.setCapability("app", "https://kobiton.docsapp.net/apps/app_id"); // Install the app using a direct download link.
+----
+
+=== `useConfiguration`
+
+The device configuration to use during the session. *Only available for web testing*.
+
+* *Type:* `string`
+* *Required:* No
+
+[source,java]
+----
+capabilities.setCapability("useConfiguration", "kobiton"); // Use this pre-defined configuration for the test session.
+----
+
+=== `autoWebview`
+
+The webview context to use during the session. *Only available for web testing*.
+
+* *Type:* `boolean`
+* *Required:* No
+
+[source,java]
+----
+capabilities.setCapability("autoWebview", true); // Automatically select the webview context.
+----
+
+=== `browserName`
+
+The web browser to use during the session. *Only available for web testing*.
+
+* *Type:* `string`
+* *Required:* No
+
+[source,java]
+----
+capabilities.setCapability("browserName", "safari"); // Use Safari for web testing on iOS.
+capabilities.setCapability("browserName", "chrome"); // Use Chrome for web testing on Android.
+----
+
+=== `deviceOrientation`
+
+The starting orientation for the device screen.
+
+* *Type:* `integer`
+* *Required:* No
+
+[source,java]
+----
+capabilities.setCapability("deviceOrientation", "portrait"); // Set the device's starting orientation to portrait.
+capabilities.setCapability("deviceOrientation", "landscape"); // Set the device's starting orientation to landscape.
+----
+
+=== `deviceName`
+
+The device name. Assign multiple platform versions using wildcards (`*`).
+
+* *Type:* `integer`
+* *Required:* No
+
+[source,java]
+----
+capabilities.setCapability("deviceName", "iPhone 11 Pro"); // Use iPhone 11 Pro as the device name.
+capabilities.setCapability("deviceName", "*Pro"); // Use any device name ending with 'Pro'.
+capabilities.setCapability("deviceName", "iPhone 11*"); // Use any device name starting with 'iPhone 11'.
+----
+
+=== `platformName`
+
+The device platform name.
+
+* *Type:* `integer`
+* *Required:* No
+
+[source,java]
+----
+capabilities.setCapability("platformName", "iOS"); // Use the iOS platform for the test session.
+capabilities.setCapability("platformName", "Android"); // Use the Android platform for the test session.
+----
+
+=== `platformVersion`
+
+The device platform version. Assign multiple platform versions using wildcards (`*`).
+
+* *Type:* `integer`
+* *Required:* No
+
+[source,java]
+----
+capabilities.setCapability("platformVersion", "14.6"); // Uses 14.6 as the platform version.
+capabilities.setCapability("platformVersion", "14.*"); // Uses any platform version starting with '14'.
+capabilities.setCapability("platformVersion", "*.6"); // Uses any platform version ending with '.6'.
+----
+
+=== `kobitonServerUrl`
+
+By default, the user's xref:profile:server-url-and-api-keys.adoc[default API key] and Kobiton server URL is assigned.
+
+* *Type:* `string`
+* *Required:* No
+
+[source,java]
+----
+String kobitonServerUrl = "https://<name>:<id>@api.kobiton.com/wd/hub"; // Use the default API key to connect the Appium and Kobiton servers.
+----
+
+=== `kobiton:visualValidation`
+
+Validates UI output across different devices, operating systems, and form factors.
+
+* *Type:* `boolean`
+* *Required:* No
+
+[source,java]
+----
+capabilities.setCapability("ensureWebviewsHavePages", true); // Set to true.
+capabilities.setCapability("kobiton:visualValidation", true);  // Set to true.
+capabilities.setCapability("kobiton:referenceSessionId", 0000011); // (Optional) Choose a different reference session by assigning its kobitonSessionId.
+----
+
+=== `kobiton:flexCorrect`
+
+When a script is run on different devices, element selection is autocorrected. xref:automation-testing:desired-capabilities/add-flexcorrect.adoc[Requires additional set up].
+
+* *Type:* `boolean`
+* *Required:* No
+
+[source,java]
+----
+capabilities.setCapability("kobiton:flexCorrect", true);  // Enable flexCorrect by setting capability to true.
+capabilities.setCapability("kobiton:baselineSessionId", 0000011); // (Optional) Choose a different baseline session by assigning its kobitonSessionId.
+----

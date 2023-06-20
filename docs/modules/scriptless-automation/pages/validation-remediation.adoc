@@ -1,0 +1,125 @@
+= Validation remediation
+:navtitle: Validation remediation
+
+== Scriptless Automation's progress bar
+
+After Scriptless Automation automated executions are completed, a validation
+will be triggered to automatically identify visual difference across multiple
+selected devices. When viewing the Test Case List, beside the Search bar, there
+is a validation Progress that demonstrates the status of Scriptless Automation
+executions at a single point of time.
+
+image:./guide-media/01GWDZ1SJW0DRE50ZTFD9M7058[width=, alt="progress-bar.png"]
+
+|===
+|Action|Description
+
+|Preparing
+|This step will be checked as soon as you run an Scriptless Automation
+session. During execution on each device that status is enqueued
+or running, you can terminate any long-lasting executions that you
+think may decelerate other executions. If your execution is stuck
+with a blocker, let's resolve this by choosing the
+link:/hc/en-us/articles/360055620472[ignore] option
+to remove this blocking device out of the bundle.
+
+|Analyzing
+|Then do not lose track of this progress while we are using some AI
+algorithms to instantly validate each page of your application sites
+and highlight only some significant bugs related to color text, text
+appearance, etc. We will send an email to you as soon as this step
+completed
+
+|Completed
+|Well done! All have been finished and you can check your remediation
+(if any) by jumping to the Validation List page.
+|===
+
+To navigate to the Validation List page, you can click on the icon shown in the
+below image.
+
+image:./guide-media/01GWEMM7EERNRMR70YBH8YWQY1[width=, alt="assertion-icon.png"]
+
+*Note*: An icon is only available when the state of the progress
+bar is Completed.
+
+Then, you will be able to access validation List page
+
+image:./guide-media/01GWECYVVZFG04V3VQFPQPZTFN[width=, alt="assertion-list.png"]
+
+== Text Validation
+
+Scriptless Automation will point out exactly the difference in character changes between the baseline and screenshot as you can see this one. In the below example, there are some spacing errors caused by different screen resolution on two device types.
+
+image:./guide-media/01GWDZ1TA9HZPD14VF4ZNHW19B[width=, alt="text-assertion.png"]
+
+We provide you an ability to remediation submission so that you won't encounter this validation again.
+
+|===
+|Action|Description
+
+|Adjust Comparison
+|Currently, you can choose three comparison level that be suitable
+to your expectation:
+* Exact: Two texts (string) must be exactly the same.
+* Beginning Text: Focus only the content on the first text, but still
+raise the issue regarding the text-wrapping.
+* Relaxed Placement: A part of Beginning Text and also ignore the
+text wrapping
+
+|Skip
+|This action indicates that we will skip scanning the selected element.
+|===
+
+*Note*: The “Recommended” label will appear on the action that
+is recommended by our system but of course you can select any options that you
+want.
+
+== Color Text Validation
+
+By comparing two color codes of selected elements, Scriptless Automation will detect the difference in color text that the human eye cannot normally recognize.
+
+image:./guide-media/01GWEQSWMA6CZXF2CY7WGK9C9F[width=, alt="color-assertion.png"]
+
+|===
+|Action|Description
+
+|Adjust Comparison
+|Currently, you can choose three comparison level that be suitable
+to your expectation:
+* Strict: Two color text must be exactly the same
+* Relaxed: Accept the maximize value difference between two color
+text
+
+|Skip
+|This action indicates that we will skip scanning the selected element.
+|===
+
+Finally, don’t forget to submit your selection to resolve the validation.
+
+== Performance Validation
+
+To employ this feature, you must do the link:https://support.kobiton.com/hc/en-us/articles/360055590932-Network-Payload-Capture-#to-setup-network-payload-capture-on-your-local-devices-0-1[pre-setup] to turn on the payload capturing ability on every devices that will be used for  Scriptless (Intelligent Quality Suite - IQS).
+
+In the scriptless rerun executions, IQS will perform the network payload capturing on test steps. The transition time between each two consecutive test steps will then be compared with a defined baseline - 2000ms. If a test step's transition response value is greater than a baseline, IQS will detect and raise a remediation to users.
+
+Below is a performance validation within a scriptless rerun session. The graph compares the response time among each test steps transition, together with maximum and average response time recorded within the test case. Each data point on the graph is a transition response time between two consecutive steps. In this validation, the response time is high compared to the baseline of 2000 milliseconds.
+
+image:./guide-media/01GWEBYKQ4WWGK3TC8Z8DEGVMD[width=, alt="Screen_Shot_2022-06-23_at_2.07.58_PM.png"]
+
+You can remediate the validation so that you won't encounter this validation again.
+
+image:./guide-media/01GWEBYJRWZ4GN3Y1G7NRZB818[width=, alt="Screen_Shot_2022-06-23_at_2.07.21_PM.png"]
+
+|===
+|Action|Description
+
+|Adjust Comparison
+|Currently, you can choose three comparison levels according to your
+expectation:
+* Strict: The response time must be closely equal to the baseline
+value 2000ms
+* Relaxed: The response time can be higher than 20% of the baseline
+value 2000ms
+* Ignored: Ignore the response time value, it won't be raised again
+|===

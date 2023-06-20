@@ -1,0 +1,43 @@
+= Enable iOS VoiceOver
+:navtitle: Enable iOS VoiceOver
+
+Learn how to enable iOS VoiceOver, so you can run xref:manual-testing:ios-voiceover-commands.adoc[iOS VoiceOver commands] to test your app's screen reader compatibility during your test session.
+
+== Before you start
+
+You'll need the following devices:
+
+* A Kobiton server installed with a Kobiton GEM or Orion Audio Board Card.
+* An iOS device running iOS 12.0 or later.
+
+[NOTE]
+Due to a recent Apple update, this feature is currently unavailable for devices running iOS 16 or later.
+
+== Enable VoiceOver
+
+On your Kobiton, Mac mini server, open *System Preferences*, and turn on *Bluetooth*.
+
+image:$NEW-IMAGE$[width=, alt=""]
+
+Connect your iOS device to the Mac mini. Then on the iOS device, open *Settings* and select *Bluetooth*.
+
+image:devices:enable-ios-voiceover.png[width=400,alt="Open Settings and select Bluetooth"]
+
+Turn on *Bluetooth*, then select the Mac mini below *My Devices*.
+
+image:$NEW-IMAGE$[width=, alt=""]
+
+On the Mac mini, accept the paring request.
+
+image:$NEW-IMAGE$[width=, alt=""]
+
+Back on the iOS device, go back to *Settings*, then select *Accessibility*.
+
+image:$NEW-IMAGE$[width=, alt=""]
+
+Turn on *VoiceOver*, then select *Audio* and turn on *Send to HDMI*.
+
+[NOTE]
+You will not use an HDMI connection during testing, however this setting is still required for full VoiceOver functionality.
+
+Now you can run xref:manual-testing:ios-voiceover-commands.adoc[iOS VoiceOver commands] during a manual test session.

@@ -1,0 +1,43 @@
+= Kobiton 3.3 release notes (Legacy)
+:navtitle: Kobiton 3.3 release notes
+
+_May 18, 2020_
+
+== Intelligent Test Automation (ITA)
+
+=== New Features
+
+* *Device Soft Keys*: Now, ITA is able to “playback” an action ‘touch’ on the Device Soft Keys (Back, Home and Recent App) for the revisit on multiple devices.
+
+* *Virtual Keyboard (iOS)*: Users can use the virtual keyboard of iOS in a test case and ITA will playback successfully on other devices.
+
+[NOTE]
+There are some limitations on the iOS virtual keyboard like only support language English, does not support the language modification & the Emoji icon.
+
+* *System Pop-up (Android)*: Now, any system pop-ups that appear unexpectedly on the test case (not a part of the test case), ITA will bypass that pop-up to ensure the revisit process will not be interrupted.
+
+=== Enhancements
+* Currently, it is very hard for users to organize their ITA test cases (record & playback sessions) since the session list also contains Appium sessions. Now users can use the new filter “ITA sessions” in the session list to see only sessions that were triggered ITA.
+* Users shouldn’t encounter with an issue “cannot select an element” for the annotation on the Blocker Remediation anymore.
+* Stabilize the playback process of action Touch on Android
+* Stabilize the playback process of action Swipe on iOS
+
+== Kobiton
+
+=== New Features
+
+* *Passcode Bypass Enhancement*: For Private customers with passcodes, this enhancement allows end users to retrieve the device passcode via an API.
+
+* *Support new Android application format *.aab*: Since `.aab` is becoming more popular, Kobiton wants to allow user to upload `.aab` file to app repo and install the file to device.
+
+* *Primary color: changing from light blue to purple*: To have a less pale experience, Kobiton changes the primary color from light blue to purple.
+
+=== Enhancements
+
+* Support the manual & automation test up to iOS 13.4.1
+* Support the automation test for Android on Chrome version 80
+* Update Kobiton’s infrastructure like Xcode 11.4
+* During clean up policy, ensuring the iOS device language comes back to English from Arabia, Turkish
+* Add “Select all” checkbox to the screen “Assign Users to Group” in Org Management
+* New Desktop auto update notification
+* For in-house devices, set the default value for “Automatically clean-up after session end” to be True

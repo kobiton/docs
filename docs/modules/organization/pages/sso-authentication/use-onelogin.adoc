@@ -1,0 +1,101 @@
+= Use OneLogin for SSO authentication
+:navtitle: Use OneLogin
+
+Learn how to use link:https://www.onelogin.com/[OneLogin] for Single Sign-On (SSO) authentication so members of your organization can sign in to Kobiton using their OneLogin credentials.
+
+[#_get_kobiton_parameters]
+== Get Kobiton parameters
+
+include::partial$get-kobiton-parameters.adoc[]
+
+== Create IdP application
+
+In Onelogin, select *Applications*, then *Add App*.
+
+image::organization:onelogin-add-app-context.png[width=1000,alt="Select Applications, then Add App in OneLogin"]
+
+In the search bar, enter `SAML Test Connector`, then select *SAML Test Connector (Advanced)*.
+
+image::organization:onelogin-select-saml-connector-context.png[width=1000,alt="Select SAML Test Connector (Advanced)"]
+
+Enter a display name and add a logo to customize your sign-in portal, then select *Save*.
+
+image::organization:onelogin-edit-name-and-save-context.png[width=1000,alt="Enter a display name and add a logo to customize your sign-in portal, then select *Save*"]
+
+You'll be automatically redirected to your *Info* page. Select *Configuration* to go back to setting up OneLogin.
+
+image:$NEW-IMAGE$[width=, alt=""]
+
+Using your xref:_get_kobiton_parameters[Kobiton SSO parameters from earlier], fill out the *Application details*, then select *Save*.
+
+image:$OLD-IMAGE$[width=, alt=""]
+
+== Map parameters
+
+Now that your IdP application is created, you'll need to create OneLogin SSO parameters mapped to Kobiton. Go to *Parameters* to get started.
+
+image::organization:onelogin-navigate-to-parameters-context.png[width=1000,alt="Go to Parameters tab on OneLogin"]
+
+Select the *blue + icon* to open the parameter creation form.
+
+image::organization:onelogin-parameters-creation-form-closeup.png[width=1000,alt="Open Parameters creation form"]
+
+Use the following information to create and map each parameter:
+
+Parameter 1::
+* *Field name:* `email`
+* *Value:* Email
+* *Include in SAML assertion*: &#9745;
+* *Multi-value parameter*: &#9744;
+Parameter 2::
+* *Field name:* `firstName`
+* *Value:* First Name
+* *Include in SAML assertion*: &#9744;
+* *Multi-value parameter*: &#9744;
+Parameter 3::
+* *Field name:* `lastName`
+* *Value:* Last Name
+* *Include in SAML assertion*: &#9745;
+* *Multi-value parameter*: &#9744;
+Parameter 4::
+* *Field name:* `memberOf`
+* *Value:* User Roles
+* *Include in SAML assertion*: &#9745;
+* *Multi-value parameter*: &#9744;
+Parameter 5::
+* *Field name:* `phoneNumber`
+* *Value:* Phone
+* *Include in SAML assertion*: &#9745;
+* *Multi-value parameter*: &#9744;
+
+When your finished, your five custom parameters will be listed beneath *SAML Test Connect (Advanced) Field*:
+
+image::organization:onelogin-custom-sso-parameters-context.png[width=, alt="Custom SSO Parameters"]
+
+== Get IdP parameters and download certificate
+
+Next you'll need to save a copy of your OneLogin parameters and download your X.509 certificate. Select *SSO* to get started.
+
+image::organization:onelogin-select-sso-context.png[width=1000,alt="Select SSO in SAML Test Connector"]
+
+Copy the following values and save them to a note:
+
+* *Issuer URL*
+* *SAML 2.0 Endpoint (HTTP)*
+* *SLO Endpoint (HTTP)*
+
+Next, select *View Details*.
+
+image:$OLD-IMAGE$[width=, alt=""]
+
+Choose *X.509 PEM* from the dropdown, then select *Download* to download your X.509 certificate.
+
+image::organization:onelogin-click-download-context.png[width=1000,alt="select *Download* to download your X.509 certificate"]
+
+== Add IdP parameters and certificate to Kobiton
+
+include::partial$add-idp-parameters-and-certificate-to-kobiton.adoc[]
+
+== Verify and save configuration
+
+include::partial$verify-and-save-configuration.adoc[]

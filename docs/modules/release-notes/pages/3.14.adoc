@@ -1,0 +1,76 @@
+= Kobiton 3.14 release notes (Legacy)
+:navtitle: Kobiton 3.14 release notes
+
+_August 23, 2021_
+
+== Updates to the Kobiton Platform
+
+=== Accessibility Assertions
+
+To help with testing mobile accessibility functionality, we've added the two assertions to test with:
+
+** Color contrast
+** Touch target
+
+=== One-Time Password Bypass
+
+Can't get away from One-Time Passwords, but to make them easier by exporting an Appium script through the portal.
+
+=== Device Health Check
+
+Public devices will display if it's in a healthy state. Hover over to display why the device is unhealthy.
+
+=== Sleep/Wait time added to Data-Driven Testing
+
+To avoid a test to run before a screen renders and is able to run the functionality, wait/sleep time has been added to Data-Driven Testing.
+
+=== Exported Scripts on SauceLabs Devices
+
+When users select a SauceLabs device, by default the script will be run on the SauceLabs device.
+
+=== Figma Integration
+
+Figma's integration provides a screenshot overlay of a Figma design/layout over the app launched on a Kobiton portal device. This integration can serve as a visual comparison directly on the portal that eliminates going back and forth from screen to screen which can often result in details missed on the final product.
+
+=== Search Improvements:
+
+** On the Sessions detail page, search field will populate the most recent search fields.
+** The ability to search keyword dynamically has been added to the Kobiton portal.
+** Search is available on device logs
+
+=== TestRail Integration Enhancement
+
+Our TestRail integration has gotten a major upgrade by creating an authentication form on the Kobiton UI. Once an admin has completed the authentication process, all users under that admin’s organization will be able to reach their TestRail test cases from the portal.
+
+=== OneLogin
+
+Kobition users will be able to access the OneLogin template on the OneLogin catalog to more easily be able to connect with the security software.
+
+=== UI Improvements
+
+** The sessions list has gone from a pagination layout to infinite scroll.
+
+== DLM Updates
+
+=== Device Tags
+
+Devices can now be tagged through the UI. This allows devices to be grouped, assigned, or easily identified.
+
+=== Improvements
+
+** Devices that are disconnected will still display on the UI.
+** Softbooking, by default, is now available to all users on private devices
+
+=== SSO Improvements
+
+** Role mapping is disabled when "Enforce SSO" is enabled
+** The SSO button can be enabled when enabling "Role mapping"
+
+=== RBAC Improvements
+
+** Public devices are automatically added to Teams
+** Devices can be filtered by "assign" and "unassigned"
+
+=== Bug Fixes
+
+The mapping between the playback panel and system metrics has been corrected to display the proper time.

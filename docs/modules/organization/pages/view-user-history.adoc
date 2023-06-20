@@ -1,0 +1,34 @@
+= View user history
+:navtitle: View user history
+
+User History allows users, especially those with the Admin role to review the activities history of other users, activities such as login, logout, and apps installed or launched.
+
+== Check user history
+
+. Go to the `Org Management`, select the `Users` tab.
+. From the users list, click on the user you want to check.
+. On the User Details site, click the `User History` tab.
+. Filter user history by types of events, select among Activities, Device Retainment, Device Enablement, Application Installation, Application Launched, or All. See details of events in `Event & Sub-event descriptions`.
+. Filter user history by time range, select among Today, Last 30 Days, Custom, or All.
+. Click the device's hyperlink to see the device's details.
+. Click the session ID hyperlink to go to the session's details.
+
+== Events & Sub-events descriptions
+
+Among the event types, there are sub-events to filter from:
+
+* Activities +
+* User Login: when the user login to the Kobiton portal
+* User Logout: when the user logout of the Kobiton portal
+* Removed User ‘user_name’: When the user removed other users
+* Disabled User ‘user_name’: When the user disabled other users
+* User Created: When the user first login to Kobiton, either for the first time or after being deleted and invited again.
+* Device Retainment +
+* Device Retained: when the user soft-book (retain) the device
+* Device Released: when the user ends the session
+* Device Enablement (link to the user that hosted this device) +
+* Device Registered: when the device was plugged in and showed on Kobiton Portal
+* Device Unregistered: when the device was unplugged (disconnected)
+* Device Restarted: when the user selects to restart the device
+* Application Installed: when the user installs the application in a session
+* Application Launched: when a user launches the application that was installed in a session

@@ -1,0 +1,36 @@
+= Azure DevOps integration
+:navtitle: Azure DevOps integration
+
+Azure DevOps, a Continuous Integration (CI) server, can be integrated with Kobiton's Azure DevOps Extension to run automation test scripts on Kobiton devices.
+
+The Kobiton extension provides two tasks:
+
+* *Kobiton Automation Test Executor:* This task is used to trigger your automation test script on Kobiton devices
+* *Kobiton App Version Uploader:* This task is used to upload a new app version of an existing app on Kobiton's App Repository.
+
+== Before you start
+
+* link:https://dev.azure.com[Azure DevOps account]
+* An Executor Server is needed to setup the Azure DevOps extension, which acts as an environment to execute test scripts.
+For Kobiton Executor Server credentials, please link:https://kobiton.com/contact-us/[contact us].
+
+== Install extension
+
+. To access the Kobiton Azure DevOps Extension, click link:https://marketplace.visualstudio.com/items?itemName=Kobiton.Kobiton[here].
+image:./guide-media/01GWDZDMN2NZRY9HXS58W7CKME[mceclip0.png]
+. To install the extension, follow the instructions on this link:https://docs.microsoft.com/en-us/azure/devops/marketplace/install-extension?view=azure-devops&tabs=browser[guide.]
+. Log into the Kobiton Executor Server.
+
+== Kobiton API Credentials
+
+* You will need your Kobiton *Username* and *Password (API Key)* to interact with Kobiton REST API using our Azure DevOps plugin.
+* To get your Kobiton *Username* and *API Key*, please follow instructions at *IV*. Configure Test Script for Kobiton section on link:https://kobiton.com/blog/tutorial/parallel-testing-selenium-webdriver/[our blog].
+image:./guide-media/01GWEBXTZ05AYNHXTAP2HASGFY[mceclip1.png]
+
+== Git repository contains your automation test script + SSH Key
+
+* To execute your test script with the Kobiton Azure DevOps extension, prepare your automation test project in a Git repository.
+* For security purposes, we recommend setting your Git repository to private and setup an SSH key.
+** link:https://help.github.com/articles/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent/[Create a Github SSH key]
+** link:https://help.github.com/articles/adding-a-new-ssh-key-to-your-github-account/[Adding a new SSH key to your Github account]
+* Find our sample guide link:https://github.com/kobiton/samples/tree/master/java/java_testng_junit[here].

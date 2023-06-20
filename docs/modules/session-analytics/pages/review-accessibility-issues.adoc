@@ -1,0 +1,133 @@
+= Accessibility validation
+:navtitle: Accessibility validation
+
+Learn how to review accessibility issues that were automatically flagged during your test session and get suggestions for improving each element's color contrast, content labels, and xref:_accessibility_tools[more].
+
+[NOTE]
+Our suggestions reference the guidelines created by https://developer.apple.com/design/human-interface-guidelines/foundations/accessibility[Apple] and https://www.google.com/accessibility/for-developers/[Google].
+
+== Open accessibility validation
+
+. Select *Sessions*.
+. xref:search-for-a-session.adoc[Find a session].
+. Launch the xref:session-overview.adoc[Session Overview].
+. Select *Explorer*.
+. In the xref:session-explorer.adoc#_session_timeline[session timeline], select the *yellow marker* for a page you want to review.
+. Select *View Details*.
+. Select xref:_touch_target_size[Touch Target Size], xref:_color_contrast[Color Contrast], or xref:_content_labeling[Content Labeling] to review the accessibility of your webpage or app.
+
+[TIP]
+Select *Create Jira Ticket* to keep track of issues you find. Learn more about our Jira integration xref:integrations:jira/jira.adoc[here].
+
+[#_accessibility_tools]
+== Accessibility tools
+
+[#_screen_preview]
+=== Screen preview
+
+[cols="1h,4",autowidth"]
+|===
+|Next/previous screen
+|Select *Next Screen* or *Previous Screen* to navigate through all screens accessed during the test session.
+
+|Issue markers
+|The yellow markers indicate potential accessibility issues with the currently selected element. https://www.google.com/accessibility/for-developers/[Google's] and https://developer.apple.com/design/human-interface-guidelines/foundations/accessibility[Apple's] accessibility guidelines are used to find potential accessibility issues for Android and iOS respectively.
+|===
+
+[#_touch_target_size]
+=== Touch target size
+[cols="1h,4",autowidth"]
+|===
+|Next/previous issue
+|Select *Next Issue* or *Previous Issue* to navigate through all issues on the current screen.
+
+|Issue description
+|A description of the issue currently highlighted in the xref:_screen_preview[screen preview] along with a link to https://www.google.com/accessibility/for-developers/[Google's] or https://developer.apple.com/design/human-interface-guidelines/foundations/accessibility[Apple's] respective accessibility guidelines.
+
+|Visible
+|Outputs `true` or `false` regarding the visibility of the currently selected element.
+
+|Xpath
+|Displays the Xpath for the currently selected element. See the full Xpath expression and copy it to your clipboard by hovering over the preview and selecting the *copy icon*.
+
+|Text
+|Displays a text preview for the currently selected element.
+
+|Width
+|Displays the width for the currently selected element.
+
+|Height
+|Displays the height for the currently selected element.
+
+|X
+|Displays the X-coordinate for the currently selected element.
+
+|Y
+|Displays the Y-coordinate for the currently selected element.
+|===
+
+[#_color_contrast]
+=== Color Contrast
+
+[cols="1h,4",autowidth"]
+|===
+|Next/previous issue
+|Select *Next Issue* or *Previous Issue* to navigate through all issues on the current screen.
+
+|Issue description
+|A description of the issue currently highlighted in the xref:_screen_preview[screen preview] along with a link to https://www.google.com/accessibility/for-developers/[Google's] or https://developer.apple.com/design/human-interface-guidelines/foundations/accessibility[Apple's] respective accessibility guidelines.
+
+|Xpath
+|Displays the Xpath for the currently selected element. See the full Xpath expression and copy it to your clipboard by hovering over the preview and selecting the *copy icon*.
+
+|Text
+|Displays a text preview for the currently selected element.
+
+|Foreground color
+|Displays the foreground color and hex code for the currently selected element.
+
+|Background color
+|Displays the background color and hex code for the currently selected element.
+
+|Contrast ratio
+|Displays the contrast ratio for the currently selected element.
+
+|X
+|Displays the X-coordinate for the currently selected element.
+
+|Y
+|Displays the Y-coordinate for the currently selected element.
+|===
+
+[#_content_labeling]
+=== Content labeling
+
+[cols="1h,4",autowidth"]
+|===
+|Next/previous issue
+|Select *Next Issue* or *Previous Issue* to navigate through all issues on the current screen.
+
+|Issue description
+|A description of the issue currently highlighted in the xref:_screen_preview[screen preview] along with a link to https://www.google.com/accessibility/for-developers/[Google's] or https://developer.apple.com/design/human-interface-guidelines/foundations/accessibility[Apple's] respective accessibility guidelines.
+
+|Visible
+|Outputs `true` or `false` regarding the visibility of the currently selected element.
+
+|Xpath
+|Displays the Xpath for the currently selected element. See the full Xpath expression and copy it to your clipboard by hovering over the preview and selecting the *copy icon*.
+
+|Text
+|Displays a text preview for the currently selected element.
+
+|Speakable text
+|Displays the text of the currently selected element as comma separated values to show  screen reader.
+
+|Duplication count
+|Displays how many other elements share the same text of the currently selected element.
+
+|X
+|Displays the X-coordinate for the currently selected element.
+
+|Y
+|Displays the Y-coordinate for the currently selected element.
+|===
