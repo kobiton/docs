@@ -1,50 +1,9 @@
-= Start a scriptless session during automation testing
-:navtitle: Start a scriptless session during automation testing
+= Use REST API to run Scriptless
+:navtitle: Use REST API
 
-In addition to using a Manual session, you can use an automation session as the
-baseline session for rerunning a test script with Kobiton's Scriptless functionality.
+$DESCRIPTION$
 
-== Before you start
-
-First, run an Automation session on Kobiton with an Appium automation script.
-To illustrate, we will use this
-link:https://github.com/kobiton/samples/tree/master/java/java_testng_junit[example script].
-NOTE: Before running the script, make sure you:
-
-. Enter your username and API key (API key can be retrieved
-in link:https://portal.kobiton.com/settings/keys[https://portal.kobiton.com/settings/keys])
-to the file `Configs.java` in the example script.
-
-(You can find the file in the sample script's folder path:
-_samples/java/java_testng_junit/src/main/java/kobiton/com/configs/Configs.java_)
-+
-image:./guide-media/01GWDZ23SDPMB6XXVA9DWKXX97[width=, alt="image-20220117-032015.png"]
-
-. Add the desired capability `scriptlessEnable` to the Configs.java file
-+
-image:./guide-media/01GWEGNHNJ36WCSBG8HKDJK6YC[width=, alt="image-20220117-033252.png"]
-
-One the above is done, you can run the script through Kobiton. After you run
-the script and have the resulting Automation session on the Kobiton platform,
-you should be able to retrieve the session name and session ID on the
-link:https://portal.kobiton.com/sessions[Session List].
-
-There are two methods to trigger Scriptless reruns from that automation session
-- via the Kobiton portal or via a REST API call.
-
-== Method 1: Trigger scriptless rerun via the Kobiton portal
-
-After navigating to the session on Session List, right-click on the session and
-select *View Test Execution Plan.*
-+
-image:./guide-media/01GWDZ24QVA6K61H10V293KFRE[width=, alt="image-20220215-072911.png"]
-
-In the Test Execution Plan view, select the *Run* button in the
-upper right corner to trigger a Scriptless rerun.
-+
-image:./guide-media/01GWEFXT8Z92F6DKGNQW51YG6K[width=, alt="image-20220215-081421.png"]
-
-== Method 2: Trigger Scriptless rerun via REST APIs call
+== Use REST API
 
 Use the endpoint is below. You can also refer to our link:https://api.kobiton.com/docs/#start-scriptless-automation[API documentation] for
 more information.

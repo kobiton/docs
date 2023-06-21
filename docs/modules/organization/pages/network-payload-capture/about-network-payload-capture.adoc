@@ -42,11 +42,3 @@ To continue, follow guidelines to setup Network Payload Capture on iOS/ Android 
 
 * Setup for iOS devices[^b] (follow all steps for Legacy Kobiton and steps 3, 4, 5, 6 for Latest Kobiton).
 * Setup for Android devices[^c] (follow all steps for Legacy Kobiton and steps 3, 4, 5 for Latest Kobiton).
-
-== Limitations
-
-* Android support includes version 9-11.
-* There is a 30-second to 1-minute delay for iOS devices as the proxy is being configured.
-* Users can capture network transactions on Manual and Appium sessions only. Currently, Espresso and XCUITest are unable to generate network payload capture.
-* We do not support certificate pinning for native apps due to instability. Make sure to disable certificate pinning on native apps if you want to capture payload.
-* Please contact us for support if this feature is disabled on your system.
