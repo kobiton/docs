@@ -1,158 +1,55 @@
 = Session overview
 :navtitle: Session overview
 
-Learn how to use the Session Overview to review device information, logs, and xref:_session_overview_controls[more] after a test session.
+In *Sessions*, select a session to open the overview and access the session recording, device information, logs, and more.
 
-[#_session_video]
-== Session video
+image:<NEW-IMAGE>[width=, alt=""]
 
-=== Play/Pause
+== Session Explorer
 
-Play or pause the test session recording.
+In the xref:session-explorer/index.adoc[Session Explorer], leverage the NOVA AI engine to automatically flag accessibility issues, reinspect elements from the session, validate UI using Figma, and more.
 
-=== Timeline
+image:<NEW-IMAGE>[width=, alt=""]
 
-Scrub through the test session recording.
+== Automated test case
 
-=== Mute/Unmute
+Instead of writing test scripts from scratch, use the current session as your base and start a xref:scriptless-automation:index.adoc[Scriptless session] or an xref:automation-testing:scripting/auto-generate-an-appium-script.adoc[auto-generated Appium script] for your automation session.
 
-Mute or unmute the test session recording.
+image:<NEW-IMAGE>[width=, alt=""]
 
-=== Fullscreen
+== Jira integration
 
-Set the test session recording to fullscreen.
+Once you xref:integrations:jira/index.adoc[integrate Jira] with your Kobiton account, create Jira tickets directly from the session overview.
 
-== Additional info
+image:<NEW-IMAGE>[width=, alt=""]
 
-=== Device orientation
+[#_session_recording]
+== Session recording
 
-Description
+The full session recording. To view each test action, accessibility issue, and get links to specific test steps, use the session recording in the xref:session-explorer/timeline.adoc[Session Explorer] instead.
 
-=== NodeJS Version
-
-Description
-
-=== WebDrier ID
-
-Description
-
-=== Browser version
-
-Description
-
-=== Appium version
-
-Description
-
-=== Capture screenshot
-
-Description
-
-=== Baseline session ID
-
-Description
-
-[#_number_of_corrections]
-=== Number of corrections
-
-Description
+image:<NEW-IMAGE>[width=, alt=""]
 
 == Session info
 
-=== Session name
+General information about the session, including name, description, user, and more.
 
-Select *Edit* to change the session name. You can also change this name during a test session.
-
-=== Description
-
-Select *Edit* to change the session description. You can also change the description during a test session.
-
-=== Testing type
-
-Indicates whether the test session was manual or automated.
-
-=== User
-
-The name of the user that performed the test session.
-
-=== Duration
-
-The length of the test session.
-
-=== Status
-
-Indicates whether the test session was completed.
-
-=== Start/End time
-
-The date and time the test session started and ended.
+image:<NEW-IMAGE>[width=, alt=""]
 
 == Apps installed
 
-=== App name
+The xref:apps:app-metadata.adoc[app metadata] for the apps installed during the test session.
 
-The official name of the app, like Instagram or Gmail.
-
-=== Size
-
-The size of the app in MBs or GBs.
-
-=== Version
-
-The app version, like 268179862 or 1.0.0.
-
-=== Package
-
-The bundle identifier, like `com.burbn.instagram`.
-
-=== Instrumentation
-
-Instrumentation is required for image injection. Indicates whether this feature was turned on during the test session.
-
-=== Instrumentation status
-
-Instrumentation is required for image injection. Indicates whether instrumentation was successful during the test session.
-
-=== Installation status
-
-Indicates whether the app successfully installed during the test session.
+image:<NEW-IMAGE>[width=, alt=""]
 
 == Device info
 
-=== Manufacturer
+The xref:devices:device-metadata.adoc[device metadata] for the device used in the test session.
 
-The manufacturer, like Apple, Google, or Samsung.
-
-=== Operating system
-
-The operating system, like Android or iOS.
-
-=== Device name
-
-The official name of the device, like Galaxy S10, iPhone 11 Pro, or iPhone XS.
-
-=== Resolution
-
-The screen resolution, like 1080x2220 or 1125x2436.
-
-=== Model name
-
-The device model, like D10Ap, Lenovo TB-8705F, or SM-G970U.
-
-=== UDID
-
-The unique device identifier (UDID) used to identify iOS devices.
+image:<NEW-IMAGE>[width=, alt=""]
 
 == Logs
 
-=== Download
+Download the session device logs or crash logs as a `.log` file.
 
-Select *Download* to save a copy of the device and crash logs.
-
-=== Device
-
-Select *Device* to open a preview of the device logs, then select *Download* to save a copy.
-
-=== Crash
-
-Select *Crash* to open a preview of the crash logs, then select *Download* to save a copy.
+image:<NEW-IMAGE>[width=, alt=""]

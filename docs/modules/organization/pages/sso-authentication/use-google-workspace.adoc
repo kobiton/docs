@@ -12,19 +12,19 @@ include::partial$get-kobiton-parameters.adoc[]
 
 In the Google Admin console, and select *Apps*.
 
-image::organization:gsuite-select-apps-context.png[width=1000,alt=In Google Admin Console, select Apps]
+image:organization:gsuite-select-apps-context.png[width=1000,alt=In Google Admin Console, select Apps]
 
 In Apps, choose *SAML apps*.
 
-image::organization:gsuite-select-saml-apps-context.png[width=1000,alt="Select SAML apps"]
+image:organization:gsuite-select-saml-apps-context.png[width=1000,alt="Select SAML apps"]
 
 Select the *Add App* dropdown, then select *Add custom SAML app*.
 
-image::organization:gsuite-select-add-custom-saml-context.png[width=1000,alt="Select Add custom SAML app in the dropdown"]
+image:organization:gsuite-select-add-custom-saml-context.png[width=1000,alt="Select Add custom SAML app in the dropdown"]
 
 In step 1, *App details*, enter a name for your application.
 
-image::organization:gsuite-enter-app-details-context.png[width=1000,alt="Enter a name for the app"]
+image:organization:gsuite-enter-app-details-context.png[width=1000,alt="Enter a name for the app"]
 
 == Get IdP parameters and download certificate
 
@@ -35,7 +35,7 @@ In step 2, *Google Identity Provider Details*, copy the following values and sav
 * *Certificate*
 * *SHA-256 fingerprint*
 
-image::organization:gsuite-fill-sso-url-id-certificate-sha-context.png[width=1000,alt="Values in Google Identity Provider Details"]
+image:organization:gsuite-fill-sso-url-id-certificate-sha-context.png[width=1000,alt="Values in Google Identity Provider Details"]
 
 == Map parameters
 
@@ -45,7 +45,7 @@ In step 3, *Service Provider Details*, use your xref:_get_kobiton_parameters[Kob
 * *Entity ID*
 * *Domain Key*
 
-image::organization:gsuite-fill-in-acs-id-domain-context.png[width=1000,alt="Fill in ACS URL, Entity ID, Domain Key"]
+image:organization:gsuite-fill-in-acs-id-domain-context.png[width=1000,alt="Fill in ACS URL, Entity ID, Domain Key"]
 
 Then in step 4, *Add custom SAML app*, create the following parameters:
 
@@ -62,7 +62,7 @@ Parameter 4::
 * *Google Directory attributes:* Phone number
 * *App attributes:* `phone`
 
-image::organization:gsuite-fill-parameters-context.png[width=1000,alt="Fill in parameters in Custom SAML"]
+image:organization:gsuite-fill-parameters-context.png[width=1000,alt="Fill in parameters in Custom SAML"]
 
 == Add IdP parameters and certificate to Kobiton
 
