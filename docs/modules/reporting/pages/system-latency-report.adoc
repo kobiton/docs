@@ -1,0 +1,91 @@
+= System latency report
+:navtitle: System latency report
+
+The system latency report is a predefined report containing latency data for all test sessions.
+
+image:<NEW-IMAGE>[width=, alt=""]
+
+System latency refers to the amount of time it takes to preform the following actions during a manual or mixed session:
+
+* Type
+* Touch
+* Swipe
+* Drag
+* Zoom
+* Home
+* Power
+* Volume Up
+* Volume Down
+* Delete
+* Enter
+* App Switch (Android)
+* Back (Android)
+
+== By connection or location
+
+Sort the report by the type of network connection or the physical location of the sessions.
+
+image:<NEW-IMAGE>[width=,alt=""]
+
+[#_date_range]
+== Date range
+
+Display network latency data within a selected date range up to 90 days. This date range will be applied to xref:_columns[column] data.
+
+image:<NEW-IMAGE>[width=,alt=""]
+
+== Details
+
+Display additional latency details.
+
+image:<NEW-IMAGE>[width=,alt=""]
+
+Use the search bar to search for a session, or select *All sessions* and search manually.
+
+image:<NEW-IMAGE>[width=,alt=""]
+
+Select the session ID to open the xref:session-analytics:session-overview.adoc[session overview].
+
+image:<NEW-IMAGE>[width=,alt=""]
+
+[#_columns]
+== Columns
+
+Each column contains details about network latency.
+
+[NOTE]
+Columns only represent data within the selected xref:_date_range[date range].
+
+image:<NEW-IMAGE>[width=,alt=""]
+
+=== Connection
+
+The network connection type of the test sessions.
+
+=== Location
+
+The physical location of the test sessions.
+
+=== deviceShare
+
+The number of sessions using deviceShare.
+
+=== Session info
+
+A list of all sessions, grouped by deviceShare ID. Select the session ID to open the xref:session-analytics:session-overview.adoc[session overview].
+
+=== Average (ms)
+
+The average latency time of a session in milliseconds.
+
+=== Minimum (ms)
+
+The minimum latency time of a session in milliseconds.
+
+=== Maximum (ms)
+
+The maximum latency time of a session in milliseconds.
+
+=== Median (ms)
+
+The median latency time of a session in milliseconds.

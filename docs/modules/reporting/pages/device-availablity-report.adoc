@@ -1,0 +1,103 @@
+= Device availability report
+:navtitle: Device availability report
+
+The device availability report is a collection of predefined reports containing all outage entries for your private and local devices.
+
+image:<NEW-IMAGE>[width=, alt=""]
+
+[#_date_range]
+== Date range
+
+Display all outages within a selected date range up to 90 days.This date range will be applied to each xref:_summary[summary] and xref:_columns[column].
+
+image:<NEW-IMAGE>[width=,alt=""]
+
+== Reports
+
+The device availability report contains two reports: local devices and private devices.
+
+=== Local devices
+
+Devices hosted on your local network.
+
+image:<NEW-IMAGE>[width=,alt=""]
+
+=== Private devices
+
+Devices hosted on Kobiton Cloud that are only accessible by your organization.
+
+image:<NEW-IMAGE>[width=,alt=""]
+
+[#_summary]
+== Summary
+
+A summary of each report with some key metrics.
+
+[NOTE]
+Summaries only represent data within the selected xref:_date_range[date range].
+
+image:<NEW-IMAGE>[width=,alt=""]
+
+=== Total registered devices
+
+The all-time total number of registered devices.
+
+=== Registered devices within date range
+
+The total number of registered devices from the selected xref:_date_range[date range].
+
+=== Average days available
+
+The average number of days your devices were online and the percentage of your total devices.
+
+== Search
+
+Filter the report by a specific device UDID.
+
+image:<NEW-IMAGE>[width=, alt=""]
+
+== Notes
+
+Add a note detailing why a device was offline during this time.
+
+image:<NEW-IMAGE>[width=,alt=""]
+
+You can also choose to exclude this specific outage from your SLA.
+
+image:<NEW-IMAGE>[width=,alt=""]
+
+[#_columns]
+== Columns
+
+Each column contains details about a specific outage.
+
+[NOTE]
+Columns only represent data within the selected xref:_date_range[date range].
+
+image:<NEW-IMAGE>[width=,alt=""]
+
+=== UDID
+
+The device's Unique Device Identifier (UDID).Beneath each UDID is a list of all offline entries for the device.
+
+image:<NEW-IMAGE>[width=,alt=""]
+
+=== Device type
+
+The type of device. Beneath each device type is a list of all offline entries for the device, along with the specific network status: Offline, Offline (Unplugged), or No Network.
+
+=== OS version
+
+The device operating system version (OS version).
+
+=== In-service dates
+
+A date range representing the length of time a device was in service.
+
+=== Days online
+
+A ratio representing the total number of days a device has been online versus its total days in service.
+
+=== Minutes offline
+
+Total number of minutes a device was offline during a specific outage.
