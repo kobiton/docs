@@ -1,0 +1,18 @@
+<div class="landing-page">
+  <div class="search-content">
+      <div class="search-wrapper">
+        <div class="search-title">What can we help you with?</div> <br/>
+        <div class="search">
+          <div id="search-field-id" class="search-field">
+            <input id="start-search-input" type="text" placeholder="Type your question here...">
+          </div>
+          <button id="search-button" class="search-btn">Search</button>
+        </div>
+      </div>
+  </div>
+  {{#with page.navigation}}
+    <div class="item-content">
+      {{> nav-box-item navigation=this}}
+    </div>
+  {{/with}}
+</div>

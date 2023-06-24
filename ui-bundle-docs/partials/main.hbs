@@ -4,8 +4,12 @@
 {{#if (eq page.layout '404')}}
 {{> article-404}}
 {{else}}
+{{#if (eq page.title 'Welcome to Kobiton Docs')}}
+{{> landing-page}}
+{{else}}
 {{> toc}}
 {{> article}}
+{{/if}}
 {{/if}}
   </div>
 </main>
