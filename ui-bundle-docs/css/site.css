@@ -2233,7 +2233,7 @@ footer.footer {
 .landing-page > .search-content {
   display: flex;
   height: 377px;
-  background: transparent url(../img/landing-page.svg) no-repeat;
+  background: transparent url(../img/landing-page.svg) no-repeat center;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -2303,6 +2303,19 @@ footer.footer {
   position: relative;
   top: -15%;
   padding: 0 10px;
+  width: 100%;
+  height: 100%;
+}
+
+@media screen and (min-width:1680px) {
+  .landing-page > .item-content {
+    box-sizing: border-box;
+    position: relative;
+    top: -15%;
+    padding: 0 250px;
+    width: 100%;
+    height: 100%;
+  }
 }
 
 .row {
