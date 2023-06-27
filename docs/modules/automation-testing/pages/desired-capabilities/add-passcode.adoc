@@ -1,7 +1,7 @@
 = Add `passcode` to capabilities
 :navtitle: Add passcode
 
-Learn how to add `passcode` to your capabilities so you can use a device with a passcode xref:devices:set-passcode.adoc[set by an administrator], or set a new passcode for the device.
+Learn how to add `passcode` to your capabilities so you can use a device with a passcode xref:devices:set-device-passcodes.adoc[set by an administrator], or set a new passcode for the device.
 
 == Locate config file
 
@@ -27,7 +27,7 @@ In the config file, locate `DesiredCapabilities`, and add the following lines:
 | Value
 
 | `passcode`
-| The passcode xref:devices:set-passcode.adoc[set by an administrator]. If the device doesn't have a passcode, the value of `passcode` will be used to create one.
+| The passcode xref:devices:set-device-passcodes.adoc[set by an administrator]. If the device doesn't have a passcode, the value of `passcode` will be used to create one.
 
 | `udid`
 | The device's Unique Device Identifier (UDID).
@@ -55,4 +55,4 @@ public static DesiredCapabilities getIPhone11ProIOS146DesiredCapabilities() {
 }
 ----
 
-When you're finished, save your changes. Now you can use a device with a passcode xref:devices:set-passcode.adoc[set by an administrator], or set a new passcode for the device.
+When you're finished, save your changes. Now you can use a device with a passcode xref:devices:set-device-passcodes.adoc[set by an administrator], or set a new passcode for the device.
