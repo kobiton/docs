@@ -1,0 +1,68 @@
+= Team permissions
+:navtitle: Team permissions
+
+$DESCRIPTION$
+
+== Roles
+
+=== Team owner
+
+THIS
+
+=== Team admin
+
+THIS
+
+=== Team member
+
+THIS
+
+== Permissions
+
+=== `settings.modify`
+
+Edit team details (name, description, assertion value) and team settings (private test mode, cleanup policy).
+
+* *Team owner:* Always ON
+* *Team admin:* ON
+* *Team member:* OFF
+
+=== `members.modify`
+
+Add and remove team members, and change permissions for team members.
+
+* *Team owner:* Always ON
+* *Team admin:* ON
+* *Team member:* Always OFF
+
+=== `devices.modify`
+
+Add and remove devices assigned to the team.
+
+* *Team owner:* Always ON
+* *Team admin:* ON
+* *Team member:* Always OFF
+
+=== `member.make_admin`
+
+Make a team member a team admin.
+
+* *Team owner:* Always ON
+* *Team admin:* Always OFF
+* *Team member:* Always OFF
+
+=== `member.make_owner`
+
+Make a team member the team owner.
+
+* *Team owner:* Always ON
+* *Team admin:* Always OFF
+* *Team member:* Always OFF
+
+=== `apps.unassigned`
+
+Remove an app assigned to the team.
+
+* *Team owner:* Always ON
+* *Team admin:* OFF
+* *Team member:* Always OFF

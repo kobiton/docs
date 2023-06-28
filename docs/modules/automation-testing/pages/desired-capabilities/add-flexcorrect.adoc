@@ -1,13 +1,13 @@
-= Add `flexCorrect`
+= Add `flexCorrect` to capabilities
 :navtitle: Add `flexCorrect`
 
-Learn how add `flexCorrect` to your capabilities, so your automation script will automatically select the right element--even across different devices. Using `flexCorrect` will decrease the amount of `Element not found` errors you may get during testing.
+Learn how add `flexCorrect` to your capabilities so your automation script will automatically select the right element--even across different devices. Using `flexCorrect` will decrease the amount of `Element not found` errors you may get during testing.
 
 == Locate config file
 
 First, open your test suite and locate your config file. The exact name and location may vary, but you'll find it in a similar location:
 
-[source,plaintext]
+[source,asciidoc]
 ----
 root
 └── src
@@ -42,7 +42,7 @@ Here's an example:
 public static DesiredCapabilities getIPhone11ProIOS146DesiredCapabilities() {
         DesiredCapabilities capabilities = new DesiredCapabilities();
 
-        // Change these desired capabilities:
+        // Add these capabilities:
 
         capabilities.setCapability("kobiton:flexCorrect", true);  // Enable flexCorrect by setting capability to true.
         capabilities.setCapability("kobiton:baselineSessionId", 0000011); // (Optional) Choose a different baseline session by assigning its kobitonSessionId.
@@ -54,4 +54,4 @@ public static DesiredCapabilities getIPhone11ProIOS146DesiredCapabilities() {
 When you're finished, save your changes. Now `flexCorrect` will automatically select the correct elements, even when you run your script on different devices.
 
 [NOTE]
-After a session, you can see xref:session-analytics:session-overview.adoc#_number_of_corrections[how many elements were corrected].
+After a session, you can check xref:session-analytics:session-overview.adoc[how many elements were corrected].

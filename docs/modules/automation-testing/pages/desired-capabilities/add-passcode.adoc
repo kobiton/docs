@@ -1,0 +1,58 @@
+= Add `passcode` to capabilities
+:navtitle: Add passcode
+
+Learn how to add `passcode` to your capabilities so you can use a device with a passcode xref:devices:set-device-passcodes.adoc[set by an administrator], or set a new passcode for the device.
+
+== Locate config file
+
+First, open your test suite and locate your config file. The exact name and location may vary, but you'll find it in a similar location:
+
+[source,asciidoc]
+----
+root
+└── src
+    └── test
+        └── Config # Java TestNG
+        └── Config.java # Java JUnit
+        └── config.js # NodeJS Mocha
+----
+
+== Add capability
+
+In the config file, locate `DesiredCapabilities`, and add the following lines:
+
+[cols="2,3", options="header"]
+|===
+| Capability
+| Value
+
+| `passcode`
+| The passcode xref:devices:set-device-passcodes.adoc[set by an administrator]. If the device doesn't have a passcode, the value of `passcode` will be used to create one.
+
+| `udid`
+| The device's Unique Device Identifier (UDID).
+
+| `removePasscodeOnExit`
+| (Optional) Determine whether the device passcode will be removed after the test session.
+|===
+
+Here's an example:
+
+[source,java]
+----
+// Located in test/scriptlessautomation/Config in the Java's TestNG framework.
+
+public static DesiredCapabilities getIPhone11ProIOS146DesiredCapabilities() {
+        DesiredCapabilities capabilities = new DesiredCapabilities();
+
+        // Add these capabilities:
+
+        capabilities.setCapability("passcode", "1234"); // Set the passcode for the device.
+        capabilities.setCapability("udid", "01234567-89ab-cdef-0123-456789abcdef"); // Use the device with this UDID.
+        capabilities.setCapability("removePasscodeOnExit", true); // (Optional) The device passcode will be removed after the test session.
+
+    return capabilities;
+}
+----
+
+When you're finished, save your changes. Now you can use a device with a passcode xref:devices:set-device-passcodes.adoc[set by an administrator], or set a new passcode for the device.

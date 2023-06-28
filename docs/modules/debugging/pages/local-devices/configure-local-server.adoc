@@ -8,7 +8,7 @@ Learn how to configure your local Kobiton server so users in your organization c
 
 In order for users to xref:debugging:local-devices/configure-personal-computer.adoc[set up their personal computer to debug local devices], they'll need the server's IP address and REST API port numbers. Here's a template:
 
-[source,plaintext]
+[source,asciidoc]
 ----
 # Required server information for:
 # https://docs.kobiton.com/kobiton-docs/debugging/debug-local-devices/configure-personal-computer.html
@@ -22,7 +22,7 @@ Save this information in a secure location your team can easily access.
 
 === Get network address
 
-Users can use your private domain name _or_ the Kobiton server's IP address. If you prefer to use the Kobiton server's IP address, run the following command in the terminal and save the output to a secure location for your team:
+Users can use your private domain name _or_ the Kobiton server's IP address. If you prefer to use the Kobiton server's IP address, enter the following command in the terminal and save the output to a secure location for your team:
 
 [source,shell]
 ----
@@ -33,7 +33,7 @@ hostname -I
 
 To get the Kobiton server's REST API port numbers, open `~/config/app.yaml` and check for the following port keys:
 
-[source,plaintext]
+[source,asciidoc]
 ----
 rest_api_ingress_advertised_port: <port-number>
 grpc_ingress_gateway_public_advertised_port: <port-number>
@@ -58,7 +58,7 @@ cd ~/usr/local/deviceconnect
 
 Open `dc.ini` and add the following environment variables:
 
-[source,plaintext]
+[source,asciidoc]
 ----
 GatewayPublicAddress=<ip-address> # Set to your private or public IP address.
 ExternalAirstreamTlsPort=<port-number> # Set to 10161 or public IP address.
@@ -72,7 +72,7 @@ GatewayPublicAddress=192.168.36.36
 ExternalAirstreamTlsPort=10161
 ----
 
-Save your changes, then run the following command to restart the server:
+Save your changes, then enter the following command to restart the server:
 
 [source,shell]
 ----

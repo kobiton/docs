@@ -1,26 +1,26 @@
 = Use Azure AD for SSO authentication
 :navtitle: Use Azure AD
 
-Learn how to use link:https://azure.microsoft.com/solutions/active-directory-sso/[Azure Active Directory (Azure AD)] for Single Sign-On (SSO) authentication so members of your organization can sign in to Kobiton using their Microsoft credentials.
+Learn how to use link:https://azure.microsoft.com/solutions/active-directory-sso/[Azure Active Directory (Azure AD)] for Single Sign-On (SSO) authentication with SAML 2.0 so members of your organization can sign in to Kobiton using their Microsoft credentials.
 
 [#_get_kobiton_parameters]
 == Get Kobiton parameters
 
-include::partial$get-kobiton-parameters.adoc[]
+include::partial$sso-authentication/get-kobiton-parameters.adoc[]
 
 == Create IdP application
 
 In Azure DP, open your default directory, select *Enterprise Application*, then *New Application*.
 
-image::organization:azure-select-enterprise-application-context.png[width=1000,alt="Select Enterprise Application, then New Application"]
+image:organization:azure-select-enterprise-application-context.png[width=1000,alt="Select Enterprise Application, then New Application"]
 
 From *Add your own app*, choose *Non-gallery application*, then enter a name for your application in the search bar and select *Add*.
 
-image::organization:azure-select-non-gallery-app-context.png[width=1000,alt="Choose Non-gallery application option"]
+image:organization:azure-select-non-gallery-app-context.png[width=1000,alt="Choose Non-gallery application option"]
 
 Select *Assign users and groups* and add test user for your application.
 
-image::organization:azure-select-assign-users-groups-context.png[width=1000,alt="Assign users and group option in Getting Started"]
+image:organization:azure-select-assign-users-groups-context.png[width=1000,alt="Assign users and group option in Getting Started"]
 
 You'll *set up single sign on* in the next section.
 
@@ -28,7 +28,7 @@ You'll *set up single sign on* in the next section.
 
 Now that your IdP application is initially created, you'll need to create Azure AD parameters mapped to Kobiton and download your Base64 certificate. Select *Set up single sign on* to get started.
 
-image::organization:azure-select-setup-single-sign-on-context.png[width=1000,alt="Select Setup Single Sign On option in Getting Started"]
+image:organization:azure-select-setup-single-sign-on-context.png[width=1000,alt="Select Setup Single Sign On option in Getting Started"]
 
 In step 1, *Basic SAML Configuration*, use your xref:_get_kobiton_parameters[Kobiton SSO parameters from earlier] to fill out the following fields:
 
@@ -37,7 +37,7 @@ In step 1, *Basic SAML Configuration*, use your xref:_get_kobiton_parameters[Kob
 * *Relay State*
 
 
-image::organization:azure-fill-id-reply-url-relay-state-context.png[width=1000,alt="Fill out Identifier, Reply URL, Relay State from Kobiton SSO parameters"]
+image:organization:azure-fill-id-reply-url-relay-state-context.png[width=1000,alt="Fill out Identifier, Reply URL, Relay State from Kobiton SSO parameters"]
 
 In step 2, *User Attributes & Claims*, create the following parameters:
 
@@ -67,13 +67,13 @@ Parameter 5::
 * *Name format:* Basic
 * *Value:* `user.userprincipalname`
 
-image::organization:azure-fill-attributes-and-claim.png[width=1000,alt="Fill out Attributes & Claim"]
+image:organization:azure-fill-attributes-and-claim.png[width=1000,alt="Fill out Attributes & Claim"]
 
 == Download certificate and get IdP parameters
 
 In step 3, *SAML Signing Certificate*, download *Certificate (Base64)*.
 
-image::azure-saml-signing-certificate-context.png[width=1000,alt="Download Certificate (Base64)"]
+image:azure-saml-signing-certificate-context.png[width=1000,alt="Download Certificate (Base64)"]
 
 In step 4, *Set up Kobiton Azure Local*, copy the following values and save them to a note:
 
@@ -83,12 +83,12 @@ In step 4, *Set up Kobiton Azure Local*, copy the following values and save them
 
 image:$OLD-IMAGE$[width=,alt=""]
 
-image::organization:azure-set-up-kobiton-azure-local-context.png[width=1000,alt="Set up Kobiton Azure Local"]
+image:organization:azure-set-up-kobiton-azure-local-context.png[width=1000,alt="Set up Kobiton Azure Local"]
 
 == Add IdP parameters and certificate to Kobiton
 
-include::partial$add-idp-parameters-and-certificate-to-kobiton.adoc[]
+include::partial$sso-authentication/add-idp-parameters-and-certificate-to-kobiton.adoc[]
 
 == Verify and save configuration
 
-include::partial$verify-and-save-configuration.adoc[]
+include::partial$sso-authentication/verify-and-save-configuration.adoc[]

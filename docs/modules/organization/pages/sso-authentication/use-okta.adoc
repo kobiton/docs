@@ -1,12 +1,12 @@
 = Use Okta for SSO authentication
 :navtitle: Use Okta
 
-Learn how to use link:https://www.okta.com/[Okta] for Single Sign-On (SSO) authentication so members of your organization can sign in to Kobiton using their Okta credentials.
+Learn how to use link:https://www.okta.com/[Okta] for Single Sign-On (SSO) authentication with SAML 2.0 so members of your organization can sign in to Kobiton using their Okta credentials.
 
 [#_get_kobiton_parameters]
 == Get Kobiton parameters
 
-include::partial$get-kobiton-parameters.adoc[]
+include::partial$sso-authentication/get-kobiton-parameters.adoc[]
 
 == Create IdP application
 
@@ -45,7 +45,7 @@ Using your xref:_get_kobiton_parameters[Kobiton SSO parameters from earlier], fi
 * *Audience URI (SP Entity ID)*
 * *Default RelayState*
 
-image::organization:okta-fill-out-fields-context.png[width=1000,alt= "Fields to fill to Kobiton SSO"]
+image:organization:okta-fill-out-fields-context.png[width=1000,alt= "Fields to fill to Kobiton SSO"]
 
 Next, create the following custom parameters:
 
@@ -62,7 +62,7 @@ Parameter 3::
 * *Name format:* Basic
 * *Value:* `user.lastName`
 
-image::organization:okta-groups-attributes-context.png[width=1000,alt="Attribute Statements of OKTA"]
+image:organization:okta-groups-attributes-context.png[width=1000,alt="Attribute Statements of OKTA"]
 
 Finally select *Download Okta Certificate*.
 
@@ -74,7 +74,7 @@ When you're done, select *Next*, then *Finish*.
 
 Next you'll need to save a copy of your Okta paramters you can add to Kobiton later. Select *Sign On*, then *View Setup Instructions*.
 
-image::organization:okta-view-setup-instruction-context.png[width=1000,click View Setup Instruction in OKTA]
+image:organization:okta-view-setup-instruction-context.png[width=1000,click View Setup Instruction in OKTA]
 
 In your SAML application’s configuration, go to the *Sign On* tab. Click *View Setup Instructions* and populate Box 3 of your Kobiton portal SSO settings page with this information.
 
@@ -90,8 +90,8 @@ Copy the following values and save them to a note:
 
 == Add IdP parameters and certificate to Kobiton
 
-include::partial$add-idp-parameters-and-certificate-to-kobiton.adoc[]
+include::partial$sso-authentication/add-idp-parameters-and-certificate-to-kobiton.adoc[]
 
 == Verify and save configuration
 
-include::partial$verify-and-save-configuration.adoc[]
+include::partial$sso-authentication/verify-and-save-configuration.adoc[]

@@ -1,0 +1,25 @@
+= About HTTP timeouts for client libraries
+:navtitle: About HTTP timeouts for client libraries
+
+Learn about HTTP timeouts for client libraries so you can avoid session timeouts during your automation session.
+
+== Override HTTP timeouts
+
+xref:supported-client-libraries.adoc[Client libraries] typically rely on third-party HTTP libraries to send requests, and many of these libraries time out after 2 minutes of inactivity. If you plan to install an app during your test session, consider changing your client library's HTTP timeout so your app can fully install before your session times out.
+
+For example:
+
+[source,java]
+----
+// Desired capabilities
+String kobitonServerUrl = "https://<user-name>:<api-key>@api.kobiton.com/wd/hub";
+// Other capabilites...
+
+// Custom executor that sets Selenium's HTTP library, Apache HttpClient, to 15 a minute timeout.
+HttpCommandExecutor executor = new HttpCommandExecutor(new URL(kobitonServerUrl));
+executor.getClient().setReadTimeout(15, TimeUnit.MINUTES);
+executor.getClient().setConnectTimeout(15, TimeUnit.MINUTES);
+
+// Initiate the session using the custom executor.
+WebDriver driver = new RemoteWebDriver(executor, capabilities);
+----

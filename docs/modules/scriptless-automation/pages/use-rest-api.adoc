@@ -1,0 +1,87 @@
+= Use REST API to run Scriptless
+:navtitle: Use REST API
+
+$DESCRIPTION$
+
+== Use REST API
+
+Use the endpoint is below. You can also refer to our link:https://api.kobiton.com/docs/#start-scriptless-automation[API documentation] for
+more information.
+
+[source]
+----
+POST https://api.kobiton.com/v1/revisitPlans/start
+----
+
+We will use Postman to illustrate. If you are not familiar with setting up Postman
+and Kobiton, refer to our example for uploading apps to Kobiton devices with
+Postman link:https://kobiton.com/blog/app-testinghow-to-upload-apps-into-kobiton-store-by-using-postman[here]
+to see the basic setup steps.
+
+=== Authentication
+
+Input your username and API Key (which can be found at
+link:https://portal.kobiton.com/settings/keys[https://portal.kobiton.com/settings/keys])
+to connect to the Kobiton portal:
++
+image:./guide-media/01GWEQT7RD4TXC7HZ2K87G63N6[width=, alt="image-20220117-040619.png"]
+
+=== Body
+
+First, you need to choose raw data with JSON format.
++
+image:./guide-media/01GWE1D6BW5S48PR3BYP3D2KKM[width=, alt="image-20220117-072455.png"]
+
+Enter the ID of the baseline automation session to
+*exploringSessionIds* parameter. Enter the device bundle
+intended for testing to *deviceBundleId* parameter (device bundle
+ID can be retrieved at
+link:https://portal.kobiton.com/organization/device-bundles[https://portal.kobiton.com/organization/device-bundles]).
++
+image:./guide-media/01GWDZ25GKYT55BF4QDD4R3377[width=, alt="image-20220117-074356.png"]
+
+Another example of triggering Scriptless with some (but not all) devices in a
+device bundle:
++
+image:./guide-media/01GWEJZ4SCXN8T5EKVWSQTFTG8[width=, alt="image-20220117-074219.png"]
+
+NOTE: If there are two devices specified in one *deviceCapabilities*
+parameter, it would be an OR condition which means the system can pick either
+*Galaxy Note10* or *Galaxy Note20 Ultra 5G* if the other
+device is not available.
+
+There are more parameters that you can apply when triggering Scriptless rerun
+sessions - see our
+link:https://api.kobiton.com/docs/#start-scriptless-automation[API documentation]
+for more information.
+
+=== Trigger the API call
+
+Select *Send* in Postman to trigger Kobiton Scriptless
+reruns. The response would look like this:
++
+image:./guide-media/01GWEGNJN52CMMEPTTKNC9KBZG[width=, alt="image-20220117-080318.png"]
+
+== Supported endpoints (for both Android and iOS)
+
+* All `GET` endpoints
+* `POST /wd/hub/session[?]*$`
+* `POST /wd/hub/session/(${PARAM_PATTERN})/element[?]*$`
+* `POST /wd/hub/session/(${PARAM_PATTERN})/elements[?]*$`
+* `POST /wd/hub/session/(${PARAM_PATTERN})/context[?]*$`
+* `POST /wd/hub/session/(${PARAM_PATTERN})/timeouts[?]*$`
+* `POST /wd/hub/session/(${PARAM_PATTERN})/appium/settings[?]*$`
+* `POST /wd/hub/session/(${PARAM_PATTERN})/execute[?]*$`
+* `POST /wd/hub/session/(${PARAM_PATTERN})/execute/sync[?]*$`
+* `POST /wd/hub/session/(${PARAM_PATTERN})/actions[?]*$`
+* `POST /wd/hub/session/(${PARAM_PATTERN})/touch/perform[?]*$`
+* `POST /wd/hub/session/(${PARAM_PATTERN})/touch/longclick[?]*$`
+* `POST /wd/hub/session/(${PARAM_PATTERN})/element/(${PARAM_PATTERN})/click[?]*$`
+* `POST /wd/hub/session/(${PARAM_PATTERN})/element/(${PARAM_PATTERN})/value[?]*$`
+* `POST /wd/hub/session/(${PARAM_PATTERN})/element/(${PARAM_PATTERN})/clear[?]*$`
+* `POST /wd/hub/session/(${PARAM_PATTERN})/appium/device/press_keycode[?]*$
+* `POST /wd/hub/session/(${PARAM_PATTERN})/back[?]*$`
+* `POST /wd/hub/session/(${PARAM_PATTERN})/orientation[?]*$`
+* `POST /wd/hub/session/(${PARAM_PATTERN})/keys[?]*$`
+* `POST /wd/hub/session/(${PARAM_PATTERN})`/appium/device/hide_keyboard[?]*$`
+* `POST /wd/hub/session/(${PARAM_PATTERN})/location[?]*$`
