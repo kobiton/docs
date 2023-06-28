@@ -1,11 +1,11 @@
 = User roles and permissions
-:navtitle: User roles and permissions
+:navtitle: Roles and permissions
 
-These are the user roles and permissions available when xref:roles/create-a-role.adoc[creating] or xref:roles/manage-roles.adoc#_set_permissions[managing] user roles.
+These are the user roles and permissions available when xref:roles/create-a-role.adoc[creating] or xref:roles/manage-roles.adoc#_set_permissions[managing] roles.
 
 == Predefined roles
 
-By default, the following roles are predefined in your organization.
+By default, the following roles are predefined and cannot be changed.
 
 === Organization Owner
 
@@ -26,10 +26,12 @@ Every user xref:users/invite-a-user.adoc[invited to your organization] is assign
 [#_permissions]
 == Permissions
 
+[#_system_login]
 === `system.login`
 
 Can log in to the portal.
 
+[#_system_logout]
 === `system.logout`
 
 Can log out of the portal.
@@ -38,6 +40,7 @@ Can log out of the portal.
 
 Can delete apps in the app repository.
 
+[#_app_repo_view_all_application]
 === `app_repo.view_all_application`
 
 Can view all apps in the app repository, including private and locked ones.
