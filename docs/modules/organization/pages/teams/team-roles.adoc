@@ -1,68 +1,88 @@
-= Team permissions
-:navtitle: Team permissions
+= Team roles
+:navtitle: Team roles
 
-$DESCRIPTION$
+These are the roles and permissions available when xref:teams/manage-teams.adoc#_set_team_permissions[setting team permissions] or xref:teams/change-a-users-team-role.adoc[changing a user's team role].
 
 == Roles
 
 === Team owner
 
-THIS
+The user(s) with the highest team permissions. Team owners *always* have the following permissions, and they cannot be changed:
+
+* xref:_settings_modify[]
+* xref:_members_modify[]
+* xref:_devices_modify[]
+* xref:_apps_unassign[]
+* xref:_member_make_admin[]
+* xref:_member_make_owner[]
 
 === Team admin
 
-THIS
+The user(s) with the second-highest team permissions. By default, *Team Admins* are assigned the following permissions:
+
+* xref:_settings_modify[]
+* xref:_members_modify[]
+* xref:_devices_modify[]
+* xref:_apps_unassign[]
+
+*Team Owners* can add or remove these permissions, but they cannot add any other permissions.
 
 === Team member
 
-THIS
+The user(s) with the lowest team permissions. By default, *Team Members* have *no team permissions*. *Team Owners* can choose to add xref:_settings_modify[] to *Team Members*, but they cannot add any other permissions.
 
 == Permissions
 
+[#_settings_modify]
 === `settings.modify`
 
-Edit team details (name, description, assertion value) and team settings (private test mode, cleanup policy).
+Can edit team details (name, description, assertion value) and team settings (private test mode, cleanup policy).
 
-* *Team owner:* Always ON
-* *Team admin:* ON
-* *Team member:* OFF
+* *Team owner:* Always
+* *Team admin:* On by default
+* *Team member:* Off by default
 
+[#_members_modify]
 === `members.modify`
 
-Add and remove team members, and change permissions for team members.
+Can add and remove team members, and change permissions for team members.
 
-* *Team owner:* Always ON
-* *Team admin:* ON
-* *Team member:* Always OFF
+* *Team owner:* Always
+* *Team admin:* On by default
+* *Team member:* Never
 
+[#_devices_modify]
 === `devices.modify`
 
-Add and remove devices assigned to the team.
+Can add and remove devices assigned to the team.
 
-* *Team owner:* Always ON
-* *Team admin:* ON
+* *Team owner:* Always
+* *Team admin:* On by default
 * *Team member:* Always OFF
 
+[#_member_make_admin]
 === `member.make_admin`
 
-Make a team member a team admin.
+Can make a team member a team admin.
 
-* *Team owner:* Always ON
-* *Team admin:* Always OFF
-* *Team member:* Always OFF
+* *Team owner:* Always
+* *Team admin:* Never
+* *Team member:* Never
 
+[#_member_make_owner]
 === `member.make_owner`
 
-Make a team member the team owner.
+Can make a team member the team owner.
 
-* *Team owner:* Always ON
-* *Team admin:* Always OFF
-* *Team member:* Always OFF
+* *Team owner:* Always
+* *Team admin:* Never
+* *Team member:* Never
 
-=== `apps.unassigned`
+[#_apps_unassign]
+=== `apps.unassign`
 
-Remove an app assigned to the team.
+Can remove an app assigned to the team.
 
-* *Team owner:* Always ON
-* *Team admin:* OFF
-* *Team member:* Always OFF
+* *Team owner:* Always
+* *Team admin:* Never
+* *Team member:* Never
