@@ -13,9 +13,7 @@
                   Getting Started
                 </div>
               </div>
-              <div class="box-description">
-                Lorem ipsum dolor sit amet consectetur. Amet velit facilisis mauris nisl dui ullamcorper id.
-              </div>
+              <div class="box-description">Everything you need to start using Kobiton.</div>
             </div>
           </div>
         </a>
@@ -32,9 +30,7 @@
                   Release Notes
                 </div>
               </div>
-              <div class="box-description">
-                Lorem ipsum dolor sit amet consectetur. Amet velit facilisis mauris nisl dui ullamcorper id.
-              </div>
+              <div class="box-description">See what’s new in Kobiton.</div>
             </div>
           </div>
         </a>
@@ -51,9 +47,7 @@
                   Integrations
                 </div>
               </div>
-              <div class="box-description">
-                Lorem ipsum dolor sit amet consectetur. Amet velit facilisis mauris nisl dui ullamcorper id.
-              </div>
+              <div class="box-description">Integrate with the tools you use most.</div>
             </div>
           </div>
         </a>
@@ -70,9 +64,7 @@
                   Devices
                 </div>
               </div>
-              <div class="box-description">
-                Lorem ipsum dolor sit amet consectetur. Amet velit facilisis mauris nisl dui ullamcorper id.
-              </div>
+              <div class="box-description">Find, manage, and configure your devices.</div>
             </div>
           </div>
         </a>
@@ -89,9 +81,7 @@
                   Apps
                 </div>
               </div>
-              <div class="box-description">
-                Lorem ipsum dolor sit amet consectetur. Amet velit facilisis mauris nisl dui ullamcorper id.
-              </div>
+              <div class="box-description">Upload apps to your repository for easy access.</div>
             </div>
           </div>
         </a>
@@ -108,9 +98,7 @@
                   Manual Testing
                 </div>
               </div>
-              <div class="box-description">
-                Lorem ipsum dolor sit amet consectetur. Amet velit facilisis mauris nisl dui ullamcorper id.
-              </div>
+              <div class="box-description">Manually test your websites and apps.</div>
             </div>
           </div>
         </a>
@@ -127,9 +115,7 @@
                   Automation Testing
                 </div>
               </div>
-              <div class="box-description">
-                Lorem ipsum dolor sit amet consectetur. Amet velit facilisis mauris nisl dui ullamcorper id.
-              </div>
+              <div class="box-description">Perform end-to-end automation tests.</div>
             </div>
           </div>
         </a>
@@ -146,9 +132,7 @@
                   Scriptless Automation
                 </div>
               </div>
-              <div class="box-description">
-                Lorem ipsum dolor sit amet consectetur. Amet velit facilisis mauris nisl dui ullamcorper id.
-              </div>
+              <div class="box-description">Automate your tests without writing scripts.</div>
             </div>
           </div>
         </a>
@@ -165,9 +149,7 @@
                   Debugging
                 </div>
               </div>
-              <div class="box-description">
-                Lorem ipsum dolor sit amet consectetur. Amet velit facilisis mauris nisl dui ullamcorper id.
-              </div>
+              <div class="box-description">Debug from anywhere with virtualUSB.</div>
             </div>
           </div>
         </a>
@@ -184,9 +166,7 @@
                   Session Explorer
                 </div>
               </div>
-              <div class="box-description">
-                Lorem ipsum dolor sit amet consectetur. Amet velit facilisis mauris nisl dui ullamcorper id.
-              </div>
+              <div class="box-description">Analyze sessions and validations in the Session Explorer.</div>
             </div>
           </div>
         </a>
@@ -203,9 +183,7 @@
                   Test Management
                 </div>
               </div>
-              <div class="box-description">
-                Lorem ipsum dolor sit amet consectetur. Amet velit facilisis mauris nisl dui ullamcorper id.
-              </div>
+              <div class="box-description">Manage test cases for your team.</div>
             </div>
           </div>
         </a>
@@ -222,9 +200,7 @@
                   Reporting
                 </div>
               </div>
-              <div class="box-description">
-                Lorem ipsum dolor sit amet consectetur. Amet velit facilisis mauris nisl dui ullamcorper id.
-              </div>
+              <div class="box-description">Leverage reports to gain valuable insights.</div>
             </div>
           </div>
         </a>
@@ -241,9 +217,7 @@
                   Organization
                 </div>
               </div>
-              <div class="box-description">
-                Lorem ipsum dolor sit amet consectetur. Amet velit facilisis mauris nisl dui ullamcorper id.
-              </div>
+              <div class="box-description">Invite people, create teams, and manage permissions.</div>
             </div>
           </div>
         </a>
@@ -260,9 +234,7 @@
                   Profile
                 </div>
               </div>
-              <div class="box-description">
-                Lorem ipsum dolor sit amet consectetur. Amet velit facilisis mauris nisl dui ullamcorper id.
-              </div>
+              <div class="box-description">Create and customize your profile.</div>
             </div>
           </div>
         </a>
@@ -279,13 +251,28 @@
                   Resources
                 </div>
               </div>
-              <div class="box-description">
-                Lorem ipsum dolor sit amet consectetur. Amet velit facilisis mauris nisl dui ullamcorper id.
-              </div>
+              <div class="box-description">Learn more about the Kobiton platform.</div>
             </div>
           </div>
         </a>
-      {{/if}} 
+      {{/if}}
+            {{#if (eq ./content 'API reference')}}
+        <a class="col-3" href="
+                  {{~#if (eq ./urlType 'internal')}}{{{relativize ./url}}}
+                  {{~else}}{{{./url}}}{{~/if}}">
+          <div class="box-wrapper">
+            <div class="box-item">
+              <div class="box-title">
+                <div class="api-reference-image"></div>
+                <div class="title-info">
+                  API Reference
+                </div>
+              </div>
+              <div class="box-description">Our guide to the Kobiton REST API.</div>
+            </div>
+          </div>
+        </a>
+      {{/if}}
     {{/if}}
   {{> nav-box-item navigation=./items level=(increment ../level)}}
   {{/each}}

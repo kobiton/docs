@@ -2,17 +2,20 @@
   <div class="search-content">
       <div class="search-wrapper">
         <div class="search-title">What can we help you with?</div> <br/>
+        {{#if env.SITE_SEARCH_PROVIDER}}
         <div class="search">
-          <div id="search-field-id" class="search-field">
-            <input id="start-search-input" type="text" placeholder="Type your question here...">
+          <div class="search-field">
+            <input id="search-input" type="text" placeholder="Type your question here...">
           </div>
-          <button id="search-button" class="search-btn">Search</button>
         </div>
+        {{/if}}
       </div>
   </div>
   {{#with page.navigation}}
     <div class="item-content">
-      {{> nav-box-item navigation=this}}
+      <div class="item-wrapper">
+        {{> nav-box-item navigation=this}}
+      </div>
     </div>
   {{/with}}
 </div>
