@@ -29,7 +29,7 @@ cd C:\Users\<your-user-name>\AppData\Roaming\virtualUSB
 
 Open the `config.ini` file in a text editor and modify the following lines:
 
-[source,plaintext]
+[source,asciidoc]
 ----
 Kobiton.ApiBaseUrl: https://<network-address>:<api-port-baseurl>
 Kobiton.ApiGrpcBaseUrl: https://<network-address>:<api-port-grpc-baseurl>
@@ -60,14 +60,14 @@ Debugging a local device on _Kobiton Cloud_ versus _a local Kobiton server_ requ
 For example:
 
 .Kobiton Cloud
-[source,plaintext]
+[source,asciidoc]
 ----
 Kobiton.ApiBaseUrl: https://api.mycompany.com
 Kobiton.ApiGrpcBaseUrl: https://proxy-api-public-grpc-server.mycompany.com
 ----
 
 .Local Kobiton server
-[source,plaintext]
+[source,asciidoc]
 ----
 Kobiton.ApiBaseUrl: https://192.168.36.24:3000
 Kobiton.ApiGrpcBaseUrl: https://192.168.36.24:3001

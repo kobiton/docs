@@ -1,4 +1,4 @@
-= Add `visualValidation`
+= Add `visualValidation` to capabilities
 :navtitle: Add `visualValidation`
 
 Learn how to add `visualValidation` to your capabilities so you can test your UI output and ensure it displays correctly across all devices, operating systems, and form factors.
@@ -7,7 +7,7 @@ Learn how to add `visualValidation` to your capabilities so you can test your UI
 
 First, open your test suite and locate your config file. The exact name and location may vary, but you'll find it in a similar location:
 
-[source,plaintext]
+[source,asciidoc]
 ----
 root
 └── src
@@ -53,10 +53,10 @@ public static DesiredCapabilities getIPhone11ProIOS146DesiredCapabilities() {
 }
 ----
 
-When you're finished, save your changes. Now you can use `visualValidation` to test a single device. To test devices in parallel, also xref:_modify_setup_function[modify your `setup()` function].
+When you're finished, save your changes. Now you can use `visualValidation` to test a single device. To test devices in parallel, also xref:_run_in_parallel[modify your `setup()` function].
 
-[#_modify_setup_function]
-== Modify `setup()`
+[#_run_in_parallel]
+== Run in parallel
 
 To run visual testing on devices in parallel you'll need to modify the `setup()` function in your `test` directory. The exact location of the function depends on the xref:scripting/auto-generate-an-appium-script.adoc#_export_your_script[framework you selected].
 

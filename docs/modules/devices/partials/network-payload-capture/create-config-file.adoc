@@ -1,0 +1,25 @@
+Safely disconnect the device from your computer. In terminal, open the directory for the xref:_get_device_udid[device UDID you copied earlier] using the following command:
+
+[source,shell]
+----
+cd ~/Library/"Application Support"/Kobiton/devices/<device-udid>
+----
+
+For example:
+
+[source,shell]
+----
+cd ~/Library/"Application Support"/Kobiton/devices/a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2
+----
+
+In the device UDID directory, create a file named `config` and add the following content:
+
+[source,asciidoc]
+----
+{
+  "unlockPasscodeEnabled": false,
+  "networkPayloadCaptureEnabled": true
+}
+----
+
+When you're finished, save your changes. Now you can use network payload capture during a xref:manual-testing:enable-network-payload-capture.adoc[manual session] or xref:automation-testing:enable-network-payload-capture.adoc[automation session].

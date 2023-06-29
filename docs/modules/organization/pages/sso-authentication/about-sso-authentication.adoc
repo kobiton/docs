@@ -1,12 +1,22 @@
 = About Single Sign-On (SSO) authentication
 :navtitle: About Single Sign-On (SSO) authentication
 
-== What Is SSO and SAML, and Why Would You Need It?
+== What is Single Sign-On?
 
-SSO, or Single Sign-On, is an authentication process that allows a user to log in to multiple independent software systems using a single ID and password. You may want to use SSO if you are interested in increasing security by reducing attack surfaces and security risks, or if you would like to simplify your user management by only requiring a single credential set from your users to access a suite of software with which your employees interact. There are multiple SSO options for IT organizations to choose from; one of these, which Kobiton now supports, is SAML. 
+Single Sign-On, often referred to as SSO, is an authentication method that enables a user to access multiple software systems with a single ID and password. By implementing SSO, you can enhance security, reduce potential risks, and make user management more straightforward. Essentially, it requires your users to remember just one set of login details to interact with an array of software tools. There are various SSO solutions available for IT teams to adopt. One of these options, which Kobiton now supports, is SAML.
 
-== What’s the Difference?
+== SSO and SAML
 
-SAML (Security Assertion Markup Language) is an open standard for data exchange that enables SSO for a user base. SAML verifies and authenticates a user by transferring the user’s identity from the identity provider (also known as an IdP) to the service provider via digitally signed XML documents; the user only needs to enter one set of credentials, specifically for the identity provider, and the IdP takes care of the rest. SAML therefore provides an SSO-like experience from an end-user view, with less effort and possibility of security threats on the user’s part.
+Security Assertion Markup Language (SAML) is an open-standard protocol that supports SSO functionality for a group of users. SAML works by verifying a user's identity and sharing that information securely with the service provider. The user needs to input their credentials only once, with SAML managing the rest. This approach offers an SSO-like user experience while minimizing the risk of security breaches.
 
-Kobiton currently supports only SAML 2.0 protocol. Kobiton uses these three identity providers as our standard: *Onelogin, Okta,* and *Azure AD.* Please be aware that the use of other IdPs may result in unexpected issues. 
+== SSO with Kobiton
+
+Currently, Kobiton supports the SAML 2.0 protocol for SSO. Here's what you need to get started:
+
+*** xref:sso-authentication/use-azure-ad.adoc[]
+*** xref:sso-authentication/use-google-workspace.adoc[]
+*** xref:sso-authentication/use-okta.adoc[]
+*** xref:sso-authentication/use-onelogin.adoc[]
+
+[NOTE]
+Use identity providers at your own risk.

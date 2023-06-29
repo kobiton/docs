@@ -1,21 +1,24 @@
 = Supported filetypes
 :navtitle: Supported filetypes
 
-These are the supported filetypes for the app repository.
+These are the supported filetypes for uploading apps to the xref:manage-apps.adoc[app repository].
 
-== Supported filetypes
+== iOS
 
-Only the following filetypes are supported for Android and iOS apps:
+=== `.ipa`
 
-[cols="^1,^1,5"]
-|===
-|OS |Filetype |Description
+A standard package containing your app and related resources.
 
-|Android |`.apk` | A standard package containing your app and related resources.
+=== `.zip`
 
-|Android |`.aab` |An Android App Bundle (AAB) containing your app and related resources that defers `.apk` generation and signing to Google.
+A standard `.zip` file containing a compressed version of your iOS app and related resources.
 
-|iOS |`.ipa` | A standard package containing your app and related resources.
+== Android
 
-|iOS |`.zip` | A standard `.zip` file containing a compressed version of your iOS app and related resources.
-|===
+=== `.apk`
+
+A standard package containing your app and related resources.
+
+=== `.aab`
+
+An Android App Bundle (AAB) containing your app and related resources that defers `.apk` generation and signing to Google.

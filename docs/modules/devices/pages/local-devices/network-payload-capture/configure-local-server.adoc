@@ -1,0 +1,71 @@
+= Configure local server for network payload capture
+:navtitle: Configure local server
+
+Learn how to configure your local Kobiton server so you and your team can use network payload capture during a xref:manual-testing:enable-network-payload-capture.adoc[manual session] or xref:automation-testing:enable-network-payload-capture.adoc[automation session].
+
+[NOTE]
+Network paylaod capture can only be configured by an admin with access to the *deviceConnect* Mac mini server.
+
+== Check for an existing SSH key
+
+Log into the *deviceConnect* Mac mini server as an admin. In terminal, open the `.ssh` directory by entering the following command:
+
+[source,shell]
+----
+cd ~/.ssh
+----
+
+List the contents of the directory by entering:
+
+[source,shell]
+----
+ls -a
+----
+
+If an `id_rsa` file is present, skip to xref:_modify_the_ssh_key[modify the SSH key], otherwise xref:_generate_a_new_ssh_key[generate a new SSH key].
+
+[#_generate_a_new_ssh_key]
+== Generate a new SSH key
+
+In the `.ssh` directory, enter the following command:
+
+----
+ssh-keygen -t rsa
+----
+
+Leave the passphrase empty and press *Enter*.
+
+[source,shell]
+----
+> Enter passphrase (empty for no passphrase): [Leave empty]
+> Enter same passphrase again: [Leave empty]
+----
+
+Now you need to xref:_modify_the_ssh_key[modify the SSH key].
+
+[#_modify_the_ssh_key]
+== Modify the SSH key
+
+In the `.ssh` directory, enter the following command to copy the contents from your `id_rsa` public key into the `authorized_keys_` file. If the `authorized_keys_` file doesn't exist, one will be created for you.
+
+----
+cat id_rsa.pub >> ./authorized_keys
+----
+
+Enter the following command to log in using your SSH key.
+
+[source,shell]
+----
+ssh 127.0.0.1
+----
+
+If asked to _trust this connection_, type *yes* and press *Enter*.
+
+Once logged in, enter the following command to exit the SSH session.
+
+[source,shell]
+----
+exit
+----
+
+Now, once you configure an Android or iOS, you and your team can use network payload capture during a xref:manual-testing:enable-network-payload-capture.adoc[manual session] or xref:automation-testing:enable-network-payload-capture.adoc[automation session].

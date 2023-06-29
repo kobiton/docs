@@ -1,7 +1,7 @@
 = Set up virtualUSB
 :navtitle: Set up virtualUSB
 
-Learn how to set up virtualUSB on your personal computer, so you can debug public and private devices. If you want to debug _local_ devices instead, after your initial set up, you'll also need to xref:debugging:local-devices/configure-personal-computer.adoc[configure your personal computer for debugging local devices].
+Learn how to set up virtualUSB on your personal computer so you can debug public and private devices. If you want to debug _local_ devices instead, after your initial set up, you'll also need to xref:debugging:local-devices/configure-personal-computer.adoc[configure your personal computer for debugging local devices].
 
 == Before you start
 
@@ -53,7 +53,7 @@ For MacOS only, virtualUSB will need to find your OpenSSL package, which is loca
 ln -sfn /usr/local/Cellar/openssl@1.0/1.0.2t/lib/libssl.dylib /usr/local/lib/libssl.dylib && sudo cp /usr/local/Cellar/openssl@1.0/1.0.2t/bin/openssl /usr/local/bin/
 ----
 
-Next, run the following command to add these two OpenSSL flags to your shell's config file:
+Next, enter the following command to add these two OpenSSL flags to your shell's config file:
 
 .MacOS
 [source,shell]
@@ -113,9 +113,9 @@ For Windows, link:https://support.apple.com/en-us/HT210384[install iTunes]. Also
 
 Download virtualUSB from the link:https://portal.kobiton.com/[Kobiton portal].
 
-image:$OLD-IMAGE$[width=, alt=""]
+image:download-virtualusb-closeup.png[width=500,alt="Download virtual USB from Kobiton portal"]
 
-For Windows, run the following commands when your installation is finished:
+For Windows, enter the following commands when your installation is finished:
 
 .Windows
 [source,powershell]
@@ -124,8 +124,8 @@ cd C:\Program Files\virtualUSB
 vusb setup-ios
 ----
 
-Finally, launch virtualUSB and sign in using your email address and password or xref:profile:server-url-and-api-keys.adoc[Kobiton API key].
+Finally, launch virtualUSB and sign in using your email address and passcode or xref:profile:your-api-keys.adoc[Kobiton API key].
 
-image:$OLD-IMAGE$[width=, alt=""]
+image:debugging:sign-in-virtualusb-context.png[width=1000,alt="Sign in Virtual USB using email or API Key"]
 
 Now you can debug cloud devices using virtualUSB. If you plan on debugging _local_ devices using virtualUSB, you'll need to xref:debugging:local-devices/configure-personal-computer.adoc[configure your personal computer for debugging local devices].

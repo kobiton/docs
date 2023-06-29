@@ -1,18 +1,69 @@
 = Search for a device
 :navtitle: Search for a device
 
-Learn how to search for a device so you can xref:install-an-app.adoc[install apps] , xref:automation-testing:desired-capabilities/auto-generate-capabilities.adoc[auto-generate desired capabilities], and change xref:manage-devices.adoc[device settings].
+Learn how to search for a device using views, categories, statues, and more.
 
-== Search for a device
+[#_views]
+== Views
 
-Open your device list, select a xref:#_views[view], then choose a xref:#_device_categories[device category].
+image:devices:list-view-card-view-context.png[width=1000,alt="A context of list view and card view in the session list]
 
-image:devices:search-devices-context.png[width=1000,alt="Select a view and choose device category"]
+=== Card view (default)
 
-Select *List View*, *Edit Column*, and choose xref:#_custom_columns[up to nine columns].
+Displays essential information about your devices.Sort by xref:_statuses[device status], device health, device name, friendly name, or OS version.
 
-image:devices:search-devices-closeup (1).png[width=300, alt="A closeup of list view with nine columns chosen"]
+=== List view
 
-Once you've found a device, select the *vertical ellipses* so you can xref:manage-devices.adoc[manage your device].
+Displays detailed information about your devices. Select *Edit Column* to customize the view and add up to nine xref:_custom_columns[custom columns].
 
-image:devices:search-device-closeup1.png[width=1000,alt="A closeup of a device with vertical ellipses selected"]
+[#_categories]
+== Categories
+
+image:<NEW-IMAGE>[width=, alt="The device list with the device categories highlighted."]
+
+[#_favorite]
+=== Favorite
+A list of your favorite devices.To favorite a device, select the *vertical ellipses* next to the device, then click the *star icon*.
+
+=== Public devices
+Devices shared between all Kobiton customers.
+
+=== Private & local devices
+Devices reserved for your team.
+
+[#_statuses]
+== Statuses
+
+image:$NEW-IMAGE$[width, alt=""]
+
+image:devices:search-options-context.png[width=1000,alt="A device lists with statuses"]
+
+=== Online
+
+The device is available for a testing session.
+
+=== Busy: Utilized
+
+The device is currently in a test session.
+
+=== Busy: Retained
+
+Reserved by a user, but may or may not be in a test session.
+
+[NOTE]
+Only available for private and local devices.
+
+=== Offline: Connected
+
+The device is offline, but physically connected to the hardware.
+
+=== Offline: Unplugged
+
+The device is offline and physically disconnected from the hardware.
+
+[#_custom_columns]
+== Custom columns
+
+You can display different columns by selecting *List View*, *Edit Column*, then choosing up to nine columns from the following list.
+
+image:devices:list-view-nine-options-closeup.png[width=300,alt="Select List View and choose upto nine columns"]
