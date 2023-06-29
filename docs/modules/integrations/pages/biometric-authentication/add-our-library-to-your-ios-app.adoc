@@ -19,7 +19,7 @@ First you’ll add `KobitonLAContext.framework` as an embedded and signed framew
 
 == Modify `ViewController.swift`
 
-Next you’ll open the ViewController.swift file in your project directory and replace all `LocalAuthentication` imports with `KobitonLAContext`.
+Next you’ll open the ViewController. swift file in your project directory and replace all `LocalAuthentication` imports with `KobitonLAContext`.
 
 Then replace all `context = LAContext()` variables with `context = KobitonLAContext()`.
 
@@ -38,18 +38,18 @@ case loggedin, loggedout
 }
 ----
 
-Save the file.If your app requires support for iOS 14 or earlier, you’ll also need to xref:_add_new_info_plist_parameters[add a few `info.plist` parameters]. Otherwise, you can xref:_verify_your_changes[verify your changes].
+Save the file. If your app requires support for iOS 14 or earlier, you’ll also need to xref:_add_new_info_plist_parameters[add a few `info.plist` parameters]. Otherwise, you can xref:_verify_your_changes[verify your changes].
 
 [#_add_new_info_plist_parameters]
 == Add new `info.plist parameters`
 
-If your app requires support for iOS 14 or earlier, you’ll also need to add a few `info.plist` parameters.These let you …
+If your app requires support for iOS 14 or earlier, you’ll also need to add a few `info.plist` parameters. These let you …
 
 . Open the project’s root directory and select *Info*.
 . Next to any of the custom iOS target properties, select the *+ icon*, and choose *App Transport Security Settings* to add this property to the list.
 . Next to your new property, select the *dropdown*, then the *+ icon*, then choose *Allow Arbitrary Loads*.
 . Set Allow Arbitrary Loads to *Yes*.
-. Your changes are saved automatically.When you’re finished, xref:_verify_your_changes[verify your changes].
+. Your changes are saved automatically. When you’re finished, xref:_verify_your_changes[verify your changes].
 
 [#_verify_your_changes]
 == Verify your changes
