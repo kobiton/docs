@@ -2,7 +2,7 @@
 <ul class="nav-list">
   {{#each navigation}}
   <li class="nav-item{{#if (eq ./url @root.page.url)}} is-current-page{{/if}}" data-depth="{{or ../level 0}}">
-    {{#if ./content}}
+    {{#if (and ./content (ne ./content 'API reference'))}}
     {{#if ./items.length}}
     <button class="nav-item-toggle"></button>
     {{/if}}

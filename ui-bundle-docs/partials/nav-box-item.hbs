@@ -256,10 +256,8 @@
           </div>
         </a>
       {{/if}}
-            {{#if (eq ./content 'API reference')}}
-        <a class="col-3" href="
-                  {{~#if (eq ./urlType 'internal')}}{{{relativize ./url}}}
-                  {{~else}}{{{./url}}}{{~/if}}">
+      {{#if (eq ./content 'API reference')}}
+        <a class="col-3" href="https://api.kobiton.com/v2/docs" target="_blank">
           <div class="box-wrapper">
             <div class="box-item">
               <div class="box-title">
