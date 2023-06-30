@@ -17,13 +17,13 @@ image:./guide-media/01GWEMKVWEC6VK1XH404WSHJ4R[alt="step1.png"]
 
 == Modify Desired Capabilities
 
-* Upload New App Version: By enabling, you'll need to upload a new version of your existing app on the Kobiton App Repository. App file path: Select an .apk or .ia in the release artifact.
+* Upload New App Version: By enabling, you'll need to upload a new version of your existing app on the Kobiton App Repository. App file path: Select an . apk or . ia in the release artifact.
 
-* App ID: The App ID of your existing app on the Kobiton App Repository, which can be found on https://portal.kobiton.com/apps[Kobiton's app repository].
+* App ID: The App ID of your existing app on the Kobiton App Repository, which can be found on link:https://portal.kobiton.com/apps[Kobiton's app repository].
 
 * As an example, once the app uploading process is complete, a value of 4058 will be parsed to your KOBITON_SESSION_APPLICATION environmental variables.
 
-* If this field is left unchecked, in the App ID of the .apk file, you can enter your existing App ID or URL. This value will be directly passed to your KOBITON_SESSION_APPLICATION environmental variable.
+* If this field is left unchecked, in the App ID of the . apk file, you can enter your existing App ID or URL. This value will be directly passed to your KOBITON_SESSION_APPLICATION environmental variable.
 
 * Use Custom Device: This will check if you want to define the device related parameters in your desiredCaps via environmental variables.
 
@@ -41,7 +41,7 @@ image:./guide-media/01GWEMKVWEC6VK1XH404WSHJ4R[alt="step1.png"]
 * *Commands:* The command lines to execute your test script. These commands will be called at the root directory of your Git repository. The commands will depend on your test project. In this example, we will use the command “mvn test” to build the project and run automation test script.
 * *Wait for execution:*
 * If unchecked, the release will continue to the next release task. The execution job ID of this task will be printed, but not on the console logs or report URL.
-* If checked, the task will wait for the execution to be either *COMPLETED* (commands ran successfully) or *FAILED* (cannot clone git repository, server error,...) then print the console log and report URL (if it existed).
+* If checked, the task will wait for the execution to be either *COMPLETED* (commands ran successfully) or *FAILED* (cannot clone git repository, server error,$DESCRIPTION$) then print the console log and report URL (if it existed).
 * *Log Type:* Users can pick a type of log to be printed. *Combined* means the *output logs* and *error logs* will be printed in chronological order. The Separated option allows you to choose one of the 2 types of logs. It is recommended to log your test case result with appropriate log type. For example, in Java you can use `System.err.println` to print test case errors, this will be in the *error logs* while `System.out.println` will return texts in *output logs*.
 * *Terminate release pipeline on failed job:* If checked, once the execution job status is *FAILED*, an error will be returned and the whole release is terminated *(All the following release tasks below this task will be skipped)*.
 

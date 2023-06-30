@@ -41,7 +41,7 @@ steps:
 | Title of the app being built, for example `test-app`
 
 | `app-path` (required)
-| Path to the app .apk or .ipa file, for example `./test.apk`
+| Path to the app . apk or . ipa file, for example `./test.apk`
 
 | `app-type`
 | `ipa` for IOS app or `apk` for Android app
@@ -68,7 +68,7 @@ image:./guide-media/01GWEFXWJN3WFR3SPABHBNV5NH[]
 (Optional) Once the pipeline completes running, you can go to Kobiton App Repo to double check your new application/new application version.
 
 == Kobiton Execute Test
-To execute your test with Kobiton Executor, add the following to your pipeline.yml:
+To execute your test with Kobiton Executor, add the following to your pipeline. yml:
 ----
 steps:
 - label: "Kobiton Execute Test"
@@ -98,7 +98,7 @@ plugins:
 | Description
 | kobi-username (required)
 kobi-api-key (required)
-| To get your Kobiton Username and API Key, please follow instructions at _IV. Configure Test Script for Kobiton_ section on https://kobiton.com/blog/tutorial/parallel-testing-selenium-webdriver/[our blog]
+| To get your Kobiton Username and API Key, please follow instructions at _IV. Configure Test Script for Kobiton_ section on link:https://kobiton.com/blog/tutorial/parallel-testing-selenium-webdriver/[our blog]
 | executor-url (required)
 executor-username (required)
 executor-passcode (required)
@@ -106,12 +106,12 @@ executor-passcode (required)
 | git-repo-url (required)
 git-repo-branch (required)
 git-repo-ssh-key
-| You need to prepare your automation test project in a Git-based repository. For your security, we highly recommend setting your Git repository to Private and prepare an SSH key for it. If you do not know how to authenticate the key with Git, please follow the guide from https://help.github.com/articles/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent/[Github create SSH key instruction] and https://help.github.com/articles/adding-a-new-ssh-key-to-your-github-account/[Github adding the key to account instruction].
+| You need to prepare your automation test project in a Git-based repository. For your security, we highly recommend setting your Git repository to Private and prepare an SSH key for it. If you do not know how to authenticate the key with Git, please follow the guide from link:https://help.github.com/articles/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent/[Github create SSH key instruction] and link:https://help.github.com/articles/adding-a-new-ssh-key-to-your-github-account/[Github adding the key to account instruction].
 * git-repo-url: This is the URL to your Git repository that contains your TestNG test script.
 * git-repo-branch: The branch of the repository to execute automation test script.
 * git-repo-ssh-key: The SSH Key of the above repository.
 | app-id
-| You can retrieve app-id from App Repo on Portal. Reference: https://support.kobiton.com/hc/en-us/articles/360056028911-Managing-Applications-#app-tiles-0-0
+| You can retrieve app-id from App Repo on Portal. Reference: link:https://support.kobiton.com/hc/articles/360056028911-Managing-Applications-#app-tiles-0-0
 | root-directory (required)
 command (required)
 | Input the root directory of your Git repo and the command lines to install dependencies and execute your automation test script. These commands will run from the root directory of your Git repository.
