@@ -1,0 +1,48 @@
+= Kobiton 3.30 release notes (Legacy)
+:navtitle: Kobiton 3.30 release notes
+
+_July 1, 2023_
+
+These release notes pertain to Legacy Kobiton 3.30.
+
+As a reminder, last year, we started using 4.0+ as the numbering for releases of the new Kobiton, while Legacy Kobiton will continue with numbering starting with 3.25 and above. If you are using the new Kobiton, see the xref:4.5.adoc[].
+
+If you have any questions or would like to update your Kobiton system, please send us an email at link:mailto:support@kobiton.com[support@kobiton.com] or contact your Account Executive.
+
+== New iOS support
+
+Kobiton 3.30 supports the following:
+
+* iOS/iPadOS 16.5 Official
+* iOS/iPadOS 15.7.6 Official
+* macOS 13.4 Official
+
+== New Jenkins plugin for Kobiton integration
+
+With this release, we introduced a new Jenkins plugin to integrate Kobiton process into the Jenkins CI/CD pipeline. With this plugin, you can:
+
+* Specify Kobiton account credentials (username, API key).
+* Upload the app built by Jenkins by specifying app path.
+* Upload Appium script to run automation tests on the app.
+* View the test result (pass/fail) and link to Kobiton session.
+
+The plugin will be published on the Jenkins plugin site this week.
+
+== Payload Capture: export payload files in HAR-compatible format
+
+Users with Network Payload Capture now have an option to view and export the payload capture file from Session Overview under the Logs section. The exported files are compatible with the HAR format and can be read from HAR tools, such as link:https://toolbox.googleapps.com/apps/har_analyzer/[HAR Analyzer] from Google Admin Toolbox.
+
+[NOTE]
+* HAR files are only available for Private and Local devices that have Network Payload Capture set up.
+* Some exported files may not be read from the HAR Analyzer tool. We are actively working to fix the issue.
+
+== New unlimited option for retaining device
+
+Users can retain a device for an unlimited amount of time.
+
+[NOTE]
+The unlimited retain option is only available for Private and Local devices.
+
+== Additional enhancements and bug fixes
+
+In addition to the above, this release includes a number of minor bug fixes and enhancements to improve your day-to-day testing.

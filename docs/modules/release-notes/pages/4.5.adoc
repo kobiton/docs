@@ -1,0 +1,59 @@
+= Kobiton 4.5 release notes
+:navtitle: Kobiton 4.5 release notes
+
+_July 1, 2023_
+
+These release notes pertain to Kobiton 4.5. If you are using Legacy Kobiton, see the xref:3.30.adoc[].
+
+== New OS support
+
+Kobiton 4.5 supports the following:
+
+* iOS/iPadOS 16.5
+* iOS/iPadOS 15.7.6
+* macOS 13.4
+
+== Export Appium script in NodeJS - Mocha
+
+You can now generate an Appium script in NodeJS that is compatible with the Mocha testing framework. When you complete a Manual Session, select Export Appium Script on the Automated Test Case tab, then select NodeJS - Mocha from the Testing Framework dropdown.
+
+[NOTE]
+====
+* The Manual test session must qualify to be converted to an Automated test case for the Export Appium Script button to be enabled.
+* Only sessions on native application are supported. Support for Web and hybrid apps is coming soon.
+* With other export options, Appium script can be exported from Manual sessions and Revisit sessions with passed status. However, Node.js - Mocha option currently only supports exporting from Manual sessions.
+====
+
+== Display additional device information in the Device List
+
+The following device information is now available when viewing the Device List:
+
+* Total memory
+* Battery Temp
+* Battery Health
+* Phone IMSI
+* Phone ICCID
+* Mobile number
+* Carrier
+* Network Type
+* CPU platform
+* Security Patch
+* IMEI
+
+To display the above columns, switch to the List View instead of the default Card View, then click the Edit Column button to select/deselect the columns. A maximum of 9 columns can be displayed at a time, so you may need to deselect columns before adding new ones.
+
+[NOTE]
+In devices with two SIM cards, columns such as Mobile number, Carrier, etc. only display data of the first SIM card.
+
+== New Jenkins plugin for Kobiton integration
+
+With this release, we are introducing a Jenkins plugin that enables seamless integration between Kobiton and a Jenkins CI/CD pipeline.
+
+With this plugin, you can:
+
+* Specify Kobiton account credentials (username, API key).
+* Upload an app built by the Jenkins pipeline by specifying app path.
+* Upload an Appium script to run automation tests on the app.
+* View the test result (pass/fail) and link to Kobiton session.
+
+The plugin will be published on the Jenkins plugin site.
