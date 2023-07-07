@@ -13,9 +13,9 @@ Example:
 ----
 // Define desired capabilities for a native/hybrid app
 capabilities.setCapability("app", "kobiton-store:000111");
-// Set additional capabilities...
+// Set additional capabilities$DESCRIPTION$
 
-// Start the session...
+// Start the session$DESCRIPTION$
 
 // Send requests
 driver.findElement(By.id("com.mycompany.app:id/open_button")).click();  // This is a native/hybrid app; initial request should be sent within 30 minutes.
@@ -35,9 +35,9 @@ Example:
 capabilities.setCapability("useConfiguration", "kobiton");
 capabilities.setCapability("autoWebview", true);
 capabilities.setCapability("browserName", "safari");
-// Additional capabilities...
+// Additional capabilities$DESCRIPTION$
 
-// Start the session...
+// Start the session$DESCRIPTION$
 
 // Define explicit wait
 WebDriverWait wait = new WebDriverWait(driver, 20 * 60);  // Typically, first HTTP request for web apps is sent within 10 minutes. Here, WebDriverWait is explicitly set to 30 minutes.
