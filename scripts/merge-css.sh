@@ -23,7 +23,4 @@ for file in "$input_folder"/*.css; do
   # Add a newline to separate the content of the files
   echo "" >> "$output_file"
 
-  echo "Merged $file into $output_file"
 done
-
-echo "All CSS files have been merged."

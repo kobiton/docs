@@ -28,5 +28,3 @@ MERGE_FILE_WIDGET="$PROJECT_ROOT/ui-bundle-widget/css/merged.css"
 # Remove the temporary file
 rm "$MERGE_FILE_DOCS"
 rm "$MERGE_FILE_WIDGET"
-
-echo "CSS minification completed."
