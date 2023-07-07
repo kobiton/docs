@@ -15,14 +15,6 @@ find $PROJECT_ROOT/ui-bundle-widget/css/ -type f -not -name 'site.css' -name '*.
 echo -e "/*! DO NOT EDIT: 'site.css' is auto-generated from the minified output of 'default-styles.css' and 'custom-styles.css'. */\n$(cat $TEMP_FILE_DOCS)" > "$TEMP_FILE_DOCS"
 echo -e "/*! DO NOT EDIT: 'site.css' is auto-generated from the minified output of 'default-styles.css' and 'custom-styles.css'. */\n$(cat $TEMP_FILE_WIDGET)" > "$TEMP_FILE_WIDGET"
 
-# Remove all comments except the header
-sed -i.bak '2,$s/\/\*.*\*\///g' "$TEMP_FILE_DOCS"
-sed -i.bak '2,$s/\/\*.*\*\///g' "$TEMP_FILE_WIDGET"
-
-# Remove the backup files created by sed
-rm "$TEMP_FILE_DOCS.bak"
-rm "$TEMP_FILE_WIDGET.bak"
-
 # Calculate the original checksum
 ORIGINAL_CHECKSUM_DOCS=$(openssl dgst -md5 "$PROJECT_ROOT/ui-bundle-docs/css/site.css" | cut -d ' ' -f2)
 ORIGINAL_CHECKSUM_WIDGET=$(openssl dgst -md5 "$PROJECT_ROOT/ui-bundle-widget/css/site.css" | cut -d ' ' -f2)
