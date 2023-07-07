@@ -41,6 +41,7 @@ jobs:
       - name: Yarn test/build
         run: |
           yarn install
+          ./scripts/minify-css.sh
           yarn build
       
       - name: Configure AWS credentials from PRODUCTION account
