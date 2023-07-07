@@ -321,6 +321,43 @@ Content.
 Content.
 ```
 
+### Release notes
+
+Release notes are not a part of the [Diátaxis](https://diataxis.fr/) framework, so we use the following templates for our release notes.
+
+#### For Kobiton 4.0 or later
+
+```asciidoc
+= Kobiton X.X release notes
+:navtitle: Kobiton X.X release notes
+
+_DATE_
+
+== First item
+
+Content.
+
+== Second item
+
+Content.
+```
+
+#### For legacy Kobiton
+```asciidoc
+= Kobiton X.X release notes (Legacy)
+:navtitle: Kobiton X.X release notes
+
+_DATE_
+
+== First item
+
+Content.
+
+== Second item
+
+Content.
+```
+
 # Style and voice
 
 One day we'll create our own, but for now we use the [Microsoft Style Guide](https://learn.microsoft.com/en-us/style-guide/brand-voice-above-all-simple-human) to inform our style and voice.

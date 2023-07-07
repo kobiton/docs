@@ -1,0 +1,277 @@
+{{#if navigation.length}}
+  {{#each navigation}}
+    {{#if (and ./url (eq ../level 1))}}
+      {{#if (eq ./content 'Get started')}}
+        <a class="col-3" href="
+                  {{~#if (eq ./urlType 'internal')}}{{{relativize ./url}}}
+                  {{~else}}{{{./url}}}{{~/if}}">
+          <div class="box-wrapper">
+            <div class="box-item">
+              <div class="box-title">
+                <div class="get-started-image"></div>
+                <div class="title-info">
+                  Getting Started
+                </div>
+              </div>
+              <div class="box-description">Everything you need to start using Kobiton.</div>
+            </div>
+          </div>
+        </a>
+      {{/if}} 
+      {{#if (eq ./content 'Release notes')}}
+        <a class="col-3" href="
+                  {{~#if (eq ./urlType 'internal')}}{{{relativize ./url}}}
+                  {{~else}}{{{./url}}}{{~/if}}">
+          <div class="box-wrapper">
+            <div class="box-item">
+              <div class="box-title">
+                <div class="release-notes-image"></div>
+                <div class="title-info">
+                  Release Notes
+                </div>
+              </div>
+              <div class="box-description">See what’s new in Kobiton.</div>
+            </div>
+          </div>
+        </a>
+      {{/if}}
+      {{#if (eq ./content 'Integrations')}}
+        <a class="col-3" href="
+                  {{~#if (eq ./urlType 'internal')}}{{{relativize ./url}}}
+                  {{~else}}{{{./url}}}{{~/if}}">
+          <div class="box-wrapper">
+            <div class="box-item">
+              <div class="box-title">
+                <div class="integrations-image"></div>
+                <div class="title-info">
+                  Integrations
+                </div>
+              </div>
+              <div class="box-description">Integrate with the tools you use most.</div>
+            </div>
+          </div>
+        </a>
+      {{/if}} 
+      {{#if (eq ./content 'Devices')}}
+        <a class="col-3" href="
+                  {{~#if (eq ./urlType 'internal')}}{{{relativize ./url}}}
+                  {{~else}}{{{./url}}}{{~/if}}">
+          <div class="box-wrapper">
+            <div class="box-item">
+              <div class="box-title">
+                <div class="devices-image"></div>
+                <div class="title-info">
+                  Devices
+                </div>
+              </div>
+              <div class="box-description">Find, manage, and configure your devices.</div>
+            </div>
+          </div>
+        </a>
+      {{/if}} 
+      {{#if (eq ./content 'Apps')}}
+        <a class="col-3" href="
+                  {{~#if (eq ./urlType 'internal')}}{{{relativize ./url}}}
+                  {{~else}}{{{./url}}}{{~/if}}">
+          <div class="box-wrapper">
+            <div class="box-item">
+              <div class="box-title">
+                <div class="apps-image"></div>
+                <div class="title-info">
+                  Apps
+                </div>
+              </div>
+              <div class="box-description">Upload apps to your repository for easy access.</div>
+            </div>
+          </div>
+        </a>
+      {{/if}} 
+      {{#if (eq ./content 'Manual testing')}}
+        <a class="col-3" href="
+                  {{~#if (eq ./urlType 'internal')}}{{{relativize ./url}}}
+                  {{~else}}{{{./url}}}{{~/if}}">
+          <div class="box-wrapper">
+            <div class="box-item">
+              <div class="box-title">
+                <div class="manual-testing-image"></div>
+                <div class="title-info">
+                  Manual Testing
+                </div>
+              </div>
+              <div class="box-description">Manually test your websites and apps.</div>
+            </div>
+          </div>
+        </a>
+      {{/if}} 
+      {{#if (eq ./content 'Automation testing')}}
+        <a class="col-3" href="
+                  {{~#if (eq ./urlType 'internal')}}{{{relativize ./url}}}
+                  {{~else}}{{{./url}}}{{~/if}}">
+          <div class="box-wrapper">
+            <div class="box-item">
+              <div class="box-title">
+                <div class="automation-testing-image"></div>
+                <div class="title-info">
+                  Automation Testing
+                </div>
+              </div>
+              <div class="box-description">Perform end-to-end automation tests.</div>
+            </div>
+          </div>
+        </a>
+      {{/if}} 
+      {{#if (eq ./content 'Scriptless automation')}}
+        <a class="col-3" href="
+                  {{~#if (eq ./urlType 'internal')}}{{{relativize ./url}}}
+                  {{~else}}{{{./url}}}{{~/if}}">
+          <div class="box-wrapper">
+            <div class="box-item">
+              <div class="box-title">
+                <div class="scriptless-automation-image"></div>
+                <div class="title-info">
+                  Scriptless Automation
+                </div>
+              </div>
+              <div class="box-description">Automate your tests without writing scripts.</div>
+            </div>
+          </div>
+        </a>
+      {{/if}} 
+      {{#if (eq ./content 'Debugging')}}
+        <a class="col-3" href="
+                  {{~#if (eq ./urlType 'internal')}}{{{relativize ./url}}}
+                  {{~else}}{{{./url}}}{{~/if}}">
+          <div class="box-wrapper">
+            <div class="box-item">
+              <div class="box-title">
+                <div class="debugging-image"></div>
+                <div class="title-info">
+                  Debugging
+                </div>
+              </div>
+              <div class="box-description">Debug from anywhere with virtualUSB.</div>
+            </div>
+          </div>
+        </a>
+      {{/if}} 
+      {{#if (eq ./content 'Session analytics')}}
+        <a class="col-3" href="
+                  {{~#if (eq ./urlType 'internal')}}{{{relativize ./url}}}
+                  {{~else}}{{{./url}}}{{~/if}}">
+          <div class="box-wrapper">
+            <div class="box-item">
+              <div class="box-title">
+                <div class="session-explorer-image"></div>
+                <div class="title-info">
+                  Session Explorer
+                </div>
+              </div>
+              <div class="box-description">Analyze sessions and validations in the Session Explorer.</div>
+            </div>
+          </div>
+        </a>
+      {{/if}} 
+      {{#if (eq ./content 'Test management')}}
+        <a class="col-3" href="
+                  {{~#if (eq ./urlType 'internal')}}{{{relativize ./url}}}
+                  {{~else}}{{{./url}}}{{~/if}}">
+          <div class="box-wrapper">
+            <div class="box-item">
+              <div class="box-title">
+                <div class="test-management-image"></div>
+                <div class="title-info">
+                  Test Management
+                </div>
+              </div>
+              <div class="box-description">Manage test cases for your team.</div>
+            </div>
+          </div>
+        </a>
+      {{/if}} 
+      {{#if (eq ./content 'Reporting')}}
+        <a class="col-3" href="
+                  {{~#if (eq ./urlType 'internal')}}{{{relativize ./url}}}
+                  {{~else}}{{{./url}}}{{~/if}}">
+          <div class="box-wrapper">
+            <div class="box-item">
+              <div class="box-title">
+                <div class="reporting-image"></div>
+                <div class="title-info">
+                  Reporting
+                </div>
+              </div>
+              <div class="box-description">Leverage reports to gain valuable insights.</div>
+            </div>
+          </div>
+        </a>
+      {{/if}} 
+      {{#if (eq ./content 'Organization')}}
+        <a class="col-3" href="
+                  {{~#if (eq ./urlType 'internal')}}{{{relativize ./url}}}
+                  {{~else}}{{{./url}}}{{~/if}}">
+          <div class="box-wrapper">
+            <div class="box-item">
+              <div class="box-title">
+                <div class="organization-image "></div>
+                <div class="title-info">
+                  Organization
+                </div>
+              </div>
+              <div class="box-description">Invite people, create teams, and manage permissions.</div>
+            </div>
+          </div>
+        </a>
+      {{/if}} 
+      {{#if (eq ./content 'Profile')}}
+        <a class="col-3" href="
+                  {{~#if (eq ./urlType 'internal')}}{{{relativize ./url}}}
+                  {{~else}}{{{./url}}}{{~/if}}">
+          <div class="box-wrapper">
+            <div class="box-item">
+              <div class="box-title">
+                <div class="profile-image"></div>
+                <div class="title-info">
+                  Profile
+                </div>
+              </div>
+              <div class="box-description">Create and customize your profile.</div>
+            </div>
+          </div>
+        </a>
+      {{/if}} 
+      {{#if (eq ./content 'Resources')}}
+        <a class="col-3" href="
+                  {{~#if (eq ./urlType 'internal')}}{{{relativize ./url}}}
+                  {{~else}}{{{./url}}}{{~/if}}">
+          <div class="box-wrapper">
+            <div class="box-item">
+              <div class="box-title">
+                <div class="resources-image"></div>
+                <div class="title-info">
+                  Resources
+                </div>
+              </div>
+              <div class="box-description">Learn more about the Kobiton platform.</div>
+            </div>
+          </div>
+        </a>
+      {{/if}}
+      {{#if (eq ./content 'API reference')}}
+        <a class="col-3" href="https://api.kobiton.com/v2/docs" target="_blank">
+          <div class="box-wrapper">
+            <div class="box-item">
+              <div class="box-title">
+                <div class="api-reference-image"></div>
+                <div class="title-info">
+                  API Reference
+                </div>
+              </div>
+              <div class="box-description">Our guide to the Kobiton REST API.</div>
+            </div>
+          </div>
+        </a>
+      {{/if}}
+    {{/if}}
+  {{> nav-box-item navigation=./items level=(increment ../level)}}
+  {{/each}}
+{{/if}}

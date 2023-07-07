@@ -1,13 +1,14 @@
 <header class="header">
   <nav class="navbar">
     <div class="navbar-brand">
-      <a class="navbar-item" href="{{{or site.url siteRootPath}}}">{{site.title}}</a>
-      {{#if env.SITE_SEARCH_PROVIDER}}
-      <div class="navbar-item search hide-for-print">
-        <div id="search-field" class="field">
-          <input id="search-input" type="text" placeholder="Search the docs"{{#if page.home}} autofocus{{/if}}>
+      <div class="logo"></div>
+      <a class="navbar-item app-title" href="{{{or site.url siteRootPath}}}">{{site.title}}</a>
+      {{#if (and env.SITE_SEARCH_PROVIDER (ne page.module 'ROOT'))}}
+        <div class="navbar-item search hide-for-print">
+          <div id="search-field" class="field">
+            <input id="search-input" type="text" placeholder="Search the docs"{{#if page.home}} autofocus{{/if}}>
+          </div>
         </div>
-      </div>
       {{/if}}
       <button class="navbar-burger" data-target="topbar-nav">
         <span></span>
@@ -18,32 +19,16 @@
     <div id="topbar-nav" class="navbar-menu">
       <div class="navbar-end">
         <div class="navbar-item has-dropdown is-hoverable">
-          <a class="navbar-link" href="#">Testing Types</a>
+          <a class="navbar-link" href="#">Support</a>
           <div class="navbar-dropdown">
-            <a class="navbar-item" href="#">Manual Testing</a>
-            <a class="navbar-item" href="#">Automated Testing</a>
-            <a class="navbar-item" href="#">Scriptless Testing</a>
+            <a class="menu-item navbar-item" href="https://support.kobiton.com/hc/en-us/requests/new" target="_blank">Submit a support request</a>
+            <a class="menu-item navbar-item" href="https://kobiton.zendesk.com/auth/v2/login" target="_blank">My support requests</a>
+            <a class="menu-item navbar-item" href="https://docs.kobiton.com/kobiton-docs/resources/index.html">Support resources</a>
           </div>
         </div>
-        <div class="navbar-item has-dropdown is-hoverable">
-          <a class="navbar-link" href="#">Products</a>
-          <div class="navbar-dropdown">
-            <a class="navbar-item" href="#">Device Lab Management</a>
-            <a class="navbar-item" href="#">Intelligent Quality Suite</a>
-            <a class="navbar-item" href="#">Virtual USB</a>
-          </div>
-        </div>
-        <div class="navbar-item has-dropdown is-hoverable">
-          <a class="navbar-link" href="#">Other Resources</a>
-          <div class="navbar-dropdown">
-            <a class="navbar-item" href="#">API</a>
-            <a class="navbar-item" href="#">Installers</a>
-            <a class="navbar-item" href="#">Release Notes</a>
-            <a class="navbar-item" href="#">Integrations</a>
-            <a class="navbar-item" href="#">Supported Versions</a>
-          </div>
-        </div>
-        <a class="navbar-item" href="#">Kobiton Home</a>
+        <div class="navbar-item">
+          <a class="login-wrapper" href="https://portal.kobiton.com" target="_blank">Sign in</a>
+        </a>
       </div>
     </div>
   </nav>
