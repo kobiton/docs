@@ -1,11 +1,13 @@
 <main class="article">
 {{> toolbar}}
-  <div class="content">
+<div class="content">
 {{#if (eq page.layout '404')}}
-{{> article-404}}
+    {{> article-404}}
+{{else if (eq page.module 'ROOT')}}
+  {{> landing-page}}
 {{else}}
-{{> toc}}
-{{> article}}
+  {{> toc}}
+  {{> article}}
 {{/if}}
-  </div>
+</div>
 </main>
