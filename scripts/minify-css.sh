@@ -6,9 +6,6 @@ PROJECT_ROOT=$(git rev-parse --show-toplevel)
 # Set the temporary file path
 TEMP_FILE="$PROJECT_ROOT/ui-bundle-docs/css/temp.css"
 
-# Install dependencies if needed
-npm install postcss-cli postcss-import postcss-clean
-
 # Merge all css files to 1 file
 $PROJECT_ROOT/scripts/merge-css.sh $PROJECT_ROOT/ui-bundle-docs/css/
 $PROJECT_ROOT/scripts/merge-css.sh $PROJECT_ROOT/ui-bundle-widget/css/
