@@ -11,9 +11,13 @@ TEMP_FILE_WIDGET="$PROJECT_ROOT/ui-bundle-widget/css/temp.css"
 find $PROJECT_ROOT/ui-bundle-docs/css/ -type f -not -name 'site.css' -name '*.css' -exec cat {} \; | npx postcss --use postcss-import postcss-clean --no-map > "$TEMP_FILE_DOCS"
 find $PROJECT_ROOT/ui-bundle-widget/css/ -type f -not -name 'site.css' -name '*.css' -exec cat {} \; | npx postcss --use postcss-import postcss-clean --no-map > "$TEMP_FILE_WIDGET"
 
+# Remove all comments from the merged files
+sed -i '' 's/\/\*.*\*\///g' "$TEMP_FILE_DOCS"
+sed -i '' 's/\/\*.*\*\///g' "$TEMP_FILE_WIDGET"
+
 # Append the header comment
-echo -e "/*! DO NOT EDIT: 'site.css' is auto-generated from the minified output of 'default-styles.css' and 'custom-styles.css'. */\n$(cat $TEMP_FILE_DOCS)" > "$TEMP_FILE_DOCS"
-echo -e "/*! DO NOT EDIT: 'site.css' is auto-generated from the minified output of 'default-styles.css' and 'custom-styles.css'. */\n$(cat $TEMP_FILE_WIDGET)" > "$TEMP_FILE_WIDGET"
+echo -e "/* DO NOT EDIT: 'site.css' is auto-generated from the minified output of 'default-styles.css' and 'custom-styles.css'. */\n$(cat $TEMP_FILE_DOCS)" > "$TEMP_FILE_DOCS"
+echo -e "/* DO NOT EDIT: 'site.css' is auto-generated from the minified output of 'default-styles.css' and 'custom-styles.css'. */\n$(cat $TEMP_FILE_WIDGET)" > "$TEMP_FILE_WIDGET"
 
 # Calculate the original checksum
 ORIGINAL_CHECKSUM_DOCS=$(openssl dgst -md5 "$PROJECT_ROOT/ui-bundle-docs/css/site.css" | cut -d ' ' -f2)
