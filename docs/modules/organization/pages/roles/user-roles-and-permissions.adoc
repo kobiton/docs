@@ -1,0 +1,91 @@
+= User roles and permissions
+:navtitle: Roles and permissions
+
+These are the user roles and permissions available when xref:roles/create-a-role.adoc[creating] or xref:roles/manage-roles.adoc#_set_permissions[managing] roles.
+
+== Predefined roles
+
+By default, the following roles are predefined and cannot be changed.
+
+=== Organization Owner
+
+The owner of the Kobiton account given xref:_permissions[all user permissions]. This role can only be transferred to another user xref:transfer-an-organization.adoc[by the current Organization Owner].
+
+=== ADMIN
+
+The ADMIN role must be assigned by the Organization Owner or another ADMIN.  ADMINs are given xref:_permissions[all user permissions].
+
+=== MEMBER
+
+Every user xref:users/invite-a-user.adoc[invited to your organization] is assigned the MEMBER role and given the following permissions:
+
+* xref:_system_login[]
+* xref:_system_logout[]
+* xref:_app_repo_view_all_application[]
+
+[#_permissions]
+== Permissions
+
+[#_system_login]
+=== `system.login`
+
+Can log in to the portal.
+
+[#_system_logout]
+=== `system.logout`
+
+Can log out of the portal.
+
+=== `app_repo.delete_other_application`
+
+Can delete apps in the app repository.
+
+[#_app_repo_view_all_application]
+=== `app_repo.view_all_application`
+
+Can view all apps in the app repository, including private and locked ones.
+
+=== `app_repo.upload_application`
+
+Can upload apps and rename any apps they previously uploaded.
+
+=== `device.custom_device_name`
+
+Can create custom device names.
+
+=== `device.tag_devices`
+
+Can create device tags.
+
+=== `org_management.modify`
+
+Can manage all teams, roles, users, and device bundles.
+
+=== `org_setting.modify`
+
+Can manage all organization settings, including cleanup policies, integrations, THIS, and more.
+
+=== `org_setting.modify_sso_setting`
+
+Can manage all Single-Sign On (SSO) authentication settings.
+
+[#_org_setting_modify_security_banner]
+=== `org_setting.modify_security_banner`
+
+Can change the portal login message.
+
+=== `session.view_all_session`
+
+Can view all test sessions.
+
+=== `session.terminate_other_session`
+
+Can end another user's test session.
+
+=== `session.modify_other_session`
+
+Can change session details and delete sessions.
+
+=== `soft_book.terminate_other_soft_book`
+
+Can delete another user's retainment for a device.

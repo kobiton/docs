@@ -15,7 +15,7 @@ curl -X POST https://api.kobiton.com/v1/apps/uploadUrl \
   -H 'Content-Type: application/json' \
   -H 'Accept: application/json' \
   -d '{
-  "filename" :  "${app-filename}", # Replace with ...
+  "filename" :  "${app-filename}", # Replace with $DESCRIPTION$
   "appId" :  1
 }'
 ----
@@ -41,10 +41,10 @@ Next, make a `PUT` request using the `url` you generated to send your app to our
 ----
 # You can also use wget
 curl
-  -T ${filePath} \  # Replace with ...
+  -T ${filePath} \  # Replace with $DESCRIPTION$
   -H "Content-Type: application/octet-stream" \
   -H "x-amz-tagging: unsaved=true" \
-  -X PUT ${presignedUrl} # Replace with ...
+  -X PUT ${presignedUrl} # Replace with $DESCRIPTION$
 ----
 
 A successful `PUT` request will return a `200` status.
@@ -62,8 +62,8 @@ curl -X POST https://api.kobiton.com/v1/apps \
   -H 'Content-Type: application/json' \
   -H 'Accept: application/json' \
   -d '{
-  "filename" :  "${app-filename}", # Replace with ...
-  "appPath" :  "${uploadUrl-call}" # Replace with ...
+  "filename" :  "${app-filename}", # Replace with $DESCRIPTION$
+  "appPath" :  "${uploadUrl-call}" # Replace with $DESCRIPTION$
 }'
 ----
 
