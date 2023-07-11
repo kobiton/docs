@@ -1,69 +1,107 @@
 = Search for a device
 :navtitle: Search for a device
 
-Learn how to search for a device using views, categories, statues, and more.
+Learn how to search for a device, so you can xref:manage-devices.adoc[manage the device] or use the device in a test session.
 
 [#_views]
 == Views
 
-image:devices:list-view-card-view-context.png[width=1000,alt="A context of list view and card view in the session list]
+To change how the list is visually displayed, select *Card View* or *List View*.
 
-=== Card view (default)
+image:$NEW-IMAGE$[width="", alt=""]
 
-Displays essential information about your devices. Sort by xref:_statuses[device status], device health, device name, friendly name, or OS version.
+=== Card view
 
+*Card view* displays _general_ information about each device in a compact card.
+
+image:$NEW-IMAGE$[width="",alt=""]
+
+To sort the view by xref:device-metadata.adoc[device metadata], select the *Sort by dropdown* and choose *OS Version*, *Device Name*, *Friendly Name*, or *Device Health*.
+
+image:$NEW-IMAGE$[width="",alt=""]
+
+[#_list_view]
 === List view
 
-Displays detailed information about your devices. Select *Edit Column* to customize the view and add up to nine xref:_custom_columns[custom columns].
+*List view* displays _detailed_ information about each device in a nine-column list.
 
-[#_categories]
-== Categories
+image:$NEW-IMAGE$[width="",alt=""]
 
-image:<NEW-IMAGE>[width=, alt="The device list with the device categories highlighted."]
+To sort the view by xref:device-metadata.adoc[device metadata], select the *up arrow* or *down arrow* at the top of a column.
 
-[#_favorite]
-=== Favorite
-A list of your favorite devices. To favorite a device, select the *vertical ellipses* next to the device, then click the *star icon*.
+image:$NEW-IMAGE$[width="",alt=""]
 
-=== Public devices
-Devices shared between all Kobiton customers.
+== Filters
 
-=== Private & local devices
-Devices reserved for your team.
+=== Team
 
-[#_statuses]
-== Statuses
+To only display xref:organization:teams/manage-team-devices.adoc[devices assigned to a specific team], select the *Team dropdown* and choose a team.
 
-image:$NEW-IMAGE$[width, alt=""]
+image:$NEW-IMAGE$[width="", alt=""]
 
-image:devices:search-options-context.png[width=1000,alt="A device lists with statuses"]
+=== Search bar
 
-=== Online
+To filter the list by one or more types of xref:device-metadata.adoc[device metadata], enter each type into the *search bar*.
 
-The device is available for a testing session.
+image:$NEW-IMAGE$[width="", alt=""]
 
-=== Busy: Utilized
+=== Custom columns
 
-The device is currently in a test session.
-
-=== Busy: Retained
-
-Reserved by a user, but may or may not be in a test session.
-
-[NOTE]
-Only available for private and local devices.
-
-=== Offline: Connected
-
-The device is offline, but physically connected to the hardware.
-
-=== Offline: Unplugged
-
-The device is offline and physically disconnected from the hardware.
-
-[#_custom_columns]
-== Custom columns
-
-You can display different columns by selecting *List View*, *Edit Column*, then choosing up to nine columns from the following list.
+To change which xref:device-metadata.adoc[device metadata] is displayed in the xref:_list_view[list view], select *Edit Column*, then choose up to nine types of metadata.
 
 image:devices:list-view-nine-options-closeup.png[width=300,alt="Select List View and choose upto nine columns"]
+
+[#_favorite]
+=== Favorite devices
+
+To only display your favorite devices, select *Favorite*.
+
+image:$NEW-IMAGE$[width="", alt=""]
+
+Favorite a device by selecting the *vertical ellipses* next to a device and then the *star icon*.
+
+image:$NEW-IMAGE$[width="", alt=""]
+
+=== Public devices
+
+To only display public devices, select *Public Devices*.
+
+image:$NEW-IMAGE$[width="", alt=""]
+
+=== Private & local devices
+
+To only display private & local devices, select *Private & Local Devices*.
+
+image:$NEW-IMAGE$[width="", alt=""]
+
+=== Operating system
+
+To only display devices using a specific operating system (OS), choose *iOS* or *Android*.
+
+image:$NEW-IMAGE$[width="", alt=""]
+
+To remove the filter, select the same OS again.
+
+=== Device status
+
+To only display specific device status, choose *Online*, *Busy*, or *Offline*.
+
+image:$NEW-IMAGE$[width="", alt=""]
+
+[cols="1h,3"]
+|===
+|Online
+|The device is available for a testing session.
+
+|Busy: Utilized
+|The device is currently in a test session.
+
+|Busy: Retained
+|Reserved by a user, but may or may not be in a test session. Only available for private and local devices.
+
+|Offline: Connected
+|The device is offline, but physically connected to the hardware.
+
+|Offline: Unplugged
+|The device is offline and physically disconnected from the hardware.
+|===
