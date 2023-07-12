@@ -1,0 +1,94 @@
+= Metadata for the system latency report
+:navtitle: Report metadata
+
+The system latency report lists each test session and the amount of time it took the system to preform an action during the session. Reference this metadata when you xref:system-latency-report/manage-the-report.adoc[manage your report].
+
+image:columns-context.png[width=1000,alt="Columns represent data within the selected date range"]
+
+== System actions
+
+=== Type
+
+The amount of time it takes the system to preform a keystroke on the device keyboard.
+
+=== Touch
+
+The amount of time it takes the system to touch or tap the device screen after a touch gesture was performed.This includes single and multi-finger gestures.
+
+=== Swipe
+
+The amount of time it takes the system to swipe the device screen after a swipe gesture was performed. This includes single and multi-finger gestures.
+
+=== Drag
+
+The amount of time it takes the system to drag an on-screen element across the device screen.
+
+=== Zoom
+
+The amount of time it takes the system to zoom in or out on the device screen after a zoom or pinch gesture was performed.
+
+=== Home
+
+The amount of time it takes the system to go to the device home screen after the home button was pressed.
+
+=== Power
+
+The amount of time it takes the system to begin to restart the device after the power button was pressed.
+
+=== Volume Up
+
+The amount of time it takes the system to change the volume after the volume up button was pressed.
+
+=== Volume Down
+
+The amount of time it takes the system to change the volume after the volume down button was pressed.
+
+=== Delete
+
+The amount of time it takes the system to begin deleting data from storage after a user selected delete. Includes data across any native or third-party application.
+
+=== Enter
+
+The amount of time it takes the system to process the enter key being pressed by a user. This includes actions like creating a newline while typing or submitting a web form.
+
+=== Recent apps (Android only)
+
+The amount of time it takes the system to open the list of recent apps after the recent apps button was pressed.
+
+=== Back (Android only)
+
+The amount of time it takes the system to go to the previous page after the back button was pressed. This includes actions like going to page 2 from page 3 or going to the home screen from page 1.
+
+== Report fields
+
+=== Connection
+
+The network connection type of the test sessions.
+
+=== Location
+
+The physical location of the test sessions.
+
+=== deviceShare
+
+The number of sessions using deviceShare.
+
+=== Session info
+
+A list of all sessions, grouped by deviceShare ID. Select the session ID to open the xref:session-analytics:session-overview.adoc[session overview].
+
+=== Average (ms)
+
+The average latency time of a session in milliseconds.
+
+=== Minimum (ms)
+
+The minimum latency time of a session in milliseconds.
+
+=== Maximum (ms)
+
+The maximum latency time of a session in milliseconds.
+
+=== Median (ms)
+
+The median latency time of a session in milliseconds.
