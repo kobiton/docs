@@ -7,7 +7,7 @@ image:manual-testing:custom-gestures-context.png[width=1000, alt="A manual sessi
 
 == Scripts
 
-Scripts contain one or more space-separated xref:_functions[functions] in a single line. Each function may contain zero or more xref:_parameters[parameters], depending on the specific function. If a parameter is required for a specific function, it'll be marked with `<>`. If it's optional, it'll be marked with `[]`.
+Scripts contain one or more space-separated xref:_functions[functions]. Depending on the specific function, zero or more xref:_parameters[parameters] can be assigned to the function. If a parameter is required for a function, it'll be surrounded with `<>`, otherwise it'll be surrounded with `[]`.
 
 [source,]
 ----
@@ -20,9 +20,7 @@ down(0%, 0%, 3) move(50%, 50%, 3) up(3) // Places the 4th finger on the screen a
 [#_arc]
 === `arc(<x>, <y>, <angle>, [finger], [duration])`
 
-Draws an elliptical shape starting from the current location of `finger` and finishing at the same location.
-
-The xref:_x_and_y[`x`] and xref:_x_and_y[`y`] coordinates refer to the exact center of the shape--the arc's path never passes through `x` and `y`, rather it goes _around_ in a symmetrical path. Set the `angle` to determine how wide or narrow the shape should be.
+`arc()` draws an arc from -360 to 360 degrees. Use xref:_x_and_y[`x`] and xref:_x_and_y[`y`] to set the center of the arc, and `angle` to set the arc's angle in degrees.
 
 By default, `finger` is set to `0` and `duration` is set to `2s`.
 
@@ -36,7 +34,7 @@ down(50%, 50%) arc(50%, 50%, 360) // Draws a full circle starting and ending at 
 [#_down]
 === `down(<x>, <y>, [finger])`
 
-Place a finger on the screen at the xref:_x_and_y[`x`] and xref:_x_and_y[`y`] coordinates. By default, xref:_finger[`finger`] will be set to `0`, unless you choose a different finger. The `finger` won't move unless called in another function.
+`dow()` places a finger on the screen at the xref:_x_and_y[`x`] and xref:_x_and_y[`y`] coordinates. By default, xref:_finger[`finger`] will be set to `0`, unless you choose a different finger. The `finger` won't move unless called in another function.
 
 [source,]
 ----
@@ -48,7 +46,7 @@ down(1%, 100%) // Places a finger at 1%, 100% by multiplying the length of the m
 [#_move]
 === `move(<x>, <y>, [finger], [duration])`
 
-Swipe a finger from its current location to the location specified in `move()`. By default, xref:_finger[`finger`] will be set to `0` and xref:_duration[`duration`] will be set to `2s`.
+`move()` swipes a finger from its current location to the location specified in `move()`. By default, xref:_finger[`finger`] will be set to `0` and xref:_duration[`duration`] will be set to `2s`.
 
 [NOTE]
 If there's no `finger` on the screen yet, xref:_down[`down()`] will be called instead.
@@ -63,7 +61,7 @@ down(50%, 50%) move(100%, 0%) // Places a finger at 50%, 50% then moves it to 10
 [#_sync]
 === `sync([finger])`
 
-Wait for all function calls to finish before calling more functions. If xref:_finger[`finger`] is assigned, `sync()` only applies to function calls using that `finger`.
+`sync()` waits for all function calls to finish before calling more functions. If xref:_finger[`finger`] is assigned, `sync()` only applies to function calls using that `finger`.
 
 [source,]
 ----
@@ -75,7 +73,7 @@ down(0) sync(0) down(1) // Place the 2nd finger down immediately, since sync() w
 [#_up]
 === `up([finger])`
 
-Remove a finger from the screen. By default, xref:_finger[`finger`] will be set to `0`, unless you choose a different finger.
+`up()` removes a finger from the screen. By default, xref:_finger[`finger`] will be set to `0`, unless you choose a different finger.
 
 [source,]
 ----
@@ -86,7 +84,7 @@ up(5) // Removes the 6th finger from the screen.
 [#_wait]
 === `wait(<duration>)`
 
-Wait for `duration` before calling more functions.
+`wait()` waits for `duration` before calling more functions.
 
 [source,]
 ----
@@ -99,7 +97,7 @@ wait(30s) // Waits for 30 seconds before calling another function.
 
 === `angle`
 
-An integer ranging from `-360` to `360` that determines the angle of xref:_arc[`arc()`]. Positive integers are drawn clockwise, while negative integers are drawn in reverse.
+`angle` determines the angle of xref:_arc[`arc()`]. Set to an integer ranging from `-360` to `360`. Positive integers are draw `arc()` clockwise and negative integers draw `arc()` counterclockwise.
 
 [source,]
 ----
@@ -111,7 +109,7 @@ down(50%, 50%) arc(50%, 50%, 360) // Draws a full circle starting and ending at 
 [#_duration]
 === `duration`
 
-A positive integer used to set the duration of a function. By default, `duration` is set to milliseconds, but you can append `ms` (milliseconds) or `s` (seconds) to manually change this.
+`duration` determines the duration of a function and can be set to any positive integer. By default, `duration` uses milliseconds. Alternatively, append `ms` (milliseconds) or `s` (seconds) to the integer.
 
 [source,]
 ----
@@ -123,7 +121,7 @@ wait(8s) // Waits for 8 seconds.
 [#_finger]
 === `finger`
 
-An integer ranging from `0` to `9` indicating _which_ finger to use in a gesture. By default, `finger` is set to `0`, but you can choose another integer up to `9`. Use different fingers with different functions to create multi-finger gestures, like a two-finger swipe or pinch.
+`finger` determines which finger to use for a gesture and can be set to an integer ranging from `0` to `9`. By default, `finger` is set to `0`. Use a different `finger` for different xref:_functions[functions] to create multi-touch gestures, like a two-finger swipe or pinch.
 
 [source,]
 ----
@@ -135,7 +133,7 @@ up(4) // Removes the fifth finger from the screen.
 [#_x_and_y]
 === `x` and `y`
 
-Two positive integers used to set a gesture's coordinates. By default, `x` and `y` refer to pixels, but you can append `px` (pixels), `dp` (device-independent pixels), or `%` (percent) to override the coordinate type.
+`x` and `y` determines the xref:_functions[function's] location on the device screen. By default, `x` and `y` uses to pixels. Alternatively, append `px` (pixels), `dp` (device-independent pixels), or `%` (percent) to the `x` or `y` integer.
 
 [source,]
 ----
