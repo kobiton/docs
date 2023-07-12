@@ -13,7 +13,7 @@ You'll need to complete the following:
 
 == Modify `config.ini`
 
-In the terminal, open your `virtualUSB` directory:
+In the terminal, open the `virtualUSB` directory:
 
 .MacOS
 [source,shell]
@@ -27,7 +27,7 @@ cd ~/Library/"Application Support"/virtualUSB
 cd C:\Users\<your-user-name>\AppData\Roaming\virtualUSB
 ----
 
-Open the `config.ini` file in a text editor and modify the following lines:
+Open `config.ini` in a text editor and look for the following lines:
 
 [source,asciidoc]
 ----
@@ -35,9 +35,9 @@ Kobiton.ApiBaseUrl: https://<network-address>:<api-port-baseurl>
 Kobiton.ApiGrpcBaseUrl: https://<network-address>:<api-port-grpc-baseurl>
 ----
 
-Debugging a local device on _Kobiton Cloud_ versus _a local Kobiton server_ requires different values for `Kobiton.ApiBaseUrl` and `Kobiton.ApiGrpcBaseUrl`. Reference the following table to ensure you set the right values:
+Debugging a local device on *Kobiton Cloud* versus a *local Kobiton server* requires different values for `Kobiton.ApiBaseUrl` and `Kobiton.ApiGrpcBaseUrl`. Use the following table to set their values.
 
-[cols="1,1,1,1"]
+[cols="1,2,2,2"]
 |===
 |Placeholder|Description|Kobiton Cloud|Local Kobiton server
 

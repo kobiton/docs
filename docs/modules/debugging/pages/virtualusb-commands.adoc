@@ -11,16 +11,16 @@ You'll need to complete the following:
 * xref:add-virtualusb-to-your-path.adoc[].
 * To debug on a local Kobiton server, xref:debugging:local-devices/configure-personal-computer.adoc[configure your personal computer for debugging local devices].
 
-== `-- help`
+== `help`
 
-List all virtualUSB commands in the terminal.
+To list all virtualUSB commands, run:
 
 [source,shell]
 ----
-vusb --help
+vusb help
 ----
 
-To learn more about a command, enter the command after `help`:
+To learn more about a specific command, add the command after `help`:
 
 [source,shell]
 ----
@@ -29,14 +29,14 @@ vusb help <command>
 
 == `login`
 
-Log in to your Kobiton account using your email address and passcode or xref:profile:your-api-keys.adoc[Kobiton API key].
+To log in to your Kobiton account with your email address and passcode or xref:profile:your-api-keys.adoc[Kobiton API key], run:
 
 [source,shell]
 ----
 vusb login
 ----
 
-Alternatively, specify your username and passcode in the `login` command:
+Alternatively, enter your username and passcode after `login` using flags:
 
 [source,shell]
 ----
@@ -48,7 +48,7 @@ Using the alternate method, your passcode will be visible in the terminal. Do no
 
 == `logout`
 
-Log out of your Kobiton account.
+To log out of your Kobiton account, run:
 
 [source,shell]
 ----
@@ -57,7 +57,7 @@ vusb logout
 
 == `connect`
 
-Connect to a device by entering the device UDID.
+To connect to a device using the device UDID, run:
 
 [source,shell]
 ----
@@ -66,7 +66,7 @@ vusb connect --udid <device-udid>
 
 == `disconnect`
 
-Disconnect from a device by entering the device UDID.
+To disconnect from a device using the device UDID, run:
 
 [source,shell]
 ----
@@ -75,19 +75,20 @@ vusb disconnect --udid <udid>
 
 == `status`
 
-Check the status of the currently connected device.
+To check the status of the currently connected device, run:
 
 [source,shell]
 ----
 vusb status
 ----
 
-If a device is connected, the device's JSON data will be listed in the terminal.
+If a device is connected, the device's JSON data will be displayed in the terminal.
 
 For example:
 
-[source,json]
+[source,shell]
 ----
+$ vusb status
 {
   "servers": [
     {
@@ -123,14 +124,16 @@ For example:
 
 == `export-logs`
 
-Export virtualUSB logs. By default, the logs will be downloaded to the system's default location, and the download will contain logs from the past day.
+To export virtualUSB logs, run:
 
 [source,shell]
 ----
 vusb export-logs
 ----
 
-Use the `--out` flag to change the download location and the `--days` flag to choose how many days back, starting from the current day, to retrieve logs from.
+By default, the logs will be downloaded to the system's default download location, and will contain logs from the past day.
+
+Alternatively, use `--out` to set a new download location and `--days` to set how many days back the logs should include:
 
 [source,shell]
 ----
@@ -143,13 +146,14 @@ For example:
 
 [source,shell]
 ----
-Please wait$DESCRIPTION$
+$ vusb export-logs
+Please wait
 Exported to /Users/Alex/Downloads/vulogs.zip
 ----
 
 == `setup-ios` (Windows only)
 
-Install the necessary dependencies for debugging iOS devices on Windows.
+To install iOS dependencies on Windows, run:
 
 [source,shell]
 ----
@@ -158,7 +162,7 @@ vusb setup-ios
 
 == `setup-adb` (Windows only)
 
-Install the necessary dependencies for debugging Android devices on Windows.
+To install Android dependencies on Windows, run:
 
 [source,shell]
 ----
