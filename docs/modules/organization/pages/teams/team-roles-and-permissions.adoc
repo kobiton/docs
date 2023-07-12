@@ -29,41 +29,41 @@ The user(s) with the second-highest team permissions. By default, *Team Admins* 
 
 === Team member
 
-The user(s) with the lowest team permissions. By default, *Team Members* have *no team permissions*. *Team Owners* can choose to add xref:_settings_modify[] to *Team Members*, but they cannot add any other permissions.
+The user(s) with the lowest team permissions. By default, *Team Members* have *no team permissions*. *Team Owners* Allows a user to choose to add xref:_settings_modify[] to *Team Members*, but they Allows a user tonot add any other permissions.
 
 == Permissions
 
 [#_settings_modify]
 === `settings.modify`
 
-Can edit team details (name, description, assertion value) and team settings (private test mode, cleanup policy).
+Allows a user to edit team details (name, description, assertion value) and team settings (private test mode, cleanup policy).
 
 * *Team owner:* Always
-* *Team admin:* On by default
-* *Team member:* Off by default
+* *Team admin:* By default, On
+* *Team member:* By default, Off
 
 [#_members_modify]
 === `members.modify`
 
-Can add and remove team members, and change permissions for team members.
+Allows a user to add and remove members, and change member permissions.
 
 * *Team owner:* Always
-* *Team admin:* On by default
+* *Team admin:* By default, On
 * *Team member:* Never
 
 [#_devices_modify]
 === `devices.modify`
 
-Can add and remove devices assigned to the team.
+Allows a user to add and remove devices assigned to the team.
 
 * *Team owner:* Always
-* *Team admin:* On by default
-* *Team member:* Always OFF
+* *Team admin:* By default, On
+* *Team member:* Never
 
 [#_member_make_admin]
 === `member.make_admin`
 
-Can make a team member a team admin.
+Allows a user to make a team member a team admin.
 
 * *Team owner:* Always
 * *Team admin:* Never
@@ -72,7 +72,7 @@ Can make a team member a team admin.
 [#_member_make_owner]
 === `member.make_owner`
 
-Can make a team member the team owner.
+Allows a user to make a team member the team owner.
 
 * *Team owner:* Always
 * *Team admin:* Never
@@ -81,7 +81,7 @@ Can make a team member the team owner.
 [#_apps_unassign]
 === `apps.unassign`
 
-Can remove an app assigned to the team.
+Allows a user to remove an app assigned to the team.
 
 * *Team owner:* Always
 * *Team admin:* Never
