@@ -10,7 +10,7 @@ When users xref:debugging:local-devices/configure-personal-computer.adoc[configu
 
 Save this information to a secure location your team can easily access:
 
-[source,asciidoc]
+[source,plaintext]
 ----
 # Required server information for:
 # https://docs.kobiton.com/kobiton-docs/debugging/debug-local-devices/configure-personal-computer.html
@@ -33,7 +33,7 @@ hostname -I
 
 To get the Kobiton server's REST API port numbers, open `~/config/app.yaml` and check for the following port keys:
 
-[source,asciidoc]
+[source,plaintext]
 ----
 rest_api_ingress_advertised_port: <port-number>
 grpc_ingress_gateway_public_advertised_port: <port-number>
@@ -58,7 +58,7 @@ cd ~/usr/local/deviceconnect
 
 Open `dc.ini` and add the following environment variables:
 
-[source,asciidoc]
+[source,plaintext]
 ----
 GatewayPublicAddress=<ip-address> # Set to your private or public IP address.
 ExternalAirstreamTlsPort=<port-number> # Set to 10161 or public IP address.
