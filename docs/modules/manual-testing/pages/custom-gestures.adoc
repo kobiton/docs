@@ -20,9 +20,9 @@ down(0%, 0%, 3) move(50%, 50%, 3) up(3) // Places the 4th finger on the screen a
 [#_arc]
 === `arc(<x>, <y>, <angle>, [finger], [duration])`
 
-`arc()` draws an arc from -360 to 360 degrees. Use xref:_x_and_y[`x`] and xref:_x_and_y[`y`] to set the center of the arc, and `angle` to set the arc's angle in degrees.
+`arc()` draws an arc from -360 to 360 degrees. Use xref:_x_and_y[`x`] and xref:_x_and_y[`y`] to set the center of the arc, and xref:_angle[`angle`] to set the arc's angle in degrees.
 
-By default, `finger` is set to `0` and `duration` is set to `2s`.
+By default, xref:_finger[`finger`] is set to `0` and xref:_duration[`duration`] is set to `2s`.
 
 [source,]
 ----
@@ -95,9 +95,10 @@ wait(30s) // Waits for 30 seconds before calling another function.
 [#_parameters]
 == Parameters
 
+[#_angle]
 === `angle`
 
-`angle` determines the angle of xref:_arc[`arc()`]. Set to an integer ranging from `-360` to `360`. Positive integers are draw `arc()` clockwise and negative integers draw `arc()` counterclockwise.
+`angle` determines the angle of xref:_arc[`arc()`].Set to an integer ranging from `-360` to `360`.Positive integers are draw `arc()` clockwise and negative integers draw `arc()` counterclockwise.
 
 [source,]
 ----
