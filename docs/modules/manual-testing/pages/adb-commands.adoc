@@ -5,17 +5,19 @@ These are the Android Debug Bridge (`adb`) commands you can xref:device-controls
 
 image:adb-shell-context.png[width=1100, alt="A manual session with the `adb` shell open."]
 
-== Public
+== Public devices
 
-Since public devices can be accessed by anyone using Kobiton, we limit the amount of `adb` commands you can run on public devices. For now, these are the only supported commands:
+Since public devices are shared across all Kobiton users, only the following `adb` commands are supported:
 
 * `dumpsys display`
 * `dumpsys battery`
 * `pm list packages -3`
 
-== Private and local
+== Private and local devices
 
-You can run most `adb` commands on private and local devices--unless they could harm the device or alter device systems in real-time. Here are the kinds of commands we *don't* allow:
+You can run most `adb` commands on private and local devices--as long as they don't harm the device or alter systems in real-time.
+
+Here are some examples of commands we *don't* allow:
 
 * `kobiton/i`
 * `logcat/i`

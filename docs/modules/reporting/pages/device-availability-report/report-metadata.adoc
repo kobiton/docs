@@ -1,0 +1,62 @@
+= Metadata for the device availability report
+:navtitle: Report metadata
+
+The device availability report is a collection of predefined reports containing all outage entries for your private and local devices. Reference this metadata when you xref:device-availability-report/manage-the-report.adoc[manage your report].
+
+image:$NEW-IMAGE$[width=, alt=""]
+
+== Report types
+
+The device availability report contains two report types: xref:_local_devices[local devices] and xref:_private_devices[private devices].
+
+[#_local_devices]
+=== Local devices
+
+Local devices are devices hosted on your local network.
+
+image:local-devices-report-context.png[width=1000,alt="Local devices in the report"]
+
+[#_private_devices]
+=== Private devices
+
+Private devices are devices hosted on Kobiton Cloud and only accessible by your organization.
+
+image:private-devices-report-context.png[width=1000,alt="Private devices in the report"]
+
+== Report fields
+
+=== Total registered devices
+
+The all-time total number of registered devices.
+
+=== Registered devices within date range
+
+The total number of registered devices from the selected xref:_change_the_date_range[date range].
+
+=== Average days available
+
+The average number of days your devices were online and the percentage of your total devices.
+
+=== UDID
+
+The device's Unique Device Identifier (UDID). Beneath each UDID is a list of all offline entries for the device.
+
+=== Device type
+
+The type of device. Beneath each device type is a list of all offline entries for the device, along with the specific network status: Offline, Offline (Unplugged), or No Network.
+
+=== OS version
+
+The device operating system version (OS version).
+
+=== In-service dates
+
+A date range representing the length of time a device was in service.
+
+=== Days online
+
+A ratio representing the total number of days a device has been online versus its total days in service.
+
+=== Minutes offline
+
+Total number of minutes a device was offline during a specific outage.

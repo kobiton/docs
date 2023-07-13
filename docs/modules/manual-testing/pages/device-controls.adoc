@@ -1,117 +1,146 @@
 = Device controls
 :navtitle: Device controls
-:numbered:
 
-These are the device controls you can use to interact with a device during a manual session.
-
-image:manual-testing:device-controls-context.png[width=1000, alt="A manual session with each device control numbered in red."]
+Use these device controls to interact with your device during a manual test session.
 
 == Touch
 
-You can interact with your device by using *left-click* to tap and swipe the screen.
+To interact with your device, select *Touch*, then use *left-click* to tap and swipe the device screen.
+
+image:$NEW-IMAGE$[width="", alt=""]
 
 == Pinch/zoom
 
-You can zoom or pinch the device screen by placing the center circle on your target location and dragging an outer circle closer or farther away.
+To pinch or use two-finger zoom, select *Pinch/ Zoom,* then place the center circle on the target and drag an outer circle.
 
 image:manual-testing:device-controls-context3.png[width=1000,alt="A manual session with a closeup of a device using pinch/zoom."]
 
 == Set device location
 
-You can change the device location by either searching for a location or entering a longitude and latitude.
+To change the device location, select *Location*, then search for a location or enter the longitude and latitude.
 
 image:manual-testing:device-controls-closeup4.png[width=400,alt="A manual session with a closeup of the location controls."]
 
 == Set device timezone
 
-You can change the device timezone by selecting a new timezone from the dropdown.
+To change the device timezone, select *Set device timezone* and choose a timezone from the dropdown.
 
 image:manual-testing:device-controls-closeup3.png[width=300,alt="A manual session with a closeup of a device set to landscape."]
 
 == Rotate screen
 
-You can rotate the device screen between portrait and landscape.
+To rotate the device screen between portrait or landscape, select *Rotate Screen*.
 
 image:manual-testing:device-controls-context2.png[width=1000,alt="A manual session with a rotate screen"]
 
 == Volume
 
-You can change the device volume by selecting *Volume Up* or *Volume Down*.
+To change the device volume, select *Volume Up* or *Volume Down*.
+
+image:$NEW-IMAGE$[width="", alt=""]
 
 [#_adb_shell]
 == `adb` shell
 
-You can enter Android Debug Bridge (`adb`) commands to install or debug apps on your Android test device.
+To enter Android Debug Bridge (`adb`) commands, select *adb shell*, then enter a xref:adb-commands.adoc[supported `adb` command].
 
 image:adb-shell-closeup.png[width="750", alt="A manual session with a closeup of the adb shell running `adb shell dumpsys display`."]
 
-[NOTE]
-We only allow xref:adb-commands.adoc[specific `adb` commands] so we can continue keeping test devices in excellent condition.
-
 == Preform VoiceOver
 
-After you set up xref:devices:local-devices/configure-ios-voiceover.adoc[VoiceOver for iOS], you can test your app's screen reader compatibility.
+Once xref:devices:local-devices/configure-ios-voiceover.adoc[VoiceOver for iOS] is set up, select *Preform VoiceOver* to test an app's screen reader compatibility.
+
+image:$NEW-IMAGE$[width="", alt=""]
 
 == Biometric authentication
 
-After you add our xref:integrations:biometric-authentication/about-biometrics-authentication.adoc[biometrics authentication library] to your app, you can select *Pass* or *Fail* to test biometric authentication requests.
+Once our xref:integrations:biometric-authentication/about-biometrics-authentication.adoc[biometrics authentication library] is added to your app, select *Biometric Authentication*, then choose *Pass* or *Fail* to test authentication requests.
+
+image:$NEW-IMAGE$[width="", alt=""]
 
 [#_draw_custom_gesture]
 == Draw custom gesture
 
-You can draw custom gestures like three-finger swipes or two-finger taps by choosing a sample gesture or xref:custom-gestures.adoc[creating your own].
+To draw custom gestures like three-finger swipes or two-finger taps, select *Draw Custom Gesture,* then choose a sample gesture or xref:custom-gestures.adoc[create your own].
 
 image:manual-testing:device-controls-closeup2.png[width=300,alt="A manual session with a closeup of the gesture controls."]
 
-After you create a gesture, you can save it for future sessions.
+Once a custom gesture is created, select the *star* icon to save it for future sessions.
+
+image:$NEW-IMAGE$[width="", alt=""]
 
 == Input sensitive data
 
-You can input sensitive data (like usernames and passcodes) without recording it in the xref:session-analytics:session-overview.adoc#_session_recording[session video]. Enter your sensitive data, tap the related field on your device, then select *Save* to send it securely.
+To input sensitive data (like usernames and passcodes) without it being recorded in the xref:session-analytics:session-overview.adoc#_session_recording[session video], select *Input Sensitive Data*, then enter the data in the text box.
 
 image:manual-testing:device-controls-closeup.png[width=300,alt="A manual session with a closeup of the sensitive data controls."]
 
+Select the corresponding field on the device screen, then select *Save* to input the sensitive data.
+
+image:$NEW-IMAGE$[width="", alt=""]
+
 == Image injection
 
-You can xref:test-the-app-camera.adoc[test your in-app camera] by adding an image to the injection library and selecting *Inject*.
+To xref:test-the-app-camera.adoc[test your in-app camera], select *Image Injection*, then add an image to the injection library and select *Inject*.
 
 image:image-injection-closeup.png[width=500, alt="A manual session with a closeup of image injection."]
 
 == Power
 
-You can restart your device by selecting the *Power* button. (Don't worry--this won't end your session).
+To restart your device, select *Power*.
+
+[NOTE]
+Restarting a device won't end the session.
+
+image:$NEW-IMAGE$[width="", alt=""]
 
 == Home button
 
-You can single-click or double-click the *Home Button* to replicate the link:https://support.apple.com/HT208204[iOS] or link:https://support.google.com/android/answer/9079644[Android] home button.
+To replicate the link:https://support.apple.com/HT208204[iOS] or link:https://support.google.com/android/answer/9079644[Android] home button, single-click or double-click the *Home Button*.
+
+image:$NEW-IMAGE$[width="", alt=""]
 
 == Recent apps
 
-While using an Android device, you can select *Recent Apps* to link:https://support.google.com/android/answer/9079646[display your recent apps].
+To replicate Android's link:https://support.google.com/android/answer/9079646[display recent apps] button, select *Recent Apps*.
 
 image:manual-testing:device-controls-context5.png[width=1000,alt="A manual session with a close up of the device display its recent apps."]
 
 == Back
 
-While using an Android device, you can select *Back* to xref:https://support.google.com/android/answer/9079644[return to the previous page].
+To replicate Android's xref:https://support.google.com/android/answer/9079644[return to the previous page], select *Back*.
+
+image:$NEW-IMAGE$[width="", alt=""]
 
 == Synchronous inventory capture
 
-If you're missing a few actions in your xref:session-analytics:index.adoc[session analytics], you may have been moving faster than your session's inventory capture. Enable *Synchronous Inventory Capture* to prevent test actions from running until your current action is fully captured.
+To ensure each action is captured in the inventory before a new action can be started, enable *Synchronous Inventory Capture*.
+
+image:$NEW-IMAGE$[width="", alt=""]
+
+The circle will be filled when an action is fully captured.
 
 image:manual-testing:device-control-context6.png[width=1000,alt="A manual session with a closeup of the device with synchronous inventory capture enabled."]
 
 == Speedometer
 
-You can increase the test device screen to 30 frames per second (FPS) by enabling *Lightning Mode*. You can also check your session runtime, latency, and resolution.
+To view the session runtime, latency, and resolution, select the *Speedometer*.
 
 image:manual-testing:device-controls-context4.png[width=1000,alt="A manual sesion with a closeup of the speedometer opened."]
+
+To increase the device screen to 30 frames per second (FPS), enable *Lightning Mode*.
 
 [NOTE]
 Lightning mode is only available for link:https://kobiton.com/pricing/[certain plans].
 
+image:$NEW-IMAGE$[width="", alt=""]
+
 == Screenshots
 
-You can select *Take Screenshot* to take a screenshot and select *Screenshots* to download them. Your total number of screenshots will be displayed on the *Screenshots* icon.
+To take a screenshot of the current screen, select *Take Screenshot* to take a screenshot. The total number of screenshots will be displayed on the *Screenshots* icon.
 
 image:screenshot-context.png[width=750, alt="A manual session with a closeup of a device and the screenshot conter set to 3 highlighted in red."]
+
+To download your screenshots, select *Screenshots*, then choose a screenshot to download.
+
+image:$NEW-IMAGE$[width="", alt=""]
