@@ -835,7 +835,8 @@ a + .breadcrumbs {
 .doc h4 .anchor::before,
 .doc h5 .anchor::before,
 .doc h6 .anchor::before {
-  content: '\00a7';
+    /* postcss will convert '\00a7' to 'a7', so a second escape character has been added */ 
+    content: '\\00a7';
 }
 .doc h1:hover .anchor,
 .doc h2:hover .anchor,
