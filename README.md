@@ -2,8 +2,8 @@
 
 This repository contains the source files for [docs.kobiton.com](https://docs.kobiton.com/), the docs site for our mobile-testing platform, Kobiton. If you'd like to help improve the docs, you can:
 
-- [Report an issue](https://github.com/kobiton/documentation/issues/new?assignees=&labels=&template=report-an-issue.md&title=)
-- [Request a feature](https://github.com/kobiton/documentation/issues/new?assignees=&labels=&template=request-a-feature.md&title=)
+- [Report an issue](https://github.com/kobiton/docs/issues/new?assignees=&labels=issue&projects=&template=report_an_issue.md&title=)
+- [Request a feature](https://github.com/kobiton/docs/issues/new?assignees=&labels=enhancement&projects=&template=request_a_feature.md&title=)
 - [Contribute](CONTRIBUTING.md)
 
 ## Quick start
