@@ -152,7 +152,7 @@ For example:
 
 ## Hide a page from search
 
-All `.adoc` files within `modules` are searchable on Kobiton Docs using the [Antora Lunr Extension](https://gitlab.com/antora/antora-lunr-extension). To hide a page from search, add the `:noindex:` attribute to the page's metadata.
+By default, all `.adoc` files in the `modules` directory are searchable on Kobiton Docs using the [Antora Lunr Extension](https://gitlab.com/antora/antora-lunr-extension). To hide a page from search results, add the `:noindex:` attribute to the page's metadata.
 
 For example:
 
