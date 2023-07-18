@@ -1,0 +1,100 @@
+= Kobiton 3.16 release notes (Legacy)
+:navtitle: Kobiton 3.16 release notes
+
+_November 14, 2021_
+
+== Organization Management
+
+=== User history
+
+User history data is available for users to track their activity on the portal, including information about the user’s account creation, login times, as well as info about the user’s device interactions such as device retention, release, and soft booking.
+
+== App Repository updates
+
+=== A few updates to the App Repository:
+
+** Application can be downloaded from the App Repository
+** Added the ability to specify which teams have access to an application. So now you can choose between available to all users, specific teams only, and private.
+** A date and time timestamp has been added to app details indicating when an application was uploaded.
+** Search for you app on the repo by automation snippet, the Kobiton assigned key/value pair. For example: `kobiton-store:274762`.
+
+=== Device List enhancement
+
+There are two ways to view devices on the device list, list or card view. Now, once you set a view, every time you return to the device list, devices will be displayed in that view. This applies when returning to the list after a launched session or when logging back in to your account.
+
+== Kobiton Intelligent Quality Suite and Scriptless Automation
+
+=== Session Action Menu
+
+From the session action menu, you can view session details, delete a session, and copy the session's link. To access the menu:
+
+** Right-click on the session to display a pop-up.
+** Click on the session to display on the top session menu.
+
+=== New interaction behavior on Sessions page
+
+** On the Sessions page, to get to a session's overview page double-click on a session or click on a session ID.
+** Left-click once to highlight the session.
+
+=== NOVA suggested device bundles will recommend devices by OS version
+
+The Recommended Device Bundle feature released in October got an update! For applications that state the minimum OS versions in their metadata, the suggestions will now specify OS versions, not just the OS.
+
+=== API remediation request update
+
+We've added a new parameter to the `GET /remediationRequests/` command: `testRunId=\{testRunId}`. This parameter will return a list of test run remediations, including our recently added accessibility assertions.
+
+[source, terminal]
+----
+GET /remediationRequests/all?sessionId={sessionId}&type={type}&isResolved={isResolved}&testRunId={testRunId}
+----
+
+=== Manual session baseline for automation assertions
+
+We’ve added a new methodology for using a manual test as a baseline for leveraging our automation feature while testing visual/text assertions. Previously, our users could only take advantage of our automation features while testing with an automated Appium script is they used the “Test Run Creation” flow, which involves several steps using the API for test run calls in order to wrap up multiple Appium scripts. This new method allows users to declare a manual session ID for an assertion baseline instead of an automation session ID, and does not require the “Test Run Creation” flow. Please note these limitations: declaring a manual session baseline is not yet available if you still use the flow "Envelope Appium Script in Test Run".
+
+=== Concurrent Revisit Sessions increase
+
+We have increased the number of concurrent revisit sessions from 5 to 10.
+
+== Device Lab Management
+
+=== Device tag update
+
+For consistency and clarity, we’ve updated how tags appear in the device search bar. The list of tags that display in the device search bar when you select the option to search by tag will distinguish between org and individual tags with color and icon, following the same pattern as tags displayed in other areas of the portal.
+
+=== Device List OS filter
+
+Both list and card views of the Devices List will offer the ability to view and filter devices by OS. You can filter your device view according to Android or Apple OS by clicking the corresponding apple icon or robot icon found in the upper-left section of the device list.
+
+=== Device internet connectivity check
+
+To eliminate devices lacking an internet connection from your automation test runs, Kobiton has added a new desiredCapibility to help users select devices with an active internet connection in their automation testing. The *failIfNoInternet* capability will function as follows:
+
+** *False* (default): the automation session will continue even if an internet connection is not detected on the device.
+** *True*: the automation session will end if the device does not have an internet connection.
+
+=== Automatic Apple certificate check
+
+Kobiton will automatically check that the correct Apple certification is in place before launching a session. Is the certification is not detected, it will obtain and install it.
+
+=== Passcode support Kobiton Desktop app for passcode support
+
+We have upgraded some parts of the desktop app to better support working with devices that have passcodes enabled; for example, devices with MDM profiles that do not allow users to set a screen timeout to “Never” will automatically default to a five-minute timeout.
+
+=== RBAC enhancements
+
+** The Organization Owner will be able to transfer their role to another Admin user. Once transferred, the original Org Owner will no longer have Org Owner privilege and will become an Admin user. Please note that this transfer must be performed before an Org Owner’s account is deleted or disabled. A pop-up message will appear when an Org Owner tries to disable their account to remind the user to transfer their role.
+** Team names are now displayed in alphabetical order on the Teams dropdown menu
+
+=== Added version support
+
+** iOS 15.0.2 and 15.1, which will run on Xcode 13
+** Android 12
+** Chromedriver 95
+
+== Portal Fixes
+
+** Corrected an issue with the user avatar incorrectly displaying in the device modal
+** Android 12 devices are properly displaying the health reports missing from the list view
+** Corrected an issue where the device list on the favorite page was not displayed correctly

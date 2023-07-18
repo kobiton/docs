@@ -1,27 +1,30 @@
 = Manage devices
 :navtitle: Manage devices
 
-Learn how to manage devices so can enable network payload capture, create device tags, auto-generate capabilities, and more. In *Devices*, select the *vertical ellipses* next to a device to get started.
+Learn how to manage devices so can enable network payload capture, create device tags, auto-generate capabilities, and more. xref:open-the-device-settings.adoc[Open the device settings] to get started.
 
-image:devices:manage-device-context.png[width=, alt=""]
+== Rename the device
 
-== Rename device
-
-Enter a new device name and select *Save*. You can also check the box to apply this name to all similar devices.
+To rename the device, enter a new name and select *Save*. Optionally, check the box to apply this name to all similar devices.
 
 image:devices:edit-device-name-closeup.png[width=400,alt="A closeup to rename the device"]
 
-== Favorite device
+== Favorite the device
 
-Select the *star icon* to add the device to your list of favorites. Select it again to remove it.
+To add the device to your xref:search-for-a-device.adoc#_favorite[list of favorites], select the *star* icon.
 
-image:devices:favorite-device-closeup.png[width=300,alt="A closeup to favorite a device"]
+image:devices:favorite-device-closeup.png[width=300,alt="A closeup to favorite the device"]
 
+To remove the device from your favorites, select the *star* icon again.
+
+[#_add_or_remove_tags]
 == Add or remove tags
 
-Create a new tag or choose an existing one to add a device tag. To remove a tag, select the *x* icon.
+To add a device tag, create a new tag or choose an existing one.
 
 image:devices:tags-section-context.png[width=500,alt="A context of tag section- Manage Device modal"]
+
+To remove a tag, select the *x* icon.
 
 == Enable network payload capture
 
@@ -29,15 +32,15 @@ Once xref:manual-testing:enable-network-payload-capture.adoc[network payload cap
 
 image:devices:config-section-context.png[width=500,alt=" A context of Use Configuration section - Managing Device modal"]
 
-== Retain device
+== Retain the device
 
-Select *Retain* to reserve the device and preventing other testers from using it.
+To prevent others from using the device in a test session, select *Retain*.
 
 image:devices:retain-device-closeup.png[width=400,alt="A closeup to Retain status for device"]
 
 == Require a passcode
 
-Enable *Passcode Feature Enforced*, then enter a passcode to require a passcode for this device to be used it in a test session.
+To require a passcode for this device, enable *Passcode Feature Enforced*, then enter a passcode.
 
 [NOTE]
 Learn more about xref:set-device-passcodes.adoc[managing device passcodes].
@@ -46,6 +49,8 @@ image:devices:passcode-section-context.png[width=500,alt="A context of passcode 
 
 == Automation settings
 
-Select *Automation settings* and xref:automation-testing:desired-capabilities/auto-generate-capabilities.adoc[auto-generate capabilities] for your test suite.
+To open the device automation settings, select *Automation settings*.
 
 image:devices:automation-settings-context.png[width=500,alt=" A context of Automation Settings section - Managing Device modal"]
+
+In the automation settings, you can xref:automation-testing:desired-capabilities/auto-generate-capabilities.adoc[auto-generate capabilities] for your test suite.

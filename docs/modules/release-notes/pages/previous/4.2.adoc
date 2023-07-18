@@ -1,0 +1,114 @@
+= Kobiton 4.2 release notes
+:navtitle: Kobiton 4.2 release notes
+
+_March 4, 2023_
+
+These release notes pertain to Kobiton 4.2.0. As a reminder, in our November release, we started using 4.0+ as the numbering for releases of the new Kobiton, while Legacy Kobiton continues numbering starting with 3.25 and above. If you are using Legacy Kobiton, see the xref:previous/3.27.adoc[].
+
+== New iOS and Android support
+
+Kobiton 4.2 supports the following:
+
+* iOS/iPadOS 15.7.3
+* iOS/iPadOS 16.3
+* iOS/iPadOS 16.3.1
+
+== Device health screen: orange screen on unhealthy device
+
+Organizations that host their own device lab can activate the device health screen feature. When activated, unhealthy devices display an orange screen with details of the issue. The orange screen allows devices to be more easily located.
+
+A device is determined to be unhealthy if it appears *online* in the Kobiton Portal and has any of the below issues:
+
+* No Internet connection from Wi-Fi. (Cellular connection status is not supported.)
+* Remaining battery percentage is below 20%.
+
+An orange screen appears with maximum screen brightness (100%) in an unhealthy device to make it visible. If the device is used physically or through a test session, the orange screen disappears and screen brightness returns to default settings. After 30 seconds of inactivity, the orange screen appears again. When the system detects that the device is healthy again, the orange screen disappears and screen brightness returns to default settings.
+
+More detailed documentation for this feature will be added to online help soon.
+
+_Notes:_
+
+* _When a device becomes unhealthy, it may take up to 3 minutes for the orange screen to appear._
+* _When a device is healthy again, the orange screen may take up to 3 minutes to disappear._
+* _This feature is not on by default and must be enabled for your organization via a Support ticket request._
+* _A service restart on all deviceConnect machines is required after this feature is enabled._
+
+== Device health screen: red screen for offline device
+
+As part of the device health screen feature, we also introduced a red screen alert for offline, or bad, devices.
+
+A device is considered bad if it has all of the following conditions :
+
+* Device appears online in deviceConnect.
+* Device appears offline in the Kobiton Portal due to device-related issues.
+* deviceControl is installed and running on the device.
+* For iOS devices only, the device is unlocked.
+
+If the above conditions are met, a device displays a red screen with maximum screen brightness (100%). When accessed physically, this screen disappears and screen brightness returns to default settings. After 30 seconds of inactivity, the red screen appears again. When the system detects that the device is back online In Kobiton, the red screen disappears and screen brightness returns to default settings.
+
+More detailed documentation for this feature is available in link:/hc/en-us/articles/14077162655629[this link].
+
+_Notes:_
+
+* _When a device becomes bad, it may take up to 3 minutes for the red screen to appear._
+* _When a device is online again, the red screen may take up to 3 minutes to disappear._
+* _This feature is not on by default and must be enabled for your organization via a Support ticket request._
+* _A service restart on all deviceConnect machines is required after this feature is enabled._
+
+== System Metrics: Device temperature information (Android)
+
+To enable monitoring of device temperatures during a test, device temperature information now displays for Android devices as follows:
+
+* Manual Session: under the *Metrics* tab.
+* Session Explorer: under *Review System Metrics* dropdown menu.
+* System metrics payload capture.
+
+There are 4 new types of metrics under the *Temperature* category: CPU, GPU, Battery and Skin. Detailed documentation for this feature will be available in online help soon.
+
+_Notes:_
+
+* _Some Android devices cannot show all 4 types of temperature metrics (Example: Galaxy S21 5G)._
+* _Some Android devices cannot show any metrics (Example: OnePlus 7)_
+
+== Support for Microsoft Intune MDM
+
+Kobiton now has guidelines for enrolling Private and Local devices with Intune Mobile Device Management (MDM). Send us an email at mailto:support@kobiton.com[support@kobiton.com] or contact your Account Executive to learn more about about setting up Intune for Kobiton devices.
+
+_A few considerations:_
+
+* _If your Intune configuration profile or compliance policy requires a passcode to be set up on devices, *passcode mode 1* must be enabled for your organization. Learn more about passcode modes link:https://support.kobiton.com/hc/en-us/articles/6781014022797-Device-Passcodes[here]._
+* _Using Intune requires that your organization uses a *No Cleanup* policy. Learn more about Cleanup Policies link:https://support.kobiton.com/hc/en-us/articles/360055588272-Device-Cleanup-[here]._
+
+== Device Log: Show info logging for iOS devices
+
+You can now view and filter device logs by *Info* level for iOS devices (Android devices already support this type of logging). More detailed documentation for this feature is available in link:/hc/en-us/articles/14077419067661[this link].
+
+_Note:_
+
+* _Info log is supported from iOS/iPadOS 14 onward._
+* _An application must enable Info level logging to retrieve Info log._
+
+== API v2
+
+API v2 is now available with improved performance and new endpoints.
+
+Check out the API v2 documentation site link:https://api.kobiton.com/v2/docs[here].
+
+A quick introduction on how to navigate and try real API requests in this site, as well as the current API v2 limitations can be found link:https://support.kobiton.com/hc/en-us/articles/6782179234445-API-v2[here].
+
+link:https://api.kobiton.com/docs/?http#kobiton-api-v1-0[Kobiton API v1] is still available until further notice. We encourage you to start using API v2 as you add new test scripts and processes.
+
+For endpoints in API v1 not yet offered in v2, continue to use API v1. We'll continue to enhance API v2 in future releases.
+
+== Accessibility Validations: Touch Target Size and Color Contrast validations on web and hybrid applications
+
+Previously, we introduced the ability to initiate Touch Target Size and Color Contrast validations for native applications. Now, these validations are available on web and hybrid applications.
+
+_Notes:_
+
+* _Accessibility validations are an option for Enterprise plans and must be enabled for your organization._
+* _Limited support for Ionic framework. Due to the framework's limited accessibility support, only some elements can be validated._
+
+== Additional enhancements and bug fixes
+
+In addition to the above, this release includes a number of minor bug fixes and enhancements to improve your day-to-day testing.

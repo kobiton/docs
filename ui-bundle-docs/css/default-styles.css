@@ -1,5 +1,5 @@
-/*! Default styles */
-/*! Edit this file, then run 'yarn build' to auto-generate 'site.css' */
+/* Default styles */
+/* Edit this file, then run 'yarn build' to auto-generate 'site.css' */
 @font-face {
   font-family: Poppins;
   font-style: normal;
@@ -835,7 +835,8 @@ a + .breadcrumbs {
 .doc h4 .anchor::before,
 .doc h5 .anchor::before,
 .doc h6 .anchor::before {
-  content: '\00a7';
+    /* postcss will convert '\00a7' to 'a7', so a second escape character has been added */ 
+    content: '\\00a7';
 }
 .doc h1:hover .anchor,
 .doc h2:hover .anchor,
@@ -1749,18 +1750,15 @@ body {
 .navbar-brand .navbar-item {
   color: #fff;
 }
-
 .navbar-brand .app-title {
   font-size: 20px;
   padding: 0.5em 0.5em;
 }
-
 @media screen and (max-width: 768.5px) {
   .navbar-brand .app-title  {
     font-size: 16px;
   }
 }
-
 .logo {
   width: 32px;
   background: transparent url(../img/logomark.svg) no-repeat 0;
@@ -1882,7 +1880,6 @@ body {
   padding: 0.5rem 1rem;
   font-size: 14px;
 }
-
 .navbar-item.has-dropdown {
   padding: 0;
 }
@@ -1897,7 +1894,6 @@ body {
   width: inherit;
   height: inherit;
 }
-
 .login-wrapper {
   margin: 13.5px 10px;
   outline: 1px solid #fff;
@@ -1913,7 +1909,6 @@ body {
   text-align: center;
   font-size: 14px;
 }
-
 .navbar-link {
   padding-right: 2.5em;
 }
@@ -2046,7 +2041,7 @@ body {
   .navbar-end .navbar-item.has-dropdown:hover .navbar-link,
   .navbar-end .navbar-link:hover,
   .navbar-end > a.navbar-item:hover {
-    background: #230089;
+    background: #0A0F19;
     color: #fff;
   }
   .navbar-end .navbar-link::after {
@@ -2096,7 +2091,6 @@ footer.footer {
 .footer a {
   color: #191919;
 }
-
 /*! Adapted from the GitHub style by Vasily Polovnyov <vast@whiteants.net> */
 .hljs-comment,
 .hljs-quote {

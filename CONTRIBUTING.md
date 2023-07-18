@@ -12,6 +12,7 @@ If you're new to docs-as-code, start with [First time contributors](#first-time-
 - [Directory structure](#directory-structure)
 - [Antora playbooks](#antora-playbooks)
 - [Site navigation](#site-navigation)
+- [Hide a page from search](#hide-a-page-from-search)
 - [Partials](#partials)
 - [File naming](#file-naming)
 - [Page types and templates](#page-types-and-templates)
@@ -147,6 +148,20 @@ For example:
 *** xref:list-of-desired-capabilities.adoc[]
 ** xref:download-appium-script.adoc[]
 ** xref:supported-client-libraries.adoc[]
+```
+
+## Hide a page from search
+
+By default, all `.adoc` files in the `modules` directory are searchable on Kobiton Docs using the [Antora Lunr Extension](https://gitlab.com/antora/antora-lunr-extension). To hide a page from search results, add the `:noindex:` attribute to the page's metadata.
+
+For example:
+
+```asciidoc
+= Generate an API token
+:noindex:
+
+Learn how to generate an API token in Kobiton so you log in to virtualUSB through the command line.
+
 ```
 
 ## Partials
