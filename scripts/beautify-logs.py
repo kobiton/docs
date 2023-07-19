@@ -57,11 +57,11 @@ def reformat_errors(logfile, errors):
     # open the log file for writing
     with open(logfile, 'w') as f:
         # write the log type at the top of the file
-        f.write(f'= {log_type} logs\n\n')
+        f.write(f'= {log_type} logs\n')
 
         # for each error, write the type and target of the error, and the transformed file path
         for error_type, targets in errors.items():
-            f.write(f'== {error_type} not found\n')
+            f.write(f'\n== {error_type} not found\n')
             for target, files in targets.items():
                 f.write(f'\n=== {target}\n\n')
                 for file in files:
