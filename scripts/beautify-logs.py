@@ -32,16 +32,21 @@ def get_logs(logfile):
 def transform_filepath(filepath):
     # split the file path into parts
     path_parts = filepath.split('/')
+
     # find the index of 'docs' in the path parts
     doc_index = path_parts.index('docs')
+
     # create a new path starting from the part after 'docs'
     new_path_parts = path_parts[doc_index + 1:]
+
     # join the new path parts into a string to be used as link text, skipping the first two parts
     new_file_path = "/".join(new_path_parts[2:])
+
     # join the new path parts into a string to be used as the link
     full_path = "/".join(new_path_parts)
+
     # return the cross-reference link in AsciiDoc format
-    return f"xref:docs/{full_path}[{new_file_path}]"
+    return f"xref:../{full_path}[{new_file_path}]"
 
 
 # function to write the error information back to the log file in a new format
@@ -61,7 +66,7 @@ def reformat_errors(logfile, errors):
                 f.write(f'\n=== {target}\n\n')
                 for file in files:
                     new_file_path = transform_filepath(file)
-                    f.write(f'- {new_file_path}\n\n')
+                    f.write(f'- {new_file_path}\n')
 
 
 # list of log files to process
