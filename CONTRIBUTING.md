@@ -9,6 +9,7 @@ If you're new to docs-as-code, start with [First time contributors](#first-time-
 
 - [First time contributors](#first-time-contributors)
 - [Build the docs locally](#build-the-docs-locally)
+- [Antora logs](#antora-logs)
 - [Directory structure](#directory-structure)
 - [Antora playbooks](#antora-playbooks)
 - [Site navigation](#site-navigation)
@@ -72,6 +73,58 @@ If Node.js and Yarn are installed, install our project dependencies and build th
 ```shell
 yarn install
 yarn build
+```
+
+## Antora logs
+
+Logs for [each Antora playbook](#antora-playbooks) are automatically generated in the `logs` directory when you run `yarn build`. Here's an example:
+
+```plaintext
+[10:23:27.243] WARN (asciidoctor): skipping reference to missing attribute: param_pattern
+    file: /Users/<user-name>/docs/docs/modules/scriptless-automation/pages/use-rest-api.adoc
+    source: /Users/<user-name>/docs (branch: <curent-branch> <worktree> | start path: docs)
+```
+
+To beautify the log output, run:
+
+```shell
+scripts/beautify-logs.py
+```
+
+When you open the log file with the preview enabled, you can select links in the **Table of contents** or the **File** column to go directly to that section or file. Here's an example beautified log:
+
+```asciidoc
+= Docs logs
+
+.Table of contents
+* xref:_fatal[]: _NONE_
+* xref:_error[]: _NONE_
+* xref:_warn[]: 1 issue(s)
+* xref:_info[]: _NONE_
+* xref:_debug[]: _NONE_
+
+[#_fatal]
+== Fatal
+
+_NONE_
+
+[#_error]
+== Error
+
+_NONE_
+
+[#_warn]
+== Warn
+
+[cols="1,1,1,1"]
+|===
+|Issue type|Issue|Module|File
+
+|skipping reference to missing attribute
+|beta
+|release-notes
+|xref:../docs/modules/release-notes/pages/previous/4.3.adoc[4.3.adoc]
+|===
 ```
 
 ## Directory structure
