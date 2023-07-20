@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 # Beautifies logs in 'logs/' and adds 'xref:' attributes so
 # maintainers can directly open files from the preview panel.
 
