@@ -1,6 +1,15 @@
 = Device passcodes
 :navtitle: Device passcodes
 
-Learn how to set device passcodes so you and your team can test apps that require device passcodes.  xref:devices:open-the-device-settings.adoc[Open the device settings] to get started.
+Some apps or MDMs require a passcode to be set on a device. So in order to test them, Kobiton must support the ability to add a passcode to a device. The device passcode feature is available for Private and Local devices.
+
+PASSWORD mode: all devices are automatically set with system-generated alphabetic text password. Users will not see the passcode when interacting with the device and there will not be a passcode toggle button in the device modal.
+PIN mode: all devices are automatically set with a system-generated PIN. Users will not see the passcode when interacting with the device and there will not be a passcode toggle button in the device modal.
+
+In order to use these features on Private and Local devices, please make a request via Kobiton Support. We will enable this feature as an org-level permission.
+
+Regardless of the mode, passcodes should NOT be added/changed/removed within a test session using the Settings menu of the device or a popup within the device. If an MDM requires a stronger passcode than the one set by the user at the outset of a manual session, the user must close the session and remove the passcode via the exit modal. Then, start a new session and create a new stronger passcode.
+
+As mentioned above, the PIN and PASSWORD passcode mode must be activated for you by the Kobiton team. Once the device is enabled with pin or password, you will launch the device from the Portal without the need to enter the the passcode. When in a manual session, you can check the device passcode by turning off the screen and turning it on again. By doing this, you'll see the device automatically filling in the passcode and unlocking the device.
 
 Reach out...
