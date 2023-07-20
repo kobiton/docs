@@ -70,6 +70,7 @@ def reformat_errors(logfile, errors):
     # Table footer
     output += '|==='
 
+    # Overwrite log file
     with open(logfile, 'w') as f:
         f.write(output)
 
