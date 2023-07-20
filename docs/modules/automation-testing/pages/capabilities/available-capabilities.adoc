@@ -4,7 +4,7 @@
 These are the capabilities you can use to interact with the link:https://api.kobiton.com/v2/docs[Kobiton API] during an automation session.
 
 [NOTE]
-You can also xref:desired-capabilities/auto-generate-capabilities.adoc[auto-generate capabilities] for your test script.
+You can also xref:automation-testing:capabilities/auto-generate-capabilities.adoc[auto-generate capabilities] for your test script.
 
 == Capabilities
 
@@ -281,7 +281,7 @@ String kobitonServerUrl = "https://<name>:<id>@api.kobiton.com/wd/hub"; // Use t
 [#_passcode]
 === `passcode`
 
-If a device passcode was xref:devices:set-device-passcodes.adoc[set by an administrator], the value `passcode` must the pre-set passcode in order to use the device during the test session. If the device doesn't have a passcode, the value of `passcode` will be used to create one. xref:automation-testing:desired-capabilities/add-passcode.adoc[Learn more].
+If a device passcode was xref:devices:set-device-passcodes.adoc[set by an administrator], the value `passcode` must the pre-set passcode in order to use the device during the test session. If the device doesn't have a passcode, the value of `passcode` will be used to create one. xref:automation-testing:capabilities/add-passcode.adoc[Learn more].
 
 * *Type:* `string`
 * *Required capablities:* xref:_udid[]
@@ -311,7 +311,7 @@ capabilities.setCapability("removePasscodeOnExit", true); // The device passcode
 [#_visualValidation]
 === `visualValidation`
 
-Validates UI output across different devices, operating systems, and form factors.  xref:automation-testing:desired-capabilities/add-visualvalidation.adoc[Learn more].
+Validates UI output across different devices, operating systems, and form factors.  xref:automation-testing:capabilities/add-visualvalidation.adoc[Learn more].
 
 * *Type:* `boolean`
 * *Required capabilities:* xref:_ensureWebviewsHavePages[]
@@ -357,7 +357,7 @@ capabilities.setCapability("kobiton:referenceSessionId", 0000011); // Choose a d
 [#_flexCorrect]
 === `flexCorrect`
 
-When a script is run on different devices, element selection is autocorrected. xref:automation-testing:desired-capabilities/add-flexcorrect.adoc[Learn more].
+When a script is run on different devices, element selection is autocorrected. xref:automation-testing:capabilities/add-flexcorrect.adoc[Learn more].
 
 * *Type:* `boolean`
 * *Required capabilities:* None
