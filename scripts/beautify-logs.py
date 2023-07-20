@@ -8,9 +8,6 @@ import re
 import subprocess
 from collections import defaultdict
 
-# Run `yarn build` from repo root before executing the rest of the script
-subprocess.run(["yarn", "build"], check=True)
-
 
 # Get git root path
 def get_git_root_path():
@@ -76,7 +73,8 @@ def count_issues(logs):
 
 def reformat_logs(logfile, logs):
     antora_playbook = os.path.basename(logfile).split('-')[0].capitalize()
-    log_types = ['FATAL (asciidoctor)', 'ERROR (asciidoctor)', 'WARN (asciidoctor)', 'INFO (asciidoctor)', 'DEBUG (asciidoctor)']
+    log_types = ['FATAL (asciidoctor)', 'ERROR (asciidoctor)', 'WARN (asciidoctor)', 'INFO (asciidoctor)',
+                 'DEBUG (asciidoctor)']
 
     # Get total issue counts
     total = count_issues(logs)

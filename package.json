@@ -9,6 +9,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "./scripts/minify-css.sh && antora antora-playbook-docs.yml && antora antora-playbook-widget.yml",
+    "local": "yarn run build && ./scripts/beautify-logs.py",
     "start-docs": "open ./build/docs/kobiton-docs",
     "start-widget": "open ./build/widget/kobiton-docs"
   },
@@ -35,6 +36,7 @@
     "postcss": "^8.4.25",
     "postcss-clean": "^1.2.2",
     "postcss-cli": "^10.1.0",
-    "postcss-import": "^15.1.0"
+    "postcss-import": "^15.1.0",
+    "python": "^0.0.4"
   }
 }
