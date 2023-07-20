@@ -72,26 +72,14 @@ If Node.js and Yarn are installed, install our project dependencies and build th
 
 ```shell
 yarn install
-yarn build
+yarn local
 ```
 
 ## Antora logs
 
-Logs for [each Antora playbook](#antora-playbooks) are automatically generated in the `logs` directory when you run `yarn build`. Here's an example:
+Beautified logs for [each Antora playbook](#antora-playbooks) are automatically generated in the `logs` directory when you run `yarn local`. If you have the AsciiDoc preview enabled in your text editor, you can select links in the **Table of contents** or the **File** column to go directly to that section or file.
 
-```plaintext
-[10:23:27.243] WARN (asciidoctor): skipping reference to missing attribute: param_pattern
-    file: /Users/<user-name>/docs/docs/modules/scriptless-automation/pages/use-rest-api.adoc
-    source: /Users/<user-name>/docs (branch: <curent-branch> <worktree> | start path: docs)
-```
-
-To beautify the log output, run:
-
-```shell
-scripts/beautify-logs.py
-```
-
-When you open the log file with the preview enabled, you can select links in the **Table of contents** or the **File** column to go directly to that section or file. Here's an example beautified log:
+Here's an example:
 
 ```asciidoc
 = Docs logs
@@ -125,6 +113,20 @@ _NONE_
 |release-notes
 |xref:../docs/modules/release-notes/pages/previous/4.3.adoc[4.3.adoc]
 |===
+```
+
+To generate logs using Antora's default format, run instead:
+
+```shell
+yarn build
+```
+
+Here's an example:
+
+```plaintext
+[10:23:27.243] WARN (asciidoctor): skipping reference to missing attribute: param_pattern
+    file: /Users/<user-name>/docs/docs/modules/scriptless-automation/pages/use-rest-api.adoc
+    source: /Users/<user-name>/docs (branch: <curent-branch> <worktree> | start path: docs)
 ```
 
 ## Directory structure
