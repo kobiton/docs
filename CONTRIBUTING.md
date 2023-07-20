@@ -77,9 +77,9 @@ yarn local
 
 ## Antora logs
 
-Beautified logs for [each Antora playbook](#antora-playbooks) are automatically generated in the `logs` directory when you run `yarn local`. If you have the AsciiDoc preview enabled in your text editor, you can select links in the **Table of contents** or the **File** column to go directly to that section or file.
+Beautified logs are automatically generated in the `logs` directory when you run `yarn local`. If AsciiDoc preview is enabled in your text editor, you can select links in the **Table of contents** or the **File** column to go directly to that section or file.
 
-Here's an example:
+For example:
 
 ```asciidoc
 = Docs logs
@@ -115,13 +115,7 @@ _NONE_
 |===
 ```
 
-To generate logs using Antora's default format, run instead:
-
-```shell
-yarn build
-```
-
-Here's an example:
+To generate standard Antora logs instead, run `yarn build`. For example:
 
 ```plaintext
 [10:23:27.243] WARN (asciidoctor): skipping reference to missing attribute: param_pattern
