@@ -21,7 +21,7 @@ To upload your application to Kobiton App Repo, add the following to your `pipel
 [source,yaml]
 ----
 steps:
-- label: "Kobiton App Upload"
+- label: 'Kobiton App Upload'
   plugins:
   - kobiton/kobiton-app-upload#v1.0.0:
       app-name: '<app-name>'
@@ -73,21 +73,23 @@ image:$OLD-IMAGE$[width="", alt=""]
 
 == Kobiton Execute Test
 To execute your test with Kobiton Executor, add the following to your pipeline. yml:
+
+[source,yaml]
 ----
 steps:
-- label: "Kobiton Execute Test"
+- label: 'Kobiton Execute Test'
 plugins:
 - kobiton/kobiton-execute-test#v1.0.0:
    kobi-username: 'your kobiton username'
-   kobi-api-key: "your kobiton api key"
+   kobi-api-key: 'your kobiton api key'
    executor-url: 'https://executor-demo.kobiton.com'
    executor-username: 'your kobiton executor server username'
-   executor-passcode: "your kobiton executor server passcode"
+   executor-password: 'your kobiton executor server password'
    git-repo-url: 'https://github.com/Nhattd97/azure-devops-sample-java-prod.git'
    git-repo-branch: 'master'
    git-repo-ssh-key: ''
    app-id: 'kobiton-store:91041'
-   root-directory: "/"
+   root-directory: '/'
    command: 'mvn test'
    device-name: 'Galaxy S10'
    device-platform-version: '10'
@@ -96,6 +98,7 @@ plugins:
    wait-for-execution: 'true'
    log-type: 'combined'
 ----
+
 [cols="1,1",options="header"]
 |===
 | Configuration
@@ -105,7 +108,7 @@ kobi-api-key (required)
 | To get your Kobiton Username and API Key, please follow instructions at _IV. Configure Test Script for Kobiton_ section on link:https://kobiton.com/blog/tutorial/parallel-testing-selenium-webdriver/[our blog]
 | executor-url (required)
 executor-username (required)
-executor-passcode (required)
+executor-password (required)
 | We will provide you credentials to access our TestNG Execution Server. This will be used to execute your automation test script.
 | git-repo-url (required)
 git-repo-branch (required)
