@@ -21,7 +21,7 @@ To upload your application to Kobiton App Repo, add the following to your `pipel
 [source,yaml]
 ----
 steps:
-- label: "Kobiton App Upload"
+- label: 'Kobiton App Upload'
   plugins:
   - kobiton/kobiton-app-upload#v1.0.0:
       app-name: '<app-name>'
@@ -59,31 +59,37 @@ steps:
 | API key to access Kobiton API, for example `2c8n41e4-b30d-4f19-ba63-6596016c9e58`. To get your Kobiton API Key, please follow instructions at _IV. Configure Test Script for Kobiton_ section on link:https://kobiton.com/blog/tutorial/parallel-testing-selenium-webdriver/[our blog]
 |===
 
-For example: This will upload a new app version to app ID = 294808 and this app is private. image:./guide-media/01GWDZECF8TQXCKCKGFPTQDM3D[]
+For example: This will upload a new app version to app ID = 294808 and this app is private.
 
-Once you're done adding the plugin to your pipeline, click on "Save and Build", then click "Create Build" to proceed. image:./guide-media/01GWE1DA6J088P949DYNJ3S8YQ[]
+image:$OLD-IMAGE$[width="", alt=""]
 
-image:./guide-media/01GWEFXWJN3WFR3SPABHBNV5NH[]
+Once you're done adding the plugin to your pipeline, click on "Save and Build", then click "Create Build" to proceed.
+
+image:$OLD-IMAGE$[width="", alt=""]
+
+image:$OLD-IMAGE$[width="", alt=""]
 
 (Optional) Once the pipeline completes running, you can go to Kobiton App Repo to double check your new application/new application version.
 
 == Kobiton Execute Test
 To execute your test with Kobiton Executor, add the following to your pipeline. yml:
+
+[source,yaml]
 ----
 steps:
-- label: "Kobiton Execute Test"
+- label: 'Kobiton Execute Test'
 plugins:
 - kobiton/kobiton-execute-test#v1.0.0:
    kobi-username: 'your kobiton username'
-   kobi-api-key: "your kobiton api key"
+   kobi-api-key: 'your kobiton api key'
    executor-url: 'https://executor-demo.kobiton.com'
    executor-username: 'your kobiton executor server username'
-   executor-passcode: "your kobiton executor server passcode"
+   executor-password: 'your kobiton executor server password'
    git-repo-url: 'https://github.com/Nhattd97/azure-devops-sample-java-prod.git'
    git-repo-branch: 'master'
    git-repo-ssh-key: ''
    app-id: 'kobiton-store:91041'
-   root-directory: "/"
+   root-directory: '/'
    command: 'mvn test'
    device-name: 'Galaxy S10'
    device-platform-version: '10'
@@ -92,6 +98,7 @@ plugins:
    wait-for-execution: 'true'
    log-type: 'combined'
 ----
+
 [cols="1,1",options="header"]
 |===
 | Configuration
@@ -101,7 +108,7 @@ kobi-api-key (required)
 | To get your Kobiton Username and API Key, please follow instructions at _IV. Configure Test Script for Kobiton_ section on link:https://kobiton.com/blog/tutorial/parallel-testing-selenium-webdriver/[our blog]
 | executor-url (required)
 executor-username (required)
-executor-passcode (required)
+executor-password (required)
 | We will provide you credentials to access our TestNG Execution Server. This will be used to execute your automation test script.
 | git-repo-url (required)
 git-repo-branch (required)
@@ -131,6 +138,6 @@ If it’s set to “false”, the release pipeline will continue to the next ste
 
 Example:
 
-image:./guide-media/01GWEGNP2MJAAWS9VXARSZQMHG[image-20220509-140135.png]
+image:$OLD-IMAGE$[width="", alt=""]
 
 Once you’re done adding the plugin to your pipeline, select “Save and Build”, then click “Create Build” to proceed.
