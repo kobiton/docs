@@ -1,10 +1,7 @@
 = Add our library to your Android app
 :navtitle: Add our library to your Android app
 
-Learn how to add our biometric authentication library to your Android xref:integrations:biometric-authentication/add-our-library-to-your-ios-app.adoc[or iOS] app so you can test biometric authentication during your manual and automated test sessions.
-
-[NOTE]
-After you add our library, rebuild your `.apk` and upload it to the xref:apps:manage-apps.adoc[app repository].
+Learn how to add our biometric authentication library to your Android xref:biometric-authentication/add-our-library-to-your-ios-app.adoc[or iOS] app so you can test biometric authentication during your manual and automated test sessions.
 
 == Before you start
 
@@ -27,18 +24,18 @@ Before you can add our library to your app, create a link:https://developer.andr
 
 == Add `KobitonBiometric.aar`
 
-First you’ll open your app’s Android Studio project and create a `libs` directory inside your project’s `app` directory if you don't already have one. Then download and move `KobitonBiometric.aar` into your new `libs` directory.
+First you'll open your app's Android Studio project and create a `libs` directory inside your project's `app` directory if you don't already have one. Then download and move `KobitonBiometric.aar` into your new `libs` directory.
 
 == Modify `build.gradle`
 
-Next you’ll open the `build.gradle` in your app directory and add our library (or all your `.aar` libraries) to your list of `dependencies`:
+Next you'll open the `build.gradle` in your app directory and add our library (or all your `.aar` libraries) to your list of `dependencies`:
 
 [,groovy]
 ----
     implementation fileTree(dir: 'libs', include: ['<library>']) // Replace <library> with KobitonBiometric.aar or *.arr.
 ----
 
-Here’s an example `build.gradle` file:
+Here's an example `build.gradle` file:
 
 [,groovy]
 ----
@@ -56,11 +53,11 @@ dependencies {
 }
 ----
 
-When you’re finished, save your file.
+When you're finished, save your file.
 
 == Modify AndroidManifest. xml
 
-Next you’ll open the `AndroidManifest.xml` file in `/app/src/main` and add the following lines to your `<manifest>` element:
+Next you'll open the `AndroidManifest.xml` file in `/app/src/main` and add the following lines to your `<manifest>` element:
 
 [,xml]
 ----
@@ -80,19 +77,19 @@ Inside `<application>`, replace:
 * `*.BiometricManager` classes with `com.kobiton.biometric.BiometricManager`
 * `*.BiometricPrompt` with `com.kobiton.biometric.BiometricPrompt`
 
-Here’s an example `AndroidManifest.xml` file:
+Here's an example `AndroidManifest.xml` file:
 
 [,xml]
 ----
 $EXAMPLE$
 ----
 
-When you’re finished, save your file and xref:_verify_your_changes[verify your changes].
+When you're finished, save your file and xref:_verify_your_changes[verify your changes].
 
 [#_verify_your_changes]
 == Verify your changes
 
-As with any code change, you’ll want to verify your new library works. First, rebuild your `.apk` and upload it to the app repository. Then, start a manual test session, launch your app, and try using biometric authentication to sign in. Select *Pass* and check the logs to verify your changes.
+As with any code change, you'll want to verify your new library works. First, rebuild your `.apk` and xref:apps:manage-apps.adoc#_upload_an_app[upload it to the app repository]. Then, start a manual test session, launch your app, and try using biometric authentication to sign in. Select *Pass* and check the logs to verify your changes.
 
 == Known issues
 
@@ -103,7 +100,7 @@ If you add our library to your app and send `BiometricPrompt.AuthenticationCallb
 java.lang.NullPointerException: Can't toast on a thread that has not called Looper.prepare()
 ----
 
-Here’s an example that could lead to a crash:
+Here's an example that could lead to a crash:
 
 [source,java]
 ----

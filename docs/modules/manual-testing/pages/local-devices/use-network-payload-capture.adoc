@@ -1,0 +1,56 @@
+= Use network payload capture
+:navtitle: Use network payload capture
+
+Learn how to use network payload capture for your manual test session so you can...
+
+[NOTE]
+====
+Learn more about xref:devices:local-devices/network-payload-capture/network-payload-capture.adoc[network payload capture].
+====
+
+== Before you start
+
+You'll need to complete the following:
+
+* xref:devices:local-devices/network-payload-capture/configure-an-ios-device.adoc[Configure an iOS device]
+* xref:devices:local-devices/network-payload-capture/configure-an-android-device.adoc[Configure an Android device]
+* Download link:https://apps.apple.com/app/id1037126344[Apple Configurator] and link:https://support.apple.com/guide/apple-configurator-mac/use-the-command-line-tool-cad856a8ea58/mac[install automation tools]
+
+== Connect a mobile device
+
+Make sure that the mobile device and the computer where it is plugged connect to the same Wifi/Ethernet address.
+
+== Launch Kobiton desktop and start configurator
+
+With the mobile device plugged in, launch the Kobiton Desktop application.
+
+Make sure that the Apple configurator tool is started and running during the test for Android devices.
+
+== Enable network payload capture
+
+In *Devices*, xref:devices:search-for-a-device.adoc[search for a device], then select the *vertical ellipses* next to a device.
+
+image:$NEW-IMAGE$[width="",alt=""]
+
+Select *Network Payload Capture* and choose a configuration from the dropdown.
+
+image:$NEW-IMAGE$[width="",alt=""]
+
+When you're ready, select *Launch Device* to start a manual testing session.
+
+== Test the device
+
+THIS.
+
+== Open Session Explorer
+
+THIS.
+
+
+== Use the Network Payload capture testing on the device
+
+.
+. With the mobile device plugged in, launch the Kobiton Desktop application.
+. Make sure that the Apple configurator tool is started and running during the test for Android devices.
+. Start your test session including Manual (or Appium automation) that accesses the domain which is set up to capture payload.
+. You can view the payload in the tab Observe Request / Response Payloads in Session Detail page on the Kobiton portal.
