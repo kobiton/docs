@@ -7,7 +7,7 @@ image:$NEW-IMAGE$[width=, alt=""]
 
 == Before you start
 
-You'll need to xref:testrail/create-a-project.adoc#_generate_an_api_key[generate a TestRail API key] and xref:testrail/create-a-project.adoc#_configure_project[create a new TestRail project]. You can also xref:profile:manage-your-api-keys.adoc[add a new Kobiton API key] if you don't want to use your default one.
+You'll need to xref:integrations:testrail/create-a-project.adoc#_generate_an_api_key[generate a TestRail API key] and xref:integrations:testrail/create-a-project.adoc#_configure_project[create a new TestRail project]. You can also xref:profile:manage-your-api-keys.adoc[add a new Kobiton API key] if you don't want to use your default one.
 
 == Create constant variables
 
@@ -37,7 +37,7 @@ public class Config {
 }
 ----
 
-Below your Kobiton credentials, assign your TestRail xref:testrail/locate-credentials.adoc#_server_address[server address], xref:testrail/locate-credentials.adoc#_username[username], and xref:testrail/locate-credentials.adoc#_api_key[API key] to constant variables. Here's an example:
+Below your Kobiton credentials, assign your TestRail xref:integrations:testrail/locate-credentials.adoc#_server_address[server address], xref:integrations:testrail/locate-credentials.adoc#_username[username], and xref:integrations:testrail/locate-credentials.adoc#_api_key[API key] to constant variables. Here's an example:
 
 [source,java]
 ----
@@ -70,10 +70,10 @@ Next, in the same config file, locate `DesiredCapabilities` and add the followin
 | Assign to the TestRail API key variable.
 
 | `"kobiton:externalRunId"`
-| Assign to your TestRail project's xref:testrail/locate-credentials.adoc#_run_id[run ID].
+| Assign to your TestRail project's xref:integrations:testrail/locate-credentials.adoc#_run_id[run ID].
 
 | `"kobiton:externalCaseId"`
-| Assign to your TestRail project's xref:testrail/locate-credentials.adoc#_case_id[case ID].
+| Assign to your TestRail project's xref:integrations:testrail/locate-credentials.adoc#_case_id[case ID].
 |===
 
 Here's an example:
