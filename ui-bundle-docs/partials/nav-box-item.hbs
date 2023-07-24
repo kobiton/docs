@@ -154,7 +154,7 @@
           </div>
         </a>
       {{/if}} 
-      {{#if (eq ./content 'Session analytics')}}
+      {{#if (eq ./content 'Session Explorer')}}
         <a class="col-3" href="
                   {{~#if (eq ./urlType 'internal')}}{{{relativize ./url}}}
                   {{~else}}{{{./url}}}{{~/if}}">
@@ -163,7 +163,7 @@
               <div class="box-title">
                 <div class="session-explorer-image"></div>
                 <div class="title-info">
-                  Session analytics
+                  Session Explorer
                 </div>
               </div>
               <div class="box-description">Analyze sessions and validations in the Session Explorer.</div>
