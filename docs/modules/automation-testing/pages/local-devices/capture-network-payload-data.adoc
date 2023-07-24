@@ -1,0 +1,35 @@
+= Capture network payload data during an automation session
+:navtitle: Capture network payload data
+
+Learn how to capture network payload data during an automation session so you can review request and response data in xref:session-analytics:about-the-session-explorer.adoc[Session Explorer].
+
+[#_before_you_start]
+== Before you start
+
+You'll need to xref:devices:local-devices/network-payload-capture/network-payload-capture.adoc#_set_up[set up network payload capture].
+
+== Enable network payload capture
+
+[NOTE]
+You can add the capability to your existing capabilities, or you can xref:automation-testing:capabilities/auto-generate-capabilities.adoc[auto-generate new capabilities] to use instead.
+
+In your test suite's config file, set `useConfiguration` to the xref:_before_you_start[configuration you previously created].
+
+For example:
+
+[source,java]
+----
+public static DesiredCapabilities getIPhone11ProIOS146DesiredCapabilities() {
+        DesiredCapabilities capabilities = new DesiredCapabilities();
+
+        capabilities.setCapability("kobiton:useConfiguration", "https-requests");
+
+    return capabilities;
+}
+----
+
+When you're finished, save your changes, then start your automation session.
+
+== Launch Session Explorer
+
+include::devices:partial$network-payload-capture/launch-session-explorer.adoc[]
