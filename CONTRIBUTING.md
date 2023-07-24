@@ -63,14 +63,14 @@ When a commit is merged to our `main` branch in GitHub, the site is automaticall
 
 We use [Antora](https://docs.antora.org/antora/latest/how-antora-works/) to generate a static site. Before you can use Antora to generate the site locally, you'll need [Node.js](https://nodejs.org/) and [Yarn](https://yarnpkg.com/). Run the following commands to see if they're installed:
 
-```shell
+```plaintext
 node --version
 yarn --version
 ```
 
 If Node.js and Yarn are installed, install our project dependencies and build the docs locally by running:
 
-```shell
+```plaintext
 yarn install
 yarn local
 ```
@@ -115,7 +115,9 @@ _NONE_
 |===
 ```
 
-To generate standard Antora logs instead, run `yarn build`. For example:
+To generate standard Antora logs instead, run `yarn build`.
+
+For example:
 
 ```plaintext
 [10:23:27.243] WARN (asciidoctor): skipping reference to missing attribute: param_pattern
