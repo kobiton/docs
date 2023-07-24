@@ -19,7 +19,7 @@ If Node.js and Yarn are installed, you can install project dependencies and buil
 
 ```shell
 yarn install
-yarn build
+yarn local
 ```
 
 ## Code of Conduct
