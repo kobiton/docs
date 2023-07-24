@@ -10,14 +10,14 @@ This repository contains the source files for [docs.kobiton.com](https://docs.ko
 
 To build the docs locally, you'll need [Node.js](https://nodejs.org/) and [Yarn](https://yarnpkg.com/). Run the following commands to check if they're installed:
 
-```shell
+```plaintext
 node --version
 yarn --version
 ```
 
 If Node.js and Yarn are installed, you can install project dependencies and build the docs by running:
 
-```shell
+```plaintext
 yarn install
 yarn local
 ```
