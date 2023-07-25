@@ -1,0 +1,57 @@
+= Reinspect Appium elements
+:navtitle: Reinspect Appium elements
+
+Learn how to reinspect Appium elements after your test session so you can  download the session's XML hierarchy, search for specific attributes, get attribute values, and more.
+
+== Open the inspector
+
+First, search for a session and xref:session-explorer:launch-session-explorer.adoc[launch Session Explorer].
+
+image:$NEW-IMAGE$[width=, alt=""]
+
+In Session Explorer, select *Appium Inspector*.
+
+image:session-explorer:appium-inspector-context.png[width=1000,alt="A context to Appium inspector in Session Explorer"]
+
+== Download the inventory
+
+Download the current XML hierarchy as an `.xml` file.
+
+image:session-explorer:download-inventory-context.png[width=1000,alt="A context to Download inventory of Appium Inspector"]
+
+== Filter the inventory
+
+Display the XML hierarchy of the current device screen. Select a specific element from the hierarchy to highlight it on the device.
+
+image:$NEW-IMAGE$[width=, alt=""]
+
+image:session-explorer:refresh-inventory-closeup.png[width=500,alt="A closeup to see Refresh Inventory"]
+
+[NOTE]
+*Refresh inventory* resets all filters and searches.
+
+Filter the XML hierarchy by the selected WebView. The default WebView is `NATIVE_APP`.
+
+image:session-explorer:webview-closeup.png[width=500,alt="A closeup to webview with default is NATIVE_APP"]
+
+== Search for an element
+
+Filter the XML hierarchy by a specific element.
+
+image:session-explorer:search-bar-closeup.png[width=500,alt="A closeup to search bar in the Appium Inspector"]
+
+== Inspect an element
+
+Hover over on-screen elements to highlight the elements in the XML hierarchy.
+
+image:session-explorer:inspect-elements-context.png[width=1000,alt="A context to Inspect Element function in Appium Inspector"]
+
+== Get an element's XML attribute
+
+Display an element's attributes.
+
+image:session-explorer:attributes-context.png[width=1000,alt="A context to Attributes of Appium Inspector"]
+
+Hover over a specific attribute and to copy it to your clipboard.
+
+image:session-explorer:hover-attribute-closeup.png[width=500,alt="Hover over a specific attribute and to copy it to your clipboard"]
