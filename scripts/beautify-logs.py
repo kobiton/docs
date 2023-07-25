@@ -5,34 +5,34 @@
 
 import os
 import re
-import subprocess
 from collections import defaultdict
 
-
-# Get git root path
-def get_git_root_path():
-    return subprocess.check_output(["git", "rev-parse", "--show-toplevel"]).strip().decode('utf-8')
-
-
-git_root = get_git_root_path()
+# Get the directory of the script
+script_dir = os.path.dirname(os.path.realpath(__file__))
 
 # Get log location
-log_files = [os.path.join(git_root, 'logs/docs-logs.adoc'), os.path.join(git_root, 'logs/widget-logs.adoc')]
+log_files = [os.path.join(script_dir, '../logs/docs-logs.adoc'), os.path.join(script_dir, '../logs/widget-logs.adoc')]
 
 
 # Get errors from logs
 def get_logs(log):
-    log_regex = r"\[(.*?)\] (.*? \(asciidoctor\)): (.*?): (.*?)\n\s*file: (.*?)\n"
+    log_regex = r'{"level":"(.*?)","time":\d+,"name":"asciidoctor","file":{"path":"(.*?)"},"source":{"url":.*,"local":.*,"worktree":"(.*?)",.*},"msg":"(.*?): (.*?)"\}'
     logs = defaultdict(lambda: defaultdict(lambda: defaultdict(list)))
 
     with open(log, 'r') as f:
-        log_content = f.read()
+        for line in f:
+            match = re.search(log_regex, line)
+            if match:
+                log_type = f"{match.group(1).upper()} (asciidoctor)"
+                absolute_file_path = match.group(2)
+                worktree_path = match.group(3)
+                issue = match.group(4)
+                log_target = match.group(5)
 
-    # Get and group relevant log information
-    matches = re.findall(log_regex, log_content)
-    for match in matches:
-        timestamp, log_type, issue, log_target, file = match
-        logs[log_type][issue][log_target].append(file)
+                # Removing the worktree path from the absolute file path
+                relative_file_path = absolute_file_path.replace(worktree_path, '', 1)
+
+                logs[log_type][issue][log_target].append(relative_file_path)
 
     return logs
 
@@ -103,12 +103,10 @@ def reformat_logs(logfile, logs):
             for issue, log_targets in logs[type].items():
                 for log_target, files in log_targets.items():
                     for file in files:
-                        path_parts = file.split('/')
-                        module_index = path_parts.index('modules')
-                        module = path_parts[module_index + 1]
-                        new_path_parts = path_parts[path_parts.index('docs') + 1:]
-                        new_file_path = "/".join(new_path_parts)
-                        output += f'|{issue}\n|{log_target}\n|{module}\n|xref:../{new_file_path}[{new_path_parts[-1]}]\n'
+                        # Extracting module and file name from relative path
+                        module = file.split('modules/')[1].split('/')[0]
+                        file_name = file.split('/')[-1]
+                        output += f'|{issue}\n|{log_target}\n|{module}\n|xref:..{file}[{file_name}]\n'
             output += '|===\n\n'
         else:
             # If there are no logs, write NONE
@@ -122,10 +120,8 @@ def reformat_logs(logfile, logs):
 # Run script
 def run_script():
     for logfile in log_files:
-        absolute_logfile_path = os.path.join(git_root, logfile)
-        logs = get_logs(absolute_logfile_path)
+        logs = get_logs(logfile)
         sorted_logs = sort_logs(logs)
-        reformat_logs(absolute_logfile_path, sorted_logs)
-
+        reformat_logs(logfile, sorted_logs)
 
 run_script()
