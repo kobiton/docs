@@ -1,57 +1,59 @@
 = Reinspect Appium elements
 :navtitle: Reinspect Appium elements
 
-Learn how to reinspect Appium elements after your test session so you can  download the session's XML hierarchy, search for specific attributes, get attribute values, and more.
+Learn how to reinspect Appium elements after your test session so you can download the session's XML hierarchy, search for specific attributes, get attribute values, and more.
 
 == Open the inspector
 
-First, search for a session and xref:session-explorer:launch-session-explorer.adoc[launch Session Explorer].
+include::session-explorer:partial$launch-session-explorer.adoc[]
 
-image:$NEW-IMAGE$[width=, alt=""]
-
-In Session Explorer, select *Appium Inspector*.
+Select *Appium Inspector*.
 
 image:session-explorer:appium-inspector-context.png[width=1000,alt="A context to Appium inspector in Session Explorer"]
 
-== Download the inventory
+== Use the inspector
 
-Download the current XML hierarchy as an `.xml` file.
+=== Generate the XML hierarchy
 
-image:session-explorer:download-inventory-context.png[width=1000,alt="A context to Download inventory of Appium Inspector"]
-
-== Filter the inventory
-
-Display the XML hierarchy of the current device screen. Select a specific element from the hierarchy to highlight it on the device.
-
-image:$NEW-IMAGE$[width=, alt=""]
+To generate the XML hierarchy using the selected test step, select *Refresh Inventory*.
 
 image:session-explorer:refresh-inventory-closeup.png[width=500,alt="A closeup to see Refresh Inventory"]
 
 [NOTE]
-*Refresh inventory* resets all filters and searches.
+*Refresh Inventory* will reset all your active filters and searches.
 
-Filter the XML hierarchy by the selected WebView. The default WebView is `NATIVE_APP`.
+=== Filter the XML hierarchy
+
+By default, WebView is set to `NATIVE_APP`. To filter the XML hierarchy by a different WebView, select the dropdown and choose a different option.
 
 image:session-explorer:webview-closeup.png[width=500,alt="A closeup to webview with default is NATIVE_APP"]
 
-== Search for an element
-
-Filter the XML hierarchy by a specific element.
+To filter the XML hierarchy by a label, xPath, or xPath attribute, enter your string into the search bar.
 
 image:session-explorer:search-bar-closeup.png[width=500,alt="A closeup to search bar in the Appium Inspector"]
 
-== Inspect an element
+=== Inspect an element
 
-Hover over on-screen elements to highlight the elements in the XML hierarchy.
+To highlight an element in the XML hierarchy on the device screen, place your pointer over the element in the XML hierarchy.
 
 image:session-explorer:inspect-elements-context.png[width=1000,alt="A context to Inspect Element function in Appium Inspector"]
 
-== Get an element's XML attribute
+To highlight an element on the device screen in the XML hierarchy, select *Inspect Element* and place your pointer over the element on the device screen.
 
-Display an element's attributes.
+image:$NEW-IMAGE$[width=, alt=""]
+
+=== Get an element's XML attributes
+
+To get an element's XML attributes, select an element in the XML hierarchy, then select *Show Attributes*.
 
 image:session-explorer:attributes-context.png[width=1000,alt="A context to Attributes of Appium Inspector"]
 
-Hover over a specific attribute and to copy it to your clipboard.
+To copy a specific attribute to your clipboard, place your mouse of the attribute and select the *Copy* icon.
 
 image:session-explorer:hover-attribute-closeup.png[width=500,alt="Hover over a specific attribute and to copy it to your clipboard"]
+
+=== Download all XML data
+
+To download the current XML hierarchy as an `.xml` file, select the *Download Inventory* icon.
+
+image:session-explorer:download-inventory-context.png[width=1000,alt="A context to Download inventory of Appium Inspector"]
