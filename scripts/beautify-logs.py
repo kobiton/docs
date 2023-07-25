@@ -4,37 +4,34 @@
 # maintainers can directly open files from the preview panel.
 
 import os
-import re
+import json
 from collections import defaultdict
 
-# Get the directory of the script
-script_dir = os.path.dirname(os.path.realpath(__file__))
-
-# Get log location
-log_files = [os.path.join(script_dir, '../logs/docs-logs.adoc'), os.path.join(script_dir, '../logs/widget-logs.adoc')]
+# Constants
+SCRIPT_DIR = os.path.dirname(os.path.realpath(__file__))
+LOG_FILES = [os.path.join(SCRIPT_DIR, '../logs/docs-logs.adoc'), os.path.join(SCRIPT_DIR, '../logs/widget-logs.adoc')]
 
 
-# Get errors from logs
+# Get the logs and create a dictionary for building beautified logs
 def get_logs(log):
-    log_regex = r'{"level":"(.*?)","time":\d+,"name":"asciidoctor","file":{"path":"(.*?)"},"source":{"url":.*,"local":.*,"worktree":"(.*?)",.*},"msg":"(.*?): (.*?)"\}'
     logs = defaultdict(lambda: defaultdict(lambda: defaultdict(list)))
+    log_types = set()
 
     with open(log, 'r') as f:
         for line in f:
-            match = re.search(log_regex, line)
-            if match:
-                log_type = f"{match.group(1).upper()} (asciidoctor)"
-                absolute_file_path = match.group(2)
-                worktree_path = match.group(3)
-                issue = match.group(4)
-                log_target = match.group(5)
+            data = json.loads(line)
+            log_type = f"{data['level'].upper()} (asciidoctor)"
+            log_types.add(log_type)
+            absolute_file_path = data['file']['path']
+            worktree_path = data['source']['worktree']
+            issue, log_target = data['msg'].split(': ')
 
-                # Removing the worktree path from the absolute file path
-                relative_file_path = absolute_file_path.replace(worktree_path, '', 1)
+            # Removing the worktree path from the absolute file path
+            relative_file_path = absolute_file_path.replace(worktree_path, '', 1)
 
-                logs[log_type][issue][log_target].append(relative_file_path)
+            logs[log_type][issue][log_target].append(relative_file_path)
 
-    return logs
+    return logs, list(log_types)
 
 
 # Sort logs alphabetically by column: type, issue, module, file.
@@ -71,6 +68,7 @@ def count_issues(logs):
     return total
 
 
+# Reformat logs into a table
 def reformat_logs(logfile, logs):
     antora_playbook = os.path.basename(logfile).split('-')[0].capitalize()
     log_types = ['FATAL (asciidoctor)', 'ERROR (asciidoctor)', 'WARN (asciidoctor)', 'INFO (asciidoctor)',
@@ -119,9 +117,10 @@ def reformat_logs(logfile, logs):
 
 # Run script
 def run_script():
-    for logfile in log_files:
-        logs = get_logs(logfile)
+    for logfile in LOG_FILES:
+        logs, log_types = get_logs(logfile)
         sorted_logs = sort_logs(logs)
         reformat_logs(logfile, sorted_logs)
+
 
 run_script()
