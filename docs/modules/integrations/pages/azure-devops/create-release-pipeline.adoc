@@ -12,7 +12,7 @@ An Artifact will be added the APK file. You can learn more about Artifacts on th
 
 . On the left sidebar, click **Repos > Files**
 +
-image:$OLD-IMAGE$[width="", alt=""]
+image:click-repo.png[width=500,alt="Click Repos, then Files"]
 
 . On the **Clone to your computer** section:
 .. Click the **Generate Git Credentials** button to display **User Name** and **Password** that will be used in a later step.
@@ -25,34 +25,34 @@ https://AZURE_ORG_NAME@dev.azure.com/AZURE_ORG_NAME/AZURE_PROJECT_NAME/_git/AZUR
 .. On your local machine, open Terminal and enter: `git clone GIT_URL`
 .. Replace GIT_URL with the URL above, depending on your project setup. If prompted during the cloning process, use the **Username** and **Password** from step 2.
 +
-image:$OLD-IMAGE$[width="", alt=""]
+image:username-password.png[width=1000,alt="Use the username and password from step 2"]
 
 .. In your local machine, copy the APK file to the cloned repository. Then `cd` to the repository and type this line in your terminal: `git add . && git commit -m "Upload apk" && git push`
 .. We copied the **ApiDemos-debug. apk** file in the /Downloads folder in to the Git repository. You can access and download the sample app link:https://appium.github.io/appium/assets/ApiDemos-debug.apk[here].
 +
-image:$OLD-IMAGE$[width="", alt=""]
+image:api-demos.png[width=1000,alt="Copied the ApiDemos-debug"]
 
 .. **Back to your Azure DevOps web page**, confirm that the uploaded file is listed on your Azure DevOps Project.
 +
-image:$OLD-IMAGE$[width="", alt=""]
+image:azure-devops.png[width=1000,alt="confirm that the uploaded file is listed on your Azure DevOps Project"]
 
 .. Create a Release Pipeline. On your Azure DevOps Project, click on the **Release Pipeline** page.
 +
-image:$OLD-IMAGE$[width="", alt=""]
+image:click-release-pipeline.png[width=1000,alt="Click the Release Pipeline"]
 
 .. We create a new Release pipeline, but an existing pipeline can be reused. Click the **New pipeline** button to create a new release pipeline.
 +
-image:$OLD-IMAGE$[width="", alt=""]
+image:click-new-pipeline.png[width=1000,alt="Click the New pipeline"]
 
 .. On the right sidebar, click **Empty job** to create an empty Release Stage.
 .. To add an Artifact, click on the **Add an artifact** button.
 +
-image:$OLD-IMAGE$[width="", alt=""]
-image:$OLD-IMAGE$[width="", alt=""]
+image:empty-job-on-azure.png[width=1000,alt="Click Empty job"]
+image:add-artifact.png[width=400,alt="Click Add an artifact"]
 
 .. To add an Artifact, click **+Add an artifact**.
 +
-image:$OLD-IMAGE$[width="", alt=""]
+image:add-an-artifact.png[width=300,alt="Click Add an artifact"]
 
 .. Select **Azure Repository** and enter the required information, and then click **Add**.
 .. In the **Artifact** dialog, do the following:
@@ -61,7 +61,7 @@ image:$OLD-IMAGE$[width="", alt=""]
 ... Choose **Default version** to **Latest**.
 ... Then click **Add**.
 +
-image:$OLD-IMAGE$[width="", alt=""]
+image:artifact-dialog.png[width=1000,alt="Artifact dialog"]
 
 .. The pipeline now includes the newly created artifact.
 +
@@ -69,21 +69,21 @@ image:$OLD-IMAGE$[width="", alt=""]
 
 .. To add a task to the stage, click on **1 job, 0 task**.
 +
-image:$OLD-IMAGE$[width="", alt=""]
+image:1-job-0-task.png[width=400,alt="Stage 1 (1 job, 0 task)"]
 +
 image:$OLD-IMAGE$[width="", alt=""]
 
 .. You can add a **Kobiton task** to execute a test on a Kobiton device. Click on **+Add a task to agent job** to add a task to the stage.
 +
-image:$OLD-IMAGE$[width="", alt=""]
+image:add-task.png[width=500,alt="Add a task to agent job"]
 
 .. Click on the Kobiton icon to add a Kobiton task.
 +
-image:$OLD-IMAGE$[width="", alt=""]
+image:agent-job.png[width=500,alt="Agent job"]
 
 .. Enter the required information to set up the task.
 +
-image:$OLD-IMAGE$[width="", alt=""]
+image:set-up-task.png[width=1000,alt="Enter the required information to set up the task"]
 
 .. You have successfully created the task. You can also create a task to upload a new version of the app from APK file.
 
