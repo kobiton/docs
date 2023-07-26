@@ -9,7 +9,7 @@ Learn how to configure your personal computer so you can debug local devices usi
 You'll need to complete the following:
 
 * xref:debugging:set-up-virtualusb.adoc[Set up virtualUSB] on your personal computer.
-* To debug on a Kobiton Standalone server, get xref:debugging:local-devices/configure-standalone-server.adoc#_get_server_information_for_your_team[server information] from your system administrator.
+* To debug on Kobiton Standalone, get xref:debugging:local-devices/configure-kobiton-standalone-server.adoc#_get_server_details_for_your_team[server details] from your system administrator.
 
 == Modify `config.ini`
 
@@ -48,12 +48,12 @@ Debugging a local device on *Kobiton Cloud* versus a *Kobiton Standalone* requir
 
 |`<api-port-baseurl>`
 |The server's API port number for `Kobiton.ApiBaseUrl`.
-|Remove `<api-port-baseurl>` from the string.
+|Only needed for Kobiton Standalone. Remove `<api-port-baseurl>` from the string.
 |Set to the value listed in your xref:_before_you_start[server information].
 
 |`<api-port-grpc-baseurl>`
 |The server's API Port number for `Kobiton.ApiGrpcBaseUrl`.
-|Remove `<api-port-grpc-baseurl>` from the string.
+|Only needed for Kobiton Standalone. Remove `<api-port-grpc-baseurl>` from the string.
 |Set to the value listed in your xref:_before_you_start[server information].
 |===
 
