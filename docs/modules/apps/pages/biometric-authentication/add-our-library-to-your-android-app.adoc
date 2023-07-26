@@ -30,14 +30,13 @@ First you'll open your app's Android Studio project and create a `libs` director
 
 Next you'll open the `build.gradle` in your app directory and add our library (or all your `.aar` libraries) to your list of `dependencies`:
 
-[,groovy]
+[source,groovy]
 ----
     implementation fileTree(dir: 'libs', include: ['<library>']) // Replace <library> with KobitonBiometric.aar or *.arr.
 ----
 
-Here's an example `build.gradle` file:
-
-[,groovy]
+.Example
+[source,groovy]
 ----
 dependencies {
     implementation fileTree(dir: 'libs', include: ['KobitonBiometric.aar']) // Alternatively, replace KobitonBiometric.aar with *.arr to include all libraries.
@@ -59,7 +58,7 @@ When you're finished, save your file.
 
 Next you'll open the `AndroidManifest.xml` file in `/app/src/main` and add the following lines to your `<manifest>` element:
 
-[,xml]
+[source,xml]
 ----
 <uses-permission android:name="android.permission.USE_BIOMETRIC" android:requiredFeature="false"/>
 <uses-permission android:name="android.permission.INTERNET"/>
@@ -67,7 +66,7 @@ Next you'll open the `AndroidManifest.xml` file in `/app/src/main` and add the f
 
 Locate your `<application>` element and add the following line:
 
-[,xml]
+[source,xml]
 ----
 android:usesCleartextTraffic="true"
 ----
@@ -77,9 +76,8 @@ Inside `<application>`, replace:
 * `*.BiometricManager` classes with `com.kobiton.biometric.BiometricManager`
 * `*.BiometricPrompt` with `com.kobiton.biometric.BiometricPrompt`
 
-Here's an example `AndroidManifest.xml` file:
-
-[,xml]
+.Example
+[source,xml]
 ----
 $EXAMPLE$
 ----
@@ -89,7 +87,7 @@ When you're finished, save your file and xref:_verify_your_changes[verify your c
 [#_verify_your_changes]
 == Verify your changes
 
-As with any code change, you'll want to verify your new library works. First, rebuild your `.apk` and xref:apps:manage-apps.adoc#_upload_an_app[upload it to the app repository]. Then, start a manual test session, launch your app, and try using biometric authentication to sign in. Select *Pass* and check the logs to verify your changes.
+First, rebuild your `.apk` and xref:apps:manage-apps.adoc#_upload_an_app[upload it to the app repository]. Then, start a manual test session, launch your app, and try using biometric authentication to sign in. Select *Pass* and check the logs to verify your changes.
 
 == Known issues
 
@@ -100,7 +98,7 @@ If you add our library to your app and send `BiometricPrompt.AuthenticationCallb
 java.lang.NullPointerException: Can't toast on a thread that has not called Looper.prepare()
 ----
 
-Here's an example that could lead to a crash:
+Here's a script that could lead to a crash:
 
 [source,java]
 ----

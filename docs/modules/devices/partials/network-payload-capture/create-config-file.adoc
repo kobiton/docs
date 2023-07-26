@@ -5,8 +5,7 @@ Safely disconnect the device from your computer. In terminal, open the directory
 cd ~/Library/"Application Support"/Kobiton/devices/<device-udid>
 ----
 
-For example:
-
+.Example
 [source,shell]
 ----
 cd ~/Library/"Application Support"/Kobiton/devices/a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2
@@ -14,7 +13,7 @@ cd ~/Library/"Application Support"/Kobiton/devices/a1b2c3d4e5f6a1b2c3d4e5f6a1b2c
 
 In the device UDID directory, create a file named `config` and add the following content:
 
-[source,asciidoc]
+[source,plaintext]
 ----
 {
   "unlockPasscodeEnabled": false,

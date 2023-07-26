@@ -1,7 +1,7 @@
-= Configure the local server for local devices
-:navtitle: Configure the local server
+= Configure Kobiton Standalone server for local devices
+:navtitle: Configure Kobiton Standalone server
 
-Learn how to configure your local Kobiton server so users in your organization can debug local devices on your server using virtualUSB.
+Learn how to configure your Kobiton Standalone server so users in your organization can debug local devices using virtualUSB.
 
 [#_get_server_information_for_your_team]
 == Get server information for your team
@@ -10,7 +10,7 @@ When users xref:debugging:local-devices/configure-your-personal-computer.adoc[co
 
 Save this information to a secure location your team can easily access:
 
-[source,asciidoc]
+[source,plaintext]
 ----
 # Required server information for:
 # https://docs.kobiton.com/kobiton-docs/debugging/debug-local-devices/configure-personal-computer.html
@@ -22,7 +22,7 @@ Save this information to a secure location your team can easily access:
 
 === Get network address
 
-Users can use your private domain name _or_ the Kobiton server's IP address. If you prefer to use the Kobiton server's IP address, enter the following command in the terminal and save the output to a secure location for your team:
+Users can use your private domain name _or_ the Kobiton server's IP address. If you prefer the Kobiton server's IP address, enter the following command in the terminal and save the output to a secure location for your team:
 
 [source,shell]
 ----
@@ -33,7 +33,7 @@ hostname -I
 
 To get the Kobiton server's REST API port numbers, open `~/config/app.yaml` and check for the following port keys:
 
-[source,asciidoc]
+[source,plaintext]
 ----
 rest_api_ingress_advertised_port: <port-number>
 grpc_ingress_gateway_public_advertised_port: <port-number>
@@ -47,7 +47,7 @@ If the keys are present, save their values to a secure location. If they're not,
 == Modify `dc.ini`
 
 [NOTE]
-The `dc.ini` file needs to be modified for *each Mac mini server*.
+The `dc.ini` file needs to be modified for _each Mac mini server_.
 
 In the terminal, open the `deviceconnect` directory:
 
@@ -58,14 +58,13 @@ cd ~/usr/local/deviceconnect
 
 Open `dc.ini` and add the following environment variables:
 
-[source,asciidoc]
+[source,plaintext]
 ----
 GatewayPublicAddress=<ip-address> # Set to your private or public IP address.
 ExternalAirstreamTlsPort=<port-number> # Set to 10161 or public IP address.
 ----
 
-For example:
-
+.Example
 [source,shell]
 ----
 GatewayPublicAddress=192.168.36.36

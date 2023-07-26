@@ -20,9 +20,8 @@ Next you'll open the ViewController. swift file in your project directory and re
 
 Then replace all `context = LAContext()` variables with `context = KobitonLAContext()`.
 
-Here's an example `ViewController.swift` file:
-
-[,swift]
+.Example
+[source,swift]
 ----
 import UIKit
 import LocalAuthentication /// Change to import KobitonLAContext
@@ -51,4 +50,4 @@ If your app requires support for iOS 14 or earlier, you'll also need to add a fe
 [#_verify_your_changes]
 == Verify your changes
 
-As with any code change, you'll want to verify your new library works. First, rebuild your `.ipa` and xref:apps:manage-apps.adoc#_upload_an_app[upload it to the app repository]. Then, start a manual test session, launch your app, and try using biometric authentication to sign in. Select *Pass* and check the logs to see verify your changes.
+First, rebuild your `.ipa` and xref:apps:manage-apps.adoc#_upload_an_app[upload it to the app repository]. Then, start a manual test session, launch your app, and try using biometric authentication to sign in. Select *Pass* and check the logs to see verify your changes.
