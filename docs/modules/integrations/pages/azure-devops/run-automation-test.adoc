@@ -13,7 +13,7 @@ After adding the Kobiton Automation Test Executor task to your pipeline, you'll 
 * Git repository branch: Git branch that will execute automation test script.
 * Git repository SSH key: The SSH Key to access a private Git repository. In this document, we will use Kobiton's public sample repository and will leave this field empty.
 
-image:$OLD-IMAGE$[width="", alt=""]
+image:add-info.png[width=1000,alt="Add information"]
 
 == Modify Desired Capabilities
 
@@ -44,8 +44,8 @@ image:$OLD-IMAGE$[width="", alt=""]
 * If checked, the task will wait for the execution to be either *COMPLETED* (commands ran successfully) or *FAILED* (cannot clone git repository, server error,$DESCRIPTION$) then print the console log and report URL (if it existed).
 * *Log Type:* Users can pick a type of log to be printed. *Combined* means the *output logs* and *error logs* will be printed in chronological order. The Separated option allows you to choose one of the 2 types of logs. It is recommended to log your test case result with appropriate log type. For example, in Java you can use `System.err.println` to print test case errors, this will be in the *error logs* while `System.out.println` will return texts in *output logs*.
 * *Terminate release pipeline on failed job:* If checked, once the execution job status is *FAILED*, an error will be returned and the whole release is terminated *(All the following release tasks below this task will be skipped)*.
-
-image:$OLD-IMAGE$[width="", alt=""]
++
+image:terminate-release-pipeline.png[width=1000,alt="Terminate the release pipeline"]
 
 == Execute the release
 
