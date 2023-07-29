@@ -1,0 +1,85 @@
+= Configure Kobiton Standalone server for local devices
+:navtitle: Configure Kobiton Standalone server
+
+Learn how to configure your Kobiton Standalone server so users in your organization can debug local devices using virtualUSB.
+
+== Before you start
+
+You'll need to verify your system administrator privileges for your Kobiton Standalone server.
+
+[#_get_server_details_for_your_team]
+== Get server details for your team
+
+When users xref:debugging:local-devices/configure-your-personal-computer.adoc[configure their personal computer], they'll need your server's IP address and REST API port numbers.
+
+Save these details to a secure location your team can easily access:
+
+[source,plaintext]
+----
+# Required server details for:
+# https://docs.kobiton.com/kobiton-docs/debugging/debug-local-devices/configure-personal-computer.html
+
+<network-address> : VALUE
+<api-port-baseurl> : VALUE
+<api-port-grpc-baseurl> : VALUE
+----
+
+=== Get network address
+
+Users can use your private domain name _or_ the Kobiton server's IP address. If you prefer the Kobiton server's IP address, enter the following command in the terminal and save the output to a secure location for your team:
+
+[source,shell]
+----
+hostname -I
+----
+
+=== Get REST API port numbers
+
+To get the Kobiton server's REST API port numbers, open `~/config/app.yaml` and check for the following port keys:
+
+[source,plaintext]
+----
+rest_api_ingress_advertised_port: <port-number>
+grpc_ingress_gateway_public_advertised_port: <port-number>
+----
+
+If the keys are present, save their values to a secure location. If they're not, save these details instead:
+
+* Set the port number for `Kobiton.ApiBaseUrl` to `3000`.
+* Set the port number for `Kobiton.ApiGrpcBaseUrl` to `3001`.
+
+== Modify `dc.ini`
+
+[NOTE]
+The `dc.ini` file needs to be modified for _each Mac mini server_.
+
+In the terminal, open the `deviceconnect` directory:
+
+[source,shell]
+----
+cd ~/usr/local/deviceconnect
+----
+
+Open `dc.ini` and add the following environment variables:
+
+[source,plaintext]
+----
+GatewayPublicAddress=<ip-address> # Set to your private or public IP address.
+ExternalAirstreamTlsPort=<port-number> # Set to 10161 or public IP address.
+----
+
+.Example
+[source,shell]
+----
+GatewayPublicAddress=192.168.36.36
+ExternalAirstreamTlsPort=10161
+----
+
+Save your changes, then enter the following command to restart the server:
+
+[source,shell]
+----
+sudo sv restart dc-services dc-webviewer dc-watchdog
+----
+
+Now users in your organization can debug local devices hosted on your local Kobiton server.

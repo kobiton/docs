@@ -3,27 +3,23 @@
 
 == What is Role-Based Access Control?
 
-Role-Based Access Control (RBAC) is an organizational structure and methodology that gives you more fine-tuned, granular control over your teams' work and what they can work with. With RBAC you can make custom rules for your organization within Kobiton that enables you to define which devices and/or actions your users have access to.
+Role-Based Access Control (RBAC) is an organizational structure and methodology that gives you more fine-tuned, granular control over your teams' work and what they can work with. With RBAC you can make custom rules for your organization that enable you to define which devices and/or actions your users have access to.
 
-== How does RBAC work?
+== How it works in Kobiton
 
-Each user is defined by a role and assigned to a team; these aspects of the user's values in RBAC's organizational system will specify which permissions are available to them (which actions they can take) and which devices they can access.
+In Kobiton, RBAC consists of xref:_roles[roles], xref:_users[users], and xref:_teams[teams]:
 
-A team is simply a collection of multiple users identified by RBAC as a single group unit. An admin can add or remove users to or from a team, can modify settings for that team including default cleanup policy and SSO policies, and set which device bundles that team is permitted to view and interact with.
+[#_roles]
+=== Roles
 
-A role is a defined set of permissions that can be granted to a user. Users assigned a certain role are considered "members" of that role. Members of a role are granted the permissions assigned to that role.
+**Roles** are one or more xref:organization:roles/user-roles-and-permissions.adoc[user permissions] grouped together, allowing to assign custom roles to users and teams and avoid assigning the same frequently-used permissions to every new user or team.
 
-== RBAC example
+[#_users]
+=== Users
 
-As an example, let's say Kevin is a high-level admin of his organization. He is made a member of the Custom Admin Role, which grants him a number of powerful action permissions (decided on by him and his IT colleagues), including the ability to view all uploaded applications for the company, terminate any other user's sessions, and modify SSO settings. At the same time, Kevin is part of the Custom Admin Team, which is given access to view all devices for the organization.
+**Users** are assigned a role and a team, which impacts their xref:organization:users/user-roles-and-permissions.adoc[user permissions] across Kobiton.
 
-Meanwhile, Fred is a tester who works primarily with Android devices. He doesn't need the same high-level abilities Kevin does, nor does he need to be able to interact with devices that aren't Android model. Kevin and his fellow admins decide to assign Fred to a more limited role and a team that only views Android devices. They assign him the Custom Tester Role, which only has permissions to log in and out of the Kobiton portal, install and uninstall applications to devices, and nothing else--none of the power and scope to touch other users' sessions or devices like the Custom Admin Role has. Fred is also added to the Android Devices Team, which has access to Android devices but none of the iOS devices or XiaoMi devices in the company's device lab.
+[#_teams]
+=== Teams
 
-Finally, Angela is also an admin like Kevin, but she only manages Android devices like Fred. Angela is made a member of the Custom Admin Role so that she shares the same permissions as Kevin, but she is also added to the Android Devices Team like Fred so that she is limited to a view of Android-only devices and does not have to sort through all the devices in the device lab.
-
-== RBAC in Kobiton
-
-In Kobiton, you can create roles for both teams and users. Choose a topic to learn more:
-
-*** xref:organization:teams/team-roles-and-permissions.adoc[]
-*** xref:organization:roles/user-roles-and-permissions.adoc[]
+**Teams** are a group of two or more users with shared xref:organization:teams/team-roles-and-permissions.adoc[team permissions], allowing you to assign and manage permissions to the whole group at once.

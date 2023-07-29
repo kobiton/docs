@@ -7,7 +7,7 @@ Learn how to upload apps to the xref:apps:manage-apps.adoc[app repository] using
 
 First, call `/apps/uploadUrl` to generate the URL you'll need to upload your app to our private S3 bucket on Amazon Web Services (AWS).
 
-[source,]
+[source,shell]
 ----
 # You can also use wget
 curl -X POST https://api.kobiton.com/v1/apps/uploadUrl \
@@ -20,9 +20,10 @@ curl -X POST https://api.kobiton.com/v1/apps/uploadUrl \
 }'
 ----
 
-Here's an example of a successful response:
+A successful response will output the following:
 
-[source,]
+.Example
+[source,shell]
 ----
 {
 "appPath" :  "users/1/apps/app‐prod‐debug‐237824a0‐302c‐9bfd‐ff417c89610a.apk",
@@ -37,7 +38,7 @@ Keep a copy of `appPath`. You'll need it later to xref:_initiate_upload[initiate
 
 Next, make a `PUT` request using the `url` you generated to send your app to our private S3 bucket.
 
-[source,]
+[source,shell]
 ----
 # You can also use wget
 curl
@@ -54,7 +55,7 @@ A successful `PUT` request will return a `200` status.
 
 Finally, make a `POST` request to initiate your upload to the app repository in Kobiton. Be sure to upload a xref:apps:supported-filetypes.adoc[supported filetype].
 
-[source,]
+[source,shell]
 ----
 # You can also use wget
 curl -X POST https://api.kobiton.com/v1/apps \

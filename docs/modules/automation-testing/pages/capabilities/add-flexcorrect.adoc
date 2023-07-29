@@ -7,7 +7,8 @@ Learn how add `flexCorrect` to your capabilities so your automation script will 
 
 First, open your test suite and locate your config file. The exact name and location may vary, but you'll find it in a similar location:
 
-[source,asciidoc]
+.Example
+[source,plaintext]
 ----
 root
 └── src
@@ -30,11 +31,10 @@ In the config file, locate `DesiredCapabilities`, and add the following lines:
 | `true`
 
 | `kobiton:baselineSessionId`
-| (Optional) Choose a different baseline session by assigning its xref:automation-testing:get-a-session-id.adoc[session ID].
+| (Optional) Choose a different baseline session by assigning its xref:automation-testing:get-the-sessionid.adoc[session ID].
 |===
 
-Here's an example:
-
+.Example
 [source,java]
 ----
 // Located in test/scriptlessautomation/Config in the Java's TestNG framework.
@@ -54,4 +54,4 @@ public static DesiredCapabilities getIPhone11ProIOS146DesiredCapabilities() {
 When you're finished, save your changes. Now `flexCorrect` will automatically select the correct elements, even when you run your script on different devices.
 
 [NOTE]
-After a session, you can check xref:session-analytics:session-overview.adoc[how many elements were corrected].
+After a session, you can check xref:session-explorer:manage-sessions.adoc[how many elements were corrected].

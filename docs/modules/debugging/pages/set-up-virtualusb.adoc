@@ -1,7 +1,10 @@
 = Set up virtualUSB
 :navtitle: Set up virtualUSB
 
-Learn how to set up virtualUSB on your personal computer so you can debug *public* and *private* devices. If you also want to debug *local* devices, xref:debugging:local-devices/configure-personal-computer.adoc[configure your personal computer] after the initial setup.
+Learn how to set up virtualUSB on your personal computer so you can debug *public* and *private* devices.
+
+[NOTE]
+To debug *local* devices, you'll need to xref:debugging:local-devices/configure-your-personal-computer.adoc[configure your personal computer] after you complete these steps.
 
 == Before you start
 
@@ -107,11 +110,7 @@ set PATH=%PATH%;%ANDROID_HOME%\tools;%ANDROID_HOME%\platform-tools
 
 == Install iTunes and third-party libraries
 
-For Windows, link:https://support.apple.com/HT210384[install iTunes].
-
-image:$NEW-IMAGE$[width="", alt=""]
-
-Optionally, install a third-party library that helps Windows natively communicate with iOS devices.
+For Windows, link:https://support.apple.com/HT210384[install iTunes]. Optionally, install a third-party library that helps Windows natively communicate with iOS devices.
 
 == Install virtualUSB
 
@@ -128,8 +127,8 @@ cd C:\Program Files\virtualUSB
 vusb setup-ios
 ----
 
-Finally, launch virtualUSB and sign in using your email address and passcode or xref:profile:manage-your-api-keys.adoc[Kobiton API key].
+Finally, launch virtualUSB and sign in using your email address and password or xref:profile:manage-your-api-keys.adoc[Kobiton API key].
 
 image:debugging:sign-in-virtualusb-context.png[width=1000,alt="Sign in Virtual USB using email or API Key"]
 
-Now you can debug cloud devices using virtualUSB. If you plan on debugging _local_ devices using virtualUSB, you'll need to xref:debugging:local-devices/configure-personal-computer.adoc[configure your personal computer for debugging local devices].
+Now you can debug cloud devices using virtualUSB. If you plan on debugging _local_ devices using virtualUSB, you'll need to xref:debugging:local-devices/configure-your-personal-computer.adoc[configure your personal computer for debugging local devices].

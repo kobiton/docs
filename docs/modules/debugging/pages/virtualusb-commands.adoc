@@ -9,7 +9,7 @@ You'll need to complete the following:
 
 * xref:debugging:set-up-virtualusb.adoc[] on your personal computer.
 * xref:debugging:add-virtualusb-to-your-path.adoc[].
-* To debug on a local Kobiton server, xref:debugging:local-devices/configure-personal-computer.adoc[configure your personal computer for debugging local devices].
+* To debug *local* devices, xref:debugging:local-devices/configure-your-personal-computer.adoc[configure your personal computer].
 
 == `help`
 
@@ -29,14 +29,14 @@ vusb help <command>
 
 == `login`
 
-To log in to your Kobiton account with your email address and passcode or xref:profile:manage-your-api-keys.adoc[Kobiton API key], run:
+To log in to your Kobiton account with your email address and password or xref:profile:manage-your-api-keys.adoc[Kobiton API key], run:
 
 [source,shell]
 ----
 vusb login
 ----
 
-Alternatively, enter your username and passcode after `login` using flags:
+Alternatively, enter your username and password after `login` using flags:
 
 [source,shell]
 ----
@@ -44,7 +44,7 @@ vusb login --username <username> --passcode <passcode>
 ----
 
 [NOTE]
-Using the alternate method, your passcode will be visible in the terminal. Do not enter use this method if others are around.
+Using the alternate method, your password will be visible in the terminal. Do not enter use this method if others are around.
 
 == `logout`
 
@@ -84,8 +84,7 @@ vusb status
 
 If a device is connected, the device's JSON data will be displayed in the terminal.
 
-For example:
-
+.Example
 [source,shell]
 ----
 $ vusb status
@@ -142,8 +141,7 @@ vusb export-logs --out <download-path> --days <days-back>
 
 When `export-logs` is run, a confirmation message will be displayed in the terminal.
 
-For example:
-
+.Example
 [source,shell]
 ----
 $ vusb export-logs
