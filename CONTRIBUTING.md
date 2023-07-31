@@ -132,7 +132,7 @@ We use one `modules` directory containing an `antora.yml` file, a `ROOT` directo
 For example:
 
 ```plaintext
-kobiton-docs
+ROOT
 └── docs
 └── modules
 ├── ROOT
@@ -178,7 +178,7 @@ Each subdirectory in `modules` contains a dedicated `nav.adoc` file. When Antora
 For example, this `antora.yml` will create the site navigation by referencing `automation-testing/nav.adoc` and `manual-testing/nav.adoc`:
 
 ```plaintext
-kobiton-docs
+ROOT
 └── docs
 └── modules
 ├── automation-testing
@@ -222,7 +222,7 @@ You can use partials to reuse content across the docs. _Global_ content (role re
 For example:
 
 ```plaintext
-kobiton-docs
+ROOT
 └── docs
 └── modules
 ├── ROOT
