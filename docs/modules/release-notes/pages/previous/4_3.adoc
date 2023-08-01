@@ -3,7 +3,7 @@
 
 _April 1, 2023_
 
-These release notes pertain to Kobiton 4.3. For Legacy Kobiton, see the xref:previous/3.28.adoc[].
+These release notes pertain to Kobiton 4.3. For Legacy Kobiton, see xref:previous/3_28.adoc[].
 
 == virtualUSB for macOS (GA)
 virtualUSB for macOS is now General Availability (GA)! Learn more about virtualUSB link:/hc/en-us/articles/11016368492301[here].
@@ -11,11 +11,13 @@ virtualUSB for macOS is now General Availability (GA)! Learn more about virtualU
 NOTE: virtualUSB for Windows remains in beta.
 
 == Kobiton Inspector: ability to inspect Shadow DOM data
+
 For hybrid apps built on frameworks such as the Ionic Framework, Shadow DOM is often utilized to provide encapsulation. It allows a component to have its own Shadow DOM tree that is not accessible from the main document so it can have local style rules.
 
 The Kobiton Inspector can now show Shadow DOM data in the Manual Session and in Session Explorer. With this feature, testers can retrieve information about an element’s style previously hidden by Shadow DOM.
 
 == API v2: new endpoints and enhancements
+
 We have a number of additions and changes to API v2 as follows.
 
 We added the following endpoints:
@@ -41,11 +43,15 @@ link:https://api.kobiton.com/docs/?http#kobiton-api-v1-0[Kobiton API v1] is stil
 For endpoints in API v1 not yet offered in v2, continue to use API v1.
 
 == Android Audio device-to-browser with Orion (beta)
+
 For enterprise customers who need to test audio output from apps and mobile browsers, we have released support streaming audio from device to user browser on Private Kobiton-hosted Android devices in beta. Contact your account executive to learn how to try this feature.
 
-NOTE:
+[NOTE]
+====
 * Requires addition hardware setup: Orion Board 32+ Gen 3 audio interface.
 * Requires Android 10 or later devices that have a headphone jack.
+====
 
 == Additional enhancements and bug fixes
+
 In addition to the above, this release includes a number of minor bug fixes and enhancements to improve your day-to-day testing.
