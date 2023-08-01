@@ -51,11 +51,9 @@ jobs:
 
       - name: Deploy to PRODUCTION environment
         run: |
-          cp ./ci/index.html ./build/docs
           aws s3 sync ./build/docs s3://${{ env.DOCS_S3_HOSTING_BUCKET }}
           aws cloudfront create-invalidation --distribution-id ${{ env.DOCS_CLOUDFRONT_ID }} --paths "/*"
           echo "Docs is deployed!"
-          cp ./ci/index.html ./build/widget
           aws s3 sync ./build/widget s3://${{ env.WIDGET_S3_HOSTING_BUCKET }}
           aws cloudfront create-invalidation --distribution-id ${{ env.WIDGET_CLOUDFRONT_ID }} --paths "/*"
           echo "Widget is deployed!"
