@@ -3,8 +3,6 @@
 
 Learn how to add TestRail to your Desired Capabilities so you can automatically update TestRail projects and link them to your session analytics.
 
-image:$NEW-IMAGE$[width=, alt=""]
-
 == Before you start
 
 You'll need to xref:integrations:testrail/create-a-project.adoc#_generate_an_api_key[generate a TestRail API key] and xref:integrations:testrail/create-a-project.adoc#_configure_project[create a new TestRail project]. You can also xref:profile:manage-your-api-keys.adoc[add a new Kobiton API key] if you don't want to use your default one.
@@ -13,6 +11,7 @@ You'll need to xref:integrations:testrail/create-a-project.adoc#_generate_an_api
 
 First, download your xref:automation-testing:scripting/auto-generate-an-appium-script.adoc[auto-generated Appium script] and open the config file in the `test` directory. The exact location and name of the config file will depend on your testing framework.
 
+.Example
 [source,plaintext]
 ----
 root
@@ -23,12 +22,10 @@ root
         └── config.js # NodeJS Mocha
 ----
 
-In the config file, assign your Kobiton xref:profile:manage-your-profile.adoc#_change_your_default_team[username] and xref:profile:manage-your-api-keys.adoc[API key] to constant variables. Here's an example:
+In the config file, assign your Kobiton xref:profile:manage-your-profile.adoc#_change_your_default_team[username] and xref:profile:manage-your-api-keys.adoc[API key] to constant variables.
 
 [source,java]
 ----
-// Located in test/scriptlessautomation/Config in the Java's TestNG framework.
-
 public class Config {
 
     // Kobiton credentials
@@ -37,12 +34,10 @@ public class Config {
 }
 ----
 
-Below your Kobiton credentials, assign your TestRail xref:integrations:testrail/locate-credentials.adoc#_server_address[server address], xref:integrations:testrail/locate-credentials.adoc#_username[username], and xref:integrations:testrail/locate-credentials.adoc#_api_key[API key] to constant variables. Here's an example:
+Below your Kobiton credentials, assign your TestRail xref:integrations:testrail/locate-credentials.adoc#_server_address[server address], xref:integrations:testrail/locate-credentials.adoc#_username[username], and xref:integrations:testrail/locate-credentials.adoc#_api_key[API key] to constant variables.
 
 [source,java]
 ----
-// Located in test/scriptlessautomation/Config in the Java's TestNG framework.
-
 public class Config {
 
     // Kobiton credentials
@@ -79,8 +74,6 @@ Next, in the same config file, locate `DesiredCapabilities` and add the followin
 .Example
 [source,java]
 ----
-// Located in test/scriptlessautomation/Config in the Java's TestNG framework.
-
 public static DesiredCapabilities getIPhone11ProIOS146DesiredCapabilities() {
     DesiredCapabilities capabilities = new DesiredCapabilities();
 
