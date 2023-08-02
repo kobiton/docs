@@ -10,7 +10,7 @@ To debug *local* devices, you'll need to xref:debugging:local-devices/configure-
 
 You'll need a personal computer with the following system specifications:
 
-* *MacOS:* Monterey 12 or later, and Xcode 13 or later.
+* *macOS:* Monterey 12 or later, and Xcode 13 or later.
 * *Windows:* Windows 10 or later.
 
 [#_configure_openssl]
@@ -36,7 +36,7 @@ system "make", "install", "MANDIR=#{man}", "MANSUFFIX=ssl"
 
 Reinstall OpenSSL using the following command:
 
-.MacOS
+.macOS
 [source,shell]
 ----
 brew reinstall openssl@1.0.rb
@@ -48,9 +48,9 @@ brew reinstall openssl@1.0.rb
 Start-Process -FilePath "powershell" -ArgumentList "brew reinstall openssl@1.0.rb" -Verb RunAs
 ----
 
-For MacOS only, virtualUSB will need to find your OpenSSL package, which is located in a non-standard location (brew's `Cellar` directory). Run the following command to link and copy the necessary files for virtualUSB:
+For macOS only, virtualUSB will need to find your OpenSSL package, which is located in a non-standard location (brew's `Cellar` directory). Run the following command to link and copy the necessary files for virtualUSB:
 
-.MacOS
+.macOS
 [source,shell]
 ----
 ln -sfn /usr/local/Cellar/openssl@1.0/1.0.2t/lib/libssl.dylib /usr/local/lib/libssl.dylib && sudo cp /usr/local/Cellar/openssl@1.0/1.0.2t/bin/openssl /usr/local/bin/
@@ -58,7 +58,7 @@ ln -sfn /usr/local/Cellar/openssl@1.0/1.0.2t/lib/libssl.dylib /usr/local/lib/lib
 
 Next, enter the following command to add these two OpenSSL flags to your shell's config file:
 
-.MacOS
+.macOS
 [source,shell]
 ----
 echo -e 'export LDFLAGS=-L/usr/local/opt/openssl@1.0/lib\nexport CPPFLAGS=-I/usr/local/opt/openssl@1.0/include' >> ~/.zshrc
@@ -72,7 +72,7 @@ Add-Content -Path $PROFILE -Value 'n#OpenSSL Configsn$env:LDFLAGS="-LC:\Program 
 
 Apply the changes to your shell:
 
-.MacOS
+.macOS
 [source,shell]
 ----
 source ~/.zshrc
@@ -95,7 +95,7 @@ openssl --version
 
 To debug Android devices, install link:https://developer.android.com/tools/releases/platform-tools[Android Debug Bridge (adb)] and add the following `adb` environment variables to your path:
 
-.MacOS
+.macOS
 ----
 export ANDROID_HOME=path/to/Android/sdk
 export PATH=$PATH:$ANDROID_HOME/tools:$ANDROID_HOME/tools/bin:$ANDROID_HOME/platform-tools
