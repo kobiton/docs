@@ -166,8 +166,7 @@ PROJECT
     └── antora.yml
 ```
 
-[NOTE]
-[Learn more about site navigation.](#site-navigation)
+**Note:** [Learn more about site navigation.](#site-navigation)
 
 ## Site navigation
 
@@ -285,8 +284,7 @@ Then, add the landing page to the `nav.adoc` file as an `xref`, and all the subs
 
 ## Site URLs
 
-[NOTE]
-These URL guidelines are strictly enforced to ensure URLs remain consistent, and bookmarks do not break for end-users.
+**Note:** These URL guidelines are strictly enforced to ensure URLs remain consistent, and bookmarks do not break for end-users.
 
 The site URL is generated from the [`antora-playbook-docs.yml` file](#docs-playbook-and-ui-bundle), `antora.yml` file, and each module's [`nav.adoc` file](#configure-navigation-in-navadoc).
 
