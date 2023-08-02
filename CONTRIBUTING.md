@@ -88,6 +88,9 @@ To generate standard Antora logs instead, run `yarn build`. For example:
 {"level":"error","time":1691005714646,"name":"asciidoctor","file":{"path":"/Users/<your-username>/kobiton/docs/docs/modules/automation-testing/pages/index.adoc"},"source":{"url":"https://github.com/kobiton/documentation.git","local":"/Users/<your-username>/kobiton/docs/.git","worktree":"/Users/<your-username>/kobiton/docs","refname":"update-contributing-doc","reftype":"branch","startPath":"docs"},"msg":"target of image not found: $NEW-IMAGE$"}
 {"level":"error","time":1691005714663,"name":"asciidoctor","file":{"path":"/Users/<your-username>/kobiton/docs/docs/modules/apps/pages/index.adoc"},"source":{"url":"https://github.com/kobiton/documentation.git","local":"/Users/<your-username>/kobiton/docs/.git","worktree":"/Users/<your-username>/kobiton/docs","refname":"update-contributing-doc","reftype":"branch","startPath":"docs"},"msg":"target of image not found: $NEW-IMAGE$"}
 {"level":"error","time":1691005714679,"name":"asciidoctor","file":{"path":"/Users/<your-username>/kobiton/docs/docs/modules/devices/pages/about-device-passcodes.adoc"},"source":{"url":"https://github.com/kobiton/documentation.git","local":"/Users/<your-username>/kobiton/docs/.git","worktree":"/Users/<your-username>/kobiton/docs","refname":"update-contributing-doc","reftype":"branch","startPath":"docs"},"msg":"target of image not found: $NEW-IMAGE$"}
+{"level":"error","time":1691005714694,"name":"asciidoctor","file":{"path":"/Users/<your-username>/kobiton/docs/docs/modules/devices/pages/index.adoc"},"source":{"url":"https://github.com/kobiton/documentation.git","local":"/Users/<your-username>/kobiton/docs/.git","worktree":"/Users/<your-username>/kobiton/docs","refname":"update-contributing-doc","reftype":"branch","startPath":"docs"},"msg":"target of image not found: $NEW-IMAGE$"}
+{"level":"error","time":1691005714712,"name":"asciidoctor","file":{"path":"/Users/<your-username>/kobiton/docs/docs/modules/devices/pages/search-for-a-device.adoc"},"source":{"url":"https://github.com/kobiton/documentation.git","local":"/Users/<your-username>/kobiton/docs/.git","worktree":"/Users/<your-username>/kobiton/docs","refname":"update-contributing-doc","reftype":"branch","startPath":"docs"},"msg":"target of image not found: $NEW-IMAGE$"}
+{"level":"error","time":1691005714718,"name":"asciidoctor","file":{"path":"/Users/<your-username>/kobiton/docs/docs/modules/integrations/pages/index.adoc"},"source":{"url":"https://github.com/kobiton/documentation.git","local":"/Users/<your-username>/kobiton/docs/.git","worktree":"/Users/<your-username>/kobiton/docs","refname":"update-contributing-doc","reftype":"branch","startPath":"docs"},"msg":"target of image not found: $NEW-IMAGE$"}
 ```
 
 ## Antora playbooks and UI bundles
@@ -213,7 +216,7 @@ Additionally, each `nav.adoc` file can organize its module into multi-nested sub
 
 #### Create a subsection without a landing page
 
-To create a subsection _without_ a landing page, first create the subsection directory and add all subsection content as `.adoc` files. For example:
+To create a subsection without a landing page, first create the subsection directory and add all subsection content as `.adoc` files. For example:
 
 ```plaintext
 automation-testing
@@ -244,7 +247,7 @@ Generates **Subsection A**, which is not hyperlinked and only serves as a dropdo
 
 #### Create a subsection with a landing page
 
-To create a subsection _with_ a landing page, first create the subsection directory. Add the landing page as an `index.adoc` file and the all subsection content as `.adoc` files. For example:
+To create a subsection with a landing page, first create the subsection directory. Add the landing page as an `index.adoc` file and the all subsection content as `.adoc` files. For example:
 
 ```plaintext
 automation-testing
