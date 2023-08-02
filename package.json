@@ -10,8 +10,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "./scripts/minify-css.sh && antora antora-playbook-docs.yml && antora antora-playbook-widget.yml",
     "local": "yarn run build && ./scripts/beautify-logs.py",
-    "start-docs": "open ./build/docs/kobiton-docs",
-    "start-widget": "open ./build/widget/kobiton-docs"
+    "start-docs": "open ./build/docs",
+    "start-widget": "open ./build/widget"
   },
   "repository": {
     "type": "git",

@@ -7,7 +7,7 @@ Use these device controls to interact with your device during a manual test sess
 
 To interact with your device, select *Touch*, then use *left-click* to tap and swipe the device screen.
 
-image:$NEW-IMAGE$[width="", alt=""]
+image:manual-testing:select-touch-context.png[width=1000,alt="Select Touch on Manual session"]
 
 == Pinch/zoom
 
@@ -37,7 +37,7 @@ image:manual-testing:device-controls-context2.png[width=1000,alt="A manual sessi
 
 To change the device volume, select *Volume Up* or *Volume Down*.
 
-image:$NEW-IMAGE$[width="", alt=""]
+image:manual-testing:volume-up-volume-down-context.png[width=1000,alt="Select Volume up or Volume Down"]
 
 [#_adb_shell]
 == `adb` shell
@@ -46,17 +46,17 @@ To enter Android Debug Bridge (`adb`) commands, select *adb shell*, then enter a
 
 image:manual-testing:adb-shell-closeup.png[width="750", alt="A manual session with a closeup of the adb shell running `adb shell dumpsys display`."]
 
-== Preform VoiceOver
+== Perform VoiceOver
 
-Once xref:devices:local-devices/configure-ios-voiceover.adoc[VoiceOver for iOS] is set up, select *Preform VoiceOver* to test an app's screen reader compatibility.
+Once xref:devices:local-devices/configure-ios-voiceover.adoc[VoiceOver for iOS] is set up, select *Perform VoiceOver* to test an app's screen reader compatibility.
 
-image:$NEW-IMAGE$[width="", alt=""]
+image:manual-testing:perform-voiceover-context.png[width=1000,alt="Select Perform Voiceover feature"]
 
 == Biometric authentication
 
-Once our xref:integrations:biometric-authentication/about-biometrics-authentication.adoc[biometrics authentication library] is added to your app, select *Biometric Authentication*, then choose *Pass* or *Fail* to test authentication requests.
+Once our xref:apps:biometric-authentication/about-biometrics-authentication.adoc[biometrics authentication library] is added to your app, select *Biometric Authentication*, then choose *Pass* or *Fail* to test authentication requests.
 
-image:$NEW-IMAGE$[width="", alt=""]
+image:manual-testing:biometrics-authentication-context.png[width=1000,alt="Select Biometric Authentication feature"]
 
 [#_draw_custom_gesture]
 == Draw custom gesture
@@ -67,21 +67,21 @@ image:manual-testing:device-controls-closeup2.png[width=300,alt="A manual sessio
 
 Once a custom gesture is created, select the *star* icon to save it for future sessions.
 
-image:$NEW-IMAGE$[width="", alt=""]
+image:manual-testing:save-custom-gesture-closeup.png[width=300,alt="Select the star icon to save the custom gesture"]
 
 == Input sensitive data
 
-To input sensitive data (like usernames and passcodes) without it being recorded in the xref:session-analytics:session-overview.adoc#_session_recording[session video], select *Input Sensitive Data*, then enter the data in the text box.
+To input sensitive data (like usernames and passwords) without it being recorded in the xref:session-explorer:manage-sessions.adoc#_session_recording[session video], select *Input Sensitive Data*, then enter the data in the text box.
 
 image:manual-testing:device-controls-closeup.png[width=300,alt="A manual session with a closeup of the sensitive data controls."]
 
 Select the corresponding field on the device screen, then select *Save* to input the sensitive data.
 
-image:$NEW-IMAGE$[width="", alt=""]
+image:manual-testing:save-input-sensitive-data-closeup.png[width=300,alt="Select Save to input the sensitive data"]
 
 == Image injection
 
-To xref:manual-testing:test-the-app-camera.adoc[test your in-app camera], select *Image Injection*, then add an image to the injection library and select *Inject*.
+To xref:manual-testing:test-your-app-camera.adoc[test your in-app camera], select *Image Injection*, then add an image to the injection library and select *Inject*.
 
 image:manual-testing:image-injection-closeup.png[width=500, alt="A manual session with a closeup of image injection."]
 
@@ -92,13 +92,13 @@ To restart your device, select *Power*.
 [NOTE]
 Restarting a device won't end the session.
 
-image:$NEW-IMAGE$[width="", alt=""]
+image:manual-testing:power-button-context.png[width=1000,alt="Select Power button"]
 
 == Home button
 
 To replicate the link:https://support.apple.com/HT208204[iOS] or link:https://support.google.com/android/answer/9079644[Android] home button, single-click or double-click the *Home Button*.
 
-image:$NEW-IMAGE$[width="", alt=""]
+image:manual-testing:home-button-context.png[width=1000,alt="Select Home button"]
 
 == Recent apps
 
@@ -116,7 +116,7 @@ image:$NEW-IMAGE$[width="", alt=""]
 
 To ensure each action is captured in the inventory before a new action can be started, enable *Synchronous Inventory Capture*.
 
-image:$NEW-IMAGE$[width="", alt=""]
+image:manual-testing:capture-context.png[width=1000,alt="Enable Synchronous Inventory Capture"]
 
 The circle will be filled when an action is fully captured.
 
@@ -143,4 +143,4 @@ image:manual-testing:screenshot-context.png[width=750, alt="A manual session wit
 
 To download your screenshots, select *Screenshots*, then choose a screenshot to download.
 
-image:$NEW-IMAGE$[width="", alt=""]
+image:manual-testing:select-screenshot-closeup.png[width=750,alt="Select screenshots you want to download"]

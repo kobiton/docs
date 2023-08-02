@@ -1,0 +1,31 @@
+= Performance validation
+:navtitle: Performance validation
+
+$DESCRIPTION$
+
+== Performance Validation
+
+To employ this feature, you must do the link:https://support.kobiton.com/hc/articles/360055590932-Network-Payload-Capture-#to-setup-network-payload-capture-on-your-local-devices-0-1[pre-setup] to turn on the payload capturing ability on every devices that will be used for  Scriptless (Intelligent Quality Suite - IQS).
+
+In the Scriptless rerun executions, IQS will perform the network payload capturing on test steps. The transition time between each two consecutive test steps will then be compared with a defined baseline - 2000ms. If a test step's transition response value is greater than a baseline, IQS will detect and raise a remediation to users.
+
+Below is a performance validation within a Scriptless rerun session. The graph compares the response time among each test steps transition, together with maximum and average response time recorded within the test case. Each data point on the graph is a transition response time between two consecutive steps. In this validation, the response time is high compared to the baseline of 2000 milliseconds.
+
+image:performance-validation.png[width=1000,alt="Performance validation"]
+
+You can remediate the validation so that you won't encounter this validation again.
+
+image:remediate-the-validation.png[width=1000,alt="Remediate the validation"]
+
+|===
+|Action|Description
+
+|Adjust Comparison
+|Currently, you can choose three comparison levels according to your
+expectation:
+* Strict: The response time must be closely equal to the baseline
+value 2000ms
+* Relaxed: The response time can be higher than 20% of the baseline
+value 2000ms
+* Ignored: Ignore the response time value, it won't be raised again
+|===

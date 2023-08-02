@@ -1,0 +1,48 @@
+= Review network payload data
+:navtitle: Review network payload data
+
+Learn how to review network payload capture data after your test session so you can inspect payload data and response times.
+
+== Before you start
+
+You'll need to complete a xref:manual-testing:local-devices/capture-network-payload-data.adoc[manual session] _or_ an xref:automation-testing:local-devices/capture-network-payload-data.adoc[automation session] with network payload capture enabled.
+
+== Launch Session Explorer
+
+include::session-explorer:partial$launch-session-explorer.adoc[]
+
+Next, review xref:_review_payload_data[payload data] or xref:_review_response_times[response times].
+
+[#_review_payload_data]
+== Review payload data
+
+In Session Explorer, select *Observe Request / Response Payloads*.
+
+image:$NEW-IMAGE$[width=,alt=""]
+
+In the session timeline, select a *purple marker* to see the list of payloads sent and received during that time.
+
+image:$NEW-IMAGE$[width=,alt=""]
+
+The package name and size are listed in the *Response* row.
+
+image:$NEW-IMAGE$[width=,alt=""]
+
+To see more details, select the *Request* or *Response* dropdown.
+
+image:$NEW-IMAGE$[width=,alt=""]
+
+[#_review_response_times]
+== Review response times
+
+In Session Explorer, select *Analyze response times*.
+
+image:$NEW-IMAGE$[width=,alt=""]
+
+In the graph, select a *green* or *red* marker.
+
+image:$NEW-IMAGE$[width=,alt=""]
+
+To see that test step in the session timeline, select *Jump to step*.
+
+image:$NEW-IMAGE$[width=, alt=""]

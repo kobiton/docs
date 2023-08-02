@@ -13,7 +13,7 @@ You'll need to xref:integrations:testrail/create-a-project.adoc#_generate_an_api
 
 First, download your xref:automation-testing:scripting/auto-generate-an-appium-script.adoc[auto-generated Appium script] and open the config file in the `test` directory. The exact location and name of the config file will depend on your testing framework.
 
-[source,asciidoc]
+[source,plaintext]
 ----
 root
 └── src
@@ -76,8 +76,7 @@ Next, in the same config file, locate `DesiredCapabilities` and add the followin
 | Assign to your TestRail project's xref:integrations:testrail/locate-credentials.adoc#_case_id[case ID].
 |===
 
-Here's an example:
-
+.Example
 [source,java]
 ----
 // Located in test/scriptlessautomation/Config in the Java's TestNG framework.
@@ -97,4 +96,4 @@ public static DesiredCapabilities getIPhone11ProIOS146DesiredCapabilities() {
 
 ----
 
-When you're finished, save your changes. Now future automation sessions using this config will automatically update this TestRail project and display the project IDs in the xref:session-analytics:session-overview.adoc[session overview].
+When you're finished, save your changes. Now future automation sessions using this config will automatically update this TestRail project and display the project IDs in the xref:session-explorer:manage-sessions.adoc[session overview].

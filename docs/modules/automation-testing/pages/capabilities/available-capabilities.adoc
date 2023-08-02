@@ -4,7 +4,7 @@
 These are the capabilities you can use to interact with the link:https://api.kobiton.com/v2/docs[Kobiton API] during an automation session.
 
 [NOTE]
-You can also xref:automation-testing:capabilities/auto-generate-capabilities.adoc[auto-generate capabilities] for your test script.
+You can also xref:automation-testing:capabilities/auto-generate-capabilities.adoc[auto-generate your capabilities].
 
 == Capabilities
 
@@ -129,7 +129,7 @@ This is only available for private and local devices.
 
 === `captureScreenshots`
 
-Screenshots will be captured after each test step automatically. They'll be available in the xref:session-analytics:session-overview.adoc[session overview] after the test session.
+Screenshots will be captured after each test step automatically. They'll be available in the xref:session-explorer:manage-sessions.adoc[session overview] after the test session.
 
 * *Type:* `boolean`
 * *Required capabilities:* None
@@ -266,7 +266,7 @@ capabilities.setCapability("platformVersion", "*.6"); // Uses any platform versi
 
 === `kobitonServerUrl`
 
-By default, the user's xref:profile:manage-your-api-keys.adoc[default API key] and Kobiton server URL is assigned.
+By default, the user's xref:profile:manage-your-api-keys.adoc[default API key] and Kobiton server URL are assigned.
 
 * *Type:* `string`
 * *Required capabilities:* None
@@ -276,36 +276,6 @@ By default, the user's xref:profile:manage-your-api-keys.adoc[default API key] a
 [source,java]
 ----
 String kobitonServerUrl = "https://<name>:<id>@api.kobiton.com/wd/hub"; // Use the default API key to connect the Appium and Kobiton servers.
-----
-
-[#_passcode]
-=== `passcode`
-
-If a device passcode was xref:devices:set-device-passcodes.adoc[set by an administrator], the value `passcode` must the pre-set passcode in order to use the device during the test session. If the device doesn't have a passcode, the value of `passcode` will be used to create one. xref:automation-testing:capabilities/add-passcode.adoc[Learn more].
-
-* *Type:* `string`
-* *Required capablities:* xref:_udid[]
-* *Optional capabilities:* xref:_removepasscodeonexit[]
-
-.Example
-[source,java]
-----
-capabilities.setCapability("passcode", "1234"); // Set the passcode for the device.
-----
-
-[#_removepasscodeonexit]
-=== `removePasscodeOnExit`
-
-If xref:_passcode[`passcode`] is set, determines whether the device passcode will be removed after the test session.
-
-* *Type:* `boolean`
-* *Required capabilities:* xref:_passcode[]
-* *Optional capabilities:* None
-
-.Example
-[source,java]
-----
-capabilities.setCapability("removePasscodeOnExit", true); // The device passcode will be removed after the test session.
 ----
 
 [#_visualValidation]
@@ -363,7 +333,6 @@ When a script is run on different devices, element selection is autocorrected. x
 * *Required capabilities:* None
 * *Optional capabilities:* xref:_baselineSessionId[]
 
-.Example
 .Example
 [source,java]
 ----
