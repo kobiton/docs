@@ -80,15 +80,15 @@ yarn local
 
 Beautified logs are automatically generated in the `logs` directory when you run `yarn local`. If AsciiDoc preview is enabled in your text editor, you can select links in the **Table of contents** or the **File** column to go directly to that section or file. For example:
 
-**Output:**
-
 ![beautified-logs](https://github.com/kobiton/docs/assets/95643215/d2d7e7a1-2e07-417c-a6ec-f9971c31cdc1)
 
 To generate standard Antora logs instead, run `yarn build`. For example:
 
-**Output:**
-
-![standard-logs](https://github.com/kobiton/docs/assets/95643215/6bcc992d-61c7-4005-9d56-e82c17b0b760)
+```json
+{"level":"error","time":1691005714646,"name":"asciidoctor","file":{"path":"/Users/<your-username>/kobiton/docs/docs/modules/automation-testing/pages/index.adoc"},"source":{"url":"https://github.com/kobiton/documentation.git","local":"/Users/<your-username>/kobiton/docs/.git","worktree":"/Users/<your-username>/kobiton/docs","refname":"update-contributing-doc","reftype":"branch","startPath":"docs"},"msg":"target of image not found: $NEW-IMAGE$"}
+{"level":"error","time":1691005714663,"name":"asciidoctor","file":{"path":"/Users/<your-username>/kobiton/docs/docs/modules/apps/pages/index.adoc"},"source":{"url":"https://github.com/kobiton/documentation.git","local":"/Users/<your-username>/kobiton/docs/.git","worktree":"/Users/<your-username>/kobiton/docs","refname":"update-contributing-doc","reftype":"branch","startPath":"docs"},"msg":"target of image not found: $NEW-IMAGE$"}
+{"level":"error","time":1691005714679,"name":"asciidoctor","file":{"path":"/Users/<your-username>/kobiton/docs/docs/modules/devices/pages/about-device-passcodes.adoc"},"source":{"url":"https://github.com/kobiton/documentation.git","local":"/Users/<your-username>/kobiton/docs/.git","worktree":"/Users/<your-username>/kobiton/docs","refname":"update-contributing-doc","reftype":"branch","startPath":"docs"},"msg":"target of image not found: $NEW-IMAGE$"}
+```
 
 ## Antora playbooks and UI bundles
 
@@ -101,8 +101,6 @@ The content on [docs.kobiton.com](https://docs.kobiton.com/) is configured in th
 - The `antora-playbook-docs.yml` file is used to configure the site name, analytics keys, extensions, UI bundle location, [Antora logs](#antora-logs), and [site URLs](#site-urls).
 - The `ui-bundle-docs` directory contains all source files for style and design of the site, including the home page tiles.
 
-**Output:**
-
 ![docs-site](https://github.com/kobiton/docs/assets/95643215/67c0dc03-5b3e-413c-bf01-41383c835a42)
 
 
@@ -112,8 +110,6 @@ The help widget on [portal.kobiton.com](https://portal.kobiton.com/) configured 
 
 - The `antora-playbook-widget.yml` file is used to configure the site name, analytics keys, extensions, and UI bundle location.
 - The `ui-bundle-widget` directory contains all source files for style and design of the widget on [portal.kobiton.com](https://portal.kobiton.com/).
-
-**Output:**
 
 <img src="https://github.com/kobiton/docs/assets/95643215/5a8c4c4f-b7de-4b0c-8638-f3d3df46e570" width="500" height="" />
 
@@ -176,9 +172,9 @@ When Antora builds content for [docs.kobiton.com](https://docs.kobiton.com), [th
 
 The `antora.yml` file defines which modules are displayed in the navigation bar. This file should **only** be modified when an entire section needs to be added or removed from the navigation bar. For example:
 
-**Input:**
+_Input:_
 
-```plaintext
+```yaml
 name: ROOT
 title: Kobiton Docs
 version: ~
@@ -201,7 +197,7 @@ nav:
   - modules/api-reference/nav.adoc
 ```
 
-**Output:**
+_Output:_
 
 ![landing-page](https://github.com/kobiton/docs/assets/95643215/40513b33-61bd-43d6-910b-99c9f9e8dd05)
 
@@ -209,7 +205,7 @@ nav:
 
 The `nav.adoc` file within each module defines which pages are displayed in that module's section on the navigation bar. To ensure [site URLs](#url-configuration-in-navadoc) are generated properly, each `nav.adoc` files must begin with `.xref:index.adoc[]`. For example:
 
-```plaintext
+```asciidoc
 .xref:automation-testing:index.adoc[]
 * xref:automation-testing:page-a.adoc[]
 * xref:automation-testing:page-b.adoc[]
@@ -234,9 +230,9 @@ automation-testing
 
 Then, add the subsection title to the `nav.adoc` file as plaintext, and all the subsection content one list-level below it. For example:
 
-**Input:**
+_Input:_
 
-```plaintext
+```asciidoc
 .xref:automation-testing:index.adoc[]
 
 * Subsection A
@@ -246,7 +242,7 @@ Then, add the subsection title to the `nav.adoc` file as plaintext, and all the 
 * xref:automation-testing:page-b.adoc[]
 ```
 
-**Output:**
+_Output:_
 
 ![subsection-without-landing-page](https://github.com/kobiton/docs/assets/95643215/81619345-1949-47f6-baa5-d666b1cde6b2)
 
@@ -267,9 +263,9 @@ automation-testing
 
 Then, add the landing page to the `nav.adoc` file as an `xref`, and all the subsection's content one list-level below it. For example:
 
-**Input:**
+_Input:_
 
-```plaintext
+```asciidoc
 .xref:automation-testing:index.adoc[]
 
 * xref:automation-testing:subsection-a/index.adoc[]
@@ -278,7 +274,7 @@ Then, add the landing page to the `nav.adoc` file as an `xref`, and all the subs
 * xref:automation-testing:page-b.adoc[]
 ```
 
-**Output:**
+_Output:_
 
 ![subsection-with-landing-page](https://github.com/kobiton/docs/assets/95643215/22f52977-2f56-4dce-b472-647cbecc7f80)
 
@@ -364,7 +360,7 @@ The `nav.adoc` file in each module is used to generate the [site navigation](#co
 
 For [docs.kobiton.com](https://docs.kobiton.com/), we **do not** add `index` to URLs, so [Antora's list title formatting](https://docs.antora.org/antora/latest/navigation/files-and-lists/#list-titles-and-items) should be applied to the first `index.adoc` listed in the `nav.adoc` file. For example:
 
-```plaintext
+```asciidoc
 .xref:index.adoc[]
 * xref:devices:search-for-a-device.adoc[]
 * xref:devices:manage-devices.adoc[]
@@ -379,7 +375,7 @@ For [docs.kobiton.com](https://docs.kobiton.com/), we **do not** add `index` to 
 
 By default, all `.adoc` files in the `modules` directory are searchable on Kobiton Docs using the [Antora Lunr Extension](https://gitlab.com/antora/antora-lunr-extension). To hide a page from search results, add the `:noindex:` attribute to the page's metadata. For example:
 
-```plaintext
+```asciidoc
 = Generate an API token
 :navtitle: Generate an API token
 :noindex:
@@ -406,13 +402,13 @@ ROOT
 
 To use a global partial, use the following `include` statement:
 
-```plaintext
+```asciidoc
 include::ROOT:partial$<filename>.adoc
 ```
 
 To use a feature-specific partial, use the following `include` statement:
 
-```plaintext
+```asciidoc
 include::<feature>:partial$<filename>.adoc
 ```
 
@@ -448,7 +444,7 @@ For example, a tutorial titled "Your first manual session" would state a learnin
 
 #### Tutorial template
 
-```plaintext
+```asciidoc
 = Title
 :navtitle: Title
 
@@ -478,7 +474,7 @@ For example, a how-to doc titled "Download an app during a manual test session" 
 
 #### How-to template
 
-```plaintext
+```asciidoc
 = Title
 :navtitle: Title
 
@@ -504,7 +500,7 @@ For example, a reference doc titled "Desired capabilities" should list all desir
 
 #### Reference template
 
-```plaintext
+```asciidoc
 = Title
 :navtitle: Title
 
@@ -541,7 +537,7 @@ For example, an explanation doc titled "About biometric authentication" should e
 
 #### Explanation template
 
-```plaintext
+```asciidoc
 = Title
 :navtitle: Title
 
@@ -562,7 +558,7 @@ Release notes are not a part of the [Diátaxis](https://diataxis.fr/) framework,
 
 #### For Kobiton 4.0 or later
 
-```plaintext
+```asciidoc
 = Kobiton X.X release notes
 :navtitle: Kobiton X.X release notes
 
@@ -578,7 +574,8 @@ Content.
 ```
 
 #### For legacy Kobiton
-```plaintext
+
+```asciidoc
 = Kobiton X.X release notes (Legacy)
 :navtitle: Kobiton X.X release notes
 
