@@ -98,23 +98,24 @@ Typically, a project uses one `antora-playbook.yml` file and one `ui-bundle` dir
 
 The content on [docs.kobiton.com](https://docs.kobiton.com/) is configured in the `antora-playbook-docs.yml` and the `ui-bundle-docs` directory.
 
+- The `antora-playbook-docs.yml` file is used to configure the site name, analytics keys, extensions, UI bundle location, [Antora logs](#antora-logs), and [site URLs](#site-urls).
+- The `ui-bundle-docs` directory contains all source files for style and design of the site, including the home page tiles.
+
 **Output:**
 
 ![docs-site](https://github.com/kobiton/docs/assets/95643215/67c0dc03-5b3e-413c-bf01-41383c835a42)
 
-- The `antora-playbook-docs.yml` file is used to configure the site name, analytics keys, extensions, UI bundle location, [Antora logs](#antora-logs), and [site URLs](#site-urls).
-- The `ui-bundle-docs` directory contains all source files for style and design of the site, including the home page tiles. 
 
 ### Portal playbook and UI bundle
 
 The help widget on [portal.kobiton.com](https://portal.kobiton.com/) configured in the `antora-playbook-widget.yml` file and the `ui-bundle-widget` directory.
 
+- The `antora-playbook-widget.yml` file is used to configure the site name, analytics keys, extensions, and UI bundle location.
+- The `ui-bundle-widget` directory contains all source files for style and design of the widget on [portal.kobiton.com](https://portal.kobiton.com/).
+
 **Output:**
 
 <img src="https://github.com/kobiton/docs/assets/95643215/5a8c4c4f-b7de-4b0c-8638-f3d3df46e570" width="500" height="" />
-
-- The `antora-playbook-widget.yml` file is used to configure the site name, analytics keys, extensions, and UI bundle location.
-- The `ui-bundle-widget` directory contains all source files for style and design of the widget on [portal.kobiton.com](https://portal.kobiton.com/).
 
 ## Directory structure
 
