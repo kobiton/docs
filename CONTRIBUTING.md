@@ -170,9 +170,7 @@ When Antora builds content for [docs.kobiton.com](https://docs.kobiton.com), [th
 
 ### Configure navigation in `antora.yml`
 
-The `antora.yml` file defines which modules are displayed in the navigation bar. This file should **only** be modified when an entire section needs to be added or removed from the navigation bar. For example:
-
-_Input:_
+The `antora.yml` file defines which modules are displayed in the navigation bar. This file should **only** be modified when an entire section needs to be added or removed from the navigation bar. For example, this `antora.yml` file:
 
 ```yaml
 name: ROOT
@@ -197,7 +195,7 @@ nav:
   - modules/api-reference/nav.adoc
 ```
 
-_Output:_
+Generates the navigation bar on the left side of the screen:
 
 ![landing-page](https://github.com/kobiton/docs/assets/95643215/40513b33-61bd-43d6-910b-99c9f9e8dd05)
 
@@ -228,9 +226,7 @@ automation-testing
 └── nav.adoc
 ```
 
-Then, add the subsection title to the `nav.adoc` file as plaintext, and all the subsection content one list-level below it. For example:
-
-_Input:_
+Then, add the subsection title to the `nav.adoc` file as plaintext, and all the subsection content one list-level below it. For example, this `nav.adoc` file:
 
 ```asciidoc
 .xref:automation-testing:index.adoc[]
@@ -242,7 +238,7 @@ _Input:_
 * xref:automation-testing:page-b.adoc[]
 ```
 
-_Output:_
+Generates **Subsection A**, which is not hyperlinked and only serves as a dropdown for this subsection in the navigation bar:
 
 ![subsection-without-landing-page](https://github.com/kobiton/docs/assets/95643215/81619345-1949-47f6-baa5-d666b1cde6b2)
 
@@ -261,9 +257,7 @@ automation-testing
 └── nav.adoc
 ```
 
-Then, add the landing page to the `nav.adoc` file as an `xref`, and all the subsection's content one list-level below it. For example:
-
-_Input:_
+Then, add the landing page to the `nav.adoc` file as an `xref`, and all the subsection's content one list-level below it. For example, this `nav.adoc` file:
 
 ```asciidoc
 .xref:automation-testing:index.adoc[]
@@ -274,7 +268,7 @@ _Input:_
 * xref:automation-testing:page-b.adoc[]
 ```
 
-_Output:_
+Generates a landing page **Subsection A**, which also serves as a dropdown for this subsection in the navigation bar:
 
 ![subsection-with-landing-page](https://github.com/kobiton/docs/assets/95643215/22f52977-2f56-4dce-b472-647cbecc7f80)
 
