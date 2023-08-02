@@ -82,13 +82,13 @@ Beautified logs are automatically generated in the `logs` directory when you run
 
 **Output:**
 
-$IMAGE:BEAUTIFIED-LOGS$
+![beautified-logs](https://github.com/kobiton/docs/assets/95643215/d2d7e7a1-2e07-417c-a6ec-f9971c31cdc1)
 
 To generate standard Antora logs instead, run `yarn build`. For example:
 
 **Output:**
 
-$IMAGE:STANDARD-LOGS$
+![standard-logs](https://github.com/kobiton/docs/assets/95643215/6bcc992d-61c7-4005-9d56-e82c17b0b760)
 
 ## Antora playbooks and UI bundles
 
@@ -100,7 +100,7 @@ The content on [docs.kobiton.com](https://docs.kobiton.com/) is configured in th
 
 **Output:**
 
-$IMAGE:DOCS-OUTPUT$
+![docs-site](https://github.com/kobiton/docs/assets/95643215/67c0dc03-5b3e-413c-bf01-41383c835a42)
 
 - The `antora-playbook-docs.yml` file is used to configure the site name, analytics keys, extensions, UI bundle location, [Antora logs](#antora-logs), and [site URLs](#site-urls).
 - The `ui-bundle-docs` directory contains all source files for style and design of the site, including the home page tiles. 
@@ -111,7 +111,7 @@ The help widget on [portal.kobiton.com](https://portal.kobiton.com/) configured 
 
 **Output:**
 
-$IMAGE:WIDGET-OUTPUT$
+<img src="https://github.com/kobiton/docs/assets/95643215/5a8c4c4f-b7de-4b0c-8638-f3d3df46e570" width="500" height="" />
 
 - The `antora-playbook-widget.yml` file is used to configure the site name, analytics keys, extensions, and UI bundle location.
 - The `ui-bundle-widget` directory contains all source files for style and design of the widget on [portal.kobiton.com](https://portal.kobiton.com/).
@@ -203,7 +203,7 @@ nav:
 
 **Output:**
 
-$IMAGE:LANDING-PAGE$
+![landing-page](https://github.com/kobiton/docs/assets/95643215/40513b33-61bd-43d6-910b-99c9f9e8dd05)
 
 ### Configure navigation in `nav.adoc`
 
@@ -238,15 +238,17 @@ Then, add the subsection title to the `nav.adoc` file as plaintext, and all the 
 
 ```plaintext
 .xref:automation-testing:index.adoc[]
-* xref:automation-testing:page-b.adoc[]
 
-* xref:automation-testing:subsection-a/page-a1.adoc[]
+* Subsection A
+** xref:automation-testing:subsection-a/page-a1.adoc[]
 ** xref:automation-testing:subsection-a/page-a2.adoc[]
+
+* xref:automation-testing:page-b.adoc[]
 ```
 
 **Output:**
 
-$IMAGE:DIRECTORY-STRUCTURE$
+![subsection-without-landing-page](https://github.com/kobiton/docs/assets/95643215/81619345-1949-47f6-baa5-d666b1cde6b2)
 
 #### Create a subsection with a landing page
 
@@ -269,15 +271,16 @@ Then, add the landing page to the `nav.adoc` file as an `xref`, and all the subs
 
 ```plaintext
 .xref:automation-testing:index.adoc[]
-* xref:automation-testing:page-b.adoc[]
 
 * xref:automation-testing:subsection-a/index.adoc[]
 ** xref:automation-testing:subsection-a/page-a.adoc[]
+
+* xref:automation-testing:page-b.adoc[]
 ```
 
 **Output:**
 
-$IMAGE:DIRECTORY-STRUCTURE$
+![subsection-with-landing-page](https://github.com/kobiton/docs/assets/95643215/22f52977-2f56-4dce-b472-647cbecc7f80)
 
 ## Site URLs
 
