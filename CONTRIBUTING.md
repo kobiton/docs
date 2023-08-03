@@ -118,22 +118,22 @@ The help widget on [portal.kobiton.com](https://portal.kobiton.com/) is configur
 
 ## Directory structure
 
-Our project contains a single `modules` directory with an `antora.yml` file, a `ROOT` directory, and directories for each module.
+Our project hosts a single `modules` directory containing an `antora.yml` file, a `ROOT` directory, and a directory for each section of content.
 
 ```plaintext
 PROJECT
 └── docs
     ├── modules
     │   ├── ROOT
-    │   └── example-module
+    │   └── example-section
     └── antora.yml
 ```
 
-A module represents a content section and contains an `attachments`, `images`, `pages`, and `partials` directory, along with a `nav.adoc` file.
+Each directory in `modules` hosts a specific section, including an `attachments`, `images`, `pages`, and `partials` directory, as well as a `nav.adoc` file.
 
 ```plaintext
 modules
-└── example-module
+└── example-section
     ├── attachments
     ├── images
     ├── pages
@@ -141,7 +141,7 @@ modules
     └── nav.adoc
 ```
 
-_At a minimum_, a `pages` directory contains a `index.adoc` file, which serves as that section's landing page and is accessible from the [navigation bar](#site-navigation). It also contains the section's content in the form of `.adoc` files, which can be organized into [multi-nested subsections](#add-a-subsection).
+The `pages` directory hosts the written content for each section as `.adoc` files with [this file formatting](#directory-and-file-names). Content files can be stored directly in `pages` (such as `pages/*`) or in [multi-nested directories](#add-a-subsection) (such as `pages/**/*`).
 
 ```plaintext
 example-section
@@ -154,6 +154,10 @@ example-section
     ├── index.adoc
     └── page-c.adoc
 ```
+
+_At a minimum_, each `pages` directory must contain an `index.adoc` file, which serves as the section's landing page and is accessible from the [navigation bar](#site-navigation).
+
+![example-section](https://github.com/kobiton/docs/assets/95643215/7e29386f-f758-43e4-9384-9e0d0573c56f)
 
 ## Site navigation
 
@@ -207,8 +211,8 @@ To add a subsection with a landing page, first create a directory for that subse
 example-section
 ├── pages
 │   ├── subsection-a
-│   │    ├── index.adoc
-│   │    └── page-a.adoc
+│   │   ├── index.adoc
+│   │   └── page-a.adoc
 │   ├── index.adoc
 │   └── page-b.adoc
 └── nav.adoc
@@ -241,8 +245,8 @@ To add a subsection without a landing page, first create a directory for that su
 example-section
 ├── pages
 │   ├── subsection-a
-│   │    ├── page-a1.adoc
-│   │    └── page-a2.adoc
+│   │   ├── page-a1.adoc
+│   │   └── page-a2.adoc
 │   ├── index.adoc
 │   └── page-b.adoc
 └── nav.adoc
@@ -419,14 +423,14 @@ Antora partials allow you to reuse global and feature-specific content across th
 ```plaintext
 ROOT
 └── docs
-└── modules
-├── ROOT
-│   └── partials
-│       ├── pricing.adoc
-│       └── roles-page.adoc
-└── apps
-    └── partials
-        └── supported-filetypes.adoc
+    └── modules
+        ├── ROOT
+        │   └── partials
+        │       ├── pricing.adoc
+        │       └── roles-page.adoc
+        └── apps
+            └── partials
+                └── supported-filetypes.adoc
 ```
 
 To use a global partial, use the following `include` statement:
@@ -457,10 +461,10 @@ For example:
 ```plaintext
 automation-testing
 └──pages
-    ├── desired-capabilities.adoc
-    ├── download-appium-script.adoc
-    ├── index.adoc
-    └── supported-client-libraries.adoc
+   ├── desired-capabilities.adoc
+   ├── download-appium-script.adoc
+   ├── index.adoc
+   └── supported-client-libraries.adoc
 ```
 
 ## Page types and templates
@@ -629,7 +633,7 @@ One day we'll create our own, but for now we use the [Microsoft Style Guide](htt
 
 We use [Docker](https://www.docker.com/) and [GitHub actions](https://docs.github.com/en/actions/learn-github-actions/understanding-github-actions) to publish content to [docs.kobiton.com](https://docs.kobiton.com/) and [portal.kobiton.com](https://portal.kobiton.com/).
 
-### Docker images for the docs
+### Create an image for the docs
 
 To create a docker image for [docs.kobiton.com](https://docs.kobiton.com/), run:
 
@@ -637,7 +641,7 @@ To create a docker image for [docs.kobiton.com](https://docs.kobiton.com/), run:
 docker build -t kobiton/docs:1.0 -f docker/docs/Dockerfile .
 ```
 
-### Docker images for the portal
+### Create an image for the portal
 
 To create a docker image for the help widget on [portal.kobiton.com](https://portal.kobiton.com/), run:
 
