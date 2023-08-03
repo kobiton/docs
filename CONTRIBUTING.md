@@ -164,8 +164,6 @@ When [docs.kobiton.com](https://docs.kobiton.com/) is generated, these files cre
 
 Use these files to add [sections](#add-a-section), [subsections](#add-a-subsection), and [pages](#add-a-page) to the navigation bar.
 
-![subsection-with-landing-page](https://github.com/kobiton/docs/assets/95643215/22f52977-2f56-4dce-b472-647cbecc7f80)
-
 ### Add a section
 
 To add a section to the navigation bar, open `docs/antora.yml` and add the relative path to that section's `nav.adoc` file beneath the `nav` key:
