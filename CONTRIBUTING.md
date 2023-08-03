@@ -350,7 +350,7 @@ Open the `nav.adoc` for the main section and add the subsection title as plainte
 
 ## Site URLs
 
-_These guidelines are strictly enforced so formatting inconsistencies and broken user bookmarks can be avoided._
+> These URL guidelines are strictly enforced to avoid formatting inconsistencies and broken end-user bookmarks.
 
 URLs are generated from three files:
 
