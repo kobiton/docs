@@ -162,7 +162,7 @@ When [docs.kobiton.com](https://docs.kobiton.com/) is generated, these files cre
 - `antora.yml`: determines which sections (or modules) are added to the navigation bar.
 - `nav.adoc`: determines which pages are displayed beneath each section on the navigation bar.
 
-Use these files to add or remove [sections](#add-a-section), [pages](#add-a-page), and [subsections](#add-a-subsection) from the site navigation.
+Use these files to add [sections](#add-a-section), [subsections](#add-a-subsection), and [pages](#add-a-page) to the navigation bar.
 
 ![subsection-with-landing-page](https://github.com/kobiton/docs/assets/95643215/22f52977-2f56-4dce-b472-647cbecc7f80)
 
@@ -175,40 +175,10 @@ name: ROOT
 title: Kobiton Docs
 version: ~
 nav:
-  - modules/get-started/nav.adoc
-  - modules/release-notes/nav.adoc
-  - modules/integrations/nav.adoc
-  - modules/devices/nav.adoc
-  - modules/apps/nav.adoc
-  - modules/manual-testing/nav.adoc
-  - modules/automation-testing/nav.adoc
-  - modules/scriptless-automation/nav.adoc
-  - modules/debugging/nav.adoc
-  - modules/session-explorer/nav.adoc
-  - modules/profile/nav.adoc
-  - modules/organization/nav.adoc
-  - modules/test-management/nav.adoc
-  - modules/reporting/nav.adoc
-  - modules/supported-platforms/nav.adoc
-  - modules/api-reference/nav.adoc
+  - modules/example-section/nav.adoc
 ```
 
-### Add a page
-
-To add a page to a section [or subsection](#add-a-subsection) in the navigation bar, first open the `nav.adoc` for that section.
-
-```plaintext
-PROJECT
-└── docs
-    └── modules
-       └── automation-testing
-           ├── images
-           ├── pages
-           ├── partials
-           └── nav.adoc
-```
-
-Then add a cross-reference to the page in the unordered list. (Be sure the section's `nav.adoc` begins with `.xref:index.adoc[]` so [site URLs](#remove-index-strings) are generated properly). For example:
+Open the section's `nav.adoc` file and add cross-references to each `.adoc` file at least one level below `.xref:example-section:index.adoc[]`:
 
 **`nav.adoc` input:**
 
@@ -217,15 +187,15 @@ Then add a cross-reference to the page in the unordered list. (Be sure the secti
 * xref:example-section:page.adoc[]
 
 * Subsection A
-** xref:example-section:subsection-b/page-a.adoc[]
+** xref:example-section:subsection-a/page-a.adoc[]
 
-** xref:example-section:subsection-b/index.adoc[]
+* xref:example-section:subsection-b/index.adoc[]
 ** xref:example-section:subsection-b/page-b.adoc[]
 ```
 
 **`nav.adoc` output:**
 
-$IMAGE$
+![example-section](https://github.com/kobiton/docs/assets/95643215/7e29386f-f758-43e4-9384-9e0d0573c56f)
 
 ### Add a subsection
 
@@ -252,16 +222,18 @@ Open the `nav.adoc` for the main section and add cross-references to the `index.
 
 ```asciidoc
 .xref:example-section:index.adoc[]
+* xref:example-section:page.adoc[]
 
-* xref:example-section:subsection-a/index.adoc[]
+* Subsection A
 ** xref:example-section:subsection-a/page-a.adoc[]
 
-* xref:example-section:page-b.adoc[]
+* xref:example-section:subsection-b/index.adoc[]
+** xref:example-section:subsection-b/page-b.adoc[]
 ```
 
 **`nav.adoc` output:**
 
-![subsection-with-landing-page](https://github.com/kobiton/docs/assets/95643215/22f52977-2f56-4dce-b472-647cbecc7f80)
+![subsection-b](https://github.com/kobiton/docs/assets/95643215/aaffe891-7490-4dca-934c-4821cd8fc44c)
 
 #### Without a landing page
 
@@ -284,17 +256,52 @@ Open the `nav.adoc` for the main section and add the subsection title as plainte
 
 ```asciidoc
 .xref:example-section:index.adoc[]
+* xref:example-section:page.adoc[]
 
 * Subsection A
-** xref:example-section:subsection-a/page-a1.adoc[]
-** xref:example-section:subsection-a/page-a2.adoc[]
+** xref:example-section:subsection-a/page-a.adoc[]
 
-* xref:example-section:page-b.adoc[]
+* xref:example-section:subsection-b/index.adoc[]
+** xref:example-section:subsection-b/page-b.adoc[]
 ```
 
 **`nav.adoc` output:**
 
-![subsection-without-landing-page](https://github.com/kobiton/docs/assets/95643215/81619345-1949-47f6-baa5-d666b1cde6b2)
+![page-a](https://github.com/kobiton/docs/assets/95643215/685d2a99-aec4-449a-accf-3d2aace36fb3)
+
+### Add a page
+
+To add a page to a section [or subsection](#add-a-subsection) in the navigation bar, first open the `nav.adoc` for that section.
+
+```plaintext
+PROJECT
+└── docs
+    └── modules
+       └── automation-testing
+           ├── images
+           ├── pages
+           ├── partials
+           └── nav.adoc
+```
+
+Then add a cross-reference to the page in the unordered list. (Be sure the section's `nav.adoc` begins with `.xref:index.adoc[]` so [site URLs](#remove-index-strings) are generated properly). For example:
+
+**`nav.adoc` input:**
+
+```asciidoc
+.xref:example-section:index.adoc[]
+* xref:example-section:page.adoc[]
+
+* Subsection A
+** xref:example-section:subsection-a/page-a.adoc[]
+
+* xref:example-section:subsection-b/index.adoc[]
+** xref:example-section:subsection-b/page-b.adoc[]
+```
+
+**`nav.adoc` output:**
+
+![page](https://github.com/kobiton/docs/assets/95643215/920f9446-64e6-4a86-bfd3-2140b657b5c0)
 
 ## Site URLs
 
