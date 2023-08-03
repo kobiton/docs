@@ -78,11 +78,11 @@ yarn local
 
 ## Antora logs
 
-Beautified logs are automatically generated in the `logs` directory when you run `yarn local`. If AsciiDoc preview is enabled in your text editor, you can select links in the **Table of contents** or the **File** column to go directly to that section or file. For example:
+Beautified logs are generated in the `logs` directory when you run `yarn local`. If AsciiDoc preview is enabled in your text editor, you can select links in the **Table of contents** or the **File** column to open that section or file.
 
 ![beautified-logs](https://github.com/kobiton/docs/assets/95643215/d2d7e7a1-2e07-417c-a6ec-f9971c31cdc1)
 
-To generate standard Antora logs instead, run `yarn build`. For example:
+Run `yarn build` to generate standard JSON logs instead.
 
 ```json
 {"level":"error","time":1691005714646,"name":"asciidoctor","file":{"path":"/Users/<your-username>/kobiton/docs/docs/modules/automation-testing/pages/index.adoc"},"source":{"url":"https://github.com/kobiton/documentation.git","local":"/Users/<your-username>/kobiton/docs/.git","worktree":"/Users/<your-username>/kobiton/docs","refname":"update-contributing-doc","reftype":"branch","startPath":"docs"},"msg":"target of image not found: $NEW-IMAGE$"}
@@ -95,85 +95,80 @@ To generate standard Antora logs instead, run `yarn build`. For example:
 
 ## Antora playbooks and UI bundles
 
-Typically, a project uses one `antora-playbook.yml` file and one `ui-bundle` directory to configure Antora, however, our project uses a set of each--one for [docs.kobiton.com](https://docs.kobiton.com/) and the other for [portal.kobiton.com](https://portal.kobiton.com/). In most cases, the playbook content will match and the UI bundles will be site-specific.
+Typically, a project uses one `antora-playbook.yml` and one `ui-bundle/` directory to configure Antora. However, our project uses a set of each: one for [docs.kobiton.com](https://docs.kobiton.com/) and one for [portal.kobiton.com](https://portal.kobiton.com/). In most cases, the playbook will match and the UI bundles will remain site-specific.
 
-### Docs playbook and UI bundle
+### Docs content
 
-The content on [docs.kobiton.com](https://docs.kobiton.com/) is configured in the `antora-playbook-docs.yml` and the `ui-bundle-docs` directory.
+The content on [docs.kobiton.com](https://docs.kobiton.com/) is configured in `antora-playbook-docs.yml` and the `ui-bundle-docs` directory.
 
-- The `antora-playbook-docs.yml` file is used to configure the site name, analytics keys, extensions, UI bundle location, [Antora logs](#antora-logs), and [site URLs](#site-urls).
-- The `ui-bundle-docs` directory contains all source files for style and design of the site, including the home page tiles.
+- `antora-playbook-docs.yml` is used to configure the site name, analytics keys, extensions, UI bundle location, [Antora logs](#antora-logs), and [site URLs](#site-urls).
+- `ui-bundle-docs` contains all source files for style and design of the site, including the home page tiles.
 
 ![docs-site](https://github.com/kobiton/docs/assets/95643215/67c0dc03-5b3e-413c-bf01-41383c835a42)
 
 
-### Portal playbook and UI bundle
+### Portal widget
 
-The help widget on [portal.kobiton.com](https://portal.kobiton.com/) configured in the `antora-playbook-widget.yml` file and the `ui-bundle-widget` directory.
+The help widget on [portal.kobiton.com](https://portal.kobiton.com/) is configured in `antora-playbook-widget.yml` and the `ui-bundle-widget/` directory.
 
-- The `antora-playbook-widget.yml` file is used to configure the site name, analytics keys, extensions, and UI bundle location.
-- The `ui-bundle-widget` directory contains all source files for style and design of the widget on [portal.kobiton.com](https://portal.kobiton.com/).
+- `antora-playbook-widget.yml` is used to configure the site name, analytics keys, extensions, and UI bundle location.
+- `ui-bundle-widget/` contains all source files for style and design of the widget on [portal.kobiton.com](https://portal.kobiton.com/).
 
-<img src="https://github.com/kobiton/docs/assets/95643215/5a8c4c4f-b7de-4b0c-8638-f3d3df46e570" width="500" height="" />
+<img src="https://github.com/kobiton/docs/assets/95643215/5a8c4c4f-b7de-4b0c-8638-f3d3df46e570" width="500" height="" alt=""/>
 
 ## Directory structure
 
-Our project contains a single `modules` directory with an `antora.yml` file, a `ROOT` directory, and a modules directory for each Kobiton feature. For example:
+Our project contains a single `modules` directory with an `antora.yml` file, a `ROOT` directory, and directories for each module.
 
 ```plaintext
 PROJECT
 └── docs
     ├── modules
     │   ├── ROOT
-    │   ├── automation-testing
-    │   └── manual-testing
+    │   └── example-module
     └── antora.yml
 ```
 
-Each module in `modules` contains an `images`, `pages`, and `partials` directory, along with a `nav.adoc` file. For example:
+A module represents a content section and contains an `attachments`, `images`, `pages`, and `partials` directory, along with a `nav.adoc` file.
 
 ```plaintext
-PROJECT
-└── docs
-    ├── modules
-    │   └── automation-testing
-    │       ├── images
-    │       ├── pages
-    │       ├── partials
-    │       └── nav.adoc
-    └── antora.yml
+modules
+└── example-module
+    ├── attachments
+    ├── images
+    ├── pages
+    ├── partials
+    └── nav.adoc
 ```
 
-_At a minimum_, each module's `pages` directory contains one `index.adoc` file, which represents the module's landing page in the [site navigation](#site-navigation). Each `pages` directory contains the documentation for each section (as an `.adoc` file) and can be organized into multi-nested subdirectories with or without their own landing pages. For example:
+_At a minimum_, a `pages` directory contains a `index.adoc` file, which serves as that section's landing page and is accessible from the [navigation bar](#site-navigation). It also contains the section's content in the form of `.adoc` files, which can be organized into [multi-nested subsections](#add-a-subsection).
 
 ```plaintext
-PROJECT
-└── docs
-    ├── modules
-    │   └── automation-testing
-    │       ├── images
-    │       ├── pages
-    │       │   ├── subsection-a
-    │       │   │    ├── index.adoc
-    │       │   │    └── page-a.adoc
-    │       │   ├── subsection-b
-    │       │   │    └── page-b.adoc
-    │       │   ├── index.adoc
-    │       │   └── page-c.adoc
-    │       ├── partials
-    │       └── nav.adoc
-    └── antora.yml
+example-section
+└── pages
+    ├── subsection-a
+    │   ├── index.adoc
+    │   └── page-a.adoc
+    ├── subsection-b
+    │   └── page-b.adoc
+    ├── index.adoc
+    └── page-c.adoc
 ```
-
-**Note:** [Learn more about site navigation.](#site-navigation)
 
 ## Site navigation
 
-When Antora builds content for [docs.kobiton.com](https://docs.kobiton.com), [the Antora playbook](#docs-playbook-and-ui-bundle) will reference the `antora.yml` file to determine which _modules_ to display in the navigation bar, and the `nav.adoc` files in each module to determine which _pages_ to display in the navigation bar.
+When [docs.kobiton.com](https://docs.kobiton.com/) is generated, these files create the site's navigation bar:
 
-### Configure navigation in `antora.yml`
+- `antora.yml`: determines which sections (or modules) are added to the navigation bar.
+- `nav.adoc`: determines which pages are displayed beneath each section on the navigation bar.
 
-The `antora.yml` file defines which modules are displayed in the navigation bar. This file should **only** be modified when an entire section needs to be added or removed from the navigation bar. For example, this `antora.yml` file:
+Use these files to add or remove [sections](#add-a-section), [pages](#add-a-page), and [subsections](#add-a-subsection) from the site navigation.
+
+![subsection-with-landing-page](https://github.com/kobiton/docs/assets/95643215/22f52977-2f56-4dce-b472-647cbecc7f80)
+
+### Add a section
+
+To add a section to the navigation bar, open `docs/antora.yml` and add the relative path to that section's `nav.adoc` file beneath the `nav` key:
 
 ```yaml
 name: ROOT
@@ -198,59 +193,50 @@ nav:
   - modules/api-reference/nav.adoc
 ```
 
-Generates the navigation bar on the left side of the screen:
+### Add a page
 
-![landing-page](https://github.com/kobiton/docs/assets/95643215/40513b33-61bd-43d6-910b-99c9f9e8dd05)
-
-### Configure navigation in `nav.adoc`
-
-The `nav.adoc` file within each module defines which pages are displayed in that module's section on the navigation bar. To ensure [site URLs](#url-configuration-in-navadoc) are generated properly, each `nav.adoc` files must begin with `.xref:index.adoc[]`. For example:
-
-```asciidoc
-.xref:automation-testing:index.adoc[]
-* xref:automation-testing:page-a.adoc[]
-* xref:automation-testing:page-b.adoc[]
-```
-
-Additionally, each `nav.adoc` file can organize its module into multi-nested subsections--each subsection using a landing page or omitting one completely.
-
-#### Create a subsection without a landing page
-
-To create a subsection without a landing page, first create the subsection directory and add all subsection content as `.adoc` files. For example:
+To add a page to a section [or subsection](#add-a-subsection) in the navigation bar, first open the `nav.adoc` for that section.
 
 ```plaintext
-automation-testing
-├── pages
-│   ├── subsection-a
-│   │    ├── page-a1.adoc
-│   │    └── page-a2.adoc
-│   ├── index.adoc
-│   └── page-b.adoc
-└── nav.adoc
+PROJECT
+└── docs
+    └── modules
+       └── automation-testing
+           ├── images
+           ├── pages
+           ├── partials
+           └── nav.adoc
 ```
 
-Then, add the subsection title to the `nav.adoc` file as plaintext, and all the subsection content one list-level below it. For example, this `nav.adoc` file:
+Then add a cross-reference to the page in the unordered list. (Be sure the section's `nav.adoc` begins with `.xref:index.adoc[]` so [site URLs](#remove-index-strings) are generated properly). For example:
+
+**`nav.adoc` input:**
 
 ```asciidoc
-.xref:automation-testing:index.adoc[]
+.xref:example-section:index.adoc[]
+* xref:example-section:page.adoc[]
 
 * Subsection A
-** xref:automation-testing:subsection-a/page-a1.adoc[]
-** xref:automation-testing:subsection-a/page-a2.adoc[]
+** xref:example-section:subsection-b/page-a.adoc[]
 
-* xref:automation-testing:page-b.adoc[]
+** xref:example-section:subsection-b/index.adoc[]
+** xref:example-section:subsection-b/page-b.adoc[]
 ```
 
-Generates **Subsection A**, which is not hyperlinked and only serves as a dropdown for this subsection in the navigation bar:
+**`nav.adoc` output:**
 
-![subsection-without-landing-page](https://github.com/kobiton/docs/assets/95643215/81619345-1949-47f6-baa5-d666b1cde6b2)
+$IMAGE$
 
-#### Create a subsection with a landing page
+### Add a subsection
 
-To create a subsection with a landing page, first create the subsection directory. Add the landing page as an `index.adoc` file and the all subsection content as `.adoc` files. For example:
+When you add a subsection, you can choose to [add](#with-a-landing-page) or [omit](#without-a-landing-page) a landing page for that subsection.
+
+#### With a landing page
+
+To add a subsection with a landing page, first create a directory for that subsection. Add an `index.adoc` file (which will serve as the landing page) and all related `.adoc` files:
 
 ```plaintext
-automation-testing
+example-section
 ├── pages
 │   ├── subsection-a
 │   │    ├── index.adoc
@@ -260,35 +246,76 @@ automation-testing
 └── nav.adoc
 ```
 
-Then, add the landing page to the `nav.adoc` file as an `xref`, and all the subsection's content one list-level below it. For example, this `nav.adoc` file:
+Open the `nav.adoc` for the main section and add cross-references to the `index.adoc` to the unordered list and all content files one list-level below it:
+
+**`nav.adoc` input:**
 
 ```asciidoc
-.xref:automation-testing:index.adoc[]
+.xref:example-section:index.adoc[]
 
-* xref:automation-testing:subsection-a/index.adoc[]
-** xref:automation-testing:subsection-a/page-a.adoc[]
+* xref:example-section:subsection-a/index.adoc[]
+** xref:example-section:subsection-a/page-a.adoc[]
 
-* xref:automation-testing:page-b.adoc[]
+* xref:example-section:page-b.adoc[]
 ```
 
-Generates a landing page **Subsection A**, which also serves as a dropdown for this subsection in the navigation bar:
+**`nav.adoc` output:**
 
 ![subsection-with-landing-page](https://github.com/kobiton/docs/assets/95643215/22f52977-2f56-4dce-b472-647cbecc7f80)
 
+#### Without a landing page
+
+To add a subsection without a landing page, first create a directory for that subsection, then add all related `.adoc` files:
+
+```plaintext
+example-section
+├── pages
+│   ├── subsection-a
+│   │    ├── page-a1.adoc
+│   │    └── page-a2.adoc
+│   ├── index.adoc
+│   └── page-b.adoc
+└── nav.adoc
+```
+
+Open the `nav.adoc` for the main section and add the subsection title as plaintext to the unordered list, then cross-references for each `.adoc` file one list-level below it:
+
+**`nav.adoc` input:**
+
+```asciidoc
+.xref:example-section:index.adoc[]
+
+* Subsection A
+** xref:example-section:subsection-a/page-a1.adoc[]
+** xref:example-section:subsection-a/page-a2.adoc[]
+
+* xref:example-section:page-b.adoc[]
+```
+
+**`nav.adoc` output:**
+
+![subsection-without-landing-page](https://github.com/kobiton/docs/assets/95643215/81619345-1949-47f6-baa5-d666b1cde6b2)
+
 ## Site URLs
 
-**Note:** These URL guidelines are strictly enforced to ensure URLs remain consistent, and bookmarks do not break for end-users.
+_These guidelines are strictly enforced so formatting inconsistencies and broken user bookmarks can be avoided._
 
-The site URL is generated from the [`antora-playbook-docs.yml` file](#docs-playbook-and-ui-bundle), `antora.yml` file, and each module's [`nav.adoc` file](#configure-navigation-in-navadoc).
+URLs are generated from three files:
 
-### URL configuration in  `antora-playbook-docs.yml`
+- `antora-playbook-docs.yml`: determines if URLs end in a file extension, like `.html`.
+- `antora.yml`: determines if URLs contain subdirectories, like `docs/`.
+- `nav.adoc`: determines if certain URLs contain `index` strings.
+
+Use these files to remove [file extensions](#remove-file-extensions), [subdirectories](#remove-subdirectories), and [`index` strings](#remove-index-strings) from URLs. 
+
+### Remove file extensions
 
 The `antora-playbook-docs.yml` is used to add or remove the `.html` file extension from URL endings.
 
 - File extension: `docs.kobiton.com/devices/install-an-app.html`
 - No file extension: `docs.kobiton.com/devices/install-an-app`
 
-For [docs.kobiton.com](https://docs.kobiton.com/), we **do not** add file extensions to URL endings, so the `html_extension_style` key is set to `drop` in the `antora-playbook-docs.yml` file. For example:
+For [docs.kobiton.com](https://docs.kobiton.com/), we **do not** add file extensions to URL endings, so the `html_extension_style` key is set to `drop` in the `antora-playbook-docs.yml` file:
 
 ```yaml
 site:
@@ -304,7 +331,7 @@ content:
     branches: HEAD
 ```
 
-However, if this needs to change in the future, [set `html_extension_style` to `indexing`](https://docs.antora.org/antora/latest/playbook/urls-html-extension-style/#html-extension-style-key) or remove the key completely. For example:
+However, if this needs to change in the future, [set `html_extension_style` to `indexing`](https://docs.antora.org/antora/latest/playbook/urls-html-extension-style/#html-extension-style-key) or remove the key completely:
 
 ```yaml
 site:
@@ -317,14 +344,14 @@ content:
     branches: HEAD
 ```
 
-### URL configuration in  `antora.yml`
+### Remove subdirectories
 
-The `antora.yml` file in `PROJECT/docs/` is used to add or remove a subdirectory from the site URL. For example:
+The `antora.yml` file in `PROJECT/docs/` is used to add or remove a subdirectory from the site URL.
 
 - Subdirectory: `docs.kobiton.com/docs/get-started/`
 - No subdirectory: `docs.kobiton.com/get-started/`
 
-For [docs.kobiton.com](https://docs.kobiton.com/), we **do not** add subdirectories, so the `name` property is set to `ROOT` in the `antora.yml` file. For example:
+For [docs.kobiton.com](https://docs.kobiton.com/), we **do not** add subdirectories, so the `name` property is set to `ROOT` in the `antora.yml` file:
 
 ```yaml
 name: ROOT
@@ -336,7 +363,7 @@ nav:
   - modules/integrations/nav.adoc
 ```
 
-However, if this needs to change in the future, set `name` to any hyphen-separated string. For example:
+However, if this needs to change in the future, set `name` to any hyphen-separated string:
 
 ```yaml
 name: kobiton-docs
@@ -348,14 +375,14 @@ nav:
   - modules/integrations/nav.adoc
 ```
 
-### URL configuration in  `nav.adoc`
+### Remove `index` strings
 
-The `nav.adoc` file in each module is used to generate the [site navigation](#configure-navigation-in-navadoc), as well as add or remove `index` from URLs. For example:
+The `nav.adoc` file in each module is used to generate the [site navigation](#remove-index-strings), as well as add or remove `index` from URLs.
 
 - Index: `docs.kobiton.com/get-started/index`
 - No index: `docs.kobiton.com/get-started/`
 
-For [docs.kobiton.com](https://docs.kobiton.com/), we **do not** add `index` to URLs, so [Antora's list title formatting](https://docs.antora.org/antora/latest/navigation/files-and-lists/#list-titles-and-items) should be applied to the first `index.adoc` listed in the `nav.adoc` file. For example:
+For [docs.kobiton.com](https://docs.kobiton.com/), we **do not** add `index` to URLs, so [Antora's list title formatting](https://docs.antora.org/antora/latest/navigation/files-and-lists/#list-titles-and-items) should be applied to the first `index.adoc` listed in the `nav.adoc` file:
 
 ```asciidoc
 .xref:index.adoc[]
@@ -370,7 +397,7 @@ For [docs.kobiton.com](https://docs.kobiton.com/), we **do not** add `index` to 
 
 ## Hide a page from search
 
-By default, all `.adoc` files in the `modules` directory are searchable on Kobiton Docs using the [Antora Lunr Extension](https://gitlab.com/antora/antora-lunr-extension). To hide a page from search results, add the `:noindex:` attribute to the page's metadata. For example:
+By default, all `.adoc` files in the `modules` directory are searchable on Kobiton Docs using the [Antora Lunr Extension](https://gitlab.com/antora/antora-lunr-extension). To hide a page from search results, add the `:noindex:` attribute to the page's metadata.
 
 ```asciidoc
 = Generate an API token
@@ -382,7 +409,7 @@ Learn how to generate an API token in Kobiton.
 
 ## Partials
 
-Antora partials allow you to reuse content across the docs. _Global_ content (role requirements, pricing, etc.) is located within `ROOT/partials`, while _feature-specific_ content (supported app filetypes, supported gestures, etc.) is located within that specific feature's `partials` subdirectory. For example:
+Antora partials allow you to reuse global and feature-specific content across the docs. Global content (role requirements, pricing, etc.) is located within `ROOT/partials`, while feature-specific content (supported app filetypes, supported gestures, etc.) is located within that specific feature's `partials` subdirectory.
 
 ```plaintext
 ROOT
@@ -418,7 +445,9 @@ All directories and files should follow these guidelines:
 | Only lowercase letters     | `This Is My TITLE`   | `this is my title`      |
 | Replace spaces with dashes | `this is my title`   | `this-is-my-title`      |
 | Replace important symbols  | `i love c++ & c#`    | `i love cpp and csharp` |
-| Remove unimportant symbols | `this: is my title!` | `this is my title`      | For example:
+| Remove unimportant symbols | `this: is my title!` | `this is my title`      |
+
+For example:
 
 ```plaintext
 automation-testing
