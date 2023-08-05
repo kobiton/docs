@@ -1,77 +1,10 @@
-= Buildkite
-:navtitle: Buildkite
+= Run automation test
+:navtitle: Run automation test
 
-== About Buildkite
-link:https://buildkite.com/[Buildkite] is a platform for running fast, secure, and scalable continuous integration pipelines on your own infrastructure.
-
-== Kobiton Plugins
-Kobiton Plugins can be found here: link:https://buildkite.com/plugins?filter=kobiton[Buildkite Plugins]
-
-You can add Kobiton plugin(s) to your YAML pipeline in order to:
-
-* upload your app to Kobiton app repo
-* execute test on Kobiton device
-
-== How to use
-Precondition: You should already have your Buildkite pipeline set up. Please also refer to link:https://buildkite.com/docs/pipelines/defining-steps[Defining Your Pipeline Steps]
-
-== Kobiton App Upload
-To upload your application to Kobiton App Repo, add the following to your `pipeline.yml`:
-
-[source,yaml]
-----
-steps:
-- label: 'Kobiton App Upload'
-  plugins:
-  - kobiton/kobiton-app-upload#v1.0.0:
-      app-name: '<app-name>'
-      app-path: '<path-to-your-app>'
-      app-type: '<apk or ipa>'
-      kobiton-app-id: 'your-kobiton-app-id'
-      kobiton-app-access: 'private'
-      kobiton-username: '<your-kobiton-username>'
-      kobiton-api-key: '<your-kobiton-api-key>'
-----
-
-[%header,cols="2*,*"]
-|===
-| Configuration | Description
-
-| `app-name` (required)
-| Title of the app being built, for example `test-app`
-
-| `app-path` (required)
-| Path to the app . apk or . ipa file, for example `./test.apk`
-
-| `app-type`
-| `ipa` for IOS app or `apk` for Android app
-
-| `kobiton-app-id`
-| App ID in Kobiton, use this in case you want to upload new version of an existing app in Kobiton, for example `204234`. Leave blank if you're uploading new app
-
-| `kobiton-app-access`
-| use `private` if you want to make this app private or `public` to make it available for everyone in the organization
-
-| `kobiton-username`
-| Kobiton Username to upload to Kobiton, for example `kobitonadmin`
-
-| `kobiton-api-key`
-| API key to access Kobiton API, for example `2c8n41e4-b30d-4f19-ba63-6596016c9e58`. To get your Kobiton API Key, please follow instructions at _IV. Configure Test Script for Kobiton_ section on link:https://kobiton.com/blog/tutorial/parallel-testing-selenium-webdriver/[our blog]
-|===
-
-For example: This will upload a new app version to app ID = 294808 and this app is private.
-
-image:integrations:app-configuration.png[width=1000,alt="App configuration"]
-
-Once you're done adding the plugin to your pipeline, click on "Save and Build", then click "Create Build" to proceed.
-
-image:integrations:new-build.png[width=1000,alt="The New Build window"]
-
-image:integrations:kobiton-app-upload.png[width=1000,alt="Kobiton App Upload"]
-
-(Optional) Once the pipeline completes running, you can go to Kobiton App Repo to double check your new application/new application version.
+Lear how to ...
 
 == Kobiton Execute Test
+
 To execute your test with Kobiton Executor, add the following to your pipeline. yml:
 
 [source,yaml]

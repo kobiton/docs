@@ -1,0 +1,75 @@
+= Create a project
+:navtitle: Create a project
+
+Learn how to ...
+
+== Before you start
+
+* Desktop IDE, e.g., Eclipse, IntelliJ, Android Studio or Xcode
+* A Cloud Repository account
+* The ability to upload a project to the Cloud Repository, e.g., GitHub Desktop
+* A Jenkins Instance and valid credentials
+* Valid Kobiton login credentials.
+
+You should have a previously _known working_ project from your desktop IDE utilizing devices within your Kobiton Mobile Device Lab. This working baseline is important as it will assist with troubleshooting potential connectivity issues between Jenkins and the Kobiton Mobile Device Lab. If you have previously utilized the Scriptless Automation capability to export a Java-based Appium file, ensure that your username and API keys have been populated, like so:
+
+image:/guide-media/01GWECYNBYZ4SZSGP5QC8VMBRA[alt="mceclip1.png"]
+
+There is no need to modify the existing desired capability for the selected devices.
+
+== Create a project
+
+. Within the Jenkins Dashboard, select New Item. +
+image:/guide-media/01GWEGMNT65G21F0DM1YGXJ458[alt="mceclip5.png"]
+. Select the Maven Project to take advantage of the POM file that is included with the exported Appium File from Kobiton. +
+image:/guide-media/01GWEMKZV318SBWC42F4WRHMRX[alt="mceclip6.png"] The Configuration Screen will appear next.
+
+=== General tab
+
+. Enter a Description, if so desired.
+. Select "Discard Old Builds". Determine your Log Rotation Strategy and fill in "Days to keep builds" and "Max # of builds to keep" fields. An example is shown below:
++
+image:/guide-media/01GWE55K478THXB4SACF5MZM7C[alt="mceclip7.png"]
+
+=== Source Code Management tab
+
+. Select Git and provide the Repository URL (as mentioned previously) and your corresponding credentials.
+
+image:/guide-media/01GWEFX4DGZ37Y7HDMEEGNKXPA[alt="mceclip8.png"]
+
+=== Build Triggers tab
+
+. Select the appropriate build triggers depending on your requirement(s). In this example, the Build whenever a SNAPSHOT dependency is built as well as a Build Periodically – hourly triggers are selected.
++
+image:/guide-media/01GWEYQBP9PAPQAZE290G8VEDZ[alt="mceclip9.png"]
+
+=== Build Environment tab
+
+. Select the "Delete Workspace before build starts" option to enable Jenkins to request a code refresh from the Github repository.
+. Select "Abort the build if it’s stuck".
+. Select "Add timestamps to Console Output" if you would like timestamps to be included in every line of the output log of your test.
++
+image:/guide-media/01GWEJYJ7EMT8X58EYERYYF2K0[alt="mceclip10.png"]
+
+=== Steps and settings
+
+image:/guide-media/01GWESQSWAQHDMFCKVNG8AJMWC[alt="mceclip11.png"]
+
+Select Save or Apply to save your changes.
+
+image:/guide-media/01GWE55MJZBEVTPWMAWXFXK7H6[alt="mceclip12.png"]
+
+=== Optional configurations
+
+. Optionally, if you wish to pass String Parameters to the Appium Code to use at run time as Environmental Variables, in the General Configuration, check “This Project is parameterized”.
++
+image:/guide-media/01GWEGMPMDYWVFMTM8K8J6SK8F[alt="mceclip13.png"]
+. Select "String Parameters" from the dropdown list.
++
+image:/guide-media/01GWEYQCDY5W9BPTB7N7F01MA6[alt="mceclip14.png"]
+. Enter your Username Parameters (example below):
++
+image:/guide-media/01GWEBXX7E51V7N8NAJXHB5RX5[alt="mceclip15.png"]
+. Ensure the changes are reflected in the Config.java within the Github Repository.
++
+image:/guide-media/01GWESQTRSGV6ZWM7HGWSEMJS2[alt="mceclip16.png"]

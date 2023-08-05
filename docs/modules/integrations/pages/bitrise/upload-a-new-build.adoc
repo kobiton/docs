@@ -1,0 +1,27 @@
+= Upload a new build
+:navtitle: Upload a new build
+
+Learn how to ...
+
+== Upload new build of application to Kobiton App repo
+
+This Step will take your latest build and upload it to the Kobiton App Repo (it will either create a new app or upload a new version of the existing app).
+
+This step is already launched and available in the Bitrise Step library (see link:https://www.bitrise.io/integrations/steps/kobiton-app-upload[Integrations]).
+
+To use it, go to link:https://devcenter.bitrise.io/en/steps-and-workflows/adding-steps-to-a-workflow.html#adding-steps-to-a-workflow[Workflow editor], click *+* and search for Kobiton:
+
+image:integrations:workflow-editor.png[width=1000,alt="Workflow editor"]
+
+Click on the step to add it to your workflow - the added step will look like this:
+
+image:integrations:add-to-workflow.png[width=1000,alt="Add to workflow"]
+
+Review and input your app info as well as your Kobiton credentials (to get your Kobiton Username and API Key, login to the Kobiton portal and go to link:https://portal.kobiton.com/settings/keys[link:https://portal.kobiton.com/settings/keys]).
+
+Some additional notes:
+
+* Input "App ID" if you want to upload a new version for an existing app.
+* You can choose the App Privacy setting: Public (available for all member users in an organization to access) or Private (only available for you to access).
+
+Once you're done inputting variables for the step, save the workflow, then start/schedule your build in Bitrise.
