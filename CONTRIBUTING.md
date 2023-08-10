@@ -69,11 +69,22 @@ node --version
 yarn --version
 ```
 
-If Node.js and Yarn are installed, install project dependencies and build the docs locally by running:
+If Node.js and Yarn are installed, install project dependencies by running:
 
 ```plaintext
 yarn install
+```
+
+To build the docs [with logs](#antora-logs), run:
+
+```plaintext
 yarn local
+```
+
+To view the logs in your web browser, run:
+
+```plaintext
+yarn server
 ```
 
 ## Antora logs
