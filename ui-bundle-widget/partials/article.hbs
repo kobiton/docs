@@ -14,11 +14,13 @@
     </div>
     {{/with}}
     {{#if env.SITE_SEARCH_PROVIDER}}
-    <div class="search hide-for-print">
-      <div id="search-field" class="field">
-        <input id="search-input" type="text" placeholder="Search Help" {{#if page.home}} autofocus{{/if}}>
+      {{#if (eq page.title 'Reference Resources')}}
+      <div class="search hide-for-print content-hidden">
+        <div id="search-field" class="field">
+          <input id="search-input" type="text" placeholder="Search Reference Resources" {{#if page.home}} autofocus{{/if}}>
+        </div>
       </div>
-    </div>
+      {{/if}}
     {{/if}}
   </div>
 

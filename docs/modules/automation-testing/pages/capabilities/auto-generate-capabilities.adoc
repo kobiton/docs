@@ -19,10 +19,12 @@ First, choose a language and a framework for your auto-generated capabilities.
 
 image:automation-testing:automation-settings-closeup.png[width=1200, alt=""]
 
-Now choose your capabilities. When you do, your `DesiredCapabilities` object will update automatically. To learn more about a capability, see xref:automation-testing:capabilities/available-capabilities.adoc[].
+Choose the capabilities you want to add. When you do, your `DesiredCapabilities` object will update automatically.
 
-Here's an example `DesiredCapabilities` object:
+[NOTE]
+xref:automation-testing:capabilities/available-capabilities.adoc[See all capabilities].
 
+.Example
 [source,java]
 ----
 String kobitonServerUrl = "https://<user-name>:<api-key>@api.kobiton.com/wd/hub"; // <user-name> and <api-key> will be automatically replaced with your credentials.
@@ -52,7 +54,8 @@ image:automation-testing:copy-desired-capabilities-closeup.png[width=750, alt=""
 
 First, open your test suite and locate your config file. The exact name and location may vary, but you'll find it in a similar location:
 
-[source,asciidoc]
+.Example
+[source,plaintext]
 ----
 root
 └── src
@@ -64,8 +67,7 @@ root
 
 Next, open the config file, locate your existing `DesiredCapabilities` object, and add your new capabilities. When you're finished, save your changes.
 
-Here's an example:
-
+.Example
 [source,java]
 ----
 // Located in ~/test/scriptlessautomation/Config in the Java's TestNG framework.

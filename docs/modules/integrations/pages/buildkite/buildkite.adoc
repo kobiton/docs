@@ -21,7 +21,7 @@ To upload your application to Kobiton App Repo, add the following to your `pipel
 [source,yaml]
 ----
 steps:
-- label: "Kobiton App Upload"
+- label: 'Kobiton App Upload'
   plugins:
   - kobiton/kobiton-app-upload#v1.0.0:
       app-name: '<app-name>'
@@ -61,33 +61,35 @@ steps:
 
 For example: This will upload a new app version to app ID = 294808 and this app is private.
 
-image:$OLD-IMAGE$[width="", alt=""]
+image:app-configuration.png[width=1000,alt="App configuration"]
 
 Once you're done adding the plugin to your pipeline, click on "Save and Build", then click "Create Build" to proceed.
 
-image:$OLD-IMAGE$[width="", alt=""]
+image:new-build.png[width=1000,alt="The New Build window"]
 
-image:$OLD-IMAGE$[width="", alt=""]
+image:kobiton-app-upload.png[width=1000,alt="Kobiton App Upload"]
 
 (Optional) Once the pipeline completes running, you can go to Kobiton App Repo to double check your new application/new application version.
 
 == Kobiton Execute Test
 To execute your test with Kobiton Executor, add the following to your pipeline. yml:
+
+[source,yaml]
 ----
 steps:
-- label: "Kobiton Execute Test"
+- label: 'Kobiton Execute Test'
 plugins:
 - kobiton/kobiton-execute-test#v1.0.0:
    kobi-username: 'your kobiton username'
-   kobi-api-key: "your kobiton api key"
+   kobi-api-key: 'your kobiton api key'
    executor-url: 'https://executor-demo.kobiton.com'
    executor-username: 'your kobiton executor server username'
-   executor-passcode: "your kobiton executor server passcode"
+   executor-password: 'your kobiton executor server password'
    git-repo-url: 'https://github.com/Nhattd97/azure-devops-sample-java-prod.git'
    git-repo-branch: 'master'
    git-repo-ssh-key: ''
    app-id: 'kobiton-store:91041'
-   root-directory: "/"
+   root-directory: '/'
    command: 'mvn test'
    device-name: 'Galaxy S10'
    device-platform-version: '10'
@@ -96,6 +98,7 @@ plugins:
    wait-for-execution: 'true'
    log-type: 'combined'
 ----
+
 [cols="1,1",options="header"]
 |===
 | Configuration
@@ -105,7 +108,7 @@ kobi-api-key (required)
 | To get your Kobiton Username and API Key, please follow instructions at _IV. Configure Test Script for Kobiton_ section on link:https://kobiton.com/blog/tutorial/parallel-testing-selenium-webdriver/[our blog]
 | executor-url (required)
 executor-username (required)
-executor-passcode (required)
+executor-password (required)
 | We will provide you credentials to access our TestNG Execution Server. This will be used to execute your automation test script.
 | git-repo-url (required)
 git-repo-branch (required)
@@ -120,14 +123,14 @@ git-repo-ssh-key
 command (required)
 | Input the root directory of your Git repo and the command lines to install dependencies and execute your automation test script. These commands will run from the root directory of your Git repository.
 | use-custom-device
-| If you haven’t set the device information in your script, set this to “true” to choose a device to execute your test script.
+| If you haven't set the device information in your script, set this to “true” to choose a device to execute your test script.
 | device-name
 device-platform-version
 device-platform
 | if above config is true, provide the info of the device you want to use to run the test.
 |wait-for-execution
 |Set to “true” if you want the release pipeline to wait until your automation testing is completed or failed, then print out the console log and test result. +
-If it’s set to “false”, the release pipeline will continue to the next step. The execution job ID of this task will be printed, but not the console logs or TestNG report URL.
+If it's set to “false”, the release pipeline will continue to the next step. The execution job ID of this task will be printed, but not the console logs or TestNG report URL.
 
 |log-type
 |Your desired log type to be showed. Choose “combined” to show logs in chronological order, or specify a specific type of log ("output" or "error").
@@ -135,6 +138,6 @@ If it’s set to “false”, the release pipeline will continue to the next ste
 
 Example:
 
-image:$OLD-IMAGE$[width="", alt=""]
+image:test-execution-config.png[width=1000,alt="Test execution configuration"]
 
-Once you’re done adding the plugin to your pipeline, select “Save and Build”, then click “Create Build” to proceed.
+Once you're done adding the plugin to your pipeline, select “Save and Build”, then click “Create Build” to proceed.
