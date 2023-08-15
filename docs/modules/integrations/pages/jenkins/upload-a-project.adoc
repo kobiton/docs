@@ -1,9 +1,57 @@
-= Upload a project to your cloud repository
-:navtitle: Upload a project
+= Upload your test suite
+:navtitle: Upload your test suite
 
 Learn how to ...
 
-== Upload a project to your cloud repository
+== Before you start
+
+You'll need:
+
+* To create xref:automation-testing:scripting/auto-generate-an-appium-script.adoc[or generate] a test script with xref:automation-testing:capabilities/auto-generate-capabilities.adoc[Kobiton capabilities]
+
+* Access to a cloud repository service (like link:https://github.com/about[GitHub], link:https://about.gitlab.com/[GitLab], etc.) with SSH enabled
+
+== Upload to a new repository
+
+If you don't have a cloud repository for your project, you can create one and upload your project from the command line simultaneously. First, open terminal and navigate to your project's root directory.
+
+.Example
+[source,shell]
+----
+cd ~/my-app/
+----
+
+If your project hasn't been initialized as a git repository yet, run the following three commands to create your initial commit.
+
+[source,shell]
+----
+git init -b main
+git add --all
+git commit -m "First commit"
+----
+
+=== GitHub
+
+Next, link:https://github.com/cli/cli#installation[install `gh`], GitHub's command-line tool, using your operating system's package manager.
+
+.Example
+[source,shell]
+----
+brew install gh
+----
+
+Enter the following command and follow the prompts in your terminal.
+
+[source,shell]
+----
+gh repo create
+----
+
+=== GitLab
+
+This:
+
+== Upload to an existing repository
 
 For this example, we are using GitHub as our Cloud Repository example.
 
