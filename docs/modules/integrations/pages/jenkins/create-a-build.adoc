@@ -1,0 +1,100 @@
+= Create a Jenkins build
+:navtitle: Create a build
+
+Learn how to create a Jenkins build, so you can leverage continuous integration within your test automation pipeline.
+
+== Before you start
+
+You'll need to complete the following:
+
+* xref:integrations:jenkins/upload-a-project.adoc[Upload your project to a cloud repository].
+* link:https://www.jenkins.io/doc/book/installing/[Install Jenkins] on your personal computer.
+* Verify your Jenkins permissions are link:https://www.jenkins.io/doc/book/security/access-control/permissions/#access-granted-with-overallmanage[Overall/Manage] or higher.
+
+== Open Jenkins
+
+By default, Jenkins is set to http://localhost:8080. Open Jenkins in your browser.
+
+image:$NEW-IMAGE$[width="",alt=""]
+
+== Optional: install the Maven plugin
+
+If you haven't installed the link:https://plugins.jenkins.io/maven-plugin/[Maven plugin] already, select *Dashboard > Manage Jenkins*.
+
+image:$NEW-IMAGE$[width="",alt=""]
+
+Select *Plugins*.
+
+image:$NEW-IMAGE$[width="",alt=""]
+
+Select *Available Plugins*, then search for Maven and select *Install without restart*.
+
+image:$NEW-IMAGE$[width="",alt=""]
+
+== Create a new project
+
+Select *Dashboard > New Item*.
+
+image:$OLD-IMAGE$[width="",alt=""]
+
+Enter a project name, select *Maven project > OK*.
+
+== Configure the minimum requirements
+
+In the *Configuration* page, you will configure your Maven project. The following section outlines the _minimum_ requirements for integrating Jenkins with Kobiton; however, you can add or change any of these options to better meet your project needs.
+
+=== General
+
+In the *General* pane, enter a description.
+
+image:$OLD-IMAGE$[width="",alt=""]
+
+Select the *Discard old builds* checkbox, then choose the maximum number of days to keep builds and how many builds to keep. For example:
+
+image:$OLD-IMAGE$[width="",alt=""]
+
+[NOTE]
+If you are sharing this build with multiple users, we recommended configuring runtime environment variables so users will be required to enter their username, API key, and device UDID so Jenkins can assign these variables at runtime. For more information, see xref:integrations:jenkins/configure-runtime-environment-variables.adoc[].
+
+=== Source code management
+
+Select *Source Code Management*.
+
+image:$OLD-IMAGE$[width="",alt=""]
+
+Select *Git*, then enter the xref:integrations:jenkins/upload-a-project.adoc#_upload_the_project[URL you created previously] along with your credentials.
+
+image:$OLD-IMAGE$[width="",alt=""]
+
+=== Build triggers
+
+Select *Build Triggers*.
+
+image:$OLD-IMAGE$[width="",alt=""]
+
+Choose the settings that work best for you and your team. For example:
+
+image:$OLD-IMAGE$[width="",alt=""]
+
+=== Build environment
+
+Select *Build Environment*.
+
+image:$OLD-IMAGE$[width="",alt=""]
+
+Select the *Delete Workspace before build starts*, *Add timestamps to Console Output*, and *Terminate a build if it's stuck* checkboxes.
+
+image:$OLD-IMAGE$[width="",alt=""]
+
+Now that your Maven project is configured with the minimum requirements, you can xref:_configure_build_steps[configure your build steps].
+
+[#_configure_build_steps]
+== Configure build steps
+
+In the remaining panels on the *Configuration* page, you will configure your Maven project's *Pre Steps*, *Build*, *Post Steps*, *Build Settings*, and *Post-Build Actions*.
+
+Build steps are project-specific, so choose the options that best meet your project's needs.
+
+image:$NEW-IMAGE$[width="",alt=""]
+
+When you're finished, select *Save*. Now you can test your
