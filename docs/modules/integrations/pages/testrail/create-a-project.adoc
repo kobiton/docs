@@ -1,69 +1,62 @@
-= Create a project
+= Create a TestRail project
 :navtitle: Create a project
 
-Learn how to configure TestRail so you can xref:integrations:testrail/add-to-desired-capabilities.adoc[add TestRail to your test suite]. Once it's added, your future automation sessions will automatically update your TestRail project and link it to your session analytics.
+Learn how to create a TestRail project so you can xref:integrations:testrail/add-to-capabilities.adoc[add TestRail to your capabilities]. Once added, automation sessions will automatically update your TestRail project and link the results to your xref:session-explorer:manage-sessions.adoc[session overview].
 
-These are the various TestRail credentials you'll need in order to xref:integrations:testrail/add-to-desired-capabilities.adoc[add TestRail to your test suite].
+== Create a TestRail API key
 
-== Get TestRail credentials
+Open link:https://test.testrail.net/index.php?/auth/login/[TestRail] and select *Profile > My Settings*.
 
-[#_username]
-=== Username
+image:UNEDITED-testrail-select-settings.png[width="",alt=""]
 
-This
+Select *API keys*, then select *Add Key*.
 
-[#_server_address]
-=== Server address
+image:UNEDITED-testrail-select-add-key.png[width="",alt=""]
 
-This
+Store your key in a secure location, then select *Save Settings*.
 
-[#_api_key]
-=== API key
+image:UNEDITED-testrail-select-save-settings.png[width="",alt=""]
 
-This
+== Create a new project
 
-[#_case_id]
-=== Case ID
+Select *Dashboard*, then *+ Add Project*.
 
-This
+image:$OLD$[width="",alt=""]
 
-[#_run_id]
-=== Run ID
+Enter a project name, select *Use a single repository for all cases*, and then select *Add Project*.
 
-This
+image:$OLD$[width="",alt=""]
 
-[#_generate_an_api_key]
-== Generate an API key
+== Add the project to a test run
 
-Ensure that your APIs are enabled in TestRail. Go to Site Settings/API and make sure the *Enable API* and *Enable session authentication for API* boxes are checked.
+Select *Dashboard*, then choose your project.
 
-You will create your TestRail API key by logging into your TestRail account, clicking on your username in the top right-hand corner, and selecting *My Settings* from the dropdown menu.
+image:$NEW$[width="",alt=""]
 
-Click on the API Keys tab, and then *Add key*. You can name your API key anything you would like, then click *+ Generate Key*.
+Select *Test Runs & Results*, then *+Add Test Run*.
 
-Your API key will be generated and you can copy it from the API Key box.
+image:$OLD$[width="",alt=""]
 
-[NOTE]
-You can xref:profile:manage-your-api-keys.adoc[add your TestRail API Key to Kobiton] for easy access.
+Enter a test run name, then in the *Assign To* list, select *Me*.
 
-[#_configure_project]
-== Configure project
+image:$OLD$[width="",alt=""]
 
-. On the TestRail website, click *+ Add Project*.
+Select *Add Test Run*.
 
-. Name your project, make sure
-*Use a single repository for all cases* is selected, and then
-click *Add Project* at the bottom.
+image:$OLD$[width="",alt=""]
 
-. From the Dashboard, open your project, select the
-*Test Runs & Results* tab, and then
-*+Add Test Run*.
+== Add the project to a test case
 
-. Name your Test Run. Under "Assign To", select *Me* and click
-*Add Test Run* at the bottom of the page.
+Select *Dashboard*, then choose your project.
 
-. Next, click the *Test Cases* tab and click
-*+ Add Test Case*.
+image:$NEW$[width="",alt=""]
 
-. Name your Test Case and click *Add Test Case* at the bottom
-of the page.
+Select *Test Cases*, then *+ Add Test Case*.
+
+image:$OLD$[width="",alt=""]
+
+Enter a test case name, then select *Add Test Case*.
+
+image:$OLD$[width="",alt=""]
+
+Now you can xref:integrations:testrail/add-to-capabilities.adoc[add TestRail to your capabilities].
