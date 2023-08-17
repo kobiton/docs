@@ -1,0 +1,73 @@
+= Run an automation test using BuildKite
+:navtitle: Run an automation test
+
+Learn how to run an automation test using BuildKite, so you can ...
+
+== Before you start
+
+You'll need to complete the following:
+
+* link:https://buildkite.com/docs/pipelines/create-your-own[Create a BuildKite pipeline].
+* xref:integrations:buildkite/upload-a-project.adoc[Upload your project to a cloud repository].
+
+== Get your credentials
+
+Some credentials can be easily added while you're xref:_modify_your_pipeline_yml_file[modifying your `pipeline.yml` file], but others will be easier to get beforehand. Save these credentials to a secure location so you can add them to your `pipeline.yml` in the next section.
+
+* Kobiton API key: THIS
+* Kobiton Executer credentials: THIS
+* Cloud repository credentials: THIS
+
+[#_modify_your_pipeline_yml_file]
+== Modify your `pipeline.yml` file
+
+Open link:https://buildkite.com/login[BuildKite] and select your pipeline.
+
+image:$NEW-IMAGE$[width="",alt=""]
+
+Select *Settings*.
+
+image:$NEW-IMAGE$[width="",alt=""]
+
+Select *Steps*.
+
+image:$NEW-IMAGE$[width="",alt=""]
+
+To execute your test with Kobiton Executor, add the following to your `pipeline.yml`:
+
+[source,yaml]
+----
+steps:
+  - label: 'Kobiton Execute Test'
+    plugins:
+      - kobiton/kobiton-execute-test#v1.0.0:
+          kobi-username: '<your-username>'                     // Required: your Kobiton username.
+          kobi-api-key: '<your-api-key>'                       // Required: your Kobiton API key.
+          executor-url: 'https://executor-demo.kobiton.com'    // Required:
+          executor-username: '<your-executor-server-username>' // Required:
+          executor-password: '<your-executor-server-password>' // Required:
+          git-repo-url: '<repo-url>'                           // Required: the URL to your project's cloud repository.
+          git-repo-branch: '<repo-branch>'                     // Required: the default branch for your project's cloud repository.
+          git-repo-ssh-key: '<repo-ssh-key>'                   // Required: the SSH key for your project's cloud repository.
+          root-directory: '<path-to-project-root>'             // Required: the relative path to your project's root directory, such as '/'.
+          command: '<command-to-execute>'                      // Required: the command(s) used to install your project dependncies and run your test scripts.
+          app-id: '<kobiton-app-id>'                           // When testing your app (rather than your website), assign the app's existing Kobiton ID.
+          use-custom-device: '<true-or-false>'                 // Set to 'true' if you'd like to test a specific device.
+          device-name: '<device-name>'                         // If 'use-custom-device' is set to 'true', set to the device's name.
+          device-platform-version: '<device-platform-version>' // If 'use-custom-device' is set to 'true', set to the device's platform version.
+          device-platform: '<device-platform>'                 // If 'use-custom-device' is set to 'true', set to the
+          wait-for-execution: '<true-or-false>'                // Set to 'true' if you want the pipeline to wait until the test is complete.
+          log-type: 'log-type'                                 // Set to 'combined' for chonological logs, 'output' for output logs, 'error' for error logs.
+----
+
+When you're finished, select *Save and Build*.
+
+image:$NEW-IMAGE$[width="",alt=""]
+
+Choose to add a commit message or leave it blank, then select *Create Build*.
+
+image:$NEW-IMAGE$[width="",alt=""]
+
+When your build is complete, BuildKite will let you know if it passed.
+
+image:$NEW-IMAGE$[width="",alt=""]
