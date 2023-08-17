@@ -7,7 +7,7 @@ Learn how to create a Jenkins build, so you can leverage continuous integration 
 
 You'll need to complete the following:
 
-* xref:integrations:jenkins/upload-a-project.adoc[Upload your project to a cloud repository].
+* xref:integrations:jenkins/upload-a-project-to-your-cloud-repository.adoc[Upload your project to a cloud repository].
 * link:https://www.jenkins.io/doc/book/installing/[Install Jenkins] on your personal computer.
 * Verify your Jenkins permissions are link:https://www.jenkins.io/doc/book/security/access-control/permissions/#access-granted-with-overallmanage[Overall/Manage] or higher.
 
@@ -62,7 +62,7 @@ Select *Source Code Management*.
 
 image:$OLD-IMAGE$[width="",alt=""]
 
-Select *Git*, then enter the xref:integrations:jenkins/upload-a-project.adoc#_upload_the_project[URL you created previously] along with your credentials.
+Select *Git*, then enter the xref:integrations:jenkins/upload-a-project-to-your-cloud-repository.adoc#_upload_the_project[URL you created previously] along with your credentials.
 
 image:$OLD-IMAGE$[width="",alt=""]
 
@@ -86,15 +86,13 @@ Select the *Delete Workspace before build starts*, *Add timestamps to Console Ou
 
 image:$OLD-IMAGE$[width="",alt=""]
 
-Now that your Maven project is configured with the minimum requirements, you can xref:_configure_build_steps[configure your build steps].
+Now that your Maven project is configured with the minimum requirements, you can xref:_configure_the_build_steps[configure your build steps].
 
-[#_configure_build_steps]
-== Configure build steps
+[#_configure_the_build_steps]
+== Configure the build steps
 
-In the remaining panels on the *Configuration* page, you will configure your Maven project's *Pre Steps*, *Build*, *Post Steps*, *Build Settings*, and *Post-Build Actions*.
-
-Build steps are project-specific, so choose the options that best meet your project's needs.
+In the remaining panels on the *Configuration* page, configure your Maven project's *Pre Steps*, *Build*, *Post Steps*, *Build Settings*, and *Post-Build Actions*. Build steps are project-specific, so choose the options that best meet your project's needs.
 
 image:$NEW-IMAGE$[width="",alt=""]
 
-When you're finished, select *Save*. Now you can test your
+When you're finished, select *Save*.

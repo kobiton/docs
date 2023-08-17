@@ -1,0 +1,95 @@
+= Run an automation test using Bitrise
+:navtitle: Run an automation test
+
+Learn how to run an automation test using Bitrise, so you can leverage continuous integration within your test automation pipeline.
+
+== Before you start
+
+You'll need to complete the following:
+
+* link:https://devcenter.bitrise.io/en/steps-and-workflows/introduction-to-workflows.html[Create a Bitrise workflow].
+* xref:integrations:bitrise/upload-a-project-to-your-cloud-repository.adoc[Upload your project to a cloud repository].
+
+[#_get_your_credentials]
+== Get your credentials
+
+Some credentials can be added while you're xref:_modify_your_pipeline_yml_file[modifying your `pipeline.yml` file], but others are easier to get beforehand.Save these credentials to a secure location so you can easily add them to your `pipeline.yml` later:
+
+* *Kobiton API key:* get API key values from your list of xref:profile:manage-your-api-keys.adoc[Kobiton API keys].
+* *Executor server credentials:* N/A
+* *Cloud repository credentials:* get the URL and SSH key for the xref:integrations:buildkite/upload-a-project-to-your-cloud-repository.adoc[project you uploaded].
+
+== Add the workflow
+
+Open link:https://app.bitrise.io/users/sign_in[Bitrise] and select *Workflows*.
+
+image:UNEDITED-bitrise-select-workflows.png[width="",alt=""]
+
+Next to your workflow, select the *edit* icon.
+
+image:$NEW-IMAGE$[width="",alt=""]
+
+Select the *+* icon.
+
+image:$NEW-IMAGE$[width="",alt=""]
+
+Use the search bar to find and add *Upload application to Kobiton*.
+
+image:integrations:workflow-editor.png[width=1000,alt="Workflow editor"]
+
+== Add your credentials
+
+You'll be redirected to the workflow editor.
+
+image:integrations:added-in-the-workflow.png[width=1000,alt="Added info in the workflow"]
+
+In the *Input variables* panel, xref:_get_your_credentials[use your credentials] to fill out all the following fields:
+
+* *Kobiton Username*
+* *Kobiton API Key*
+* *Executor Server URL*
+* *Executor Username*
+* *Executor Password*
+* *Git Repository URL*
+* *Git Repository Branch*
+* *Git Repository SSH Key*
+
+== Configure the build steps
+
+Build steps are project-specific, so fill out the remaining fields in the *Input variables* panel to best meet your project needs:
+
+[cols="1,3"]
+|===
+|Property|Description
+
+|Root Directory (Required)
+|The relative path to your project's root directory, such as `/`.
+
+|Command (Required)
+|The command(s) used to install your project dependencies and run your test scripts.
+
+|App ID
+|When testing your app (rather than your website), assign the app's existing Kobiton ID.
+
+|Use Custom Device
+|Set to `true` if you'd like to test a specific device.
+
+|Device Name
+|If `use-custom-device` is set to `true`, set to the device's name.
+
+|Device Platform Version
+|If `use-custom-device` is set to `true`, set to the device's platform version.
+
+|Device Platform
+|If `use-custom-device` is set to `true`, set to the device's platform.
+
+|Wait for Execution
+|Set to `true` if you want the pipeline to wait until the test is complete.
+
+|Log Type
+|Set to `combined` for chronological logs, `output` for output logs, `error` for error logs.
+|===
+
+When you're finished, select *Save*.
+
+image:$NEW-IMAGE$[width="",alt=""]
