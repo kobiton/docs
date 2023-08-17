@@ -1,0 +1,148 @@
+= Run an automation test using CircleCI
+:navtitle: Run an automation test
+
+Learn how to run an automation test using CircleCI.
+
+[NOTE]
+For more information, see link:https://circleci.com/developer/orbs/orb/kobiton/kobiton[Official Orb Registry for Kobiton].
+
+== Before you start
+
+You'll need to complete the following:
+
+* link:https://circleci.com/docs/local-cli/#next-steps[Install CircleCI].
+* xref:integrations:circleci/upload-a-project-to-your-cloud-repository.adoc[Upload a project to your cloud repository].
+
+include::partial$add-kobiton-to-your-orbs.adoc[]
+
+== Create a workflow
+
+link:https://circleci.com/docs/workflows/[CircleCI workflows] can be used to create a complex set of jobs, commands, and steps that enable you to leverage continuous integration in your project. You can order the link:https://circleci.com/docs/reusing-config/#authoring-parameterized-jobs[jobs] and link:https://circleci.com/docs/reusing-config/#authoring-reusable-commands[commands] in your CircleCI workflow in a variety of ways. Use the following table to create your workflow, then save your `circleci/config.yml` file:
+
+|===
+|PARAMETER |DESCRIPTION |REQUIRED |DEFAULT |TYPE
+
+|`KOBITON_API_KEY`
+|Specific key to access Kobiton API (required as env variable in project settings)
+|No
+|`KOBITON_API_KEY`
+|`env_var_name`
+
+|`KOBITON_APP_ID`
+|The App ID or App URL to use in your test script (optional)
+|No
+|`''`
+|`string`
+
+|`KOBITON_COMMAND`
+|Command lines to install dependencies and execute your automation test script. These commands will run from the root directory of your Git repository
+|No
+|`mvn test`
+|`string`
+
+|`KOBITON_DEVICE_NAME`
+|This value will be consumed by the `KOBITON_DEVICE_NAME` environment variable in your test script.
+|No
+|`''`
+|`string`
+
+|`KOBITON_DEVICE_PLATFORM`
+|This value will be consumed by the `KOBITON_DEVICE_PLATFORM_NAME` environment variable in your test script.
+|No
+|`android`
+|`enum`
+
+|`KOBITON_DEVICE_PLATFORM_VERSION`
+|This value will be consumed by the `KOBITON_SESSION_PLATFORM_VERSION` environment variable in your test script.
+|No
+|`''`
+|`string`
+
+|`KOBITON_EXECUTOR_PASSWORD`
+|The Password Kobiton Automation Test Executor (required as env variable in project settings)
+|No
+|`KOBITON_EXECUTOR_PASSWORD`
+|`env_var_name`
+
+|`KOBITON_EXECUTOR_URL`
+|Kobiton Automation Test Executor URL to perform (required as parameter in config file)
+|Yes
+|`-`
+|`string`
+
+|`KOBITON_EXECUTOR_USERNAME`
+|The Username for Kobiton Automation Test Executor (required as env variable in project settings)
+|No
+|`KOBITON_EXECUTOR_USERNAME`
+|`env_var_name`
+
+|`KOBITON_GIT_REPO_BRANCH`
+|The branch of your Git repository you want to execute automation test with (required as parameter in config file)
+|Yes
+|`-`
+|`string`
+
+|`KOBITON_GIT_REPO_SSH_KEY`
+|It is used if your Git Repository is private (if repo is private, required as env variable in project settings)
+|No
+|`KOBITON_GIT_REPO_SSH_KEY`
+|`env_var_name`
+
+|`KOBITON_GIT_REPO_URL`
+|Link to your Git repository (required as parameter in config file)
+|Yes
+|`-`
+|`string`
+
+|`KOBITON_LOG_TYPE`
+|Your desired log type to be showed. Choose Combined to show logs in chronological order, or Separated for single type of log (Output or Error).
+|No
+|`combined`
+|`enum`
+
+|`KOBITON_ROOT_DIRECTORY`
+|Input the root directory of your Git repository
+|No
+|`/`
+|`string`
+
+|`KOBITON_USE_CUSTOM_DEVICE`
+|Check if you want to execute one or some test cases with a specific Kobiton Cloud Device. If you already set your device information in your test script, leave this field unchecked.
+|No
+|`'false'`
+|`enum`
+
+|`KOBITON_USERNAME`
+|The user in Kobiton (required as env variable in project settings)
+|No
+|`KOBITON_USERNAME`
+|`env_var_name`
+
+|`KOBITON_WAIT_FOR_EXECUTION`
+|Check if you want the release pipeline to wait until your automation testing is completed or failed, then print out the console log and test result.
+|No
+|`'true'`
+|`enum`
+|===
+
+== Example
+
+The following workflow runs an automation test on a Galaxy A20s using `https://executor-demo.kobiton.com`:
+
+[source,yaml]
+----
+version: '2.1'
+orbs:
+  kobiton: kobiton/kobiton@<version>
+workflows:
+  main:
+    jobs:
+      - kobiton/execute-test:
+          KOBITON_DEVICE_NAME: Galaxy A20s
+          KOBITON_DEVICE_PLATFORM: android
+          KOBITON_DEVICE_PLATFORM_VERSION: '10'
+          KOBITON_EXECUTOR_URL: https://executor-demo.kobiton.com
+          KOBITON_GIT_REPO_BRANCH: main
+          KOBITON_GIT_REPO_URL: https://github.com/sonhmle/azure-devops-sample-java-prod.git
+          KOBITON_USE_CUSTOM_DEVICE: 'true'
+----

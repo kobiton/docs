@@ -1,0 +1,32 @@
+== Optional: add the Kobiton orb
+
+If you haven't already, you'll need to add the Kobiton orb to your `circleci/config.yml`. In the terminal, open your project.
+
+.Example
+[source,shell]
+----
+cd ~/my-project
+----
+
+Open `circleci/config.yml` in a text editor.
+
+.Example
+[source,shell]
+----
+nano ./circleci/config.yml
+----
+
+Set CircleCI to version 2.1 at the top of the file.
+
+[source,yaml]
+----
+version: 2.1
+----
+
+Add Kobiton to your list of orbs.
+
+[source,yaml]
+----
+orbs:
+    kobiton: kobiton/kobiton@1.1.0
+----
