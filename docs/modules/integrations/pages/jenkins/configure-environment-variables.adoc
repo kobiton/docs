@@ -1,7 +1,7 @@
-= Configure runtime environment variables
-:navtitle: Configure runtime environment variables
+= Configure environment variables in Jenkins
+:navtitle: Configure environment variables
 
-Learn how to configure runtime environment variables, so shared builds will prompt users to enter their username, API key, and device UDID to assign as environment variables at runtime.
+Learn how to configure environment variables in Jenkins, so shared builds will prompt users to enter their username, API key, and device UDID to assign as environment variables at runtime.
 
 == Before you start
 
@@ -29,12 +29,12 @@ In the *Name* field, enter the name of your variable. In the *Default Value* fie
 
 image:$NEW$[width="",alt=""]
 
-Repeat these steps and create environment variables for `KOBITON_USERNAME`, `KOBITON_API_KEY`, and `KOBITON_DEVICE_UDID`. When you're finished, select *Save*, then xref:_update_project_configuration_file[update your project's configuration file].
+Repeat these steps and create environment variables for `KOBITON_USERNAME`, `KOBITON_API_KEY`, and `KOBITON_DEVICE_UDID`. When you're finished, select *Save*, then xref:_add_to_your_test_suite[update your test suite].
 
-[#_update_project_configuration_file]
-== Update project configuration file
+[#_add_to_your_test_suite]
+== Add to your test suite
 
-In the terminal, open the xref:integrations:jenkins/upload-a-project-to-your-cloud-repository.adoc[project you uploaded to your cloud repository].
+In the terminal, open the xref:integrations:upload-a-project-to-your-cloud-repository.adoc[project you uploaded to your cloud repository].
 
 .Example
 [source,shell]
@@ -42,7 +42,7 @@ In the terminal, open the xref:integrations:jenkins/upload-a-project-to-your-clo
 cd ~/my-project
 ----
 
-Open your project configuration file in a text editor.
+Open your test suite's configuration file in a text editor.
 
 .Example
 [source,shell]
@@ -50,7 +50,7 @@ Open your project configuration file in a text editor.
 nano ./src/test/Config.java
 ----
 
-Add your environment variables to the file.
+Add your environment variables.
 
 .Example
 [source,java]

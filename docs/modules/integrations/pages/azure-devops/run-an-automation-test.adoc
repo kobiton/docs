@@ -1,7 +1,7 @@
-= Run automation test
-:navtitle: Run automation test
+= Run an automation test using Azure DevOps
+:navtitle: Run an automation test testing extension
 
-$DESCRIPTION$
+Learn how to ...
 
 == Before you start
 
@@ -12,8 +12,20 @@ After adding the Kobiton Automation Test Executor task to your pipeline, you'll 
 * Git repository URL: Git URL that contains test scripts. If the repository is private, use the SSH URL.
 * Git repository branch: Git branch that will execute automation test script.
 * Git repository SSH key: The SSH Key to access a private Git repository. In this document, we will use Kobiton's public sample repository and will leave this field empty.
+* link:https://dev.azure.com[Azure DevOps account]
+* An Executor Server is needed to setup the Azure DevOps extension, which acts as an environment to execute test scripts.
+For Kobiton Executor Server credentials, Please mailto:support@kobiton.com[contact support].
 
 image:integrations:add-info.png[width=1000,alt="Add information"]
+
+== Install extension
+
+. To access the Kobiton Azure DevOps Extension, click link:https://marketplace.visualstudio.com/items?itemName=Kobiton.Kobiton[here].
++
+image:integrations:access-azure-devops.png[width=1000,alt="Access Azure DevOps"]
+
+. To install the extension, follow the instructions on this link:https://docs.microsoft.com/azure/devops/marketplace/install-extension?view=azure-devops&tabs=browser[guide.]
+. Log into the Kobiton Executor Server.
 
 == Modify Desired Capabilities
 

@@ -7,7 +7,7 @@ Learn how to create a Jenkins build, so you can leverage continuous integration 
 
 You'll need to complete the following:
 
-* xref:integrations:jenkins/upload-a-project-to-your-cloud-repository.adoc[Upload your project to a cloud repository].
+* xref:integrations:upload-a-project-to-your-cloud-repository.adoc[Upload your project to a cloud repository].
 * link:https://www.jenkins.io/doc/book/installing/[Install Jenkins] on your personal computer.
 * Verify your Jenkins permissions are link:https://www.jenkins.io/doc/book/security/access-control/permissions/#access-granted-with-overallmanage[Overall/Manage] or higher.
 
@@ -39,7 +39,7 @@ image:$OLD$[width="",alt=""]
 
 Enter a project name, select *Maven project > OK*.
 
-== Configure the minimum requirements
+== Set up the minimum requirements
 
 In the *Configuration* page, you will configure your Maven project. The following section outlines the _minimum_ requirements for integrating Jenkins with Kobiton; however, you can add or change any of these options to better meet your project needs.
 
@@ -54,7 +54,7 @@ Select the *Discard old builds* checkbox, then choose the maximum number of days
 image:$OLD$[width="",alt=""]
 
 [NOTE]
-If you are sharing this build with multiple users, we recommended configuring runtime environment variables so users will be required to enter their username, API key, and device UDID so Jenkins can assign these variables at runtime. For more information, see xref:integrations:jenkins/configure-runtime-environment-variables.adoc[].
+If you are sharing this build with multiple users, we recommended configuring runtime environment variables so users will be required to enter their username, API key, and device UDID so Jenkins can assign these variables at runtime. For more information, see xref:integrations:jenkins/configure-environment-variables.adoc[].
 
 === Source code management
 
@@ -62,7 +62,7 @@ Select *Source Code Management*.
 
 image:$OLD$[width="",alt=""]
 
-Select *Git*, then enter the xref:integrations:jenkins/upload-a-project-to-your-cloud-repository.adoc#_upload_the_project[URL you created previously] along with your credentials.
+Select *Git*, then enter the xref:integrations:upload-a-project-to-your-cloud-repository.adoc#_upload_the_project[URL you created previously] along with your credentials.
 
 image:$OLD$[width="",alt=""]
 
