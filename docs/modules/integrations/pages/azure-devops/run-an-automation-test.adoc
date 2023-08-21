@@ -1,103 +1,138 @@
 = Run an automation test using Azure DevOps
-:navtitle: Run an automation test testing extension
+:navtitle: Run an automation test
 
-Learn how to ...
+Learn how to run an automation test using Azure DevOps.
 
 == Before you start
 
-After adding the Kobiton Automation Test Executor task to your pipeline, you'll need to add some information:
+You'll need to complete the following:
 
-* Display name: The Kobiton API Credentials created in the previous section. (More credentials can be added, but for now select from the dropdown list).
-* Kobiton executor server credentials: The Kobiton Executor Server credentials in the service connection store. Please mailto:support@kobiton.com[contact support] for the necessary *username, password, and domain*.
-* Git repository URL: Git URL that contains test scripts. If the repository is private, use the SSH URL.
-* Git repository branch: Git branch that will execute automation test script.
-* Git repository SSH key: The SSH Key to access a private Git repository. In this document, we will use Kobiton's public sample repository and will leave this field empty.
-* link:https://dev.azure.com[Azure DevOps account]
-* An Executor Server is needed to setup the Azure DevOps extension, which acts as an environment to execute test scripts.
-For Kobiton Executor Server credentials, Please mailto:support@kobiton.com[contact support].
+* Add the link:https://marketplace.visualstudio.com/items?itemName=Kobiton.Kobiton[Kobiton Azure DevOps extension] to your project.
+* xref:integrations:azure-devops/configure-environment-variables.adoc[Configure your environment variables].
+* mailto:support@kobiton.com[Contact Kobiton support] for your executor server credentials.
 
-image:integrations:add-info.png[width=1000,alt="Add information"]
+== Add the task to your YAML file
 
-== Install extension
+In your Azure DevOps project, select *Pipelines*.
 
-. To access the Kobiton Azure DevOps Extension, click link:https://marketplace.visualstudio.com/items?itemName=Kobiton.Kobiton[here].
-+
-image:integrations:access-azure-devops.png[width=1000,alt="Access Azure DevOps"]
+image:$NEW$[width="",alt=""]
 
-. To install the extension, follow the instructions on this link:https://docs.microsoft.com/azure/devops/marketplace/install-extension?view=azure-devops&tabs=browser[guide.]
-. Log into the Kobiton Executor Server.
+Select your release pipeline.
 
-== Modify Desired Capabilities
+image:$NEW$[width="",alt=""]
 
-* Upload New App Version: By enabling, you'll need to upload a new version of your existing app on the Kobiton App Repository. App file path: Select an . apk or . ia in the release artifact.
+Select *Edit*.
 
-* App ID: The App ID of your existing app on the Kobiton App Repository, which can be found on link:https://portal.kobiton.com/apps[Kobiton's app repository].
+image:$NEW$[width="",alt=""]
 
-* As an example, once the app uploading process is complete, a value of 4058 will be parsed to your KOBITON_SESSION_APPLICATION environmental variables.
+The *Kobiton Automation Test Executor* task will be added to your YAML file where your cursor is currently located. Move your cursor to the location where you'd like to add the task.
 
-* If this field is left unchecked, in the App ID of the . apk file, you can enter your existing App ID or URL. This value will be directly passed to your KOBITON_SESSION_APPLICATION environmental variable.
+In the *Tasks* pane, search for and select *Kobiton Automation Test Executor*.
 
-* Use Custom Device: This will check if you want to define the device related parameters in your desiredCaps via environmental variables.
+image:$NEW$[width="",alt=""]
 
-* If left unchecked, the extension will ignore environmental variables.
+Use the following table to configure the task:
 
-* If checked, the following fields are required:
+[cols="1h,1,1,1"]
+|===
+|Parameter |Required |Environment Variable(s) |Description
 
-** Kobiton Cloud Device Name: KOBITON_DEVICE_NAME
-** Device platform version: KOBITON_SESSION_PLATFORM_VERSION
-** Device platform: KOBITON_DEVICE_PLATFORM
+|Display name
+|Yes
+|N/A
+|The release pipeline's display name.
 
-== Execution Inputs
+|Kobiton API credentials
+|Yes
+a|`KOBITON_USERNAME` +
+`KOBITON_API_KEY`
+|Your Kobiton API credentials.
 
-* *Root Directory:* The path to your Git repository.
-* *Commands:* The command lines to execute your test script. These commands will be called at the root directory of your Git repository. The commands will depend on your test project. In this example, we will use the command “mvn test” to build the project and run automation test script.
-* *Wait for execution:*
-* If unchecked, the release will continue to the next release task. The execution job ID of this task will be printed, but not on the console logs or report URL.
-* If checked, the task will wait for the execution to be either *COMPLETED* (commands ran successfully) or *FAILED* (cannot clone git repository, server error,$DESCRIPTION$) then print the console log and report URL (if it existed).
-* *Log Type:* Users can pick a type of log to be printed. *Combined* means the *output logs* and *error logs* will be printed in chronological order. The Separated option allows you to choose one of the 2 types of logs. It is recommended to log your test case result with appropriate log type. For example, in Java you can use `System.err.println` to print test case errors, this will be in the *error logs* while `System.out.println` will return texts in *output logs*.
-* *Terminate release pipeline on failed job:* If checked, once the execution job status is *FAILED*, an error will be returned and the whole release is terminated *(All the following release tasks below this task will be skipped)*.
-+
-image:integrations:terminate-release-pipeline.png[width=1000,alt="Terminate the release pipeline"]
+|Kobiton executor server credentials
+|Yes
+|N/A
+|Your Kobiton executor server credentials.
 
-== Execute the release
+|Git repository URL
+|Yes
+|N/A
+|The URL for your project's xref:integrations:upload-a-project-to-your-cloud-vcs.adoc[cloud repository].
 
-* Once everything is set up, click on the *Save* button on the right.
+|Git repository branch
+|Yes
+|N/A
+|The release branch for your project's xref:integrations:upload-a-project-to-your-cloud-vcs.adoc[cloud repository].
 
-* Leave fields blank, then click *OK*.
+|Git repository SSH key
+|Yes
+|N/A
+|The SSH key for your project's xref:integrations:upload-a-project-to-your-cloud-vcs.adoc[cloud repository].
 
-* On the right, click *Create Release* button to create a new release.
+|Upload New App Version
+|No
+|`KOBITON_SESSION_APPLICATION`
+a|Upload and install a new version of an xref:apps:manage-apps.adoc[existing app] during the test session. If selected, enter the following:
 
-* A new window will appear, leave everything blank, and click *Create*.
+* *App file path:* the path from your project root to your `.apk` or `.ipa` file.
+* *App ID:* your app's xref:apps:app-metadata.adoc#_app_id[Kobiton App ID]. __Assigned to the__ `KOBITON_SESSION_APPLICATION` __environment variable.__
 
-* On the notification, click *Release-1* to view the release status.
+|App ID/URL
+|No
+|`KOBITON_SESSION_APPLICATION`
+a|Your app's xref:apps:app-metadata.adoc#_app_id[Kobiton App ID]. __Requires *Upload New App Version* to be unchecked.__
 
-* When the release in completed, you can check the release log by clicking the *Logs* button below the release Stage.
+|Use Custom Device
+|No
+a|`KOBITON_DEVICE_NAME` +
+`KOBITON_SESSION_PLATFORM_VERSION` +
+`KOBITON_DEVICE_PLATFORM_NAME`
+a|Use a specific device from xref:devices:manage-devices.adoc[your devices]. If selected, enter the following:
 
-* Click on *Kobiton Automation Test Executor* task to view its logs
+* *Kobiton Cloud Device Name:* the device's xref:devices:device-metadata.adoc#_device_name_default[name in Kobiton]. __Assigned to the__ `KOBITON_DEVICE_NAME` __environment variable__.
+* *Device platform version:* the device's xref:devices:device-metadata.adoc#_os_version_default[platform version]. __Assigned to the__ `KOBITON_SESSION_PLATFORM_VERSION` __environment variable__.
+* *Device platform:* the device's xref:devices:device-metadata.adoc#_operating_system_default[platform version], either *Android* or *iOS*. __Assigned to the__ `KOBITON_DEVICE_PLATFORM_NAME` __environment variable__.
 
-* If you chose to *Wait for execution*, in cases with no server error and all test cases pass, you can see the test result, execution job ID ,and report URL.
+|Root directory
+|No
+|N/A
+|Description
 
-[NOTE]
-The **Job ID** is formatted with prefix **“rN”** where N is the release ID of your Azure DevOps project. Clicking on the Report URL will lead you to the report interface.
+|Commands
+|Yes
+|N/A
+|The command(s) to install project dependencies and run your test script.
 
-* After the session is successfully created, look up the session in the link:https://portal.kobiton.com/sessions[Kobiton Portal].
+|Wait for execution
+|No
+|N/A
+a|Wait for your automation script(s) to finish before starting the release pipeline. If selected, choose the following:
 
-== Example
+* *Log type:* choose *Combined* to display all logs, or *Separated* to display either output or error logs only.
+* *Terminate release pipeline on failed job:* terminate the pipeline if the automation script fails.
+|===
 
-This sample case demonstrates how to trigger the automation test script on Kobiton devices.
+When you're finished, select *Add*.
 
-*Filling in the inputs:*
+image:$NEW$[width="",alt=""]
 
-* link:https://github.com/kobiton/samples.git[Kobiton public git repository]
-* In `Root directory` enter the execution task. Change directory to test scripts before running the test. `./java/java_testng_junit`
-* In the `command` input of the execution task, run the test: `$ mvn test -Dtest=azureTestNG`
-* Because this demo repository is public, leave the SSH Key field blank and use HTTPS URL in the Kobiton Azure DevOps Release Task.
+Verify the task has been added to the correct location in your YAML file, then select *Save*.
 
-*Preparing the automation script:*
+image:$NEW$[width="",alt=""]
 
-The script will set default values for these following capabilities:
+Choose to commit directly to your main branch or create a new branch, then select *Save*.
 
-* *KOBITON_USERNAME:* the Kobiton Username set in Azure Service connection
-* *KOBITON_API_KEY:* The Kobiton API Key set in Azure Service connection
-* *KOBITON_DEVICE_NAME:* The Kobiton API Key set in Azure Service connection
-* *KOBITON_SESSION_APPLICATION:* Value of the app in Kobiton Extension Task
+image:$NEW$[width="",alt=""]
+
+== Run your automatoin test
+
+In your Azure DevOps project, select *Pipelines*.
+
+image:$NEW$[width="",alt=""]
+
+Select your release pipeline.
+
+image:$NEW$[width="",alt=""]
+
+Select *Run pipeline* to start your automation test.
+
+image:$NEW$[width="",alt=""]

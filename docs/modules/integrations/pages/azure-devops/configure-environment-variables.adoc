@@ -1,79 +1,31 @@
 = Set up environment variables in Azure DevOps
 :navtitle: Set up environment variables
 
-Learn how to set up environment variables in Azure DevOps, so
+Learn how to set up environment variables in Azure DevOps, so you and your team can use Azure DevOps to xref:integrations:azure-devops/upload-an-app.adoc[upload apps] and xref:integrations:azure-devops/run-an-automation-test.adoc[run automation tests].
 
 == Before you start
 
 You'll need to complete the following:
 
-* link:https://learn.microsoft.com/en-us/azure/devops/pipelines/create-first-pipeline?view=azure-devops&tabs=java%2Ctfs-2018-2%2Cbrowser[Create an Azure DevOps pipeline].
-* xref:integrations:azure-devops/run-an-automation-test.adoc[Set up automation testing for Azure DevOps].
+* link:https://learn.microsoft.com/en-us/azure/devops/pipelines/create-first-pipeline[Create an Azure DevOps pipeline].
+* xref:integrations:upload-a-project-to-your-cloud-vcs.adoc[Upload a project to your cloud VCS].
 
-== Supported environment variables
+== Create service connections
 
-[cols="1,2",options="header"]
-|===
-|Variable Name |Description
+THIS
 
-|`KOBITON_USERNAME`
-|Kobiton Username set in the Azure Service connection.
+=== For your API credentials
 
-|`KOBITON_API_KEY`
-|Kobiton API Key set in the Azure Service connection.
+THIS
 
-|`KOBITON_DEVICE_NAME`
-|Value of the device name in the Kobiton Extension Task.
+=== For your executor server credentials
 
-|`KOBITON_SESSION_PLATFORM_VERSION`
-|Value of the device platform in the Kobiton Extension Task.
+THIS
 
-|`KOBITON_DEVICE_PLATFORM_NAME`
-|Value of the device platform, Android / iOS, in the Kobiton Extension Task.
+[#_update_your_test_suite]
+== Update your test suite
 
-|`KOBITON_SESSION_APPLICATION`
-|App value in the Kobiton Extension Task.
-|===
-
-== Create environment variables
-
-In your link:https://azure.microsoft.com/en-us/products/devops/[Azure DevOps] project, select *Pipelines*.
-
-image:$NEW$[width="",alt=""]
-
-Select your pipeline.
-
-image:$NEW$[width="",alt=""]
-
-Select *Edit*.
-
-image:$NEW$[width="",alt=""]
-
-Select *Variables*.
-
-image:$NEW$[width="",alt=""]
-
-Select *New Variable*.
-
-image:$NEW$[width="",alt=""]
-
-Enter a variable name, assign a value, then select the *Keep this value secret* and *Let users override this value when running this pipeline* checkboxes.
-
-[NOTE]
-For more information, see link:https://learn.microsoft.com/en-us/azure/devops/pipelines/process/variables?view=azure-devops&tabs=yaml%2Cbatch[Azure Pipeline Variables].
-
-image:$NEW$[width="",alt=""]
-
-Select *Ok*.
-
-image:$NEW$[width="",alt=""]
-
-Repeat this process When you're finished, select *Save*, then xref:_add_to_your_test_suite[add the environment variables to your test suite].
-
-[#_add_to_your_test_suite]
-== Add to your test suite
-
-In the terminal, open the xref:integrations:upload-a-project-to-your-cloud-repository.adoc[project you uploaded to your cloud repository].
+In the terminal, open your project.
 
 .Example
 [source,shell]
@@ -89,7 +41,36 @@ Open your test suite's configuration file in a text editor.
 nano ./src/test/Config.java
 ----
 
-Add your environment variables.
+Add empty environment variables to the file using the following table. You'll assign values later when you add xref:integrations:azure-devops/run-an-automation-test.adoc[Kobiton Automation Test Executor] or xref:integrations:azure-devops/upload-an-app.adoc[Kobiton App Version Uploader] to your pipeline.
+
+[cols="1h,1,1"]
+|===
+|Environment Variable |Required |Description
+
+|`KOBITON_USERNAME`
+|Yes
+|Your xref:profile:manage-your-profile.adoc[Kobiton username].
+
+|`KOBITON_API_KEY`
+|Yes
+|Your xref:profile:manage-your-api-keys.adoc[Kobiton API key].
+
+|`KOBITON_SESSION_APPLICATION`
+|No
+|Your app's xref:apps:app-metadata.adoc#_app_id[Kobiton App ID].
+
+|`KOBITON_DEVICE_NAME`
+|No
+|A device's xref:devices:device-metadata.adoc#_device_name_default[name in Kobiton].
+
+|`KOBITON_SESSION_PLATFORM_VERSION`
+|No
+|A device's xref:devices:device-metadata.adoc#_os_version_default[platform version].
+
+|`KOBITON_DEVICE_PLATFORM_NAME`
+|No
+|A device's xref:devices:device-metadata.adoc#_operating_system_default[platform version], either *Android* or *iOS*.
+|===
 
 .Example
 [source,java]
@@ -114,38 +95,4 @@ public class Config {
 }
 ----
 
-When you're finished, save your changes. You can start using your environment variables now--however, we recommend xref:_optional_add_error_handling_for_empty_variables[adding error handling to your test suite] first.
-
-[#_optional_add_error_handling_for_empty_variables]
-== Optional: add error handling for empty variables
-
-Since `KOBITON_USERNAME` and `KOBITON_API_KEY` are empty, each user must xref:integrations:azure-devops/assign-your-credentials-at-runtime.adoc[assign their credentials to these variables] before they run the pipeline. To improve debugging for your team, we recommend adding error handling if `KOBITON_USERNAME` and `KOBITON_API_KEY` are still empty at runtime.
-
-The following method is only an _example_. Add error handling that best meets your project's needs.
-
-Open your test suite's configuration file in a text editor.
-
-.Example
-[source,shell]
-----
-nano ./src/test/Config.java
-----
-
-Add a conditional statement to check if `KOBITON_USERNAME` and `KOBITON_API_KEY` are blank and print an error message if they are.
-
-[NOTE]
-*DO NOT* write the values of `KOBITON_USERNAME` or `KOBITON_API_KEY` to your error message--even if they're empty.
-
-.Example
-[source,java]
-----
-if (System.getenv("KOBITON_USERNAME") == null || System.getenv("KOBITON_USERNAME").isEmpty() ||
-    System.getenv("KOBITON_API_KEY") == null || System.getenv("KOBITON_API_KEY").isEmpty()) {
-    System.err.println("Error: Username or API key is blank. Please refer to https://docs.kobiton.com/how-to-use-runtime-parameters-in-azure-devops/ for assistance.");
-    return; // or throw an exception
-}
-----
-
-When you're finished, save your changes. The following message will be printed in the xref:https://learn.microsoft.com/en-us/azure/devops/pipelines/troubleshooting/review-logs?view=azure-devops[pipeline's logs] if `KOBITON_USERNAME` or `KOBITON_API_KEY` are empty at runtime.
-
-image:$NEW$[width="",alt=""]
+When you're finished, save your changes.
