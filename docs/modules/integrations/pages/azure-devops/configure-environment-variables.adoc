@@ -1,26 +1,46 @@
-= Set up environment variables in Azure DevOps
-:navtitle: Set up environment variables
+= Configure environment variables in Azure DevOps
+:navtitle: Configure environment variables
 
-Learn how to set up environment variables in Azure DevOps, so you and your team can use Azure DevOps to xref:integrations:azure-devops/upload-an-app.adoc[upload apps] and xref:integrations:azure-devops/run-an-automation-test.adoc[run automation tests].
+Learn how to configure environment variables in Azure DevOps, so you and your team can xref:integrations:azure-devops/upload-an-app.adoc[upload apps] and xref:integrations:azure-devops/run-an-automation-test.adoc[run automation tests].
 
+[#_before_you_start]
 == Before you start
 
 You'll need to complete the following:
 
 * link:https://learn.microsoft.com/en-us/azure/devops/pipelines/create-first-pipeline[Create an Azure DevOps pipeline].
 * xref:integrations:upload-a-project-to-your-cloud-vcs.adoc[Upload a project to your cloud VCS].
+* Optional: xref:integrations:create-a-shared-kobiton-account-for-automation-tests.adoc[create a shared Kobiton account].
 
 == Create service connections
 
-THIS
+In Azure DevOps, open your project, then select *Settings*.
 
+image:$NEW$[width="",alt=""]
+
+In the *Pipelines* pane, select *Service connections*, then *Create a service connection*.
+
+image:$NEW$[width="",alt=""]
+
+Search for _Kobiton_, then create a connection for xref:_for_your_api_credentials[Kobiton API] and xref:_for_your_executor_server_credentials[Kobiton Server Executor].
+
+image:$NEW$[width="",alt=""]
+
+[#_for_your_api_credentials]
 === For your API credentials
 
-THIS
+We recommend creating a xref:integrations:create-a-shared-kobiton-account-for-automation-tests.adoc[shared Kobiton account] for running automation tests instead of using your personal Kobiton API credentials.
 
+Enter the username and password for the shared Kobiton account, then select *Verify and save*.
+
+image:$NEW$[width="",alt=""]
+
+[#_for_your_executor_server_credentials]
 === For your executor server credentials
 
-THIS
+Enter the username and password for the executor server credentials xref:_before_you_start[you were sent], then select *Verify and save*.
+
+image:$NEW$[width="",alt=""]
 
 [#_update_your_test_suite]
 == Update your test suite
