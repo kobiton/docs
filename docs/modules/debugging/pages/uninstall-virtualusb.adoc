@@ -3,11 +3,16 @@
 
 Learn how to uninstall virtualUSB from your personal computer.
 
-== Uninstall on MacOS
+== Uninstall virtualUSB
 
+[tabs]
+======
+macOS::
++
+--
 Open your *Applications* folder in Finder, then drag and drop *virtualUSB* into the trash.
 
-image:$NEW-IMAGE$[width=, alt=""]
+image:debugging:uninstall-virtual-usb-closeup.png[width=700,alt="Uninstall virtualUSB"]
 
 In the terminal, enter the following command:
 
@@ -15,9 +20,13 @@ In the terminal, enter the following command:
 ----
 sudo dcb uninstall && sudo rm -rf /usr/local/var/dcb /usr/local/bin/dcb ~/.dcbridgerc ~/Library/Application\ Support/virtualUSB
 ----
+--
 
-== Uninstall on Windows
-
+Windows::
++
+--
 Open File Explorer, go to *C:\Program Files\virtualUSB\*, then double-click *Uninstall virtualUSB*.
 
 image:debugging:uninstall-virtualusb-context.png[width=1000,alt="Uninstall virtual USB on Window"]
+--
+======

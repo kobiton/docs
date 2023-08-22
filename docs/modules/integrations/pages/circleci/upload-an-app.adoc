@@ -1,0 +1,92 @@
+= Upload an app using CircleCI
+:navtitle: Upload an app
+
+Learn how to upload an app to your app repository using CircleCI.
+
+[NOTE]
+For more information, see link:https://circleci.com/developer/orbs/orb/kobiton/kobiton[Official Orb Registry for Kobiton].
+
+== Before you start
+
+You'll need to complete the following:
+
+* link:https://circleci.com/docs/local-cli/#next-steps[Install CircleCI].
+* xref:integrations:upload-a-project-to-your-cloud-vcs.adoc[Upload a project to your cloud VCS].
+
+include::partial$add-kobiton-to-your-orbs.adoc[]
+
+== Create a workflow
+
+link:https://circleci.com/docs/workflows/[CircleCI workflows] can be used to create a complex set of jobs, commands, and steps that enable you to leverage continuous integration in your project. You can order the link:https://circleci.com/docs/reusing-config/#authoring-parameterized-jobs[jobs] and link:https://circleci.com/docs/reusing-config/#authoring-reusable-commands[commands] in your CircleCI workflow in a variety of ways. Use the following table to create your workflow, then save your `circleci/config.yml` file:
+
+|===
+|PARAMETER |DESCRIPTION |REQUIRED |DEFAULT |TYPE
+
+|`KOBITON_API_KEY`
+|Specific key to access Kobiton API (required as env variable in project settings)
+|No
+|`KOBITON_API_KEY`
+|`env_var_name`
+
+|`KOBITON_APP_ACCESS`
+|You can either make this app private or available for everyone in the organization (private vs. public)
+|No
+|`public`
+|`enum`
+
+|`KOBITON_APP_ID`
+|App ID in Kobiton - use this in case you want to upload a new version of an existing app in Kobiton (optional)
+|No
+|`''`
+|`string`
+
+|`KOBITON_APP_NAME`
+|Title of the app to be built (optional)
+|No
+|`demo-app`
+|`string`
+
+|`KOBITON_APP_PATH`
+|Path to the app .apk or .ipa file (should be in the same repo and start with ../ for example: ../test.apk) (required as parameter in config file)
+|Yes
+|`-`
+|`string`
+
+|`KOBITON_APP_TYPE`
+|Type of the app to be uploaded - Android (apk) or iOS (ipa)
+|No
+|`apk`
+|`enum`
+
+|`KOBITON_USERNAME`
+|The user to upload to Kobiton (required as env variable in project settings)
+|No
+|`KOBITON_USERNAME`
+|`env_var_name`
+|===
+
+== Example
+
+The following workflow uploads a new `.apk` and `.ipa` for an existing app, with the `.apk` set to public and the `.ipa` is set to private:
+
+[source,yaml]
+----
+version: '2.1'
+orbs:
+  kobiton: kobiton/kobiton@<version>
+workflows:
+  main:
+    jobs:
+      - kobiton/upload-app:
+          KOBITON_APP_PATH: ../test.apk
+      - kobiton/upload-app:
+          KOBITON_APP_ACCESS: public
+          KOBITON_APP_ID: '275643'
+          KOBITON_APP_NAME: android-app
+          KOBITON_APP_PATH: ../demo/android-test.apk
+      - kobiton/upload-app:
+          KOBITON_APP_ACCESS: private
+          KOBITON_APP_NAME: ios-app
+          KOBITON_APP_PATH: ../demo/ios-test.ipa
+          KOBITON_APP_TYPE: ipa
+----

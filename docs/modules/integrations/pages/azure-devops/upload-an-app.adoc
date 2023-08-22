@@ -1,0 +1,80 @@
+= Upload an app using Azure DevOps
+:navtitle: Upload an app
+
+Learn how to upload an app to your xref:apps:index.adoc[app repository] using Azure DevOps.
+
+== Before you start
+
+You'll need to complete the following:
+
+* Add the link:https://marketplace.visualstudio.com/items?itemName=Kobiton.Kobiton[Kobiton Azure DevOps extension] to your project.
+* xref:integrations:azure-devops/configure-environment-variables.adoc[Configure your environment variables].
+
+== Add the task to your YAML file
+
+In your Azure DevOps project, select *Pipelines*.
+
+image:$NEW$[width="",alt=""]
+
+Select your release pipeline.
+
+image:$NEW$[width="",alt=""]
+
+Select *Edit*.
+
+image:$NEW$[width="",alt=""]
+
+The *Kobiton App Version Uploader* task will be added to your YAML file where your cursor is currently located. Move your cursor to the location where you'd like to add the task.
+
+In the *Tasks* pane, search for and select *Kobiton App Version Uploader*.
+
+image:$NEW$[width="",alt=""]
+
+Use the following table to configure the task:
+
+[cols="1h,1,1,1"]
+|===
+|Parameter |Required |Environment Variable(s) |Description
+
+|Kobiton API credentials
+|Yes
+a|`KOBITON_USERNAME` +
+`KOBITON_API_KEY`
+|Your Kobiton API credentials.
+
+|File path
+|Yes
+|N/A
+|The path from your project root to your `.apk` or `.ipa` file.
+
+|App ID/URL
+|No
+|`KOBITON_SESSION_APPLICATION`
+|Your app's xref:apps:app-metadata.adoc#_app_id[Kobiton App ID].
+|===
+
+When you're finished, select *Add*.
+
+image:$NEW$[width="",alt=""]
+
+Verify the task has been added to the correct location in your YAML file, then select *Save*.
+
+image:$NEW$[width="",alt=""]
+
+Choose to commit directly to your main branch or create a new branch, then select *Save*.
+
+image:$NEW$[width="",alt=""]
+
+== Upload an app
+
+In your Azure DevOps project, select *Pipelines*.
+
+image:$NEW$[width="",alt=""]
+
+Select your release pipeline.
+
+image:$NEW$[width="",alt=""]
+
+Select *Run pipeline* to upload an app to your xref:apps:index.adoc[app repository].
+
+image:$NEW$[width="",alt=""]

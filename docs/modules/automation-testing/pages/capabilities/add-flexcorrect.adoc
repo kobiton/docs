@@ -31,21 +31,19 @@ In the config file, locate `DesiredCapabilities`, and add the following lines:
 | `true`
 
 | `kobiton:baselineSessionId`
-| (Optional) Choose a different baseline session by assigning its xref:automation-testing:get-the-sessionid.adoc[session ID].
+| Optional: choose a different baseline session by assigning its xref:automation-testing:get-the-sessionid.adoc[session ID].
 |===
 
 .Example
 [source,java]
 ----
-// Located in test/scriptlessautomation/Config in the Java's TestNG framework.
-
 public static DesiredCapabilities getIPhone11ProIOS146DesiredCapabilities() {
         DesiredCapabilities capabilities = new DesiredCapabilities();
 
         // Add these capabilities:
 
         capabilities.setCapability("kobiton:flexCorrect", true);  // Enable flexCorrect by setting capability to true.
-        capabilities.setCapability("kobiton:baselineSessionId", 0000011); // (Optional) Choose a different baseline session by assigning its kobitonSessionId.
+        capabilities.setCapability("kobiton:baselineSessionId", 0000011); // Optional: choose a different baseline session by assigning its kobitonSessionId.
 
     return capabilities;
 }

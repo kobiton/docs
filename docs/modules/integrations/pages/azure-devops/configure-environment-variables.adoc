@@ -1,0 +1,118 @@
+= Configure environment variables in Azure DevOps
+:navtitle: Configure environment variables
+
+Learn how to configure environment variables in Azure DevOps, so you and your team can xref:integrations:azure-devops/upload-an-app.adoc[upload apps] and xref:integrations:azure-devops/run-an-automation-test.adoc[run automation tests].
+
+[#_before_you_start]
+== Before you start
+
+You'll need to complete the following:
+
+* link:https://learn.microsoft.com/en-us/azure/devops/pipelines/create-first-pipeline[Create an Azure DevOps pipeline].
+* xref:integrations:upload-a-project-to-your-cloud-vcs.adoc[Upload a project to your cloud VCS].
+* Optional: xref:integrations:create-a-shared-kobiton-account-for-automation-tests.adoc[create a shared Kobiton account].
+
+== Create service connections
+
+In Azure DevOps, open your project, then select *Settings*.
+
+image:$NEW$[width="",alt=""]
+
+In the *Pipelines* pane, select *Service connections*, then *Create a service connection*.
+
+image:$NEW$[width="",alt=""]
+
+Search for _Kobiton_, then create a connection for xref:_kobiton_api[Kobiton API] and xref:_kobiton_executor_server[Kobiton Server Executor].
+
+image:$NEW$[width="",alt=""]
+
+[#_kobiton_api]
+=== Kobiton API
+
+We recommend creating a xref:integrations:create-a-shared-kobiton-account-for-automation-tests.adoc[shared Kobiton account] for running automation tests instead of using your personal Kobiton API credentials.
+
+Enter the username and password for the shared Kobiton account, then select *Verify and save*.
+
+image:$NEW$[width="",alt=""]
+
+[#_kobiton_executor_server]
+=== Kobiton Executor Server
+
+Enter the username and password for the executor server credentials xref:_before_you_start[you were sent], then select *Verify and save*.
+
+image:$NEW$[width="",alt=""]
+
+[#_update_your_test_suite]
+== Update your test suite
+
+In the terminal, open your project.
+
+.Example
+[source,shell]
+----
+cd ~/my-project
+----
+
+Open your test suite's configuration file in a text editor.
+
+.Example
+[source,shell]
+----
+nano ./src/test/Config.java
+----
+
+Add empty environment variables to the file using the following table. You'll assign values later when you add xref:integrations:azure-devops/run-an-automation-test.adoc[Kobiton Automation Test Executor] or xref:integrations:azure-devops/upload-an-app.adoc[Kobiton App Version Uploader] to your pipeline.
+
+[cols="1h,1,1"]
+|===
+|Environment Variable |Required |Description
+
+|`KOBITON_USERNAME`
+|Yes
+|Your xref:profile:manage-your-profile.adoc[Kobiton username].
+
+|`KOBITON_API_KEY`
+|Yes
+|Your xref:profile:manage-your-api-keys.adoc[Kobiton API key].
+
+|`KOBITON_SESSION_APPLICATION`
+|No
+|Your app's xref:apps:app-metadata.adoc#_app_id[Kobiton App ID].
+
+|`KOBITON_DEVICE_NAME`
+|No
+|A device's xref:devices:device-metadata.adoc#_device_name_default[name in Kobiton].
+
+|`KOBITON_SESSION_PLATFORM_VERSION`
+|No
+|A device's xref:devices:device-metadata.adoc#_os_version_default[platform version].
+
+|`KOBITON_DEVICE_PLATFORM_NAME`
+|No
+|A device's xref:devices:device-metadata.adoc#_operating_system_default[platform version], either *Android* or *iOS*.
+|===
+
+.Example
+[source,java]
+----
+public class Config {
+    enum SERVER_TYPE_ENUMS {KOBITON, LOCAL}
+
+    private String kobitonServerUrl = "https://" + System.getenv("KOBITON_USERNAME") + ":" + System.getenv("KOBITON_API_KEY") + "@api.kobiton.com/wd/hub";
+
+    public void setCapabilities() {
+        capabilities.setCapability("deviceGroup", "KOBITON");
+        capabilities.setCapability("deviceName", System.getenv("KOBITON_DEVICE_NAME"));
+        capabilities.setCapability("platformName", System.getenv("KOBITON_DEVICE_PLATFORM_NAME"));
+        capabilities.setCapability("platformVersion", System.getenv("KOBITON_SESSION_PLATFORM_VERSION"));
+        capabilities.setCapability("app", System.getenv("KOBITON_SESSION_APPLICATION"));
+    }
+
+    public static final SERVER_TYPE_ENUMS SERVER_TYPE = SERVER_TYPE_ENUMS.KOBITON;
+    public static final int IMPLICIT_WAIT_IN_SECOND = 30;
+    public static final int DEVICE_WAITING_MAX_TRY_TIMES = 5;
+    public static final int DEVICE_WAITING_INTERVAL_IN_MS = 30000;
+}
+----
+
+When you're finished, save your changes.

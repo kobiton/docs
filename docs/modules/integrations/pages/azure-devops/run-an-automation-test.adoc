@@ -1,0 +1,138 @@
+= Run an automation test using Azure DevOps
+:navtitle: Run an automation test
+
+Learn how to run an automation test using Azure DevOps.
+
+== Before you start
+
+You'll need to complete the following:
+
+* Add the link:https://marketplace.visualstudio.com/items?itemName=Kobiton.Kobiton[Kobiton Azure DevOps extension] to your project.
+* xref:integrations:azure-devops/configure-environment-variables.adoc[Configure your environment variables].
+* mailto:support@kobiton.com[Contact Kobiton support] for your executor server credentials.
+
+== Add the task to your YAML file
+
+In your Azure DevOps project, select *Pipelines*.
+
+image:$NEW$[width="",alt=""]
+
+Select your release pipeline.
+
+image:$NEW$[width="",alt=""]
+
+Select *Edit*.
+
+image:$NEW$[width="",alt=""]
+
+The *Kobiton Automation Test Executor* task will be added to your YAML file where your cursor is currently located. Move your cursor to the location where you'd like to add the task.
+
+In the *Tasks* pane, search for and select *Kobiton Automation Test Executor*.
+
+image:$NEW$[width="",alt=""]
+
+Use the following table to configure the task:
+
+[cols="1h,1,1,1"]
+|===
+|Parameter |Required |Environment Variable(s) |Description
+
+|Display name
+|Yes
+|N/A
+|The release pipeline's display name.
+
+|Kobiton API credentials
+|Yes
+a|`KOBITON_USERNAME` +
+`KOBITON_API_KEY`
+|Your Kobiton API credentials.
+
+|Kobiton executor server credentials
+|Yes
+|N/A
+|Your Kobiton executor server credentials.
+
+|Git repository URL
+|Yes
+|N/A
+|The URL for your project's xref:integrations:upload-a-project-to-your-cloud-vcs.adoc[cloud repository].
+
+|Git repository branch
+|Yes
+|N/A
+|The release branch for your project's xref:integrations:upload-a-project-to-your-cloud-vcs.adoc[cloud repository].
+
+|Git repository SSH key
+|Yes
+|N/A
+|The SSH key for your project's xref:integrations:upload-a-project-to-your-cloud-vcs.adoc[cloud repository].
+
+|Upload New App Version
+|No
+|`KOBITON_SESSION_APPLICATION`
+a|Upload and install a new version of an xref:apps:manage-apps.adoc[existing app] during the test session. If selected, enter the following:
+
+* *App file path:* the path from your project root to your `.apk` or `.ipa` file.
+* *App ID:* your app's xref:apps:app-metadata.adoc#_app_id[Kobiton App ID]. __Assigned to the__ `KOBITON_SESSION_APPLICATION` __environment variable.__
+
+|App ID/URL
+|No
+|`KOBITON_SESSION_APPLICATION`
+a|Your app's xref:apps:app-metadata.adoc#_app_id[Kobiton App ID]. __Requires *Upload New App Version* to be unchecked.__
+
+|Use Custom Device
+|No
+a|`KOBITON_DEVICE_NAME` +
+`KOBITON_SESSION_PLATFORM_VERSION` +
+`KOBITON_DEVICE_PLATFORM_NAME`
+a|Use a specific device from xref:devices:manage-devices.adoc[your devices]. If selected, enter the following:
+
+* *Kobiton Cloud Device Name:* the device's xref:devices:device-metadata.adoc#_device_name_default[name in Kobiton]. __Assigned to the__ `KOBITON_DEVICE_NAME` __environment variable__.
+* *Device platform version:* the device's xref:devices:device-metadata.adoc#_os_version_default[platform version]. __Assigned to the__ `KOBITON_SESSION_PLATFORM_VERSION` __environment variable__.
+* *Device platform:* the device's xref:devices:device-metadata.adoc#_operating_system_default[platform version], either *Android* or *iOS*. __Assigned to the__ `KOBITON_DEVICE_PLATFORM_NAME` __environment variable__.
+
+|Root directory
+|No
+|N/A
+|Description
+
+|Commands
+|Yes
+|N/A
+|The command(s) to install project dependencies and run your test script.
+
+|Wait for execution
+|No
+|N/A
+a|Wait for your automation script(s) to finish before starting the release pipeline. If selected, choose the following:
+
+* *Log type:* choose *Combined* to display all logs, or *Separated* to display either output or error logs only.
+* *Terminate release pipeline on failed job:* terminate the pipeline if the automation script fails.
+|===
+
+When you're finished, select *Add*.
+
+image:$NEW$[width="",alt=""]
+
+Verify the task has been added to the correct location in your YAML file, then select *Save*.
+
+image:$NEW$[width="",alt=""]
+
+Choose to commit directly to your main branch or create a new branch, then select *Save*.
+
+image:$NEW$[width="",alt=""]
+
+== Run your automatoin test
+
+In your Azure DevOps project, select *Pipelines*.
+
+image:$NEW$[width="",alt=""]
+
+Select your release pipeline.
+
+image:$NEW$[width="",alt=""]
+
+Select *Run pipeline* to start your automation test.
+
+image:$NEW$[width="",alt=""]

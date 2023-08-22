@@ -11,31 +11,38 @@ You'll need the following devices:
 * An iOS device running iOS 12.0 or later.
 
 [NOTE]
-Due to a recent Apple update, this feature is currently unavailable for devices running iOS 16 or later.
+====
+Due to a recent Apple update, this feature is currently unavailable for:
+
+* Mobile devices running iOS 16 or later.
+* Local Kobiton servers running macOS Monterey (12) or later.
+====
 
 == Configure VoiceOver
 
-On the Kobiton server, open *System Preferences*, and turn on *Bluetooth*.
+On the local Kobiton server, open *System Preferences*, and turn on *Bluetooth*. Take note of the name under *This Mac is discoverable as...*
 
-image:$NEW-IMAGE$[width=, alt=""]
+image:devices:enable-bluetooth-server-ios-voiceover.png[width=500, alt="Open System Preferences and select Bluetooth"]
 
-Connect your iOS device to the Mac mini. Then on the iOS device, open *Settings* and select *Bluetooth*.
+Connect your iOS device to the local Kobiton server. Then on the iOS device, open *Settings* and select *Bluetooth*.
 
-image:devices:enable-ios-voiceover.png[width=400,alt="Open Settings and select Bluetooth"]
+image:devices:open-bluetooth-ios-voiceover.png[width=400,alt="Open Settings and select Bluetooth"]
 
-Turn on *Bluetooth*, then select the Mac mini below *My Devices*.
+Turn on *Bluetooth*, then select the local Kobiton server's name under *Devices*.
 
-image:$NEW-IMAGE$[width=, alt=""]
+image:devices:enable-bluetooth-ios-voiceover.png[width=400, alt="Enable Bluetooth and select the Mac mini host"]
 
-On the Mac mini, accept the paring request.
+On the local server, accept the paring request.
 
-image:$NEW-IMAGE$[width=, alt=""]
+image:devices:accept-pairing-server-ios-voiceover.png[width=400, alt="Accept pairing request"]
 
-Back on the iOS device, go back to *Settings*, then select *Accessibility*.
+Back on the iOS device, go back to *Settings*, select *Accessibility*, then turn on *VoiceOver*.
 
-image:$NEW-IMAGE$[width=, alt=""]
+image:devices:enable-ios-voiceover.png[width=400, alt="Go to Settings and select Accessibility, then turn on Voiceover"]
 
-Turn on *VoiceOver*, then select *Audio* and turn on *Send to HDMI*.
+Select *Audio* and turn on *Send to HDMI*.
+
+image:devices:send-to-hdmi-ios-voiceover.png[width=400, alt="Select Audio and turn on Send to HDMI"]
 
 [NOTE]
 You will not use an HDMI connection during testing, however this setting is still required for full VoiceOver functionality.

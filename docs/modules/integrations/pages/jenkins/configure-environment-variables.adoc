@@ -1,0 +1,72 @@
+= Configure environment variables in Jenkins
+:navtitle: Configure environment variables
+
+Learn how to configure environment variables in Jenkins, so shared builds will prompt users to enter their username, API key, and device UDID to assign as environment variables at runtime.
+
+== Before you start
+
+You'll need to xref:integrations:jenkins/create-a-build.adoc[create a Jenkins build].
+
+== Create environment variables
+
+By default, Jenkins is set to http://localhost:8080. Open Jenkins in your browser.
+
+image:$NEW$[width="",alt=""]
+
+Select *Dashboard*, then select the xref:integrations:jenkins/create-a-build.adoc[build you created].
+
+image:$NEW$[width="",alt=""]
+
+Select *Configure*.
+
+image:$NEW$[width="",alt=""]
+
+In the *General* pane, select the *This project is parameterized* checkbox, select *String Parameter*.
+
+image:$NEW$[width="",alt=""]
+
+In the *Name* field, enter the name of your variable. In the *Default Value* field, enter the value of the variable. For example:
+
+image:$NEW$[width="",alt=""]
+
+Repeat these steps and create environment variables for `KOBITON_USERNAME`, `KOBITON_API_KEY`, and `KOBITON_DEVICE_UDID`. When you're finished, select *Save*, then xref:_add_to_your_test_suite[update your test suite].
+
+[#_add_to_your_test_suite]
+== Add to your test suite
+
+In the terminal, open the xref:integrations:upload-a-project-to-your-cloud-vcs.adoc[project you uploaded to your cloud repository].
+
+.Example
+[source,shell]
+----
+cd ~/my-project
+----
+
+Open your test suite's configuration file in a text editor.
+
+.Example
+[source,shell]
+----
+nano ./src/test/Config.java
+----
+
+Add your environment variables.
+
+.Example
+[source,java]
+----
+public class Config {
+    enum SERVER_TYPE_ENUMS {KOBITON, LOCAL}
+
+    public static final String KOBITON_USERNAME = System.getenv("USERNAME"); // Environment variable added
+    public static final String KOBITON_API_KEY = System.getenv("API_KEY"); // Environment variable added
+    public static final String KOBITON_API_URL = "https://api.kobiton.com/wd/hub";
+    public static final String KOBITON_DEVICE_UDID = System.getenv("UDID"); // Environment variable added
+    public static final SERVER_TYPE_ENUMS SERVER_TYPE = SERVER_TYPE_ENUMS.KOBITON;
+    public static final int IMPLICIT_WAIT_IN_SECOND = 30;
+    public static final int DEVICE_WAITING_MAX_TRY_TIMES = 5;
+    public static final int DEVICE_WAITING_INTERVAL_IN_MS = 30000;
+}
+----
+
+When you're finished, save your changes. Now shared builds will prompt users to enter their username, API key, and device UDID to assign as environment variables at runtime.
