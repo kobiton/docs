@@ -3,34 +3,34 @@
 
 Learn how to add virtualUSB to your PATH so you can run xref:debugging:virtualusb-commands.adoc[virtualUSB commands] in the terminal to debug your devices.
 
-== Add on macOS
+== Add virtualUSB to your PATH
 
 In the terminal, enter the following command to add virtualUSB to your system PATH:
 
+[tabs]
+======
+macOS::
++
+--
 [source,shell]
 ----
-echo 'export PATH=$PATH:/Applications/virtualUSB.app/Contents/Resources' >> ~/.zshrc
+echo 'export PATH=/Applications/virtualUSB.app/Contents/Resources:$PATH' >> ~/.zshrc
 ----
+--
+
+Windows::
++
+--
+[source,shell]
+----
+setx PATH "%PATH%;C:\Program Files\virtualUSB"
+----
+--
+======
 
 Then, verify your changes:
 
 [source,shell]
-----
-vusb --version
-----
-
-== Add on Windows
-
-In the terminal, enter the following command to add virtualUSB to your system PATH:
-
-[source,powershell]
-----
-[Environment]::SetEnvironmentVariable("Path", "$env:Path;C:\Program Files\virtualUSB", "User")
-----
-
-Then, verify your changes:
-
-[source,powershell]
 ----
 vusb --version
 ----

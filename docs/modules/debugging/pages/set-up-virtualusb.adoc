@@ -1,5 +1,6 @@
 = Set up virtualUSB
 :navtitle: Set up virtualUSB
+:tabs-sync-option:
 
 Learn how to set up virtualUSB on your personal computer so you can debug *public* and *private* devices.
 
@@ -13,100 +14,32 @@ You'll need a personal computer with the following system specifications:
 * *macOS:* Monterey 12 or later, and Xcode 13 or later.
 * *Windows:* Windows 10 or later.
 
-[#_configure_openssl]
-== Configure OpenSSL
-
-Install link:https://github.com/openssl/openssl[OpenSSL] using the following command:
-
-[source,shell]
-----
-wget https://raw.githubusercontent.com/rbenv/homebrew-tap/master/Formula/openssl%401.0.rb
-----
-
-Open `openssl@1.0.rb` in a text editor and remove `system "make", "test"` from line 42:
-
-[source,ruby]
-----
-system "perl", "./Configure", *args
-system "make", "depend"
-system "make"
-system "make", "test" # Remove this line
-system "make", "install", "MANDIR=#{man}", "MANSUFFIX=ssl"
-----
-
-Reinstall OpenSSL using the following command:
-
-.macOS
-[source,shell]
-----
-brew reinstall openssl@1.0.rb
-----
-
-.Windows
-[source,powershell]
-----
-Start-Process -FilePath "powershell" -ArgumentList "brew reinstall openssl@1.0.rb" -Verb RunAs
-----
-
-For macOS only, virtualUSB will need to find your OpenSSL package, which is located in a non-standard location (brew's `Cellar` directory). Run the following command to link and copy the necessary files for virtualUSB:
-
-.macOS
-[source,shell]
-----
-ln -sfn /usr/local/Cellar/openssl@1.0/1.0.2t/lib/libssl.dylib /usr/local/lib/libssl.dylib && sudo cp /usr/local/Cellar/openssl@1.0/1.0.2t/bin/openssl /usr/local/bin/
-----
-
-Next, enter the following command to add these two OpenSSL flags to your shell's config file:
-
-.macOS
-[source,shell]
-----
-echo -e 'export LDFLAGS=-L/usr/local/opt/openssl@1.0/lib\nexport CPPFLAGS=-I/usr/local/opt/openssl@1.0/include' >> ~/.zshrc
-----
-
-.Windows
-[source,powershell]
-----
-Add-Content -Path $PROFILE -Value 'n#OpenSSL Configsn$env:LDFLAGS="-LC:\Program Files\OpenSSL-Win64\lib"`n$env:CPPFLAGS="-IC:\Program Files\OpenSSL-Win64\include"'
-----
-
-Apply the changes to your shell:
-
-.macOS
-[source,shell]
-----
-source ~/.zshrc
-----
-
-.Windows
-[source,shell]
-----
-& $PROFILE
-----
-
-Verify your OpenSSL version is *1.0.2t 10 Sep 2019* or later:
-
-[source,shell]
-----
-openssl --version
-----
-
 == Add `adb` environment variables
 
 To debug Android devices, install link:https://developer.android.com/tools/releases/platform-tools[Android Debug Bridge (adb)] and add the following `adb` environment variables to your path:
 
-.macOS
+[tabs]
+======
+macOS::
++
+--
+[source,shell]
 ----
 export ANDROID_HOME=path/to/Android/sdk
 export PATH=$PATH:$ANDROID_HOME/tools:$ANDROID_HOME/tools/bin:$ANDROID_HOME/platform-tools
 ----
+--
 
-.Windows
-[source,powershell]
+Windows::
++
+--
+[source,shell]
 ----
 set ANDROID_HOME=C:\path\to\Android\Sdk
 set PATH=%PATH%;%ANDROID_HOME%\tools;%ANDROID_HOME%\platform-tools
 ----
+--
+======
 
 == Install iTunes and third-party libraries
 
@@ -114,11 +47,24 @@ For Windows, link:https://support.apple.com/HT210384[install iTunes]. Optionally
 
 == Install virtualUSB
 
+[tabs]
+======
+macOS::
++
+--
+Download virtualUSB from the link:https://portal.kobiton.com/[Kobiton portal].
+
+image:debugging:download-virtualusb-closeup.png[width=500,alt="Download virtual USB from Kobiton portal"]
+--
+
+Windows::
++
+--
 Download virtualUSB from the link:https://portal.kobiton.com/[Kobiton portal].
 
 image:debugging:download-virtualusb-closeup.png[width=500,alt="Download virtual USB from Kobiton portal"]
 
-For Windows, enter the following commands when your installation is finished:
+When your installation is complete, enter the following commands:
 
 .Windows
 [source,powershell]
@@ -126,6 +72,10 @@ For Windows, enter the following commands when your installation is finished:
 cd C:\Program Files\virtualUSB
 vusb setup-ios
 ----
+--
+======
+
+== Launch virtualUSB
 
 Finally, launch virtualUSB and sign in using your email address and password or xref:profile:manage-your-api-keys.adoc[Kobiton API key].
 

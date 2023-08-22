@@ -1,5 +1,6 @@
 = Configure your personal computer for local devices
 :navtitle: Configure personal computer
+:tabs-sync-option:
 
 Learn how to configure your personal computer so you can debug local devices using virtualUSB.
 
@@ -15,60 +16,103 @@ You'll need to complete the following:
 
 In the terminal, open the `virtualUSB` directory:
 
-.macOS
+[tabs]
+======
+macOS::
++
+--
 [source,shell]
 ----
 cd ~/Library/"Application Support"/virtualUSB
 ----
+--
 
-.Windows
-[source,powershell]
+Windows::
++
+--
+[source,shell]
 ----
 cd C:\Users\<your-user-name>\AppData\Roaming\virtualUSB
 ----
+--
+======
 
 Open `config.ini` in a text editor and look for the following lines:
 
+[tabs]
+======
+Kobiton Cloud::
++
+--
+[source,plaintext]
+----
+Kobiton.ApiBaseUrl: https://<network-address>/
+Kobiton.ApiGrpcBaseUrl: https://<network-address>/
+----
+--
+
+Kobiton Standalone::
++
+--
 [source,plaintext]
 ----
 Kobiton.ApiBaseUrl: https://<network-address>:<api-port-baseurl>
 Kobiton.ApiGrpcBaseUrl: https://<network-address>:<api-port-grpc-baseurl>
 ----
+--
+======
 
-Debugging a local device on *Kobiton Cloud* versus a *Kobiton Standalone* requires different values for `Kobiton.ApiBaseUrl` and `Kobiton.ApiGrpcBaseUrl`. Use the following to assign the correct values:
+Debugging a local device on *Kobiton Cloud* versus *Kobiton Standalone* requires different values. Use the following table to assign the correct values:
 
-[cols="1,2,2,2"]
+[tabs]
+======
+Kobiton Cloud::
++
+--
+[cols="1,2,2"]
 |===
-|Placeholder|Description|Kobiton Cloud|Kobiton Standalone
+|Placeholder|Description|Kobiton Cloud
 
 |`<network-address>`
 |The server's network address.
 |Set to `kobiton`, or your organization's private domain name.
-|Set to the value listed in your xref:_before_you_start[server information].
-
-|`<api-port-baseurl>`
-|The server's API port number for `Kobiton.ApiBaseUrl`.
-|Only needed for Kobiton Standalone. Remove `<api-port-baseurl>` from the string.
-|Set to the value listed in your xref:_before_you_start[server information].
-
-|`<api-port-grpc-baseurl>`
-|The server's API Port number for `Kobiton.ApiGrpcBaseUrl`.
-|Only needed for Kobiton Standalone. Remove `<api-port-grpc-baseurl>` from the string.
-|Set to the value listed in your xref:_before_you_start[server information].
 |===
 
-.Kobiton Cloud
+.Example
 [source,plaintext]
 ----
 Kobiton.ApiBaseUrl: https://api.mycompany.com
 Kobiton.ApiGrpcBaseUrl: https://proxy-api-public-grpc-server.mycompany.com
 ----
+--
 
-.Kobiton Standalone
+Kobiton Standalone::
++
+--
+[cols="1,2,2"]
+|===
+|Placeholder|Description|Kobiton Standalone
+
+|`<network-address>`
+|The server's network address.
+|Set to the value listed in your xref:_before_you_start[server information].
+
+|`<api-port-baseurl>`
+|The server's API port number for `Kobiton.ApiBaseUrl`.
+|Set to the value listed in your xref:_before_you_start[server information].
+
+|`<api-port-grpc-baseurl>`
+|The server's API Port number for `Kobiton.ApiGrpcBaseUrl`.
+|Set to the value listed in your xref:_before_you_start[server information].
+|===
+
+.Example
 [source,plaintext]
 ----
 Kobiton.ApiBaseUrl: https://192.168.36.24:3000
 Kobiton.ApiGrpcBaseUrl: https://192.168.36.24:3001
 ----
+--
+======
 
-When you're finished, save the file, then restart your virtualUSB application to apply the changes. Now you can debug local devices using virtualUSB.
+When you're finished, save the file, then restart your virtualUSB application.
