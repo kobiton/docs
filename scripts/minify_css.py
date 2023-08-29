@@ -12,7 +12,7 @@ from modules.get_project_root import get_project_root
 
 # Get the project root directory
 PROJECT_ROOT = get_project_root()
-DIRECTORIES = ['docs', 'widget']   # If more than one UI bundle, add its name (i.e. 'docs', 'widget'). Otherwise, leave blank.
+DIRECTORIES = ['docs', 'widget']   # If more than one UI bundle, add its name (i.e. 'docs', 'widget').
 
 
 # Get the path to the 'current_directory'. If 'current_directory' is empty,
