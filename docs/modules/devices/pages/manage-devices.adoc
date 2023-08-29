@@ -1,15 +1,27 @@
 = Manage devices
 :navtitle: Manage devices
 
-Learn how to manage devices so can enable network payload capture, create device tags, auto-generate capabilities, and more. xref:devices:open-the-device-settings.adoc[Open the device settings] to get started.
+Learn how to manage devices so can enable network payload capture, create device tags, auto-generate capabilities, and more.
 
-== Rename the device
+== Open the device settings
+
+In Kobiton, select *Devices*.
+
+image:devices:select-devices-context.png[width=1000,alt="Select Devices tab on Kobiton Portal"]
+
+After you xref:devices:search-for-a-device.adoc[search for a device], select the *vertical ellipses* to open the device settings.
+
+image:devices:manage-device-context.png[width=, alt=""]
+
+== Manage the device
+
+=== Rename the device
 
 To rename the device, enter a new name and select *Save*. Optionally, check the box to apply this name to all similar devices.
 
 image:devices:edit-device-name-closeup.png[width=400,alt="A closeup to rename the device"]
 
-== Favorite the device
+=== Favorite the device
 
 To add the device to your xref:devices:search-for-a-device.adoc#_favorite[list of favorites], select the *star* icon.
 
@@ -18,7 +30,7 @@ image:devices:favorite-device-closeup.png[width=300,alt="A closeup to favorite t
 To remove the device from your favorites, select the *star* icon again.
 
 [#_add_or_remove_tags]
-== Add or remove tags
+=== Add or remove tags
 
 To add a device tag, create a new tag or choose an existing one.
 
@@ -26,30 +38,30 @@ image:devices:tags-section-context.png[width=500,alt="A context of tag section- 
 
 To remove a tag, select the *x* icon.
 
-== Enable network payload capture
+=== Enable network payload capture
 
 Once xref:devices:local-devices/network-payload-capture/index.adoc[network payload capture] is configured, select *Use Configuration* and choose a configuration.
 
 image:devices:config-section-context.png[width=500,alt=" A context of Use Configuration section - Managing Device modal"]
 
-== Retain the device
+=== Retain the device
 
-To prevent others from using the device in a test session, select *Retain*.
+To prevent others from using the device in a test session, select *Retain*, then choose either *1 hour*, *2 hours*, *4 hours*, *8 hours*, *24 hours*, or *Unlimited*.
 
 image:devices:retain-device-closeup.png[width=400,alt="A closeup to Retain status for device"]
 
-== Require a passcode
-
-To require a passcode for this device, enable *Passcode Feature Enforced*, then enter a passcode.
+=== Require a passcode
 
 [NOTE]
-Learn more about xref:devices:about-device-passcodes.adoc[managing device passcodes].
+Only Admins can manage device passcodes.
+
+To require a passcode for this device, enable *Passcode Feature Enforced*, then enter a passcode. For more information, see xref:devices:about-device-passcodes.adoc[].
 
 image:devices:passcode-section-context.png[width=500,alt="A context of passcode section- Managing Device modal"]
 
-== Automation settings
+=== Automation settings
 
-To open the device automation settings, select *Automation settings*.
+To open the device's automation settings, select *Automation settings*.
 
 image:devices:automation-settings-context.png[width=500,alt=" A context of Automation Settings section - Managing Device modal"]
 
