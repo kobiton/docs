@@ -1,0 +1,31 @@
+= Supported actions
+:navtitle: Supported actions
+
+Learn about the requirements to convert a manual or automation session into Automated Test Case for Scriptless.
+
+== Device control in manual session
+
+In the manual session, perform only the supported controls in the table below:
+
+[options="header,footer"]
+|=======================
+|Controls                            |OS          |Status        |Comment
+|Touch                               |Android/iOS |Supported     |
+|Swipe                               |Android/iOS |Supported     |
+|Device softkeys                     |Android     |Supported     |
+|Virtual keyboard (ASCII characters) |Android/iOS |Supported*    |*Might not work properly on  the password field on Android 7 and below.
+
+*Only English language is supported in iOS, excluding the emoji.
+|Physical keyboard                   |Android/iOS |Supported     |
+|Home (toolbar)                      |Android/iOS |Supported     |
+|Power (toolbar)                     |Android/iOS |Supported     |
+|Recent app (toolbar)                |Android     |Supported     |
+|Back (toolbar)                      |Android     |Supported     |
+|Long press                          |Android/iOS |Supported     |
+|Double tap                          |Android/iOS |Not supported |
+|Double press home                   |Android/iOS |Not supported |
+|Pin to zoom                         |Android/iOS |Not supported |
+|Take screenshot                     |Android/iOS |Not supported |
+|Set timezone                        |Android/iOS |Not supported |
+|Copy & paste (copy to clipboard)    |iOS         |Not supported |
+|=======================
