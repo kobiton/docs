@@ -21,15 +21,12 @@ After the session ends, you are automatically redirected to the Session Overview
 
 In Session Overview, select Automated Test Case.
 
-If the session does not satisfy all Scriptless requirements, the screen appears as below. Launch a new manual session and make sure that all requirements are met.
+If the session does not satisfy all scriptless requirements, the screen appears as below. Launch a new manual session and make sure that all requirements are met.
 
 If all requirements are satisfied, the screen displays the test steps recorded from the baseline session.
 
-From here, you can perform several actions:
+If the recorded test steps do not contain any overlapping element, the green message displays as below. You can then select Convert to Test Case to convert and start xref:manage-test-case.adoc[managing the test case].
 
-* Annotate test steps.
-* Rerun the recorded test case on device bundles.
-* Generate Appium script.
-* Convert to Automated Test Case.
+If any of the test steps contains overlapping element, the red message displays as below. You can xref:remediations/annotate-test-step.adoc[annotate the steps] before converting to test case.
 
 
