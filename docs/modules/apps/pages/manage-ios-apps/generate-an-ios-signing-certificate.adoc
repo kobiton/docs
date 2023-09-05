@@ -55,24 +55,26 @@ Choose the *Personal Information Exchange (. p12)* file format, then select *Sav
 
 image:apps:personal-info-exchange-context.png[width=1000,alt="Choose the *Personal Information Exchange (.p12)* file format, then select *Save*"]
 
+Enter a password to protect the certificate. If you don't want to enter a password, leave the field blank and select *OK*.
+
+image:apps:protect-certificate-with-password.png[width=500,alt="Enter a password to protect the certificate, or leave the fields blank and select *OK*"]
+
 == Add `.p12` file to Xcode project
 
-Launch Xcode and select your project. In the project menu, select *Signing & Capabilities*.
+Note down the location of the _.p12_ file you created in the previous section.
 
-image:$NEW-IMAGE$[width=, alt=""]
+Launch Terminal on your MacOS machine and enter the below command:
 
-Choose *Signing (Debug)* or *Signing (Release)*.
+[source]
+sudo security import <Path to the cert>/<Name of the cert>.p12 -k /Library/Keychains/System.keychain -A
 
-image:$NEW-IMAGE$[width=, alt=""]
+[NOTE]
+Replace _<Path to the cert>/<Name of the cert>.p12_ with the actual path and name of your _.p12_ file.
 
-In the *Signing Certificate dropdown*, select *Create*.
+Enter the admin password of the MacOS machine to continue.
 
-image:$NEW-IMAGE$[width=, alt=""]
+Enter the password inputted when exporting the certificate in the pop-up. If there is no password, leave the field blank and click *OK*.
 
-Choose *Import an existing Certificate*.
+image:apps:unlock-certificate.png[width=500,alt="Enter the password to import the certificate"]
 
-image:$NEW-IMAGE$[width=, alt=""]
-
-Select your `.p12` file.
-
-image:$NEW-IMAGE$[width=, alt=""]
+The certificate is now imported to the keychain. Next, follow xref:apps:manage-ios-apps/generate-an-ios-provisioning-profile.adoc#_add_mobileprovision_file_to_xcode_project[this guide] to add the provisioning profile associated with the certificate into Xcode.
