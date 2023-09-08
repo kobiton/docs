@@ -3,6 +3,11 @@
 
 Learn how to upload an app to the xref:manage-apps.adoc[app repository] using our link:https://api.kobiton.com/docs/[REST API].
 
+[#_configure_your_authorization_header]
+== Configure your authorization header
+
+include::automation-testing:partial$configure-your-authorization-header.adoc[]
+
 == Generate an upload URL
 
 In the terminal, make a `POST` request to `/apps/uploadUrl`, which will generate a unique upload URL that connects to our private S3 bucket on Amazon Web Services (AWS).
@@ -11,12 +16,12 @@ In the terminal, make a `POST` request to `/apps/uploadUrl`, which will generate
 ----
 # You can also use wget
 curl -X POST https://api.kobiton.com/v1/apps/uploadUrl \
-  -H 'Authorization: Basic dGVzdHVzZXI6MTIzZWQtMTIzZmFjLTkxMzdkY2E=' \
+  -H 'Authorization: Basic ${yourBase64String}' \
   -H 'Content-Type: application/json' \
   -H 'Accept: application/json' \
   -d '{
   "filename": "${appFilename}",
-  "appId" :  1
+  "appId": 1
 }'
 ----
 
@@ -40,11 +45,10 @@ Make a `PUT` request using the `url` you generated in the previous step.
 [source,shell]
 ----
 # You can also use wget
-curl
-  -T ${filePath} \  
+curl -X PUT ${generatedUrl} \
   -H "Content-Type: application/octet-stream" \
   -H "x-amz-tagging: unsaved=true" \
-  -X PUT ${generatedUrl}
+  -T ${filePath} \
 ----
 
 A successful `PUT` request will return a `200` status.
@@ -58,13 +62,13 @@ Make a `POST` request to initiate your upload to the app repository in Kobiton. 
 ----
 # You can also use wget
 curl -X POST https://api.kobiton.com/v1/apps \
-  -H 'Authorization: Basic dGVzdHVzZXI6MTIzZWQtMTIzZmFjLTkxMzdkY2E=' \
-  -H 'Content-Type: application/json' \
-  -H 'Accept: application/json' \
-  -d '{
-  "filename": "${appFilename}",
-  "appPath": "${generatedAppPath}"
-}'
+    -H 'Authorization: Basic ${yourBase64String}' \
+    -H 'Content-Type: application/json' \
+    -H 'Accept: application/json' \
+    -d '{
+        "filename": "${appFilename}",
+        "appPath": "${generatedAppPath}"
+        }'
 ----
 
 If your request was successful, `POST` will return a `200` status, then the API will extract your app's metadata, preform security checks, and upload the app to your library.
