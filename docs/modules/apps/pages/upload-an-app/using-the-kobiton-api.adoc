@@ -5,7 +5,7 @@ Learn how to upload an app to the xref:manage-apps.adoc[app repository] using ou
 
 == Generate an upload URL
 
-First, call `/apps/uploadUrl` to generate the URL you'll need to upload your app to our private S3 bucket on Amazon Web Services (AWS).
+In the terminal, make a `POST` request to `/apps/uploadUrl`, which will generate a unique upload URL that connects to our private S3 bucket on Amazon Web Services (AWS).
 
 [source,shell]
 ----
@@ -15,37 +15,36 @@ curl -X POST https://api.kobiton.com/v1/apps/uploadUrl \
   -H 'Content-Type: application/json' \
   -H 'Accept: application/json' \
   -d '{
-  "filename" :  "${app-filename}", # Replace with $DESCRIPTION$
+  "filename": "${appFilename}",
   "appId" :  1
 }'
 ----
 
-A successful response will output the following:
+A successful response will return the following:
 
 .Example
 [source,shell]
 ----
 {
-"appPath" :  "users/1/apps/app‐prod‐debug‐237824a0‐302c‐9bfd‐ff417c89610a.apk",
-"url" :  "https://kobiton-us.s3.amazonaws.com/users/1/apps/app‐f417c89610a.apk?AWSAccessKeyId=AKINQ57IQCo
-"
+    "appPath": "users/1/apps/app‐prod‐debug‐237824a0‐302c‐9bfd‐ff417c89610a.apk",
+    "url": "https://kobiton-us.s3.amazonaws.com/users/1/apps/app‐f417c89610a.apk?AWSAccessKeyId=AKINQ57IQCo"
 }
 ----
 
-Keep a copy of `appPath`. You'll need it later to xref:_initiate_upload[initiate your upload].
+Save these values for the following sections.
 
 == Send app to S3
 
-Next, make a `PUT` request using the `url` you generated to send your app to our private S3 bucket.
+Make a `PUT` request using the `url` you generated in the previous step.
 
 [source,shell]
 ----
 # You can also use wget
 curl
-  -T ${filePath} \  # Replace with $DESCRIPTION$
+  -T ${filePath} \  
   -H "Content-Type: application/octet-stream" \
   -H "x-amz-tagging: unsaved=true" \
-  -X PUT ${presignedUrl} # Replace with $DESCRIPTION$
+  -X PUT ${generatedUrl}
 ----
 
 A successful `PUT` request will return a `200` status.
@@ -53,7 +52,7 @@ A successful `PUT` request will return a `200` status.
 [#_initiate_upload]
 == Initiate upload
 
-Finally, make a `POST` request to initiate your upload to the app repository in Kobiton. Be sure to upload a xref:supported-filetypes.adoc[supported filetype].
+Make a `POST` request to initiate your upload to the app repository in Kobiton. Be sure to upload a xref:supported-filetypes.adoc[supported filetype].
 
 [source,shell]
 ----
@@ -63,9 +62,9 @@ curl -X POST https://api.kobiton.com/v1/apps \
   -H 'Content-Type: application/json' \
   -H 'Accept: application/json' \
   -d '{
-  "filename" :  "${app-filename}", # Replace with $DESCRIPTION$
-  "appPath" :  "${uploadUrl-call}" # Replace with $DESCRIPTION$
+  "filename": "${appFilename}",
+  "appPath": "${generatedAppPath}"
 }'
 ----
 
-If your request was successful, `POST` will return `200`. The API will then extract your app's metadata, preform security checks, and upload the app to your library.
+If your request was successful, `POST` will return a `200` status, then the API will extract your app's metadata, preform security checks, and upload the app to your library.

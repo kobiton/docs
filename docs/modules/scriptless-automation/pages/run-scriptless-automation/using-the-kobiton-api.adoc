@@ -1,91 +1,123 @@
 = Run scriptless automation using the Kobiton API
 :navtitle: Using the Kobiton API
 
-$DESCRIPTION$
+Learn how to run scriptless automation using the Kobiton API. For more information, see link:https://api.kobiton.com/docs/#start-scriptless-automation[Kobiton API v1].
 
+[#_before_you_start]
 == Before you start
 
-You'll need to xref:scriptless-automation:baseline-sessions/create-a-baseline-session.adoc[create a baseline session] you can use for scriptless automation.
+You'll need to complete the following:
 
-== Use REST API
+* xref:scriptless-automation:baseline-sessions/create-a-baseline-session.adoc[Create a baseline session].
+* xref:scriptless-automation:get-a-session-id.adoc[Get the baseline session ID].
+* Get your xref:profile:manage-your-api-credentials.adoc[Kobiton API credentials].
 
-Use the endpoint is below. You can also refer to our link:https://api.kobiton.com/docs/#start-scriptless-automation[API documentation] for
-more information.
+[#_get_parameter_values]
+== Get parameter values
 
-[source]
+First, decide which link:https://api.kobiton.com/docs/#start-scriptless-automation[scriptless automation parameters] you plan to use during your session, then get their values.The `/revisitPlans/start` endpoint supports up to 11 parameters, but only the following are required:
+
+[cols="1,1,1,3"]
+|===
+|Parameter |Type |Required? |Description
+
+|`exploringSessionIds`
+|`[integer]`
+|Always
+|A list of one or more xref:scriptless-automation:get-a-session-id.adoc[baseline session IDs], where each baseline session is run as its own scriptless automation session. Up to 10 baseline session IDs can be assigned; however, the same device platform must be used for each session (such as `iOS` or `Android`).
+
+|`deviceSelections`
+|`[object]`
+|Yes, if `deviceBundleId` is unassigned
+|An array of one or more devices, where each device is assigned a `deviceCapabilities` object (required) and `dataSetId` (optional). For more information, see link:https://api.kobiton.com/docs/#start-scriptless-automation[scriptless automation parameters].
+
+|`deviceBundleId`
+|`[integer]`
+|Yes, if `deviceSelections` is unassigned
+|A list of one or more device bundle IDs where each device will run a scriptless session for each session in `exploringSessionIds`. Up to six device bundle IDs can be assigned.
+|===
+
+== Start your session
+
+In the terminal, make a `POST` request using xref:_get_parameter_values[your parameter values].
+
+[source,shell]
 ----
-POST https://api.kobiton.com/v1/revisitPlans/start
+curl -X POST https://api.kobiton.com/v1/revisitPlans/start \
+    -H 'Authorization: Basic ${yourKobitonCredentials}' \
+    -H 'Content-Type: application/json' \
+    -H 'Accept: application/json' \
+    -d '{
+        "exploringSessionIds": ${sessionId},
+        "deviceSelections": {
+            "dataSetId": ${dataSetId},
+            "deviceCapabilities": {
+                "deviceName": "${deviceName}",
+                "platformVersion": "${platformVersion}",
+                "deviceSource": "${deviceSource}"
+                },
+            },
+        "appPath": "${appPath}",
+        "deviceBundleId": ${deviceBundleId},
+        "runAllDevicesInBundle": ${runAllDevicesInBundleBoolean},
+        "testCaseIds": ${testCaseId}
+        }'
 ----
 
-We will use Postman to illustrate. If you are not familiar with setting up Postman
-and Kobiton, refer to our example for uploading apps to Kobiton devices with
-Postman link:https://kobiton.com/blog/app-testinghow-to-upload-apps-into-kobiton-store-by-using-postman[here]
-to see the basic setup steps.
+A successful `POST` response will return a `200` status, along with the following information:
 
-=== Authentication
+.Example
+[source,json]
+----
+{
+    "testRunId": ${yourTestRunId},
+    "testRunDetailLink": "https://portal.kobiton.com/{path-to-your-test-run}"
+}
+----
 
-Input your username and API Key (which can be found at
-link:https://portal.kobiton.com/settings/keys[link:https://portal.kobiton.com/settings/keys])
-to connect to the Kobiton portal:
+When you're finished, use the URL assigned to `testRunDetailLink` to review your session in xref:session-explorer:index.adoc[Session Explorer].
 
-image:scriptless-automation:authentication.png[width=1000,alt="Authentication"]
+== Example `POST` request
 
-=== Body
+Here's an example `POST` request where multiple devices will each download an app and test the app three different times using three different baseline sessions.
 
-First, you need to choose raw data with JSON format.
-
-image:scriptless-automation:body.png[width=1000,alt="Body"]
-
-Enter the ID of the baseline automation session to
-*exploringSessionIds* parameter. Enter the device bundle
-intended for testing to *deviceBundleId* parameter (device bundle
-ID can be retrieved at
-link:https://portal.kobiton.com/organization/device-bundles[link:https://portal.kobiton.com/organization/device-bundles]).
-+
-image:$OLD-IMAGE$[width="", alt=""]
-
-Another example of triggering Scriptless with some (but not all) devices in a
-device bundle:
-+
-image:$OLD-IMAGE$[width="", alt=""]
-
-NOTE: If there are two devices specified in one *deviceCapabilities*
-parameter, it would be an OR condition which means the system can pick either
-*Galaxy Note10* or *Galaxy Note20 Ultra 5G* if the other
-device is not available.
-
-There are more parameters that you can apply when triggering Scriptless rerun
-sessions - see our
-link:https://api.kobiton.com/docs/#start-scriptless-automation[API documentation]
-for more information.
-
-=== Trigger the API call
-
-Select *Send* in Postman to trigger Kobiton Scriptless
-reruns. The response would look like this:
-
-image:scriptless-automation:send-postman.png[width=1000,alt="Select Send in Postman"]
-
-== Supported endpoints (for both Android and iOS)
-
-* All `GET` endpoints
-* `POST /wd/hub/session[?]*$`
-* `POST /wd/hub/session/($__PARAM_NAME__)/element[?]*$`
-* `POST /wd/hub/session/($__PARAM_NAME__)/elements[?]*$`
-* `POST /wd/hub/session/($__PARAM_NAME__)/context[?]*$`
-* `POST /wd/hub/session/($__PARAM_NAME__)/timeouts[?]*$`
-* `POST /wd/hub/session/($__PARAM_NAME__)/appium/settings[?]*$`
-* `POST /wd/hub/session/($__PARAM_NAME__)/execute[?]*$`
-* `POST /wd/hub/session/($__PARAM_NAME__)/execute/sync[?]*$`
-* `POST /wd/hub/session/($__PARAM_NAME__)/actions[?]*$`
-* `POST /wd/hub/session/($__PARAM_NAME__)/touch/perform[?]*$`
-* `POST /wd/hub/session/($__PARAM_NAME__)/touch/longclick[?]*$`
-* `POST /wd/hub/session/($__PARAM_NAME__)/element/($__PARAM_NAME__)/click[?]*$`
-* `POST /wd/hub/session/($__PARAM_NAME__)/element/($__PARAM_NAME__)/value[?]*$`
-* `POST /wd/hub/session/($__PARAM_NAME__)/element/($__PARAM_NAME__)/clear[?]*$`
-* `POST /wd/hub/session/($__PARAM_NAME__)/appium/device/press_keycode[?]*$
-* `POST /wd/hub/session/($__PARAM_NAME__)/back[?]*$`
-* `POST /wd/hub/session/($__PARAM_NAME__)/orientation[?]*$`
-* `POST /wd/hub/session/($__PARAM_NAME__)/keys[?]*$`
-* `POST /wd/hub/session/($__PARAM_NAME__)/appium/device/hide_keyboard[?]*$`
-* `POST /wd/hub/session/($__PARAM_NAME__)/location[?]*$`
+.Example
+[source,shell]
+----
+curl -X POST https://api.kobiton.com/v1/revisitPlans/start \
+    -H 'Authorization: Basic dGVzdHVzZXI6MTIzZWQtMTIzZmFjLTkxMzdkY2E=' \
+    -H 'Content-Type: application/json' \
+    -H 'Accept: application/json' \
+    -d '{
+        "exploringSessionIds": [1, 2, 3],
+        "deviceSelections": [
+            {
+                "dataSetId": 99,
+                "deviceCapabilities": [
+                    {
+                        "deviceName": "Galaxy S8",
+                        "platformVersion": "*",
+                        "deviceSource": "KOBITON"
+                    },
+                    {
+                        "deviceName": "*S9*",
+                        "platformVersion": "10.0.0",
+                        "deviceSource": "KOBITON"
+                    }
+                ]
+            },
+            {
+                "dataSetId": 100,
+                "deviceCapabilities": {
+                    "deviceName": "Nokia*",
+                    "platformVersion": "11.0.0",
+                    "deviceSource": "KOBITON"
+                }
+            }
+        ],
+        "appPath": "kobiton-store:v100",
+        "deviceBundleId": [1, 2, 3 ],
+        "runAllDevicesInBundle": true,
+        "testCaseIds": [1, 2, 3]
+    }'
+----
