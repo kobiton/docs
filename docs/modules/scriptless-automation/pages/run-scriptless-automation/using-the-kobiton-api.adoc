@@ -9,7 +9,7 @@ Learn how to run scriptless automation using the Kobiton API. For more informati
 You'll need to complete the following:
 
 * xref:create-a-baseline-session.adoc[Create one or more baseline sessions].
-* xref:scriptless-automation:get-a-session-id.adoc[Get their session ID(s)].
+* Get the related session ID(s) using the xref:get-a-session-id/using-the-kobiton-portal.adoc[Kobiton portal] or xref:get-a-session-id/using-the-kobiton-api.adoc[Kobiton API].
 * xref:profile:manage-your-api-credentials.adoc[Get your API credentials].
 
 [#_configure_your_authorization_header]
@@ -29,7 +29,7 @@ Determine which link:https://api.kobiton.com/docs/#start-scriptless-automation[s
 |`exploringSessionIds`
 |`[integer]`
 |Always
-|A list of one or more xref:scriptless-automation:get-a-session-id.adoc[baseline session IDs], where each baseline session is run as its own scriptless automation session. Up to 10 baseline session IDs can be assigned; however, the same device platform must be used for each session (such as `iOS` or `Android`).
+|A list of one or more xref:get-a-session-id/using-the-kobiton-api.adoc[baseline session IDs], where each baseline session is run as its own scriptless automation session. Up to 10 baseline session IDs can be assigned; however, the same device platform must be used for each session (such as `iOS` or `Android`).
 
 |`deviceSelections`
 |`[object]`

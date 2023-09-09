@@ -5,11 +5,15 @@ Learn how to run scriptless automation using the Kobiton portal.
 
 == Before you start
 
-You'll need to xref:create-a-baseline-session.adoc[create a baseline session] for your scriptless automation session.
+You'll need to complete the following:
 
-== Run scriptless automation
+* xref:create-a-baseline-session.adoc[Create a baseline session].
+* xref:remediation/annotate-test-step.adoc[Annotate flagged test steps] (if applicable).
 
-In *Sessions*, search for your session, then select the session.
+
+== Open your automation test case
+
+In *Sessions*, search for a session, then select the session.
 
 image:$NEW$[width="",alt=""]
 
@@ -20,7 +24,18 @@ Select *Automation Test Case*.
 
 image:$NEW$[width="",alt=""]
 
-If your session used xref:scriptless-automation:baseline-sessions/supported-apps.adoc[supported apps] and xref:scriptless-automation:baseline-sessions/supported-actions.adoc[supported actions], you'll see the option to rerun your session.
+== Optional: annotate a test step
+
+You'll need to annotate test steps flagged for overlapping elements before you run scriptless automation. Automation test cases with flagged test steps will display the following warning:
+
+image:$NEW$[width="",alt=""]
+
+Search for the test step highlighted in red, then select *Annotate*.
+
+image:$NEW$[width="",alt=""]
+
+
+If your session used xref:scriptless-automation:create-a-baseline-session.adoc#_use_supported_actions[supported actions], you'll see the option to rerun your session.
 
 Select *Rerun*.
 
