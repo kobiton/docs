@@ -11,37 +11,49 @@ The name of your app within Kobiton. This doesn't need to match the public name 
 
 == Version
 
-There can be xref:apps:manage-apps.adoc#_upload_an_app[multiple versions] for each app. For example, `1.0.2` and `1.1.0`. Use this field to identify the app version.
+There can be xref:apps:manage-apps.adoc#_upload_an_app[multiple versions] for each app, such as `1.0.2` and `1.1.0`. Use this field to identify the app version.
 
 == Latest
 
-There can be xref:apps:manage-apps.adoc#_upload_an_app[multiple versions] for each app. For example, `1.0.2` and `1.1.0`. Use this field to identify whether the version you're looking at is the latest version.
+There can be xref:apps:manage-apps.adoc#_upload_an_app[multiple versions] for each app, such as `1.0.2` and `1.1.0`. Use this field to identify whether the version you're looking at is the latest version.
 
 == App ID
 
-The unique identifier assigned to each app. For example, `com.kobiton.appname`.
+The unique identifier assigned to each app, such as `com.kobiton.appname`.
 
+[#_app_package_version]
+== App package version
+
+An Android app's unique bundle version, such as `2.9.6`.For iOS, see xref:_bundle_version[].
+
+[#_bundle_version]
 == Bundle version
 
-Your app's bundle version. For example, `1.2.5`.
+An iOS app's unique bundle version, such as `1.2.5`.For Android, see xref:_app_package_version[].
 
+[#_bundle_id]
 == Bundle ID
 
-The unique identifier Apple and Google use to identify your app. For example, `com.kobiton.appname`.
+The unique identifier Apple uses to identify your app, such as `com.kobiton.appname`.For Android, see xref:_package[].
 
 == Minimum OS version
 
-The earliest operating system (OS) version compatible with your app. For example, `iOS 11.0` or `Android 15`.
+The earliest operating system (OS) version compatible with your app, such as `iOS 11.0` or `Android 15`.
+
+[#_package]
+== Package
+
+The unique identifier Google uses to identify your app, such as `com.android.kobiton.appname`.For iOS, see xref:_bundle_id[].
 
 == Supported CPU architectures
 
-The different mobile CPUs compatible with your app. For example, `arm 64` or `x86`.
+The different mobile CPUs compatible with your app, such as `arm 64` or `x86`.
 
 == Updated
 
-The date your app was last updated. For example, `May 15, 2023 10:55:35`.
+The date your app was last updated, such as `May 15, 2023 10:55:35`.
 
 [#_uploaded_by]
 == Uploaded by
 
-The user who uploaded this version of the app. For example, `alex-lee`.
+If you're at the toplevel of the app repository, this is the user who uploaded the latest version of the app, such as `alex-lee`. If you're within a specific app, this is the user who uploaded the app version you're currently viewing.
