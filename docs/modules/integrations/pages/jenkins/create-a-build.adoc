@@ -35,7 +35,7 @@ image:select-maven-plugin-closeup.png[width=1000,alt="Select Maven and select In
 
 Select *Dashboard > New Item*.
 
-image:$OLD$[width="",alt=""]
+image:jenkins-select-new-item.png[width=500,alt="Select New Item option in Jenkins"]
 
 Enter a project name, select *Maven project > OK*.
 
@@ -47,11 +47,11 @@ In the *Configuration* page, you will configure your Maven project. The followin
 
 In the *General* pane, enter a description.
 
-image:$OLD$[width="",alt=""]
+image:jenkins-enter-description.png[width=500,alt="Enter description"]
 
 Select the *Discard old builds* checkbox, then choose the maximum number of days to keep builds and how many builds to keep. For example:
 
-image:$OLD$[width="",alt=""]
+image:jenkins-discards-old-build.png[width=500,alt="Select the Discards old build"]
 
 [NOTE]
 If you are sharing this build with multiple users, we recommended configuring runtime environment variables so users will be required to enter their username, API key, and device UDID so Jenkins can assign these variables at runtime. For more information, see xref:integrations:jenkins/configure-environment-variables.adoc[].
@@ -64,7 +64,7 @@ image:$OLD$[width="",alt=""]
 
 Select *Git*, then enter the xref:integrations:upload-a-project-to-your-cloud-vcs.adoc#_upload_the_project[URL you created previously] along with your credentials.
 
-image:$OLD$[width="",alt=""]
+image:jenkins-config-select-git.png[width=500,alt="select Git in Source Code Management"]
 
 === Build triggers
 
@@ -74,7 +74,7 @@ image:$OLD$[width="",alt=""]
 
 Choose the settings that work best for you and your team. For example:
 
-image:$OLD$[width="",alt=""]
+image:select-build-triggers.png[width=500,alt="Select settings in Build Triggers']
 
 === Build environment
 
@@ -82,9 +82,9 @@ Select *Build Environment*.
 
 image:$OLD$[width="",alt=""]
 
-Select the *Delete Workspace before build starts*, *Add timestamps to Console Output*, and *Terminate a build if it's stuck* checkboxes.
+Select the *Delete Workspace before build starts*, *Add timestamps to Console Output*, and *Abort the build if it's stuck* checkboxes.
 
-image:$OLD$[width="",alt=""]
+image:select-delete-workspace.png[width=500,alt="Select"]
 
 Now that your Maven project is configured with the minimum requirements, you can xref:_configure_your_build_steps[configure your build steps].
 
