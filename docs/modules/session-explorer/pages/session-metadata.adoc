@@ -1,104 +1,96 @@
 = Session metadata
 :navtitle: Session metadata
 
-$DESCRIPTION$
+This is the metadata associated with each test session. In *Sessions*, select a session to open the session overview and view the related metadata.
 
-== Session info
+image:$NEW$[width="",alt=""]
 
-=== Session name
+== Session
 
-Select *Edit* to change the session name. You can also change this name in xref:manual-testing:change-manual-session-settings.adoc[during a test session].
+The following metadata is related to information about the session:
 
-=== Description
+[cols="1h,3"]
+|===
+|Description
+|The session's description, such as `My biometric authenticaiton test`. For more information, see xref:session-explorer:manage-sessions.adoc#_change_session_description[Change session description].
 
-Select *Edit* to change the session description. You can also change the description xref:manual-testing:change-manual-session-settings.adoc[during a test session].
+|Duration
+|The length of the test session, such as `10m 15s`.
 
-=== Testing type
+|End Time
+|The date and time the session ended, such as `September 11, 2023 at 7:37 PM`.
 
-Indicates whether the test session was manual or automated.
+|Name
+|The session's name, such as `Biometric authenticaiton testing`. For more information, see xref:session-explorer:manage-sessions.adoc#_rename_the_session[Rename a session].
 
-=== User
+|Start Time
+|The date and time the session started, such as `September 11, 2023 at 7:37 PM`.
 
-The name of the user that performed the test session.
+|Status
+|The status of the session, such as `Complete`.
 
-=== Duration
+|Testing Type
+|The type of test session: `manual`, `automated`, or `scriptless`.
 
-The length of the test session.
+|User
+|The name of the user that performed the test session, such as `alex-lee`.
+|===
 
-=== Status
+== Device
 
-Indicates whether the test session was completed.
+The following metadata is related to information about the device used during the session:
 
-=== Start/End time
+[cols="1h,3"]
+|===
+|Manufacturer
+|The device manufacturer, such as `Apple`, `Google`, `Samsung`.
 
-The date and time the test session started and ended.
+|Model
+|The device model, such as `D10Ap`, `Lenovo TB-8705F`, `SM-G970U`.
 
-== Apps installed
+|OS
+|The device Operating System (OS), such as `Android` or `iOS`.
 
-=== App name
+|OS Version
+|The device Operating System (OS) version, such as `iOS 15.5` or `Android 8.0.0`.
 
-The official name of the app, like Instagram or Gmail.
+|Screen Resolution
+|The screen resolution, such as `1080x2220` or `1125x2436`.
 
-=== Size
+|UDID
+|The unique device identifier (UDID) used to identify iOS devices, such as `0709C8D4-DD63-E500-8832A7F4A1B3A932`. For Android devices, the serial number will be displayed instead.
+|===
 
-The size of the app in MBs or GBs.
+[NOTE]
+For the full list of device metadata, including metadata _not_ associated with sessions, see xref:devices:device-metadata.adoc[].
 
-=== Version
+== Apps
 
-The app version, like 268179862 or 1.0.0.
+The following metadata is related to information about the app(s) installed during the session:
 
-=== Package
+[cols="1h,3"]
+|===
+|Instrumentation
+|If instrumentation was enabled during the session, instrumentation is set to `Enabled`. For more information about instrumentation, see xref:manual-testing:test-your-app-camera.adoc[].
 
-The bundle identifier, like `com.burbn.instagram`.
+|Instrumentation Status
+|If instrumentation was enabled, shows the status, such as `Success`.  For more information about instrumentation, see xref:manual-testing:test-your-app-camera.adoc[].
 
-=== Instrumentation
+|Installation Status
+|Shows the app installation status, such as `Success`.
 
-Instrumentation is required for xref:manual-testing:test-your-app-camera.adoc[image injection]. Indicates whether this feature was turned on during the test session.
+|Name
+|The official name of the app, such as `Instagram` or `Gmail`.
 
-=== Instrumentation status
+|Package
+|The bundle identifier, such as `com.burbn.instagram`.
 
-Instrumentation is required for xref:manual-testing:test-your-app-camera.adoc[image injection]. Indicates whether instrumentation was successful during the test session.
+|Size
+|The size of the app in MBs or GBs, such as `500 MBs`.
 
-=== Installation status
+|Version
+|The app version, such as `268179862` or `1.0.0`.
+|===
 
-Indicates whether the app successfully installed during the test session.
-
-== Device info
-
-=== Manufacturer
-
-The manufacturer, like Apple, Google, or Samsung.
-
-=== Operating system
-
-The operating system, like Android or iOS.
-
-=== Device name
-
-The official name of the device, like Galaxy S10, iPhone 11 Pro, or iPhone XS.
-
-=== Resolution
-
-The screen resolution, like 1080x2220 or 1125x2436.
-
-=== Model name
-
-The device model, like D10Ap, Lenovo TB-8705F, or SM-G970U.
-
-=== UDID
-
-The unique device identifier (UDID) used to identify iOS devices.
-
-== Logs
-
-=== Download
-
-Select *Download* to save a copy of the device and crash logs.
-
-=== Device
-
-Select *Device* to open a preview of the device logs, then select *Download* to save a copy.
-
-=== Crash
-
-Select *Crash* to open a preview of the crash logs, then select *Download* to save a copy.
+[NOTE]
+For the full list of app metadata, including metadata _not_ associated with sessions, see xref:apps:app-metadata.adoc[].
