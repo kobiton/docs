@@ -1,0 +1,81 @@
+= Validate accessibility
+:navtitle: Validate accessibility
+
+Learn how to validate your app or website for accessibility by finding and fixing issues like touch target size, color contrast, and content labeling.
+
+== Open accessibility validation
+
+include::session-explorer:partial$launch-session-explorer.adoc[]
+
+Select a *yellow marker* in the session timeline.
+
+image:$NEW-IMAGE$[width=, alt=""]
+
+Select *View Details*.
+
+image:$NEW-IMAGE$[width=, alt=""]
+
+[#_select_an_issue_type]
+== Select an issue type
+
+To view all issues related to a specific accessibility type, select from one of the following:
+
+=== Touch target size
+
+The size of an element on the screen your user can interact with. If an element is too small, some users may struggle to interact with elements on your app or website.
+
+image:session-explorer:touch-target-size-context.png[width=1000,alt="A context to Touch Target Size cases"]
+
+=== Color Contrast
+
+The difference in light between a foreground element and its background.If the color contrast is insufficient some users may struggle to see elements on your app or website.
+
+image:session-explorer:color-contrast-context.png[width=1000,alt="A context to color contrast cases"]
+
+=== Content labeling
+
+Each UI element on the screen should be properly labeled in your codebase.If a UI element is missing or using an incorrect label, users may be unable to use a screen reader with your app or website.
+
+image:session-explorer:content-labeling-context.png[width=1000,alt="A context to Content Labeling cases on screen"]
+
+[#_select_a_screenshot]
+== Select a screenshot
+
+Each screenshot is flagged with one or more issues related to the xref:_select_an_issue_type[current issue type]. The total number of screenshots for this issue type is located beneath the screenshot pane. Use the *Next* and *Previous* icons to select a specific screenshot.
+
+image:session-explorer:yellow-dot-context.png[width=1000,alt="A context to yellow dots on the timeline and the screen"]
+
+[#_select_an_issue]
+== Select an issue
+
+The total number of issues flagged on the xref:_select_a_screenshot[selected screenshot] is located at the top of the issue pane. Use the *Next* and *Previous* icons to select an issue on the currently selected screenshot.
+
+image:session-explorer:yellow-dot-context.png[width=1000,alt="A context to yellow dots on the timeline and the screen"]
+
+== Review the issue
+
+Each issue contains a description with a link to the related link:https://developer.apple.com/design/human-interface-guidelines/accessibility[Apple] or link:https://www.google.com/accessibility/for-developers/[Google] accessibility guideline. Use the following information to review the xref:_select_an_issue[selected issue].
+
+[cols="1h,3"]
+|====
+|Visible
+|Indicates the visibility of the selected element using `true` or `false`.
+
+|Xpath
+|The Xpath of the selected element. Hover over the Xpath value to copy it to your clipboard.
+
+|Text
+|The text output of the selected element.
+
+|Width
+|The width of the selected element.
+
+|Height
+|The height of the selected element.
+
+|X
+|The X-coordinate on the screen of the selected element.
+
+|Y
+|The Y-coordinate on the screen of the selected element.
+|====

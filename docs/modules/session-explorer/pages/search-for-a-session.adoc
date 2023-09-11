@@ -1,88 +1,85 @@
 = Search for a session
 :navtitle: Search for a session
 
-Learn how to search for a session so you can review general session information, view analytics, run validations, and more.
+Learn how to search for a session so you can review the session timeline, analyze previous sessions, run scriptless automation, and more.
 
-== Search for a session
+== Open Sessions
 
 In Kobiton, select *Sessions*.
 
 image:session-explorer:session-search-context.png[width=1000,alt="A context of Session page in Kobiton portal"]
 
-Use one or more xref:_search_methods[search methods] to search for your session.
+[#_search_for_a_session]
+== Search for a session
 
-[#_search_methods]
-== Search methods
+[#_using_a_saved_search]
+=== Using a saved search
 
-[#_run_a_saved_search]
-=== Run a saved search
-
-To run a previously-created xref:session-explorer:custom-search-queries.adoc[custom search query], select the *Saved Searches* dropdown and choose a search.
+To search for a session using one of your xref:session-explorer:custom-search-queries.adoc[custom search queries], select the *Saved Searches* dropdown, then choose a search.
 
 image:session-explorer:saved-search-context.png[width=1000,alt="Choose saved search"]
 
-=== Select a date range
+=== Using a a date range
 
-To display sessions within a specific date range, select *From* and *To*, then choose your dates.
+To search for a session within a specific date range, select *From* and *To*, then choose a date for each.
 
-image:session-explorer:date-range-context.png[width=1000, alt="Display sessions within the selected date range"]
+image:$NEW$[width="", alt=""]
 
-[#_use_the_search_bar]
-=== Use the search bar
+=== Using the search bar
 
-To display sessions matching specific criteria, first select the search bar.
+To search for a session using session metadata, select the search bar and enter your criteria. For more information, see xref:session-explorer:session-metadata.adoc[].
+
+image:$NEW$[width="", alt=""]
+
+[#_use_session_tags]
+=== Using session tags
+
+To search for a session using session tags, select the search bar, then choose from the list of tags.
 
 image:session-explorer:session-tags-context.png[width=500,alt="Sessions with Failed tag"]
 
-You can manually enter specific xref:session-metadata.adoc[session metadata] or choose from the list of session tags:
+The following table contains a list of all session tags:
 
-==== Passed
+[cols="1,3"]
+|====
+|Tag |Description
 
-Display sessions that passed their test criteria.
+|Passed
+|Sessions that passed their test criteria.
 
-==== Complete
+|Complete
+|Completed test sessions.
 
-Display completed test sessions.
+|Running
+|Sessions currently in progress.
 
-==== Running
+|Error
+|Sessions that experienced an error during the session.
 
-Display sessions currently in progress.
+|Failed
+|Sessions that failed their test criteria.
 
-==== Error
+|Timeout
+|Sessions that timed-out due to inactivity.
 
-Display sessions that experienced errors during the session.
+|Terminated
+|Sessions terminated mid-session.
 
-==== Failed
-Display sessions that failed their test criteria.
+|Scriptless
+|Sessions using Scriptless automation.
 
-==== Timeout
+|Manual
+|Manual test sessions.
 
-Display sessions that timed-out due to inactivity.
+|Appium
+|Sessions using the Appium framework.
 
-==== Terminated
+|Espresso
+|Sessions using the Espresso framework.
 
-Display sessions terminated mid-session.
+|XCUITest
+|Sessions using the XCUITest framework.
 
-==== Scriptless
-
-Display sessions using Scriptless automation.
-
-==== Manual
-
-Display manual test sessions.
-
-==== Appium
-
-Display sessions using the Appium framework.
-
-==== Espresso
-
-Display sessions using the Espresso framework.
-
-==== XCUITest
-
-Display sessions using the XCUITest framework.
-
-==== Mixed
-
-Display sessions using both manual and automated testing during a session.
+|Mixed
+|Sessions combining manual and automation testing during a single session.
+|====

@@ -1,22 +1,17 @@
 = Configure iOS VoiceOver
 :navtitle: Configure iOS VoiceOver
 
-Learn how to configure iOS VoiceOver so you can run xref:manual-testing:local-devices/ios-voiceover-commands.adoc[iOS VoiceOver commands] to test your app's screen reader compatibility during your test session.
+Learn how to configure iOS VoiceOver so you can run xref:manual-testing:device-controls.adoc#_perform_voiceover[iOS VoiceOver commands] to test your app's screen reader compatibility during your test session.
 
 == Before you start
 
-You'll need the following devices:
+You'll need the following:
 
 * A local Kobiton server (Cloud or Standalone) installed with a Kobiton GEM or Orion Audio Board Card.
 * An iOS device running iOS 12.0 or later.
 
 [NOTE]
-====
-Due to a recent Apple update, this feature is currently unavailable for:
-
-* Mobile devices running iOS 16 or later.
-* Local Kobiton servers running macOS Monterey (12) or later.
-====
+Due to Apple's policies, this feature is only available for local Kobiton servers with link:https://developer.apple.com/documentation/macos-release-notes/macos-big-sur-11_5-release-notes[macOS Big Sur 11.5] or earlier.
 
 == Configure VoiceOver
 
@@ -47,4 +42,4 @@ image:devices:send-to-hdmi-ios-voiceover.png[width=400, alt="Select Audio and tu
 [NOTE]
 You will not use an HDMI connection during testing, however this setting is still required for full VoiceOver functionality.
 
-Now you can run xref:manual-testing:local-devices/ios-voiceover-commands.adoc[iOS VoiceOver commands] during a manual test session.
+Now you can run xref:manual-testing:device-controls.adoc#_perform_voiceover[iOS VoiceOver commands] during a manual test session.
