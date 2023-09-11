@@ -98,7 +98,7 @@ wait(30s) // Waits for 30 seconds before calling another function.
 [#_angle]
 === `angle`
 
-`angle` determines the angle of xref:_arc[`arc()`].Set to an integer ranging from `-360` to `360`.Positive integers are draw `arc()` clockwise and negative integers draw `arc()` counterclockwise.
+`angle` determines the angle of xref:_arc[`arc()`]. Set to an integer ranging from `-360` to `360`.Positive integers are draw `arc()` clockwise and negative integers draw `arc()` counterclockwise.
 
 [source,]
 ----
@@ -110,7 +110,7 @@ down(50%, 50%) arc(50%, 50%, 360) // Draws a full circle starting and ending at 
 [#_duration]
 === `duration`
 
-`duration` determines the duration of a function and can be set to any positive integer. By default, `duration` uses milliseconds. Alternatively, append `ms` (milliseconds) or `s` (seconds) to the integer.
+`duration` determines the duration of a function and can be set to any positive integer. By default, milliseconds (xref:_ms[]) is used as the unit of measurement, however seconds (xref:_s[]) can be used instead.
 
 [source,]
 ----
@@ -134,7 +134,7 @@ up(4) // Removes the fifth finger from the screen.
 [#_x_and_y]
 === `x` and `y`
 
-`x` and `y` determines the xref:_functions[function's] location on the device screen. By default, `x` and `y` uses to pixels. Alternatively, append `px` (pixels), `dp` (device-independent pixels), or `%` (percent) to the `x` or `y` integer.
+`x` and `y` determines the xref:_functions[function's] location on the device screen. By default, pixels (xref:_px[]) is used as the unit of measurement, but device-independent pixels (xref:_dp[]) or a screen percentage (xref:_percent[]) can be used instead.
 
 [source,]
 ----
@@ -142,3 +142,28 @@ down(1px, 400px) // Places a finger at 1px, 400px using the pixels of your compu
 down(400dp, 1dp) // Places a finger at 400px, 1px using the pixels of the mobile device screen.
 down(1%, 100%) // Places a finger at 1%, 100% by multiplying the length of the mobile device screen by its relevant axis.
 ----
+
+== Units of measurement
+
+[#_px]
+=== `px`
+
+`px`, or pixel, is an integer that represents the _exact_ location of a pixel on the display running the test session (not the test device). While `px` allows for pixel-perfect placement of functions, integers assigned to `px` may represent different pixel locations on different displays. To use a _relative_ pixel location instead, see xref:_dp[].
+
+[#_dp]
+=== `dp`
+
+`dp`, or device-independent pixel, is an integer that represents the _relative_ location of a pixel on the display running the test session (not the test device). While `dp` allows gestures to be used on different displays more easily, functions can't be placed pixel-perfect. To use an _exact_ pixel location instead, see xref:_px[].
+
+[#_percent]
+=== `%`
+
+An integer between 0 and 100 that represents a location on the display running the test session (not the test device)--for example, `(50%, 50%)` represents the center of the screen. The location of `%` is determined by multiplying the length of the test screen by the relevant axis.
+
+=== `s`
+
+An integer that represents the measure of time in seconds.
+
+=== `ms`
+
+An integer that represents the measure of time in milliseconds.

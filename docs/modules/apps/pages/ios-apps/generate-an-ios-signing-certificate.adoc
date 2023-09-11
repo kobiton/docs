@@ -1,7 +1,7 @@
 = Generate an iOS signing certificate
 :navtitle: Generate an iOS signing certificate
 
-Learn how to generate the `.p12` file used for signing your iOS app. Signing certificates are required for Xcode.
+Learn how to generate the `.p12` file used for signing your iOS app. A signing certificate is a digital identity used for code signing during the build and archive process. For more information, see Apple's link:https://help.apple.com/xcode/mac/current/#/dev3a05256b8[What is app signing?].
 
 == Generate `.certSigningRequest` file
 
@@ -47,15 +47,15 @@ image:$OLD-IMAGE$[width=, alt=""]
 
 Select *Certificates*, then drag and drop your `.cert` file into the Certificates page.
 
-image:apps:launch-keychain-access-context.png[width=1000,alt="On your macOS device, launch *Keychain Access*"]
+image:apps:launch-keychain-access-context.png[width="",alt="On your macOS device, launch *Keychain Access*"]
 
 Right-click your `.cert` file, then select *Export <your-cert-file>*.
 
-image:apps:right-click-to-export-context.png[width=1000,alt="Right-click your `.cert` file, then select *Export <your-cert-file>*"]
+image:apps:right-click-to-export-context.png[width="",alt="Right-click your `.cert` file, then select *Export <your-cert-file>*"]
 
 Choose the *Personal Information Exchange (. p12)* file format, then select *Save*.
 
-image:apps:personal-info-exchange-context.png[width=1000,alt="Choose the *Personal Information Exchange (.p12)* file format, then select *Save*"]
+image:apps:personal-info-exchange-context.png[width="",alt="Choose the *Personal Information Exchange (.p12)* file format, then select *Save*"]
 
 == Add `.p12` file to Xcode project
 

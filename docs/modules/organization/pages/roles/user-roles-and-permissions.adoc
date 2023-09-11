@@ -28,49 +28,64 @@ Every user xref:organization:users/invite-a-user.adoc[invited to your organizati
 
 [#_system_login]
 === `system.login`
+
 Allows a user to log in to Kobiton. _Always required._
 
 [#_system_logout]
 === `system.logout`
+
 Allows a user to log out of Kobiton. _Always required._
 
 === `app_repo.delete_other_application`
-Allows a user to delete apps in the app repository. _Always required._
+
+Allows a user to delete public apps in the app repository. If xref:_app_repo_view_all_application[] is assigned, the user can also delete private apps.
 
 [#_app_repo_view_all_application]
 === `app_repo.view_all_application`
+
 Allows a user to view all apps in the app repository, including private and locked apps.
 
 === `app_repo.upload_application`
+
 Allows a user to upload and rename any apps they previously uploaded.
 
 === `device.custom_device_name`
+
 Allows a user to create custom device names.
 
 === `device.tag_devices`
+
 Allows a user to create device tags.
 
 === `org_management.modify`
+
 Allows a user to manage all teams, roles, users, and device bundles.
 
 === `org_setting.modify`
-Allows a user to manage all organization settings, including cleanup policies, integrations, THIS, and more.
+
+Allows a user to manage all organization settings, including cleanup policies, integrations, configurations, and more.
 
 === `org_setting.modify_sso_setting`
+
 Allows a user to manage all Single-Sign On (SSO) authentication settings.
 
 [#_org_setting_modify_security_banner]
 === `org_setting.modify_security_banner`
+
 Allows a user to change the portal login message.
 
 === `session.view_all_session`
+
 Allows a user to view all test sessions.
 
 === `session.terminate_other_session`
+
 Allows a user to end another user's test session.
 
 === `session.modify_other_session`
+
 Allows a user to change session details and delete sessions.
 
 === `soft_book.terminate_other_soft_book`
+
 Allows a user to remove a reservation from any device.

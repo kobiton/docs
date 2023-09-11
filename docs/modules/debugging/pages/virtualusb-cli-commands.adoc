@@ -1,7 +1,7 @@
-= virtualUSB commands
-:navtitle: virtualUSB commands
+= virtualUSB CLI commands
+:navtitle: virtualUSB CLI commands
 
-These are the commands for the virtualUSB command-line interface (CLI) tool.
+These are the commands you can use with the virtualUSB command-line interface (CLI) tool.
 
 == Before you start
 
@@ -36,15 +36,15 @@ To log in to your Kobiton account with your email address and password or xref:p
 vusb login
 ----
 
-Alternatively, enter your username and password after `login` using flags:
+If your organization uses a custom domain for Kobiton, append the following flags to manually set your API and GRPC base URLs:
 
 [source,shell]
 ----
-vusb login --username <username> --passcode <passcode>
+vusb login --apibaseurl <url> --grpcbaseurl <url> --username <username> --password <password>
 ----
 
 [NOTE]
-Using the alternate method, your password will be visible in the terminal. Do not enter use this method if others are around.
+Using flags will expose your credentials in the terminal. *Do not use this method while sharing your screen or around others*.
 
 == `logout`
 
@@ -70,7 +70,7 @@ To disconnect from a device using the device UDID, run:
 
 [source,shell]
 ----
-vusb disconnect --udid <udid>
+vusb disconnect --udid <device-udid>
 ----
 
 == `status`
@@ -151,7 +151,7 @@ Exported to /Users/Alex/Downloads/vulogs.zip
 
 == `setup-ios` (Windows only)
 
-To install iOS dependencies on Windows, run:
+To install iOS dependencies on your Windows computer, run:
 
 [source,shell]
 ----
@@ -160,7 +160,7 @@ vusb setup-ios
 
 == `setup-adb` (Windows only)
 
-To install Android dependencies on Windows, run:
+To install Android dependencies on your Windows computer, run:
 
 [source,shell]
 ----
