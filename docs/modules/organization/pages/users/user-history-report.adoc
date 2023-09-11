@@ -1,114 +1,96 @@
 = User history report
 :navtitle: User history report
 
-The user history report contains data about each user event. xref:organization:users/search-for-a-user.adoc[Choose a user], then select *User History* to get started.
+The user history report contains data about each user event.
+
+== Open the report
+
+In Kobiton, select *Org Management > Users*.
 
 image:$NEW-IMAGE$[width=,alt=""]
 
-== Type
-
-Only display xref:_event_types[events] matching the selected type.
+xref:organization:users/search-for-a-user.adoc[Search for a user], then select their username.
 
 image:$NEW-IMAGE$[width=,alt=""]
 
-== Time
-
-Display the user history data within a preselected time range, or select *Custom* to xref:_date_range[choose your own].
+Select *User History* to open the report and view all user events.
 
 image:$NEW-IMAGE$[width=,alt=""]
 
-[#_date_range]
-== Date range
+[#_filter_the_report]
+== Filter the report
 
-Display the user history data within a custom date range.
+You can filter the report to review specific events. For more information, see xref:_event_types[].
 
-== Search
+=== By type
 
-Filter the report by a specific xref:_event_types[event], application, or session.
+To filter the report by an event type, select the dropdown and choose an xref:_event_types[event type].
 
 image:$NEW-IMAGE$[width=,alt=""]
 
-== Columns
+=== By time
 
-Each column contains details about the user's history.
+To filter the report by time, select *Time*, then choose a timeframe.
 
-image:$NEW-IMAGE$[width=, alt=""]
+image:$NEW-IMAGE$[width=,alt=""]
 
-=== Date
+If you select *Custom*, you can choose select two dates to create a custom date range.
 
-The date of the event.
+image:$NEW-IMAGE$[width=,alt=""]
 
-=== Event
+=== Using search
 
-The type of event. xref:_event_types[See all event types].
+To filter the report using search, enter an application, session, or xref:_event_types[event type] into the search bar.
 
-=== Device
-
-The device used in the event.
-
-=== Application
-
-The application used in the event.
-
-=== Session
-
-The session recording of the event.
+image:$NEW-IMAGE$[width=,alt=""]
 
 [#_event_types]
 == Event types
 
-These are event types included in the user's history.
+The following event types are included in the user history report:
 
-=== Activities
+[cols="1,1,2"]
+|===
+|Event Type |Event |Description
 
-==== User Login
+.5+|Activities
+|User Login
+|The user logged in to the portal.
 
-When the user logs in to the portal.
+|User Logout
+|The user logged out of the portal.
 
-==== User Logout
+|Removed User
+|The user removed another user.
 
-When the user logs out of the portal.
+|Disabled User `<user_name>`
+|The user disabled another user.
 
-==== Removed User
+|User Created
+|The user logged in to the portal for the first time.
 
-When the user removes another user.
+.2+|Device Retainment
+|Device Retained
+|The user retained a device after their session.
 
-==== Disabled User <user_name>
+|Device Released
+|The user ended a session which released their device.
 
-When the user disables another users.
+.3+|Device Enablement
+|Device Registered
+|The user's device connected to the portal.
 
-==== User Created
+|Device Unregistered
+|The user's device disconnected from the portal.
 
-When the user logs in to the portal for the first time.
+|Device Restarted
+|The user restarted their device.
 
-=== Device Retainment
+|Application Installed
+|Application Installed
+|The user installed an application.
 
-==== Device Retained
-
-When the user retains a device.
-
-==== Device Released
-
-When the user ends a session.
-
-=== Device Enablement
-
-==== Device Registered
-
-When the user's device was connected to the portal.
-
-==== Device Unregistered
-
-When the user's device was disconnected from the portal.
-
-==== Device Restarted
-
-When the user restarts a device.
-
-=== Application Installed
-
-When the user installs an application.
-
-=== Application Launched
-
-When the user launches an application they previously installed.
+|Application Launched
+|Application Launched
+|The user launched an application they previously installed.
+|===

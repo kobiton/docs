@@ -1,18 +1,31 @@
 = Manage users
 :navtitle: Manage users
 
-Learn how to manage your users so you can assign a role, add a user to a team, view user history, and more. xref:organization:users/search-for-a-user.adoc[Search for a user] to get started.
+Learn how to manage your users so you can assign a role, add a user to a team, view user history, and more.
 
-[#_enable_single_sign_on_sso_authentication]
-== Enable Single-Sign On (SSO) authentication
+== View a user
 
-After you xref:organization:sso-authentication/about-sso-authentication.adoc[configure SSO authentication for your organization], select *Details*, then *Enable SSO*.
+In Kobiton, select *Org Management*, then select *Users*.
+
+image:$NEW$[width="",alt=""]
+
+xref:organization:users/search-for-a-user.adoc[Search for a user], then select their *Username*.
+
+image:$NEW$[width="",alt=""]
+
+== Manage a user
+
+[#_enable_sso_authentication]
+== Enable SSO authentication
+
+[NOTE]
+Single-Sign On (SSO) authentication must be xref:organization:sso-authentication/about-sso-authentication.adoc[configured for your organization] first.
+
+Select *Details*, then *Enable SSO* to enable SSO for this user.
 
 image:organization:enable-sso-closeup.png[width=1000,alt="Select Details, then Enable SSO"]
 
 When you're finished, select *Save*.
-
-image:organization:click-save-enable-sso-context.png[width=1000,alt="Click Save after enabling SSO"]
 
 == Disable the user
 
@@ -22,8 +35,6 @@ image:organization:disable-user-closeup.png[width=1000,alt="Select Disable to de
 
 When you're finished, select *Save*.
 
-image:organization:disable-popup-closeup.png[width=500,alt="A closeup to the popup confirming disabling the user"]
-
 == Remove the user
 
 In *Details*, select *Remove* to completely remove the user from your system.
@@ -31,8 +42,6 @@ In *Details*, select *Remove* to completely remove the user from your system.
 image:organization:remove-users-manage-users-closeup.png[width=1000,alt="A closeup to remove the user"]
 
 When you're finished, select *Save*.
-
-image:organization:remove-confirmation-popup-closeup.png[width=500,alt="A closeup to removing users confirmation popup"]
 
 == Assign a role
 
@@ -46,17 +55,16 @@ image:organization:add-role-to-user-closeup.png[width=1000,alt="Add a role to th
 
 When you're finished, select *Save*.
 
-image:organization:click-save-add-role-context.png[width=1000,alt="Click Save after adding the role to the user"]
-
 == Remove a role
 
-In *Roles*, select the *minus* icon next to the role you want to remove.
+In *Roles*, select the *minus* icon next to the role you want to remove. For more information, see xref:roles/user-roles-and-permissions.adoc[]
 
 image:organization:remove-role-closeup.png[width=1000,alt="Remove a role from the user"]
 
-When you're finished, select *Save*.
+[NOTE]
+All users must be assigned to _at least_ one role.
 
-image:organization:click-save-remove-role-context.png[width=1000,alt="Click save after removing a role from the user"]
+When you're finished, select *Save*.
 
 == Add to a team
 
@@ -70,17 +78,16 @@ image:organization:team-click-plus-icon-closeup.png[width=1000,alt="Select the p
 
 When you're finished, select *Save*.
 
-image:organization:click-save-add-teams-context.png[width=1000,alt="Click Save after adding a team to the user"]
-
 == Remove from a team
 
 In *Teams*, select the *minus* icon next to the team you want to remove the user from.
 
 image:organization:remove-from-a-team-closeup.png[width=1000,alt=" select the minus icon next to the team you want to remove the user from"]
 
-When you're finished, select *Save*.
+[NOTE]
+All users must be assigned to _at least_ one team.
 
-image:organization:click-save-remove-teams-context.png[width=1000,alt="Click Save after removing a team"]
+When you're finished, select *Save*.
 
 == View user history
 
