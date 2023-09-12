@@ -161,7 +161,7 @@ capabilities.setCapability("kobiton:flexCorrect", true);  // Enable flexCorrect 
 
 === `fullReset`
 
-Remove all apps installed during the test session. To keep the apps and only remove their app data, use xref:_noreset[`noReset`] instead.
+Remove all apps installed during the test session. To keep the apps and only remove their app data, use xref:_noreset[] instead.
 
 * *Type:* `boolean`
 * *Required capabilities:* None
@@ -192,7 +192,7 @@ capabilities.setCapability("groupId", "0011"); // Assign to the Docs Team.
 
 === `kobitonServerUrl`
 
-By default, the user's xref:profile:manage-your-api-keys.adoc[default API key] and Kobiton server URL are assigned.
+By default, the user's xref:profile:manage-your-api-credentials.adoc[default API key] and Kobiton server URL are assigned.
 
 * *Type:* `string`
 * *Required capabilities:* None
@@ -204,25 +204,9 @@ By default, the user's xref:profile:manage-your-api-keys.adoc[default API key] a
 String kobitonServerUrl = "https://<name>:<id>@api.kobiton.com/wd/hub"; // Use the default API key to connect the Appium and Kobiton servers.
 ----
 
-[#_visualValidation]
-=== `visualValidation`
-
-Validates UI output across different devices, operating systems, and form factors. For more information, see xref:automation-testing:capabilities/add-visualvalidation.adoc[].
-
-* *Type:* `boolean`
-* *Required capabilities:* xref:_ensureWebviewsHavePages[], xref:_baselineSessionId[]
-* *Optional capabilities:* None
-
-.Example
-[source,java]
-----
-capabilities.setCapability("ensureWebviewsHavePages", true); // Set to true.
-capabilities.setCapability("kobiton:visualValidation", true);  // Set to true.
-----
-
 === `noReset`
 
-Remove all app data from apps installed during the test session. To remove the full app, use xref:_fullreset[`fullReset`] instead.
+Remove all app data from apps installed during the test session. To remove the full app, use xref:_fullreset[] instead.
 
 * *Type:* `boolean`
 * *Required capabilities:* None
@@ -306,13 +290,14 @@ The device configuration to use during the test session. *Only available for web
 capabilities.setCapability("useConfiguration", "kobiton"); // Use this pre-defined configuration for the test session.
 ----
 
+[#_visualValidation]
 === `visualValidation`
 
 Validates UI output across different devices, operating systems, and form factors. For more information, see xref:automation-testing:capabilities/add-visualvalidation.adoc[].
 
 * *Type:* `boolean`
-* *Required capabilities:* xref:_ensureWebviewsHavePages[]
-* *Optional capabilities:* xref:_baselineSessionId[]
+* *Required capabilities:* xref:_ensureWebviewsHavePages[], xref:_baselineSessionId[]
+* *Optional capabilities:* None
 
 .Example
 [source,java]

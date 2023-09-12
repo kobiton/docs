@@ -1,0 +1,12 @@
+// == Configure your authorization header
+
+To ensure your credentials are kept secure, all requests sent to `https://api.kobiton.com/` must contain link:https://datatracker.ietf.org/doc/html/rfc2617#section-2[an `Authentication` header]. Credentials assigned to your authorization header need to be in base64 format.
+
+In your terminal, convert xref:_before_you_start[your Kobiton API credentials] to base64 format using the following command:
+
+[source,shell]
+----
+echo -n "${yourUserNameOrEmail}:${yourApiKey}" | base64
+----
+
+Copy the generated string and save it in a secure location for later.

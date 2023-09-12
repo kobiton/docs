@@ -15,27 +15,27 @@ You'll need to complete the following:
 
 By default, Jenkins is set to http://localhost:8080. Open Jenkins in your browser.
 
-image:$NEW$[width="",alt=""]
+image:jenkins-open-jenkins-context.png[width=1000,alt="Open Jenkins in your browser"]
 
 == Optional: install the Maven plugin
 
 If you haven't installed the link:https://plugins.jenkins.io/maven-plugin/[Maven plugin] already, select *Dashboard > Manage Jenkins*.
 
-image:$NEW$[width="",alt=""]
+image:select-manage-jenkins-context.png[width=1000,alt="Select Manage Jenkins tab"]
 
 Select *Plugins*.
 
-image:$NEW$[width="",alt=""]
+image:select-plugins-closeup.png[width=1000,alt="Select Plugins tab"]
 
-Select *Available Plugins*, then search for Maven and select *Install without restart*.
+Select *Available Plugins*, then search for Maven and select *Install after restart*.
 
-image:$NEW$[width="",alt=""]
+image:select-maven-plugin-closeup.png[width=1000,alt="Select Maven and select Install after restart"]
 
 == Create a new project
 
 Select *Dashboard > New Item*.
 
-image:$OLD$[width="",alt=""]
+image:jenkins-select-new-item.png[width=500,alt="Select New Item option in Jenkins"]
 
 Enter a project name, select *Maven project > OK*.
 
@@ -47,11 +47,11 @@ In the *Configuration* page, you will configure your Maven project. The followin
 
 In the *General* pane, enter a description.
 
-image:$OLD$[width="",alt=""]
+image:jenkins-enter-description.png[width=500,alt="Enter description"]
 
 Select the *Discard old builds* checkbox, then choose the maximum number of days to keep builds and how many builds to keep. For example:
 
-image:$OLD$[width="",alt=""]
+image:jenkins-discards-old-build.png[width=500,alt="Select the Discards old build"]
 
 [NOTE]
 If you are sharing this build with multiple users, we recommended configuring runtime environment variables so users will be required to enter their username, API key, and device UDID so Jenkins can assign these variables at runtime. For more information, see xref:integrations:jenkins/configure-environment-variables.adoc[].
@@ -60,31 +60,31 @@ If you are sharing this build with multiple users, we recommended configuring ru
 
 Select *Source Code Management*.
 
-image:$OLD$[width="",alt=""]
+image:select-source-code-management-closeup.png[width=1000,alt="select Source Code Management tab"]
 
 Select *Git*, then enter the xref:integrations:upload-a-project-to-your-cloud-vcs.adoc#_upload_the_project[URL you created previously] along with your credentials.
 
-image:$OLD$[width="",alt=""]
+image:jenkins-config-select-git.png[width=500,alt="select Git in Source Code Management"]
 
 === Build triggers
 
 Select *Build Triggers*.
 
-image:$OLD$[width="",alt=""]
+image:select-build-triggers-tab-closeup.png[width=1000,alt="Select Build Triggers closeup"]
 
 Choose the settings that work best for you and your team. For example:
 
-image:$OLD$[width="",alt=""]
+image:select-build-triggers.png[width=500,alt="Select settings in Build Triggers']
 
 === Build environment
 
 Select *Build Environment*.
 
-image:$OLD$[width="",alt=""]
+image:select-build-environment-tab-closeup.png[width=1000,alt="Select Build Environment tab"]
 
-Select the *Delete Workspace before build starts*, *Add timestamps to Console Output*, and *Terminate a build if it's stuck* checkboxes.
+Select the *Delete Workspace before build starts*, *Add timestamps to Console Output*, and *Abort the build if it's stuck* checkboxes.
 
-image:$OLD$[width="",alt=""]
+image:select-delete-workspace.png[width=500,alt="Select"]
 
 Now that your Maven project is configured with the minimum requirements, you can xref:_configure_your_build_steps[configure your build steps].
 

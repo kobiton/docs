@@ -1,0 +1,128 @@
+= Create a baseline session for scriptless automation
+:navtitle: Create a baseline session
+
+Learn how to create a baseline session for scriptless automation. After you create a baseline session, you can use the xref:run-scriptless-with-the-kobiton-portal.adoc[Kobiton portal] or xref:run-scriptless-with-the-kobiton-api.adoc[Kobiton API] to rerun your test steps on the same device or on completely different devices--_without_ writing any test scripts.
+
+include::manual-testing:partial$start-a-manual-session.adoc[]
+
+[#_optional_install_an_app]
+== Optional: install an app
+
+If you plan on testing an app, first you'll need to install it on your device. Select *Install Apps* to get stared.
+
+image:$NEW$[width="",alt=""]
+
+You can upload a xref:apps:supported-filetypes.adoc[supported filetype] from your computer, install an app from a URL, or choose an app from xref:apps:manage-apps.adoc[your app repository]. If you plan on testing your in-app camera, be sure to enable *Instrument application for camera injection* before you install.
+
+image:manual-testing:install-apps-closeup.png[width=750, alt="A close-up of the different app installation options during a manual session."]
+
+== Enable synchronous inventory capture
+
+To ensure each action is fully captured for your baseline session, enable xref:manual-testing:device-controls.adoc#_synchronous_inventory_capture[synchronous inventory capture] by selecting the *Play* icon.
+
+image:$NEW$[width="",alt=""]
+
+[#_use_supported_actions]
+== Use supported actions
+
+Only certain actions are supported for scriptless baseline sessions.Reference the following table while running your tests:
+
+[cols="1,1,1,1"]
+|===
+|Action |Supported? |Android |iOS
+
+|Touch
+|&#10004;
+|&#10004;
+|&#10004;
+
+|Swipe
+|&#10004;
+|&#10004;
+|&#10004;
+
+|Device soft keys
+|&#10004;
+|
+|&#10004;
+
+|Virtual keyboard (ASCII characters)
+|&#10004;
+|&#10004;
+b|&#10004; *
+
+_Only English is supported, excluding the emoji keyboard._
+
+|Physical keyboard
+|&#10004;
+|&#10004;
+|&#10004;
+
+|Home (toolbar)
+|&#10004;
+|&#10004;
+|&#10004;
+
+|Power (toolbar)
+|&#10004;
+|&#10004;
+|&#10004;
+
+|Recent app (toolbar)
+|&#10004;
+|
+|&#10004;
+
+|Back (toolbar)
+|&#10004;
+|
+|&#10004;
+
+|Long press
+|&#10004;
+|&#10004;
+|&#10004;
+
+|Double tap
+|
+|
+|
+
+|Double press home
+|
+|
+|
+
+|Pin to zoom
+|
+|
+|
+
+|Take screenshot
+|
+|
+|
+
+|Set timezone
+|
+|
+|
+
+|Copy & paste (copy to clipboard)
+|
+|
+|
+|===
+
+
+== Exit your session
+
+When you're finished testing, select the *X* icon.
+
+image:$NEW$[width="",alt=""]
+
+Select *Exit Session*.
+
+image:$NEW$[width="",alt=""]
+
+Now you can use this session to run scriptless automation using the xref:run-scriptless-with-the-kobiton-portal.adoc[Kobiton portal] or xref:run-scriptless-with-the-kobiton-api.adoc[Kobiton API].
