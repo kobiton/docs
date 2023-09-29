@@ -1,25 +1,81 @@
-= Install an app
-:navtitle: Install an app
+= Manage preinstalled apps
+:navtitle: Manage preinstalled apps
 
-Learn how to permanently install an app on a device so can skip installation during your test session.
-
-[NOTE]
-Only the latest version of an app can be installed.
+Learn how to manage preinstalled apps on your device so you can skip installation during your test sessions or remove any preinstalled apps you no longer need.
 
 == Before you start
 
-You'll need to add your app to the xref:apps:manage-apps.adoc[app repository] before you can install it on your device.
+You'll need to upload your app to your xref:apps:manage-apps.adoc[app repository] before you can install it on your device.
 
-== Install your app
+== Open the device overview
 
-Once you xref:devices:search-for-a-device.adoc[find a device] select the *vertical ellipses* to open the device overview.
+xref:devices:search-for-a-device.adoc[Search for a device], then select the *vertical ellipses* to open the device overview.
 
 image:devices:view-device-metadata-closeup.png[width=500,alt="Click vertical ellipse to open the device overview"]
 
-Select *Apps*, then search for an app to install.
+== Manage preinstalled apps
 
-image:apps:select-install-apps-context.png[width=1000,alt="A context to select Install Apps"]
+=== Preinstall an app
 
-When you've found an app, select *Install*.
+In the device overview, select *Apps*.
 
-image:devices:install-apps-closeup.png[width=500,alt="Click Install to install the app you've found"]
+image:select-apps-from-device-overview-closeup.png[width=500,alt="Select Apps icon from the device overview"]
+
+Depending on whether the app has one version or multiple versions in the app repository, will determine which steps to follow:
+
+[tabs]
+======
+One version::
++
+--
+Search for the app, then select *Install*.
+
+image:select-install-an-app-closeup.png[width=500,alt="Select Install to install an app"]
+
+--
+
+Multiple versions::
++
+--
+Search for the app, select the *App Name*, find the version you want to install, then select *Install*.
+
+image:select-version-of-app-closeup.png[width=500,alt="Find the version of the app you want to install"]
+--
+======
+
+=== Remove a preinstalled app
+
+In the device overview, select *Apps*.
+
+image:select-apps-from-device-overview-closeup.png[width=500,alt="Select Apps from the device overview"]
+
+Depending on whether the app has one version or multiple versions in the app repository, will determine which steps to follow:
+
+[tabs]
+======
+One version::
++
+--
+Search for the app, then select *Uninstall*.
+
+image:uninstall-app-closeup.png[width=500,alt="Uninstall an app with one version"]
+--
+
+Multiple versions::
++
+--
+Search for the app, select the *App Name*, find the version you want to uninstall, then select *Uninstall*.
+
+image:uninstall-selected-app-version-closeup.png[width=500,alt="Uninstall an app with multiple versions"]
+--
+======
+
+=== Remove all preinstalled apps
+
+In the device overview, select *Apps*.
+
+image:select-apps-from-device-overview-closeup.png[width=500,alt="Select Apps from device overview"]
+
+Select *Uninstall All*.
+
+image:uninstall-all-apps-closeup.png[width=500,alt="Uninstall all apps"]

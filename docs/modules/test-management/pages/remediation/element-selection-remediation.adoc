@@ -1,0 +1,12 @@
+= Element selection remediation
+:navtitle: Element selection remediation
+
+The User Interface (UI) of an element often changes across multiple devices. This can interrupt revisits on different devices because it's challenging to manage the appearance of an element through various device ratios, like 18:9, 17:9, and 16:9. But, with scriptless automation, you can easily handle these challenges through the UI without any scripting.
+
+image:scriptless-automation:ui-remediation-window.png[width=1000,alt="UI Remediation window"]
+
+When revisiting on a Galaxy J5, a blocker is raised because a UI change covers and makes the **Login** button un-clickable. You can resolve this by manually selecting the **Login** button in the scriptless automation Remediation. This selection becomes the new 'baseline' for the test case, ensuring smooth execution.
+
+image:scriptless-automation:ui-remediation2.png[width=1000,alt="Another view of UI Remediation window"]
+
+In situations where different screen ratios crop a list view cell, making it undetectable, this would typically result in a failed test case with other “Record & Playback” technologies. However, with scriptless automation, you can select the correct list view cell and submit the remediation to continue the test.

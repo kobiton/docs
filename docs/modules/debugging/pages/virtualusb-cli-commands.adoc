@@ -1,0 +1,168 @@
+= virtualUSB CLI commands
+:navtitle: virtualUSB CLI commands
+
+These are the commands you can use with the virtualUSB command-line interface (CLI) tool.
+
+== Before you start
+
+You'll need to complete the following:
+
+* xref:debugging:set-up-virtualusb.adoc[] on your personal computer.
+* xref:debugging:add-virtualusb-to-your-path.adoc[].
+* To debug *local* devices, xref:debugging:local-devices/configure-your-personal-computer.adoc[configure your personal computer].
+
+== `help`
+
+To list all virtualUSB commands, run:
+
+[source,shell]
+----
+vusb help
+----
+
+To learn more about a specific command, add the command after `help`:
+
+[source,shell]
+----
+vusb help <command>
+----
+
+== `login`
+
+To log in to your Kobiton account with your email address and password or xref:profile:manage-your-api-credentials.adoc[Kobiton API key], run:
+
+[source,shell]
+----
+vusb login
+----
+
+If your organization uses a custom domain for Kobiton, append the following flags to manually set your API and GRPC base URLs:
+
+[source,shell]
+----
+vusb login --apibaseurl <url> --grpcbaseurl <url> --username <username> --password <password>
+----
+
+[NOTE]
+Using flags will expose your credentials in the terminal. *Do not use this method while sharing your screen or around others*.
+
+== `logout`
+
+To log out of your Kobiton account, run:
+
+[source,shell]
+----
+vusb logout
+----
+
+== `connect`
+
+To connect to a device using the device UDID, run:
+
+[source,shell]
+----
+vusb connect --udid <device-udid>
+----
+
+== `disconnect`
+
+To disconnect from a device using the device UDID, run:
+
+[source,shell]
+----
+vusb disconnect --udid <device-udid>
+----
+
+== `status`
+
+To check the status of the currently connected device, run:
+
+[source,shell]
+----
+vusb status
+----
+
+If a device is connected, the device's JSON data will be displayed in the terminal.
+
+.Example
+[source,shell]
+----
+$ vusb status
+{
+  "servers": [
+    {
+      "connectionStatus": "Connected", //Host connection status
+      "host": "virtualusb.example.com:10002", //URL of the virtualUSB host
+      "linkedDevices": [
+        {
+          "connectionStatus": "Connected", //Connection status of the device
+          "id": "0709C8D4-DD63-E500-8832", //ID of the device
+          "name": "Galaxy A11", //Name of the device
+          "os": "Android", //Operating system of the device
+          "osVersion": "12", // OS version of the device
+          "statusDescription": "Connected", //Description of the connection status
+          "vendorUniqueIdentifier": "R9JN615AACA" //UDID of the device
+        },
+        {
+          "connectionStatus": "Connected",
+          "id": "6A2266BE-F655-57A2-349C",
+          "name": "Galaxy Tab A",
+          "os": "Android",
+          "osVersion": "9",
+          "statusDescription": "Connected",
+          "vendorUniqueIdentifier": "R52N501VDSA"
+        }
+      ],
+      "name": "virtualusb.example.com:10002",
+      "statusDescription": "Connected"
+    }
+  ],
+  "version": "4.0.10924.1230.KOB-31816-vucli@1cb4dae" //virtualUSB version
+}
+----
+
+== `export-logs`
+
+To export virtualUSB logs, run:
+
+[source,shell]
+----
+vusb export-logs
+----
+
+By default, the logs will be downloaded to the system's default download location, and will contain logs from the past day.
+
+Alternatively, use `--out` to set a new download location and `--days` to set how many days back the logs should include:
+
+[source,shell]
+----
+vusb export-logs --out <download-path> --days <days-back>
+----
+
+When `export-logs` is run, a confirmation message will be displayed in the terminal.
+
+.Example
+[source,shell]
+----
+$ vusb export-logs
+Please wait
+Exported to /Users/Alex/Downloads/vulogs.zip
+----
+
+== `setup-ios` (Windows only)
+
+To install iOS dependencies on your Windows computer, run:
+
+[source,shell]
+----
+vusb setup-ios
+----
+
+== `setup-adb` (Windows only)
+
+To install Android dependencies on your Windows computer, run:
+
+[source,shell]
+----
+vusb setup-adb
+----

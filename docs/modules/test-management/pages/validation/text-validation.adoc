@@ -1,0 +1,26 @@
+= Text Validation
+:navtitle: Text Validation
+
+Scriptless Automation highlights the exact character differences between the baseline and the screenshot. For example, in the image below, discrepancies in spacing arise from varying screen resolutions across two devices.
+
+image:scriptless-automation:text-assertion.png[width=1000,alt="Text validation"]
+
+You can submit a remediation, ensuring you don't face this validation in future runs.
+
+[width="100%",options="header"]
+|===
+| Action | Description
+
+| Adjust Comparison
+a| Choose from three comparison levels to suit your needs:
+
+* **Exact**: Both texts must be identical.
+* **Beginning Text**: Focuses on the initial text content but will highlight issues related to text wrapping.
+* **Relaxed Placement**: Builds on "Beginning Text" but disregards text wrapping concerns.
+
+| Skip
+| Use this action if you want to skip scanning the selected element.
+|===
+
+[NOTE]
+An action labeled *Recommended* is what our system suggests. However, you're free to choose any option that meets your specific requirements.

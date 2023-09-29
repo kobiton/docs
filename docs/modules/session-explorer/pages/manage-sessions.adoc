@@ -1,38 +1,45 @@
 = Manage sessions
 :navtitle: Manage sessions
 
-Learn how to manage sessions so you can rename a session, change the session description, download logs, or create a Jira ticket.
+Learn how to manage sessions so you can rename a session, change the session description, download logs, or create a Jira ticket. You can also leverage Session Explorer to xref:analytics/index.adoc[review analytics] or xref:validations/index.adoc[run validations].
 
-== Open the session overview
+== Open a session
 
 In Kobiton, select *Sessions*.
 
-image:$NEW-IMAGE$[width=, alt=""]
+image:select-sessions-closeup.png[width=1000,alt="Select Sessions tab"]
 
-xref:session-explorer:search-for-a-session.adoc[Find a session], then select the session ID to open the session overview.
+xref:session-explorer:search-for-a-session.adoc[Search for a session], then select the session ID to open the session overview.
 
-image:$NEW-IMAGE$[width=, alt=""]
+image:search-session-id-closeup.png[width=1000,alt="Search for a session ID"]
 
-== Rename the session
+From the Session Overview window, users can view below mentioned information.
 
-General information about the session, including name, description, user, and more.
+image:session-overview-context copy.png[width=1000,alt="A context to Session Overview"]
 
-image:session-explorer:session-info-closeup.png[width=500,alt="Session info section of Session Overview"]
+== Manage the session
 
-== Change session description
+=== Rename the session
 
-General information about the session, including name, description, user, and more.
+To rename the session, select the *Edit* icon beneath *Session Name*, then enter a new name. You can also change this xref:manual-testing:change-manual-session-settings.adoc[during a test session].
 
-image:session-explorer:session-info-closeup.png[width=500,alt="Session info section of Session Overview"]
+image:edit-session-name-context.png[width=1000,alt="Edit a session name"]
 
-== Download session logs
+=== Change session description
 
-Download the session device logs or crash logs as a `.log` file.
+To change the session description, select the *Edit* icon beneath *Session Description*, then enter a new description. You can also change this xref:manual-testing:change-manual-session-settings.adoc[during a test session].
+
+image:edit-session-description-context.png[width=1000,alt="Edit a session description"]
+
+[#_download_session_logs]
+=== Download session logs
+
+To download device or crash logs as a `.log` file, select *Device* or *Crash* to download that specific log file.
 
 image:session-explorer:logs-closeup.png[width=400,alt="Logs section in Session Overview"]
 
-== Create a Jira ticket
+=== Create a Jira ticket
 
-Once you xref:integrations:jira/index.adoc[integrate Jira] with your Kobiton account, create Jira tickets directly from the session overview.
+If your xref:integrations:jira/index.adoc[Jira integration is enabled], select *Jira Ticket* to create a ticket that's linked to this session.
 
-image:$NEW-IMAGE$[width=, alt=""]
+image:$NEW-IMAGE$[width=,alt=""]

@@ -44,17 +44,18 @@ image:manual-testing:volume-up-volume-down-context.png[width=1000,alt="Select Vo
 
 To enter Android Debug Bridge (`adb`) commands, select *adb shell*, then enter a xref:manual-testing:adb-commands.adoc[supported `adb` command].
 
-image:manual-testing:adb-shell-closeup.png[width="750", alt="A manual session with a closeup of the adb shell running `adb shell dumpsys display`."]
+image:manual-testing:adb-shell-closeup.png[width="750",alt="A manual session with a closeup of the adb shell running `adb shell dumpsys display`."]
 
+[#_perform_voiceover]
 == Perform VoiceOver
 
-Once xref:devices:local-devices/configure-ios-voiceover.adoc[VoiceOver for iOS] is set up, select *Perform VoiceOver* to test an app's screen reader compatibility.
+Once xref:devices:local-devices/configure-ios-voiceover.adoc[VoiceOver for iOS] is set up, select *Perform VoiceOver*, then choose a VoiceOver option to test an app's screen reader compatibility.
 
 image:manual-testing:perform-voiceover-context.png[width=1000,alt="Select Perform Voiceover feature"]
 
 == Biometric authentication
 
-Once our xref:apps:enable-biometric-authentication/about-biometrics-authentication.adoc[biometrics authentication library] is added to your app, select *Biometric Authentication*, then choose *Pass* or *Fail* to test authentication requests.
+Once you've added our xref:apps:biometric-authentication-sdk/about-biometrics-authentication.adoc[biometrics authentication library] to your app, select *Biometric Authentication*, then choose *Pass* or *Fail* to test authentication requests.
 
 image:manual-testing:biometrics-authentication-context.png[width=1000,alt="Select Biometric Authentication feature"]
 
@@ -87,10 +88,10 @@ image:manual-testing:image-injection-closeup.png[width=500, alt="A manual sessio
 
 == Power
 
-To restart your device, select *Power*.
+To lock the device screen, select *Power*.
 
 [NOTE]
-Restarting a device won't end the session.
+Locking the device screen won't end the session.
 
 image:manual-testing:power-button-context.png[width=1000,alt="Select Power button"]
 
@@ -110,8 +111,9 @@ image:manual-testing:device-controls-context5.png[width=1000,alt="A manual sessi
 
 To replicate Android's xref:https://support.google.com/android/answer/9079644[return to the previous page], select *Back*.
 
-image:$NEW-IMAGE$[width="", alt=""]
+image:select-back-context.png[width=1000,alt="Select Back on Device Controls"]
 
+[#_synchronous_inventory_capture]
 == Synchronous inventory capture
 
 To ensure each action is captured in the inventory before a new action can be started, enable *Synchronous Inventory Capture*.
@@ -133,8 +135,6 @@ To increase the device screen to 30 frames per second (FPS), enable *Lightning M
 
 [NOTE]
 Lightning mode is only available for link:https://kobiton.com/pricing/[certain plans].
-
-image:$NEW-IMAGE$[width="", alt=""]
 
 == Screenshots
 

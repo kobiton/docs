@@ -17,35 +17,50 @@ status:passed type:manual os:android # Returns all passing, manual sessions, usi
 
 == Save a query
 
-After a query is built, select *Add Saved Search*, then *Save*. Now you can run this query any time you xref:session-explorer:search-for-a-session.adoc#_saved_searches[search for a session].
+After a query is built, select *Add Saved Search*, then *Save*. Now you can run this query any time you xref:session-explorer:search-for-a-session.adoc#_using_a_saved_search[search for a session].
 
 image:session-explorer:add-saved-search-context.png[width=1000,alt="Click Star to add Saved Search"]
 
 [#_parameters]
 == Parameters
 
+=== `application:`
+
+Returns all sessions using this application. `application:` takes a space-separated string surrounded in double quotes `""` or a concatenated string with or without double quotes `""`.
+
+.Example
+[source,plaintext]
+----
+application:"wingman api" # Returns all sessions using the Wingman API app.
+application:guardian # Returns all sessions using the Gaurdian app.
+----
+
+[#_isscriptless]
 === `is:scriptless`
 
-Returns all Scriptless sessions.
+Returns all Scriptless sessions.For manual or automation sessions, see xref:_type[].
 
+.Example
 [source,plaintext]
 ----
 is:scriptless # Returns all Scriptless sessions.
 ----
 
-=== `type:`
+=== `manufacturer:`
 
-Returns all sessions with this session type: `manual` or `automation`.
+Returns all sessions using devices with this manufacturer.
 
+.Example
 [source,plaintext]
 ----
-type:manual # Returns all manual sessions.
+manufacturer:apple # Returns all sessions using an Apple device.
 ----
 
 === `model:`
 
 Returns all sessions using this device model. `model:` takes a space-separated string surrounded in double quotes `""` or a concatenated string with or without double quotes `""`.
 
+.Example
 [source,plaintext]
 ----
 model:"redmi note 7" # Returns all sessions using a Xiaomi Redmi Note 7.
@@ -56,6 +71,7 @@ model:mq9d2 # Returns all sessions using a Space Gray iPhone 8 Plus.
 
 Returns all sessions using a device with this operating system (OS).
 
+.Example
 [source,plaintext]
 ----
 os:ios # Returns all sessions using an iOS device.
@@ -65,62 +81,59 @@ os:ios # Returns all sessions using an iOS device.
 
 Returns all sessions using a device with this operating system version (OS version).
 
+.Example
 [source,plaintext]
 ----
 os_version:14.7.1 # Returns all sessions using an iOS device on version 14.7.1.
-----
-
-=== `user:`
-
-Returns all sessions started by this user. This user must be a member of xref:profile:manage-your-profile.adoc#_change_your_default_team[your team].
-
-[source,plaintext]
-----
-user:alex # Returns all sessions started by Alex.
-----
-
-=== `status:`
-
-Returns all sessions matching this status. See xref:session-explorer:search-for-a-session.adoc#_session_tags[list of session tags].
-
-[source,plaintext]
-----
-status:running # Returns all sessions currently running.
-----
-
-=== `application:`
-
-Returns all sessions using this application. `application:` takes a space-separated string surrounded in double quotes `""` or a concatenated string with or without double quotes `""`.
-
-[source,plaintext]
-----
-application:"wingman api" # Returns all sessions using the Wingman API app.
-application:guardian # Returns all sessions using the Gaurdian app.
-----
-
-=== `udid:`
-
-Returns all sessions using a device with this UDID.
-
-[source,plaintext]
-----
-udid:6ec7ca0e # Returns all sessions using a device with UDID 6ec7ca0e.
 ----
 
 === `resolution:`
 
 Returns all sessions using devices with this screen resolution.
 
+.Example
 [source,plaintext]
 ----
 resolution:720x1080 # Returns all sessions using a device with a 720x1080 screen resolution.
 ----
 
-=== `manufacturer:`
+=== `status:`
 
-Returns all sessions using devices with this manufacturer.
+Returns all sessions matching this status.For more information, see xref:session-explorer:search-for-a-session.adoc#_use_session_tags[Session tags].
 
+.Example
 [source,plaintext]
 ----
-manufacturer:apple # Returns all sessions using an Apple device.
+status:running # Returns all sessions currently running.
+----
+
+[#_type]
+=== `type:`
+
+Returns all sessions with this session type: `manual` or `automation`. For scriptless sessions, see xref:_isscriptless[].
+
+.Example
+[source,plaintext]
+----
+type:manual # Returns all manual sessions.
+----
+
+=== `udid:`
+
+Returns all sessions using a device with this UDID.
+
+.Example
+[source,plaintext]
+----
+udid:6ec7ca0e # Returns all sessions using a device with UDID 6ec7ca0e.
+----
+
+=== `user:`
+
+Returns all sessions started by this user. You may only search users assigned to xref:profile:manage-your-profile.adoc#_change_your_default_team[your team].
+
+.Example
+[source,plaintext]
+----
+user:alex # Returns all sessions started by Alex.
 ----
