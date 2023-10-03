@@ -8,8 +8,8 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "./scripts/minify_css.py && antora antora-playbook-docs.yml && antora antora-playbook-widget.yml",
-    "local": "./scripts/minify_css.py && antora antora-playbook-docs.yml && antora antora-playbook-widget.yml && ./scripts/beautify_logs.py",
+    "build": "./scripts/taph.py -q -m -a",
+    "local": "./scripts/taph.py -q -m -a -b",
     "server": "http-server build/docs -c-1",
     "start-docs": "open ./build/docs",
     "start-widget": "open ./build/widget"

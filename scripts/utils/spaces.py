@@ -2,7 +2,7 @@
 # Spaces won't be added to code-styled content, AsciiDoc attributes and links, or version numbers.
 
 import re
-from scripts.modules.ignore_styling import ignore_styling
+from ignore import ignore_styling
 
 # Styling patterns to ignore
 styling_to_ignore = ignore_styling(attributes=True, urls=True, code=True)

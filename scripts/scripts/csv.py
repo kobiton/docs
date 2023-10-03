@@ -1,13 +1,14 @@
 #!/usr/bin/env python3
 
-# Makes a '.csv' file containing a full list of site URLs to add to a spreadsheet for large-scale docs reviews.
+# Creates a '.csv' file containing a full list of site URLs to add to a spreadsheet for large-scale docs reviews.
 
 import os
 import csv
 from html.parser import HTMLParser
-from modules.get_project_root import get_project_root
+from utils.root import get_project_root
 
 
+# Use HTMLParser to parse through the generated site's primary './build/index.html' file.
 class MyHTMLParser(HTMLParser):
     def __init__(self):
         HTMLParser.__init__(self)
@@ -51,6 +52,7 @@ class MyHTMLParser(HTMLParser):
 output_file = "site-urls.csv"
 
 
+# Extracts the section from a given href.
 def extract_section_from_href(href):
     # Split the href using '/'
     parts = href.split('/')
@@ -64,6 +66,7 @@ def extract_section_from_href(href):
     return section
 
 
+# Formats the section path for display.
 def format_section(section):
     # Split the section by '/'
     parts = section.split('/')
@@ -75,7 +78,8 @@ def format_section(section):
     return ' > '.join(parts)
 
 
-def create_csv():
+# Main function to create the CSV file containing site URLs and metadata.
+def main():
     # Set the directory to search using get_project_root() directly
     search_directory = os.path.join(get_project_root(), 'build/docs/')
 
@@ -109,4 +113,4 @@ def create_csv():
 
 
 if __name__ == "__main__":
-    create_csv()
+    main()

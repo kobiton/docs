@@ -1,12 +1,12 @@
 #!/usr/bin/env python3
 
-# Beautifies logs in 'logs/' and adds 'xref:' attributes so
-# maintainers can directly open files from the preview window.
+# Beautifies the logs in 'logs/' by creating an AsciiDoc table and a cross-reference
+# to each file, allowing them to be opened directly from the preview window.
 
 import os
 import json
 from collections import defaultdict
-from modules.get_project_root import get_project_root
+from utils.root import get_project_root
 
 # Get the project root directory
 PROJECT_ROOT = get_project_root()
@@ -46,21 +46,21 @@ def create_dictionary(default_log):
 
     for entry in default_log:
         # Get default JSON logs.
-        log = json.loads(entry)
+        log_data = json.loads(entry)
 
         # First-level dictionary
-        antora_level = log['level']
+        antora_level = log_data['level']
 
         # Second-level dictionary.
-        unique_id = log['time']
+        unique_id = log_data['time']
 
         # Variables for second-level dictionary.
-        message = log['msg']
-        path = os.path.relpath(log['file']['path'], PROJECT_ROOT)
-        module = path.split('modules/')[1].split('/')[
-            0] if 'modules' in path else 'N/A'
+        message = log_data['msg']
+        path = os.path.relpath(log_data['file']['path'], PROJECT_ROOT)
+        module = path.split('utils/')[1].split('/')[
+            0] if 'utils' in path else 'N/A'
         xref = f"xref:../{path}[{path.split('/')[-1]}]"
-        line = log['file'].get('line', 'N/A')
+        line = log_data['file'].get('line', 'N/A')
 
         # Create the following dictionary using the previous variables.
         dictionary[antora_level][unique_id] = {
@@ -126,9 +126,9 @@ def create_table(sorted_dictionary, current_log):
             for antora_level, unique_id in sorted_dictionary[level].items():
                 for issue_details in unique_id:
                     table += f"|{issue_details['message']}\n" \
-                             f"|{issue_details['module']}\n" \
-                             f"|{issue_details['xref']}\n" \
-                             f"|{issue_details['line']}\n\n"
+                              f"|{issue_details['module']}\n" \
+                              f"|{issue_details['xref']}\n" \
+                              f"|{issue_details['line']}\n\n"
             table += '|===\n\n'
         else:
             table += f'_NONE_\n\n'
@@ -138,7 +138,7 @@ def create_table(sorted_dictionary, current_log):
 
 # For each input file in 'MULTIPLE_LOGS' create a dictionary, sort the dictionary, create a table, then
 # write the table to the relevant output file.
-def beautify_logs():
+def main():
     input_log_files = get_input_file()
     output_log_files = get_output_file()
 
@@ -158,4 +158,4 @@ def beautify_logs():
 
 
 if __name__ == "__main__":
-    beautify_logs()
+    main()

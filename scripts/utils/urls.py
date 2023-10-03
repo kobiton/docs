@@ -1,7 +1,7 @@
 # Adds the Asciidoc 'link:' attribute and removes localization codes from all URLs.
 
 import re
-from scripts.modules.ignore_styling import ignore_styling
+from ignore import ignore_styling
 
 # A list of the top URL localization codes.
 localization_codes = [

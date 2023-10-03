@@ -1,32 +1,35 @@
 #!/usr/bin/env python3
 
-# Cleans up the content in '<project-root>/docs/modules/' using the scripts in the 'modules' directory:
-# 'add_module_to_attributes': Adds the module to all 'xref' and 'image' AsciiDoc attributes
-# 'add_spaces_after_periods': Adds missing spaces after periods
-# 'fix_newlines': Fixes all newlines
-# 'fix_urls': Fixes all URLs
+# A general cleanup script that adds the relative module to each AsciiDoc attribute,
+# adds spaces after periods if they're missing, fixes all newlines, and fixes all URLs.
+#
+# This is preformed using the following:
+# '../utils/modules.py'
+# '../utils/spaces.py'
+# '../utils/newlines.py'
+# '../utils/urls.py'
 
 import os
 import glob
 import importlib
-from modules.get_project_root import get_project_root
+from utils.root import get_project_root
 
-# Scripts to run from './modules'.
+# Scripts to run from '../utils/'.
 SCRIPTS = {
-    'add_module_to_attributes': 'modules.add_module_to_attributes.add_module_to_attributes',
-    'add_spaces_after_periods': 'modules.add_spaces_after_periods.add_spaces_after_periods',
-    'fix_newlines': 'modules.fix_newlines.fix_newlines',
-    'fix_urls': 'modules.fix_urls.fix_urls'
+    'modules': 'utils.modules.modules',
+    'spaces': 'utils.spaces.spaces',
+    'newlines': 'utils.fix_newlines.fix_newlines',
+    'urls': 'utils.urls.urls'
 }
 
-# Directories in '<project-root>/docs/modules/' to ignore.
+# Directories in '<project-root>/docs/utils/' to ignore.
 IGNORED_DIRECTORIES = ['release-notes', 'widget', 'about-version', 'ROOT']
 
 
-# Go to '<project-root>/docs/modules/' and run all 'SCRIPTS' against each file not in 'IGNORED_DIRECTORIES'.
-def cleanup_content():
+# Go to '<project-root>/docs/utils/' and run all 'SCRIPTS' against each file not in 'IGNORED_DIRECTORIES'.
+def main():
     root = get_project_root()
-    modules_path = os.path.join(root, 'docs', 'modules')
+    modules_path = os.path.join(root, 'docs', '../utils')
 
     for module in os.listdir(modules_path):
         module_path = os.path.join(modules_path, module)
@@ -45,4 +48,4 @@ def cleanup_content():
 
 
 if __name__ == "__main__":
-    cleanup_content()
+    main()

@@ -1,7 +1,7 @@
 # Ensures each line of content is separated by a single newline and every '.adoc' file ends with a newline.
 
 import re
-from scripts.modules.ignore_styling import ignore_styling
+from ignore import ignore_styling
 
 # Styling patterns to ignore
 ignore = ignore_styling(attributes=True, urls=True, code=True)
