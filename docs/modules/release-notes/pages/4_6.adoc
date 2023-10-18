@@ -1,0 +1,86 @@
+= Kobiton 4.6 release notes
+:navtitle: Kobiton 4.6 release notes
+
+_August 12, 2023_
+
+== New OS support
+
+Kobiton 4.6 supports the following:
+
+* Android 14 Beta 4
+* iOS/iPadOS 16.5.1
+* iOS/iPadOS 15.7.7
+* MacOS 13.4.1 Ventura
+* MacOS 14 Sonoma Beta 1
+* Mac mini with M2 chip
+
+[NOTE]
+Support for iOS 17 beta is coming soon!
+
+== Revamped Portal Navigation
+
+We overhauled the Kobiton Portal with an enhanced navigation experience. Here's what's new:
+
+*Simplified design*: We've bid goodbye to the top nav and expanded the left-hand menu. This change gives you more room to work along with a one-stop navigation bar.
+
+*Refreshed icons & layout*: We've updated icons to be more intuitive and tweaked the order to prioritize what matters most. Hover over an icon for a tooltip descriptor. The new order is:
+
+* _Devices_ - access your Device List
+* _Sessions_ - access Sessions for your team
+* _Apps_ - access the App Repo
+* _Test Case Management_
+* _Predefined Reports_
+* _Org Management_
+* _Download_ - access downloads for Legacy Kobiton desktop and virtualUSB
+* _Help_ - the question mark icon is your gateway to Help docs, API docs, and Support
+* _Team_ - We used to have a Team dropdown along the top navigation. Now, look just above your profile in the bottom of the left nav. Tap on the letter icon to view and switch between your teams. Each team you belong to is denoted by a letter and color combination.
+* _Account_ - Previously, your Profile was at the top right of the Portal. Now, find your profile with access to Settings, Subscription, and Logout at the bottom of the left nav.
+
+image:new-navigation.png[width="1000",alt="New portal navigation layout"]
+
+.Known issue
+[NOTE]
+====
+When navigating to a sub-menu under Org Management, the Org Management menu item is de-highlighted, instead of staying highlighted.
+====
+
+== Image Injection SDK for Android
+
+Previously, we introduced the Image Injection feature through application instrumentation. With this release, we added another method to inject images via an Image Injection SDK.
+
+Use Image Injection SDK if image injection through instrumentation is not feasible for your application, e.g. your application has anti-tampering.
+
+_Instructions on how to implement the SDK will be published shortly_.
+
+.Note/limitations
+[NOTE]
+====
+* Image Injection via this method is available in a manual session only.
+* Currently, this method supports apps that implement the camera2 library.
+* Access to the application source code is required to implement the SDK.
+* When injecting an image into an app that has not implemented the custom SDK, the system still sends an injection was successful message.
+* Apps with the Image Injection SDK will crash if the hidden API policy is not enabled on the device.
+====
+
+== virtualUSB: log in with custom URL
+
+With Standalone or Cloud with a custom domain, users can now:
+
+* specify the custom URLs for Kobiton server in the virtualUSB login screen after selecting the *Login to your custom domain portal* checkbox.
+
+image:virtualusb-custom-login.png[width="400",alt="Log in with custom URL"]
+
+* specify the custom URLs for Kobiton server in the vusb login command of virtualUSB command-line interface (CLI) with the 2 new options: `--apibaseurl`, and `--grpcbaseurl`.
+
+[IMPORTANT]
+Download the latest virtualUSB application from the Portal to see the changes.
+
+== Additional enhancements and bug fixes
+
+In addition to the above, this release includes a number of minor bug fixes and enhancements to improve your day-to-day testing:
+
+* Fixed an issue with Chrome welcome screen blocking Scriptless if the welcome screen appears in a Revisit session, but not the original session.
+* Fixed an issue with Device Inspector sometimes not displaying the web view in Android hybrid apps.
+* Added the desired capability `kobi:retainDurationInSeconds` to retain device in automation session. The value of the capability determines the duration of retainment:
+** `-1`: unlimited
+** an `x` number larger than 0: retain for `x` seconds (maximum 24 hours)
