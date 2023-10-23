@@ -1,42 +1,34 @@
-= Configure the local server for network payload capture
-:navtitle: Configure the local server
+= Configure the host machine for network payload capture
+:navtitle: Configure the host machine
 
-Learn how to configure your local Cloud or Standalone Kobiton server so you and your team can use network payload capture during a xref:manual-testing:local-devices/capture-network-payload-data.adoc[manual session] or xref:automation-testing:local-devices/capture-network-payload-data.adoc[automation session].
+Learn how to configure your local Cloud or Standalone Kobiton host machine so you and your team can use network payload capture during a xref:manual-testing:local-devices/capture-network-payload-data.adoc[manual session] or xref:automation-testing:local-devices/capture-network-payload-data.adoc[automation session].
 
 [#_before_you_start]
 == Before you start
 
 You'll need to:
 
-* Verify your system administrator privileges for the local Cloud or Standalone Kobiton server.
-* Download and install link:https://apps.apple.com/app/id1037126344[Apple Configurator] on the server.
-
-[#_get_the_local_server_ip_address]
-== Get the local server IP address
-
-You can use the `ifoncifg` command to get your server's IP address from `en0`. Open the terminal, the use the following command to copy the IP address to your clipboard using the following command. Save this value in a secure location for later.
-
-[source,bash]
-----
-ifconfig en0 | grep ether | awk '{print $2}' | pbcopy
-----
+* Verify your system administrator privileges for the local Cloud or Standalone Kobiton host machine. The *host machine* is the Mac mini computer in the Kobiton cart.
+* Download and install link:https://apps.apple.com/app/id1037126344[Apple Configurator] on the host machine.
 
 == Modify the `dc.ini` file
 
-Next, you'll edit the `dc.ini` within the `deviceconnect` directory. Open the file in your preferred text editor.
+Open the Terminal app on the host machine or `ssh` to the host machine.
+
+Next, you'll edit the `dc.ini` within the `/usr/local/deviceconnect` directory. Open the file in your preferred text editor.
 
 .Example
 [source,shell]
 ----
-nano ~/usr/local/deviceconnect/dc.ini
+nano /usr/local/deviceconnect/dc.ini
 ----
 
-If the following lines are present, simply verify the IP address, then go to xref:_check_for_an_existing_ssh_key[]. Otherwise, add these lines to the end of the file and replace `LOCAL_SERVER_IP_ADDRESS` with the correct value.
+If the following lines are present, simply verify the IP address, then go to xref:_check_for_an_existing_ssh_key[]. Otherwise, add these lines to the end of the file and replace `HOST_MACHINE_IP_ADDRESS` with the correct value.
 
 [source,plaintext]
 ----
 # Payload Capture
-DeviceNetworkCapture.NetworkCaptureProxyHost=LOCAL_SERVER_IP_ADDRESS
+DeviceNetworkCapture.NetworkCaptureProxyHost=HOST_MACHINE_IP_ADDRESS
 DeviceNetworkCapture.NetworkCaptureProxyIsLocal=true
 DeviceNetworkCapture.NetworkCaptureProxyControlPort=8225
 DeviceNetworkCapture.NetworkCaptureProxyHttpListenPort=8080
@@ -51,6 +43,11 @@ When you're finished, save your changes, then run the following command to resta
 ----
 sudo sv restart /usr/local/var/service/*
 ----
+
+[NOTE]
+====
+If you are only hosting Android devices, you can move on to configure your xref:devices:local-devices/network-payload-capture/configure-an-android-device.adoc[Android device] now. The next steps are only required for hosting iOS devices.
+====
 
 [#_check_for_an_existing_ssh_key]
 == Check for an existing SSH key
@@ -104,7 +101,7 @@ Login using your SSH key. If prompted to _trust this connection_, type *yes* and
 ssh 127.0.0.1
 ----
 
-After you're successfully logged in, exit the SSH session, then restart the macMini.
+After you're successfully logged in, exit the SSH session, then restart the host machine.
 
 [source,shell]
 ----
@@ -113,7 +110,7 @@ exit && sudo shutdown -r now
 
 == Set up Apple Configurator
 
-Open the Apple Configurator app you xref:_before_you_start[installed previously].
+After the Open the Apple Configurator app you xref:_before_you_start[installed previously].
 
 // TODO: image:$NEW$[width="",alt=""]
 

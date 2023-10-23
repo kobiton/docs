@@ -1,54 +1,26 @@
 = Configure an Android device for network payload capture
 :navtitle: Configure an Android device
 
-Learn how to configure an Android device for network payload capture so you can xref:devices:local-devices/network-payload-capture/create-a-configuration.adoc[create a configuration for network payload capture].
+Learn how to configure an Android device for network payload capture, so you can xref:devices:local-devices/network-payload-capture/create-a-configuration.adoc[create a configuration for network payload capture].
 
 [NOTE]
-You'll need to configure each Android device you want to use for network playload capture.
+You'll need to configure each Android device you want to use for network payload capture.
 
 [#_before_you_start]
 == Before you start
 
 You'll need to:
 
-* Confirm your system administrator xref:devices:local-devices/network-payload-capture/configure-the-local-server.adoc[configured your local Kobiton server].
-* Install link:https://developer.android.com/tools/releases/platform-tools[Android Debug Bridge (adb)] on your personal macOS computer.
-* Download the xref:attachment$kobiton-network-payload-capture-certificate-1.3.crt[network payload capture certificate] on your personal macOS computer.*
+* Confirm your system administrator already xref:devices:local-devices/network-payload-capture/configure-the-host-machine.adoc[configured your host machine].
 
-[#_get_device_udid]
-== Get device UDID
-
-Connect the Android device to your personal computer, then enter the following command to get the device UDID:
-
-[source,shell]
-----
-adb shell settings get secure android_id
-----
-
-You'll need this later. Copy it to a secure location.
-
-== Add certificate to device
-
-Confirm the location of the xref:_before_you_start[certificate you downloaded earlier], then enter the following command:
-
-[source,shell]
-----
-adb push <path/to/certificate> sdcard
-----
-
-.macOS
-[source,shell]
-----
-adb push ~/Downloads/mitmproxy-cert.crt sdcard
-----
-
-.Windows
-[source,shell]
-----
-adb push C:\Users\Alex\Downloads\mitmproxy-cert.crt sdcard
-----
+== Download certificate
+On your Android device, open any web browser, then download the xref:attachment$kobiton-network-payload-capture-certificate-1.3.crt[network payload capture certificate].
 
 == Install certificate
+
+=== Android 10 or 9
+
+On the Android device, 
 
 === Android 11 or later
 
