@@ -26,18 +26,17 @@ Network traffic from the device is captured through a proxy server installed on 
 
 On the Android device, open a file explorer app, then navigate to the certificate file and open it.
 
-// TODO: image:$NEW-IMAGE$[width=, alt=""]
-
 For organizations with device passcode enabled, input the device passcode, then enter a name for the certificate and select *OK*. The certificate is then installed.
-
 
 For organizations without device passcode, enter a name for the certificate and select *OK*.
 
-// TODO: image:$NEW-IMAGE$[width=, alt=""]
+image:devices:android-certificate-name.png[width=500, alt="Choose Certificate name and select OK"]
 
-You'll be asked to create a passcode for the device. Follow the on-screen instructions to do so. The certificate is installed when the passcode setup completed
-.
-// TODO: image:$NEW-IMAGE$[width=, alt=""]
+You'll be asked to create a passcode for the device.
+
+image:devices:android-passcode-require.png[width=500, alt="Set a passcode to install the certificate"]
+
+Follow the on-screen instructions to set up a PIN or password. The certificate is installed when the passcode setup completed.
 
 [IMPORTANT]
 ====
@@ -46,14 +45,10 @@ If your organization does not use any passcode mode, remove the passcode on the 
 
 === Android 11 or later
 
-On the Android device, open *Settings*, *Biometrics and security*, then *Other security settings*.
+On the Android device, open *Settings*, *Biometrics and security*, *Other security settings*. Select *Install from the device storage*, then *CA certificate*.
 
-// TODO: image:$NEW-IMAGE$[width=, alt=""]
-
-Select *Install from the device storage*, then *CA certificate*.
-
-// TODO: image:$NEW-IMAGE$[width=, alt=""]
+image:devices:android-ca-certificate.png[width=500, alt="Navigate to CA Certificate"]
 
 Choose *Install anyway*, then select the certificate. Select *Done* to install.
 
-// TODO: image:$NEW-IMAGE$[width=, alt=""]
+image:devices:android-ca-certificate-install.png[width=500, alt="Install the CA Certificate"]
