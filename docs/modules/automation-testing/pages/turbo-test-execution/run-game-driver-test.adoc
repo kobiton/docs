@@ -18,11 +18,11 @@ Learn how to run https://gamedriver.io/[GameDriver] tests on real devices using 
 
 To run GameDriver tests on the Kobiton platform, expose the `testPort` environment variable in your test script like the example below:
 
-image:$NEW$[width="",alt=""]
+image:automation-testing:gamedriver-expose-testport.png[width="1000",alt="Expose testPort environment variable in test script"]
 
 Then, package the test project for local execution. After running your tests against the Unity editor to verify they are functioning as expected, copy the `<Test>/bin/Debug` directory contents of your test into your Appium `<Test>/test` folder. For example:
 
-image:$NEW$[width="",alt=""]
+image:automation-testing:gamedriver-test-package.png[width="500",alt="Package your test project for local execution"]
 
 Copy the `<Test>/packages/NUnit.ConsoleRunner.3.12.0/tools` directory contents to your `<Test>/ext` folder.
 
@@ -34,11 +34,15 @@ Log in to the Kobiton Portal using your Kobiton username/email and password.
 
 Select the profile picture, then navigate to *Settings*.
 
-image:$NEW$[width="",alt=""]
+image:profile:choose-settings-context.png[width="1000",alt="Navigate to Settings in Kobiton Portal"]
 
 In the API Keys page, note down the *Server URL* but remove `/wd/hub`. For example, if the Server URL is _https://api.kobiton.com/wd/hub_, then only note down _https://api.kobiton.com_. This is the `<api base url>` to be used later.
 
+image:automation-testing:api-server-url.png[width=1000,alt="Note down the API Server URL"]
+
 Next, note down the value of one of the API Keys. This value, together with the Kobiton account’s username/email, is required to obtain the `<credentials>` to be used later. Add a new key if there aren't any.
+
+image:automation-testing:api-key.png[width=1000,alt="Note down the API Key"]
 
 == Prepare and collect information from Kobiton
 
@@ -50,49 +54,49 @@ Log in to the Kobiton Portal using your Kobiton username/email and password.
 
 Navigate to the application repository by selecting *Apps* on the navigation pane.
 
-Select the *plus* icon to upload an app.
+Select the *+* icon to upload an app.
 
-image:$NEW$[width="",alt=""]
+image:apps:add-app-context.png[width="1000",alt="Select the plus icon to upload an app""]
 
 Wait until the below _File uploaded successfully..._ message appears.
 
-image:$NEW$[width="",alt=""]
+image:apps:app-upload-success.png[width="1000",alt="File uploaded successfully message"]
 
 Refresh the page until the message is replaced by your app icon. See below for an example. Then, select the newly uploaded app.
 
-image:$NEW$[width="",alt=""]
+image:apps:open-uploaded-app.png[width="1000",alt="Open the uploaded app"]
 
 Make sure the screen displays the app version as below, then select the *Automation Snippet* icon.
 
-image:$NEW$[width="",alt=""]
+image:automation-testing:app-automation-snippet.png[width="1000",alt="Select Automation Snippet"]
 
 Note down the value in the text field. This is the `<app url>` to be used later.
 
-image:$NEW$[width="",alt=""]
+image:automation-testing:app-automation-snippet-value.png[width="500",alt="Note down automation snippet value"]
 
 Navigate to the Device list by selecting *Devices* on the navigation pane.
 
 Select the 3-dot icon on the Android device you plan to use for testing.
 
-image:$NEW$[width="",alt=""]
+image:automation-testing:open-device-overview-context.png[width="1000",alt="Navigate to Devices and select the 3-dot icon on an Android device"]
 
-Note down the device’s UDID. This is the `<udid>` to be used later.
+Note down the device’s UDID. This is the `<udid>` to be used later. Select *Automation Settings*.
 
-Select *Automation Settings*.
+image:automation-testing:device-overview-closeup.png[width="1000",alt="Note down the device UDID, then select Automation Settings"]
 
 In the Framework dropdown, select *UIAutomator/ Espresso*.
 
-image:$NEW$[width="",alt=""]
+image:automation-testing:automation-framework-uiautomator-espresso.png[width="1000",alt="Select UIAutomator or Espresso"]
 
 Scroll down until you find the Test Runner section, then select *Upload Test Runner*.
 
-image:$NEW$[width="",alt=""]
+image:automation-testing:upload-test-runner.png[width="1000",alt="Select Upload Test Runner under the Test Runner section"]
 
 Choose the _test_runner.zip_ file and select *Open*.
 
 When the file finishes uploading, note down the value of *Test Runner Url*. This is the `<test runner url>` to be used later.
 
-image:$NEW$[width="",alt=""]
+image:automation-testing:test-runner-url.png[width="500",alt="Note down the value of Test Runner URL"]
 
 === Method 2: Using Kobiton API
 
@@ -249,11 +253,11 @@ Log in to the Kobiton Portal using your Kobiton username/email and password.
 
 Navigate to Sessions, then input the `<Gaming session ID>` obtained from running the test above into the search bar. Select the session in the search results to navigate to the session details.
 
-image:$NEW$[width="",alt=""]
+image:automation-testing:gaming-session-search.png[width="1000",alt="Provide the Gaming session ID in the search box of the Session list"]
 
 Under *Test Report*, select *download* to save the test report to your computer. Note: the test report can only be downloaded for sessions with the status: *Complete*.
 
-image:$NEW$[width="",alt=""]
+image:automation-testing:gaming-session-test-report.png[width="1000",alt="Select download under Test Report"]
 
 === Method 2: Using Kobiton API
 
