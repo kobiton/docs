@@ -94,3 +94,60 @@ When the file finishes uploading, note down the value of *Test Runner Url*. This
 
 image:$NEW$[width="",alt=""]
 
+=== Method 2: Using Kobiton API
+
+Run the following API endpoints in order to upload an app to the Kobiton application repository:
+
+* https://api.kobiton.com/v2/docs#tag/ApplicationAPI/operation/ApplicationAPI_GenerateUploadUrl[Generate application upload URL]
+* https://api.kobiton.com/v2/docs#tag/ApplicationAPI/operation/CustomAPIv2_ApplicationAPI_UploadFileToS3[Upload file to S3]
+* https://api.kobiton.com/v2/docs#tag/ApplicationAPI/operation/ApplicationAPI_CreateAppAndVersion[Create application or application version]
+
+Append the `version_id` from the response of the last endpoint to the text below. This is the `<app url>` to be used later.
+
+----
+kobiton-store:v<version_id>
+----
+
+Run the following API endpoints, in order, to upload the test runner to Kobiton:
+
+* https://api.kobiton.com/v2/docs#tag/NativeFrameworkAPI/operation/NativeFrameworkAPI_GetTestRunnerUploadUrl[Get test runner upload URL]
+* https://api.kobiton.com/v2/docs#tag/ApplicationAPI/operation/CustomAPIv2_ApplicationAPI_UploadFileToS3[Upload file to S3]
+* https://api.kobiton.com/v2/docs#tag/NativeFrameworkAPI/operation/NativeFrameworkAPI_GetTestRunnerUploadUrl[Get test runner download URL]
+
+Note down the value of `url` from the response of the last endpoint. This is the `<test runner url>` to be used later.
+
+Run the List all devices API endpoint to find an Android device to use for your testing. Note down the value of `udid` in the response of the desired device. This is the `<udid>` to be used later.
+
+== Run the automation test
+
+Open a terminal in your computer and enter the following command:
+
+[source,commandline]
+----
+curl --location '<api base url>/v2/sessions/native' \
+--header 'Content-Type: application/json' \
+--header 'Authorization: Basic <credentials>' \
+--data '{
+    "session_description": "<session description>",
+    "session_name": "<session name>",
+    "test_framework": "GAMEDRIVER",
+    "app": "<app url>",
+    "run_command": "mono <path to nunit runner> <path to test script> --testparam:Mode=standalone --testparam:testHost=localhost --testparam:testPort=<gdio port>",
+    "test_runner": "<test runner url>",
+    "root_directory": "<root directory name>",
+    "udid": "<udid>",
+    "device_name": "<device name>",
+    "platform_version": "<device OS version>"
+}'
+----
+
+Fill in the variable information in the command based on the below table:
+
+
+
+Run the command with all the required information filled in. The system then finds the 1st device that matches either `<udid>`, or the `<device name>` and `<platform version>` pair and runs the test script on it. If successful, the response is similar to the below example. Note down the value of `<Gaming session ID>` to retrieve the logs and test results of the session.
+
+----
+{"id":<Gaming session ID>}%
+----
+
