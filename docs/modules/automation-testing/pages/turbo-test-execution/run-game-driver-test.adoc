@@ -1,0 +1,96 @@
+= Run a GameDriver test on Kobiton
+:navtitle: Run a GameDriver test
+
+[NOTE]
+====
+This feature is currently in Beta and is limited to Android devices.
+====
+
+Learn how to run https://gamedriver.io/[GameDriver] tests on real devices using the Turbo Test Execution feature of the Kobiton Platform. Turbo Test Execution enables mobile automation tests to run on the same network as a real device for optimal execution speed and low latency.
+
+== Prerequisites
+
+* A Kobiton subscription that includes GameDriver Turbo Test Execution.
+* An Android app built with https://unity.com/[Unity] with a GameDriver agent already embedded. Learn how to do it https://support.gamedriver.io/support/solutions/articles/69000368474-installation-instructions[here].
+* A GameDriver test project for apps built with Unity. Learn how to create one https://support.gamedriver.io/support/solutions/articles/69000388800-testing-android-apps-built-with-unity[here].
+
+== Prepare the test project package
+
+To run GameDriver tests on the Kobiton platform, expose the `testPort` environment variable in your test script like the example below:
+
+image:$NEW$[width="",alt=""]
+
+Then, package the test project for local execution. After running your tests against the Unity editor to verify they are functioning as expected, copy the `<Test>/bin/Debug` directory contents of your test into your Appium `<Test>/test` folder. For example:
+
+image:$NEW$[width="",alt=""]
+
+Copy the `<Test>/packages/NUnit.ConsoleRunner.3.12.0/tools` directory contents to your `<Test>/ext` folder.
+
+Archive the `<Test>` folder into a .zip file, such as _test_runner.zip_.
+
+== Obtain Kobiton API credentials
+
+Log in to the Kobiton Portal using your Kobiton username/email and password.
+
+Select the profile picture, then navigate to *Settings*.
+
+image:$NEW$[width="",alt=""]
+
+In the API Keys page, note down the *Server URL* but remove `/wd/hub`. For example, if the Server URL is _https://api.kobiton.com/wd/hub_, then only note down _https://api.kobiton.com_. This is the `<api base url>` to be used later.
+
+Next, note down the value of one of the API Keys. This value, together with the Kobiton account’s username/email, is required to obtain the `<credentials>` to be used later. Add a new key if there aren't any.
+
+== Prepare and collect information from Kobiton
+
+Before you can run the test on Kobiton devices, you need to prepare and collect information from Kobiton. This can be completed by either of these 2 methods:
+
+=== Method 1: Using Kobiton Portal
+
+Log in to the Kobiton Portal using your Kobiton username/email and password.
+
+Navigate to the application repository by selecting *Apps* on the navigation pane.
+
+Select the *plus* icon to upload an app.
+
+image:$NEW$[width="",alt=""]
+
+Wait until the below _File uploaded successfully..._ message appears.
+
+image:$NEW$[width="",alt=""]
+
+Refresh the page until the message is replaced by your app icon. See below for an example. Then, select the newly uploaded app.
+
+image:$NEW$[width="",alt=""]
+
+Make sure the screen displays the app version as below, then select the *Automation Snippet* icon.
+
+image:$NEW$[width="",alt=""]
+
+Note down the value in the text field. This is the `<app url>` to be used later.
+
+image:$NEW$[width="",alt=""]
+
+Navigate to the Device list by selecting *Devices* on the navigation pane.
+
+Select the 3-dot icon on the Android device you plan to use for testing.
+
+image:$NEW$[width="",alt=""]
+
+Note down the device’s UDID. This is the `<udid>` to be used later.
+
+Select *Automation Settings*.
+
+In the Framework dropdown, select *UIAutomator/ Espresso*.
+
+image:$NEW$[width="",alt=""]
+
+Scroll down until you find the Test Runner section, then select *Upload Test Runner*.
+
+image:$NEW$[width="",alt=""]
+
+Choose the _test_runner.zip_ file and select *Open*.
+
+When the file finishes uploading, note down the value of *Test Runner Url*. This is the `<test runner url>` to be used later.
+
+image:$NEW$[width="",alt=""]
+
