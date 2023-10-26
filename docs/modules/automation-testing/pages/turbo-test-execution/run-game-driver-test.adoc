@@ -143,7 +143,97 @@ curl --location '<api base url>/v2/sessions/native' \
 
 Fill in the variable information in the command based on the below table:
 
+== C#
 
+[cols="1,1,1,1,1"]
+|===
+|Parameter|Type|Required?|Example|Description
+
+|`<api base url>`
+|string
+|Yes
+|https://api.kobiton.com
+|API base URL
+
+|`<credentials>`
+|string
+|Yes
+|a29iaXRvbmFkbWluOjI4Nzk4MTI0LTItZGEtd2Rhdy0tNDMtMjQzMjQ=
+|Base64 encoding of username/email and API key joined by a single colon `:`
+
+|`<session description>`
+|string
+|No
+|A gaming session
+|Description of the session
+
+|`<session name>`
+|string
+|No
+|Gaming session
+
+Default value: Session created at <date> <time>
+|Name of the session
+
+|`<app url>`
+|string
+|Yes
+|kobiton-store:v205170
+|URL of the application to be tested
+
+|`<path to nunit runer>`
+|string
+|Yes
+|./ext/nunit3-console.exe
+|Path to the _nunit3-console.exe_ file from the root directory
+
+|`<path to test script>`
+|string
+|Yes
+|./test/NewAPI_MobileTennis_Test.dll
+|Path to the test script DLL file from the root directory
+
+|`<gdio port>`
+|string
+|Yes
+|KOBITON_GDIO_PORT
+
+19734
+|The local port to run GameDriver test on. Use either KOBITON_GDIO_PORT to let the system automatically decide, or use the default 19734 port
+
+|<test runner url>
+|string
+|Yes
+|https://kobiton-prod-blue.s3.amazonaws.com/test-runner/users/17/test_runner-cfc2d590-5067-11ee-b387-71e5b022613e.zip
+|Download URL of the test runner
+
+|`<root directory name>`
+|string
+|Yes
+|test_runner
+|Name of the root directory in the test runner package that contains the ext and test folder
+
+|`<udid>`
+|string
+|Yes if `<device name>` is not provided
+|8bf2c82a-5053-11ee-be56-0242ac120002
+|UDID of the Kobiton device to run a test on
+
+|`<device name>`
+|string
+|Yes if `<udid>` is not provided
+|Pixel 6
+
+* (wildcard)
+|Display name of the device on the Kobiton Portal
+
+|`<platform version>`
+|string
+|No
+|12
+|OS version of the device
+
+|===
 
 Run the command with all the required information filled in. The system then finds the 1st device that matches either `<udid>`, or the `<device name>` and `<platform version>` pair and runs the test script on it. If successful, the response is similar to the below example. Note down the value of `<Gaming session ID>` to retrieve the logs and test results of the session.
 
@@ -151,3 +241,22 @@ Run the command with all the required information filled in. The system then fin
 {"id":<Gaming session ID>}%
 ----
 
+== View GameDriver test report
+
+=== Method 1: On Kobiton Portal
+
+Log in to the Kobiton Portal using your Kobiton username/email and password.
+
+Navigate to Sessions, then input the `<Gaming session ID>` obtained from running the test above into the search bar. Select the session in the search results to navigate to the session details.
+
+image:$NEW$[width="",alt=""]
+
+Under *Test Report*, select *download* to save the test report to your computer. Note: the test report can only be downloaded for sessions with the status: *Complete*.
+
+image:$NEW$[width="",alt=""]
+
+=== Method 2: Using Kobiton API
+
+Pass the `<Gaming session ID>` obtained from running the test into https://api.kobiton.com/v2/docs#tag/SessionAPI/operation/SessionAPI_GetSessiondById[Get a session] API endpoint to retrieve the details of your GameDriver session.
+
+In the response, the value of `test_report_url` is the download link of the test report. Use the link to save the test report to your computer.
