@@ -1,0 +1,82 @@
+== v4.7 September 30, 2023
+
+October 02, 2023 04:54
+
+These release notes pertain to Kobiton 4.7.
+
+[[h_01HBQSFWJ6H0R3VF1Z8A4R5H6Z]]
+== New OS support
+
+Kobiton 4.7 supports the following:
+
+* iOS/iPadOS 17.0.1
+* iOS/iPadOS 17.0.2
+* macOS Sonoma 14.0
+* Android 14
+
+For known limitations for iOS 17, see the https://support.kobiton.com/hc/en-us/articles/19849123070989[4.6.3 Release Notes].
+
+Reminders:
+
+* *Private Cloud customers* - contact your Customer Success Manager or Account Executive to request device upgrades to iOS 17 and Android 14.
+* *Customer-hosted Local Cloud customers *- contact Kobiton Support to request the new 4.7 release and to learn about the network requirements for iOS 17 to use Lightning mode. Changes to your network configuration may be required. (If you are using Standard mode, network changes are unnecessary for iOS 17.)
+
+[[h_01HBQSFWJ6MV6YRCXETDXFCRQ9]]
+== Turbo Test Execution + GameDriver support (Beta)
+
+In this update, we're excited to unveil Turbo Test Execution. Designed for developers and QA teams, this feature enables mobile automation tests to run on the same network as a real device. The result? Optimal execution speed and minimized latency.
+
+https://www.gamedriver.io/[GameDriver] is the first automation framework supported by Turbo Test Execution. This integration grants testers the ability to upload and execute GameDriver tests on real devices. Check out the https://support.kobiton.com/hc/en-us/articles/19799863676557-Getting-started-with-GameDriver-Turbo-Test-Execution[user guide].
+
+_Notes:_
+
+* Turbo Test Execution + GameDriver is in beta. Contact Kobiton Support to try this feature.
+* Currently supports Android devices; iOS support is coming soon.
+
+[[h_01HBQSFWJ6KPVAXVKE2ZXETNYT]]
+== Enhanced bitrise.io integration to support Kobiton Scriptless
+
+Prior to this release, Kobiton supported the following add-on steps for bitrise.io:
+
+* Upload application to Kobiton
+* Execute Automation Test in Kobiton
+
+With this release, we extended the capability of the Execute Automation Test in Kobiton to include support for Kobiton Scriptless. With Kobiton Scriptless integration, users can now:
+
+* Record test steps performed in the automation test into an Automated Test Case.
+* Rerun the Automated Test Cases on multiple devices (device bundle) using Kobiton Scriptless.
+* Review the result of the scriptless sessions in the built-in Bitrise artifacts report.
+* Use the above result as a condition for automatic deployment.
+
+_Notes:_
+
+* We've submitted the updated Execute Automation Test feature to Bitrise and will provide detailed instructions to use the feature once it has been approved.
+* This feature requires a http://bitrise.io/[bitrise.io] account and Scriptless to be enabled for the org in Kobiton.
+
+[[h_01HBQSFWJ690BE32V1XXZDBV9K]]
+== Reduced load time for Apps, Sessions, and Device lists
+
+We have optimized the load time of the Apps, Sessions, and Device lists. Users of both the Kobiton Portal and our API endpoints will see significant load time improvements.
+
+[[h_01HBQSFWJ64HQJJZ4P9Y364MWK]]
+== Additional enhancements and bug fixes
+
+This release includes a number of bug fixes and enhancements to improve your day-to-day testing. Some of the updates include:
+
+* Script-based test automation and Device Inspector items:
+** Fixed an issue with some elements that cannot be found in the Appium automation session and Inspector.
+** Fixed error with _element.getScreenshotAs()._
+** Resolved inconsistencies with SupportContextSwitching.
+* Scriptless automation:
+** Fixed several issues with generated Java (JUnit + TestNG) and NodeJS automation scripts.
+** Fixed an issue with AI matching the wrong element in a group of overlapping elements with no parent/child relationship.
+** Support scroll and swipe action in the vertical sub-list view.
+** Fixed an issue with failing to swipe on some Scriptless sessions.
+** Fixed an issue where the system initiates the process of finding an element too quickly and results in a blocker during a revisit execution.
+* Others:
+** SSO settings - fixed an issue where clicking the Verify button breaks the login flow of some customers.
+** Network payload capture - fixed an issue with bad data on some network capture files.
+** Manual session - added the ability to long press and drag apps on Android devices.
+** Fixed an issue where long-running sessions caused some customers to exceed purchased minutes.
+** Added support for adb shell commands: _svc wifi enable/disable_, _svc data enable/disable_.
+** Fixed automation testing failing because Katalon doesn't recognize a .EditText object on Kobiton devices.
