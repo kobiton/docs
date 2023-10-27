@@ -15,11 +15,17 @@ node --version
 yarn --version
 ```
 
-If Node.js and Yarn are installed, you can install project dependencies and build the docs by running:
+If Node.js and Yarn are installed, install project dependencies by running:
 
 ```plaintext
 yarn install
+```
+
+To build the docs and start a local server, run:
+
+```plaintext
 yarn local
+yarn server
 ```
 
 ## Code of Conduct
