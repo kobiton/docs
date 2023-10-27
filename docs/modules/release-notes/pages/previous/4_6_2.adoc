@@ -1,0 +1,65 @@
+= Kobiton 4.6.2 release notes
+:navtitle: Kobiton 4.6.2 release notes
+
+_September 16, 2023_
+
+== iOS 17/iPadOS 17 support
+
+With this release, Kobiton Cloud supports iOS 17/ipadOS 17 for both Lightning mode and Standard mode. (iOS 17 Beta was supported in Standard mode in 4.6.1.)
+
+*Public Cloud Subscribers* - We upgraded iOS 17 beta devices to iOS 17 RC in our Public Cloud over the weekend and will update to iOS 17 GA this week. We'll be adding more iOS 17 devices in the coming weeks.
+
+*Private Cloud customers* - please contact your Customer Success Managers or Account Executives to request iOS 17 support.
+
+*Customer-hosted Local Cloud customers* - contact Kobiton Support to request the new 4.6.2 release and to learn about the network requirements for iOS 17 to use Lightning mode. Changes to your network configuration may be required. (If you are using Standard mode, network changes are not needed for iOS 17.)
+
+[NOTE]
+====
+_The following are limitations related to iOS 17:_
+
+* virtualUSB does not support iOS 17 devices.
+* XCUI automation is not currently supported for iOS 17 devices.
+* Device metrics are not currently available for iOS 17 devices.
+* Passcode mode 3 is not currently supported for deployments that include iOS 17 devices.
+
+_The following are known issues related to iOS 17:_
+
+* The Cleanup Policy does not reset the device’s Display Zoom to the default if it is set to Zoomed during a prior session.
+* The Cleanup Policy does not close system apps opened during a session.
+* For organizations with our standard Passcode feature (mode 1) enabled, clicking the Power icon on the toolbar in a Manual session makes the device show black screen and inaccessible. Quit and launch a new session to access the device again.
+
+_The following are known issues only for iOS 17 devices connected to a GEM (Lightning mode):_
+
+* When a GEM is restarted for an organization with passcode mode enabled, all iOS devices (iOS 17 and lower) connected to the GEM will not come back online on their own. Kobiton Support can provide instructions to resolve the issue. Manual touch on the devices may be required if they are managed by an MDM with an always-on passcode policy.
+====
+
+We are actively working to support and resolve the above items, as well as supporting iOS 17 for our Standalone deployment type. Stay tuned!
+
+== Additional enhancements and bug fixes
+
+In addition to the above, this release includes a boatload of bug fixes and enhancements to improve your day-to-day testing:
+
+* Script-based test automation and Device Inspector items:
+** Support `pickerWheel`.
+** Fix issues where `ion-element` on iOS devices cannot be found.
+** Allow interaction with Shadow DOM while running automation script on endpoints: `/execute_async` and `/execute/async`.
+** Catch Exception at levels lower than `WebDriverException` class.
+** Give meaningful error message, such as `NoSuchMethodException`, `NoSuchElementLocated`, etc, instead of `unhandled_exception`.
+** Select element is now able to locate elements within index range.
+** When an Android application is already installed on the device, automation sessions can be launched with only `appPackage` and `appActivity` desired capabilities.
+** Allow `setValue()` into a `DatePickerWheel`.
+** Fix an issue with `wait.until()` method.
+** Fix an issue where text cannot be set on web element with `<span>` tag.
+** Fix an issue where `isDisplayed()` is not working properly.
+** Fix an issue with nested locator.
+** Allow scrolling to element using `findElementByAndroidUIAutomator`.
+** Fix an issue with `getAppStringMap()` not working.
+** When `autoLaunch` capability is set to false, allow apps to be installed using other capabilities.
+** Fix an issue where the `NoReset` capability, when set to false, deleted the pre-installed iOS app and prevented the automation session from launching.
+* Manual session:
+** Improve iOS Manual session responsiveness.
+* Scriptless automation:
+** When clicking a blank space on a page in a revisit session, raise Blocker Remediation instead of Crash Remediation.
+** Fix an issue where bypassing the system pop-up resulted in the incorrect selection of the element.
+
+...and more!

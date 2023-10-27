@@ -3,16 +3,23 @@
 
 These are the IP address for Kobiton devices. You can use a device IP address to xref:devices:local-devices/connect-to-a-private-network.adoc[connect devices to your private network].
 
-== Public and private devices
+== Public and Kobiton-hosted private devices
 
 You can use the following IP addresses for any public or private device:
 
-* `173.213.234.130`
-* `68.64.33.132`
-* `64.19.222.254`
+* `173.213.234.253`
+* `64.19.222.131`
 
 == Proof of Concept (POC)
 
 You can use the following IP address for POC devices:
 
-* `173.213.234.130`
+* `173.213.234.253`
+
+== Enable lightning mode
+
+(Optional) To enable lightning mode for public, Kobiton-hosted private, and POC devices, whitelist the following IP addresses and UDP port range:
+
+* `173.213.234.128/25`
+* `64.19.222.128/25`
+* port range for the above IPs: `30000-65535`
