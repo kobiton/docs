@@ -13,23 +13,29 @@ You'll need to complete the following:
 
 == Add the task to your YAML file
 
-In your Azure DevOps project, select *Pipelines*.
+In your Azure DevOps project, select *Pipelines*, then *Release*.
 
-image:azure-select-pipelines-context.png[width=1000,alt="Select Pipelines tab on Azure DevOps"]
+image:integrations:azure-select-pipelines-context.png[width=500,alt="Select Pipelines then Release on Azure DevOps"]
 
-Select your release pipeline.
+Create a new release pipeline, or edit an existing one.
 
 image:integrations:azure-select-your-release-context.png[width=1000,alt="Select your release pipeline"]
 
-Select *Edit*.
+Under *Pipeline*, add or edit a stage.
 
-image:integrations:azure-select-edit-context.png[width=1000,alt="Select Edit on New release pipelines"]
+image:integrations:azure-add-a-stage-context.png[width=1000,alt="Add or edit a stage in the release pipeline"]
 
-The *Kobiton Automation Test Executor* task will be added to your YAML file where your cursor is currently located. Move your cursor to the location where you'd like to add the task.
+If you are adding a new stage, select *Empty job*, then *Apply*.
 
-In the *Tasks* pane, search for and select *Kobiton Automation Test Executor*.
+image:integrations:azure-add-stage-empty-job.png[width=1000,alt="Select empty job as a template"]
 
-image:integrations:azure-select-kobiton-automation-test-executor-context.png[width=1000,alt="Select Kobiton Automation Test Executor"]
+Switch to the *Tasks* pane of the stage, then add a task to Agent job.
+
+image:$NEW$[width="",alt=""]
+
+Search for *Kobiton Automation Test Executor* and select *Add*.
+
+image:$NEW$[width="",alt=""]
 
 Use the following table to configure the task:
 
@@ -111,28 +117,20 @@ a|Wait for your automation script(s) to finish before starting the release pipel
 * *Terminate release pipeline on failed job:* terminate the pipeline if the automation script fails.
 |===
 
-When you're finished, select *Add*.
-
-image:azure-add-kobiton-test-executor-closeup.png[width=1000,alt="Add Kobiton Automation Test Executor to azure"]
-
-Verify the task has been added to the correct location in your YAML file, then select *Save*.
-
-image:$NEW$[width="",alt=""]
-
-Choose to commit directly to your main branch or create a new branch, then select *Save*.
+Review your task and select *Save*.
 
 image:$NEW$[width="",alt=""]
 
 == Run your automation test
 
-In your Azure DevOps project, select *Pipelines*.
+Select your release pipeline and create a new release.
 
-image:azure-select-pipelines-context.png[width=1000,alt="Select Pipelines tab on Azure DevOps"]
+image:integrations:azure-select-your-release-context.png[width=1000,alt="Select your release and choose Create release"]
 
-Select your release pipeline.
+Select the stage with the Kobiton Automation Test Executor task, then select *Deploy*.
 
-image:integrations:azure-select-your-release-context.png[width=1000,alt="Select your release pipeline"]
+image:$NEW$[width="",alt=""]
 
-Select *Run pipeline* to start your automation test.
+Wait for the deployment to complete and view the logs.
 
 image:$NEW$[width="",alt=""]
