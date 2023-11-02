@@ -25,7 +25,7 @@ To build the docs and start a local server, run:
 
 ```plaintext
 yarn local
-yarn server
+yarn server-docs
 ```
 
 ## Code of Conduct
