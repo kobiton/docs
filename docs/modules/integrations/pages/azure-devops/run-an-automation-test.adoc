@@ -15,7 +15,7 @@ You'll need to complete the following:
 
 In your Azure DevOps project, select *Pipelines*, then *Release*.
 
-image:azure-select-pipelines-context.png[width=1000,alt="Select Pipelines tab on Azure DevOps"]
+image:integrations:azure-select-pipelines-context.png[width=500,alt="Select Pipelines then Release on Azure DevOps"]
 
 Create a new release pipeline, or edit an existing one.
 
@@ -23,11 +23,19 @@ image:integrations:azure-select-your-release-context.png[width=1000,alt="Select 
 
 Under *Pipeline*, add or edit a stage.
 
+image:integrations:azure-add-a-stage-context.png[width=1000,alt="Add or edit a stage in the release pipeline"]
+
 If you are adding a new stage, select *Empty job*, then *Apply*.
+
+image:integrations:azure-add-stage-empty-job.png[width=1000,alt="Select empty job as a template"]
 
 Switch to the *Tasks* pane of the stage, then add a task to Agent job.
 
+image:$NEW$[width="",alt=""]
+
 Search for *Kobiton Automation Test Executor* and select *Add*.
+
+image:$NEW$[width="",alt=""]
 
 Use the following table to configure the task:
 
@@ -117,8 +125,12 @@ image:$NEW$[width="",alt=""]
 
 Select your release pipeline and create a new release.
 
-image:integrations:azure-select-your-release-context.png[width=1000,alt="Select your release pipeline"]
+image:integrations:azure-select-your-release-context.png[width=1000,alt="Select your release and choose Create release"]
 
-Select
+Select the stage with the Kobiton Automation Test Executor task, then select *Deploy*.
+
+image:$NEW$[width="",alt=""]
+
+Wait for the deployment to complete and view the logs.
 
 image:$NEW$[width="",alt=""]
