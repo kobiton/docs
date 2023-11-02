@@ -29,13 +29,17 @@ If you are adding a new stage, select *Empty job*, then *Apply*.
 
 image:integrations:azure-add-stage-empty-job.png[width=1000,alt="Select empty job as a template"]
 
-Switch to the *Tasks* pane of the stage, then add a task to Agent job.
+Switch to the *Tasks* pane of the new stage, then add a task to *Agent job*.
 
-image:$NEW$[width="",alt=""]
+image:integrations:azure-add-task-to-agent-job.png[width="500",alt="Switch to Tasks pane then add a task to Agent job"]
 
 Search for *Kobiton Automation Test Executor* and select *Add*.
 
-image:$NEW$[width="",alt=""]
+image:integrations:azure-add-kobiton-automation-test-executor-task.png[width="1000",alt="Search for Kobiton Automation Test Executor and select Add"]
+
+The task details display as below:
+
+image:integrations:azure-automation-test-executor-task-details.png[width="1000",alt="The Kobiton Automation Test Executor details screen"]
 
 Use the following table to configure the task:
 
@@ -119,13 +123,15 @@ a|Wait for your automation script(s) to finish before starting the release pipel
 
 Review your task and select *Save*.
 
-image:$NEW$[width="",alt=""]
+image:integrations:azure-automation-test-executor-details-filled.png[width="1000",alt="Review the filled-in details and select Save"]
 
 == Run your automation test
 
 Select your release pipeline and create a new release.
 
 image:integrations:azure-select-your-release-context.png[width=1000,alt="Select your release and choose Create release"]
+
+image:integrations:azure-create-a-new-release-context.png[width=1000,alt=""]
 
 Select the stage with the Kobiton Automation Test Executor task, then select *Deploy*.
 
