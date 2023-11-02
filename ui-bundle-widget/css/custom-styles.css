@@ -1,0 +1,148 @@
+.doc .sub-doc-title {
+  position: fixed;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  top: 0;
+  z-index: 5;
+}
+.doc .title-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 8px;
+  height: 56px;
+  flex: none;
+  order: 0;
+  align-self: stretch;
+  flex-grow: 0;
+  background-color: white;
+  border-bottom: 1px solid #EAEDF6;
+}
+
+.doc .title-container .title {
+  font-family: 'Poppins';
+  font-style: normal;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 24px;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  letter-spacing: 0.75px;
+  color: #14142B;
+  display: inline-block;
+  white-space: nowrap;
+  overflow: hidden !important;
+  text-overflow: ellipsis;
+  width: 75%;
+  margin: 0;
+}
+.doc .back-previous-page {
+  width: 32px;
+  height: 32px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.doc .back-previous-page .back-icon {
+  background: transparent url(../img/back.svg) no-repeat 0;
+  width: inherit;
+  height: inherit;
+  cursor: pointer;
+}
+.doc .close-page {
+  width: 32px;
+  height: 32px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+.doc .close-page .close-icon {
+  /* background: transparent url(../img/close.svg) no-repeat 0; */
+  width: inherit;
+  height: inherit;
+}
+
+.doc .search {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 8px 16px;
+  gap: 10px;
+  height: 52px;
+}
+.doc .search .field {
+  width: 100%;
+}
+.doc .break-line {
+  display: block;
+  unicode-bidi: isolate;
+  margin-block-start: 8px;
+  margin-block-end: 8px;
+  margin-inline-start: auto;
+  margin-inline-end: auto;
+  border-bottom: 1px solid #EAEDF6;
+}
+.doc .document-details {
+  margin: 0 16px 8px 16px;
+  height: inherit;
+  position: relative;
+  top: 108px;
+}
+.doc .document-details .release-year-title {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.doc .document-details .release-year-title {
+  font-size: 14px;
+  font-weight: 600;
+}
+.doc .document-details .ulist {
+  font-size: 12px;
+  font-weight: 600;
+}
+.doc .document-details .ulist > ul {
+  padding-inline-start: 15px;
+}
+.doc .document-details .paragraph {
+  font-size: 12px;
+}
+.doc .document-details .sect1 > h2 {
+  font-size: 14px;
+  color: #4E4B66;
+  font-weight: 500;
+}
+.doc .document-details .sect2 > h3 {
+  font-size: 14px;
+}
+.doc .document-details .sect3 > h4 {
+  font-size: 14px;
+}
+
+.doc table.tableblock {
+  font-size: 12px;
+  margin: 1.5rem 0 0;
+}
+
+.document-details .image {
+  width: 32px;
+  height: 32px;
+}
+
+.link-url > a {
+  text-decoration: none;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 21px;
+  color: #4E4B66;
+  position: relative;
+  top: -1px;
+}
+
+.padding-top-detail {
+  top: 60px !important;
+}
