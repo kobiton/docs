@@ -131,12 +131,23 @@ Select your release pipeline and create a new release.
 
 image:integrations:azure-select-your-release-context.png[width=1000,alt="Select your release and choose Create release"]
 
+If you want to test out the release pipeline and do not want it to start automatically, select a stage to manually trigger it before selecting *Create*.
+
 image:integrations:azure-create-a-new-release-context.png[width=1000,alt=""]
 
-Select the stage with the Kobiton Automation Test Executor task, then select *Deploy*.
+Open the new release, highlight the stage with the *Kobiton Automation Test Executor* task and select *Deploy*.
 
-image:$NEW$[width="",alt=""]
+[NOTE]
+====
+Make sure you have an https://learn.microsoft.com/en-us/azure/devops/pipelines/agents/agents?view=azure-devops&tabs=yaml%2Cbrowser[agent] available before deploying.
+====
 
-Wait for the deployment to complete and view the logs.
+image:integrations:azure-release-deploy-stage.png[width="1000",alt="Hover the mouse on the stage and select Deploy"]
 
-image:$NEW$[width="",alt=""]
+After the deployment starts, highlight the stage and select *Logs*.
+
+image:integrations:azure-release-deploy-in-progress.png[width="1000",alt="Highlight the deployment in progress and select Logs"]
+
+Wait for the deployment to complete and view the automation test result under *Kobiton Automation Test Executor* logs.
+
+image:integrations:azure-automation-test-logs.png[width="1000",alt="Wait for the deployment to complete then view the logs of Kobiton Automation Test Executor"]
