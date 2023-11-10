@@ -1,0 +1,109 @@
+= Scriptless requirements
+:navtitle: Scriptless requirements
+
+Learn about the requirements to convert a manual or automation session into Automated Test Case for Scriptless.
+
+== Supported actions
+
+// tag::supported-actions[]
+
+Only certain actions are supported for scriptless baseline sessions. Refer to the following table while running your tests:
+
+[cols="1,1,1,1"]
+|===
+|Action |Supported? |Android |iOS
+
+|Touch
+|&#10004;
+|&#10004;
+|&#10004;
+
+|Swipe
+|&#10004;
+|&#10004;
+|&#10004;
+
+|Device soft keys
+|&#10004;
+|
+|&#10004;
+
+|Virtual keyboard (ASCII characters)
+|&#10004;
+|&#10004;
+b|&#10004; *
+
+_Only English is supported, excluding the emoji keyboard._
+
+|Physical keyboard
+|&#10004;
+|&#10004;
+|&#10004;
+
+|Home (toolbar)
+|&#10004;
+|&#10004;
+|&#10004;
+
+|Power (toolbar)
+|&#10004;
+|&#10004;
+|&#10004;
+
+|Recent app (toolbar)
+|&#10004;
+|
+|&#10004;
+
+|Back (toolbar)
+|&#10004;
+|
+|&#10004;
+
+|Long press
+|&#10004;
+|&#10004;
+|&#10004;
+
+|Double tap
+|
+|
+|
+
+|Double press home
+|
+|
+|
+
+|Pin to zoom
+|
+|
+|
+
+|Take screenshot
+|
+|
+|
+
+|Set timezone
+|
+|
+|
+
+|Copy & paste (copy to clipboard)
+|
+|
+|
+|===
+
+// end::supported-actions[]
+
+== Application requirements
+
+The following requirements pertain to the application(s) installed and/or opened in the manual or automation session:
+
+* Must not contain dynamic content. Examples: news apps, games, etc.
+
+* Must not contain CAPTCHA verification flow.
+
+* Must enable `.setWebContentDebuggingEnable` for Android apps. If this configuration is disabled, Kobiton cannot access the HTML source of the application. Visit https://developer.chrome.com/docs/devtools/remote-debugging/webviews/#configure_webviews_for_debugging[this link] for more information.

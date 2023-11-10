@@ -12,7 +12,13 @@ If you plan on testing an app, first you'll need to install it on your device. S
 
 image:install-apps-context.png[width=1000,alt="Install Apps"]
 
-You can upload a xref:apps:supported-filetypes.adoc[supported filetype] from your computer, install an app from a URL, or choose an app from xref:apps:manage-apps.adoc[your app repository]. If you plan on testing your in-app camera, be sure to enable *Instrument application for camera injection* before you install.
+[IMPORTANT]
+
+====
+Make sure your app aligns with the Scriptless xref:scriptless-automation:scriptless-requirements.adoc#_application_requirements[application requirements] before proceeding.
+====
+
+You can upload a xref:apps:supported-filetypes.adoc[supported filetype] from your computer, install an app from a URL, or choose an app from xref:apps:manage-apps.adoc[your app repository].
 
 image:manual-testing:install-apps-closeup.png[width=750, alt="A close-up of the different app installation options during a manual session."]
 
@@ -25,95 +31,11 @@ image:sync-inventory-capture-context.png[width=1000,alt="Enable Synchronous inve
 [#_use_supported_actions]
 == Use supported actions
 
-Only certain actions are supported for scriptless baseline sessions.Reference the following table while running your tests:
+include::scriptless-requirements.adoc[tag=supported-actions]
 
-[cols="1,1,1,1"]
-|===
-|Action |Supported? |Android |iOS
+== Follow scriptless best practices
 
-|Touch
-|&#10004;
-|&#10004;
-|&#10004;
-
-|Swipe
-|&#10004;
-|&#10004;
-|&#10004;
-
-|Device soft keys
-|&#10004;
-|
-|&#10004;
-
-|Virtual keyboard (ASCII characters)
-|&#10004;
-|&#10004;
-b|&#10004; *
-
-_Only English is supported, excluding the emoji keyboard._
-
-|Physical keyboard
-|&#10004;
-|&#10004;
-|&#10004;
-
-|Home (toolbar)
-|&#10004;
-|&#10004;
-|&#10004;
-
-|Power (toolbar)
-|&#10004;
-|&#10004;
-|&#10004;
-
-|Recent app (toolbar)
-|&#10004;
-|
-|&#10004;
-
-|Back (toolbar)
-|&#10004;
-|
-|&#10004;
-
-|Long press
-|&#10004;
-|&#10004;
-|&#10004;
-
-|Double tap
-|
-|
-|
-
-|Double press home
-|
-|
-|
-
-|Pin to zoom
-|
-|
-|
-
-|Take screenshot
-|
-|
-|
-
-|Set timezone
-|
-|
-|
-
-|Copy & paste (copy to clipboard)
-|
-|
-|
-|===
-
+For best results, follow the xref:scriptless-automation:scriptless-best-practices.adoc[] while running your tests.
 
 == Exit your session
 

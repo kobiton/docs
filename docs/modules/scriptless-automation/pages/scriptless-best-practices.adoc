@@ -1,0 +1,27 @@
+= Scriptless best practices
+:navtitle: Scriptless best practices
+
+== Order of app installation
+
+If apps need to be installed or uploaded in the session, make sure to install/upload the apps first before performing any other actions.
+
+== Performance
+
+The following actions may impact Scriptless Automation performance
+
+* Clicking very quickly. For best results, please wait three seconds between two manual actions. This wait will ensure the screen has loaded completely when you make another “click” action.
+* Swiping on map
+* Clicking outside the pop-up to close it. Instead -  use the Back button in the manual toolbar to close the pop-up
+* Tapping on text prediction above the virtual keyboard
+* Typing text into number input only
+* Typing string that has length more than limit when editing text
+
+== General Limitations
+
+* Avoid interacting too fast during manual execution as every action performed during manual execution will take a minor time for inventory capturing, especially when testing on Mobile Browser or Hybrid apps.
+
+[TIP]
+To ensure every action could be properly captured data, enable xref:manual-testing:device-controls.adoc#_synchronous_inventory_capture[synchronous inventory capture] during manual execution.
+
+* Avoid tapping on a blank space, e.g. to close a pop-up, to un-focus on a text box, etc. This tap could cause confusion for AI when finding elements and impact the accuracy of revisit execution.
+* Avoid tapping on text prediction above the device’s virtual keyboard, as the text prediction is different between devices and can cause inconsistencies.
