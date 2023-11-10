@@ -84,7 +84,7 @@ yarn local
 To view the logs in your web browser, run:
 
 ```plaintext
-yarn server
+yarn server-docs
 ```
 
 ## Antora logs
