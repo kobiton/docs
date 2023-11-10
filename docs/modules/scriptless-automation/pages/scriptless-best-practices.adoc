@@ -24,4 +24,5 @@ The following actions may impact Scriptless Automation performance
 To ensure every action could be properly captured data, enable xref:manual-testing:device-controls.adoc#_synchronous_inventory_capture[synchronous inventory capture] during manual execution.
 
 * Avoid tapping on a blank space, e.g. to close a pop-up, to un-focus on a text box, etc. This tap could cause confusion for AI when finding elements and impact the accuracy of revisit execution.
-* Avoid tapping on text prediction above the device’s virtual keyboard, as the text prediction is different between devices and can cause inconsistencies.
+* Avoid tapping on the device’s virtual keyboard. The process of capturing elements within the virtual keyboard still needs further improvements.
+* Avoid going back to the Home screen when editing a text field.
