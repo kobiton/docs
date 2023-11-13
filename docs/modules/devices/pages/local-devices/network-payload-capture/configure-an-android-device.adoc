@@ -1,97 +1,54 @@
 = Configure an Android device for network payload capture
 :navtitle: Configure an Android device
 
-Learn how to configure an Android device for network payload capture so you can xref:devices:local-devices/network-payload-capture/create-a-configuration.adoc[create a configuration for network payload capture].
+Learn how to configure an Android device for network payload capture, so you can xref:devices:local-devices/network-payload-capture/create-a-configuration.adoc[create a configuration for network payload capture].
 
 [NOTE]
-You'll need to configure each Android device you want to use for network playload capture.
+You'll need to configure each Android device you want to use for network payload capture.
 
 [#_before_you_start]
 == Before you start
 
 You'll need to:
 
-* Confirm your system administrator xref:devices:local-devices/network-payload-capture/configure-the-local-server.adoc[configured your local Kobiton server].
-* Install link:https://developer.android.com/tools/releases/platform-tools[Android Debug Bridge (adb)] on your personal macOS computer.
-* Download the xref:attachment$kobiton-network-payload-capture-certificate-1.3.crt[network payload capture certificate] on your personal macOS computer.*
+* Confirm your system administrator already xref:devices:local-devices/network-payload-capture/configure-the-host-machine.adoc[configured your host machine].
+* Open the network payload capture certificate xref:attachment$kobiton-network-payload-capture-certificate-1.3.crt[download link] from the Android device's browser and save it onto the device.
 
-[#_get_device_udid]
-== Get device UDID
-
-Connect the Android device to your personal computer, then enter the following command to get the device UDID:
-
-[source,shell]
-----
-adb shell settings get secure android_id
-----
-
-You'll need this later. Copy it to a secure location.
-
-== Add certificate to device
-
-Confirm the location of the xref:_before_you_start[certificate you downloaded earlier], then enter the following command:
-
-[source,shell]
-----
-adb push <path/to/certificate> sdcard
-----
-
-.macOS
-[source,shell]
-----
-adb push ~/Downloads/mitmproxy-cert.crt sdcard
-----
-
-.Windows
-[source,shell]
-----
-adb push C:\Users\Alex\Downloads\mitmproxy-cert.crt sdcard
-----
+[NOTE]
+====
+You can also save the certificate to the Mac mini host machine, then use https://www.android.com/filetransfer/[Android File Transfer] to https://support.google.com/android/answer/9064445?hl=en#zippy=%2Cmac-computer[transfer files] from MacOS to Android devices. Devices need to be plugged directly into the Mac mini for Android File Transfer to recognize them. Ensure the USB settings are *not* set to _no file transfer_.
+====
 
 == Install certificate
+Network traffic from the device is captured through a proxy server installed on the Mac mini host machine. For HTTPS connection, the device must be set up to trust a CA certificate issued by the proxy server.
+
+=== Android 9 and 10
+
+On the Android device, open a file explorer app, then navigate to the certificate file and open it.
+
+For organizations with device passcode enabled, input the device passcode, then enter a name for the certificate and select *OK*. The certificate is then installed.
+
+For organizations without device passcode, enter a name for the certificate and select *OK*.
+
+image:devices:android-certificate-name.png[width=500, alt="Choose Certificate name and select OK"]
+
+You'll be asked to create a passcode for the device.
+
+image:devices:android-passcode-require.png[width=500, alt="Set a passcode to install the certificate"]
+
+Follow the on-screen instructions to set up a PIN or password. The certificate is installed when the passcode setup completed.
+
+[IMPORTANT]
+====
+If your organization does not use any passcode mode, remove the passcode on the device.
+====
 
 === Android 11 or later
 
-On the Android device, open *Settings*, *Biometrics and security*, then *Other security settings*.
+On the Android device, open *Settings*, *Biometrics and security*, *Other security settings*. Select *Install from the device storage*, then *CA certificate*.
 
-image:$NEW-IMAGE$[width=, alt=""]
+image:devices:android-ca-certificate.png[width=500, alt="Navigate to CA Certificate"]
 
-Select *Install from the device storage*, then *CA certificate*.
+Choose *Install anyway*, then select the certificate. Select *Done* to install.
 
-image:$NEW-IMAGE$[width=, alt=""]
-
-Choose *Install anyway*, then select the certificate.
-
-image:$NEW-IMAGE$[width=, alt=""]
-
-=== Other Android versions
-
-On the Android device, open *Settings*, then *Explore*.
-
-image:$NEW-IMAGE$[width=, alt=""]
-
-Select the certificate.
-
-image:$NEW-IMAGE$[width=, alt=""]
-
-If the device doesn't have a passcode already, you'll be asked to create one. Follow the on-screen instructions to create a passcode.
-
-image:$NEW-IMAGE$[width=, alt=""]
-
-== Remove device passcode
-
-If your device has a passcode, open *Settings*, then *Security*.
-
-image:$NEW-IMAGE$[width=, alt=""]
-
-Select *Screen lock*, enter your passcode, then select *screen lock: None*.
-
-image:$NEW-IMAGE$[width=, alt=""]
-
-Select *Yes, remove to delete all passcode*.
-
-image:$NEW-IMAGE$[width=, alt=""]
-
-== Create config file
-
-include::partial$network-payload-capture/create-config-file.adoc[]
+image:devices:android-ca-certificate-install.png[width=500, alt="Install the CA Certificate"]

@@ -13,7 +13,7 @@ You'll need to complete the following:
 [#_get_your_credentials]
 == Get your credentials
 
-Some credentials can be added while you're xref:_modify_your_pipeline_yml_file[modifying your `pipeline.yml` file], but others are easier to get beforehand.Save these credentials to a secure location so you can easily add them to your `pipeline.yml` later:
+Some credentials can be added while you're xref:_configure_your_build_steps[configuring your `pipeline.yml`], but others are easier to get beforehand. Save the following credentials to a secure location so you can easily add them to your `pipeline.yml` later:
 
 * *Kobiton API key:* get API key values from your list of xref:profile:manage-your-api-credentials.adoc[Kobiton API keys].
 * *Executor server credentials:* N/A
@@ -23,19 +23,19 @@ Some credentials can be added while you're xref:_modify_your_pipeline_yml_file[m
 
 Open link:https://app.bitrise.io/users/sign_in[Bitrise] and select *Workflows*.
 
-image:UNEDITED-bitrise-select-workflows.png[width="",alt=""]
+image:integrations:UNEDITED-bitrise-select-workflows.png[width="",alt=""]
 
 Next to your workflow, select the *edit* icon.
 
-image:bitrise-select-edit-closeup.png[width=1000,alt="Select Edit icon in Bitrise Workflows"]
+image:integrations:bitrise-select-edit-closeup.png[width=1000,alt="Select Edit icon in Bitrise Workflows"]
 
 Select the *+* icon.
 
-image:bitrise-select-plus-icon-context.png[width=1000,alt="Select plus icon context"]
+image:integrations:bitrise-select-plus-icon-context.png[width=1000,alt="Select plus icon context"]
 
 Use the search bar to find and add *Execute Automation Test in Kobiton*.
 
-image:bitrise-select-execute-automation-context.png[width=1000,alt="Find and add Execute Automation Test in Kobiton"]
+image:integrations:bitrise-select-execute-automation-context.png[width=1000,alt="Find and add Execute Automation Test in Kobiton"]
 
 == Add your credentials
 
@@ -54,6 +54,7 @@ In the *Input variables* pane, xref:_get_your_credentials[use your credentials] 
 * *Git Repository Branch*
 * *Git Repository SSH Key*
 
+[#_configure_your_build_steps]
 == Configure your build steps
 
 Build steps are project-specific, so fill out the remaining fields in the *Input variables* pane to best meet your project needs:
@@ -92,6 +93,4 @@ Build steps are project-specific, so fill out the remaining fields in the *Input
 
 When you're finished, select *Save*.
 
-image:bitrise-select-save-context.png[width=1000,alt="select Save button on Bitrise"]
-
-
+image:integrations:bitrise-select-save-context.png[width=1000,alt="select Save button on Bitrise"]

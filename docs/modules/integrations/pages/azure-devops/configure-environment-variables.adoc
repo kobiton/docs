@@ -14,17 +14,17 @@ You'll need to complete the following:
 
 == Create service connections
 
-In Azure DevOps, open your project, then select *Settings*.
+In Azure DevOps, open your project, then select *Project settings*.
 
-image:$NEW$[width="",alt=""]
+image:integrations:azure-project-settings.png[width="1000",alt="Open a project in Azure Devops and select Project settings"]
 
-In the *Pipelines* pane, select *Service connections*, then *Create a service connection*.
+Under *Pipelines*, select *Service connections*, then *Create a service connection*.
 
-image:$NEW$[width="",alt=""]
+image:integrations:azure-select-service-connections.png[width="1000",alt="Select Service connections under Pipelines and then Create a service connection"]
 
-Search for _Kobiton_, then create a connection for xref:_kobiton_api[Kobiton API] and xref:_kobiton_executor_server[Kobiton Server Executor].
+Search for _Kobiton_, then create connections for xref:_kobiton_api[Kobiton API] and xref:_kobiton_executor_server[Kobiton Executor Server].
 
-image:$NEW$[width="",alt=""]
+image:integrations:azure-create-kobiton-connections.png[width="1000",alt="Search for Kobiton, then create a connections for Kobiton API and Kobiton Executor Server"]
 
 [#_kobiton_api]
 === Kobiton API
@@ -33,14 +33,21 @@ We recommend creating a xref:integrations:create-a-shared-kobiton-account-for-au
 
 Enter the username and password for the shared Kobiton account, then select *Verify and save*.
 
-image:$NEW$[width="",alt=""]
+[NOTE]
+====
+You can select *Verify* to verify the connection before saving.
+====
+
+image:integrations:azure-add-kobiton-api-connection.png[width="1000",alt="Enter username and password for Kobiton API connection then select Verify and save"]
 
 [#_kobiton_executor_server]
 === Kobiton Executor Server
 
-Enter the username and password for the executor server credentials xref:_before_you_start[you were sent], then select *Verify and save*.
+Change the *Server Url* to https://executor.kobiton.com.
 
-image:$NEW$[width="",alt=""]
+Enter the username and password for the xref:integrations:create-a-shared-kobiton-account-for-automation-tests.adoc[shared Kobiton account], then select *Verify and save*.
+
+image:integrations:azure-add-executor-server-connection.png[width="1000",alt="Enter username and password for Kobiton Executor Server connection then select Verify and save"]
 
 [#_update_your_test_suite]
 == Update your test suite
@@ -92,7 +99,7 @@ Add empty environment variables to the file using the following table. You'll as
 |A device's xref:devices:device-metadata.adoc#_operating_system_default[platform version], either *Android* or *iOS*.
 |===
 
-.Example
+.Example (java)
 [source,java]
 ----
 public class Config {
