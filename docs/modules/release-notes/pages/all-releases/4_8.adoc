@@ -1,0 +1,88 @@
+= Kobiton 4.8 release notes
+:navtitle: Kobiton 4.8 release notes
+
+_November 11, 2023_
+
+== New OS support
+
+Kobiton 4.8 supports the following:
+
+* iOS/iPadOS 16.7.1
+* iOS/iPadOS 17.0.3
+* iOS/iPadOS 17.1.1
+* iOS/iPadOS 16.7.2
+* macOS Sonoma 14.1.1
+* Google Pixel 8
+
+== New documentation site and search widget
+
+We are excited to introduce our new help documentation site - http://docs.kobiton.com/[docs.kobiton.com] - along with a powerful search widget integrated right within the Portal. This feature allows you to find the information you need quickly and efficiently without leaving the Portal. Keep reading to learn what’s new.
+
+NOTE: We did not migrate content regarding Legacy Kobiton-specific functionality. Rest assured that the https://support.kobiton.com/[support.kobiton.com] site will remain accessible for the time being, ensuring a smooth transition for everyone.
+
+*Refreshed and streamlined help content*: Our commitment to providing you with the best support experience has led to a complete overhaul of our help content. We've refreshed, reorganized, and modernized our documentation to ensure it is in sync with the latest features and improvements introduced in Kobiton 4.
+
+*Portal search widget*: We added the ability to search within the Portal help widget, making it easier than ever to find the information you're looking for. No need to navigate away from the Portal to search our extensive documentation. Simply enter your query, and relevant results will appear instantly for you to choose for more detail. Plus, the search results widget is resizable, allowing you to adjust the size. Use the arrow in the bottom right corner to adjust the size.
+
+*Open help in a separate tab*: Want to keep your search results handy while using the Portal? Simply choose the "Help" link to open the search results in a separate tab, so you can refer to them side-by-side.
+
+With this revamped documentation help site, we aim to provide you with a more efficient and user-friendly way to access the information you need, right when you need it.
+
+We value your feedback! If you encounter any issues, please send a note to Kobiton Support.
+
+== Scriptless automation and sensitive data
+
+While we strongly discourage the use of sensitive data during app testing for security reasons, we understand that there are certain scenarios where it is necessary. To accommodate these use cases, we incorporated a sensitive data input feature in the Portal.
+
+We also recognize that some of our users who require sensitive data may want to leverage our Scriptless automation for other test cases. We need to prioritize security and data protection. Therefore, we are implementing the following:
+
+*Sensitive data input in manual sessions:* If you utilize our Sensitive Data feature within a manual testing session, please be aware that we now classify it as an unsupported action. As a result, if you decide to initiate a Scriptless rerun for one of these sessions, we will not proceed the test beyond the step involving sensitive data.
+
+*Future enhancements:* Looking ahead, we plan to refine the Scriptless automation process to better accommodate sensitive data while maintaining robust security measures. Our goal is to limit access to sensitive information to the initial tester to ensure data privacy.
+
+We appreciate your understanding and commitment to data security.
+
+== Cleanup Policy: disable keyboard emoji tooltip on Samsung devices
+
+The Samsung keyboard’s emoji tooltip can impact successful Scriptless reruns on Samsung devices. So, we added a new cleanup action - _Clear the keyboard cache_ - to disable the tooltip.
+
+If you intend to run Kobiton Scriptless with Samsung devices, we recommend you enable _Clear the keyboard cache_ in your Cleanup Policy as shown below:
+
+image:release-notes:configure-clean-up-keyboard.png[width=600,alt="The Cleanup Policy configure screen with the Clear the keyboard cache option"]
+
+== Minor improvements and bug fixes
+
+This release includes a number of bug fixes and enhancements to improve your day-to-day testing. Some of the updates include:
+
+* Script-based test automation and Device Inspector items:
+** Standardize Appium log format (JSON).
+** Allow pushing files larger than 10MB into devices in an automation test.
+** Fix an issue with the attribute `@visible` having the wrong value on an out-of-frame element.
+** Fix an inconsistency with the value of `driver.getWindowRect()` between Legacy and 4+ devices.
+** Fix an inconsistency in the results of the same web test script of a local web browser and Kobiton devices.
+** Allow sending special characters such as `~`, `é`, or `ô` in automation sessions.
+** Fix an issue with not being able to identify specific elements with the mouse.
+** Fix an issue where running Kobiton Manual sessions and Appium sessions causes some elements to disappear.
+** Fix the missing Incoming Call Answers/Decline button locator.
+** Implement command `mobile: listSms`.
+
+* Scriptless automation:
+** Fix an issue with AI not mapping and selecting the correct elements for some apps.
+** Fix revisit execution failing with error No device matching the required capabilities.
+** Fix an issue where a non-action is registered as a swipe in a revisit session.
+** Fix incorrect XML sources capturing and elements not able to annotate.
+** Fix an issue with some scriptless sessions failing on swipe.
+** Fix an issue with scrolling points registering incorrectly during a revisit.
+** Implement the `activateApp()` method.
+** Fix an issue where the `PointerInput` scroll is not working.
+
+* Others:
+** Fix an issue with sessions terminating unexpectedly and cleanup scripts running in the middle of the session instead of after the session ends.
+** Enable `.aab` and `.zip` file upload to the Application Repository using API v2.
+** Fix image injection app instrumentation for Android and iOS.
+** Display a friendlier name format for devices in the Portal.
+** Fix an issue with Flutter apps not signing for Public Cloud devices.
+** Fix an issue where space cannot be added to a Team’s name.
+** Fix phone number and IMEI not displaying for some devices in the Portal.
+** Fix not being able to switch back to the primary tab in Safari in a manual session.
+** Fix the behavior of the Add to Favorite button in the Portal.
