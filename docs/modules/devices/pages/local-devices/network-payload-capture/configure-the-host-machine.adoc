@@ -1,0 +1,121 @@
+= Configure the host machine for network payload capture
+:navtitle: Configure the host machine
+
+Learn how to configure your local Cloud or Standalone Kobiton host machine so you and your team can use network payload capture during a xref:manual-testing:local-devices/capture-network-payload-data.adoc[manual session] or xref:automation-testing:local-devices/capture-network-payload-data.adoc[automation session].
+
+[#_before_you_start]
+== Before you start
+
+You'll need to:
+
+* Verify your system administrator privileges for the local Cloud or Standalone Kobiton host machine. The *host machine* is the Mac mini computer in the Kobiton cart.
+* Download and install link:https://apps.apple.com/app/id1037126344[Apple Configurator] on the host machine.
+
+== Modify the `dc.ini` file
+
+Open the Terminal app on the host machine or `ssh` to the host machine.
+
+Next, you'll edit the `dc.ini` within the `/usr/local/deviceconnect` directory. Open the file in your preferred text editor.
+
+.Example
+[source,shell]
+----
+nano /usr/local/deviceconnect/dc.ini
+----
+
+If the following lines are present, simply verify the IP address, then go to xref:_check_for_an_existing_ssh_key[]. Otherwise, add these lines to the end of the file and replace `HOST_MACHINE_IP_ADDRESS` with the correct value.
+
+[source,plaintext]
+----
+# Payload Capture
+DeviceNetworkCapture.NetworkCaptureProxyHost=HOST_MACHINE_IP_ADDRESS
+DeviceNetworkCapture.NetworkCaptureProxyIsLocal=true
+DeviceNetworkCapture.NetworkCaptureProxyControlPort=8225
+DeviceNetworkCapture.NetworkCaptureProxyHttpListenPort=8080
+DeviceNetworkCapture.TimeoutConnectSeconds=10
+DeviceNetworkCapture.Trace=true
+DeviceNetworkCapture.ExternalDebugLog=false
+----
+
+When you're finished, save your changes, then run the following command to restart deviceConnect.
+
+[source,shell]
+----
+sudo sv restart /usr/local/var/service/*
+----
+
+[NOTE]
+====
+If you are only hosting Android devices, you can move on to configure your xref:devices:local-devices/network-payload-capture/configure-an-android-device.adoc[Android device] now. The next steps are only required for hosting iOS devices.
+====
+
+[#_check_for_an_existing_ssh_key]
+== Check for an existing SSH key
+
+In the terminal, open the `.ssh` directory, then list the contents of the directory.
+
+[source,shell]
+----
+cd ~/.ssh && ls -a
+----
+
+If you see an `id_rsa` file, go to xref:_modify_the_ssh_key[]. Otherwise, continue to the next section.
+
+[#_generate_a_new_ssh_key]
+== Generate a new SSH key
+
+In the `.ssh` directory, enter the following command:
+
+[source,shell]
+----
+ssh-keygen -t rsa
+----
+
+Leave the passphrase empty and press *Enter*.
+
+[source,shell]
+----
+> Enter passphrase (empty for no passphrase): [Leave empty]
+> Enter same passphrase again: [Leave empty]
+----
+
+Now you're ready to xref:_modify_the_ssh_key[modify the SSH key].
+
+[#_modify_the_ssh_key]
+== Modify the SSH key
+
+In the `.ssh` directory, copy the contents from your `id_rsa` public key into the `authorized_keys_` file.
+
+[source,shell]
+----
+cat id_rsa.pub >> ./authorized_keys
+----
+
+[NOTE]
+If an `authorized_keys_` file doesn't exist, one will be automatically created.
+
+Login using your SSH key. If prompted to _trust this connection_, type *yes* and press *Enter*.
+
+[source,shell]
+----
+ssh 127.0.0.1
+----
+
+After you're successfully logged in, exit the SSH session, then restart the host machine.
+
+[source,shell]
+----
+exit && sudo shutdown -r now
+----
+
+== Set up Apple Configurator
+
+Open the Apple Configurator app you xref:_before_you_start[installed previously].
+
+In the menu bar, select *Apple Configurator 2*, then select *Install Automation Tools*:
+
+image:devices:apple-configurator-install-automation-tools.png[width="500", alt="From menu bar, select Apple Configurator, then Install Automation Tools"]
+
+Select *Install*, then enter your admin password. Once the automation tools are installed, you can close Apple Configurator since it doesn't need to be open for network payload capture.
+
+Now, you can configure your xref:devices:local-devices/network-payload-capture/configure-an-android-device.adoc[Android device] or xref:devices:local-devices/network-payload-capture/configure-an-ios-device.adoc[iOS device] for network payload capture.

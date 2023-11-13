@@ -7,7 +7,7 @@ Learn how to create a configuration so can enable network payload capture for yo
 
 You'll need to:
 
-* xref:devices:local-devices/network-payload-capture/configure-the-local-server.adoc[Configure your local Kobiton server].
+* xref:devices:local-devices/network-payload-capture/configure-the-host-machine.adoc[Configure your local Kobiton server].
 * Configure an xref:devices:local-devices/network-payload-capture/configure-an-ios-device.adoc[iOS device] or xref:devices:local-devices/network-payload-capture/configure-an-android-device.adoc[Android device].
 
 == Create a configuration
@@ -18,22 +18,18 @@ image:profile:choose-settings-context.png[width=1000,alt="A context to choose Se
 
 Select *Configurations*.
 
-image:$NEW$[width="",alt=""]
+image:devices:network-payload-configurations.png[width="1000",alt="Select Configurations"]
 
 Select *Add new configuration*.
 
-image:$NEW$[width="",alt=""]
-
 Enter a name and an optional description.
 
-image:$NEW$[width="",alt=""]
+image:devices:network-payload-create-configuration-name.png[width="1000",alt="Input name and description for new configuration"]
 
 Enter your base domains, then choose one or more xref:devices:local-devices/network-payload-capture/supported-mime-types.adoc[MIME types] you want to capture.
 
-image:$NEW$[width="",alt=""]
+image:devices:network-payload-capture-settings.png[width="1000",alt="Enter base domains to capture and select MIME types"]
 
-When you're finished, select *Apply*.
-
-image:$NEW$[width="",alt=""]
+When you're finished, select *Save*.
 
 Now you can enable network payload capture for xref:manual-testing:local-devices/capture-network-payload-data.adoc[manual testing] or xref:automation-testing:local-devices/capture-network-payload-data.adoc[automation testing].

@@ -11,74 +11,42 @@ You'll need to configure each iOS device you want to use for network payload cap
 
 You'll need to:
 
-* Confirm your system administrator xref:devices:local-devices/network-payload-capture/configure-the-local-server.adoc[configured your local Kobiton server].
-* Download the xref:attachment$kobiton-network-payload-capture-certificate-1.3.crt[network payload capture certificate] on your personal macOS computer.*
+* Confirm your system administrator xref:devices:local-devices/network-payload-capture/configure-the-host-machine.adoc[configured your local Kobiton server].
+* Open the network payload capture certificate xref:attachment$kobiton-network-payload-capture-certificate-1.3.crt[download link] from the iOS device's browser and save it onto the device.
 
-== Get device UDID
-
-Connect your device to your macOS computer. Open Finder, then select the device.
-
-image:$NEW-IMAGE$[width=, alt=""]
-
-Hover the mouse over the device information, then right-click and copy the device UDID to a secure location.
-
-image:$NEW-IMAGE$[width=, alt=""]
-
-== Add certificate to device
-
-Turn on airdrop, confirm the location of the xref:_before_you_start[certificate you downloaded earlier], then share the certificate from your computer to the device.
-
-image:$NEW-IMAGE$[width=, alt=""]
-
-When you see the airdrop notification on the device, select *Accept*.
-
-image:$NEW-IMAGE$[width=, alt=""]
+[NOTE]
+====
+You can also use https://support.apple.com/en-vn/guide/mac-help/mh35868/mac[AirDrop] to send the certificate from any MacOS machine (the Mac mini host machine, for example) to the device.
+====
 
 == Install certificate
 
 On the device, open *Settings*, then *General*.
 
-image:$NEW-IMAGE$[width=, alt=""]
+image:devices:ios-settings-general.png[width=500, alt="Open Settings then select General"]
 
-Select *Profiles*, then the certificate.
+Select *VPN & Device Management* (iOS 16 or later) or *Profiles & Device Management* (iOS 15 and earlier), then open *Kobiton Certification Authority*.
 
-image:$NEW-IMAGE$[width=, alt=""]
+image:devices:ios-vpn-and-device.png[width=500, alt="Select VPN and Device Management, then open Kobiton Certification Authority"]
 
-Select *Install*, then *Done*.
+Select *Install* on the next few steps. After the installation completes, select *Done*.
 
-image:$NEW-IMAGE$[width=, alt=""]
+image:devices:ios-select-certificate.png[width=500, alt="Select Install, then select Done when installation completes"]
 
 == Enable full trust for certificate
 
 On the device, open *Settings*, then *General*.
 
-image:$NEW-IMAGE$[width=, alt=""]
+image:devices:ios-settings-general.png[width=500, alt="Open Settings then select General"]
 
 Select *About*.
 
-image:$NEW-IMAGE$[width=, alt=""]
+image:devices:ios-settings-about.png[width=500, alt="Select About"]
 
 Select *Certificate Trust Settings*.
 
-image:$NEW-IMAGE$[width=, alt=""]
+image:devices:ios-settings-certficate-trust.png[width=500, alt="Select Certificate Trust Settings"]
 
-Turn on *Kobiton Certification Authority*.
+Turn on *Kobiton Certification Authority*. Select *Continue* in the pop-up.
 
-image:$NEW-IMAGE$[width=, alt=""]
-
-== Remove device passcode
-
-On the device, open *Settings*, then do one of the following:
-
-* On a device with Face ID: select *Face ID & Passcode*.
-* On a device with a Home button: select *Touch ID & Passcode*.
-
-image:$NEW-IMAGE$[width=, alt=""]
-
-Select *Turn Passcode Off*.
-
-image:$NEW-IMAGE$[width=, alt=""]
-
-== Create config file
-
-include::partial$network-payload-capture/create-config-file.adoc[]
+image:ios-trust-kobiton-certficate.png[width=500, alt="Turn on Kobiton Certification Authority then select Continue in the pop-up"]
