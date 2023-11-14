@@ -57,3 +57,4 @@ jobs:
           aws s3 sync ./build/widget s3://${{ env.WIDGET_S3_HOSTING_BUCKET }}
           aws cloudfront create-invalidation --distribution-id ${{ env.WIDGET_CLOUDFRONT_ID }} --paths "/*"
           echo "Widget is deployed!"
+          
