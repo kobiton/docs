@@ -1,4 +1,4 @@
-FROM nginx:1.12.2-alpine
+FROM nginx:alpine
 
 RUN mkdir -p /docs
 WORKDIR /docs

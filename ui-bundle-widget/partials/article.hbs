@@ -24,6 +24,34 @@
     {{/if}}
   </div>
   <div class="document-details{{#if (ne page.title 'Reference Resources')}} padding-top-detail{{/if}}">
+    {{#if (eq page.title 'Reference Resources')}}
+      <div class="reference-resource-wrapper">
+        <div class="reference-resource-item ">
+          <div class="reference-resource-image-item">
+            <img class="" src="_images/help.svg" alt="help">
+          </div>
+          <div>
+            {{{link 'Help'}}}
+          </div>
+        </div>
+         <div class="reference-resource-item ">
+          <div class="reference-resource-image-item">
+            <img class="" src="_images/api.svg" alt="api">
+          </div>
+          <div>
+            {{{link 'API'}}}
+          </div>
+        </div>
+         <div class="reference-resource-item ">
+          <div class="reference-resource-image-item">
+            <img class="" src="_images/support.svg" alt="support">
+          </div>
+          <div>
+            {{{link 'Support'}}}
+          </div>
+        </div>
+      </div>
+    {{/if}}
     {{{page.contents}}}
   </div>
   {{> pagination}}
