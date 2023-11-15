@@ -42,14 +42,16 @@
             {{{link 'API'}}}
           </div>
         </div>
-         <div class="reference-resource-item ">
-          <div class="reference-resource-image-item">
-            <img class="" src="_images/support.svg" alt="support">
-          </div>
-          <div>
-            {{{link 'Support'}}}
-          </div>
+        {{#if (ne env.KOBITON_ENVIRONMENT 'standalone')}}
+          <div class="reference-resource-item ">
+            <div class="reference-resource-image-item">
+              <img class="" src="_images/support.svg" alt="support">
+            </div>
+            <div>
+              {{{link 'Support'}}}
+            </div>
         </div>
+        {{/if}}
       </div>
     {{/if}}
     {{{page.contents}}}
