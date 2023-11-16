@@ -1,0 +1,169 @@
+= Kobiton 4.7S Standalone  release notes
+:navtitle: Kobiton 4.7S Standalone release notes
+
+_November 14, 2023_
+
+== New OS support
+
+Kobiton 4.7S supports the following new OS and devices:
+
+* Android 14 Beta 4
+* iOS/iPadOS 16.5.1
+* iOS/iPadOS 15.7.7
+* iOS/iPadOS 17
+* iOS/iPadOS 17.0.1
+* iOS/iPadOS 17.0.2
+* macOS 13.4.1 Ventura
+* macOS Sonoma 14.0
+* Mac mini with M2 chip
+
+== Additional Information about iOS 17/iPadOS 17 support
+
+Please review this section for limitations, known issues, and network information related to iOS 17.
+
+*Limitations related to iOS 17 or later:*
+
+* virtualUSB does not support iOS 17 devices.
+* XCUI automation is not currently supported for iOS 17 devices.
+* Device metrics are not currently available for iOS 17 devices.
+
+*Known issues related to iOS 17:*
+
+* The Cleanup Policy does not reset the device’s Display Zoom to the default if it is set to Zoomed during a prior session.
+* The Cleanup Policy does not close recent system apps opened during a session.
+* For organizations with Passcode enabled, clicking the Power icon on the toolbar in a Manual session makes the device show black screen and inaccessible. Quit and launch a new session to access the device again.
+
+*Known issues related to iOS 17 devices connected to a GEM (Lightning mode):*
+
+* When a GEM is restarted for an organization with passcode mode enabled, all iOS devices (iOS 17 and lower) connected to the GEM will not come back online on their own. Kobiton Support can provide instructions to resolve the issue. Manual touch on the devices may be required if they are managed by an MDM with an always-on passcode policy.
+
+*Network requirements for iOS 17*
+
+Apple introduced some significant changes with the rollout of iOS 17 that may require changes to your network configurations when you have Lightning mode. Please contact your Customer Success Manager or Kobiton Support for more information. Standard mode setups do not have network changes.
+
+== Revamped Portal Navigation
+
+We overhauled the Kobiton Portal with an enhanced navigation experience. Here's what's new:
+
+*Simplified design*: We bid goodbye to the top nav and expanded the left-hand menu. This change gives you more room to work along with a one-stop navigation bar.
+
+*Refreshed icons & layout*: We've updated icons to be more intuitive and tweaked the order to prioritize what matters most. Hover over an icon for a tooltip descriptor. The new order is:
+
+* _Devices_ - access your Device List
+* _Sessions_ - access Sessions for your team
+* _Apps_ - access the App Repo
+* _Test Case Management_
+* _Predefined Reports_
+* _Org Management_
+* _Help_ - the question mark icon is your gateway to API docs.
+* _Team_ - We used to have a Team dropdown along the top navigation. Now, look just above your profile in the bottom of the left nav. Tap on the letter icon to view and switch between your teams. Each team you belong to is denoted by a letter and color combination.
+* _Account_ - Previously, your Profile was at the top right of the Portal. Now, find your profile with access to Settings, Subscription, and Logout at the bottom of the left nav.
+
+image:release-notes:new-standalone-navigation.png[width=1000,alt="New portal navigation layout for Standalone"]
+
+== virtualUSB: log in with custom URL
+
+With Standalone or Cloud with a custom domain, users can now:
+
+* Specify the custom URLs for Kobiton server in the virtualUSB login screen after selecting the *Login to your custom domain portal* checkbox.
+
+image:virtualusb-custom-login.png[width="400",alt="Log in with custom URL"]
+
+* Specify the custom URLs for Kobiton server in the `vusb login` command of virtualUSB command-line interface (CLI) with the 2 new options: `--apibaseurl`, and `--grpcbaseurl`.
+
+Refer to the xref:debugging:index.adoc[Debugging with virtualUSB] documents  for more information.
+
+NOTE: Request the download from Kobiton Support to see the changes.
+
+== Integrate Kobiton Scriptless to Bitrise
+
+Before this release, Kobiton already supported 2 add-on steps in http://bitrise.io[Bitrise] :
+
+* Upload application to Kobiton
+* Execute Automation Test in Kobiton
+
+In this release, we extended the capability of the Execute Automation Test in Kobiton by adding support for Kobiton Scriptless. With Kobiton scriptless integration, users can now:
+
+* Record test steps performed in the automation test into an Automated Test Case.
+* Rerun the Automated Test Cases on multiple devices (device bundle) using NOVA AI Engine.
+* Review the result of the rerun (revisit) sessions in the built-in Bitrise artifacts report.
+* User the above result as a condition for automatic deployment.
+
+[NOTE]
+====
+* This feature is available here: https://bitrise.io/integrations/steps/kobiton-execute-test[Steps].
+* We will update this Release Notes with detailed instructions on how to use the new feature.
+* This feature requires Scriptless to be enabled for the org, and a http://bitrise.io[Bitrise] account.
+====
+
+== Reduce load time for Apps, Sessions, and Devices list
+
+We have made optimizations to significantly reduce the load time of the Apps, Sessions, and Devices lists. Both users of the Kobiton Portal and the API endpoints can see the significant load time improvement.
+
+== Improvements and bug fixes
+
+In addition to the above, this release includes several minor bug fixes and enhancements to improve your day-to-day testing:
+
+* *Standalone-specific:*
+** Fixed an issue where the Standalone GUI updater does not allow updating if the `/etc/hosts` entry of the Dell server has a tab character.
+** Reduced the size of the compressed Standalone installation package by several gigabytes. When uncompressed, the installation package size should be reduced even more, improving the extract and load time of the Standalone package.
+** Fixed an issue where default device images were not displaying when Internet connection was restricted.
+
+* *Script-based test automation and Device Inspector items:*
+** Fixed an issue with Device Inspector sometimes not displaying the web view in Android hybrid apps.
+** Support `pickerWheel`.
+** Fix issues where `ion-element` on iOS devices cannot be found.
+** Allow interaction with Shadow DOM while running automation script on endpoints: `/execute_async` and `/execute/async`.
+** Catch `Exception` at levels lower than `WebDriverException` class.
+** Give meaningful error message, such as `NoSuchMethodException`, `NoSuchElementLocated`, etc, instead of `unhandled_exception`.
+** Select element is now able to locate elements within index range.
+** When an Android application is already installed on the device, automation sessions can be launched with only `appPackage` and `appActivity` desired capabilities.
+** Allow `setValue()` into a DatePickerWheel.
+** Fix an issue with `wait.until()` method.
+** Fix an issue where text cannot be set on web element with `<span>` tag.
+** Fix an issue where `isDisplayed()` is not working properly.
+** Fix an issue with nested locator.
+** Allow scrolling to element using `findElementByAndroidUIAutomator`.
+** Fix an issue with `getAppStringMap()` not working.
+** When autoLaunch capability is set to false, allow apps to be installed using other capabilities.
+** Fix an issue where the `NoReset` capability, when set to false, deleted the pre-installed iOS app and prevented the automation session from launching.
+** Fixed an issue with some elements cannot be found in Appium automation session and Inspector.
+** Fixed unknown error with `element.getScreenshotAs()`.
+** Resolved inconsistencies with `SupportContextSwitching`.
+** Fixed an issue where Xpath is not correct and points to the entire page.
+
+* *Scriptless automation:*
+** Fixed an issue with Chrome welcome screen blocking Scriptless if the welcome screen appears in a Revisit session, but not the original session.
+** When clicking a blank space on a page in a revisit session, raise _Blocker Remediation_ instead of _Crash Remediation_.
+** Fix an issue where bypassing the system pop-up resulted in the incorrect selection of the element.
+** Fixed an issue with exported Java automation script (_JUnit_ + _TestNG_) fails to run on some applications.
+** Fixed incorrect calculation of _From_ and _To_ points in swipe action in exported NodeJS automation script.
+** Fixed an issue with AI matching the wrong element in a group of overlapping elements with no parent/child relationship.
+** Resolved the failure of exported NodeJS automation script to execute the Send Keys step.
+** Resolved an issue with exported Java automation script (_JUnit_ + _TestNG_) failing to run because of selecting the incorrect element.
+** Support scroll and swipe action in the vertical sub-list view.
+** Fixed an issue with failing to swipe on some Scriptless sessions.
+** Fixed an issue where the system initiates the process of finding element too quickly and results in the blocker during a revisit execution.
+
+* *Others:*
+** Improve iOS Manual session responsiveness.
+** Added the desired capability `kobi:retainDurationInSeconds` to retain device in automation session. The value of the capability determines the retain time:
+*** `-1`: unlimited
+*** an `x` number larger than 0: retain for `x` seconds (maximum 24 hours)
+** SSO settings - fixed an issue where clicking the Verify button breaks the login flow of some customers.
+** Network payload capture - fix an issue with bad data on some network capture files.
+** Manual session - add ability to long press and drag apps on Android devices.
+** Fixed an issue with Accessibility Validations.
+** Fixed an issue with Image Injection via App Instrumentation.
+** Add support for adb shell commands: `svc wifi enable/disable`, `svc data enable/disable`.
+** Fixed automation testing failing because Katalon doesn't recognize a `.EditText` object on Kobiton devices.
+
+== Known issues / limitations for Standalone
+
+* Unable to uninstall apps using the Uninstall All button
+* SSO settings - the Verify button is blocked by a CAPTCHA message even though there is no CAPTCHA.
+* Standard mode video does not display rotation correctly.
+* Jira Cloud integration is Cloud only, so does not work for network configurations without Internet access. There are some known issues - ticket is created, but shows 500 error and cannot add attachments.
+* Auto-generate Appium script: inputting / into a text field in the baseline session caused the auto-generated script to fail.
+* virtualUSB for Windows: cannot log into Standalone Portal (all versions of virtualUSB)
+* Scriptless may not work properly on Android apps with animation or webviews for Android 13 and below.
