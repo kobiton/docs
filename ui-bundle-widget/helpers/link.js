@@ -4,10 +4,10 @@ module.exports = (label) => {
   let href
   switch (label) {
     case 'Help':
-      href = process.env.KOBITON_STANDALONE_DOCS_V2_URL || 'https://docs.kobiton.com'
+      href = 'https://docs.kobiton.com'
       break
     case 'API':
-      href = process.env.KOBITON_STANDALONE_API_V2_DOCS_URL || 'https://api.kobiton.com/v2/docs'
+      href = 'https://api.kobiton.com/v2/docs'
       break
     case 'Support':
       // Hide support items on the standalone and break new tickets to enhance on the next release (could be 4.9S)
