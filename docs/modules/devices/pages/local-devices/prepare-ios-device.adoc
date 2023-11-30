@@ -1,45 +1,40 @@
-= Configure iOS VoiceOver
-:navtitle: Configure iOS VoiceOver
+= Prepare an iOS/iPadOS device for hosting
+:navtitle: Prepare an iOS/iPadOS device for hosting
 
-Learn how to configure iOS VoiceOver so you can run xref:manual-testing:device-controls.adoc#_perform_voiceover[iOS VoiceOver commands] to test your app's screen reader compatibility during your test session.
+Learn how to prepare iOS/iPadOS devices to be utilized with Kobiton 4.0 and later.
+
+Different models of devices and versions of iOS/iPadOS may have different layout for settings and options. Refer to Apple's official manual if you cannot find the options mentioned in this document.
 
 == Before you start
 
 You'll need the following:
 
-* A local Kobiton server (Cloud or Standalone) installed with a Kobiton GEM or Orion Audio Board Card.
-* An iOS device running iOS 12.0 or later.
+* An iOS/iPadOS device
+* For iOS/iPadOS 16 and later devices, a Mac machine with Xcode installed.
 
-[NOTE]
-Due to Apple's policies, this feature is only available for local Kobiton servers with link:https://developer.apple.com/documentation/macos-release-notes/macos-big-sur-11_5-release-notes[macOS Big Sur 11.5] or earlier.
+== Turn off auto update
 
-== Configure VoiceOver
+Open the Settings app.
 
-On the local Kobiton server, open *System Preferences*, and turn on *Bluetooth*. Take note of the name under *This Mac is discoverable as...*
+Tap *General* -> *Software Update* -> *Automatic Updates*.
 
-image:devices:enable-bluetooth-server-ios-voiceover.png[width=500, alt="Open System Preferences and select Bluetooth"]
+Turn off *Install iOS Updates*.
 
-Connect your iOS device to the local Kobiton server. Then on the iOS device, open *Settings* and select *Bluetooth*.
+Go back to the Settings screen and tap *App Store*.
 
-image:devices:open-bluetooth-ios-voiceover.png[width=400,alt="Open Settings and select Bluetooth"]
+Under *Automatic Downloads*, turn off *App Updates*.
 
-Turn on *Bluetooth*, then select the local Kobiton server's name under *Devices*.
+== Turn off passcode, if one is set
 
-image:devices:enable-bluetooth-ios-voiceover.png[width=400, alt="Enable Bluetooth and select the Mac mini host"]
+In the *Settings* app, select *Face ID & Passcode* or *Touch ID & Passcode*.
 
-On the local server, accept the paring request.
+Enter the current passcode.
 
-image:devices:accept-pairing-server-ios-voiceover.png[width=400, alt="Accept pairing request"]
+Tap *Turn Passcode Off*.
 
-Back on the iOS device, go back to *Settings*, select *Accessibility*, then turn on *VoiceOver*.
+Enter the current passcode again to turn off passcode.
 
-image:devices:enable-ios-voiceover.png[width=400, alt="Go to Settings and select Accessibility, then turn on Voiceover"]
+== Turn on developer mode and UI automation]
 
-Select *Audio* and turn on *Send to HDMI*.
 
-image:devices:send-to-hdmi-ios-voiceover.png[width=400, alt="Select Audio and turn on Send to HDMI"]
 
-[NOTE]
-You will not use an HDMI connection during testing, however this setting is still required for full VoiceOver functionality.
-
-Now you can run xref:manual-testing:device-controls.adoc#_perform_voiceover[iOS VoiceOver commands] during a manual test session.
