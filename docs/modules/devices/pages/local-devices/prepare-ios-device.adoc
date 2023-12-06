@@ -10,31 +10,170 @@ Different models of devices and versions of iOS/iPadOS may have different layout
 You'll need the following:
 
 * An iOS/iPadOS device
-* For iOS/iPadOS 16 and later devices, a Mac machine with Xcode installed.
+* For iOS/iPadOS devices, any Mac machine with Xcode installed.
 
-== Turn off auto update
+== Turn off auto update (optional)
 
-Open the Settings app.
+[NOTE]
+====
 
-Tap *General* -> *Software Update* -> *Automatic Updates*.
+This step is optional but highly recommended. A software update makes the device unavailable for use until the update is complete.
+
+====
+
+Open the Settings app. Tap *General* -> *Software Update* -> *Automatic Updates*.
+
+image:devices:ios-software-update-context.png[width=500,alt="The Software Update screen with the Automatic Updates option"]
 
 Turn off *Install iOS Updates*.
 
+image:devices:ios-automatic-update-context.png[width=500,alt="The Install iOS updates  switched off in the Automatic Updates screen"]
+
 Go back to the Settings screen and tap *App Store*.
+
+image:devices:ios-settings-context-app-store.png[width=500,alt="The App Store option in Settings"]
 
 Under *Automatic Downloads*, turn off *App Updates*.
 
-== Turn off passcode, if one is set
+image:devices:ios-app-store-context-app-updates.png[width=500,alt="The App Updates switched off in the App Store settings"]
+
+== Turn off passcode, if one is set (required)
+
+[IMPORTANT]
+====
+
+This step is required. Setting a passcode on a device prevents Kobiton software from controlling it.
+
+To use passcode on the device, request Kobiton to enable passcode mode for your organization.
+
+====
 
 In the *Settings* app, select *Face ID & Passcode* or *Touch ID & Passcode*.
 
+image:devices:ios-settings-context-face-id-passcode.png[width=500,alt="The Face ID and Passcode option under Settings"]
+
 Enter the current passcode.
+
+image:devices:ios-enter-passcode-context.png[width=500,alt="The passcode input screen"]
 
 Tap *Turn Passcode Off*.
 
+image:devices:ios-face-id-passcode-turn-passcode-off.png[width=500,alt="The Face ID and passcode screen with the option Turn Passcode Off"]
+
 Enter the current passcode again to turn off passcode.
 
-== Turn on developer mode and UI automation]
+== Turn on web inspector in Safari (required by specific features)
+
+[NOTE]
+====
+
+This step is required if you want to use the Kobiton Inspector and/or web automation on the device.
+
+====
+
+Under the *Settings* app, tap *Safari*.
+
+image:ios-settings-context-safari.png[width=500,alt="The Safari option under Settings"]
+
+Scroll down to the *Advanced* option and tap it.
+
+image:ios-safari-context-advanced.png[width=500,alt="The Advanced option under Safari settings"]
+
+Turn on *Web Inspector* and *Remote Automation*.
+
+image:ios-avanced-context-web-inspector.png[width=500,alt="Web Inspector and Remote Automation switched on under Advanced Safari settings"]
+
+== Turn off automatic brightness and auto-lock (optional)
+
+[NOTE]
+====
+
+This step is optional but recommended.
+
+Turning off automatic brightness allow Kobiton software to keep the device screen brightness at the minimum, thus saving battery life.
+
+Disabling auto-lock improves the experience of testers by not having to unlock the device after a certain amount of time.
+
+====
+
+Under the *Settings* app, tap *Display & Brightness*.
+
+image:devices:ios-settings-context-display-brightness.png[width=500,alt="The Display and Brightness option under Settings"]
+
+Turn off *Automatic*
+
+image:devices:ios-display-brighness-context-automatic.png[width=500,alt="The Automatic otpion switched off under under Display and Brightness settings"]
+
+Tap *Auto-Lock*.
+
+image:devices:ios-display-brighness-context.png[width=500,alt="The Auto-Lock option under Display and Brightness settings"]
+
+Select *Never*.
+
+image:devices:ios-auto-lock-context.png[width=500,alt="The Never option selected under the Auto-Lock settings"]
+
+== Turn on developer mode and UI automation (required)
+
+[IMPORTANT]
+====
+
+This step is required for Kobiton software to control the device.
+
+====
 
 
+[tabs]
+====
 
+iOS 16 and later::
++
+--
+
+Plug the device into the Mac machine with Xcode installed. Open Xcode on the Mac machine.
+
+Tap *Trust* in Finder of the machine and on the *Trust this computer* alert on the iOS/iPadOS device.
+
+On the iOS/iPadOS device, under *Settings*, tap *Privacy & Security*.
+
+image:devices:ios-settings-context-privacy-security.png[width=500,alt="The Privacy and Security option under Settings"]
+
+Scroll down to the *Security* section, tap *Developer Mode*.
+
+image:devices:ios-privacy-security-context-developer-mode.png[width=500,alt="The Developer Mode option under Security and Privacy"]
+
+Turn on *Developer Mode*.
+
+image:devices:ios-developer-mode-context.png[width=500,alt="The Developer Mode option switched on under the Developer Mode screen"]
+
+A restart is required. After the device restarts, confirm again on the pop-up to turn on Developer Mode.
+
+Open the *Settings* app, scroll down to the *Developer* option and tap it.
+
+image:devices:ios-settings-context-developer.png[width=500,alt="The Developer option under Settings"]
+
+Turn on *Enable UI Automation*.
+
+image:devices:ios-deverloper-context-enable-ui-automation.png[width=500,alt="The Enable UI Automation switched on under Developer"]
+
+--
+
+iOS 13 to 15::
++
+
+--
+
+Plug the device into the Mac machine with Xcode installed. Open Xcode on the Mac machine.
+
+Tap *Trust* in Finder of the machine and on the iOS/iPadOS device.
+
+On the iOS/iPadOS device, under *Settings*, scroll down to the *Developer* option and tap it.
+
+image:devices:ios-settings-context-developer-iphone-below-16.png[width=500,alt="The Developer option under Settings in iOS below 16 device"]
+
+Turn on *Enable UI Automation*.
+
+image:devices:ios-developer-context-enable-ui-automation-iphone-below-16.png[width=500,alt="The Enable UI Automation option swiched on under Developer settings for iOS below 16 device"]
+
+--
+
+====
