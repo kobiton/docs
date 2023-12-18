@@ -44,3 +44,52 @@ You can now generate an Appium script in C# that is compatible with the Nunit te
 A https://support.google.com/work/android/answer/6191949?hl=en[Work Profile] can be set up on an Android device to separate work apps and data from personal apps and data. Work apps are marked with a briefcase icon to distinguish them from personal apps.
 
 With this release, we have included a new desired capability `kobiton:workApp` to launch a selected work app in an Appium automation session. The value of this capability should be set to the name of the app to launch. See the Javascript example below:
+
+[source,javascript]
+const desiredCaps = {
+  sessionName:        'Automation test session - MDM Profile',
+  sessionDescription: 'This is an example for Android app',
+  deviceOrientation:  'portrait',
+  captureScreenshots: true,
+  deviceGroup:        'ORGANIZATION',
+  deviceName:         'Pixel 6',
+  platformName:       'Android',
+  platformVersion:    '12',
+  'kobiton:workApp':  'Contacts'
+  }
+
+[NOTE]
+====
+* The Android device must already have Work Profile enabled.
+* The work profile app must already be installed on the device.
+* Only 1 work profile app can be launched in a session, and it must be the 1st app to launch.
+====
+
+== Ending support for deviceShare 4.7 and below (Cloud customer only)
+
+With this release, we introduced some changes to the Kobiton signing service to improve its stability and scalability. Unfortunately, with this change, the Cloud portal will no longer work with deviceShare 4.7 and below. This affects Cloud Customer-hosted deployments who uses Kobiton-resigning service only.
+
+If you are a Cloud Customer-hosted customer and is using Kobiton version 4.7, please contact Kobiton Support to get updated to v4.9 as soon as possible.
+
+== Minor improvements and bug fixes
+
+This release includes a number of bug fixes and enhancements to improve your day-to-day testing. Some of the updates include:
+
+* Script-based test automation and Device Inspector items:
+
+** Fix an issue with the driver not getting `android.widget.Toast`.
+** Fixed an issue with no inspector data for certain applications.
+** Fixed the issue: cannot set device language with the capabilities local and language.
+** Fixed an issue on iOS devices where webview content does not update in the Inspector when the screen changes.
+** Re-verified the behavior of the desired capability `FailIfNoInternet` on Kobiton devices.
+** Provided a solution for running automation session when SSL is set up for deviceConnect in the Mac mini host.
+** Fixed an issue with `startActivity()` not working on Android devices.
+
+* Scriptless automation:
+
+** Improve the performance of Scriptless in general.
+
+* Others:
+
+** Fixed an issue which prevents some customers to use camera injection with instrumentation.
+** Fixed the issue: when a normal user (without admin role) launches a session without a team selected, the session is not assigned to the user’s default team (assigned to the whole org instead) and causing it to not appear in the session list.
