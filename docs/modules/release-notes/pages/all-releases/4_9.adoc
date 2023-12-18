@@ -1,0 +1,46 @@
+= Kobiton 4.9 release notes
+:navtitle: Kobiton 4.9 release notes
+
+_December 16, 2023_
+
+== New OS support
+
+Kobiton 4.9 supports the following:
+
+* iOS/iPadOS 17.1.2
+* iOS/iPadOS 17.2
+* macOS Sonoma 14.1.2
+
+[NOTE]
+====
+For iOS/iPadOS 17.1.2 and 17.2, there is a known issue: The recent apps cannot be closed during the cleanup process.
+====
+
+== Scriptless automation: use a different app version on the first test run
+
+Before this release, users can only select an app version that is different of the one used in the baseline session on the second test run onward.
+
+With this release, users can now select any versions of the app to use right on the first test run.
+
+[NOTE]
+====
+* The Manual test session must qualify to be converted to an Automated test case for the Export Appium Script button to be enabled.
+* The app version must be uploaded to the Kobiton App Repository to be selectable in the test run screen.
+====
+
+== Auto-generate Appium script with AI: C# - Nunit
+
+You can now generate an Appium script in C# that is compatible with the Nunit testing framework. When you complete a Manual Session, select *Export Appium Script* on the *Automated Test Case* tab, then select *C# - Nunit* from the *Testing Framework* dropdown.
+
+[NOTE]
+====
+* The Manual test session must qualify to be converted to an Automated test case for the Export Appium Script button to be enabled.
+* Only sessions on native application are supported. Support for Web and hybrid apps is coming soon.
+* With some export options, Appium script can be exported from Manual sessions and Revisit sessions with passed status. However, C# - Nunit option currently only supports exporting from Manual sessions.
+====
+
+== Script-based automation: launch a work profile app on Android devices
+
+A https://support.google.com/work/android/answer/6191949?hl=en[Work Profile] can be set up on an Android device to separate work apps and data from personal apps and data. Work apps are marked with a briefcase icon to distinguish them from personal apps.
+
+With this release, we have included a new desired capability `kobiton:workApp` to launch a selected work app in an Appium automation session. The value of this capability should be set to the name of the app to launch. See the Javascript example below:
