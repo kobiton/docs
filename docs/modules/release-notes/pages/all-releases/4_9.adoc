@@ -13,22 +13,10 @@ Kobiton 4.9 supports the following:
 
 [NOTE]
 ====
-For iOS/iPadOS 17.1.2 and 17.2, there is a known issue: The recent apps cannot be closed during the cleanup process.
+For iOS/iPadOS 17.1.2 and 17.2, recent apps are not currently closed during the cleanup process.
 ====
 
-== Scriptless automation: use a different app version on the first test run
-
-Before this release, users can only select an app version that is different of the one used in the baseline session on the second test run onward.
-
-With this release, users can now select any versions of the app to use right on the first test run.
-
-[NOTE]
-====
-* The Manual test session must qualify to be converted to an Automated test case for the Export Appium Script button to be enabled.
-* The app version must be uploaded to the Kobiton App Repository to be selectable in the test run screen.
-====
-
-== Auto-generate Appium script with AI: C# - Nunit
+== Generate Appium Script with AI: C# - Nunit
 
 You can now generate an Appium script in C# that is compatible with the Nunit testing framework. When you complete a Manual Session, select *Export Appium Script* on the *Automated Test Case* tab, then select *C# - Nunit* from the *Testing Framework* dropdown.
 
@@ -43,7 +31,7 @@ You can now generate an Appium script in C# that is compatible with the Nunit te
 
 A https://support.google.com/work/android/answer/6191949?hl=en[Work Profile] can be set up on an Android device to separate work apps and data from personal apps and data. Work apps are marked with a briefcase icon to distinguish them from personal apps.
 
-With this release, we have included a new desired capability `kobiton:workApp` to launch a selected work app in an Appium automation session. The value of this capability should be set to the name of the app to launch. See the Javascript example below:
+This release includes a new desired capability - `kobiton:workApp` - to launch a selected Android work app in an Appium automation session. The value of this capability should be set to the name of the app to launch. See the Javascript example below:
 
 [source,javascript]
 const desiredCaps = {
@@ -60,36 +48,38 @@ const desiredCaps = {
 
 [NOTE]
 ====
-* The Android device must already have Work Profile enabled.
-* The work profile app must already be installed on the device.
+* The Android device must have Work Profile enabled.
+* The work profile app must be installed on the device.
 * Only 1 work profile app can be launched in a session, and it must be the 1st app to launch.
 ====
 
-== Ending support for deviceShare 4.7 and below (Cloud customer only)
+== Customer-hosted Cloud customers only: Ending support for deviceShare 4.7 and below
 
-With this release, we introduced some changes to the Kobiton signing service to improve its stability and scalability. Unfortunately, with this change, the Cloud portal will no longer work with deviceShare 4.7 and below. This affects Cloud Customer-hosted deployments who uses Kobiton-resigning service only.
-
-If you are a Cloud Customer-hosted customer and is using Kobiton version 4.7, please contact Kobiton Support to get updated to v4.9 as soon as possible.
+We updated the Kobiton signing service to improve its stability and scalability. With this change, deviceShare 4.7 and below are no longer supported. Customer-hosted Cloud customers on 4.7 or below using the Kobiton signing service should contact Kobiton Support to upgrade their Mac minis.
 
 == Minor improvements and bug fixes
 
-This release includes a number of bug fixes and enhancements to improve your day-to-day testing. Some of the updates include:
+This release includes a number of bug fixes and enhancements to improve your day-to-day testing.
 
 * Script-based test automation and Device Inspector items:
 
 ** Fix an issue with the driver not getting `android.widget.Toast`.
-** Fixed an issue with no inspector data for certain applications.
-** Fixed the issue: cannot set device language with the capabilities local and language.
+** Fixed an issue with setting the device language with the capabilities `local` and `language`.
 ** Fixed an issue on iOS devices where webview content does not update in the Inspector when the screen changes.
 ** Re-verified the behavior of the desired capability `FailIfNoInternet` on Kobiton devices.
-** Provided a solution for running automation session when SSL is set up for deviceConnect in the Mac mini host.
 ** Fixed an issue with `startActivity()` not working on Android devices.
+** Provide clear error messages when a device is not available for automation session. Example:
+
+[source]
+There are no devices that satisfy your filter criteria: [ Device Type = Galaxy S20* ; Operating System = Android 10.0]
+
+To expand the available devices, you can try removing or modifying some of the desired capabilities
 
 * Scriptless automation:
 
-** Improve the performance of Scriptless in general.
+** Fixed an issue where users could not select a different app version until the second Scriptless test run. The app version must be uploaded to the Kobiton App Repository to be selectable in the test run screen.
 
 * Others:
 
-** Fixed an issue which prevents some customers to use camera injection with instrumentation.
-** Fixed the issue: when a normal user (without admin role) launches a session without a team selected, the session is not assigned to the user’s default team (assigned to the whole org instead) and causing it to not appear in the session list.
+** Fixed an issue that prevented customer-hosted cloud devices from using camera injection with instrumentation.
+** Fixed an issue where member users could not see sessions in the Session List that they created without selecting a team. These sessions are now assigned to the member’s default team.
