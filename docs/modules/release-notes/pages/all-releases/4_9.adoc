@@ -1,0 +1,88 @@
+= Kobiton 4.9 release notes
+:navtitle: Kobiton 4.9 release notes
+
+_December 16, 2023_
+
+== New OS support
+
+Kobiton 4.9 supports the following:
+
+* iOS/iPadOS 17.1.2
+* iOS/iPadOS 17.2
+* macOS Sonoma 14.1.2
+
+[NOTE]
+====
+For iOS/iPadOS 17.1.2 and 17.2, recent apps are not currently closed during the cleanup process.
+====
+
+== Generate Appium Script with AI: C# - Nunit
+
+You can now generate an Appium script in C# that is compatible with the Nunit testing framework. When you complete a Manual Session, select *Export Appium Script* on the *Automated Test Case* tab, then select *C# - Nunit* from the *Testing Framework* dropdown.
+
+[NOTE]
+====
+* The Manual test session must qualify to be converted to an Automated test case for the Export Appium Script button to be enabled.
+* Only sessions on native application are supported. Support for Web and hybrid apps is coming soon.
+* With some export options, Appium script can be exported from Manual sessions and Revisit sessions with passed status. However, C# - Nunit option currently only supports exporting from Manual sessions.
+====
+
+== Script-based automation: launch a work profile app on Android devices
+
+A https://support.google.com/work/android/answer/6191949?hl=en[Work Profile] can be set up on an Android device to separate work apps and data from personal apps and data. Work apps are marked with a briefcase icon to distinguish them from personal apps.
+
+This release includes a new desired capability - `kobiton:workApp` - to launch a selected Android work app in an Appium automation session. The value of this capability should be set to the name of the app to launch. See the Javascript example below:
+
+[source,javascript]
+const desiredCaps = {
+  sessionName:        'Automation test session - MDM Profile',
+  sessionDescription: 'This is an example for Android app',
+  deviceOrientation:  'portrait',
+  captureScreenshots: true,
+  deviceGroup:        'ORGANIZATION',
+  deviceName:         'Pixel 6',
+  platformName:       'Android',
+  platformVersion:    '12',
+  'kobiton:workApp':  'Contacts'
+  }
+
+[NOTE]
+====
+* The Android device must have Work Profile enabled.
+* The work profile app must be installed on the device.
+* Only 1 work profile app can be launched in a session, and it must be the 1st app to launch.
+====
+
+== Customer-hosted Cloud customers only: Ending support for deviceShare 4.7 and below
+
+We updated the Kobiton signing service to improve its stability and scalability. With this change, deviceShare 4.7 and below are no longer supported. Customer-hosted Cloud customers on 4.7 or below using the Kobiton signing service should contact Kobiton Support to upgrade their Mac minis.
+
+== Minor improvements and bug fixes
+
+This release includes a number of bug fixes and enhancements to improve your day-to-day testing.
+
+* Script-based test automation and Device Inspector items:
+
+** Fix an issue with the driver not getting `android.widget.Toast`.
+** Fixed an issue with setting the device language with the capabilities `local` and `language`.
+** Fixed an issue on iOS devices where webview content does not update in the Inspector when the screen changes.
+** Re-verified the behavior of the desired capability `FailIfNoInternet` on Kobiton devices.
+** Fixed an issue with `startActivity()` not working on Android devices.
+** Provide clear error messages when a device is not available for automation session.
++
+.Example
+[source]
+----
+There are no devices that satisfy your filter criteria: [ Device Type = Galaxy S20* ; Operating System = Android 10.0]
+
+To expand the available devices, you can try removing or modifying some of the desired capabilities
+----
+
+* Scriptless automation:
+
+** Fixed an issue where users could not select a different app version until the second Scriptless test run. The app version must be uploaded to the Kobiton App Repository to be selectable in the test run screen.
+
+* Others:
+
+** Fixed an issue that prevented customer-hosted cloud devices from using camera injection with instrumentation.
+** Fixed an issue where member users could not see sessions in the Session List that they created without selecting a team. These sessions are now assigned to the member’s default team.
