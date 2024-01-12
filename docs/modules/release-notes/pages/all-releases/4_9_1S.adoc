@@ -1,0 +1,163 @@
+= Kobiton 4.9.1S Standalone  release notes
+:navtitle: Kobiton 4.9.1S Standalone release notes
+
+_January 12, 2024_
+
+== New OS support
+
+Kobiton 4.9.1S supports the following new OS and devices:
+
+* iOS/iPadOS 16.7.1
+* iOS/iPadOS 17.0.3
+* iOS/iPadOS 17.1.1
+* iOS/iPadOS 16.7.2
+* macOS Sonoma 14.1.1
+* Google Pixel 8
+* iOS/iPadOS 17.1.2
+* iOS/iPadOS 17.2
+* macOS Sonoma 14.1.2
+
+== New documentation site and search widget
+
+We are excited to introduce our new help documentation site along with a powerful search widget integrated right within the Portal. This feature allows you to find the information you need quickly and efficiently without leaving the Portal. Keep reading to learn what’s new.
+
+*To access the help documentation site,* in your web browser, input the URL you usually access the Standalone web portal and add `:8001` at the end. Example: `www.kobiton.local:8001`.
+
+[NOTE]
+
+====
+We did not migrate content regarding Legacy Kobiton-specific functionality. Rest assured that the http://support.kobiton.com/[support.kobiton.com] site will remain accessible for the time being, ensuring a smooth transition for everyone.
+====
+
+*Refreshed and streamlined help content:* Our commitment to providing you with the best support experience has led to a complete overhaul of our help content. We've refreshed, reorganized, and modernized our documentation to ensure it's in sync with the latest features and improvements introduced in Kobiton 4.
+
+*Portal search widget:* We added the ability to search within the Portal help widget, making it easier than ever to find the information you're looking for. No need to navigate away from the Portal to search our extensive documentation. Simply enter your query, and relevant results will appear instantly for you to choose for more detail. Plus, the search results widget is resizable, allowing you to adjust the size. Use the arrow in the bottom right corner to adjust the size.
+
+*Open help in a separate tab:* Want to keep your search results handy while using the Portal? Simply choose the "Help" link to open the search results in a separate tab, so you can refer to them side-by-side.
+
+With this revamped documentation help site, we aim to provide you with a more efficient and user-friendly way to access the information you need, right when you need it.
+
+We value your feedback! If you encounter any issues, please send a note to Kobiton Support.
+
+== Scriptless automation and sensitive data
+
+While we strongly discourage the use of sensitive data during app testing for security reasons, we understand that there are certain scenarios where it is necessary. To accommodate these use cases, we have a sensitive data input feature in the Portal. We also recognize that some of our users who require sensitive data may want to leverage our Scriptless automation for other test cases. We need to prioritize security and data protection. Therefore, we are implementing the following for Scriptless:
+
+*Sensitive data input in manual sessions:* If you utilize our Sensitive Data feature within a manual testing session, please be aware that we now classify that as an unsupported action. As a result, if you decide to initiate a Scriptless rerun for one of these sessions, we will not proceed with the test beyond the step involving sensitive data.
+
+*Future enhancements:* Looking ahead, we plan to refine the Scriptless automation process to better accommodate sensitive data while maintaining robust security measures. Our goal is to limit access to sensitive information to the initial tester to ensure data privacy.
+
+We appreciate your understanding and commitment to data security.
+
+== Cleanup Policy: disable keyboard emoji tooltip on Samsung devices
+
+The Samsung keyboard’s emoji tooltip can impact successful Scriptless reruns on Samsung devices. So, we added a new cleanup action - _Clear the keyboard cache_ - to disable the tooltip.
+
+If you intend to run Kobiton Scriptless with Samsung devices, we recommend you enable _Clear the keyboard cache_ in your Cleanup Policy as shown below:
+
+image:cleanup-policy-clear-keyboard-cache.png[width="800",alt="The Clear the keyboard cache option under Configure the clean-up policy"]
+
+== Generate Appium Script with AI: C# - Nunit
+
+You can now generate and export an Appium script in C# that is compatible with the Nunit testing framework. When you complete a Manual Session, select *Export Appium Script* on the _Automated Test Case_ tab, then select *C# - Nunit* from the _Testing Framework_ dropdown.
+
+[NOTE]
+====
+Requirements/limitations:
+
+* The Manual test session must qualify to be converted to an Automated test case for the Export Appium Script button to be enabled.
+* Only sessions on native applications are supported. Support for Web and hybrid apps is coming soon.
+* With some export options, an Appium script can be generated from Manual sessions and Revisit sessions with a passed status. The C# - Nunit option can only be generated from Manual sessions at this time.
+====
+
+== Script-based automation: launch a work profile app on Android devices
+
+A https://support.google.com/work/android/answer/6191949?hl=en[Work Profile] can be set up on an Android device to separate work apps and data from personal apps and data. Work apps are marked with a briefcase icon to distinguish them from personal apps.
+
+This release includes a new desired capability - `kobiton:workApp` - to launch a selected Android work app in an Appium automation session. The value of this capability should be set to the name of the app to launch. See the Javascript example below:
+
+[source,javascript]
+----
+const desiredCaps = {
+  sessionName:        'Automation test session - MDM Profile',
+  sessionDescription: 'This is an example for Android app',
+  deviceOrientation:  'portrait',
+  captureScreenshots: true,
+  deviceGroup:        'ORGANIZATION',
+  deviceName:         'Pixel 6',
+  platformName:       'Android',
+  platformVersion:    '12',
+  'kobiton:workApp':  'Contacts'
+  }
+----
+
+[NOTE]
+
+====
+Requirements/limitations:
+
+* The Android device must have Work Profile enabled.
+* The work profile app must be installed on the device.
+* Only 1 work profile app can be launched in a session, and it must be the 1st app to launch.
+====
+
+== Improvements and bug fixes
+
+In addition to the above, this release includes several minor bug fixes and enhancements to improve your day-to-day testing:
+
+* *Standalone-specific:*
+** Fixed an issue with virtualUSB for Windows: cannot log into Standalone Portal (all versions of virtualUSB). Download the latest virtualUSB for Windows package with the fix https://kobiton-software.s3.amazonaws.com/v4.8.0/virtualUSB-Windows-v4.8.0.tar.gz[here].
+
+* *Script-based test automation and Device Inspector items:*
+** Fixed an issue with the driver not getting `android.widget.Toast`.
+** Fixed an issue setting the device language with the capabilities `local` and `language`.
+** Fixed an issue on iOS devices where webview content does not update in the Inspector when the screen changes.
+** Re-verified the behavior of the desired capability `FailIfNoInternet` on Kobiton devices.
+** Fixed an issue with `startActivity()` not working on Android devices.
+** Provide clear error messages when a device is not available for automation session. Example:
++
+[source]
+----
+“There are no devices that satisfy your filter criteria: [ Device Type = Galaxy S20* ; Operating System = Android 10.0]
+
+To expand the available devices, you can try removing or modifying some of the desired capabilities”
+----
+
+** Standardize Appium log format (JSON).
+** Allow pushing files larger than 10MB into devices in an automation test.
+** Fix an issue with the attribute `@visible` having the wrong value on an out-of-frame element.
+** Fix an inconsistency with the value of `driver.getWindowRect()` between Legacy Kobiton and Kobiton 4+ devices.
+** Fix an inconsistency in the results of the same web test script of a local web browser and Kobiton devices.
+** Allow sending special characters such as `~`, `é` , or `ô` in automation sessions.
+** Fix an issue with not being able to identify specific elements with the mouse.
+** Fix the missing Incoming Call Answers/Decline button locator.
+** Implement command mobile: `listSms`.
+** Implement the `activateApp()` method.
+** Fix an issue where the `PointerInput` scroll is not working.
+
+* *Scriptless automation:*
+** Fixed an issue where users could not select a different app version until the second Scriptless test run. The app version must be uploaded to the Kobiton App Repository to be selectable in the test run screen.
+** Fix an issue with not mapping and selecting the correct elements for some apps.
+** Fix revisit execution failing with error _No device matching the required capabilities_.
+** Fix an issue with some scriptless sessions failing on swipe.
+** Fix an issue with scrolling points registering incorrectly during a revisit.
+
+* *Others:*
+** Fixed an issue where member users could not see sessions in the Session List that they created without selecting a team. These sessions are now assigned to the member’s default team.
+** Fix an issue with sessions terminating unexpectedly and cleanup scripts running in the middle of the session instead of after the session ends.
+** Enable `.aab` and `.zip` file upload to the Application Repository using API v2.
+** Fix issue with image injection app instrumentation for Android and iOS.
+** Display a friendlier name format for devices in the Portal.
+** Fix an issue where space cannot be added to a Team’s name in Org Management.
+** Fix phone number and IMEI not displaying for some devices in the Portal.
+** Fix not being able to switch back to the primary tab in Safari in a manual session.
+** Fix the behavior of the _Add to Favorite_ button in the Portal.
+
+== Known issues / limitations for Standalone
+
+* Unable to uninstall apps using the _Uninstall All_ button
+* SSO settings - the Verify button is blocked by a CAPTCHA message even though there is no CAPTCHA.
+* Standard mode video does not display rotation correctly.
+* Jira Cloud integration is Cloud only, so does not work for network configurations without Internet access. There are some known issues - ticket is created, but shows 500 error and cannot add attachments.
+* Auto-generate Appium script: inputting / into a text field in the baseline session caused the auto-generated script to fail.
+* Scriptless may not work properly on Android apps with animation or webviews for Android 13 and below.
