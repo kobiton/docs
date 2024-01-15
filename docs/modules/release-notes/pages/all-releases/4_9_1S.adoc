@@ -21,15 +21,13 @@ Kobiton 4.9.1S supports the following new OS and devices:
 
 We are excited to introduce our new help documentation site along with a powerful search widget integrated right within the Portal. This feature allows you to find the information you need quickly and efficiently without leaving the Portal. Keep reading to learn what’s new.
 
-*To access the help documentation site,* in your web browser, input the URL you usually access the Standalone web portal and add `:8001` at the end. Example: `www.kobiton.local:8001`.
+*Refreshed and streamlined help content:* Our commitment to providing you with the best support experience has led to a complete overhaul of our help content. We've refreshed, reorganized, and modernized our documentation to ensure it's in sync with the latest features and improvements introduced in Kobiton 4.
 
 [NOTE]
 
 ====
-We did not migrate content regarding Legacy Kobiton-specific functionality. Rest assured that the http://support.kobiton.com/[support.kobiton.com] site will remain accessible for the time being, ensuring a smooth transition for everyone.
+We did not migrate content regarding Legacy Kobiton-specific functionality. The http://support.kobiton.com/[support.kobiton.com] site will remain accessible for the time being, ensuring a smooth transition for everyone.
 ====
-
-*Refreshed and streamlined help content:* Our commitment to providing you with the best support experience has led to a complete overhaul of our help content. We've refreshed, reorganized, and modernized our documentation to ensure it's in sync with the latest features and improvements introduced in Kobiton 4.
 
 *Portal search widget:* We added the ability to search within the Portal help widget, making it easier than ever to find the information you're looking for. No need to navigate away from the Portal to search our extensive documentation. Simply enter your query, and relevant results will appear instantly for you to choose for more detail. Plus, the search results widget is resizable, allowing you to adjust the size. Use the arrow in the bottom right corner to adjust the size.
 
@@ -37,13 +35,11 @@ We did not migrate content regarding Legacy Kobiton-specific functionality. Rest
 
 With this revamped documentation help site, we aim to provide you with a more efficient and user-friendly way to access the information you need, right when you need it.
 
-We value your feedback! If you encounter any issues, please send a note to Kobiton Support.
-
 == Scriptless automation and sensitive data
 
 While we strongly discourage the use of sensitive data during app testing for security reasons, we understand that there are certain scenarios where it is necessary. To accommodate these use cases, we have a sensitive data input feature in the Portal. We also recognize that some of our users who require sensitive data may want to leverage our Scriptless automation for other test cases. We need to prioritize security and data protection. Therefore, we are implementing the following for Scriptless:
 
-*Sensitive data input in manual sessions:* If you utilize our Sensitive Data feature within a manual testing session, please be aware that we now classify that as an unsupported action. As a result, if you decide to initiate a Scriptless rerun for one of these sessions, we will not proceed with the test beyond the step involving sensitive data.
+*Sensitive data input in manual sessions:* If you utilize our Sensitive Data feature within a manual testing session, please be aware that we now classify that as an unsupported action for Scriptless. As a result, if you decide to initiate a Scriptless rerun for one of these sessions, we will not proceed with the test beyond the step involving sensitive data.
 
 *Future enhancements:* Looking ahead, we plan to refine the Scriptless automation process to better accommodate sensitive data while maintaining robust security measures. Our goal is to limit access to sensitive information to the initial tester to ensure data privacy.
 
@@ -103,10 +99,10 @@ Requirements/limitations:
 
 == Improvements and bug fixes
 
-In addition to the above, this release includes several minor bug fixes and enhancements to improve your day-to-day testing:
+This release includes several bug fixes and enhancements to improve your day-to-day testing.
 
 * *Standalone-specific:*
-** Fixed an issue with virtualUSB for Windows: cannot log into Standalone Portal (all versions of virtualUSB). Download the latest virtualUSB for Windows package with the fix https://kobiton-software.s3.amazonaws.com/v4.8.0/virtualUSB-Windows-v4.8.0.tar.gz[here].
+** Fixed an issue with virtualUSB for Windows: cannot log into Standalone Portal (all versions of virtualUSB). Download the latest virtualUSB for Windows package with the fix https://kobiton-software.s3.amazonaws.com/v4.8.0/virtualUSB-Windows-v4.8.0.tar.gz[here]. Please contact Kobiton Support if you are not able to download via the link above due to your organization’s security requirements.
 
 * *Script-based test automation and Device Inspector items:*
 ** Fixed an issue with the driver not getting `android.widget.Toast`.
@@ -135,7 +131,7 @@ To expand the available devices, you can try removing or modifying some of the d
 ** Implement the `activateApp()` method.
 ** Fix an issue where the `PointerInput` scroll is not working.
 
-* *Scriptless automation:*
+* *Improved Scriptless automation:*
 ** Fixed an issue where users could not select a different app version until the second Scriptless test run. The app version must be uploaded to the Kobiton App Repository to be selectable in the test run screen.
 ** Fix an issue with not mapping and selecting the correct elements for some apps.
 ** Fix revisit execution failing with error _No device matching the required capabilities_.
@@ -144,10 +140,8 @@ To expand the available devices, you can try removing or modifying some of the d
 
 * *Others:*
 ** Fixed an issue where member users could not see sessions in the Session List that they created without selecting a team. These sessions are now assigned to the member’s default team.
-** Fix an issue with sessions terminating unexpectedly and cleanup scripts running in the middle of the session instead of after the session ends.
 ** Enable `.aab` and `.zip` file upload to the Application Repository using API v2.
 ** Fix issue with image injection app instrumentation for Android and iOS.
-** Display a friendlier name format for devices in the Portal.
 ** Fix an issue where space cannot be added to a Team’s name in Org Management.
 ** Fix phone number and IMEI not displaying for some devices in the Portal.
 ** Fix not being able to switch back to the primary tab in Safari in a manual session.
