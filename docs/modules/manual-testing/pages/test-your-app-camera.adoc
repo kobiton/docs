@@ -34,3 +34,34 @@ To inject an image into your app, launch the app and open the in-app camera. Cho
 image:manual-testing:image-injection-closeup.png[width=500, alt="A close-up of the image injection library containing one image."]
 
 When you're finished, select *Reset Camera* to stop image injection.
+
+== Limitations
+
+* Image Injection is available in a manual session only.
+
+* The Reset Camera button on the Image Injection dialog is always available even when no image is injected.
+
+* When injecting an image into an app that has not implemented the custom SDK or has not enabled image injection via instrumentation when installing, the system still sends an inject successfully message.
+
+* Images cannot be injected into some Android applications due to the immense number of required libraries, we currently support the most common libraries. If you encounter issues, please contact our Support team through support@kobiton.com.
+
+* App instrumentation is not working on a few Android applications, especially those applications that are obfuscated with DexGuard. For these apps, xref:apps:image-injection-sdk/add-the-sdk-to-your-android-app.adoc[add the image injection SDK] instead.
+
+* When using image injection, the injected image is rotated.
+
+* The injected image is zoomed a little when in use, compared to the actual size.
+
+* No image size in the image injection control's UI.
+
+== Known issues
+
+The application with custom SDK crashes when attempting to start the camera services.
+
+*Cause*: The custom SDK utilizes hidden APIs from Android, which may not be turned on and cause the app to crash.
+
+*Solution*: Enable a Cleanup Policy with *Device settings will be reset* option checked. If no Cleanup Policy is enabled, enter the following command in xref:manual-testing:device-controls.adoc#_adb_shell[adb shell]:
+
+[source]
+----
+settings put global hidden_api_policy 1
+----
