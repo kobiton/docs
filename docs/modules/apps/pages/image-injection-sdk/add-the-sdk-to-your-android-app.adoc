@@ -6,8 +6,8 @@ Learn how to implement Kobiton’s custom SDK in your Android application to ena
 == Prerequisites
 
 * Android 9 or newer.
-* An Android project with https://gradle.org/[Gradle] enabled.
-* The application uses camera2 library. See the full list of supported methods in camera2 in the supported methods section.
+* An Android project with https://gradle.org/[Gradle] build tool.
+* The application uses `camera2` library. See the xref:apps:image-injection-sdk/supported-methods.adoc[full list] of supported methods in `camera2`.
 * Download the Image Injection SDK file https://kobiton.s3.amazonaws.com/downloads/camera2.aar[here]. The downloaded file name should be: `camera2.arr`.
 
 == Integrate the SDK
@@ -44,3 +44,36 @@ image:NEW$[]
 
 Replace all texts in the project according to the below table to replace the stock Android library with the custom Kobiton library:
 
+[options="header"]
+|=======================
+|Replace | With
+|`android.hardware.camera2.CameraCaptureSession` | `kobiton.hardware.camera2.CameraCaptureSession`
+|`android.hardware.camera2.CameraDevice` | `kobiton.hardware.camera2.CameraDevice`
+|`android.hardware.camera2.CameraManager` | `kobiton.hardware.camera2.CameraManager`
+|`android.hardware.camera2.CaptureRequest` | `kobiton.hardware.camera2.CaptureRequest`
+|`android.hardware.camera2.params.SessionConfiguration` | `kobiton.hardware.camera2.params.SessionConfiguration`
+|`android.media.ImageReader` | `kobiton.media.ImageReader`
+|=======================
+
+Update the CameraManager's initial method by replacing `Context.getSystemService(Context.CAMERA_SERVICE)` with `CameraManager.getInstance(context)`. For example, replace:
+
+[source]
+----
+private val cameraManager: CameraManager by lazy {
+        val context = requireContext().applicationContext
+        context.getSystemService(Context.CAMERA_SERVICE) as CameraManager
+}
+----
+
+with
+
+[source]
+----
+private val cameraManager: CameraManager by lazy {
+    CameraManager.getInstance(requireContext().applicationContext)
+}
+----
+
+After all the above changes are made, package your app into an `.apk`, `.aab` or `.zip` file.
+
+Upload and install the app package, then follow xref:manual-testing:test-your-app-camera.adoc[this guide] to start using image injection.
