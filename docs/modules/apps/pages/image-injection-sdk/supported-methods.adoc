@@ -1,0 +1,170 @@
+= Supported methods of image injection SDK
+:navtitle: Supported methods of image injection SDK
+
+This article list all supported methods for the custom `camera2` library for xref:apps:image-injection-sdk/add-the-sdk-to-your-android-app.adoc[image injection].
+
+== Supported methods
+
+* CameraManager
+
+** getCameraIdList()
+
+** registerAvailabilityCallback(AvailabilityCallback callback, Handler handler)
+
+** registerAvailabilityCallback(Executor executor, AvailabilityCallback callback)
+
+** unregisterAvailabilityCallback(AvailabilityCallback callback)
+
+** registerTorchCallback(TorchCallback callback, Handler handler)
+
+** registerTorchCallback(Executor executor, TorchCallback callback)
+
+** unregisterTorchCallback(TorchCallback callback)
+
+** getCameraCharacteristics(String cameraId)
+
+** openCamera(String cameraId, StateCallback callback, Handler handler)
+
+** openCamera(String cameraId, Executor executor, StateCallback callback)
+
+** setTorchMode(String cameraId, boolean enabled)
+
+* CameraDevice
+
+** close()
+
+** createCaptureSession(List<Surface> outputs,StateCallback callback, Handler handler)
+
+** createCaptureSessionByOutputConfigurations(List<OutputConfiguration> outputConfigurations, CameraCaptureSession.StateCallback callback, Handler handler)
+
+** createCaptureSession(SessionConfiguration config)
+
+** createCaptureRequest(int templateType, Set<String> physicalCameraIdSet)
+
+** createCaptureRequest(int templateType)
+
+** createReprocessCaptureRequest(TotalCaptureResult inputResult)
+
+** isSessionConfigurationSupported(SessionConfiguration sessionConfig)
+
+* CaptureRequest
+
+** getTag()
+
+** getKeys()
+
+** isReprocess()
+
+** get(CaptureRequest.Key<T> key)
+
+** equals(Object other)
+
+** hashCode()
+
+** describeContents()
+
+** writeToParcel(Parcel dest, int flags)
+
+* CaptureRequest.Builder
+
+** addTarget(Surface outputTarget)
+
+** removeTarget(Surface outputTarget)
+
+** set(CaptureRequest.Key<T> key, T value)
+
+** get(CaptureRequest.Key<T> key)
+
+** setPhysicalCameraKey(CaptureRequest.Key<T> key, T value, String physicalCameraId)
+
+** getPhysicalCameraKey(CaptureRequest.Key<T> key, String physicalCameraId)
+
+** setTag(Object tag)
+
+** build()
+
+* CameraCaptureSession
+
+** getDevice()
+
+** prepare(Surface surface)
+
+** capture(CaptureRequest request, CameraCaptureSession.CaptureCallback callback, Handler handler)
+
+** captureSingleRequest(CaptureRequest request, Executor executor, CameraCaptureSession.CaptureCallback callback)
+
+** captureBurst(List<CaptureRequest> requests, CameraCaptureSession.CaptureCallback callback, Handler handler)
+
+** captureBurstRequests(List<CaptureRequest> requests, Executor executor, CameraCaptureSession.CaptureCallback callback)
+
+** setRepeatingRequest(CaptureRequest request, CameraCaptureSession.CaptureCallback callback, Handler handler)
+
+** setSingleRepeatingRequest(CaptureRequest request, Executor executor, CameraCaptureSession.CaptureCallback callback)
+
+** setRepeatingBurst(List<CaptureRequest> requests, CameraCaptureSession.CaptureCallback callback, Handler handler)
+
+** setRepeatingBurstRequests(List<CaptureRequest> requests, Executor executor, CameraCaptureSession.CaptureCallback callback)
+
+** stopRepeating()
+
+** abortCaptures()
+
+** updateOutputConfiguration(OutputConfiguration config)
+
+** isReprocessable()
+
+** getInputSurface()
+
+** close()
+
+* ImageReader
+
+** getWidth()
+
+** getHeight()
+
+** getImageFormat()
+
+** getMaxImages()
+
+** getSurface()
+
+** acquireLatestImage()
+
+** acquireNextImage()
+
+** setOnImageAvailableListener(ImageReader.OnImageAvailableListener listener, Handler handler)
+
+** close()
+
+** discardFreeBuffers()
+
+** finalize()
+
+* SessionConfiguration
+
+** getSessionConfiguration()
+
+** writeToParcel(Parcel dest, int flags)
+
+** describeContents()
+
+** equals(Object obj)
+
+** hashCode()
+
+** getSessionType()
+
+** getOutputConfigurations()
+
+** getStateCallback()
+
+** getExecutor()
+
+** setInputConfiguration(InputConfiguration input)
+
+** getInputConfiguration()
+
+** setSessionParameters(CaptureRequest params)
+
+** getSessionParameters()
