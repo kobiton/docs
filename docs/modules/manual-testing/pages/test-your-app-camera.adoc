@@ -1,11 +1,19 @@
-= Test your app camera
-:navtitle: Test your app camera
+= Use image injection
+:navtitle: Use image injection
 
 Learn how to test your app camera using image injection, so you can ensure end-users can take photos or scan QR codes with your app.
 
 == Before you start
 
-You'll need to enable *Instrument application for camera injection* when xref:manual-testing:install-an-app.adoc[installing your app] before you can test your in-app camera.
+There are 2 ways to enable image injection for your app:
+
+* Either enable *Instrument application for camera injection* when xref:manual-testing:install-an-app.adoc[installing your app] before you test your in-app camera.
+* Or follow xref:apps:image-injection-sdk/add-the-sdk-to-your-android-app.adoc[this guide] to add Kobiton image injection SDK into your Android apps.
++
+[IMPORTANT]
+====
+Do not enable *Instrument application for camera injection* when installing an app that already has image injection SDK added.
+====
 
 == Add an image to the library
 

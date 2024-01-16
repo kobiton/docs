@@ -1,0 +1,46 @@
+= Add image injection SDK to your Android app
+:navtitle: Add the image injeciton SDK to your Android app
+
+Learn how to implement Kobiton’s custom SDK in your Android application to enable Image Injection.
+
+== Prerequisites
+
+* Android 9 or newer.
+* An Android project with https://gradle.org/[Gradle] enabled.
+* The application uses camera2 library. See the full list of supported methods in camera2 in the supported methods section.
+* Download the Image Injection SDK file https://kobiton.s3.amazonaws.com/downloads/camera2.aar[here]. The downloaded file name should be: `camera2.arr`.
+
+== Integrate the SDK
+
+Create a new folder named *libs* under `<project_folder>/app`, where `<project_folder>` is the root folder of the Android project to be altered. Copy the downloaded `camera2.arr` file into the newly created folder.
+
+image:NEW$[]
+
+Under `<project_folder>/app`, edit the *build.gradle* file and add the following line under *dependencies*  to allow your application to use the `.arr` file:
+
+[source]
+----
+implementation fileTree(dir: 'libs', include: ['*.aar'])
+----
+
+Under `<project_folder>/app/src/main`, edit the *AndroidManifest.xml* file and add the following lines within the _application_ tag. This service is used to connect the SDK to Kobiton Server.
+
+[source]
+----
+<service android:name="kobiton.hardware.camera2.ImageInjectionClient" />
+----
+
+image:NEW$[]
+
+Within the same *AndroidManifest.xml* file as above, add the following lines within the `manifest` tag to grant the 2 permissions `INTERNET` and `ACCESS_NETWORK_STATE` for the SDK to connect to Kobiton’s Server.
+
+[source]
+----
+<uses-permission android:name="android.permission.INTERNET" />
+<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+----
+
+image:NEW$[]
+
+Replace all texts in the project according to the below table to replace the stock Android library with the custom Kobiton library:
+
