@@ -14,7 +14,7 @@ Learn how to implement Kobiton’s custom SDK in your Android application to ena
 
 Create a new folder named *libs* under `<project_folder>/app`, where `<project_folder>` is the root folder of the Android project to be altered. Copy the downloaded `camera2.arr` file into the newly created folder.
 
-image:NEW$[]
+image:apps:camera2-under-libs.png[width=500,alt="The camera2 file under the libs folder"]
 
 Under `<project_folder>/app`, edit the *build.gradle* file and add the following line under *dependencies*  to allow your application to use the `.arr` file:
 
@@ -30,7 +30,7 @@ Under `<project_folder>/app/src/main`, edit the *AndroidManifest.xml* file and a
 <service android:name="kobiton.hardware.camera2.ImageInjectionClient" />
 ----
 
-image:NEW$[]
+image:apps:android-manifest-service-content.png[width=1000,alt="The new service line in android manifest"]
 
 Within the same *AndroidManifest.xml* file as above, add the following lines within the `manifest` tag to grant the 2 permissions `INTERNET` and `ACCESS_NETWORK_STATE` for the SDK to connect to Kobiton’s Server.
 
@@ -40,7 +40,7 @@ Within the same *AndroidManifest.xml* file as above, add the following lines wit
 <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 ----
 
-image:NEW$[]
+image:apps:android-manifest-uses-permission-content.png[width=1000,alt="The new uses permission line in android manifest"]
 
 Replace all texts in the project according to the below table to replace the stock Android library with the custom Kobiton library:
 
