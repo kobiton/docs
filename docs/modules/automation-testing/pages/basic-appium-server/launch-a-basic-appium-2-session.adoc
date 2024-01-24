@@ -1,0 +1,92 @@
+= Launch a basic Appium 2.0 session on Kobiton 4+ [Alpha release]
+:navtitle: Launch a basic Appium 2.0 session [Alpha]
+
+Kobiton 4+ includes two ways to run mobile automation: Xium, Kobiton's high-speed reimplementation of Appium Server, and basic Appium 2.0.
+
+The default mobile automation method is Xium. Follow this guide to switch to basic Appium 2.0 for your automation session.
+
+Note that basic Appium 2.0 support is an alpha release, so it currently has several limitations that will be considered for future releases.
+
+== Prerequisites
+
+A basic Appium 2.0 session can only be launched on devices hosted by Kobiton v4.9 or above.
+
+== Modify the capabilities in your Appium script
+
+The following modifications must be made to the capabilities of your existing Xium script to run a basic Appium 2.0 session successfully:
+
+=== Add _kobiton:runtime_
+
+Add the `'kobiton:runtime'` capability to your script’s desired capabilities list. The value of this capability must be `'appium'` to launch a basic Appium 2.0 session.
+
+=== Specify _automationName_
+
+The `'appium:automationName'` capability is mandatory in Appium 2.0. This capability must have either of the below values:
+
+* `'XCUITest'` for iOS devices.
+* `'UIAutomator2'` for Android devices.
+
+=== Add vendor prefixes
+
+With https://appium.io/docs/en/2.1/guides/migrating-1-to-2/[Appium 2.0], vendor prefixes must be added to non-standard capabilities. The list of standard capabilities is given in the https://www.w3.org/TR/webdriver/#capabilities[WebDriver Protocol specifications] and includes a few commonly used capabilities such as `browserName` and `platformName`.
+
+For non-standard capabilities, unless there are specific instructions from Kobiton to use the `kobiton:` vendor prefix, add `appium:` prefix to all of them.
+
+=== Example
+
+Below is a sample list of capabilities that can be used on a Xium session:
+
+[source,javascript]
+----
+const desiredCaps = {
+
+      bundleId: 'com.example.ToDoApp',
+      deviceOrientation: 'portrait',
+      sessionName: 'Automation iOS Hybrid App',
+      sessionDescription: 'Automation session',
+      noReset: true,
+      fullReset: false,
+      captureScreenshots: true,
+      networkActivity: false,
+      app: 'kobiton-store:v657531',
+      deviceGroup: 'ORGANIZATION',
+      deviceName: '*',
+      udid: 'aa2ace81ea5b7e6164965b97c5bf432432',
+      platformName: 'iOS',
+
+ }
+----
+
+After modification to run Appium 2.0, it should look like the below:
+
+[source,javascript]
+----
+const desiredCaps = {
+
+      'kobiton:runtime': 'appium',
+      'appium:automationName': 'XCUITest',
+      'appium:bundleId': 'com.example.ToDoApp',
+      'appium:deviceOrientation': 'portrait',
+      'appium:sessionName': 'Automation iOS Hybrid App',
+      'appium:sessionDescription': 'Automation session',
+      'appium:noReset': true,
+      'appium:fullReset': false,
+      'appium:captureScreenshots': true,
+      'appium:networkActivity': false,
+      'appium:app': 'kobiton-store:v657531',
+      'appium:deviceGroup': 'ORGANIZATION',
+      'appium:deviceName': '*',
+      'appium:udid': 'aa2ace81ea5b7e6164965b97c5bf432432',
+      'platformName': 'iOS'
+ }
+----
+
+Once these changes are made, your script is ready to run basic Appium 2.0 sessions on Kobiton.
+
+== Known issues/Limitations
+
+* Android testing with basic Appium 2.0 is only available for Ubuntu GEM or Standard mode; iOS can be tested with Ubuntu GEM, nixOS GEM, and Standard mode.
+* No session exhaust is available, which means there are no screenshots, device logs, Appium logs, system metrics at this time. When reviewing sessions, only Session Overview has content; Session Explorer is not available.
+* Session video is not available for Android devices.
+* AI features - including Scriptless, generate Appium script, validations, and flexCorrect - are not supported for basic Appium 2.0 sessions as they rely heavily on exhaust.
+* Users will not be able to run mixed sessions with basic Appium 2.0 sessions.
