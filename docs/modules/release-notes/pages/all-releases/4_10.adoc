@@ -20,13 +20,14 @@ Kobiton 4.10 adds support for the following:
 * For iOS/iPadOS 17.2.1 and 17.3 RC, recent apps are not closed during the cleanup process.
 ====
 
+[#_enhanced_handling_of_sensitive_data_in_manual_and_scriptless_sessions]
 == Enhanced handling of sensitive data in manual and Scriptless sessions
 
-Before this release, inputting sensitive data within a manual testing session was considered an unsupported AI action, and the session became ineligible for our AI functionality, such as Scriptless and generating an Appium script. This release introduces improved security measures for manual sessions with sensitive data and enables these sessions to utilize our AI functionality.
+Before this release, inputting sensitive data within a manual testing session was considered an unsupported AI action, and the session became ineligible for our AI functionality, such as Scriptless and generating an Appium script.This release introduces improved security measures for manual sessions with sensitive data and enables these sessions to utilize our AI functionality.
 
 Here’s how it works:
 
-* Follow xref:manual-testing:device-controls.adoc#_input_sensitive_data[these instructions] to input sensitive data via the left-hand navigation in a manual session. (If data is not entered via the manual session control, the session will not be considered sensitive.)
+* Follow xref:manual-testing:device-controls.adoc#_input_sensitive_data[these instructions] to input sensitive data via the left-hand navigation in a manual session.(If data is not entered via the manual session control, the session will not be considered sensitive.)
 
 * *New sensitive session indicator*:
 
@@ -90,7 +91,7 @@ Appium Flutter driver is in Alpha version with the following limitations:
 * All limitations of our basic Appium 2.0 functionality apply.
 * Only Android devices hosted via Standard mode are supported at this time.
 
-See the detailed guide xref:automation-testing:test.adoc[here].
+See the detailed guide xref:automation-testing:basic-appium-server/launch-an-appium-flutter-driver-session.adoc[here].
 
 == Capture free drawing in a manual session
 
