@@ -1,0 +1,70 @@
+= Launch an Appium Flutter driver session on Kobiton 4+ (Alpha)
+:navtitle: Launch an Appium Flutter driver session (Alpha)
+
+Learn how to perform automation testing using the Appium Flutter driver on Kobiton 4+ devices.
+
+== Prerequisites
+
+* Familiarity with creating, signing, and building https://docs.flutter.dev/[Flutter apps].
+* Familiarity with writing and running Appium tests.
+
+== Preprocess your Flutter App
+
+The Appium Flutter Driver uses the https://github.com/dart-lang/sdk/blob/master/runtime/vm/service/service.md[Dart VM Service Protocol] with the extension `ext.flutter.driver`, similar to Flutter Driver, to control the Flutter app-under-test (AUT). This needs to be enabled in the AUT before the app can be tested with Appium Flutter Driver and can be done by following the steps below:
+
+Open your Flutter project in your favorite IDE.
+
+In the `pubspec.yaml` file, add the following dependencies:
+
+[source]
+----
+#...
+dev_dependencies:
+  test: any
+  flutter_test:
+    sdk: flutter
+  flutter_driver:
+    sdk: flutter
+#...
+----
+
+Both libraries provide functions and APIs to write tests for Flutter apps.
+
+Run the following command to install the `dev_dependencies` that you added in the previous step.
+
+[source]
+----
+flutter pub get
+----
+
+Now edit the `lib/main.dart` file in your Flutter project and add the following code statement.
+
+[source]
+----
+import 'package:flutter_driver/driver_extension.dart';
+----
+
+This statement imports the `driver_extension.dart` file from the flutter_driver library and is the first step to enable the Flutter Driver extension.
+
+Add the following code statement in the `lib/main.dart` file of your Flutter project to run the `enableFlutterDriverExtension()` function.
+
+[source]
+----
+void main() {
+  // This line enables the extension
+  enableFlutterDriverExtension();
+
+  runApp(const MyApp());
+}
+----
+
+Check out the https://api.flutter.dev/flutter/flutter_driver_extension/enableFlutterDriverExtension.html[article] about `enableFlutterDriverExtension` function to learn more about its powers.
+
+== Build your Flutter App
+
+After you have enabled the Flutter Driver extension, you can now build your app for testing.
+
+Open your Flutter project in your favorite IDE or open a terminal in the root directory of your Flutter project.
+
+Choose a device type (Android emulator/real device or iOS real device) to build your app and run one of the following commands:
+
