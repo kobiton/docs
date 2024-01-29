@@ -22,3 +22,17 @@ Once your first and second sessions are running simultaneously on the same devic
 image:automation-testing:mixed-session-context.png[width=1000,alt="A context to filter Mixed session in the Session"]
 
 Now you can view your script running on the device and fix issues in realtime.
+
+== Limitations/Notes
+
+* In a Mixed session, both the Manual and Automation session must be initiated by the same user.
+
+* Mixed session is only available for Kobiton 4+ devices.
+
+* We only support running Appium test in Mixed Session for now. Other automation frameworks eg. Espresso, XCUITest are not supported yet.
+
+* We don't support Session explorer for Mixed Session, ie. it is not possible to view the detailed steps and screenshots for Mixed sessions.
+
+* We haven't supported Kobiton Scriptless and Appium Script Export for Mixed session yet.
+
+* If you use public devices for Mixed Session, you will be charged minutes for the total time usage on the device.
