@@ -90,3 +90,16 @@ Once these changes are made, your script is ready to run basic Appium 2.0 sessio
 * Session video is not available for Android devices.
 * AI features - including Scriptless, generate Appium script, validations, and flexCorrect - are not supported for basic Appium 2.0 sessions as they rely heavily on exhaust.
 * Users will not be able to run mixed sessions with basic Appium 2.0 sessions.
+
+== Troubleshooting
+
+=== Check the current Appium Server version
+
+Access the Mac mini host directly of via SSH.
+
+Enter the following command to check the Appium Server version:
+
+[source,bash]
+----
+/usr/local/deviceconnect/appium-server/index.js --version
+----
