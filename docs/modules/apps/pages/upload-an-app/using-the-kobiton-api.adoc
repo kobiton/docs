@@ -38,7 +38,7 @@ A successful response will return the following:
 ----
 {
     "app_path": "users/1/apps/MyApp‐237824a0‐302c‐9bfd‐ff417c89610a.ipa",
-    "url": "https://kobiton-xx.s3.amazonaws.com/users/1/apps/MyApp‐12b27d40-1ff5-11ee-9992-8d505d811030.ipa?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=admin%2F20230711%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20230711T141313Z&X-Amz-Expires=43200&X-Amz-SignedHeaders=host&X-Amz-Signature=84b350ede5c07b825cc4efa1ee82f09a81660da84f3283c1ee3abee7b93e2a13"
+    "url": "https://kobiton-us-west.s3.amazonaws.com/users/78042/apps/MyApp-57b15160-cf17-11ee-98d5-e949a34321c7f.ipa?AWSAccessKeyId=AKIAYOIAYUIRGDSFS6QO&Content-Type=application%2Foctet-stream&Expires=1708384165&Signature=VHTRqXdIpKmbvauPsdfsKJhAgk%3D&x-amz-acl=private&x-amz-meta-appid=600841&x-amz-meta-createdby=78042&x-amz-meta-organizationid=681&x-amz-tagging=unsaved%3Dtrue"
 }
 ----
 
@@ -50,7 +50,7 @@ Make a `PUT` request to the `url` you generated in the previous step.
 
 [source,shell]
 ----
-curl -X PUT "${url}" \
+curl -X PUT ${url} \
   -H "Content-Type: application/octet-stream" \
   -H "x-amz-tagging: unsaved=true" \
   -T ${file_path}
@@ -58,7 +58,7 @@ curl -X PUT "${url}" \
 
 This request must contains:
 
-* `+${url}+`: the `url` obtained from the xref:_generate_an_upload_url[previous section]. Use the exact full URL.
+* `+${url}+`: the `url` obtained from the xref:_generate_an_upload_url[previous section]. Use the exact full URL without quote.
 * `+${file_path}+`: the path to the app package file you want to upload. Make sure it is of a xref:apps:supported-filetypes.adoc[supported filetype].
 
 If the response is blank, then the file is uploaded successfully.
