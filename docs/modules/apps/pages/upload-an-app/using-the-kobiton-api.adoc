@@ -23,7 +23,7 @@ In a terminal of your choice, make a `POST` request to `/v2/apps/uploadUrl`, whi
 curl -X POST https://api.kobiton.com/v2/apps/upload-url \
   -H 'Authorization: Basic ${yourBase64String}' \
   -H 'Content-Type: application/json' \
-  -d '{ "file_name": "${app_file_name}","app_id": ${app_id} }'
+  -d '{ "file_name": "${app_file_name}" , "app_id": ${app_id} }'
 ----
 
 The request contains 2 parameters:
@@ -38,7 +38,7 @@ A successful response will return the following:
 ----
 {
     "app_path": "users/1/apps/MyApp‐237824a0‐302c‐9bfd‐ff417c89610a.ipa",
-    "url": "https://kobiton-us.s3.amazonaws.com/users/1/apps/MyApp‐12b27d40-1ff5-11ee-9992-8d505d811030.ipa?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=admin%2F20230711%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20230711T141313Z&X-Amz-Expires=43200&X-Amz-SignedHeaders=host&X-Amz-Signature=84b350ede5c07b825cc4efa1ee82f09a81660da84f3283c1ee3abee7b93e2a13"
+    "url": "https://kobiton-xx.s3.amazonaws.com/users/1/apps/MyApp‐12b27d40-1ff5-11ee-9992-8d505d811030.ipa?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=admin%2F20230711%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20230711T141313Z&X-Amz-Expires=43200&X-Amz-SignedHeaders=host&X-Amz-Signature=84b350ede5c07b825cc4efa1ee82f09a81660da84f3283c1ee3abee7b93e2a13"
 }
 ----
 
@@ -74,7 +74,7 @@ curl -X POST https://api.kobiton.com/v2/apps \
     -H 'Authorization: Basic ${yourBase64String}' \
     -H 'Content-Type: application/json' \
     -H 'Accept: application/json' \
-    -d '{ "file_name": "${app_file_name}","app_path": "${app_path}" }'
+    -d '{ "file_name": "${app_file_name}" , "app_path": "${app_path}" }'
 ----
 
 This request contains 2 parameters:
