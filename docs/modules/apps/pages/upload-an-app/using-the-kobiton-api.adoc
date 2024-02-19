@@ -20,7 +20,7 @@ In a terminal of your choice, make a `POST` request to `/v2/apps/uploadUrl`, whi
 
 [source,shell]
 ----
-curl -X POST https://api.kobiton.com/v2/apps/uploadUrl \
+curl -X POST https://api.kobiton.com/v2/apps \
   -H 'Authorization: Basic ${yourBase64String}' \
   -H 'Content-Type: application/json' \
   -d '{ "file_name": "${app_file_name}","app_id": ${app_id} }'
@@ -28,8 +28,8 @@ curl -X POST https://api.kobiton.com/v2/apps/uploadUrl \
 
 The request contains 2 parameters:
 
-* `$+{app_id}+`: (optional) if another version of this app is already uploaded, provide the `app_id` of the existing app.Example: `100`.
-* `$+{app_file_name}+`: (required) provide the name of the app file to upload.Example: `MyApp.ipa`.
+* `+${app_id}+`: (optional) if another version of this app is already uploaded, provide the `app_id` of the existing app.Example: `100`.
+* `+${app_file_name}+`: (required) provide the name of the app file to upload.Example: `MyApp.ipa`.
 
 A successful response will return the following:
 
@@ -58,8 +58,8 @@ curl -X PUT "${url}" \
 
 This request must contains:
 
-* `$+{url}+`: the `url` obtained from the xref:_generate_an_upload_url[previous section]. Use the exact full URL.
-* `$+{file_path}+`: the path to the app package file you want to upload. Make sure it is of a xref:apps:supported-filetypes.adoc[supported filetype].
+* `+${url}+`: the `url` obtained from the xref:_generate_an_upload_url[previous section]. Use the exact full URL.
+* `+${file_path}+`: the path to the app package file you want to upload. Make sure it is of a xref:apps:supported-filetypes.adoc[supported filetype].
 
 If the response is blank, then the file is uploaded successfully.
 
@@ -79,8 +79,8 @@ curl -X POST https://api.kobiton.com/v2/apps \
 
 This request contains 2 parameters:
 
-* `$+{app_path}+`: (required) use the value of `app_path` in the response of xref:_generate_an_upload_url[this step].
-* `$+{app_file_name}+`: (optional) specify the name of the app. If not declared, the name of the file from `$+{app_path}+` is used.
+* `+${app_path}+`: (required) use the value of `app_path` in the response of xref:_generate_an_upload_url[this step].
+* `+${app_file_name}+`: (optional) specify the name of the app. If not declared, the name of the file from `+${app_path}+` is used.
 
 If your request was successful, `POST` will return a `200` status with the following response:
 
@@ -108,7 +108,7 @@ curl -X GET -H https://api.kobiton.com/v2/apps/parsing-status?appVersionId=${ver
 
 This request contains 1 parameter:
 
-* `$+{version_id}+`: (required) use the value of `version_id` in the response of xref:_create_app_or_app_version[this step].
+* `+${version_id}+`: (required) use the value of `version_id` in the response of xref:_create_app_or_app_version[this step].
 
 If your request was successful, `GET` will return a `200` status with the following response:
 
