@@ -101,7 +101,7 @@ Make a `GET` request to obtain the parsing status and the `app_id` of your newly
 [source,shell]
 ----
 
-curl -X GET https://api.kobiton.com/v2/apps/parsing-status?appVersionId=${version_id} \
+curl -X GET 'https://api.kobiton.com/v2/apps/parsing-status?appVersionId=${version_id}' \
     -H 'Authorization: Basic ${yourBase64String}'
 
 ----
