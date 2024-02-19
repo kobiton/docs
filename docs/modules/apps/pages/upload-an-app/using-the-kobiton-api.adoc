@@ -53,7 +53,7 @@ Make a `PUT` request to the `url` you generated in the previous step.
 curl -X PUT "${url}" \
   -H "Content-Type: application/octet-stream" \
   -H "x-amz-tagging: unsaved=true" \
-  -T ${file_path} \
+  -T ${file_path}
 ----
 
 This request must contains:
