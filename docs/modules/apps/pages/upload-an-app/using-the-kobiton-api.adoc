@@ -20,7 +20,7 @@ In a terminal of your choice, make a `POST` request to `/v2/apps/uploadUrl`, whi
 
 [source,shell]
 ----
-curl -X POST https://api.kobiton.com/v2/apps \
+curl -X POST https://api.kobiton.com/v2/apps/upload-url \
   -H 'Authorization: Basic ${yourBase64String}' \
   -H 'Content-Type: application/json' \
   -d '{ "file_name": "${app_file_name}","app_id": ${app_id} }'
