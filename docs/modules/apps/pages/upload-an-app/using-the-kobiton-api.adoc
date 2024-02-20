@@ -16,7 +16,7 @@ include::automation-testing:partial$configure-your-authorization-header.adoc[]
 [#_generate_an_upload_url]
 == Generate an upload URL
 
-In a terminal of your choice, make a `POST` request to `/v2/apps/uploadUrl`, which will generate a unique upload URL that connects to our private S3 bucket on Amazon Web Services (AWS). The sample cURL command of the request is:
+In a terminal, make a `POST` request to `/v2/apps/uploadUrl` to generate a unique upload URL that connects to our private S3 bucket on Amazon Web Services (AWS). Use the following cURL command:
 
 [source,shell]
 ----
@@ -26,20 +26,17 @@ curl -X POST https://api.kobiton.com/v2/apps/upload-url \
   -d '{ "file_name": "${app_file_name}" , "app_id": ${app_id} }'
 ----
 
-The request contains 2 parameters:
+The request has 2 parameters:
 
-* `+${app_id}+`: (optional) if another version of this app is already uploaded, provide the `app_id` of the existing app. _Example_: `100`.
+* `+${app_id}+`: (optional) Provide the `app_id` if another version of this app is already uploaded. _Example_: `100`.
+* `+${app_file_name}+`: (required) Name of the app file to upload. _Example_: `MyApp.ipa`.
 
-[NOTE]
+[TIP]
 ====
-You can look up `app_id` in xref:apps:app-metadata.adoc#_app_id[app metadata].
+You can look up the `app_id` in xref:apps:app-metadata.adoc#_app_id[app metadata].
 ====
 
-* `+${app_file_name}+`: (required) provide the name of the app file to upload. _Example_: `MyApp.ipa`.
-
-Throughout this page, in each section you will be provided with an example. The example provides the commands to execute the uploading of a fake app named MyApp.ipa. We will guide you through uploading this app in each section. In the example, MyApp.ipa is a new application and you will not provide the optional app_id.
-
-For this first one, your command would be:
+We will use the app `MyApp.ipa` throughout this guide to demonstrate the upload process. Assuming this app does not exist in the repository, there is no need to specify an `app_id`:
 
 [source,shell]
 ----
@@ -64,7 +61,7 @@ Save the above values for the next sections.
 
 == Upload app file to S3 storage
 
-Make a `PUT` request to the `url` you generated in the previous step.
+Make a `PUT` request to the previously generated `url` to upload the app file to S3 storage.
 
 [source,shell]
 ----
@@ -74,12 +71,12 @@ curl -X PUT ${url} \
   -T ${file_path}
 ----
 
-This request must contains:
+This request requires:
 
-* `+${url}+`: the `url` obtained from the xref:_generate_an_upload_url[previous section]. Use the exact full URL without quote.
-* `+${file_path}+`: the path to the app package file you want to upload. Make sure it is of a xref:apps:supported-filetypes.adoc[supported filetype].
+* `+${url}+`: The `url` obtained from the xref:_generate_an_upload_url[previous section].
+* `+${file_path}+`: Path to the app package file you want to upload.
 
-Using the Example from the previous section, your command would be:
+Example command using the previous section's response:
 
 [source,shell]
 ----
@@ -89,12 +86,12 @@ curl -X PUT https://kobiton-us-west.s3.amazonaws.com/users/78042/apps/MyApp-57b1
   -T /the/full/file/path/on/my/local/computer/MyApp.ipa
 ----
 
-If the response is blank, then the file is uploaded successfully.
+A blank response indicates a successful upload.
 
 [#_create_app_or_app_version]
 == Create the app or app version in the app repository
 
-Make a `POST` request to create the entry for the app or app version in the app repository in Kobiton.
+Make a `POST` request to create the entry for the app or app version in the app repository on Kobiton.
 
 [source,shell]
 ----
@@ -107,10 +104,10 @@ curl -X POST https://api.kobiton.com/v2/apps \
 
 This request contains 2 parameters:
 
-* `+${app_path}+`: (required) use the value of `app_path` in the response of xref:_generate_an_upload_url[this step].
-* `+${app_file_name}+`: (optional) specify the name of the app. If not declared, the name of the file from `+${app_path}+` is used.
+* `+${app_path}+`: (required) Use the value of `app_path` from the xref:_generate_an_upload_url[previous step].
+* `+${app_file_name}+`: (optional) Specify the name of the app. If not provided, the name of the file from `+${app_path}+` is used.
 
-Continuing on with the example, your command would be:
+Continuing on from the previous steps, your command would be:
 
 [source,shell]
 ----
@@ -131,7 +128,9 @@ If your request was successful, `POST` will return a `200` status with the follo
 }
 ----
 
-In the response above, `app_id` is the ID of the new app, and `version_id` is the ID of the new application version. Both of them are used in other endpoints such as installing the app on a device, or get information about a specific app or app version. If the app file is too large, it may take a while to process the file and the value of `app_id` will be `N/A`. See the next section on how to obtain the `app_id`.
+In the response above, `app_id` is the ID of the new app, and `version_id` is the ID of the new application version.
+
+If the app file is too large, it may take a while to process the file and the value of `app_id` will be `N/A`. See the next section on how to obtain the `app_id`.
 
 == Obtain the app ID
 
@@ -145,9 +144,8 @@ curl -X GET 'https://api.kobiton.com/v2/apps/parsing-status?appVersionId=${versi
 
 ----
 
-This request contains 1 parameter:
 
-* `+${version_id}+`: (required) use the value of `version_id` in the response of xref:_create_app_or_app_version[this step].
+This request requires the `version_id` obtained from the xref:_create_app_or_app_version[previous step].
 
 Continuing on with the example, your command would be:
 
@@ -174,12 +172,12 @@ If your request was successful, `GET` will return a `200` status with the follow
 
 The response has 2 parameters:
 
-* `state`: the parsing state of the app.
-** `OK`: The uploaded application is processed by the server, and is ready to use.
-** `PARSING`: The uploaded application is still being processed by the server.
-** `FAILURE_PARSING`: The uploaded application cannot be processed by the server and cannot be used, such as invalid file type.
+* `state`: indicates the parsing status of the app.
+** `OK`: The uploaded application is processed by the server and is ready to use.
+** `PARSING`: The server is still processing the uploaded application.
+** `FAILURE_PARSING`: The server could not process the uploaded application, typically due to an invalid file type.
 
-* `app_id`: the ID of the app to use in other endpoints such as installing the app on a device, or get information about a specific app.
+* `app_id`: the ID of the app to use in other endpoints such as installing the app on a device or get information about a specific app.
 
 [NOTE]
-If you receive `error 404` with the message `App version ID ... doesn't exist` although you have created the application version yourself, it could be another user has made the application private or not available to your account. Contact an admin to ask for access to this application.
+If you receive `error 404` with the message `App version ID ... doesn't exist`, the application version might be made accessible to your account. Contact an admin for access.
