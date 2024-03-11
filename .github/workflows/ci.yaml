@@ -1,0 +1,37 @@
+name: Build and Push Image to ECR
+on:
+  workflow_dispatch:
+    inputs:
+      logLevel:
+        description: 'Log level'
+        required: true
+        default: 'info'
+        type: choice
+        options:
+          - info
+          - warning
+          - debug
+      git-ref:
+        description: Git Ref (Optional)
+        required: false
+  push:
+    branches:
+      - master
+      - main
+      - '**-rc'
+      - production
+      - 'production-hotfix'
+
+
+permissions:
+  id-token: write   # This is required for requesting the JWT
+  contents: read    # This is required for actions/checkout
+
+jobs:
+  build:
+    name: Build
+    uses: kobiton/deployment/.github/workflows/ci.yaml@master
+    with:
+      git-ref: ${{ github.event.inputs.git-ref }}
+      repo-name: 'docs'
+    secrets: inherit

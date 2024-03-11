@@ -28,7 +28,7 @@ function replaceEnvVars() {
   local ENVIRONMENT_VAR="$KOBITON_ENVIRONMENT"
 
   if [ "$ENVIRONMENT_VAR" == "standalone" ]; then
-    echo "Replace external lib: mermaid.min.js"
+    echo "> Standalone > Replace external lib to local files: mermaid.min.js"
     sed -i -e 's~https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js~../../../assets/js/mermaid.min.js~g' "$destFile"
   fi
 
