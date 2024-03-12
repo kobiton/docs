@@ -25,7 +25,14 @@ echo "docs: $KOBITON_STANDALONE_DOCS_V2_URL"
 
 function replaceEnvVars() {
   local destFile="$1"
+  local ENVIRONMENT_VAR="$KOBITON_ENVIRONMENT"
 
+  if [ "$ENVIRONMENT_VAR" == "standalone" ]; then
+    echo "> Standalone > Replace external lib to local files: mermaid.min.js"
+    sed -i -e 's~https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js~../../../assets/js/mermaid.min.js~g' "$destFile"
+  fi
+
+  # For value that can be overridden by environment variables.
   for index in "${DEFAULT_VARS[@]}"; do
     local KEY="${index%%::*}"
     local DEFAULT_VAR="${index##*::}"
@@ -33,16 +40,13 @@ function replaceEnvVars() {
 
     [ -z $ENV_VAR ] && VALUE=$DEFAULT_VAR || VALUE=$ENV_VAR
 
-    if [ "$KEY" == "KOBITON_STANDALONE_DOCS_V2_URL" ]
-    then
+    if [ "$KEY" == "KOBITON_STANDALONE_DOCS_V2_URL" ]; then
       eval "sed -i -e 's~https://docs.kobiton.com~$VALUE~g' $destFile"
-    elif [ "$KEY" == "KOBITON_STANDALONE_API_V2_DOCS_URL" ]
-    then
+    elif [ "$KEY" == "KOBITON_STANDALONE_API_V2_DOCS_URL" ]; then
       eval "sed -i -e 's~https://api.kobiton.com/v2/docs~$VALUE~g' $destFile"
     else
       echo "None of the condition met"
     fi
-
   done
 }
 
