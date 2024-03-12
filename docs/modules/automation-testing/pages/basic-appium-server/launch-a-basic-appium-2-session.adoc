@@ -1,11 +1,11 @@
-= Launch a basic Appium 2.0 session on Kobiton 4+ [Alpha release]
-:navtitle: Launch a basic Appium 2.0 session [Alpha]
+= Launch a basic Appium 2.0 session on Kobiton 4+ [Beta]
+:navtitle: Launch a basic Appium 2.0 session [Beta]
 
 Kobiton 4+ includes two ways to run mobile automation: Xium, Kobiton's high-speed reimplementation of Appium Server, and basic Appium 2.0.
 
 The default mobile automation method is Xium. Follow this guide to switch to basic Appium 2.0 for your automation session.
 
-Note that basic Appium 2.0 support is an alpha release, so it currently has several limitations that will be considered for future releases.
+Note that basic Appium 2.0 support is an beta release, so it currently has several limitations that will be considered for future releases.
 
 == Prerequisites
 
@@ -87,6 +87,6 @@ Once these changes are made, your script is ready to run basic Appium 2.0 sessio
 
 * Android testing with basic Appium 2.0 is only available for Ubuntu GEM or Standard mode; iOS can be tested with Ubuntu GEM, nixOS GEM, and Standard mode.
 * No session exhaust is available, which means there are no screenshots, device logs, Appium logs, system metrics at this time. When reviewing sessions, only Session Overview has content; Session Explorer is not available.
-* Session video is not available for Android devices.
+* In mixed sessions, manual actions on the device cannot be performed.
 * AI features - including Scriptless, generate Appium script, validations, and flexCorrect - are not supported for basic Appium 2.0 sessions as they rely heavily on exhaust.
 * Users will not be able to run mixed sessions with basic Appium 2.0 sessions.
