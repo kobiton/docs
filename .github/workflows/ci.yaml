@@ -30,7 +30,7 @@ permissions:
 jobs:
   build-docs:
     name: Build
-    uses: kobiton/deployment/.github/workflows/ci.yaml@update-workflow-portal-help
+    uses: kobiton/deployment/.github/workflows/ci.yaml@master
     with:
       git-ref: ${{ github.event.inputs.git-ref }}
       repo-name: 'documentation'
@@ -39,7 +39,7 @@ jobs:
 
   build-wiget:
     name: Build
-    uses: kobiton/deployment/.github/workflows/ci.yaml@update-workflow-portal-help
+    uses: kobiton/deployment/.github/workflows/ci.yaml@master
     with:
       git-ref: ${{ github.event.inputs.git-ref }}
       repo-name: 'portal-help'
