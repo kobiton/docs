@@ -17,23 +17,26 @@ Kobiton 4.11 adds support for the following:
 * For iOS/iPadOS 17.3.1, recent apps are not closed during the cleanup process.
 ====
 
-== Script-based Automation: video and mixed session for Basic Appium 2.0 (Beta)
+== Script-based Automation: video and mixed session for Basic Appium 2 (Beta)
 
-Session videos are now available for Basic Appium 2.0 sessions:
+Session videos are now available for Basic Appium 2 sessions:
 
 * *iOS*: Supported in both Standard Mode and Lightning Mode with NixOS and Ubuntu GEM.
 * *Android*: Supported in both Standard Mode and Lightning Mode, but only with Ubuntu GEM deployment.
 
 This release also provides the ability to perform a mixed session - which means you can view the automation test being performed via a manual session. You can view the session, but cannot perform manual actions on the device via the manual session for Basic Appium 2 mixed sessions.
 
-Our Beta basic Appium 2.0 server currently has the following limitations:
+[NOTE]
+====
+Our Beta basic Appium 2 server currently has the following limitations:
 
 * *Android testing*: Only available for deployments using the Ubuntu GEM or Standard mode. (iOS testing is supported for Ubuntu GEM, nixOS GEM, and Standard mode.)
 * *Limited session exhaust*: Sessions will not include screenshots, device logs, Appium logs, or system metrics. Only Session Overview is available; Session Explorer is not accessible.
 * *AI features*: Scriptless automation, Appium script generation, validations, and flexCorrect are not supported as they rely on session exhaust.
 * *Mixed sessions*: Manual interactions are not supported.
+====
 
-== Script-based Automation: install and use Appium Gesture plugin for Basic Appium 2.0 (Beta)
+== Script-based Automation: install and use Appium Gesture plugin for Basic Appium 2 (Beta)
 
 This release enables the installation of the Appium Gesture plugin on the Mac mini host, allowing scripts that utilize the Appium Gesture plugin to run on devices hosted by the Mac mini.
 
@@ -41,8 +44,6 @@ See xref:automation-testing:basic-appium-server/install-appium-gesture-plugin.ad
 
 [NOTE]
 ====
-_Prerequisites/limitations:_
-
 * Available for Mac mini hosts running deviceConnect 4.9 and later.
 * Each Mac mini host must have the Appium Gesture plugin installed.
 * Not available for Public devices.
@@ -55,8 +56,6 @@ With this release, the screenshot of the device at the moment the session ends i
 
 [NOTE]
 ====
-_Prerequisites/limitations:_
-
 * Manual and automation sessions only. _Exit session_ step is not shown in Test Cases, Scriptless revisit, and Mixed sessions.
 * For automation sessions, the _exit session_ step does not have HTTP header.
 * The _exit session_ step may require a refresh to show up after a session ends.
