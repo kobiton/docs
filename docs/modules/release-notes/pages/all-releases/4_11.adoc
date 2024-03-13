@@ -22,22 +22,22 @@ Kobiton 4.11 adds support for the following:
 Session videos are now available for Basic Appium 2.0 sessions:
 
 * *iOS*: Supported in both Standard Mode and Lightning Mode with NixOS and Ubuntu GEM.
-* *Android*: Supported in both Standard Mode and Lightning Mode, but only with Ubuntu GEM.
+* *Android*: Supported in both Standard Mode and Lightning Mode, but only with Ubuntu GEM deployment.
 
-Mixed sessions are also introduced for Basic Appium 2.0, noting that manual actions on the device cannot be performed during these sessions.
+This release also provides the ability to perform a mixed session - which means you can view the automation test being performed via a manual session. You can view the session, but cannot perform manual actions on the device via the manual session for Basic Appium 2 mixed sessions.
 
 Our Beta basic Appium 2.0 server currently has the following limitations:
 
-* *Android testing*: Only available for deployments using the Ubuntu GEM or Standard mode.
-* *iOS testing*: Supported with Ubuntu GEM, nixOS GEM, and Standard mode.
-* *No session exhaust*: Sessions will not include screenshots, device logs, Appium logs, or system metrics. Only Session Overview is available; Session Explorer is not accessible.
+* *Android testing*: Only available for deployments using the Ubuntu GEM or Standard mode. (iOS testing is supported for Ubuntu GEM, nixOS GEM, and Standard mode.)
+* *Limited session exhaust*: Sessions will not include screenshots, device logs, Appium logs, or system metrics. Only Session Overview is available; Session Explorer is not accessible.
 * *AI features*: Scriptless automation, Appium script generation, validations, and flexCorrect are not supported as they rely on session exhaust.
+* *Mixed sessions*: Manual interactions are not supported.
 
 == Script-based Automation: install and use Appium Gesture plugin for Basic Appium 2.0 (Beta)
 
 This release enables the installation of the Appium Gesture plugin on the Mac mini host, allowing scripts that utilize the Appium Gesture plugin to run on devices hosted by the Mac mini.
 
-See xref:automation-testing:basic-appium-server/install-appium-gesture-plugin.adoc[this guide] on how to install the plugin for Customer-hosted and Standalone deployments.
+See xref:automation-testing:basic-appium-server/install-appium-gesture-plugin.adoc[this guide] to install the plugin for Customer-hosted and Standalone deployments.
 
 [NOTE]
 ====
@@ -46,14 +46,12 @@ _Prerequisites/limitations:_
 * Available for Mac mini hosts running deviceConnect 4.9 and later.
 * Each Mac mini host must have the Appium Gesture plugin installed.
 * Not available for Public devices.
-* For private and local devices hosted by Kobiton, a request to Kobiton support is required for plugin installation.
+* For private and local devices hosted by Kobiton, submit a support ticket to request the plugin.
 ====
 
-== Capture screenshot of last step before a session ends
+== Introducing the exit session step
 
-Before this release, the screenshot of the device at the moment the session ends is not captured and displayed in the Session Explorer.
-
-With this release, the screenshot of the device right before the session ends is now captured. In Session Explorer, this screenshot is displayed under a new kind of step called _exit session_.
+With this release, the screenshot of the device at the moment the session ends is now included in Session Explorer. In Session Explorer, this screenshot is displayed under a new kind of step called exit session.
 
 [NOTE]
 ====
@@ -64,29 +62,16 @@ _Prerequisites/limitations:_
 * The _exit session_ step may require a refresh to show up after a session ends.
 ====
 
-== Updated flow for self-serve to access Free Trial
-
-Visitors to https://portal.kobiton.com[portal.kobiton.com] can now create a *Free Trial* account right away to try out Kobiton. The _Free Trial_ plan includes:
-
-* Unlimited expiration.
-* 60 Public minutes.
-* 1 Parallel test.
-* 1 Appium Script export.
-* Session history kept for 365 days.
-
 == Download last mile speed test in Session Overview
-
-We introduced the ability to download the last mile speed test logs from the Session Overview screen in this release.
 
 Last mile speed is the rate of data transfer from the internet service provider's network to the user's device, representing the final segment - or last mile - of the network connection. It directly impacts activities such as web browsing and streaming. For Kobiton, the last mile impacts the speed of launching the device as well as actions performed in lightning mode / standard mode.
 
-[NOTE]
-Last mile speed test does not measure the network speed from user to Kobiton server.
+This release introduces the ability to download last mile speed test logs from Session Overview to assist in diagnosing and addressing latency experienced by testers.
 
 The last mile speed test is captured periodically throughout the session. See below for the frequency of capturing:
 
 * Every 5 minutes during the first 15 minutes of a manual session.
-* After 15 minutes, the frequency of speed test is reduced: every 15 minutes from minute 15 to 60, then every 30 minutes from minute 60 to 120… and so on.
+* After 15 minutes, the frequency of the speed test is reduced: every 15 minutes from minute 15 to 60, then every 30 minutes from minute 60 to 120… and so on.
 
 Included in the last mile speed test logs are:
 
@@ -96,24 +81,28 @@ Included in the last mile speed test logs are:
 * Latency
 * Download speed
 
-The *last mile speed result* can be downloaded from the *Log* section of the *Session Overview* screen.
+The *last mile speed result* can be downloaded from the *Log* section of *Session Overview*.
+
+[NOTE]
+The last mile speed test does not measure the network speed from the user to the Kobiton server.
 
 == Minor improvements and bug fixes
 
 This release includes several enhancements and bug fixes to improve your day-to-day testing.
 
-* Script-based test automation and Device Inspector items:
-** Enlarge arrow element not shown in Kobiton Inspector but shown on Gigafox Inspector.
-** _Analyse Responses Times is available by upgrading your plan_ is shown in Session Overview whenever an automation or mixed session is running.
+* Ability to hide the Public Device tab from view if it is not included in the org subscription. Submit a ticket to our support team to request the tab to be hidden.
 
-* Improved Scriptless automation:
+* Addressed the following Script-based test automation and Device Inspector items:
+** Enlarge arrow element is shown in Gigafox Inspector, but not Kobiton Inspector.
+** The message _Analyse Responses Times is available by upgrading your plan_ no longer displays in Session Overview whenever an automation or mixed session is running.
+
+* Improved the following items in Scriptless automation:
 ** Revisit passed although the tap action was performed on the wrong element in Ipad Pro 11-inch.
 ** Revisit execution blocked due to the utilization of a delayed screen.
 ** Unusually long execution time for Scriptless process.
 
-* Others:
+* Others items addressed:
 ** Android device’s current location constantly switches back and forth between mock and real location.
 ** Failed to launch device due to exception _Too many open files in system_ thrown from device health screen service.
 ** Failed to parse `.apk` file uploaded to Kobiton store due to segmentation fault when running the `aapt dump` command.
 ** Cannot set passcode on iPads when it is placed in Landscape mode.
-** iOS 15 and above devices constantly require manual passcode input to work again.
