@@ -1,32 +1,30 @@
-= Upload an app using the Kobiton API (Terminal)
-:navtitle: Using the Kobiton API (Terminal)
+= Upload an app using the Kobiton API (Postman)
+:navtitle: Using the Kobiton API (Postman)
 
-Learn how to upload an app to the xref:manage-apps.adoc[app repository] using our link:https://api.kobiton.com/v2/docs/[REST API].
+Learn how to use Postman to upload an app to the xref:manage-apps.adoc[app repository] using our link:https://api.kobiton.com/v2/docs/[REST API].
 
 == Before you start
 
 * Make sure your app package belongs to a xref:apps:supported-filetypes.adoc[supported filetype].
 * xref:profile:manage-your-api-credentials.adoc[Get your API credentials].
-
-[#_configure_your_authorization_header]
-== Configure your authorization header
-
-include::automation-testing:partial$configure-your-authorization-header.adoc[]
+* Familiarity with using Postman to link:https://learning.postman.com/docs/getting-started/first-steps/sending-the-first-request/[send API request] with link:https://learning.postman.com/docs/sending-requests/authorization/authorization-types/#basic-auth[basic authentication] is required.
 
 [#_generate_an_upload_url]
 == Generate an upload URL
 
-In a terminal, make a `POST` request to `/v2/apps/uploadUrl` to generate a unique upload URL that connects to our private S3 bucket on Amazon Web Services (AWS). Use the following cURL command:
+In Postman, make a `POST` request with the following details:
 
-[source,shell]
+* Method: `POST`
+* URL: https://api.kobiton.com/v2/apps/upload-url
+* Under the Authorization tab, select *Basic Auth* for Type, then fill in the Username and Password of your API credentials.
+* Under the Body tab, select *raw*, then choose the *JSON* format and input the following details:
++
+[source]
 ----
-curl -X POST https://api.kobiton.com/v2/apps/upload-url \
-  -H 'Authorization: Basic ${yourBase64String}' \
-  -H 'Content-Type: application/json' \
-  -d '{ "file_name": "${app_file_name}" , "app_id": ${app_id} }'
+{ "file_name": "${app_file_name}" , "app_id": ${app_id} }
 ----
 
-The request has 2 parameters:
+The request body has 2 parameters:
 
 * `+${app_id}+`: (optional) Provide the `app_id` if another version of this app is already uploaded. _Example_: `100`.
 * `+${app_file_name}+`: (required) Name of the app file to upload. _Example_: `MyApp.ipa`.
@@ -38,12 +36,9 @@ You can look up the `app_id` in xref:apps:app-metadata.adoc#_app_id[app metadata
 
 We will use the app `MyApp.ipa` throughout this guide to demonstrate the upload process. Assuming this app does not exist in the repository, there is no need to specify an `app_id`:
 
-[source,shell]
+[source]
 ----
-curl -X POST https://api.kobiton.com/v2/apps/upload-url \
-  -H 'Authorization: Basic ${yourBase64String}' \
-  -H 'Content-Type: application/json' \
-  -d '{ "file_name": "MyApp.ipa" }'
+{ "file_name": "MyApp.ipa" }
 ----
 
 A successful response will return the following:
