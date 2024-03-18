@@ -9,16 +9,22 @@ Learn how to use Postman to upload an app to the xref:manage-apps.adoc[app repos
 * xref:profile:manage-your-api-credentials.adoc[Get your API credentials].
 * Familiarity with using Postman to link:https://learning.postman.com/docs/getting-started/first-steps/sending-the-first-request/[send API request] with link:https://learning.postman.com/docs/sending-requests/authorization/authorization-types/#basic-auth[basic authentication] is required.
 
+[NOTE]
+====
+Replace https://api.kobiton.com with `[http/https]://[Dell server IP or hostname]:3000` if you are using Standalone server.
+====
+
 [#_generate_an_upload_url]
 == Generate an upload URL
 
-In Postman, make a `POST` request with the following details:
+In Postman, create a new request with `POST` method.
 
-* Method: `POST`
-* URL: https://api.kobiton.com/v2/apps/upload-url
-* Under the Authorization tab, select *Basic Auth* for Type, then fill in the Username and Password of your API credentials.
-* Under the Body tab, select *raw*, then choose the *JSON* format and input the following details:
-+
+For `URL`, input https://api.kobiton.com/v2/apps/upload-url.
+
+Under the *Authorization* tab, select *Basic Auth* for Type, then fill in the Username and Password of your API credentials.
+
+Under the *Body* tab, select *raw*, then choose the *JSON* format and input the following details:
+
 [source]
 ----
 { "file_name": "${app_file_name}" , "app_id": ${app_id} }
@@ -34,14 +40,14 @@ The request body has 2 parameters:
 You can look up the `app_id` in xref:apps:app-metadata.adoc#_app_id[app metadata].
 ====
 
-We will use the app `MyApp.ipa` throughout this guide to demonstrate the upload process. Assuming this app does not exist in the repository, there is no need to specify an `app_id`:
+We will use the app `MyApp.ipa` throughout this guide to demonstrate the upload process. Assuming this app does not exist in the repository, there is no need to specify an `app_id` in the request body:
 
 [source]
 ----
 { "file_name": "MyApp.ipa" }
 ----
 
-A successful response will return the following:
+Click *Send* to send the request. A successful response will return the following:
 
 .Example
 [source,shell]
@@ -56,64 +62,46 @@ Save the above values for the next sections.
 
 == Upload app file to S3 storage
 
-Make a `PUT` request to the previously generated `url` to upload the app file to S3 storage.
+Create a new request with `PUT` method.
+For `URL`, input the `url` from the response from the previous section. Following the example, the `url` would be:
+[source]
+https://kobiton-us-west.s3.amazonaws.com/users/78042/apps/MyApp-57b15160-cf17-11ee-98d5-e949a34321c7f.ipa?AWSAccessKeyId=AKIAYOIAYUIRGDSFS6QO&Content-Type=application%2Foctet-stream&Expires=1708384165&Signature=VHTRqXdIpKmbvauPsdfsKJhAgk%3D&x-amz-acl=private&x-amz-meta-appid=600841&x-amz-meta-createdby=78042&x-amz-meta-organizationid=681&x-amz-tagging=unsaved%3Dtrue
 
-[source,shell]
-----
-curl -X PUT ${url} \
-  -H "Content-Type: application/octet-stream" \
-  -H "x-amz-tagging: unsaved=true" \
-  -T ${file_path}
-----
+Under the *Authorization* tab, select *No Auth* for Type, since this endpoint does not require any authorization.
 
-This request requires:
+Under the *Body* tab, select *binary*, then *Select file*. Choose the app package file you want to upload.
 
-* `+${url}+`: The `url` obtained from the xref:_generate_an_upload_url[previous section].
-* `+${file_path}+`: Path to the app package file you want to upload.
-
-Example command using the previous section's response:
-
-[source,shell]
-----
-curl -X PUT https://kobiton-us-west.s3.amazonaws.com/users/78042/apps/MyApp-57b15160-cf17-11ee-98d5-e949a34321c7f.ipa?AWSAccessKeyId=AKIAYOIAYUIRGDSFS6QO&Content-Type=application%2Foctet-stream&Expires=1708384165&Signature=VHTRqXdIpKmbvauPsdfsKJhAgk%3D&x-amz-acl=private&x-amz-meta-appid=600841&x-amz-meta-createdby=78042&x-amz-meta-organizationid=681&x-amz-tagging=unsaved%3Dtrue  \
-  -H "Content-Type: application/octet-stream" \
-  -H "x-amz-tagging: unsaved=true" \
-  -T /the/full/file/path/on/my/local/computer/MyApp.ipa
-----
-
-A blank response indicates a successful upload.
+Click *Send*. A blank response indicates a successful upload.
 
 [#_create_app_or_app_version]
 == Create the app or app version in the app repository
 
-Make a `POST` request to create the entry for the app or app version in the app repository on Kobiton.
+In Postman, create a new request with `POST` method.
 
-[source,shell]
+For `URL`, input https://api.kobiton.com/v2/apps.
+
+Under the *Authorization* tab, select *Basic Auth* for Type, then fill in the Username and Password of your API credentials.
+
+Under the *Body* tab, select *raw*, then choose the *JSON* format and input the following details:
+
+[source]
 ----
-curl -X POST https://api.kobiton.com/v2/apps \
-    -H 'Authorization: Basic ${yourBase64String}' \
-    -H 'Content-Type: application/json' \
-    -H 'Accept: application/json' \
-    -d '{ "file_name": "${app_file_name}" , "app_path": "${app_path}" }'
+{ "file_name": "${app_file_name}" , "app_path": "${app_path}" }
 ----
 
-This request contains 2 parameters:
+The request body contains 2 parameters:
 
 * `+${app_path}+`: (required) Use the value of `app_path` from the xref:_generate_an_upload_url[previous step].
 * `+${app_file_name}+`: (optional) Specify the name of the app. If not provided, the name of the file from `+${app_path}+` is used.
 
-Continuing on from the previous steps, your command would be:
+Continuing on from the previous steps, the request body would be:
 
 [source,shell]
 ----
-curl -X POST https://api.kobiton.com/v2/apps \
-    -H 'Authorization: Basic ${yourBase64String}' \
-    -H 'Content-Type: application/json' \
-    -H 'Accept: application/json' \
-    -d '{ "MyApp.ipa": "" , "app_path": "users/1/apps/MyApp‐237824a0‐302c‐9bfd‐ff417c89610a.ipa" }'
+{ "MyApp.ipa": "" , "app_path": "users/1/apps/MyApp‐237824a0‐302c‐9bfd‐ff417c89610a.ipa" }
 ----
 
-If your request was successful, `POST` will return a `200` status with the following response:
+Click *Send*. If your request was successful, `POST` will return a `200` status with the following response:
 
 [source,shell]
 ----
@@ -129,30 +117,18 @@ If the app file is too large, it may take a while to process the file and the va
 
 == Obtain the app ID
 
-Make a `GET` request to obtain the parsing status and the `app_id` of your newly uploaded app.
+In Postman, create a new request with `GET` method.
 
-[source,shell]
-----
+For `URL`, input https://api.kobiton.com/v2/apps/parsing-status?appVersionId=${version_id}.
 
-curl -X GET 'https://api.kobiton.com/v2/apps/parsing-status?appVersionId=${version_id}' \
-    -H 'Authorization: Basic ${yourBase64String}'
+Provide in the `URL` above the `version_id` obtained from the xref:_create_app_or_app_version[previous step]. Continuing on with the example, the `URL` would be:
 
-----
+[source]
+https://api.kobiton.com/v2/apps/parsing-status?appVersionId=101
 
+Under the *Authorization* tab, select *Basic Auth* for Type, then fill in the Username and Password of your API credentials.
 
-This request requires the `version_id` obtained from the xref:_create_app_or_app_version[previous step].
-
-Continuing on with the example, your command would be:
-
-[source,shell]
-----
-
-curl -X GET 'https://api.kobiton.com/v2/apps/parsing-status?appVersionId=101' \
-    -H 'Authorization: Basic ${yourBase64String}'
-
-----
-
-If your request was successful, `GET` will return a `200` status with the following response:
+Click *Send*. If your request was successful, `GET` will return a `200` status with the following response:
 
 [source,shell]
 ----
