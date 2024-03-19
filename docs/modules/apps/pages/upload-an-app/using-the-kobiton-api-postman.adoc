@@ -107,7 +107,7 @@ Under the *Body* tab, select *binary*, then *Select file*. Choose the app packag
 
 image:apps:binary-file-upload-postman.png[width=1000,alt="Select binary file to upload in the request body"]
 
-Click *Send*. A blank response indicates a successful upload.
+Click *Send*. A blank response and `Status: 200 OK` indicates a successful upload.
 
 [#_create_app_or_app_version]
 == Create the app or app version in the app repository
@@ -115,6 +115,9 @@ Click *Send*. A blank response indicates a successful upload.
 In Postman, create a new request with `POST` method. This request requires authorization.
 
 For `URL`, input https://api.kobiton.com/v2/apps.
+
+[IMPORTANT]
+In the *Header* tab, remove the `x-amz-tagging` and `Content-Type` from the previous request (Upload app file to S3 storage) if they exist.
 
 Under the *Body* tab, select *raw*, then choose the *JSON* format and input the following details:
 
@@ -198,3 +201,15 @@ The response has 2 parameters:
 
 [NOTE]
 If you receive `error 404` with the message `App version ID ... doesn't exist`, the application version might be made inaccessible to your account. Contact an admin for access.
+
+== Troubleshooting
+
+=== _Create the app or app version_ request failed with status 400
+
+* *Issue*: After sending the request to xref:_create_app_or_app_version[create the app or app version], the response code is `400` with message `The app_path is required.`
+
+image:apps:error-400-create-app-or-app-version.png[width=1000,alt="Error 400 from sending create app or app version request"]
+
+* *Cause*: The `x-amz-tagging` and `Content-Type` headers from the previous request (Upload app file to S3 storage) are not removed.
+
+* *Solution*: In the *Header* tab of the request, remove `x-amz-tagging` and `Content-Type`, then send the request again.
