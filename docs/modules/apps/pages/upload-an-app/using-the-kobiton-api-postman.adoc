@@ -7,27 +7,40 @@ Learn how to use Postman to upload an app to the xref:manage-apps.adoc[app repos
 
 * Make sure your app package belongs to a xref:apps:supported-filetypes.adoc[supported filetype].
 * xref:profile:manage-your-api-credentials.adoc[Get your API credentials].
-* Familiarity with using Postman to link:https://learning.postman.com/docs/getting-started/first-steps/sending-the-first-request/[send API request] with link:https://learning.postman.com/docs/sending-requests/authorization/authorization-types/#basic-auth[basic authentication] is required.
+* Familiarity with using Postman to link:https://learning.postman.com/docs/getting-started/first-steps/sending-the-first-request/[send API request] is required.
 
 [IMPORTANT]
 ====
 Throughtout this document, replace https://api.kobiton.com with `[http/https]://[Dell server IP or hostname]:3000` if you are using Standalone server.
 ====
 
+[#_configure_authorization_in_postman]
+== Configure authorization in Postman
+
+Most of the Kobiton API v2 endpoints requires link:https://learning.postman.com/docs/sending-requests/authorization/authorization-types/#basic-auth[Basic Authentication].
+
+For the requests that require authorization in this document, do the following under the *Authorization* tab:
+
+* Choose *Basic Auth* as *Type*.
+* Input the username and API key from xref:profile:manage-your-api-credentials.adoc[your Kobiton API credentials]. It is recommended to input this information as link:https://learning.postman.com/docs/sending-requests/variables/variables[variable] to protect sensitive data.
+
+image:apps:postman-authorization.png[width=1000,alt="Authorization of Kobiton API request in Postman"]
+
 [#_generate_an_upload_url]
 == Generate an upload URL
 
-In Postman, create a new request with `POST` method.
+In Postman, create a new request with the `POST` method. This request requires authorization.
 
 For `URL`, input https://api.kobiton.com/v2/apps/upload-url.
-
-Under the *Authorization* tab, select *Basic Auth* for Type, then fill in the Username and Password of your API credentials.
 
 Under the *Body* tab, select *raw*, then choose the *JSON* format and input the following details:
 
 [source]
 ----
-{ "file_name": "${app_file_name}" , "app_id": ${app_id} }
+{
+    "file_name": "${app_file_name}",
+    "app_id": ${app_id}
+}
 ----
 
 The request body has 2 parameters:
@@ -44,8 +57,14 @@ We will use the app `MyApp.ipa` throughout this guide to demonstrate the upload 
 
 [source]
 ----
-{ "file_name": "MyApp.ipa" }
+{
+    "file_name": "MyApp.ipa"
+}
 ----
+
+Below is an example of how the request would look like in Postman:
+
+image:apps:generate-upload-url-postman.png[width=1000,alt="Generate an upload URL request body"]
 
 Click *Send* to send the request. A successful response will return the following:
 
@@ -63,11 +82,15 @@ Save the above values for the next sections.
 == Upload app file to S3 storage
 
 Create a new request with `PUT` method.
+
 For `URL`, input the `url` from the response from the previous section. Following the example, the `url` would be:
+
 [source]
 https://kobiton-us-west.s3.amazonaws.com/users/78042/apps/MyApp-57b15160-cf17-11ee-98d5-e949a34321c7f.ipa?AWSAccessKeyId=AKIAYOIAYUIRGDSFS6QO&Content-Type=application%2Foctet-stream&Expires=1708384165&Signature=VHTRqXdIpKmbvauPsdfsKJhAgk%3D&x-amz-acl=private&x-amz-meta-appid=600841&x-amz-meta-createdby=78042&x-amz-meta-organizationid=681&x-amz-tagging=unsaved%3Dtrue
 
 Under the *Authorization* tab, select *No Auth* for Type, since this endpoint does not require any authorization.
+
+image:apps:no-auth-postman.png[width=1000,alt="Set authorization type as No Auth"]
 
 Under the *Header* tab, add the following key and value pairs:
 
@@ -78,24 +101,29 @@ Under the *Header* tab, add the following key and value pairs:
 |Content-Type   |application/octet-stream
 |=======================
 
+image:apps:header-key-value-pairs.png[width=1000,alt="Add header key and value pairs"]
+
 Under the *Body* tab, select *binary*, then *Select file*. Choose the app package file you want to upload.
+
+image:apps:binary-file-upload-postman.png[width=1000,alt="Select binary file to upload in the request body"]
 
 Click *Send*. A blank response indicates a successful upload.
 
 [#_create_app_or_app_version]
 == Create the app or app version in the app repository
 
-In Postman, create a new request with `POST` method.
+In Postman, create a new request with `POST` method. This request requires authorization.
 
 For `URL`, input https://api.kobiton.com/v2/apps.
-
-Under the *Authorization* tab, select *Basic Auth* for Type, then fill in the Username and Password of your API credentials.
 
 Under the *Body* tab, select *raw*, then choose the *JSON* format and input the following details:
 
 [source]
 ----
-{ "file_name": "${app_file_name}" , "app_path": "${app_path}" }
+{
+    "file_name": "${app_file_name}",
+    "app_path": "${app_path}"
+}
 ----
 
 The request body contains 2 parameters:
@@ -107,8 +135,15 @@ Continuing on from the previous steps, the request body would be:
 
 [source,shell]
 ----
-{ "MyApp.ipa": "" , "app_path": "users/1/apps/MyApp‐237824a0‐302c‐9bfd‐ff417c89610a.ipa" }
+{
+    "file_name": "MyApp.ipa",
+    "app_path": "users/1/apps/MyApp‐237824a0‐302c‐9bfd‐ff417c89610a.ipa"
+}
 ----
+
+Below is an example of how the request would look like in Postman:
+
+image:apps:create-app-or-app-verison-postman.png[width=1000,alt="Request body of the create app or app version api"]
 
 Click *Send*. If your request was successful, `POST` will return a `200` status with the following response:
 
@@ -126,7 +161,7 @@ If the app file is too large, it may take a while to process the file and the va
 
 == Obtain the app ID
 
-In Postman, create a new request with `GET` method.
+In Postman, create a new request with `GET` method. This request requires authorization.
 
 For `URL`, input https://api.kobiton.com/v2/apps/parsing-status?appVersionId=${version_id}.
 
@@ -135,7 +170,9 @@ Provide in the `URL` above the `version_id` obtained from the xref:_create_app_o
 [source]
 https://api.kobiton.com/v2/apps/parsing-status?appVersionId=101
 
-Under the *Authorization* tab, select *Basic Auth* for Type, then fill in the Username and Password of your API credentials.
+Below is an example of how the request would look like in Postman:
+
+image:get-app-parsing-status-postman.png[width=1000,alt="Get app parsing status request body"]
 
 Click *Send*. If your request was successful, `GET` will return a `200` status with the following response:
 
