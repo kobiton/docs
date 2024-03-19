@@ -69,6 +69,15 @@ https://kobiton-us-west.s3.amazonaws.com/users/78042/apps/MyApp-57b15160-cf17-11
 
 Under the *Authorization* tab, select *No Auth* for Type, since this endpoint does not require any authorization.
 
+Under the *Header* tab, add the following key and value pairs:
+
+[options="header"]
+|=======================
+|Key    |Value
+|x-amz-tagging  |unsaved=true
+|Content-Type   |application/octet-stream
+|=======================
+
 Under the *Body* tab, select *binary*, then *Select file*. Choose the app package file you want to upload.
 
 Click *Send*. A blank response indicates a successful upload.
