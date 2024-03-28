@@ -1,4 +1,4 @@
-name: Build and Push Image to ECR
+name: Build and Push Image to ECR 🚀
 on:
   workflow_dispatch:
     inputs:
@@ -28,10 +28,20 @@ permissions:
   contents: read    # This is required for actions/checkout
 
 jobs:
-  build:
+  build-docs:
     name: Build
     uses: kobiton/deployment/.github/workflows/ci.yaml@master
     with:
       git-ref: ${{ github.event.inputs.git-ref }}
-      repo-name: 'docs'
+      repo-name: 'documentation'
+      dockerfile-path: 'docker/docs/Dockerfile'
+    secrets: inherit
+
+  build-wiget:
+    name: Build
+    uses: kobiton/deployment/.github/workflows/ci.yaml@master
+    with:
+      git-ref: ${{ github.event.inputs.git-ref }}
+      repo-name: 'portal-help'
+      dockerfile-path: 'docker/widget/Dockerfile'
     secrets: inherit
