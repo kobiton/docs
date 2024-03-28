@@ -28,9 +28,10 @@ RUN /bin/bash ./scripts/build.sh
 # Stage 2: Serve the static files using nginx.
 FROM nginx:alpine
 
-ENV KOBITON_ENVIRONMENT=standalone
-ENV KOBITON_STANDALONE_API_V2_DOCS_URL="localhost:8001"
-ENV KOBITON_STANDALONE_DOCS_V2_URL="localhost:9090"
+# Only for local development.
+#ENV KOBITON_ENVIRONMENT=standalone
+#ENV KOBITON_STANDALONE_API_V2_DOCS_URL="localhost:8001"
+#ENV KOBITON_STANDALONE_DOCS_V2_URL="localhost:9090"
 
 RUN apk update && apk upgrade && apk add --virtual .build-deps bash
 
