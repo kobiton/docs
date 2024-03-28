@@ -12,20 +12,16 @@ OS_ARCH=$(uname)
 echo "Image architecture: $OS_ARCH"
 
 # Merge all css files to 1 file excluding site.css.
-find "$PROJECT_ROOT"/ui-bundle-docs/css/ -type f -not -name 'site.css' -name '*.css' \
-  -exec cat {} \; | \
-  npx postcss --use postcss-import postcss-clean --no-map > "$TEMP_FILE_DOCS"
-find "$PROJECT_ROOT"/ui-bundle-widget/css/ -type f -not -name 'site.css' -name '*.css' \
-  -exec cat {} \; | \
-  npx postcss --use postcss-import postcss-clean --no-map > "$TEMP_FILE_WIDGET"
+find $PROJECT_ROOT/ui-bundle-docs/css/ -type f -not -name 'site.css' -name '*.css' -exec cat {} \; | npx postcss --use postcss-import postcss-clean --no-map > "$TEMP_FILE_DOCS"
+find $PROJECT_ROOT/ui-bundle-widget/css/ -type f -not -name 'site.css' -name '*.css' -exec cat {} \; | npx postcss --use postcss-import postcss-clean --no-map > "$TEMP_FILE_WIDGET"
 
 # Remove all comments from the merged files (anything between /* and */).
 if [[ "$OS_ARCH" == "Linux" ]]; then
-  sed -i 's/\/\*.*\*\///g' "$TEMP_FILE_DOCS"
-  sed -i 's/\/\*.*\*\///g' "$TEMP_FILE_WIDGET"
-else
   sed -i '' 's/\/\*.*\*\///g' "$TEMP_FILE_DOCS"
   sed -i '' 's/\/\*.*\*\///g' "$TEMP_FILE_WIDGET"
+else
+  sed -i 's/\/\*.*\*\///g' "$TEMP_FILE_DOCS"
+  sed -i 's/\/\*.*\*\///g' "$TEMP_FILE_WIDGET"
 fi
 
 # Append the header comment.
