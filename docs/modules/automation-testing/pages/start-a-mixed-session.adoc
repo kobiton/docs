@@ -27,12 +27,12 @@ Now you can view your script running on the device and fix issues in realtime.
 
 * In a Mixed session, both the Manual and Automation session must be initiated by the same user.
 
-* Mixed session is only available for Kobiton 4+ devices.
+* Mixed session are only available for Kobiton 4+ devices.
 
-* We only support running Appium test in Mixed Session for now. Other automation frameworks eg. Espresso, XCUITest are not supported yet.
+* Mixed sessions can only be initiated with Appium automation tests; other automation frameworks, e.g. Espresso, XCUITest, are not currently supported.
 
-* We don't support Session explorer for Mixed Session, ie. it is not possible to view the detailed steps and screenshots for Mixed sessions.
+* Session Explorer is not available for Mixed Sessions; i.e. it's not possible to view detailed steps and screenshots for Mixed Sessions.
 
-* We haven't supported Kobiton Scriptless and Appium Script Export for Mixed session yet.
+* Mixed sessions cannot be turned into test cases. They cannot be used for our AI functionality: Scriptless, generating Appium Scripts, self-healing.
 
-* If you use public devices for Mixed Session, you will be charged minutes for the total time usage on the device.
+* When you have a Mixed Session on a Public Device, you will be charged minutes for the total time usage on the device; you will not be double-charged for an automation and a manual session.
