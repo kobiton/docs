@@ -83,10 +83,21 @@ const desiredCaps = {
 
 Once these changes are made, your script is ready to run basic Appium 2 sessions on Kobiton.
 
-== Known issues/Limitations
+== Notes/Limitations
 
 * Android testing with basic Appium 2 is only available for Ubuntu GEM or Standard mode; iOS can be tested with Ubuntu GEM, nixOS GEM, and Standard mode.
 * No session exhaust is available, which means there are no screenshots, device logs, Appium logs, system metrics at this time. When reviewing sessions, only Session Overview has content; Session Explorer is not available.
-* In mixed sessions, manual actions on the device cannot be performed.
+* Session video is available.
+* Mixed sessions are available, but manual interactions in those sessions are not supported.
 * AI features - including Scriptless, generate Appium script, validations, and flexCorrect - are not supported for basic Appium 2 sessions as they rely heavily on exhaust.
-* Users will not be able to run mixed sessions with basic Appium 2 sessions.
+
+== Additional notes
+
+=== Check the current Appium Server version
+
+A Kobiton admin who has access to the Mac mini host can use the following Terminal command to check the Appium Server version:
+
+[source,bash]
+----
+/usr/local/deviceconnect/appium-server/index.js --version
+----
