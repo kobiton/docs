@@ -3,6 +3,12 @@
 
 Learn how to start a mixed session so you can view your Appium script running on your device and fix issues in realtime.
 
+== What is a mixed session?
+
+A mixed session is where you can use the feature of a manual session to observe what is happening when running an Appium automation script.
+
+It is also possible to perform manual actions on the device in a mixed session to fix unexpected issues during an automation script execution.
+
 == Start the first session
 
 First, choose to start a manual session by xref:devices:search-for-a-device.adoc[launching a device] or an automation session by link:https://api.kobiton.com/v2/docs#tag/NativeFrameworkAPI/operation/NativeFrameworkAPI_InitiateNativeSession[making a `POST` request].
@@ -13,20 +19,31 @@ image:automation-testing:launch-device-context.png[width=800,alt="A context of l
 
 After your first session starts, start a second session using the other testing method on the same device. If you started with a manual session, start an automation session. If you started with an automation session, start a manual session.
 
-image:automation-testing:start-second-session-context.png[width=1000,alt="A context to start a second automation session after manual session"]
+=== If the first session is manual
 
-Now you can view your script running on the device and fix issues in realtime.
+Run an Appium or Basic Appium 2 automation script on the device as a manual session is running, using the same user. Once the automation script starts running, a banner on the manual session appears with a message  _Automation Script is running on this device_. Now you can view your script running on the device and fix issues in realtime.
+
+image:automation-testing:manual-as-first-session.png[width=1000,alt="A context to start a second automation session after manual session"]
+
+== If the first session is automation
+
+
+
 
 == Limitations/Notes
 
-* In a Mixed session, both the Manual and Automation session must be initiated by the same user.
+* In a mixed session, both the Manual and Automation session must be initiated by the same user.
 
 * Mixed session are only available for Kobiton 4+ devices.
 
-* Mixed sessions can only be initiated with Appium automation tests; other automation frameworks, e.g. Espresso, XCUITest, are not currently supported.
+* Mixed sessions can only be initiated with Appium or Basic Appium 2 automation tests; other automation frameworks, e.g. Espresso, XCUITest, are not currently supported.
+
+* Manual actions in a mixed session is not yet available when a Basic Appium 2 script is running.
 
 * Session Explorer is not available for Mixed Sessions; i.e. it's not possible to view detailed steps and screenshots for Mixed Sessions.
 
 * Mixed sessions cannot be turned into test cases. They cannot be used for our AI functionality: Scriptless, generating Appium Scripts, self-healing.
 
-* When you have a Mixed Session on a Public Device, you will be charged minutes for the total time usage on the device; you will not be double-charged for an automation and a manual session.
+* When you have a mixed Session on a Public Device, you will be charged minutes for the total time usage on the device; you will not be double-charged for an automation and a manual session.
+
+* A mixed session counts as 1 parallel test session, although it includes a manual and an automation session.
