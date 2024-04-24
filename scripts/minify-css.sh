@@ -7,21 +7,20 @@ PROJECT_ROOT=$(git rev-parse --show-toplevel)
 TEMP_FILE_DOCS="$PROJECT_ROOT/ui-bundle-docs/css/temp.css"
 TEMP_FILE_WIDGET="$PROJECT_ROOT/ui-bundle-widget/css/temp.css"
 
-OS_ARCH=$(uname)
-
-echo "Image architecture: $OS_ARCH"
-
 # Merge all css files to 1 file excluding site.css.
 find $PROJECT_ROOT/ui-bundle-docs/css/ -type f -not -name 'site.css' -name '*.css' -exec cat {} \; | npx postcss --use postcss-import postcss-clean --no-map > "$TEMP_FILE_DOCS"
 find $PROJECT_ROOT/ui-bundle-widget/css/ -type f -not -name 'site.css' -name '*.css' -exec cat {} \; | npx postcss --use postcss-import postcss-clean --no-map > "$TEMP_FILE_WIDGET"
 
 # Remove all comments from the merged files (anything between /* and */).
-if [[ "$OS_ARCH" == "Linux" ]]; then
-  sed -i '' 's/\/\*.*\*\///g' "$TEMP_FILE_DOCS"
-  sed -i '' 's/\/\*.*\*\///g' "$TEMP_FILE_WIDGET"
-else
+if [[ "$KOBITON_ENVIRONMENT" == "standalone" ]]; then
+  # Somehow the sed command with '' doesn't work on images in the standalone environment.
   sed -i 's/\/\*.*\*\///g' "$TEMP_FILE_DOCS"
   sed -i 's/\/\*.*\*\///g' "$TEMP_FILE_WIDGET"
+else
+  # Local build & S3 build (production) needs a ''.
+  # Note that, the S3 and standalone arch is "Linux", local arch is "Darwin" (MacOS).
+  sed -i '' 's/\/\*.*\*\///g' "$TEMP_FILE_DOCS"
+  sed -i '' 's/\/\*.*\*\///g' "$TEMP_FILE_WIDGET"
 fi
 
 # Append the header comment.
