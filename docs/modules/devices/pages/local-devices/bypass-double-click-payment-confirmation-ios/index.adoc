@@ -1,0 +1,22 @@
+= Bypass Double Click Payment Confirmation on iOS
+:navtitle: Bypass Double Click Payment Confirmation on iOS
+
+On an iOS device, users are required to physically double-click the side button to confirm the payment. The double-click is a security feature from iOS and can only be bypassed using AssistiveTouch. To use Apple Pay through Kobiton, follow these instructions to setup and use AssistiveTouch.
+
+== Requirements
+
+- Access to the physical device to double-click the side button during setup of AssistiveTouch. (If the device is hosted by Kobiton, submit a support ticket to assist in the setup process.)
+- A passcode set on the device. There are two options:
+    * A passcode can be set *and must be removed* during the manual session. If the passcode is not removed before ending the session, the device *will not be able to come back online* without physical touch and a request to the team managing the devices to unlock the device.
+    * Setup Kobiton passcode support for the devices. For Private devices, discuss passcode requirements with your Customer Success Manager who will work with support to setup passcodes. For Local devices hosted at the customer location, submit a support ticket to request passcode setup documentation for your deployment type (Legacy Kobiton or PIN code mode 1 for Kobiton 4+)
+- [Optional] Use a link:https://support.kobiton.com/hc/en-us/articles/360055588272-Device-Cleanup[Cleanup Policy] for the devices to be tested that does not reset the device settings to prevent AssistiveTouch from turning off for the next session. Otherwise, the tester will need to turn on AssistiveTouch for each session that it is needed:
+
+image::devices:b1-devices-local-bypass.PNG[]
+
+== In this section
+
+There are following pages in this section:
+
+. xref:local-devices/bypass-double-click-payment-confirmation-ios/setup-process.adoc[]
+. xref:local-devices/bypass-double-click-payment-confirmation-ios/using-assistive-touch-confirmation.adoc[]
+. xref:local-devices/bypass-double-click-payment-confirmation-ios/verify-assistivetouch-configuraiton-in-manual-session.adoc[]
