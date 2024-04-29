@@ -1,21 +1,28 @@
-= Annotate a test step for scriptless automation
-:navtitle: Annotate a test step
+= Remediate a test step for scriptless automation
+:navtitle: Remediate a test step
 
-Learn how to annotate a test step from your xref:scriptless-automation:create-a-baseline-session.adoc[baseline session], so you can...
+Learn how to remediate a test step from your xref:scriptless-automation:create-a-baseline-session.adoc[baseline session], so you can ensure that the Test Case can be executed successfully in Test Run.
 
 == Before you start
 
 You'll need to xref:scriptless-automation:create-a-baseline-session.adoc[create a baseline session].
 
-== Annotate a test step
+== Remediate a test step
 
 In *Sessions*, xref:session-explorer:search-for-a-session.adoc[search for a session], then select the session.
 
 image:select-a-session-context.png[width=1000,alt="Search and select a session"]
 
-Select *Automation Test Case*.
+If you have not converted the session to a Test Case, select *Convert to Test Case*. If the AI analysis is complete, there is a success message like below:
+
+If the AI analysis is still in progress, there is an error message like below:
 
 image:select-automated-test-case-context.png[width=1000,alt="Select Automated Test Case"]
+
+After the session is converted successfully, select View Test Case.
+
+[NOTE]
+Selecting View Test Case takes you to the first Test Case that is converted from the session. Subsequent Test Cases created by cloning needs to be accessed via the link:TODO[Test Case List]
 
 If one of your test steps were flagged, you'll see a warning similar to the following:
 
