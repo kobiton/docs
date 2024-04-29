@@ -1,0 +1,125 @@
+= Kobiton 4.12 release notes
+:navtitle: Kobiton 4.12 release notes
+
+_Apr 27, 2024_
+
+== New OS support
+
+Kobiton 4.12 adds support for the following:
+
+* iOS/iPadOS 14.4.1, 17.5 Beta
+
+* Mac OS Sonoma 14.4.1
+
+[NOTE]
+====
+* At this time, we recommend hosting iOS 17+ devices via Standard mode deployments for improved performance.
+====
+
+== Mobile Test Management (Beta)
+
+We are excited to announce a significant expansion to our Test Case Management feature. With the introduction of Mobile Test Management, we now offer a comprehensive trio of features: Test Suites, Test Cases, and Test Runs. This enhancement allows for a more integrated and efficient workflow for managing your mobile testing.
+
+=== Key features
+
+* *Test Suites*: Previously, test cases had to be run one by one. Now, you can organize your test cases into suites and initiate a test run to test a set of test cases across multiple devices.
+
+* *Test Cases*: Creating a test case is now more intuitive. Use the _**Convert to Test Case**_ option instead of _**Automated Test Case**_ option in Session Explorer, or create a new test case directly from the _Test Case List_ by searching for a session. We've also introduced a new _Test Case Details_ screen, enhancing your control over test cases. Here, you can delete or remediate test steps, create different versions of a test case, or clone an existing test case.
+
+* *Test Runs*: Gain complete oversight of your testing efforts with our new test runs interface. View a comprehensive list of all your test runs, initiate new Test Runs, and access detailed, actionable insights from your Test Run results - all designed to streamline your testing process.
+
+=== Access to features
+
+* All users can create, view, and manage test cases and test suites.
+* Only users with Scriptless in their subscription can initiate test runs.
+* Only users with Appium Script Generation in their subscription can generate Appium Scripts.
+
+=== Things to note:
+
+As this feature is in Beta, we welcome your feedback. Stay tuned for additional UI improvements and extended functionality in the coming months. We will publish a comprehensive User Guide on our documentation site soon. In the meantime, please note the following:
+
+* *Launching Test Runs*: test runs can only be initiated via the _**Create Test Run**_ button on the _Test Run_ page.
+
+* *Testing Capabilities*: With the Beta release, only crash and accessibility validations are available. We are actively developing performance, text/color, and visual validations. Data-driven testing is not supported in the Beta, but will be added in a future release.
+
+* *Test Run Statuses*:
+
+** _Running_: The test run session is either pending execution or in progress.
+
+** _Needs Action_: A blocker has been encountered, and remediation is required.
+
+** _Error_: A system error has been encountered.
+
+** _Success_: The test run completed.
+
+** _Failed_: The application crashed during the test run.
+
+* *Unsupported Actions*: If a test case contains an unsupported action, the corresponding step will display a blank screenshot, and a test run cannot be initiated. As a workaround, delete the blank test steps or recreate the manual session without the unsupported action.
+
+* *Blocker Remediations*: When a Blocker is encountered for a Touch action during a test run, you can now remediate the step where the Blocker happened or review and remediate in a previous step. The submitted remediation will apply to subsequent reruns from the same test case and on the same device model.
+
+* *Searches and Filters*: Some searches and filters are currently limited and will be expanded in coming releases.
+
+Experience the next level of testing efficiency with Mobile Test Management!
+
+image:test-run-results-overview.png[width=1000,alt="Overview of Test Run Results"]
+
+== Two new options for upgrading deviceConnect for Hybrid Customers
+
+Hybrid customers, who host their own devices and utilize Kobiton services via the Cloud, previously required manual coordination with Kobiton to upgrade their software on hosted Mac minis. With the latest release, we are introducing two new methods to ensure Hybrid Mac minis are always running the most current version of deviceConnect.
+
+=== Auto-upgrade for deviceConnect:
+
+This new feature can be enabled in Settings and is disabled by default. An admin can turn it on for the whole org; there is no option to have auto-upgrade on for individual Mac minis. When turned on, the Kobiton system automatically checks for and installs new production versions of deviceConnect. This process happens only if there are no active sessions on the Mac mini’s devices; it involves downloading, verifying, and installing the update, during which all hosted devices will temporarily go offline as services restart. While most devices resume normal operation post-upgrade, some devices may require physical touch to come back online.
+
+Should an update be available but sessions are active, the system will defer the upgrade and recheck later.
+
+To use this feature, the Mac minis must be able to access *_nexus.kobiton.com_*. Add this domain into the allow-list of your Mac mini's network.
+
+=== Manual deviceConnect upgrade via the Portal:
+
+For organizations that prefer manual control or have auto-upgrade disabled, a new version notification will appear as a banner on the Portal when a deviceConnect update is available. Admins can then manually upgrade their Mac minis individually from the Device Management page.
+
+IMPORTANT: If deviceConnect is not upgraded before the next production version, the devices on the out-of-date Mac minis will go offline and not be usable.
+
+The above options are only available to Mac minis that have deviceConnect 4.12 and above. Kobiton will reach out to our hybrid customers over the next few weeks to support the upgrade to 4.12.
+
+Instructions will be posted soon.
+
+== Minor improvements and bug fixes
+
+This release includes several enhancements and bug fixes to improve your day-to-day testing.
+
+* Addressed the following Script-based test automation and Device Inspector items:
+
+** Make the `deviceOrientation` desired capability work as intended in automation session.
+
+** Return `resourceId` in Device Inspector.
+
+** New capability `'kobiton:xpath2'` to control the Xpath version used. (Use Xpath 2.0 when true).
+
+** Fixed the error `kAXErrorServerNotFound` that prevents the Device Inspector from finding elements. This fixes issues for both script-based automation and Passcode devices.
+
+** Handle an issue with arguments wrapped in arrays when executing automation script.
+
+** Handle an issue retrieving element by Xpath in recent versions of Chrome driver.
+
+** Implement capability `'Mobile:isKeyboardShown'`.
+
+** Fix automation issues on iOS 17.4.1 devices.
+
+* Improved the following items in Scriptless automation:
+
+** Generate Appium Script: Increase the timeout waiting for element in the exported script for cases when the element takes longer to load than usual.
+
+* Others items addressed:
+
+** Network Payload Capture: implement retry logic for iOS device for better stability.
+
+** API v2: the endpoint Get applications on a device now returns apps installed from both the App Repo and the Device details screen.
+
+** Allow `.zip` file created from Windows machine that has whitespace to be uploaded and used in the App Repository.
+
+** Admin can now re-enable an inactive account using the Enable button in the User management page.
+
+** Fix the Cleanup Policy to reset device language to English (US) in some device models.
