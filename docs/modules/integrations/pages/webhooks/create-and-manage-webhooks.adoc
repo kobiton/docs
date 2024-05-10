@@ -1,7 +1,7 @@
-= Create and Manage Webhook
-:navtitle: Create and Manage Webhooks
+= Create and manage webhooks
+:navtitle: Create and manage webhooks
 
-Learn how to use Kobiton webhook to send a notification via HTTP to another application when an event occurs.
+Learn how to use Kobiton webhooks to send a notification via HTTP to another application when an event occurs.
 
 You can use Kobiton webhooks to notify your app or an internal system when certain events occur in Kobiton. For example, you might use webhooks to alert your remote application when a device has gone offline or becomes available instead of periodically polling Kobiton via REST APIs to determine whether changes have occurred.
 
@@ -24,35 +24,34 @@ Device status webhooks are only available for *Private* and *Local* devices. The
 ===============================
 
 == Create a webhook
-
 In the Kobiton Portal, select your name from the main menu and choose *Settings* from the options.
 
-image:integrations:w1.png[]
+image:integrations:integrations-webhooks-create-and-manage-w1.png[]
 
 Select the **Webhook Settings** tab.
 
-image:integrations:w2.png[]
+image:integrations:integrations-webhooks-create-and-manage-w2.png[]
 
 Select **Create Webhook**.
 
-image:integrations:w3.png[]
+image:integrations:integrations-webhooks-create-and-manage-w3.png[]
 
 Complete the required information as described below:
 
 [options="header"]
 |=======================
-|Parameter|Required|Format|Example|Description
-|Webhook Name|Yes|case-sensitive, 50 characters maximum|Device offline|Name of the webhook; it must be unique to the org Example: Webhook for online status
-|URL|Yes|512 characters maximum, valid URL syntax|https://webhook.site/49e1592a-6736-4b8b-bd58-c97ab|The URL where the callback should be sent
-|Description|No|512 characters maximum|Webhook for offline devices|Description of the webhook
-|Event|Yes (at least 1 event enabled)|On/off toggle| |The type of event to trigger the callback
+|Parameter|Required|Format|Description|Example
+|Webhook Name|Yes|case-sensitive, 50 characters maximum|Name of the webhook; it must be unique to the org Example: Webhook for online status|Device offline
+|URL|Yes|512 characters maximum, valid URL syntax|The URL where the callback should be sent|https://webhook.site/49e1592a-6736-4b8b-bd58-c97ab
+|Description|No|512 characters maximum|Description of the webhook|Webhook for offline devices
+|Event|Yes (at least 1 event enabled)|On/off toggle|The type of event to trigger the callback |
 |=======================
 
-image:integrations:w4.png[]
+image:integrations:integrations-webhooks-create-and-manage-w4.png[]
 
 Choose one or more event triggers by enabling the toggle of each event. Then, select *Save*.
 
-image:integrations:w5.png[]
+image:integrations:integrations-webhooks-create-and-manage-w5.png[]
 
 == Execute a webhook
 
@@ -102,25 +101,25 @@ If you no longer want to receive a callback, delete the webhook.
 
 Navigate to *Webhook Settings*, select a webhook, and choose *Delete*.
 
-image:integrations:w6.png[]
+image:integrations:integrations-webhooks-create-and-manage-w6.png[]
 
 Confirm the deletion of the webhook by selecting *Delete* again in the modal:
 
-image:integrations:w7.png[]
+image:integrations:integrations-webhooks-create-and-manage-w7.png[]
 
 == Edit a webhook
 
 Go to *Webhook Settings*, select a webhook and choose *Edit*.
 
-image:integrations:w8.png[]
+image:integrations:integrations-webhooks-create-and-manage-w8.png[]
 
 Make changes and select *Save*.
 
-image:integrations:w9.png[]
+image:integrations:integrations-webhooks-create-and-manage-w9.png[]
 
 == Verify a webhook
 
-To quickly verify a webhook created Kobiton, use an online webhook testing site such as link:https://webhook.site/[webhook.site] or build your own API to receive the webhook.
+To quickly verify a Kobiton webhook, use an online webhook testing site such as link:https://webhook.site/[webhook.site] or build your own API to receive the webhook.
 
 == Limitations
 
