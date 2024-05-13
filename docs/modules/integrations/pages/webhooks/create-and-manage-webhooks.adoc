@@ -1,6 +1,8 @@
 = Create and manage webhooks
 :navtitle: Create and manage webhooks
 
+// tag::webhooks[]
+
 Learn how to use Kobiton webhooks to send a notification via HTTP to another application when an event occurs.
 
 You can use Kobiton webhooks to notify your app or an internal system when certain events occur in Kobiton. For example, you might use webhooks to alert your remote application when a device has gone offline or becomes available instead of periodically polling Kobiton via REST APIs to determine whether changes have occurred.
@@ -124,3 +126,5 @@ To quickly verify a Kobiton webhook, use an online webhook testing site such as 
 
 * Authentication to URLs for webhook callbacks is currently not supported.
 * It is not possible to limit the scope of devices tracked by webhook to specific teams or device bundles.
+
+// end::webhooks[]
