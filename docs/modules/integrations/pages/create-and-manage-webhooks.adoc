@@ -1,0 +1,126 @@
+= Create and manage webhooks
+:navtitle: Create and manage webhooks
+
+Learn how to use Kobiton webhooks to send a notification via HTTP to another application when an event occurs.
+
+You can use Kobiton webhooks to notify your app or an internal system when certain events occur in Kobiton. For example, you might use webhooks to alert your remote application when a device has gone offline or becomes available instead of periodically polling Kobiton via REST APIs to determine whether changes have occurred.
+
+Webhooks can be set up by org admins or any role with the *org_setting.modify* permission enabled.
+
+== Supported webhook events
+
+A webhook is triggered to send an HTTP callback when a particular event occurs.
+
+Kobiton currently supports creating device status webhooks for the following events:
+
+. *Online*: from any status, except utilizing, to *online*
+. *Offline*: from any status to offline
+. *Utilizing*: from any status to utilizing
+. *Unplugged*: from any status to unplugged
+
+[NOTE]
+===============================
+Device status webhooks are only available for *Private* and *Local* devices. They cannot be used to report status for *Public* devices. For On-prem deployments, the functionality can be used if the receiving application/system can access the API service from the Dell server.
+===============================
+
+== Create a webhook
+
+include::profile:partial$open-settings.adoc[]
+
+Select the **Webhook Settings** tab.
+
+image:integrations:webhooks-settings-context.png[]
+
+Select **Create Webhook**.
+
+image:integrations:webhooks-create-button.png[]
+
+Complete the required information as described below:
+
+[options="header"]
+|=======================
+|Parameter|Required|Format|Description|Example
+|Webhook Name|Yes|case-sensitive, 50 characters maximum|Name of the webhook; it must be unique to the org Example: Webhook for online status|Device offline
+|URL|Yes|512 characters maximum, valid URL syntax|The URL where the callback should be sent|https://webhook.site/49e1592a-6736-4b8b-bd58-c97ab
+|Description|No|512 characters maximum|Description of the webhook|Webhook for offline devices
+|Event|Yes (at least 1 event enabled)|On/off toggle|The type of event to trigger the callback |
+|=======================
+
+image:integrations:webhooks-create-new-webhook-context.png[]
+
+Choose one or more event triggers by enabling the toggle of each event. Then, select *Save*.
+
+image:integrations:webhooks-create-new-webhook-events.png[]
+
+== Execute a webhook
+
+When a webhook is created, it tracks the status of the Private and Local devices in an org. It sends HTTP callbacks to the specified URL when a condition is met for those devices.
+
+The body of the callback will be similar to the below:
+
+[source,JavaScript]
+----
+{
+  "creationTime": "2023-01-06T04:52:36.963Z",
+  "eventType": "DEVICE",
+  "eventActivity": "device.state.utilizing",
+  "eventDescription": "Utilizing",
+  "deviceUdid": "ce0917198075440c057e",
+  "deviceName": "Galaxy Note 8",
+  "orgId": 2,
+  "webhookId": 129,
+  "webhookName": "Webhook for All events"
+}
+----
+
+See below for details of the parameters in the example above:
+
+
+[options="header"]
+|=======================
+|Parameter|Description
+|creationTime|The date and time the callback is sent
+|eventType|The type of event
+|eventActivity|The triggering event
+
+For offline and online events, it appears with the format: device.status.<event>
+
+For unplugged and utilizing events, it appears with the format: device.state.<event>
+|eventDescription|The description of the webhook triggering event
+|deviceUdid|The UDID of the device
+|deviceName|The name of the device
+|orgId|The unique ID of the organization
+|webhookId|The unique ID of the webhook
+|webhookName|The webhook name
+|=======================
+
+== Delete a webhook
+
+If you no longer want to receive a callback, delete the webhook.
+
+Navigate to *Webhook Settings*, select a webhook, and choose *Delete*.
+
+image:integrations:webhooks-delete-button.png[]
+
+Confirm the deletion of the webhook by selecting *Delete* again in the modal:
+
+image:integrations:webhooks-delete-popup.png[]
+
+== Edit a webhook
+
+Go to *Webhook Settings*, select a webhook and choose *Edit*.
+
+image:integrations:webhooks-edit-button.png[]
+
+Make changes and select *Save*.
+
+image:integrations:webhooks-edit-context.png[]
+
+== Verify a webhook
+
+To quickly verify a Kobiton webhook, use an online webhook testing site such as link:https://webhook.site/[webhook.site] or build your own API to receive the webhook.
+
+== Limitations
+
+* Authentication to URLs for webhook callbacks is currently not supported.
+* It is not possible to limit the scope of devices tracked by webhook to specific teams or device bundles.
