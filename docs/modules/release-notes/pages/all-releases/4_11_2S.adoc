@@ -107,4 +107,52 @@ _Limitations/Prerequisites:_
 
 * The exit session step may require a refresh to show up after a session ends.
 
-== Hide the Public Device tab from view
+== Minor improvements and bug fixes
+
+This release includes several enhancements and bug fixes to improve your day-to-day testing.
+
+* Admin can now hide the Public Devices tab as OnPrem deployments do not need it (refer to xref:devices:hide-public-devices-tab.adoc[this guide]).
+
+* Script-based test automation and Device Inspector items:
+
+** Fixed issues with clicking an element while the device is in landscape orientation.
+
+** Enlarge arrow element is shown in Gigafox Inspector, but not Kobiton Inspector.
+
+** The message _Analyse Responses Times is available by upgrading your plan_ no longer displays in Session Overview whenever an automation or mixed session was running.
+
+* Others:
+
+** Fixed an issue with missing videos and Session Explorer data for terminated sessions.
+
+** Add a cleanup task to bypass the Ad Policy page in Google Chrome 117 update.
+
+** Fixed permission changes that were not saving in the Team Management screen.
+
+** Fixed an issue where the search result dropdown was disappearing on the Devices page.
+
+** Made a change to improve network payload capture stability.
+
+** Android device’s current location constantly switches back and forth between mock and real location.
+
+** Failed to launch device due to exception _Too many open files in system_ thrown from device health screen service.
+
+** Failed to parse .apk file uploaded to Kobiton store due to segmentation fault when running the aapt dump command.
+
+** Cannot set passcode on iPads when it is placed in Landscape mode.
+
+== Known issues / limitations for Standalone
+
+* The following AI-augmented features are currently not supported in this release: Scriptless Automation, Generate Appium Script, Validations. These will be included in an upcoming release.
+
+* Unable to uninstall apps using the Uninstall All button.
+
+* SSO settings - the Verify button is blocked by a CAPTCHA message even though there is no CAPTCHA.
+
+* Standard mode video does not display rotation correctly.
+
+* Jira Cloud integration is Cloud only, so does not work for network configurations without Internet access. You may see issues where the ticket is created, but there’s a `500` error, and you cannot add attachments.
+
+* Apps over 200MB may fail to upload to the App repo.
+
+* Device logs are sometimes missing from the Session Overview and Session Explorer.
