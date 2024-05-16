@@ -1,0 +1,110 @@
+= Kobiton 4.11.2S release notes
+:navtitle: Kobiton 4.11.2S release notes
+
+_Apr 8, 2024_
+
+These notes include changes to Standalone since the xref:release-notes:all-releases/4_9_1S.adoc[4.9.1S] release.
+
+== Ubuntu operating system
+
+With this release, Kobiton transitioned from NixOS to the Ubuntu Operating System for the GEM/Dell Server. Ubuntu allows for a more efficient upgrade process going forward along with other operational benefits. We will coordinate the upgrade process with each customer.
+
+
+== New OS support
+
+Kobiton 4.11.2S adds support for the following:
+
+* iOS/iPadOS 17.5 Beta
+
+* iOS/iPadOS 17.2.1, 17.3 RC, 17.3.1, 17.4.1
+
+* MacOS Sonoma 14.2, 14.2.1, 14.3, 14.4, and 14.4.1
+
+* Xcode 15.2, 15.3
+
+[NOTE]
+====
+* At this time, we recommend hosting iOS 17+ devices via Standard mode deployments for improved performance.
+====
+
+== Script-based Automation: Launch a basic Appium 2 session (Beta)
+
+In response to customer requests, Kobiton 4+ now offers the option to launch Appium automation tests using a basic Appium 2 server. This Beta release is particularly useful in scenarios where Xium, Kobiton’s high-speed drop-in replacement of the Appium server, may not support specific testing requirements.
+
+Kobiton’s default mobile automation method remains Xium. However, users now have the choice to try our  basic Appium 2 server by updating their Appium script with the following steps:
+
+Add the `'kobiton:runtime'` capability with the value `'appium'` to your script.
+
+Make sure your test script is compatible with Appium 2 before you run your tests:
+
+Appium 2.0 requires the capability `'appium:automationName'` - it is optional in Appium 1.0 and Xium.
+
+Non-standard capabilities must have the prefix `'appium:'` (Example: `'appium:bundleId'`).
+
+Our Beta basic Appium 2 server currently has the following limitations:
+
+* *Limited session exhaust:* Sessions will not include screenshots, device logs, Appium logs, or system metrics. Only Session Overview is available; Session Explorer is not accessible.
+
+* *Mixed sessions:* Manual interactions are not supported.
+
+* *AI features:* Scriptless automation, Appium script generation, validations, and flexCorrect are not supported as they rely on session exhaust.
+
+See the detailed user guide xref:automation-testing:basic-appium-server/launch-a-basic-appium-2-session.adoc[here].
+
+Please reach out to Kobiton Support with any feedback on this functionality.
+
+== Script-based Automation: Launch an Appium Server session using the Flutter driver (Beta)
+
+We also introduced the ability to run an https://github.com/appium/appium-flutter-driver[Appium Flutter driver] session.
+
+Before you can start using the Appium Flutter driver, ensure the following prerequisites are met:
+
+* *Flutter App Preparation*: Pre-process your Flutter app-under-test to enable the `ext.flutter.driver` extension. This step is crucial for the Appium Flutter driver to interact with your app.
+
+* *Server Selection*: Run your automation test script using our basic Appium 2.0 server. To do this, set `'kobiton:runtime'` to `'appium'`. Please note that the Appium Flutter driver is not supported by Xium.
+
+* *Capability Configuration*: Change the value of the capability `'appium:automationName'` to `'Flutter'`. This tells the Appium server to use the Flutter driver for your test session.
+
+Appium Flutter driver is in Beta version with the following limitations:
+
+* All limitations of our basic Appium 2 functionality apply.
+
+See the detailed guide xref:automation-testing:basic-appium-server/launch-an-appium-flutter-driver-session.adoc[here].
+
+== Script-based automation: install and use Appium Gesture plugin for basic Appium 2 server (Beta)
+
+This release enables the installation of the Appium Gesture plugin on the Mac mini host, allowing scripts that utilize the Appium Gesture plugin to run on devices hosted by the Mac mini.
+
+See xref:automation-testing:basic-appium-server/install-appium-gesture-plugin.adoc[this guide] to install the plugin for Customer-hosted and Standalone deployments.
+
+_Prerequisites/limitations:_
+
+* Available for Mac mini hosts running deviceConnect 4.9 and later.
+
+* Each Mac mini host must have the Appium Gesture plugin installed.
+
+* Not available for Public devices.
+
+* For private and local devices hosted by Kobiton, submit a support ticket to request the plugin.
+
+== Capture free drawing in a manual session
+
+Previously, free draw actions in a manual session were recorded as a straight line, connecting the first and last coordinates of the drawing. Now, the free draw action is captured accurately as it is drawn by the user, to test apps that rely on the ability to free draw.
+
+[NOTE]
+====
+* The improved free draw capture is available in manual sessions only.
+
+* In subsequent Scriptless rerun/revisit sessions, the free draw action will be captured as a straight line, connecting the start and end points of the drawing.
+====
+
+== Introducing the exit session step
+With this release, the screenshot of the device at the moment the session ends is now included in Session Explorer. In Session Explorer, this screenshot is displayed under a new kind of step called _exit session_.
+
+_Limitations/Prerequisites:_
+
+* For automation sessions, the _exit session_ step does not have an HTTP header.
+
+* The exit session step may require a refresh to show up after a session ends.
+
+== Hide the Public Device tab from view
