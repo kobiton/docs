@@ -3,23 +3,34 @@
 
 Learn how to hide the Public Device tab, which is only accessible to Cloud and Hybrid customers and does not have a use in OnPrem deployments.
 
+[NOTE]
+This feature is only available starting from v4.11 (Cloud and Hybrid) and v4.11.2S (OnPrem).
+
 == Enable the Kobiton debug option in Settings
 
 The option to hide the Public Device tab is hidden unless the debug mode is enabled. To enable debug mode, log into the Kobiton Portal as an admin in Chrome.
 
-Click the profile picture, then select *Settings*.
+include::profile:partial$open-settings.adoc[]
 
 Select *Other Settings*.
 
+image:hide-public-device-other-settings-context.png[width=1000,alt="The Other Settings context"]
+
 In the Chrome *address bar*, add this to the end of the current address: `?kobitonDebugEnabled=true`.
 
+image:hide-public-device-browser-address-bar.png[width=500,alt="The Chrome address bar with the modified URL"]
+
 A new option *(Debug mode) Internal settings* appears at the end of the page with a checkbox to hide or show the Public Devices tab.
+
+image:hide-public-device-debug-mode-enabled.png[width=1000,alt="The Internal settings option displays when debug mode is enabled"]
 
 == Hide or show the Public Devices tab
 
 Make sure the *(Debug mode) Internal settings* option is enabled.
 
 Uncheck the *Show Public Device Tab* option and choose *Update*.
+
+image:hide-public-device-checkbox-unchecked.png[width=500,alt="The Show Public Device Tab checkbox unchecked"]
 
 The Public Device tab is now hidden from the Devices page.
 
