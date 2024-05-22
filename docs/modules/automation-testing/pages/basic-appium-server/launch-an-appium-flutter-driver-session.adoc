@@ -1,0 +1,168 @@
+= Launch an Appium Flutter driver session on Kobiton 4+ (Beta)
+:navtitle: Launch an Appium Flutter driver session (Beta)
+
+Learn how to perform automation testing using the Appium Flutter driver on Kobiton 4+ devices.
+
+== Prerequisites
+
+* Familiarity with creating, signing, and building https://docs.flutter.dev/[Flutter apps].
+* Familiarity with writing and running Appium tests.
+
+== Preprocess your Flutter App
+
+The Appium Flutter Driver uses the https://github.com/dart-lang/sdk/blob/master/runtime/vm/service/service.md[Dart VM Service Protocol] with the extension `ext.flutter.driver`, similar to Flutter Driver, to control the Flutter app-under-test (AUT). This needs to be enabled in the AUT before the app can be tested with Appium Flutter Driver and can be done by following the steps below:
+
+Open your Flutter project in your favorite IDE.
+
+In the `pubspec.yaml` file, add the following dependencies:
+
+[source]
+----
+#...
+dev_dependencies:
+  test: any
+  flutter_test:
+    sdk: flutter
+  flutter_driver:
+    sdk: flutter
+#...
+----
+
+Both libraries provide functions and APIs to write tests for Flutter apps.
+
+Run the following command to install the `dev_dependencies` that you added in the previous step.
+
+[source]
+----
+flutter pub get
+----
+
+Now edit the `lib/main.dart` file in your Flutter project and add the following code statement.
+
+[source]
+----
+import 'package:flutter_driver/driver_extension.dart';
+----
+
+This statement imports the `driver_extension.dart` file from the flutter_driver library and is the first step to enable the Flutter Driver extension.
+
+Add the following code statement in the `lib/main.dart` file of your Flutter project to run the `enableFlutterDriverExtension()` function.
+
+[source]
+----
+void main() {
+  // This line enables the extension
+  enableFlutterDriverExtension();
+
+  runApp(const MyApp());
+}
+----
+
+Check out the https://api.flutter.dev/flutter/flutter_driver_extension/enableFlutterDriverExtension.html[article] about `enableFlutterDriverExtension` function to learn more about its powers.
+
+== Build your Flutter App
+
+After you have enabled the Flutter Driver extension, you can now build your app for testing.
+
+Open your Flutter project in your favorite IDE or open a terminal in the root directory of your Flutter project.
+
+Choose a device type (Android emulator/real device or iOS real device) to build your app and run one of the following commands:
+
+[tabs]
+======
+Android real device::
++
+--
+[source,shell]
+----
+flutter build apk --debug
+----
+--
+
+Android emulator::
++
+--
+[source,shell]
+----
+flutter build apk --debug
+----
+--
+
+iOS real device::
++
+--
+[source,shell]
+----
+flutter build ipa --debug
+----
+--
+======
+
+The corresponding output file path of the above commands:
+
+[tabs]
+======
+Android real device::
++
+--
+`\{project-root}/build/app/outputs/flutter-apk/`
+--
+
+Android emulator::
++
+--
+`\{project-root}/build/app/outputs/flutter-apk/`
+--
+
+iOS real device::
++
+--
+`\{project-root}/build/ios/ipa/`
+--
+======
+
+== Upload your Flutter App
+
+Upload the Flutter App to the Kobiton App Repository or a cloud storage of your choice.
+
+== Configure Appium Capabilities in your test script
+
+The Appium Flutter driver is supported only via our basic Appium 2 server functionality. Follow xref:basic-appium-server/launch-a-basic-appium-2-session.adoc[this document] to prepare your test script for running a basic Appium 2 server session on Kobiton devices.
+
+Then, change the value of `'appium:automationName'` to `'Flutter'` to use the Appium Flutter driver.
+
+Example iOS capabilities:
+
+[source,javascript]
+----
+const capabilities = {
+'platformName': 'iOS',
+'appium:autoAcceptAlerts': true,
+'appium:app': 'https://kobiton-us-east.s3.amazonaws.com/.../flutter_app.ipa',
+'appium:udid': '00008020-0004***41123402E',
+
+    'appium:automationName': 'Flutter', // -> required to use Appium Flutter Driver
+    'kobiton:runtime':'appium', // -> required to use Basic Appium Server
+}
+----
+
+Example Android capabilities:
+
+[source,javascript]
+----
+const capabilities = {
+    'platformName':'Android'
+    'appium:app': 'https://kobiton-us-east.s3.amazonaws.com/.../flutter_app.apk',
+    'appium:udid': '39201F****01XV',
+
+    'appium:automationName': 'Flutter', // -> required to use Appium Flutter Driver
+    'kobiton:runtime':'appium', // -> required to use Basic Appium Server
+}
+----
+
+Run the script to start the Appium Flutter driver automation session.
+
+== Limitations
+
+* All limitations for Appium Server session apply (see xref:basic-appium-server/launch-a-basic-appium-2-session.adoc#_known_issueslimitations[here]).
+* Only Android devices hosted in Standard mode are supported at this time.

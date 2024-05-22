@@ -1,0 +1,97 @@
+= Install Appium Gesture Plugin
+:navtitle: Install Appium Gesture Plugin
+
+Learn how to install and use the https://github.com/AppiumTestDistribution/appium-gestures-plugin[Appium Gesture Plugin] with Kobiton’s basic Appium 2 server.
+
+== Prerequisites
+
+* deviceConnect 4.9 or later
+* The Mac mini host must have Internet access to download the plugin.
+* The plugin is not available for Public Cloud devices.
+
+== Install Appium Gesture Plugin
+
+The Appium Gesture Plugin must be installed on all the Mac minis in your environment that host the devices you will be testing with the Appium Gesture Plugin. Repeat the steps below for each Mac mini.
+
+Access the Mac mini host. You can use Screen Sharing or SSH.
+
+In the Terminal, run the below command to install the plugin:
+
+[code]
+----
+APPIUM_HOME=/usr/local/deviceconnect/appium-drivers \
+  ANDROID_HOME=/usr/local/deviceconnect/android \
+  node /usr/local/deviceconnect/appium-server/index.js plugin install \
+  --source=npm appium-gestures-plugin
+----
+
+Extract the necessary files to the `appium-drivers` folder with this command:
+
+[code]
+----
+tar -C /usr/local/deviceconnect/appium-drivers \
+  -xvJf /var/puppet/packages/deviceconnect/files/appium-drivers.tgz
+----
+
+Verify the plugin has been installed with:
+
+[code]
+----
+APPIUM_HOME=/usr/local/deviceconnect/appium-drivers \
+  ANDROID_HOME=/usr/local/deviceconnect/android \
+  node /usr/local/deviceconnect/appium-server/index.js  plugin list
+----
+
+If the plugin is installed successfully, the output of the above should be:
+
+[code]
+----
+✔ Listing available plugins
+- gestures@4.0.1 [installed (npm)]
+- images [not installed]
+- execute-driver [not installed]
+- relaxed-caps [not installed]
+- universal-xml [not installed]
+----
+
+== Activate the plugin
+
+To activate the plugin, the launch arguments of basic Appium 2 Server need to be modified. Back up the file `run-appium.sh` inside `/usr/local/deviceconnect/Build/Mono/`.
+
+Edit the above file using any editor of choice. Add the argument `--use-plugins=gestures` at the end of the below text in the file:
+
+[code]
+----
+APPIUM_HOME=$DCDIR/appium-drivers ANDROID_HOME=$DCDIR/android exec $DCDIR/appium-server/index.js -a 127.0.0.1 -p 4723 --allow-insecure chromedriver_autodownload --use-plugins=gestures --log-no-colors -G localhost:10191
+----
+
+After editing, the above text becomes:
+
+[code]
+----
+APPIUM_HOME=$DCDIR/appium-drivers ANDROID_HOME=$DCDIR/android exec $DCDIR/appium-server/index.js -a 127.0.0.1 -p 4723 --allow-insecure chromedriver_autodownload --log-no-colors -G localhost:10191 --use-plugins=gestures
+----
+
+Save the file, then end the current `appium-server` process with this command:
+
+[code]
+----
+pkill -9 -f appium-server
+----
+
+After `appium-server` ends, it is automatically restarted with the argument to use the new plugin. Verify this by searching for `gestures@4.0.1 (ACTIVE)` in the deviceConnect service logs:
+
+[code]
+----
+cat /usr/local/deviceconnect/Logs/MobileLabs.DeviceConnect.Services.log \
+  | grep 'gestures@4.0.1 (ACTIVE)'
+----
+
+The plugin was activated successfully if `gestures@4.0.1 (ACTIVE)` is in the output.
+
+[NOTE]
+====
+If you don’t see `gestures@4.0.1 (ACTIVE)` in the output, retry the above command several times.
+====
+
+Finally, launch a Basic Appium 2 session with a script that uses the plugin to verify it works correctly.

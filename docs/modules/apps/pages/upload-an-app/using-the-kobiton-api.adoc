@@ -1,28 +1,54 @@
-= Upload an app using the Kobiton API
-:navtitle: Using the Kobiton API
+= Upload an app using the Kobiton API (Terminal)
+:navtitle: Using the Kobiton API (Terminal)
 
-Learn how to upload an app to the xref:manage-apps.adoc[app repository] using our link:https://api.kobiton.com/docs/[REST API].
+Learn how to upload an app to the xref:manage-apps.adoc[app repository] using our link:https://api.kobiton.com/v2/docs/[REST API].
+
+== Before you start
+
+* Make sure your app package belongs to a xref:apps:supported-filetypes.adoc[supported filetype].
+* xref:profile:manage-your-api-credentials.adoc[Get your API credentials].
+
+[IMPORTANT]
+====
+Throughtout this document, replace https://api.kobiton.com with `[http/https]://[Dell server IP or hostname]:3000` if you are using Standalone server.
+====
 
 [#_configure_your_authorization_header]
 == Configure your authorization header
 
 include::automation-testing:partial$configure-your-authorization-header.adoc[]
 
+[#_generate_an_upload_url]
 == Generate an upload URL
 
-In the terminal, make a `POST` request to `/apps/uploadUrl`, which will generate a unique upload URL that connects to our private S3 bucket on Amazon Web Services (AWS).
+In a terminal, make a `POST` request to `/v2/apps/uploadUrl` to generate a unique upload URL that connects to our private S3 bucket on Amazon Web Services (AWS). Use the following cURL command:
 
 [source,shell]
 ----
-# You can also use wget
-curl -X POST https://api.kobiton.com/v1/apps/uploadUrl \
+curl -X POST https://api.kobiton.com/v2/apps/upload-url \
   -H 'Authorization: Basic ${yourBase64String}' \
   -H 'Content-Type: application/json' \
-  -H 'Accept: application/json' \
-  -d '{
-  "filename": "${appFilename}",
-  "appId": 1
-}'
+  -d '{ "file_name": "${app_file_name}" , "app_id": ${app_id} }'
+----
+
+The request has 2 parameters:
+
+* `+${app_id}+`: (optional) Provide the `app_id` if another version of this app is already uploaded. _Example_: `100`.
+* `+${app_file_name}+`: (required) Name of the app file to upload. _Example_: `MyApp.ipa`.
+
+[TIP]
+====
+You can look up the `app_id` in xref:apps:app-metadata.adoc#_app_id[app metadata].
+====
+
+We will use the app `MyApp.ipa` throughout this guide to demonstrate the upload process. Assuming this app does not exist in the repository, there is no need to specify an `app_id`:
+
+[source,shell]
+----
+curl -X POST https://api.kobiton.com/v2/apps/upload-url \
+  -H 'Authorization: Basic ${yourBase64String}' \
+  -H 'Content-Type: application/json' \
+  -d '{ "file_name": "MyApp.ipa" }'
 ----
 
 A successful response will return the following:
@@ -31,44 +57,132 @@ A successful response will return the following:
 [source,shell]
 ----
 {
-    "appPath": "users/1/apps/app‐prod‐debug‐237824a0‐302c‐9bfd‐ff417c89610a.apk",
-    "url": "https://kobiton-us.s3.amazonaws.com/users/1/apps/app‐f417c89610a.apk?AWSAccessKeyId=AKINQ57IQCo"
+    "app_path": "users/1/apps/MyApp‐237824a0‐302c‐9bfd‐ff417c89610a.ipa",
+    "url": "https://kobiton-us-west.s3.amazonaws.com/users/78042/apps/MyApp-57b15160-cf17-11ee-98d5-e949a34321c7f.ipa?AWSAccessKeyId=AKIAYOIAYUIRGDSFS6QO&Content-Type=application%2Foctet-stream&Expires=1708384165&Signature=VHTRqXdIpKmbvauPsdfsKJhAgk%3D&x-amz-acl=private&x-amz-meta-appid=600841&x-amz-meta-createdby=78042&x-amz-meta-organizationid=681&x-amz-tagging=unsaved%3Dtrue"
 }
 ----
 
-Save these values for the following sections.
+Save the above values for the next sections.
 
-== Send app to S3
+== Upload app file to S3 storage
 
-Make a `PUT` request using the `url` you generated in the previous step.
+Make a `PUT` request to the previously generated `url` to upload the app file to S3 storage.
 
 [source,shell]
 ----
-# You can also use wget
-curl -X PUT ${generatedUrl} \
+curl -X PUT ${url} \
   -H "Content-Type: application/octet-stream" \
   -H "x-amz-tagging: unsaved=true" \
-  -T ${filePath} \
+  -T ${file_path}
 ----
 
-A successful `PUT` request will return a `200` status.
+This request requires:
 
-[#_initiate_upload]
-== Initiate upload
+* `+${url}+`: The `url` obtained from the xref:_generate_an_upload_url[previous section].
+* `+${file_path}+`: Path to the app package file you want to upload.
 
-Make a `POST` request to initiate your upload to the app repository in Kobiton. Be sure to upload a xref:supported-filetypes.adoc[supported filetype].
+Example command using the previous section's response:
 
 [source,shell]
 ----
-# You can also use wget
-curl -X POST https://api.kobiton.com/v1/apps \
+curl -X PUT https://kobiton-us-west.s3.amazonaws.com/users/78042/apps/MyApp-57b15160-cf17-11ee-98d5-e949a34321c7f.ipa?AWSAccessKeyId=AKIAYOIAYUIRGDSFS6QO&Content-Type=application%2Foctet-stream&Expires=1708384165&Signature=VHTRqXdIpKmbvauPsdfsKJhAgk%3D&x-amz-acl=private&x-amz-meta-appid=600841&x-amz-meta-createdby=78042&x-amz-meta-organizationid=681&x-amz-tagging=unsaved%3Dtrue  \
+  -H "Content-Type: application/octet-stream" \
+  -H "x-amz-tagging: unsaved=true" \
+  -T /the/full/file/path/on/my/local/computer/MyApp.ipa
+----
+
+A blank response indicates a successful upload.
+
+[#_create_app_or_app_version]
+== Create the app or app version in the app repository
+
+Make a `POST` request to create the entry for the app or app version in the app repository on Kobiton.
+
+[source,shell]
+----
+curl -X POST https://api.kobiton.com/v2/apps \
     -H 'Authorization: Basic ${yourBase64String}' \
     -H 'Content-Type: application/json' \
     -H 'Accept: application/json' \
-    -d '{
-        "filename": "${appFilename}",
-        "appPath": "${generatedAppPath}"
-        }'
+    -d '{ "file_name": "${app_file_name}" , "app_path": "${app_path}" }'
 ----
 
-If your request was successful, `POST` will return a `200` status, then the API will extract your app's metadata, preform security checks, and upload the app to your library.
+This request contains 2 parameters:
+
+* `+${app_path}+`: (required) Use the value of `app_path` from the xref:_generate_an_upload_url[previous step].
+* `+${app_file_name}+`: (optional) Specify the name of the app. If not provided, the name of the file from `+${app_path}+` is used.
+
+Continuing on from the previous steps, your command would be:
+
+[source,shell]
+----
+curl -X POST https://api.kobiton.com/v2/apps \
+    -H 'Authorization: Basic ${yourBase64String}' \
+    -H 'Content-Type: application/json' \
+    -H 'Accept: application/json' \
+    -d '{ "MyApp.ipa": "" , "app_path": "users/1/apps/MyApp‐237824a0‐302c‐9bfd‐ff417c89610a.ipa" }'
+----
+
+If your request was successful, `POST` will return a `200` status with the following response:
+
+[source,shell]
+----
+{
+  "app_id": 100,
+  "version_id": 101
+}
+----
+
+In the response above, `app_id` is the ID of the new app, and `version_id` is the ID of the new application version.
+
+If the app file is too large, it may take a while to process the file and the value of `app_id` will be `N/A`. See the next section on how to obtain the `app_id`.
+
+== Obtain the app ID
+
+Make a `GET` request to obtain the parsing status and the `app_id` of your newly uploaded app.
+
+[source,shell]
+----
+
+curl -X GET 'https://api.kobiton.com/v2/apps/parsing-status?appVersionId=${version_id}' \
+    -H 'Authorization: Basic ${yourBase64String}'
+
+----
+
+
+This request requires the `version_id` obtained from the xref:_create_app_or_app_version[previous step].
+
+Continuing on with the example, your command would be:
+
+[source,shell]
+----
+
+curl -X GET 'https://api.kobiton.com/v2/apps/parsing-status?appVersionId=101' \
+    -H 'Authorization: Basic ${yourBase64String}'
+
+----
+
+If your request was successful, `GET` will return a `200` status with the following response:
+
+[source,shell]
+----
+
+{
+"app_id": 100,
+"state": "OK"
+}
+
+----
+
+
+The response has 2 parameters:
+
+* `state`: indicates the parsing status of the app.
+** `OK`: The uploaded application is processed by the server and is ready to use.
+** `PARSING`: The server is still processing the uploaded application.
+** `FAILURE_PARSING`: The server could not process the uploaded application, typically due to an invalid file type.
+
+* `app_id`: the ID of the app to use in other endpoints such as installing the app on a device or get information about a specific app.
+
+[NOTE]
+If you receive `error 404` with the message `App version ID ... doesn't exist`, the application version might be made inaccessible to your account. Contact an admin for access.

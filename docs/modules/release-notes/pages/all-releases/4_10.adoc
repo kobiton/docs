@@ -1,0 +1,130 @@
+= Kobiton 4.10 release notes
+:navtitle: Kobiton 4.10 release notes
+
+_January 20, 2024_
+
+== New OS support
+
+Kobiton 4.10 adds support for the following:
+
+* iOS/iPadOS 17.2.1
+* iOS/iPadOS 17.3 RC
+* macOS Sonoma 14.2
+* macOS Sonoma 14.2.1
+* Xcode 15.2
+
+[NOTE]
+====
+* At this time, we recommend hosting iOS 17+ devices via Standard mode deployments for improved stability.
+
+* For iOS/iPadOS 17.2.1 and 17.3 RC, recent apps are not closed during the cleanup process.
+====
+
+[#_enhanced_handling_of_sensitive_data_in_manual_and_scriptless_sessions]
+== Enhanced handling of sensitive data in manual and Scriptless sessions
+
+Before this release, inputting sensitive data within a manual testing session was considered an unsupported AI action, and the session became ineligible for our AI functionality, such as Scriptless and generating an Appium script. This release introduces improved security measures for manual sessions with sensitive data and enables these sessions to utilize our AI functionality.
+
+Here’s how it works:
+
+* Follow xref:manual-testing:device-controls.adoc#_input_sensitive_data[these instructions] to input sensitive data via the left-hand navigation in a manual session. (If data is not entered via the manual session control, the session will not be considered sensitive.)
+
+* *New sensitive session indicator*:
+
+** For session owners: A green lock icon appears in both the Session Explorer and Session List, indicating a "sensitive" session that you created and own.
+** For team members: Sessions containing sensitive data display a red lock icon to other team members, restricting their access.
+
+* *Owner-exclusive access*:
+
+** Only the session owner can access Session Explorer, create an automated test case, rerun the test case, and generate an Appium script from the sensitive session.
+** Automated test cases, test runs, and reruns derived from sensitive sessions are locked and accessible solely by the owner.
+
+* *Generating Appium Script from the sensitive session*: Any sensitive data in an exported Appium script is replaced with asterisks. Automation engineers need to manually input the correct data before execution.
+
+* *Editing sensitive data*:
+
+** Removing all sensitive data from an automated test case declassifies it from being a sensitive session.
+** Subsequent test runs and sessions derived from these edited test cases will not be classified as sensitive and will have the lock icons.
+
+== Script-based Automation: Launch a basic Appium 2.0 session (Alpha)
+
+In response to customer requests, Kobiton 4+ now offers the option to launch Appium automation tests using a basic Appium 2.0 server. This Alpha release is particularly useful in scenarios where Xium, Kobiton's high-speed reimplementation of the Appium server, may not support specific testing requirements.
+
+Kobiton's default mobile automation method remains Xium. However, users now have the choice to try our Alpha basic Appium 2.0 server by updating their Appium script with the following steps:
+
+* Add the `'kobiton:runtime'` capability with the value `'appium'` to your script.
+* Make sure your test script is compatible with Appium 2.0 before you run your tests:
+
+** Appium 2.0 requires the capability `'appium:automationName'` - it is optional in Appium 1.0 and Xium.
+** Non-standard capabilities must have the prefix `'appium:'` (Example: `'appium:bundleId'`).
+
+Our Alpha basic Appium 2.0 server currently has the following limitations:
+
+* *Android testing*: Only available for deployments using the Ubuntu GEM or Standard mode.
+
+* *iOS testing*: Supported with Ubuntu GEM, nixOS GEM, and Standard mode.
+
+* *No session exhaust*: Sessions will not include screenshots, device logs, Appium logs, or system metrics. Only Session Overview is available; Session Explorer is not accessible.
+
+* *Session video*: Not available for Android devices.
+
+* *AI features*: Scriptless automation, Appium script generation, validations, and flexCorrect are not supported as they rely on session exhaust.
+
+* *Mixed sessions*: Running mixed sessions with basic Appium 2.0 is not possible.
+
+See the detailed user guide xref:automation-testing:basic-appium-server/launch-a-basic-appium-2-session.adoc[here].
+
+Please reach out to Kobiton Support with any feedback on this functionality.
+
+== Script-based Automation: Launch an Appium Server session using the Flutter driver (Alpha)
+
+We also introduced the ability to run an https://github.com/appium/appium-flutter-driver[Appium Flutter driver] session.
+
+Before you can start using the Appium Flutter driver, ensure the following prerequisites are met:
+
+* *Flutter App Preparation*: Pre-process your Flutter app-under-test to enable the ext.flutter.driver extension. This step is crucial for the Appium Flutter driver to interact with your app.
+* *Server Selection*: Run your automation test script using our basic Appium 2.0 server. To do this, set 'kobiton:runtime' to 'appium'. Please note that the Appium Flutter driver is not supported by Xium.
+* *Capability Configuration*: Change the value of the capability `'appium:automationName'` to `'Flutter'`. This tells the Appium server to use the Flutter driver for your test session.
+
+Appium Flutter driver is in Alpha version with the following limitations:
+
+* All limitations of our basic Appium 2.0 functionality apply.
+* Only Android devices hosted via Standard mode are supported at this time.
+
+See the detailed guide xref:automation-testing:basic-appium-server/launch-an-appium-flutter-driver-session.adoc[here].
+
+== Capture free drawing in a manual session
+
+Previously, free draw actions in a manual session were recorded as a straight line, connecting the first and last coordinates of the drawing. Now, the free draw action is captured accurately as it is drawn by the user to test apps that rely on the ability to free draw.
+
+[NOTE]
+====
+* The improved free draw capture is available in manual sessions only.
+* In subsequent Scriptless rerun/revisit sessions, the free draw action will be captured as a straight line, connecting the start and end points of the drawing.
+====
+
+== Minor improvements and bug fixes
+
+This release includes several enhancements and bug fixes to improve your day-to-day testing.
+
+* Script-based test automation and Device Inspector items:
+
+** Fixed issues with clicking an element while the device is in landscape orientation.
+
+* Improved Scriptless automation:
+
+** Improved the accuracy of the scroll/swipe gesture.
+** Improved the accuracy of navigating through screens that have many non-unique elements.
+** Fixed an issue where element source was not captured properly when a virtual keyboard was prompted on the screen containing `webview`.
+** Fixed an issue where revisits were blocked due to incorrect simulation of Tap action.
+** Fixed a timeout issue when executing image comparison.
+** Fixed an issue with lazy loading element blocking revisit sessions.
+** Fixed an error in revisit sessions due to the enhanced text retrieval feature.
+
+* Others:
+
+** Fixed an issue with missing videos and Session Explorer data for terminated sessions.
+** Add a cleanup task to bypass the Ad Policy page in Google Chrome 117 update.
+** Fixed permission changes that were not saving in the Team Management screen.
+** Fixed an issue where the search result dropdown was disappearing on the Devices page.
+** Made a change to improve network payload capture stability.
