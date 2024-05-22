@@ -6,6 +6,16 @@ You can perform the setup process physically on the device or through a Kobiton 
 . xref:_on_the_device[]
 . xref:_in_a_manual_session[]
 
+== Requirements
+
+- Access to the physical device to double-click the side button during setup of AssistiveTouch. (If the device is hosted by Kobiton, submit a support ticket to assist in the setup process.)
+- A passcode set on the device. There are two options:
+* A passcode can be set *and must be removed* during the manual session. If the passcode is not removed before ending the session, the device *will not be able to come back online* without physical touch and a request to the team managing the devices to unlock the device.
+* Setup Kobiton passcode support for the devices. For Private devices, discuss passcode requirements with your Customer Success Manager who will work with support to setup passcodes. For Local devices hosted at the customer location, submit a support ticket to request passcode setup documentation for your deployment type (Legacy Kobiton or PIN code mode 1 for Kobiton 4+)
+- [Optional] Use a link:https://support.kobiton.com/hc/en-us/articles/360055588272-Device-Cleanup[Cleanup Policy] for the devices to be tested that does not reset the device settings to prevent AssistiveTouch from turning off for the next session. Otherwise, the tester will need to turn on AssistiveTouch for each session that it is needed:
+
+image::devices:bypass-apple-pay-configure-cleanup-popup.PNG[]
+
 
 == On the Device
 
@@ -18,53 +28,53 @@ After the device has been set up with passcode management, start a Manual Sessio
 If it has been previously confirmed that the device has a passcode, skip this step.
 ===============================
 
-image::b2-devices-local-bypass.PNG[]
+image::bypass-apple-pay-manual-session-enter-passcode.PNG[]
 
 Exit the Manual Session. Unplug the device from the Cambrionix Hub.
 
 *Step 2:* Tap *Settings*.
 
-image::b3-devices-local-bypass.PNG[]
+image::bypass-apple-pay-settings-app.PNG[]
 
 *Step 3:* Tap *Accessibility*.
 
-image::b4-devices-local-bypass.PNG[]
+image::bypass-apple-pay-settings-context-accessibility.PNG[]
 
 *Step 4:* Under *PHYSICAL AND MOTOR*, tap *Touch*.
 
-image::b5-devices-local-bypass.PNG[]
+image::bypass-apple-pay-accessibility-context-touch.PNG[]
 
 *Step 5:* Tap *AssistiveTouch*.
 
-image::b6-devices-local-bypass.PNG[]
+image::bypass-apple-pay-touch-context-assistive-touch.PNG[]
 
 *Step 6:* Turn on *AssistiveTouch*.
 
-image::b7-devices-local-bypass.PNG[]
+image::bypass-apple-pay-assistive-touch-context-assistive-touch-toggle-on.PNG[]
 
 *Step 7:* Scroll down the screen. Under *SIDE BUTTON CONFIRMATION*, turn on *Confirm with AssistiveTouch*.
 
-image::b8-devices-local-bypass.PNG[]
+image::bypass-apple-pay-assistive-touch-context-confirm-toggle-off.PNG[]
 
 *Step 8:* Tap *Continue*.
 
-image::b9-devices-local-bypass.PNG[]
+image::bypass-apple-pay-set-up-assistive-touch-double-click.PNG[]
 
 *Step 9:* The screen message asks you to double-click the side button. While holding the physical device, double-click the physical side button on the device.
 
-image::b10-devices-local-bypass.PNG[]
+image::bypass-apple-pay-double-click-assistive-touch.PNG[]
 
 *Step 10:* Input the passcode. Tap the black space and enter the passcode using your keyboard. Due to Apple security measures, you will not see the passcode as you enter it. After inputting the whole passcode, press the backspace or delete key on your keyboard once, then input the last digit of the passcode. Tap the Done button when it is enabled. For Private devices, contact the Kobiton Support, if needed, to retrieve the passcode set on the device.
 
-image::b11-devices-local-bypass.PNG[]
+image::bypass-apple-pay-enter-passcode.PNG[]
 
 *Step 11:* Holding the device, double-click the physical side button on the device again to confirm.
 
-image::b12-devices-local-bypass.PNG[]
+image::bypass-apple-pay-double-click-assistive-touch.PNG[]
 
 *Step 12:* Verify that *Confirm with AssistiveTouch* button is on.
 
-image::b13-devices-local-bypass.PNG[]
+image::bypass-apple-pay-assistive-touch-settings-confirm-toggle-on.PNG[]
 
 *Step 13:* Plug the device into the Cambrionix Hub. Start a Manual Session on the device.
 
@@ -79,48 +89,48 @@ Start a Manual Session on the iOS device.
 
 *Step 1:* Tap *Settings*.
 
-image::b14-devices-local-bypass.PNG[]
+image::bypass-apple-pay-manual-session-context-settings-app.PNG[]
 
 *Step 2:* Tap *Accessibility*.
 
-image::b15-devices-local-bypass.PNG[]
+image::bypass-apple-pay-manual-session-settings-context-accessibility.PNG[]
 
 *Step 3:* Under *PHYSICAL AND MOTOR*, tap *Touch*.
 
-image::b16-devices-local-bypass.PNG[]
+image::bypass-apple-pay-manual-session-accessibility-settings-touch.PNG[]
 
 *Step 4:* Tap *AssistiveTouch*.
 
-image::b17-devices-local-bypass.PNG[]
+image::bypass-apple-pay-manual-session-touch-settings-assistive-touch.PNG[]
 
 *Step 5:* Turn on AssistiveTouch.
 
-image:b18-devices-local-bypass.PNG[]
+image:bypass-apple-pay-manual-session-assistive-touch-settings-toggle.PNG[]
 
 *Step 6:* Scroll down the screen. Under *SIDE BUTTON CONFIRMATION*, turn on *Confirm with AssistiveTouch*.
 
-image::b19-devices-local-bypass.PNG[]
+image::bypass-apple-pay-manual-session-assistive-touch-settings-confirm-toggle-off.PNG[]
 
 *Step 7:* Tap *Continue*.
 
-image::b20-devices-local-bypass.PNG[]
+image::bypass-apple-pay-manual-session-set-up-assistive-touch-pop-up.PNG[]
 
 *Step 8:* The screen message asks you to double-click the side button. While holding the physical device, double-click the physical side button on the device.
 
-image::b21-devices-local-bypass.PNG[]
+image::bypass-apple-pay-manual-session-double-click-confirm.PNG[]
 
 *Step 9:* Input the passcode. Tap the black space and enter the passcode using your keyboard. Due to Apple security measures, you will not see the passcode as you enter it. For Private devices, contact the Kobiton Support, if needed, to retrieve the passcode set on the device.
 
-image::b22-devices-local-bypass.PNG[]
+image::bypass-apple-pay-manual-session-enter-passcode-empty.PNG[]
 
 *Step 10:* After inputting the whole passcode, press the *backspace* or *delete* key on your keyboard once, then input the last digit of the passcode. Tap the *Done* button when it is enabled:
 
-image::b23-devices-local-bypass.PNG[]
+image::bypass-apple-pay-manual-session-enter-passcode-filled.PNG[]
 
 *Step 11:* Holding the device, double-click the physical side button on the device again to confirm.
 
-image::b24-devices-local-bypass.PNG[]
+image::bypass-apple-pay-manual-session-double-click-confirm.PNG[]
 
 *Step 12:* Verify that *Confirm with AssistiveTouch* button is on.
 
-image::b25-devices-local-bypass.PNG[]
+image::bypass-apple-pay-manual-session-assistive-touch-settings-confirm-toggle-on.PNG[]
