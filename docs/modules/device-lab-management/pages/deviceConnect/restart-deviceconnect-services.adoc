@@ -17,27 +17,26 @@ include::profile:partial$open-settings.adoc[]
 
 Select the *Device Management* tab.
 
-The *Device Management* page lists all dedicated mobile devices for the org grouped by Mac mini host. Locate the Mac mini host you want to restart and click the corresponding Restart services button.
+The *Device Management* page lists all dedicated mobile devices for the org grouped by Mac mini host. Locate the Mac mini host you want to restart and click the corresponding *Restart services* button.
 
 image:device-lab-management:restart-dc-restart-services-button.PNG[]
 
-In the confirmation modal, choose Restart Services again to proceed.
+In the confirmation modal, choose *Restart Services* again to proceed.
 
-Any active sessions on devices hosted by that Mac mini will be terminated. During the restart, no actions can be performed on the Mac mini or the connected devices (all the buttons are grayed out). A notification is displayed when the restart completes successfully.
+Any active sessions on devices hosted by that Mac mini will be terminated. During the service restart, no actions can be performed on the Mac mini or the connected devices (all the buttons are grayed out). A notification is displayed when the restart completes successfully.
 
 image:device-lab-management:restart-dc-services-restart-successful-popup.PNG[]
 
-After the restart completes, the devices should automatically come back online.
+After the service restart completes, the devices should automatically come back online.
 
 == Impacts on active test sessions during a restart
-When a Mac mini host is restarted using the above method, active sessions on devices hosted by that Mac mini experience the following:
+When a Mac mini host's services are restarted using the above method, active sessions on devices hosted by that Mac mini experience the following:
 
-- In the Manual or Mixed session, the user receives a “Device disconnected” error message and the session is terminated with a status of Terminated.
+- In the Manual or Mixed session, the user receives a _Device disconnected_ error message and the session is terminated with a status of _Terminated_.
 +
 image:device-lab-management:restart-dc-devices-disconnect-popup.PNG[]
 
-- Automation and revisit sessions are also terminated with a status of Terminated.
+- Automation and revisit sessions are also terminated with a status of _Terminated_.
 
 == Additional notes
-- Mac minis must be restarted one at a time.
 - For those with a GEM server, services on the GEM cannot be restarted via the Kobiton Portal. Contact Kobiton support for help to restart the GEM server.
