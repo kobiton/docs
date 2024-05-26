@@ -1,0 +1,63 @@
+= Prepare a Chinese Android device for hosting
+:navtitle: Prepare a Chinese Android device
+
+Learn how to prepare a **Chinese Android device** to be utilized with Kobiton 4.0 and later.
+
+This guide provides instructions for configuring **Chinese devices (Xiaomi models)** to successfully launch the **deviceConnect** service. Due to specific operating system constraints, these configuration changes are required to be performed manually and cannot be
+applied through automation.
+
+[NOTE]
+====
+
+Different models of devices and versions may have different layout for settings and options. Refer to your specific device's manual if you cannot find the options mentioned in this document.
+
+====
+
+== Before you start
+
+You need to have:
+
+- A logged in **MI account**. You can create a MI account on Xiaomi’s (https://account.xiaomi.com/)[account page].
+- A **SIM card** inserted. It does not need to be a working SIM card.
+
+== Enable Developer options
+
+Unlock your phone and go to **Settings** on your Xiaomi Redmi device.
+
+image:device-lab-management:device-lab-management-android-chinese-settings.png[width=400]
+
+Scroll down to **About Phone** and tap on it.
+
+image:device-lab-management:device-lab-management-android-chinese-about-phone.png[width=400]
+
+Locate **MIUI Version** and tap several times on it.
+
+image:device-lab-management:device-lab-management-android-chinese-miui.png[width=400]
+
+After taping it several times, you will get a message **You're now a developer!** on your device screen.
+
+== Configure Debugging options
+
+In **Developer options**, enable **Install via USB** and **USB Debugging (security setting)**.
+
+image:device-lab-management:device-lab-management-android-chinese-developer-options.png[width=400]
+
+In **Developer options**, disable **MIUI Optimization**.
+
+image:device-lab-management:device-lab-management-android-chinese-developer-options-disable-miui-optimization.png[width=400]
+
+If you can’t find the **MIUI Optimization** option, tap to **Reset to default** value field 4 times.
+
+image:device-lab-management:device-lab-management-android-chinese-developer-options-reset-to-default-value.png[width=400]
+
+== Delegate permission to DeviceControl
+
+Using a compatible cable with Xiaomi device (e.g: Xiaomi cable) connect your device to your computer.
+
+Ensure that your device shows an **Allow USB debugging?** popup.
+
+On the popup, click **OK** to trust this computer on the device.
+
+When you device shows the **USB options**, choose the **File transfer option**.
+
+Enable full permission for **DeviceControl** after the first installation.
