@@ -19,24 +19,15 @@ image::devices:bypass-apple-pay-configure-cleanup-popup.PNG[width=500,alt="The c
 
 == Set up AssistiveTouch confirmation
 
-After the device has been set up with passcode management, start a Manual Session on the device. The system generates a random passcode and sets it on the device in the background.
-
-Navigate to *Settings → Face ID & Passcode*.If you see the below screen asking for a passcode, then passcode is enabled on the device.
-
-[NOTE]
-===============================
-If it has been previously confirmed that the device has a passcode, skip this step.
-===============================
-
-image::bypass-apple-pay-manual-session-enter-passcode.PNG[width=500,alt="The passcode input screen"]
-
-Exit the Manual Session. Unplug the device from the Cambrionix Hub.
+Unplug the device from the Cambrionix Hub.
 
 Tap *Settings*.
 
 image::bypass-apple-pay-settings-app.PNG[width=400,alt="The Settings app on the home screen"]
 
-Tap *Accessibility*.
+Check if the device has a passcode by navigating to *Settings → Face ID & Passcode* or *Touch ID & Passcode*. Only proceed if the device has a passcode.
+
+Go back to the main *Settings* screen and tap *Accessibility*.
 
 image::bypass-apple-pay-settings-context-accessibility.PNG[width=400,alt="The Accessibility option in Settings"]
 
@@ -76,7 +67,6 @@ Verify that *Confirm with AssistiveTouch* button is on.
 
 image::bypass-apple-pay-assistive-touch-settings-confirm-toggle-on.PNG[width=400,alt="The Confirm with Asstive touch toggle turned on"]
 
-Plug the device into the Cambrionix Hub and start a Manual Session on the device.
+Plug the device into the Cambrionix Hub and make sure the device is online in the Kobiton portal.
 
-
-Follow the steps in xref:local-devices/use-apple-pay/verify-assistivetouch-configuration-in-manual-session.adoc[] to continue.
+Now you can follow the steps in xref:local-devices/use-apple-pay/use-apple-pay-in-manual-session.adoc[].
