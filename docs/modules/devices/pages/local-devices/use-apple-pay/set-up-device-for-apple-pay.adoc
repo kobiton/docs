@@ -1,0 +1,82 @@
+= Set up a device for Apple Pay
+:navtitle: Set up device
+
+Learn how to set up _Confirm with AssistiveTouch_ feature on an iOS/iPadOS device to use Apple Pay.
+
+== Requirements
+
+* Access to the physical device to double-click the side button during setup of AssistiveTouch. If the device is hosted by Kobiton, submit a support ticket to assist in the setup process.
+
+* A passcode set on the device. There are two options:
+
+** A passcode can be set *and must be removed* after the setup. If the passcode is not removed after the setup, the device *will not be able to come back online* without physically inputting the passcode to unlock it.
+
+** Setup Kobiton passcode support for the devices. For Private devices, discuss passcode requirements with your Customer Success Manager who will work with support to set up passcodes. For Local devices hosted at the customer location, submit a support ticket to request passcode setup documentation for your deployment type.
+
+* [Optional] Use a link:https://support.kobiton.com/hc/en-us/articles/360055588272-Device-Cleanup[Cleanup Policy] for the devices to be tested that does not reset the device settings to prevent AssistiveTouch from turning off for the next session. Otherwise, the tester will need to turn on AssistiveTouch for each session that it is needed:
+
+image::devices:bypass-apple-pay-configure-cleanup-popup.PNG[width=500,alt="The cleanup policy configuration pop-up with the option Device settings will be reset turned off"]
+
+== Set up AssistiveTouch confirmation
+
+After the device has been set up with passcode management, start a Manual Session on the device. The system generates a random passcode and sets it on the device in the background.
+
+Navigate to *Settings → Face ID & Passcode*.If you see the below screen asking for a passcode, then passcode is enabled on the device.
+
+[NOTE]
+===============================
+If it has been previously confirmed that the device has a passcode, skip this step.
+===============================
+
+image::bypass-apple-pay-manual-session-enter-passcode.PNG[width=500,alt="The passcode input screen"]
+
+Exit the Manual Session. Unplug the device from the Cambrionix Hub.
+
+Tap *Settings*.
+
+image::bypass-apple-pay-settings-app.PNG[width=400,alt="The Settings app on the home screen"]
+
+Tap *Accessibility*.
+
+image::bypass-apple-pay-settings-context-accessibility.PNG[width=400,alt="The Accessibility option in Settings"]
+
+Under *PHYSICAL AND MOTOR*, tap *Touch*.
+
+image::bypass-apple-pay-accessibility-context-touch.PNG[width=400,alt="The Touch option in Accessibility under Physical and motor"]
+
+Tap *AssistiveTouch*.
+
+image::bypass-apple-pay-touch-context-assistive-touch.PNG[width=400,alt="The Assistive touch option in Touch"]
+
+Turn on *AssistiveTouch*.
+
+image::bypass-apple-pay-assistive-touch-context-assistive-touch-toggle-on.PNG[width=400,alt="The Assistive touch toggle turned on in Assistive touch"]
+
+Scroll down the screen. Under *SIDE BUTTON CONFIRMATION*, turn on *Confirm with AssistiveTouch*.
+
+image::bypass-apple-pay-assistive-touch-context-confirm-toggle-off.PNG[width=400,alt="The Confirm with Assistive touch toggle in off state"]
+
+Tap *Continue*.
+
+image::bypass-apple-pay-set-up-assistive-touch-double-click.PNG[width=400,alt="The Set up to use Asstive touch for double click pop-up with the Continue button"]
+
+The screen message asks you to double-click the side button. While holding the physical device, double-click the physical side button on the device.
+
+image::bypass-apple-pay-double-click-assistive-touch.PNG[width=400,alt="The prompt to double click the device side button"]
+
+Input the passcode.
+
+image::bypass-apple-pay-enter-passcode.PNG[width=400,alt="The passcode input screen"]
+
+Double-click the physical side button on the device again to confirm.
+
+image::bypass-apple-pay-double-click-assistive-touch.PNG[width=400,alt="The prompt to double click the device side button"]
+
+Verify that *Confirm with AssistiveTouch* button is on.
+
+image::bypass-apple-pay-assistive-touch-settings-confirm-toggle-on.PNG[width=400,alt="The Confirm with Asstive touch toggle turned on"]
+
+Plug the device into the Cambrionix Hub and start a Manual Session on the device.
+
+
+Follow the steps in xref:local-devices/use-apple-pay/verify-assistivetouch-configuration-in-manual-session.adoc[] to continue.
