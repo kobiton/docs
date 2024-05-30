@@ -9,37 +9,37 @@ Learn how to generate the `.p12` file used for signing your iOS app. A signing c
 
 On your macOS device, launch *Keychain Access*.
 
-image:apps:launch-keychain-access-context.png[width=1000,alt="On your macOS device, launch *Keychain Access*"]
+image::ios-signing-certificate-launch-keychain-access-context.png[width=1000,alt="On your macOS device, launch *Keychain Access*"]
 
 From the Keychain Access menu, choose *Certificate Assistant*, then select *Request a Certificate From a Certification Authority*.
 
-image:apps:request-a-certificate-from-certi-authority-context.png[width=1000, alt="launch *Keychain Access*"]
+image::ios-signing-certificate-request-a-certificate-from-certi-authority-context.png[width=1000, alt="launch *Keychain Access*"]
 
 Enter your email and name, but leave *CA Email Address* blank. Then choose *Save to disk* and select *Continue*.
 
-image:apps:save-to-disk-option-context.png[width=1000, alt="Enter your email and name, but leave *CA Email Address* blank. Then choose *Save to disk* and select *Continue*"]
+image::ios-signing-certificate-save-to-disk-option-context.png[width=1000, alt="Enter your email and name, but leave *CA Email Address* blank. Then choose *Save to disk* and select *Continue*"]
 
 Select *Save* to download your `.certSigningRequest` file.
 
-image:apps:select-save-context.png[width=1000,alt="Select *Save* to download your `.certSigningRequest` file."]
+image::ios-signing-certificate-select-save-context.png[width=1000,alt="Select *Save* to download your `.certSigningRequest` file."]
 
 == Generate `.cert` file
 
 Open link:http://www.developer.apple.com[Apple Developer], select *Certificate, Identifiers and Profiles*, then *Create new certificate*.
 
-image:apps:open-apple-dev-context.png[width=1000,alt="Open Apple Developer, then select *Certificate, Identifiers and Profiles*, then *Create new certificate*"]
+image::ios-signing-certificate-open-apple-dev-context.png[width=1000,alt="Open Apple Developer, then select *Certificate, Identifiers and Profiles*, then *Create new certificate*"]
 
 Choose *Apple Development*, then select *Continue*.
 
-image:apps:select-apple-dev-context.png[width=1000,alt="Choose *Apple Development*, then select *Continue*"]
+image::ios-signing-certificate-select-apple-dev-context.png[width=1000,alt="Choose *Apple Development*, then select *Continue*"]
 
 Select *Choose File*, choose the `.certSigningRequest` file, then select *Continue*.
 
-image:apps:choose-file-context.png[width=1000,alt="Select *Choose File*, choose the `.certSigningRequest` file, then select *Continue*"]
+image::ios-signing-certificate-choose-file-context.png[width=1000,alt="Select *Choose File*, choose the `.certSigningRequest` file, then select *Continue*"]
 
 Select *Download* to download your `.cert` file.
 
-image:apps:select-download-context.png[width=1000,alt="Select *Download* to download your `.cert` file"]
+image::ios-signing-certificate-select-download-context.png[width=1000,alt="Select *Download* to download your `.cert` file"]
 
 == Generate `.p12` file
 
@@ -47,16 +47,16 @@ On your macOS device, launch *Keychain Access*.
 
 Select *Certificates*, then drag and drop your `.cert` file into the Certificates page.
 
-image:apps:launch-keychain-access-context.png[width="",alt="On your macOS device, launch *Keychain Access*"]
+image::ios-signing-certificate-launch-keychain-access-context.png[width="",alt="On your macOS device, launch *Keychain Access*"]
 
 Right-click your `.cert` file, then select *Export <your-cert-file>*.
 
-image:apps:right-click-to-export-context.png[width="",alt="Right-click your `.cert` file, then select *Export <your-cert-file>*"]
+image::ios-signing-certificate-right-click-to-export-context.png[width="",alt="Right-click your `.cert` file, then select *Export <your-cert-file>*"]
 
 Choose the *Personal Information Exchange (. p12)* file format, then select *Save*.
 
-image:apps:personal-info-exchange-context.png[width="",alt="Choose the *Personal Information Exchange (.p12)* file format, then select *Save*"]
+image::ios-signing-certificate-personal-info-exchange-context.png[width="",alt="Choose the *Personal Information Exchange (.p12)* file format, then select *Save*"]
 
 Enter a password to protect the certificate. If you don't want to enter a password, leave the field blank and select *OK*.
 
-image:apps:protect-certificate-with-password.png[width=500,alt="Enter a password to protect the certificate, or leave the fields blank and select *OK*"]
+image::ios-signing-certificate-protect-certificate-with-password.png[width=500,alt="Enter a password to protect the certificate, or leave the fields blank and select *OK*"]
