@@ -1,4 +1,6 @@
 = Generate an iOS provisioning profile
+:page-aliases: apps:ios-apps:generate-an-ios-provisioning-profile.adoc
+
 :navtitle: Generate an iOS provisioning profile
 
 Learn how to generate the `.mobileprovision` file used for your iOS app's provisioning profile. A provisioning profile authorizes your app to use certain app services and ensures that you’re a known developer developing, uploading, or distributing your app. For more information, see Apple's link:https://help.apple.com/xcode/mac/current/#/dev3a05256b8[What is app signing?].
@@ -55,21 +57,3 @@ Select all devices you want to include in the provisioning profile.
 image:apps:select-generate-context.png[width=1000,alt="Select Generate"]
 
 Enter a name for the provisioning profile, then select *Generate* to download your `.mobileprovision` file.
-
-== Add `.mobileprovision` file to Xcode project
-
-Launch Xcode and select your project. In the project menu, select *Signing & Capabilities*.
-
-image:select-signing-capabilities-context.png[width=1000,alt="Select Signing &Capabilities tab on Xcode"]
-
-Choose *Signing (Debug)* or *Signing (Release)*.
-
-image:select-debug-context.png[width=1000,alt="Select Debug tab"]
-
-In the *Provisioning Profile dropdown*, select *Import Profile*.
-
-image:select-import-profile-closeup.png[width=500,alt="In the Provisioning Profile dropdown, select Import Profile"]
-
-Select your `.mobileprovision` file.
-
-image:select-your-file-closeup.png[width=700,alt="Select your mobileprovision file"]
