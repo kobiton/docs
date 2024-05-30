@@ -9,15 +9,15 @@ Learn how to generate the `.mobileprovision` file used for your iOS app's provis
 
 If you don't have an App ID already, open link:http://www.developer.apple.com[Apple Developer], select *Certificate, Identifiers and Profiles*, then *Create new identifier*.
 
-image:apps:create-new-identifier-closeup.png[width=1000,alt="A closeup to Create new Identifier"]
+image::ios-signing-certificate-create-new-identifier-closeup.png[width=1000,alt="A closeup to Create new Identifier"]
 
 Choose *App IDs*, then select *Continue*.
 
-image:apps:select-app-id-closeup.png[width=1000,alt="A closeup to Select App ID"]
+image::ios-signing-certificate-select-app-id-closeup.png[width=1000,alt="A closeup to Select App ID"]
 
 Add a description, then choose *Wildcard* and enter `com.*`.
 
-image:apps:choose-wildcard-option-closeup.png[width=1000,alt=" A closeup to choose Wildcard option"]
+image::ios-signing-certificate-choose-wildcard-option-closeup.png[width=1000,alt=" A closeup to choose Wildcard option"]
 
 When you're finished, select *Continue*.
 
@@ -25,35 +25,35 @@ When you're finished, select *Continue*.
 
 In link:http://www.developer.apple.com[Apple Developer], select *Certificate, Identifiers and Profiles*, *Devices*, then *Register a Device*.
 
-image:apps:register-a-device-closeup.png[width=1000,alt="Register a Device"]
+image::ios-signing-certificate-register-a-device-closeup.png[width=1000,alt="Register a Device"]
 
 Enter the device *Platform*, *Name*, and *UDID*.
 
 When you're finished, select *Continue*, then *Register*.
 
-image:apps:select-platform-device-name-closeup.png[width=1000,alt="Select Platform, Name and UDID"]
+image::ios-signing-certificate-select-platform-device-name-closeup.png[width=1000,alt="Select Platform, Name and UDID"]
 
 [NOTE]
 Repeat these steps to add more devices.
 
 Select *Profile*, then *Generate a Profile*.
 
-image:apps:select-generate-a-profile-closeup.png[width=1000, alt= "Select Profile, then Generate a Profile"]
+image::ios-signing-certificate-select-generate-a-profile-closeup.png[width=1000, alt= "Select Profile, then Generate a Profile"]
 
 Choose *iOS App Development*, then select *Continue*.
 
-image:apps:select-ios-app-dev-closeup.png[width=1000,alt="Choose iOS App Development"]
+image::ios-signing-certificate-select-ios-app-dev-closeup.png[width=1000,alt="Choose iOS App Development"]
 
 Choose an App ID from the dropdown, then select *Continue*.
 
-image:apps:select-app-id-from-dropdown-closeup.png[width=1000,alt="Choose an App ID from the dropdown, then select *Continue*."]
+image::ios-signing-certificate-select-app-id-from-dropdown-closeup.png[width=1000,alt="Choose an App ID from the dropdown, then select *Continue*."]
 
 Choose the certificate you created from the dropdown, then select *Continue*.
 
-image:apps:choose-certificate-from-dropdown-closeup.png[width=1000,alt="Choose the certificate you created from the dropdown, then select *Continue*."]
+image::ios-signing-certificate-choose-certificate-from-dropdown-closeup.png[width=1000,alt="Choose the certificate you created from the dropdown, then select *Continue*."]
 
 Select all devices you want to include in the provisioning profile.
 
-image:apps:select-generate-context.png[width=1000,alt="Select Generate"]
+image::ios-signing-certificate-select-generate-context.png[width=1000,alt="Select Generate"]
 
 Enter a name for the provisioning profile, then select *Generate* to download your `.mobileprovision` file.
