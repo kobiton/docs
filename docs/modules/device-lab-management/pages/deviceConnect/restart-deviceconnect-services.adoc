@@ -7,8 +7,8 @@ Sometimes, Hybrid and On-prem customers hosting dedicated devices need to restar
 When you restart deviceConnect services, all devices linked to the Mac mini will become inaccessible and any active test sessions will be terminated. Make sure to restart the correct Mac mini and inform all affected users beforehand.
 
 == Prerequisites
-- Gather the internal IP address or hostname of the Mac mini host(s)
-- Kobiton administrator with the ADMIN predefined permission
+* Gather the internal IP address or hostname of the Mac mini host(s)
+* Kobiton administrator with the ADMIN predefined permission
 
 == Steps to restart deviceConnect services
 Log in to the Kobiton Portal with an administrator account.
@@ -32,11 +32,11 @@ After the service restart completes, the devices should automatically come back 
 == Impacts on active test sessions during a restart
 When a Mac mini host's services are restarted using the above method, active sessions on devices hosted by that Mac mini experience the following:
 
-- In the Manual or Mixed session, the user receives a _Device disconnected_ error message and the session is terminated with a status of _Terminated_.
+* In the Manual or Mixed session, the user receives a _Device disconnected_ error message and the session is terminated with a status of _Terminated_.
 +
 image:device-lab-management:restart-dc-devices-disconnect-popup.PNG[]
 
-- Automation and revisit sessions are also terminated with a status of _Terminated_.
+* Automation and revisit sessions are also terminated with a status of _Terminated_.
 
 == Additional notes
-- For those with a GEM server, services on the GEM cannot be restarted via the Kobiton Portal. Contact Kobiton support for help to restart the GEM server.
+* For those with a GEM server, services on the GEM cannot be restarted via the Kobiton Portal. Contact Kobiton support for help to restart the GEM server.
