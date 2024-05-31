@@ -3,13 +3,19 @@
 
 Learn how to prepare an Android device to be utilized with Kobiton.
 
-Different models of devices and versions of Android may have different layout for settings and options. Refer to the device's manual if you cannot find the options mentioned in this document. In this guide, the screenshots from _Samsung Galaxy_ and _Google Pixel_ devices are used as example.
+Different models of devices and versions of Android may have different layout for settings and options. Refer to the device's manual if you cannot find the options mentioned in this document. In this guide, the screenshots from _Samsung Galaxy_,  _Google Pixel_, and _Xiaomi Redmi_ devices are used as example.
 
 == Before you start
 
 You'll need the following:
 
 * A supported xref:supported-platforms:mobile-operating-systems-and-devices.adoc[Android device model].
+
+* Additional requirements for Xiaomi models:
+
+** A logged in **MI account**. You can create a MI account on Xiaomi’s https://account.xiaomi.com/[account page].
+
+** A **SIM card** inserted. It does not need to be a working SIM card.
 
 == Factory reset the device (optional)
 
@@ -32,6 +38,40 @@ This step is required for Kobiton software to control the device.
 
 From the Home screen, swipe up to show all apps. Open **Settings**.
 
+Follow the appropriate steps depending on whether the device is made by Xiaomi or not.
+
+[tabs]
+====
+
+Xiaomi devices::
++
+--
+
+Select **About Phone**.
+
+Locate **MIUI Version** and tap 7 times on it.
+
+image:device-lab-management:device-lab-management-android-chinese-about-phone.png[width=240, alt="Going to About Phone in Settings"] -> image:device-lab-management:device-lab-management-android-chinese-miui.png[width=240, alt="Taping on MIUI version field several times"]
+
+The message **You're now a developer!** displays. The Developer mode is now activated.
+
+Find and open **Developer options** in *Settings*, then enable **Install via USB** and **USB Debugging (security setting)**.
+
+[IMPORTANT]
+Depending on the Xiaomi model, you must either have a SIM card inserted or logged into a MI account to enable _USB Debugging (security setting)_.
+
+In **Developer options**, disable **MIUI Optimization**.
+
+If you can’t find the **MIUI Optimization** option, tap to **Reset to default** value field 4 times.
+
+image:device-lab-management:device-lab-management-android-chinese-developer-options.png[width=240, alt="Enabling Install via USB and USB Debuigging (security setting) inside Developer Options"] -> image:device-lab-management:device-lab-management-android-chinese-developer-options-disable-miui-optimization.png[width=240, alt="Turning off MIUI iptimization in Developer options"] -> image:device-lab-management:device-lab-management-android-chinese-developer-options-reset-to-default-value.png[width=240, alt="In Developer options, tapping Reset to default values field 4 times"]
+
+--
+
+Others::
++
+--
+
 Scroll down and select **About phone**. For some models, such as Google Pixel, this option is under **System**.
 
 Select **Software information**.
@@ -51,6 +91,10 @@ Scroll down to the **USB debugging** option and turn it on. You can use the sear
 Tap **OK** in the pop-up to confirm.
 
 image:device-lab-management:device-lab-management-android-prepare-developer-options.png[width=240, alt="Newly available Developer Options inside Settings"] -> image:device-lab-management:device-lab-management-android-prepare-usb-debugging-enable-usb-debugging.png[width=240, alt="Enable USD Debuggin inside Developer Options"] -> image:device-lab-management:device-lab-management-android-prepare-usb-debugging-enable-usb-debugging-confirmation.png[width=240, alt="Confirmation popup to allow USB Debugging"]
+
+--
+
+====
 
 == Disable passcode (required)
 
