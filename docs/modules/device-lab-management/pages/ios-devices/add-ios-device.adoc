@@ -2,13 +2,13 @@
 
 == Before you start
 
-* Follow this guide to link:prepare-ios-device.adoc[prepare the device].
+* Follow this guide to xref:ios-devices/prepare-ios-device.adoc[prepare the device].
 * Find the UDID of the device and note it down.
 * Make sure the Mac mini host has the Xcode version that is compatible with the iOS/iPadOS version of the device.
 
 == Import developer certificates and provisioning profiles
 
-Make sure you have already exported the appropriate link:generate-an-ios-signing-certificate.adoc[developer certificates] and link:generate-an-ios-provisioning-profile.adoc[provisioning profiles] for the UDID of the device.
+Make sure you have already exported the appropriate xref:ios-devices/generate-an-ios-signing-certificate.adoc[developer certificates] and xref:ios-devices/generate-an-ios-provisioning-profile.adoc[provisioning profiles] for the UDID of the device.
 
 === Import developer certificates
 
@@ -52,11 +52,11 @@ The uploaded profile should display under **Installed provisioning profiles**:
 
 image::device-lab-management:device-lab-management-ios-add-ios-installed-provisioning-profile.PNG[width=600,alt="Checking uploaded profile under installed provisioning profiles"]
 
-IMPORTANT: Important: Restart deviceConnect services to apply the new provisioning profiles.
+IMPORTANT: xref:deviceConnect/restart-deviceconnect-services.adoc[Restart deviceConnect services] to apply the new provisioning profiles.
 
 === Import developer certificates and provisioning profiles to deviceShare
 
-TIP: Skip this section if you do not use Kobiton app re-signing service.
+NOTE: Skip this section if you do not use Kobiton app re-signing service.
 
 Before importing, if your deployment include multiple Mac mini hosts, make sure the Mac mini host has deviceShare installed by going to its installation folder and check the version. Only proceed if deviceShare is installed.
 
@@ -135,7 +135,7 @@ A successful execution should show the output as below:
 
 TIP: Skip this step if the Mac mini host or GEM already has a Cambrionix hub connected.
 
-Make sure you use a supported model of link:../deviceConnect/hardware-requirements-for-deviceconnect.adoc[Cambrionix hub].
+Make sure you use a supported model of xref:deviceConnect/hardware-requirements-for-deviceconnect.adoc[Cambrionix hub].
 
 Connect the Cambrionix hub to a power source. The power LED indicator of the Cambrionix hub should turn on.
 
