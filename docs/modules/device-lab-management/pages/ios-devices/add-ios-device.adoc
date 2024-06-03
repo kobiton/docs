@@ -1,4 +1,4 @@
-= Add iOS devices
+= Add iOS device
 
 == Before you start
 
@@ -8,7 +8,7 @@
 
 * Make sure the Mac mini host has the Xcode version that is compatible with the iOS/iPadOS version of the device.
 
-* Export the appropriate xref:ios-devices/generate-an-ios-signing-certificate.adoc[developer certificates](`.p12`) and xref:ios-devices/generate-an-ios-provisioning-profile.adoc[provisioning profiles](`.mobileprovision`) for the UDID of the device.
+* Export the appropriate xref:ios-devices/generate-an-ios-signing-certificate-and-provisioning-profile.adoc#_generate_a_signing_certificate[signing certificates] (`.p12`) and xref:ios-devices/generate-an-ios-signing-certificate-and-provisioning-profile.adoc#_generate_a_provisioning_profile[provisioning profiles] (`.mobileprovision`) for the UDID of the device.
 
 * Download Apple Worldwide Relations (WWDR) Intermediate certificate file (`AppleWWDRCAG3.cer`) from https://www.apple.com/certificateauthority/AppleWWDRCAG3.cer[this link].
 
@@ -184,7 +184,7 @@ The steps to establish trust pairing vary between iOS 16 and below and iOS 17 an
 [NOTE]
 The steps in this section apply to both Standard and Lightning mode.
 
-Check the device screen. Tap **Trust** on the Trust this computer pop-up:
+Check the device screen. Tap **Trust** on the Trust this computer popup:
 
 image::device-lab-management:device-lab-management-ios-add-ios-trust-this-computer-trust.PNG[width=300,alt="Trust this computer popup, clicking Trust"]
 
@@ -273,7 +273,7 @@ Unplug the iOS 17 device from the air-gapped Mac (Standard mode) or the GEM (Lig
 
 Open Xcode.
 
-Tap Trust in the **Trust this computer** pop-up on the iOS 17 device. The **Trust this computer** prompts will reappear, tap **Trust** again. After this, there should be no more **Trust** prompts.
+Tap Trust in the **Trust this computer** popup on the iOS 17 device. The **Trust this computer** prompts will reappear, tap **Trust** again. After this, there should be no more **Trust** prompts.
 
 In the Xcode menu bar, select **Window → Devices and Simulators**. Select the iOS 17 device under the **Devices** tab.
 
