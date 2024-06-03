@@ -3,16 +3,23 @@
 == Before you start
 
 * Follow this guide to xref:ios-devices/prepare-ios-device.adoc[prepare the device].
+
 * Find the UDID of the device and note it down.
+
 * Make sure the Mac mini host has the Xcode version that is compatible with the iOS/iPadOS version of the device.
+
+* Export the appropriate xref:ios-devices/generate-an-ios-signing-certificate.adoc[developer certificates](`.p12`) and xref:ios-devices/generate-an-ios-provisioning-profile.adoc[provisioning profiles](`.mobileprovision`) for the UDID of the device.
+
+* Download Apple Worldwide Relations (WWDR) Intermediate certificate file (`AppleWWDRCAG3.cer`) from https://www.apple.com/certificateauthority/AppleWWDRCAG3.cer[this link].
 
 == Import developer certificates and provisioning profiles
 
-Make sure you have already exported the appropriate xref:ios-devices/generate-an-ios-signing-certificate.adoc[developer certificates] and xref:ios-devices/generate-an-ios-provisioning-profile.adoc[provisioning profiles] for the UDID of the device.
+Follow each subsection below in order.
 
 === Import developer certificates
 
-CAUTION: These steps require accessing the Mac mini host’s screen and cannot be done via SSH.
+[IMPORTANT]
+These steps require accessing the Mac mini host’s screen and cannot be done via SSH.
 
 Open **Terminal** on the Mac mini host and enter the following command:
 
@@ -20,9 +27,9 @@ Open **Terminal** on the Mac mini host and enter the following command:
 sudo security add-certificates -k /Library/Keychains/System.keychain <Path to the cert>/AppleWWDRCAG3.cer
 ----
 
-Replace *<Path to the cert>* with the full path to the folder containing the Apple WWDR Intermediate certificate file. Enter the administration password if required.
+Replace *<Path to the cert>* with the full path to the folder containing the Apple WWDR Intermediate certificate file (`AppleWWDRCAG3.cer`). Enter the administration password if required.
 
-Next, enter the following command, replacing *<Path to the cert>* with the full path to the .p12 certificate file and <*Name of the cert>* with the filename.
+Next, enter the following command, replacing *<Path to the cert>* with the full path to the `.p12` certificate files and *<Name of the cert>* with the filename.
 
 ----
 sudo security import <Path to the cert>/<Name of the cert>.p12 -k /Library/Keychains/System.keychain -A
@@ -32,17 +39,19 @@ Enter the certificate password. If the certificate has no password, leave the fi
 
 image::device-lab-management:device-lab-management-ios-add-ios-certificate-password.PNG[width=300,alt="Enter Password for Kobiton"]
 
-Repeat the above commands for each *.p12* file if there are multiple files.
+Repeat the above commands for each `.p12` file if there are multiple files.
 
 === Import provisioning profiles to deviceConnect
 
-Open the Chrome browser, go to the address: *localhost/#/System/IOS* and log in.
+Before importing, if your deployment include multiple Mac mini hosts, make sure the Mac mini host has deviceConnect installed by opening the Chrome browser, navigating to the address: *localhost/#/System/IOS*, and logging in.
 
-image::device-lab-management:device-lab-management-ios-add-ios-localhost-system-ios.PNG[width=600,alt="Loggin into GigaFox local host"]
+Only proceed if you can access the page and log in. Else, move on to the next Mac mini host.
 
 Under **Available signing certificates**, you can see all imported certificates from the above step.
 
 Click **Choose File** under **Upload provisioning profile**.
+
+image::device-lab-management:device-lab-management-ios-add-ios-localhost-system-ios.PNG[width=600,alt="Loggin into GigaFox local host"]
 
 Select a *.mobileprovision* file, and click **Open** to upload it.
 
@@ -52,13 +61,15 @@ The uploaded profile should display under **Installed provisioning profiles**:
 
 image::device-lab-management:device-lab-management-ios-add-ios-installed-provisioning-profile.PNG[width=600,alt="Checking uploaded profile under installed provisioning profiles"]
 
-IMPORTANT: xref:deviceConnect/restart-deviceconnect-services.adoc[Restart deviceConnect services] to apply the new provisioning profiles.
+[IMPORTANT]
+xref:deviceConnect/restart-deviceconnect-services.adoc[Restart deviceConnect services] to apply the new provisioning profiles.
 
 === Import developer certificates and provisioning profiles to deviceShare
 
-NOTE: Skip this section if you do not use Kobiton app re-signing service.
+[NOTE]
+Skip this section if you do not use Kobiton app re-signing service.
 
-Before importing, if your deployment include multiple Mac mini hosts, make sure the Mac mini host has deviceShare installed by going to its installation folder and check the version. Only proceed if deviceShare is installed.
+Before importing, if your deployment include multiple Mac mini hosts, make sure the Mac mini host has deviceShare installed by going to its installation folder and check the version. Only proceed if deviceShare is installed. Else, move on to the next Mac mini host.
 
 Open the **Keychain Access** app.
 
@@ -133,7 +144,8 @@ A successful execution should show the output as below:
 
 == Connect Cambrionix hub to the host
 
-TIP: Skip this step if the Mac mini host or GEM already has a Cambrionix hub connected.
+[NOTE]
+Skip this step if the Mac mini host or GEM already has a Cambrionix hub connected.
 
 Make sure you use a supported model of xref:deviceConnect/hardware-requirements-for-deviceconnect.adoc[Cambrionix hub].
 
@@ -169,7 +181,8 @@ The steps to establish trust pairing vary between iOS 16 and below and iOS 17 an
 
 === iOS 16 and below
 
-TIP: The steps in this section apply to both Standard and Lightning mode.
+[NOTE]
+The steps in this section apply to both Standard and Lightning mode.
 
 Check the device screen. Tap **Trust** on the Trust this computer pop-up:
 
@@ -185,21 +198,25 @@ image::device-lab-management:device-lab-management-add-android-screen-changes-to
 
 === iOS 17 and above
 
-[WARNING]
+[IMPORTANT]
 .Note for air-gapped Mac mini hosts (no Internet access)
 ====
 To control the iOS devices, deviceConnect needs to mount a *Developer Disk Image* (DDI), which is a `.dmg` archive included with Xcode that contains executables and other files needed by Xcode to support debugging and testing on iOS devices.
 
 For iOS 17 and later, rather than Xcode providing a different DDI for every iOS version and device architecture, there is a generic DDI that Xcode must "personalize" for each device. The personalization process requires an Internet connection, as Xcode must use Apple's notarization servers to sign the personalized image. Without an Internet connection, Xcode can't personalize a DDI.
 
-If the Mac mini host does not have Internet connection, follow the section pre-load DDI for air-gapped Mac mini before continuing with this section.
+If the Mac mini host does not have Internet connection, follow the section xref:#preload-ddi-air-gapped[preload DDI for air-gapped Mac mini] before continuing with this section.
 
 ====
 
-****
 Follow the appropriate steps based on whether you are using Standard or Lightning mode
 
-**Standard Mode:**
+[tabs]
+====
+
+Standard Mode::
++
+--
 
 Open Xcode on the Mac mini host, then navigate to **Window → Devices and Simulators**. Do this before continuing to the next step.
 
@@ -209,7 +226,11 @@ image::device-lab-management:device-lab-management-ios-add-ios-standard-lightnin
 
 The Trust *this computer* prompts will reappear, tap **Trust** again. This time there should be no more **Trust** prompts.
 
-**Lightning mode:**
+--
+
+Lightning mode::
++
+--
 
 Open Xcode on the Mac mini host, then navigate to **Window → Devices and Simulators**. Do this before continuing to the next step.
 
@@ -231,13 +252,16 @@ In Xcode’s Devices and Simulators, the iOS 17 devices now display with a globe
 
 image::device-lab-management:device-lab-management-ios-add-ios-xcode-device-and-simulator.PNG[width=300,alt="Devices, iphone is connected notification"]
 
-****
+--
 
-Wait until the device screen changes to the below before continuing (NOTE: there will also be an *automation running* overlay above the device screen):
+====
+
+Wait until the device screen changes to the below before continuing. There will also be an *automation running* overlay above the device screen (not shown in screenshot).
 
 image::device-lab-management:device-lab-management-add-android-screen-changes-to-blue.PNG[width=300, alt="device screen changes and shows Kobiton name and logo"]
 
-=== Pre-load DDI for air-gapped Mac mini hosts
+[#preload-ddi-air-gapped]
+=== Preload DDI for air-gapped Mac mini hosts
 
 TIP: This section is only required for Mac mini hosts with no Internet access with iOS 17 and above devices.
 
@@ -261,7 +285,8 @@ Unplug the device from the Internet Mac.
 
 Continue with connecting iOS 17 and above devices to the air-gapped Mac mini hosts.
 
-WARNING: Apple has not published whether the personalized DDI will expire or how long it will last in an air-gapped environment. If connection errors occur and other troubleshooting steps do not resolve the issue, the personalized DDI may be expired and you will need to repeat this process.
+[IMPORTANT]
+Apple has not published whether the personalized DDI will expire or how long it will last in an air-gapped environment. If connection errors occur and other troubleshooting steps do not resolve the issue, the personalized DDI may be expired and you will need to repeat this process.
 
 == Verify device is available in Kobiton
 
