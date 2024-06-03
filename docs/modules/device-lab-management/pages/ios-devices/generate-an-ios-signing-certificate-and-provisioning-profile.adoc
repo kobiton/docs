@@ -91,7 +91,7 @@ Input the MacOS administrator password to export the `.p12` certificate file. Mo
 
 At the Apple Developer https://developer.apple.com/account/resources/[resources] page, select *Indentifiers*. Select the *plus* icon to create a new identifier.
 
-image::ios-signing-certificate-create-new-identifier-closeup.png[width=1000,alt="A closeup to Create new Identifier"]
+image::ios-signing-certificate-create-new-identifier-closeup.png[width=1000,alt="The plus icon to create a new identifier"]
 
 Choose *App IDs*, then select *Continue*.
 
@@ -99,9 +99,9 @@ image::ios-signing-certificate-select-app-id-closeup.png[width=1000,alt="A close
 
 Select *App* as type, then *Continue*.
 
-image::TODO[]
+image::ios-signing-certificate-select-type-closeup.png[width=1000,alt="A closeup to Select type"]
 
-Add a description. For *Bundle ID*, choose *Wildcard*. Input the appropriate Bundle ID into the box according to the use cases below:
+Add a description for the app ID. For *Bundle ID*, choose *Wildcard*. Input the appropriate Bundle ID into the box according to the use cases below:
 
 * If you do not use Kobiton re-signing service, input `com.mobilelabsinc.*`.
 
@@ -112,13 +112,13 @@ Add a description. For *Bundle ID*, choose *Wildcard*. Input the appropriate Bun
 [NOTE]
 If you are unsure, input `com.*` as it will work in most cases.
 
-image::ios-signing-certificate-choose-wildcard-option-closeup.png[width=1000,alt=" A closeup to choose Wildcard option"]
+image::ios-signing-certificate-choose-wildcard-option-closeup.png[width=1000,alt="A closeup to choose Wildcard option"]
 
 When you're finished, select *Continue*.
 
 Review the information, then select *Register* to create the identifier.
 
-image::TODO[]
+image::ios-signing-certificate-confirm-app-id-closeup.png[width=1000,alt="A closeup to confirm app ID"]
 
 == Register device UDID
 
@@ -126,44 +126,46 @@ Note down the UDID of all iOS/iPadOS devices you want to host.
 
 At the Apple Developer https://developer.apple.com/account/resources/[resources] page, select *Devices*. Choose the *plus* icon to register new devices.
 
+image::ios-signing-certificate-register-a-device-closeup.png[width=1000,alt="The plus icon to register new device"]
+
 Choose *iOS, iPadOS, tvOS, watchOS, visionOS* for *Platform*, then enter the device name and UDID to add a single device.
 
 Alternatively, select *Download sample files* and follow the official https://developer.apple.com/help/account/register-devices/register-multiple-devices/[instructions] to register multiple devices, then upload the file by selecting *Choose File*.
 
 Select *Continue* when you are finished.
 
-image::TODO[]
+image::ios-signing-certificate-select-platform-device-name-closeup.png[width=1000,alt="The register new device screen with options to add single or multiple devices"]
 
 Review the information and select *Register*.
 
-image::TODO[]
+image::ios-signing-certificate-review-device-register-closeup.png[width=1000,alt="The register new device review information screen with the Register button"]
 
 == Generate `.mobileprovision` file
 
 At the Apple Developer https://developer.apple.com/account/resources/[resources] page, select *Profiles*. Choose the *plus* icon to create a new profile.
 
-image::ios-signing-certificate-register-a-device-closeup.png[width=1000,alt="Plus icon to create a new Profile"]
+image::ios-signing-certificate-select-generate-a-profile-closeup.png[width=1000,alt="Plus icon to create a new Profile"]
 
 Select *iOS App Development* under *Development*, then *Continue*.
 
-image::TODO[]
+image::ios-signing-certificate-select-ios-app-dev-closeup.png[width=1000,alt="The iOS App Development option under Development"]
 
-Choose the xref:#_create_an_app_identifier[app ID] you created earlier from the dropdown list, then *Continue*.
+Choose the xref:#_create_an_identifier[app ID] you created earlier from the dropdown list, then *Continue*.
 
-image::TODO[]
+image::ios-signing-certificate-select-app-id-from-dropdown-closeup.png[width=1000,alt="The app ID selection dropdown when generating a profile"]
 
 Choose the xref:#_generate_a_signing_certificate[certificate] you created earlier, then *Continue*.
 
-image::TODO[]
+image::ios-signing-certificate-choose-certificate-from-dropdown-closeup.png[width=1000,alt="The certificate selection dropdown when generating a profile"]
 
 Choose the xref:#_register_device_udid[devices] you registered earlier, then *Continue*.
 
-image::TODO[]
+image::ios-signing-certificate-select-device-from-dropdown-closeup.png[width=1000,alt="The device selection dropdown when generating a profile"]
 
 Input the *Provisioning Profile Name*, review the information, then select *Generate*.
 
-image::ios-signing-certificate-select-platform-device-name-closeup.png[width=1000,alt="Select Platform, Name and UDID"]
+image::ios-signing-certificate-review-profile-closeup.png[width=1000,alt="The review profile information screen with the Generate button"]
 
 Select *Download* to save the `.mobileprovision` file. Move the file to the Mac mini host for importing to xref:ios-devices/add-ios-device.adoc#_import_provisioning_profiles_to_deviceconnect[deviceConnect] and xref:ios-devices/add-ios-device.adoc#_import_developer_certificates_and_provisioning_profiles_to_deviceshare[deviceShare] later.
 
-image::TODO[]
+image::ios-signing-certificate-select-download-context.png[width=1000,alt="The download profile screen with the Download button"]
