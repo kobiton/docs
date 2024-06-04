@@ -14,6 +14,14 @@
 
 == Import developer certificates and provisioning profiles
 
+Before proceeding, make sure you already have xref:#_before_you_start[exported and downloaded] the following files:
+
+* The `.p12` signing certificate(s).
+
+* The `.mobileprovison` provisioning profile(s).
+
+* The `AppleWWDRCAG3.cer` file.
+
 Follow each subsection below in order.
 
 === Import developer certificates
@@ -69,7 +77,14 @@ xref:deviceConnect/restart-deviceconnect-services.adoc[Restart deviceConnect ser
 [NOTE]
 Skip this section if you do not use Kobiton app re-signing service.
 
-Before importing, if your deployment include multiple Mac mini hosts, make sure the Mac mini host has deviceShare installed by going to its installation folder and check the version. Only proceed if deviceShare is installed. Else, move on to the next Mac mini host.
+[IMPORTANT]
+====
+
+If your deployment includes multiple Mac mini hosts, ensure that deviceShare is installed on the current Mac mini host before proceeding.
+
+To check if deviceShare is installed on the Mac mini host, navigate to the path `/usr/local/kobiton/` and check for the presence of the `deviceshare` folder. If there is no such folder or the folder is empty, it means deviceShare is not installed. In this case, locate another Mac mini host where deviceShare is installed to continue with this section.
+
+====
 
 Open the **Keychain Access** app.
 
@@ -163,7 +178,7 @@ image::device-lab-management:device-lab-management-add-android-supersync15.PNG[w
 
 == Connect the device to the host
 
-Make sure you have properly prepared the device for hosting on Kobiton.
+Make sure you have properly xref:ios-devices/prepare-ios-device.adoc[prepared the device] for hosting on Kobiton.
 
 For Standard mode, connect the mobile device to the Cambrionix hub attached to the Mac mini host.
 
