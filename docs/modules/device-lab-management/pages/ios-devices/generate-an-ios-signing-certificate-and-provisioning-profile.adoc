@@ -26,11 +26,11 @@ Only Apple Development certificate can be used by Kobiton. Apple Distribution ce
 
 On any MacOS device, launch *Keychain Access*.
 
-From the Keychain Access menu, choose *Certificate Assistant*, then select *Request a Certificate From a Certification Authority*.
+From the Keychain Access menu, choose *Certificate Assistant*, then select *Request a Certificate From a Certificate Authority*.
 
 image::ios-signing-certificate-request-a-certificate-from-certi-authority-context.png[width=1000, alt="launch *Keychain Access*"]
 
-Enter your email and name, but leave *CA Email Address* blank. Then choose *Save to disk* and select *Continue*.
+Enter your email and name, but leave *CA Email Address* blank. Then choose *Saved to disk* and select *Continue*.
 
 image::ios-signing-certificate-save-to-disk-option-context.png[width=500, alt="Enter your email and name, but leave *CA Email Address* blank. Then choose *Save to disk* and select *Continue*"]
 
@@ -38,9 +38,9 @@ Select *Save* to download your `.certSigningRequest` file.
 
 image::ios-signing-certificate-select-save-context.png[width=500,alt="Select *Save* to download your `.certSigningRequest` file."]
 
-=== Submit the singing request to generate a `.cer` file
+=== Submit the signing request to generate a `.cer` file
 
-Log into link:https://developer.apple.com/account[Apple Developer]. Under *Certificate, Identifiers and Profiles*, select *Certificates*.
+Log into link:https://developer.apple.com/account[Apple Developer]. Under *Certificate, IDs & Profiles*, select *Certificates*.
 
 image::ios-signing-certificate-open-apple-dev-context.png[width=1000,alt="The Certificates option under Certificate, Identifiers and Profiles"]
 
@@ -89,7 +89,7 @@ Input the MacOS administrator password to export the `.p12` certificate file. Mo
 
 === Create an identifier
 
-At the Apple Developer https://developer.apple.com/account/resources/[resources] page, select *Indentifiers*. Select the *plus* icon to create a new identifier.
+At the Apple Developer https://developer.apple.com/account/resources/[resources] page, select *Identifiers*. Select the *plus* icon to create a new identifier.
 
 image::ios-signing-certificate-create-new-identifier-closeup.png[width=1000,alt="The plus icon to create a new identifier"]
 
