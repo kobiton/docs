@@ -209,7 +209,7 @@ If the Mac mini host does not have Internet connection, follow the section xref:
 
 ====
 
-Follow the appropriate steps based on whether you are using Standard or Lightning mode
+Follow the appropriate steps based on whether you are using Standard or Lightning mode.
 
 [tabs]
 ====
@@ -244,11 +244,11 @@ In the Mac mini host’s screen, under the **Devices** tab of the **Devices and 
 
 image::device-lab-management:device-lab-management-ios-add-ios-device-and-simulator.PNG[width=600,alt="iOS 17 in Devices and Simulators"]
 
-Unplug the device from the Mac mini host and plug it into the GEM.
+Unplug the device from the Mac mini host and plug it into the Cambrionix hub connected to the GEM.
 
 The *Trust this computer* prompts will reappear, tap **Trust** again. This time there should be no more **Trust** prompts.
 
-In Xcode’s Devices and Simulators, the iOS 17 devices now display with a globe icon next to it like below:
+In Xcode’s Devices and Simulators, the iOS 17 devices will now have a globe icon next to it like below:
 
 image::device-lab-management:device-lab-management-ios-add-ios-xcode-device-and-simulator.PNG[width=300,alt="Devices, iphone is connected notification"]
 
@@ -263,11 +263,15 @@ image::device-lab-management:device-lab-management-add-android-screen-changes-to
 [#preload-ddi-air-gapped]
 === Preload DDI for air-gapped Mac mini hosts
 
-TIP: This section is only required for Mac mini hosts with no Internet access with iOS 17 and above devices.
+[NOTE]
+This section is only required for Mac mini hosts with no Internet access with iOS 17 and above devices.
 
-Acquire any MacOS machine with Internet access. This will be referred to as the Internet Mac.
+Access any MacOS machine with Internet access. This will be referred to as the Internet Mac.
 
-Ensure Xcode is installed on the Internet Mac. Make sure the Xcode version is compatible with the iOS 17 device. Note: Kobiton software such as deviceConnect and deviceShare do not need to be installed on the Internet Mac.
+Ensure Xcode is installed on the Internet Mac. Make sure the Xcode version is compatible with the iOS 17 device.
+
+[NOTE]
+Kobiton software, such as deviceConnect and deviceShare, does not need to be installed on the Internet Mac.
 
 Unplug the iOS 17 device from the air-gapped Mac (Standard mode) or the GEM (Lightning mode) and connect it to the Internet Mac.
 
@@ -306,13 +310,16 @@ The device should appear in the filter result. If the state of the device is *Ut
 
 When the cleanup is done, the device state becomes *Online* and the **Launch** button is available. Select it to launch a Manual session on the device.
 
-image::device-lab-management:device-lab-management-ios-add-ios-kobiton-device-management-launch.PNG[width=600,alt="Kobiton portal, Launching device from Device Management"]
+image::device-lab-management:device-lab-management-ios-add-ios-kobiton-device-management-launch.png[width=1200,alt="Kobiton portal, Launching device from Device Management"]
 
 In the Manual session, try the following to verify if the device is working properly:
 
-* Navigate around.
-* Install an app.
+* xref:manual-testing:device-controls.adoc[Navigate around, window=_blank].
+
+* xref:manual-testing:install-an-app.adoc[Install an app, window=_blank].
+
 * Browse the web (if the device has a Wi-Fi connection).
-* Enable Lightning mode (if the device is configured for Lightning mode).
+
+* xref:manual-testing:device-controls.adoc#_speedometer[Enable Lightning mode, window=_blank] (if the device is configured for Lightning mode).
 
 If all the above works, you have successfully added the device.
