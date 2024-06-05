@@ -1,0 +1,235 @@
+= Prepare Android device for hosting
+:navtitle: Prepare Android device
+
+Learn how to prepare an Android device to be utilized with Kobiton.
+
+Different models of devices and versions of Android may have different layouts for settings and options. Refer to the device's manual if you cannot find the options mentioned in this document. In this guide, screenshots from _Samsung Galaxy_,  _Google Pixel_, and _Xiaomi Redmi_ devices are used as examples.
+
+== Before you start
+
+You'll need the following:
+
+* A supported xref:supported-platforms:mobile-operating-systems-and-devices.adoc[Android device model].
+
+* Additional requirements for Xiaomi models:
+
+** A logged in **MI account**. You can create a MI account on Xiaomi’s https://account.xiaomi.com/[account page].
+
+** A **SIM card** inserted. It does not need to be a working SIM card.
+
+== Factory reset the device (optional)
+
+[NOTE]
+This step is highly recommended for devices that were hosted by Legacy Kobiton or Legacy Gigafox.
+
+[CAUTION]
+This action will remove all data on the device. Back up the device before proceeding.
+
+Refer to the device model's manual for instructions to factory reset the device.
+
+== Enable USB debugging (required)
+
+[IMPORTANT]
+====
+
+This step is required for Kobiton software to control the device.
+
+====
+
+From the Home screen, swipe up to show all apps. Open **Settings**.
+
+Follow the appropriate steps depending on whether the device is made by Xiaomi or not.
+
+[tabs]
+====
+
+Most devices::
++
+--
+
+Scroll down and select **About phone**. For some models, such as Google Pixel, this option is under **System**.
+
+Select **Software information**.
+
+image:device-lab-management:device-lab-management-android-prepare-usb-debugging-settings.png[width=240, alt="The Settings app in the home screen"] -> image:device-lab-management:device-lab-management-android-prepare-usb-debugging-about-phone.png[width=240, alt="About Phone in Settings menu"] -> image:device-lab-management:device-lab-management-android-prepare-usb-debugging-software-information.png[width=240, alt="Software Information section inside About Phone"]
+
+Tap 7 times on **Build number**. A popup message will appear when you are close to enabling the mode. If you have a lock screen set, you’ll be asked to enter your security credentials.
+
+The Developer mode is now activated.
+
+image:device-lab-management:device-lab-management-android-prepare-usb-debugging-build-number.png[width=240, alt="Taping on Build Number inside Software Information 7 times"] -> image:device-lab-management:device-lab-management-android-prepare-usb-debugging-dev-mode-activated.png[width=240, alt="Notification that the Developer Mode has been turned on"]
+
+Navigate back to the Settings main screen. Tap the newly available **Developer options** item. For some models such as Google Pixel, this option is under **System**.
+
+Scroll down to the **USB debugging** option and turn it on. You can use the search function to quickly locate it.
+
+Tap **OK** in the popup to confirm.
+
+image:device-lab-management:device-lab-management-android-prepare-developer-options.png[width=240, alt="Newly available Developer Options inside Settings"] -> image:device-lab-management:device-lab-management-android-prepare-usb-debugging-enable-usb-debugging.png[width=240, alt="Enable USD Debuggin inside Developer Options"] -> image:device-lab-management:device-lab-management-android-prepare-usb-debugging-enable-usb-debugging-confirmation.png[width=240, alt="Confirmation popup to allow USB Debugging"]
+
+--
+
+Xiaomi devices::
++
+--
+
+Select **About Phone**.
+
+Locate **MIUI Version** and tap 7 times on it.
+
+image:device-lab-management:device-lab-management-android-chinese-about-phone.png[width=240, alt="Going to About Phone in Settings"] -> image:device-lab-management:device-lab-management-android-chinese-miui.png[width=240, alt="Taping on MIUI version field several times"]
+
+The message **You're now a developer!** displays. The Developer mode is now activated.
+
+Find and open **Developer options** in *Settings*, then enable **Install via USB** and **USB Debugging (security setting)**.
+
+[IMPORTANT]
+Depending on the Xiaomi model, you must either have a SIM card inserted or logged into a MI account to enable _USB Debugging (security setting)_.
+
+In **Developer options**, disable **MIUI Optimization**.
+
+If you can’t find the **MIUI Optimization** option, tap to **Reset to default** value field 4 times.
+
+image:device-lab-management:device-lab-management-android-chinese-developer-options.png[width=240, alt="Enabling Install via USB and USB Debuigging (security setting) inside Developer Options"] -> image:device-lab-management:device-lab-management-android-chinese-developer-options-disable-miui-optimization.png[width=240, alt="Turning off MIUI iptimization in Developer options"] -> image:device-lab-management:device-lab-management-android-chinese-developer-options-reset-to-default-value.png[width=240, alt="In Developer options, tapping Reset to default values field 4 times"]
+
+--
+
+====
+
+== Disable passcode (required)
+
+[IMPORTANT]
+====
+
+Setting a passcode on a device prevents Kobiton software from controlling it.
+
+To use passcode on the device, contact Kobiton support to enable passcode mode for your organization.
+
+====
+
+In the **Settings app**, select **Lock screen**.
+
+Select **Screen lock type**.
+
+Select **None**. Enter the device's passcode or lock pattern if required.
+
+image:device-lab-management:device-lab-management-android-prepare-disable-lockscreen.png[width=240, alt="Going to Lock screen option inside Settings"] -> image:device-lab-management:device-lab-management-android-prepare-disable-lockscreen-lockscreen-type.png[width=240, alt="Inside Lock Screen, going to Screen lock type"] -> image:device-lab-management:device-lab-management-android-prepare-disable-lockscreen-lockscreen-type-none.png[width=240, alt="In Screen lock types selecting the option None"]
+
+== Download Google Chrome (required for specific feature)
+
+[NOTE]
+====
+
+This step is required if you want to run web automation on the device.
+
+====
+
+Download and install Google Chrome from the Google Play Store onto the device.
+
+== Prevent screen from sleeping (optional)
+
+[NOTE]
+====
+
+Disabling screen sleep improves the experience of testers by not having to wake the device screen after a certain amount of time.
+
+Skip this step if you want to save battery life.
+
+====
+
+In the **Settings** app, scroll down and select **Developer options**. For some models, such as Google Pixel, this option is under **System**.
+
+Find the **Stay awake** option and turn it on.
+
+image:device-lab-management:device-lab-management-android-prepare-developer-options.png[width=240, alt="Going to Developer Options to prevent screen from sleeping"] -> image:device-lab-management:device-lab-management-android-prepare-prevent-sleep-enable-stay-awake.png[width=240, alt="Enable Stay Awake inside the Developer Options"]
+
+== Turn off auto-update for system software (optional)
+
+[NOTE]
+====
+
+This step is highly recommended as a software update makes the device unavailable for use until the update is complete.
+
+====
+
+Many organizations want to test a variety of mobile operating systems. Turning off the auto-update for software updates allows organizations to have control over the operating system upgrades. In the **Settings app**, tap **Software update**.
+
+Turn off **Auto download over Wi-Fi**.
+
+image:device-lab-management:device-lab-management-android-prepare-turn-off-auto-update-system-software-software-update.png[width=240, alt="Going to Software Update inside Settings"] -> image:device-lab-management:device-lab-management-android-prepare-turn-off-auto-update-system-software-turn-off-auto-download.png[width=240, alt="Disabling Auto download over wifi in Software Update"]
+
+== Turn off auto-update for apps (optional)
+
+[NOTE]
+====
+
+App automatic updates may prevent an app from being used until the update is complete.
+
+====
+
+Open the **Play Store**. Tap the **3-dot icon** and select **Settings**.
+
+Expand **Network preferences**, then tap **Auto-update apps**.
+
+Select **Don't auto-update apps** in the popup. Tap **DONE** to save the changes.
+
+image:device-lab-management:device-lab-management-android-prepare-turn-off-auto-update-apps-settings.png[width=240, alt="Going to Play Store Settings."] -> image:device-lab-management:device-lab-management-android-prepare-turn-off-auto-update-apps-auto-update.png[width=240, alt="Turning of Auto-updates for apps in Google Play Settings"] -> image:device-lab-management:device-lab-management-android-prepare-turn-off-auto-update-apps-do-not-auto-update-done.png[width=240, alt="Setting the Auto-update apps selection to Don't auto-update apps"]
+
+== Turn off adaptive brightness (optional)
+
+[NOTE]
+
+====
+
+Turning off automatic brightness allows Kobiton software to keep the device screen brightness at the minimum, thus saving battery life.
+
+====
+
+In the **Settings** app, select **Display**.
+
+Turn off **Adaptive brightness**.
+
+image:device-lab-management:device-lab-management-android-prepare-turn-off-adaptive-brightness-display.png[width=240, alt="Going to the Display option inside Settings"] -> image:device-lab-management:device-lab-management-android-prepare-turn-off-adaptive-brightness-disable.png[width=240, alt="Disabling Adaptive bringhtness inside the Display settings"]
+
+== Disable text correction/prediction for keyboard (optional)
+
+[NOTE]
+====
+
+This step is highly recommended if you want to use Scriptless Automation on the device.
+
+Text correction/prediction can prevent Scriptless test run from running.
+
+====
+
+=== Samsung Galaxy devices
+
+In the **Settings app**, select **General management**.
+
+Tap **Samsung Keyboard settings**.
+
+Turn off **Predictive text**.
+
+image:device-lab-management:device-lab-management-android-prepare-disable-text-correction-samsung-general.png[width=240, alt="Going to General management option inside Settings"] -> image:device-lab-management:device-lab-management-android-prepare-disable-text-correction-samsung-keybaord.png[width=240, alt="Inside Genereal management selecting Samsung Keyboard settings"] -> image:device-lab-management:device-lab-management-android-prepare-disable-text-correction-samsung-predictive-text.png[width=240, alt="Inside Samsumg Keyboard settigs disabling Predictive text"]
+
+=== Google Pixel devices
+
+In the **Settings** app, select **System**.
+
+Select **Languages & input**.
+
+Select **On-screen keyboard**.
+
+image:device-lab-management:device-lab-management-android-prepare-disable-text-correction-google-pixel-system.png[width=240, alt="Selecting System options inside Settings"] -> image:device-lab-management:device-lab-management-android-prepare-disable-text-correction-google-pixel-language-and-input.png[width=240, alt="Selecting Language & Input options in System settings"] -> image:device-lab-management:device-lab-management-android-prepare-disable-text-correction-google-pixel-on-screen-keyboard.png[width=240, alt="In Language & Input selecting On-screen keyboard"]
+
+Tap **Gboard**.
+
+Tap **Text correction**.
+
+Turn off **Auto-correction**.
+
+image:device-lab-management:device-lab-management-android-prepare-disable-text-correction-google-pixel-gboard.png[width=240, alt="Taping Gboard to enable/diable it according to use case"] -> image:device-lab-management:device-lab-management-android-prepare-disable-text-correction-google-pixel-text-correction.png[width=240, alt="In Settings selecting Text Correction"] -> image:device-lab-management:device-lab-management-android-prepare-disable-text-correction-google-pixel-auto-correct.png[width=240, alt="In Text Correction disabling Auto-correction"]
+
+The device is now prepared.
+
+Follow xref:android-devices/add-android-device.adoc[this guide] to add the Android device to Kobiton.
