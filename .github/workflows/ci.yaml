@@ -1,19 +1,7 @@
 name: Build and Push Image to ECR 🚀
 on:
+  # Enable manual trigger for easy debugging
   workflow_dispatch:
-    inputs:
-      logLevel:
-        description: 'Log level'
-        required: true
-        default: 'info'
-        type: choice
-        options:
-          - info
-          - warning
-          - debug
-      git-ref:
-        description: Git Ref (Optional)
-        required: false
   push:
     branches:
       - master
@@ -28,20 +16,25 @@ permissions:
   contents: read    # This is required for actions/checkout
 
 jobs:
-  build-docs:
-    name: Build
-    uses: kobiton/deployment/.github/workflows/ci.yaml@master
-    with:
-      git-ref: ${{ github.event.inputs.git-ref }}
-      repo-name: 'documentation'
-      dockerfile-path: 'docker/docs/Dockerfile'
-    secrets: inherit
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Configure AWS credentials from PRODUCTION account
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: arn:aws:iam::${{ secrets.AWS_ACCOUNT_ID }}:role/github-action-role
+          aws-region: ${{ secrets.AWS_REGION }}
 
-  build-wiget:
-    name: Build
-    uses: kobiton/deployment/.github/workflows/ci.yaml@master
-    with:
-      git-ref: ${{ github.event.inputs.git-ref }}
-      repo-name: 'portal-help'
-      dockerfile-path: 'docker/widget/Dockerfile'
-    secrets: inherit
+      - name: Build 
+        uses: dagger/dagger-for-github@v5
+        with:
+          version: "0.11.6"
+          args: |
+            --source=.
+            server
+            --sites="docs, widget"
+            --aws-region={{ secrets.AWS_REGION }}
+            --aws-account-id=${{ secrets.AWS_ACCOUNT_ID }
+            --aws-access-key-id=env:AWS_ACCESS_KEY_ID
+            --aws-secret-access-key=env:AWS_SECRET_ACCESS_KEY
+            --aws-session-token=env:AWS_SESSION_TOKEN
