@@ -1,0 +1,221 @@
+= Kobiton 4.13 release notes
+:navtitle: Kobiton 4.13 release notes
+
+_June 8, 2024_
+
+== New OS support
+
+Kobiton 4.13 adds support for the following:
+
+* iOS/iPadOS 17.5.1
+
+* Mac OS Sonoma 14.5
+
+[NOTE]
+====
+* At this time, we recommend hosting iOS 17+ devices via Standard mode deployments for improved performance.
+
+* Android beta 15 support will be available soon.
+====
+
+== Mobile Test Management (Beta)
+
+In 4.12, we released Mobile Test Management (Beta). We’ve continued to enhance that feature with the following changes:
+
+=== Support for Team assignments
+
+This feature allows organizations to control access to test cases, test suites, and test runs based on a user’s team, ensuring better security and collaboration. Details include:
+
+* The team assignment of test cases, test suites, and test runs is inherited from the baseline session from which they are created.
+
+* If the baseline session is created at the organization level, then test cases, test suites, and test runs created from it can only be accessed by users with the ADMIN predefined role who have selected the organization level from the team menu.
+
+* If the baseline session is created at the team level, then test cases, test suites, and test runs created from it can only be accessed by users assigned to that team who have selected that team from the team menu.
+
+[NOTE]
+====
+
+* Users with the ADMIN predefined role have access to all teams plus the organization level. To view test cases, test suites, and test runs of a specific team, select that team in the team menu.
+
+* Team assignment of test cases, test suites, and test cases cannot be changed.
+
+* Device bundles do not currently follow team assignments and can be accessed by all users.
+
+====
+
+=== Handling unsupported actions
+
+This release introduces improved handling of the actions that are unsupported by Scriptless in a test case:
+
+* Added clear indications of the unsupported actions in test steps.
+
+* All steps containing unsupported actions must be removed from a test case before test runs can be triggered.
+
+=== Other Mobile Test Management improvements
+
+We also made changes to improve the user experience, including:
+
+* Added a Run button in test case and test suite pages to make it easier to initiate a test run.
+
+* Added a Rerun button to the test run page. When selected, the configuration of the new test run will be pre-filled, including the specific device/device bundle previously used.
+
+* Ability to filter test runs, test suites, and test cases by name or app bundle name. Note: Hit Enter after inputting the search query to start filtering.
+
+* Ability to filter test suites and test runs by a single test case by selecting the number of test runs/test suites in the test case list.
+
+== Upgrading deviceConnect for Hybrid Customers
+
+Hybrid customers, who host their own devices and utilize Kobiton services via the Cloud, previously required manual coordination with Kobiton to upgrade their software on hosted Mac minis. In 4.12, we introduced the ability to choose how your system is upgraded - auto-upgrade or manual upgrade. Since then, we’ve made a few tweaks to this feature. Once you upgrade to 4.13 manually, you will have the option to auto-upgrade going forward.
+
+== Combined HAR files for network payload data
+
+Previously, the network payload capture log was split into multiple .payload files. We can now consolidate multiple network log files into a single payload file, making it easier to convert to load test scripts on products like Grafana K6, JMeter, and Neoload for performance testing.
+
+We also introduced two options for downloading the payload data:
+
+* Include both request and response payloads
+
+* Include request payloads only (reduced size and optimized for load testing)
+
+== Jira Data Center integration
+
+We now support integrating Kobiton with Jira Data Center, just like Jira Cloud.
+
+Detailed instructions for Jira Data Center integration are coming soon. For now, check out the requirements:
+
+* An active Jira Data Center instance hosted on a public server (Kobiton Cloud and Hybrid Cloud) for the Kobiton Portal to connect. We will provide more details with alternative solutions if you don’t host Jira Data Center publicly.
+
+* Jira integration must be enabled in the org’s Kobiton subscription.
+
+* An organization can integrate with either Jira Cloud or Jira Data Center; an org cannot integrate with both at the same time.
+
+== Applitools Eyes integration
+
+Automation testers who run scripts that utilize the https://applitools.com/platform/eyes/[Applitools Eyes SDK] on Kobiton devices can now view Applitools Eyes status in the Kobiton Portal.
+
+Session List and Session Overview in the Kobiton Portal will display the Applitools Eyes status for each automation session that uses Applitools Eyes on a Kobiton device. The Session Overview displays the status and a link to see the detailed visual testing results within Applitools Eyes.
+
+Prerequisites/Limitations:
+
+* An active Applitools account.
+
+* An Applitools admin API key with read and execute permission (separate keys for each permission are also possible).
+
+* Set up Applitools integration in the Kobiton Portal.
+
+* A https://applitools.com/docs/topics/overview/overview-writing-tests-with-eyes-runner.html[visual test script] with the Applitools Eyes SDK that targets a Kobiton device.
+
+* Available for Xium and Appium 2 Basic Automation sessions.
+
+* We have tested extensively on scripts written in Javascript. If you find issues with scripts in other languages, contact Kobiton support.
+
+* For customers with private or on-premises Applitools servers (as opposed to a public server), network configuration must be made to allow connection from the Kobiton Cloud Portal.
+
+A more detailed user guide is coming soon.
+
+== Image injection SDK for iOS
+
+A custom iOS camera framework to use image injection on Kobiton devices is now available.
+
+[NOTE]
+====
+
+* Image injection via app instrumentation is no longer available for iOS devices.
+
+* Android still supports both the app instrumentation method and an image injection SDK for Android.
+
+====
+
+Prerequisites/Limitations:
+
+* iOS/iPadOS 14 or later, Xcode 14 or later.
+
+* Download the Kobiton custom camera framework (will be provided in user guide).
+
+* Access to the application’s source code (to implement custom library).
+
+* There is no indicator that an app has the Kobiton camera framework implemented in the app repo.
+
+* Inject the image after launching the camera. Doing this before launching the camera might crash the app.
+
+* It may take up to 5 seconds for the injected image to appear in the camera view. Be patient!
+
+A detailed user guide for the image injection SDK for iOS will be available soon.
+
+== Image injection automation support
+
+This feature introduces a custom capability (for instrumented apps) and commands to support injecting images during automation. Details are as follows:
+
+* Set the capability `'kobiton:instrumentenabled'` to true for the app instrumentation method. This capability is not required for the SDK method.
+
+* Use the below two actions in your scripts for both instrumentation and SDK methods:
+
+** `kobiton:setImage`: start image injection
+
+** `kobiton:clearImage`: stop image injection (clear the image)
+
+Prerequisites/Limitations:
+
+* Image injection requirements for iOS and Android apply.
+
+* Only supported in Xium automation sessions.
+
+* The image must be located on the runner machine and be passed with `base64` encoding. Passing the image URL is not yet supported.
+
+* Inject the image after launching the camera. Injecting the image before launching the camera might crash the app.
+
+* Add a wait time for the image injection process to complete (up to 5 seconds) before performing the next command.
+
+A user guide will be published soon.
+
+== Minor improvements and bug fixes
+
+This release includes several enhancements and bug fixes to improve your day-to-day testing.
+
+* Added more information about the device in the Kobiton Portal to help customer admins locate devices for troubleshooting and testers be more efficient:
+
+** Display hosting machine name and address in the _More info_ panel of a manual session.
+
+** Add the _Slot_ column in the _Device management_ page to show the slot number of the device on the Cambrionix hub.
+
+** Display the device name instead of the device model number in the session list.
+
+* Improved load performance and capability of Session Explorer for long sessions:
+
+** Improve the load time of sessions with 500 test steps or more.
+
+** Extend the maximum displayable number of steps in Session Explorer from 1000 to 5000.
+
+* Enhanced and fixed some bugs in SSO integration:
+
+** Change the label of the _SSO Enabled_ and _Enable SSO_ buttons to _SSO only_.
+
+** When the Kobiton system automatically creates a user that logs in for the first time using SSO, set the _SSO only_ attribute of that user to `true` (meaning the user can only log in using SSO).
+
+** Change the label _Validation value_ in SSO-related settings to _Assertion value_.
+
+** Fixed a bug that prevents any ADMIN user with the _SSO only_ attribute set to `true` from updating the _SSO only_ attribute of that user and other users in an organization that does not enforce SSO login.
+
+* Addressed the following Script-based test automation and Device Inspector items:
+
+** Add actions, screenshots and HTTP headers in Session Explorer for Basic Appium 2 sessions.
+
+** Fix an issue where `sendKeys` method cannot send text to password fields in iOS.
+
+** Fix an issue with Chrome WebView being returned instead of the desired application view in sessions with Android hybrid apps.
+
+** Fix an issue with no inspection data for a 4-5MB XML tree.
+
+** Simplify the XML displayed in inspector data to exclude some attributes.
+
+* Other items addressed:
+
+** Optimize gesture performance to execute faster and smoother.
+
+** Remove the _Legacy Kobiton (Kobiton Desktop)_ download link from the Kobiton Portal.
+
+** Update the GigaCap service to improve performance.
+
+** Make the download session video button easier to see in Session Overview.
+
+* Docs site updates: Check out our new xref:device-lab-management:index.adoc[Device Lab Management section] of our online docs to assist our customer admins in maintaining their Kobiton system.
