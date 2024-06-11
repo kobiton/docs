@@ -8,7 +8,7 @@ Learn how to test your app camera using image injection, so you can ensure end-u
 There are 2 ways to enable image injection for your app:
 
 * Either enable *Instrument application for camera injection* when xref:manual-testing:install-an-app.adoc[installing your app] before you test your in-app camera.
-* Or follow xref:apps:image-injection-sdk/add-the-sdk-to-your-android-app.adoc[this guide] to add Kobiton image injection SDK into your Android apps.
+* Or add Kobiton image injection SDK into your Android or iOS apps. Follow xref:apps:image-injection-sdk/add-the-sdk-to-your-android-app.adoc[this guide] for andriod, and xref:apps:image-injection-sdk/add-the-sdk-to-your-ios-app.adoc[this guide] for iOS.
 +
 [IMPORTANT]
 ====
@@ -28,6 +28,14 @@ To remove an image from your injection library, select the *x* icon in the corne
 image:manual-testing:image-injection-context.png[width=1000, alt="A manual session with image injection open and the icon highlighted.]
 
 == Inject an image
+
+During a manual testing session, you can use the Kobiton portal to inject images into the camera view of your application. The portal provides the following buttons:
+
+* **Set Simulated Image**: Click the Set Simulated Image button to choose an image file from your computer.
+* **Inject Image**: Click the Inject button to inject the selected image into the camera view.
+* **Clear Image**: Click the Clear Image button to remove the uploaded images from the portal.
+* **Reset Camera**: Click the Reset Camera button to reset the camera view.
+
 
 To inject an image into your app, launch the app and open the in-app camera. Choose an image from the library, then select *Inject*.
 

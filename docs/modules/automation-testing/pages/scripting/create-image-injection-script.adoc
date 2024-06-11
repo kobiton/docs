@@ -1,0 +1,53 @@
+= Create image injection script
+:navtitle: Create an image injection script
+
+Learn how to automate the process of image injection, so you can automate your test suite.
+
+== Kobiton commands
+
+To automate the process of image injection, use commands provided by the Kobiton SDK.
+
+[options="header"]
+|=======================
+|Command | Description | Parameters
+| kobiton:setImage | Starts the image injection process by injecting a specified image into the camera view. | data: A base64 encoded string of the image you want to inject.
+| kobiton:clearImage |  This command stops the image injection process and reverts the camera view back to the live feed.
+ |
+|=======================
+
+=== Start Image Injection
+
+To start image injection use:
+
+    await driver.execute('kobiton:setImage', { data: <base64Image>});
+
+This will replace the camera view with the specified image.
+
+=== Stop image injection
+
+To stop image injection use:
+
+    await driver.execute('kobiton:clearImage');
+
+This will revert the camera view back to the live feed.
+
+== Supported Methods
+
+[options="header"]
+|=======================
+| Method | Functions
+| UIViewController | `presentViewController:animated:completion:`
+| UIImagePickerController | `didFinishPickingMediaWithInfo:`
+| VNDocumentCameraScan | `title`, `pageCount`, `imageOfPageAtIndex:`
+|AVCapturePhoto | `fileDataRepresentation`, `CGImageRepresentation`
+| AVCaptureMovieFileOutput | `startRecordingToOutputFileURL:recordingDelegate:`
+| AVCaptureVideoPreviewLayer | `_handleNotification:payload:`, `setBounds:`
+| AVCapturePhotoOutput | `_handleStillImageCompleteNotificationWithPayload:forRequest:`, `capturePhotoWithSettings:delegate:`
+| AVCaptureConnection | `setVideoOrientation:`
+| AVCaptureStillImageOutput | `captureStillImageAsynchronouslyFromConnection:completionHandler:`
+| AVCaptureVideoDataOutput | `setSampleBufferDelegate:queue:`
+| AVCaptureFileOutput | `captureOutput:didStartRecordingToOutputFileAtURL:fromConnections:`, `captureOutput:didFinishRecordingToOutputFileAtURL:fromConnections:error:`
+| AVCapturePhotoCaptureDelegate | `captureOutput:didFinishCaptureForResolvedSettings:error:`
+| AVCaptureVideoDataOutputSampleBufferDelegate | `captureOutput:didDropSampleBuffer:fromConnection:`, `captureOutput:didOutputSampleBuffer:fromConnection:`
+| AVCaptureMetadataOutputObjectsDelegate | `captureOutput:didOutputMetadataObjects:fromConnection:`
+|=======================

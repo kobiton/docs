@@ -1,0 +1,34 @@
+= Add image injection SDK to your iOS app
+:navtitle: Add the image injection SDK to your iOS app
+
+Learn how to implement Kobiton’s custom SDK in your iOS application to enable Image Injection.
+
+== Prerequisites
+
+* iOS version: 13.0 or later.
+* Xcode: 14.0 or later.
+* Download the SDK from the official Kobiton website.
+
+== Integrate the SDK into the Xcode Project
+
+Open your Xcode project.
+
+Drag and drop the SDK file into your project folder.
+
+In the popup dialog, ensure **“Copy items if needed”** is checked.
+
+Select the appropriate targets that you want to include the SDK in, then click **“Finish”**.
+
+Go to the General tab of your project settings.
+
+In the **“Frameworks, Libraries, and Embedded Content”** section, ensure the SDK is listed.
+
+Select **“Embed & Sign”** for the SDK in the Embed dropdown menu.
+
+image::apps:apps-image-injection-sdk-ios.png[width=800,alt="Selecting the Embed & Sign option for the SDK"]
+
+== Build and Upload
+
+Build your project as an .ipa file.
+
+Upload the .ipa file to the Kobiton portal.
