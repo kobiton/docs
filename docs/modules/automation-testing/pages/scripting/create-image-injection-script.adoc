@@ -31,23 +31,3 @@ To stop image injection use:
 
 This will revert the camera view back to the live feed.
 
-== Supported Methods
-
-[options="header"]
-|=======================
-| Method | Functions
-| UIViewController | `presentViewController:animated:completion:`
-| UIImagePickerController | `didFinishPickingMediaWithInfo:`
-| VNDocumentCameraScan | `title`, `pageCount`, `imageOfPageAtIndex:`
-|AVCapturePhoto | `fileDataRepresentation`, `CGImageRepresentation`
-| AVCaptureMovieFileOutput | `startRecordingToOutputFileURL:recordingDelegate:`
-| AVCaptureVideoPreviewLayer | `_handleNotification:payload:`, `setBounds:`
-| AVCapturePhotoOutput | `_handleStillImageCompleteNotificationWithPayload:forRequest:`, `capturePhotoWithSettings:delegate:`
-| AVCaptureConnection | `setVideoOrientation:`
-| AVCaptureStillImageOutput | `captureStillImageAsynchronouslyFromConnection:completionHandler:`
-| AVCaptureVideoDataOutput | `setSampleBufferDelegate:queue:`
-| AVCaptureFileOutput | `captureOutput:didStartRecordingToOutputFileAtURL:fromConnections:`, `captureOutput:didFinishRecordingToOutputFileAtURL:fromConnections:error:`
-| AVCapturePhotoCaptureDelegate | `captureOutput:didFinishCaptureForResolvedSettings:error:`
-| AVCaptureVideoDataOutputSampleBufferDelegate | `captureOutput:didDropSampleBuffer:fromConnection:`, `captureOutput:didOutputSampleBuffer:fromConnection:`
-| AVCaptureMetadataOutputObjectsDelegate | `captureOutput:didOutputMetadataObjects:fromConnection:`
-|=======================
