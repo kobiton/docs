@@ -5,30 +5,36 @@ Learn how to implement Kobiton’s custom SDK in your iOS application to enable 
 
 == Prerequisites
 
-* iOS/iPadOS 14.0 or later.
-* Xcode 14.0 or later.
+* A project in Xcode 14.0 or later that targets iOS/iPadOS 14.0 or later devices.
+* The project uses xref:image-injection-sdk/supported-methods.adoc#_iosipados_methods[supported camera methods].
 * Download the https://kobiton.s3.amazonaws.com/downloads/KobitonSDK-ios.zip[SDK]. The downloaded file's name should be `KobitonSDK-ios.zip`.
 
 == Integrate the SDK
 
+Extract `KobitonSDK-ios.zip` into the `KobitonSdk.framework` folder.
+
 Open your Xcode project.
 
-Drag and drop the `KobitonSDK-ios.zip` file into your project folder.
+Drag and drop the `KobitonSdk.framework` folder into any location in your project folder.
 
-In the popup dialog, check the box *Copy items if needed*.
+In the popup, check the box *Copy items if needed*. Select the appropriate targets that you want to include the SDK in, then choose *Finish*.
 
-Select the appropriate targets that you want to include the SDK in, then choose *Finish*.
+image::apps:apps-image-injection-sdk-ios-add-files-options.png[width=500,alt="The popup to choose options for adding files to project"]
 
-Go to the *General* tab of your project settings.
+In the projet navigator, select the top project name, then go to the *General* tab of your project settings.
+
+image::apps:apps-image-injection-sdk-ios-general-frameworks.png[width=1000,alt="The General tab in project settings, with the Frameworks, Libraries, and Embedded Content section visible"]
 
 In the *Frameworks, Libraries, and Embedded Content* section, make sure the SDK is listed.
 
-image::apps:apps-image-injection-sdk-ios.png[width=800,alt="Selecting the Embed & Sign option for the SDK"]
+image::apps:apps-image-injection-sdk-ios-general-frameworks-zoomed.png[width=800,alt="The Frameworks, Libraries, and Embedded Content section with the Kobiton SDK framework included"]
 
 Select *Embed & Sign* for the SDK in the Embed dropdown menu.
 
+image::apps:apps-image-injection-sdk-ios-general-frameworks-embed-sign.png[width=800,alt="The Embed and Sign option selected in the Embed dropdown"]
+
 == Build and Upload
 
-Build your project as an `.ipa` file.
+Build and export your project as an `.ipa` file.
 
-Upload the `.ipa` file and install the app on a Kobiton device, then follow the guides to use image injection in a xref:manual-testing:test-your-app-camera.adoc[manual session] or an xref:automation-testing:scripting/create-image-injection-script.adoc[automation session].
+Upload the `.ipa` file to the xref:apps:upload-an-app/using-the-kobiton-portal.adoc[app repository] or to the cloud and xref:manual-testing:install-an-app.adoc[install the app] on a Kobiton device, then follow the guides to use image injection in a xref:manual-testing:test-your-app-camera.adoc[manual session] or an xref:automation-testing:scripting/create-image-injection-script.adoc[automation session].

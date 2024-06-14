@@ -10,14 +10,17 @@ To automate the process of image injection, use commands provided by the Kobiton
 [options="header"]
 |=======================
 |Command | Description | Parameters
-| kobiton:setImage | Starts the image injection process by injecting a specified image into the camera view. | data: A base64 encoded string of the image you want to inject.
-| kobiton:clearImage |  This command stops the image injection process and reverts the camera view back to the live feed.
+| `kobiton:setImage` | Starts the image injection process by injecting a specified image into the camera view. | `data`: A base64 encoded string of the image you want to inject.
+| `kobiton:clearImage` |  This command stops the image injection process and reverts the camera view back to the live feed.
  |
 |=======================
 
 === Start Image Injection
 
 To start image injection use:
+
+.Example (javascript)
+[source,javascript]
 
     await driver.execute('kobiton:setImage', { data: <base64Image>});
 
@@ -26,6 +29,9 @@ This will replace the camera view with the specified image.
 === Stop image injection
 
 To stop image injection use:
+
+.Example (javascript)
+[source,javascript]
 
     await driver.execute('kobiton:clearImage');
 
