@@ -1,0 +1,98 @@
+= Create image injection script
+:navtitle: Create an image injection script
+
+Learn how to automate the process of image injection, so you can automate your test suite.
+
+== Before you start
+
+Enable image injection for your app with either of these options:
+
+* Either use the capability `'kobiton:instrumentenabled'` to xref:#appium_instrumentation_capability[instrument] your app.
+
+* Or add Kobiton image injection SDK into your Android or iOS apps. Follow xref:apps:image-injection-sdk/add-the-sdk-to-your-android-app.adoc[this guide] for andriod, and xref:apps:image-injection-sdk/add-the-sdk-to-your-ios-app.adoc[this guide] for iOS.
+
+[#appium_instrumentation_capability]
+== Appium capability (instrumentation only)
+
+Add the `'kobiton:instrumentenabled'` capability to your script’s capabilities list. The value of this capability must be `true` to instrument the app for image injection.
+
+
+[IMPORTANT]
+Only include this Appium capability for image injection via app instrumentation. *Do not* include it for apps with image injection SDK embedded.
+
+== Kobiton commands
+
+To automate the process of image injection, use commands provided by the Kobiton SDK.
+
+[options="header"]
+|=======================
+|Command | Description | Parameters
+| `kobiton:setImage` | Starts the image injection process by injecting a specified image into the camera view. | `data`: A base64 encoded string of the image you want to inject.
+| `kobiton:clearImage` |  This command stops the image injection process and reverts the camera view back to the live feed.
+ |
+|=======================
+
+=== Handle image file and injection
+
+Ensure the image file you intend to inject is stored locally and accessible by the test script.
+
+Pass the image file to the test script using `base64` encoding and include the command to inject it. Below is an example of an `injectImage` function demonstrating this process.
+
+.Example (javascript)
+[source,javascript]
+
+----
+
+async function injectImage(driver, imagepath) {
+  // assume the image is in the same folder as the test script so only need to provide a relative path to the image
+  const imagePath = path.join(__dirname, imagepath);
+
+  const base64Image = fs.readFileSync(imagePath, { encoding: 'base64' });
+
+  // the command to set image on the device
+  await driver.execute('kobiton:setImage', { data: base64Image });
+}
+
+----
+
+=== Start Image Injection
+
+Given that the `injectImage` function was already declared in the previous section, use it to begin the image injection process:
+
+.Example (javascript)
+[source,javascript]
+
+    await injectImage(driver, 'path_to_image/image.jpg');
+
+This will replace the camera view with the specified file in the relative path `path_to_image/image.jpg`.
+
+=== Stop image injection
+
+To stop image injection use:
+
+.Example (javascript)
+[source,javascript]
+
+    await driver.execute('kobiton:clearImage');
+
+This will revert the camera view back to the live feed.
+
+== Limitations
+
+* Only supported in Xium automation sessions.
+
+* The image must be located on the runner machine and be passed with `base64` encoding. Passing the image URL is not yet supported.
+
+include::apps:partials/image-injection-limitations.adoc[]
+
+== Known issues
+
+The Android application with custom SDK crashes when attempting to start the camera services.
+
+*Cause*: The custom SDK utilizes hidden APIs from Android, which may not be turned on and cause the app to crash.
+
+*Solution*: Enable a Cleanup Policy with *Device settings will be reset* option checked. If no Cleanup Policy is enabled, run the following `adb shell` command before launching the app:
+
+[source]
+----
+settings put global hidden_api_policy 1
