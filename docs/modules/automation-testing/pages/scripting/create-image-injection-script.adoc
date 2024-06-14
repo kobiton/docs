@@ -5,13 +5,13 @@ Learn how to automate the process of image injection, so you can automate your t
 
 == Before you start
 
-Take notes of the following prerequisites and limitations:
+Take note of the following prerequisites and limitations:
 
 * Image injection requirements for iOS and Android apply.
 
 * Only supported in Xium automation sessions.
 
-* The image must be located on the runner machine and be passed with base64 encoding. Passing the image URL is not yet supported.
+* The image must be located on the runner machine and be passed with `base64` encoding. Passing the image URL is not yet supported.
 
 * Inject the image after launching the camera. Injecting the image before launching the camera might crash the app.
 
@@ -39,9 +39,9 @@ To automate the process of image injection, use commands provided by the Kobiton
 
 === Handle image file and injection
 
-Make sure the image file to inject is located locally and accessible by the test script.
+Ensure the image file you intend to inject is stored locally and accessible by the test script.
 
-Pass the image file to the test script using `base64` encoding and add the command to inject. See below for an example of a `injectImage` function to do such process.
+Pass the image file to the test script using `base64` encoding and include the command to inject it. Below is an example of an `injectImage` function demonstrating this process.
 
 .Example (javascript)
 [source,javascript]
@@ -62,7 +62,7 @@ async function injectImage(driver, imagepath) {
 
 === Start Image Injection
 
-Provided that the function `injectImage` has been declared in the previous section, use it to start image injection:
+Given that the `injectImage` function was already declared in the previous section, use it to begin the image injection process:
 
 .Example (javascript)
 [source,javascript]
