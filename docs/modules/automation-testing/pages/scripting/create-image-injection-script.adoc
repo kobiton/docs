@@ -38,7 +38,7 @@ Ensure the image file you intend to inject is stored locally and accessible by t
 
 Pass the image file to the test script using `base64` encoding and include the command to inject it. Below is an example of an `injectImage` function demonstrating this process.
 
-.Example (javascript)
+.Example (JavaScript)
 [source,javascript]
 
 ----
@@ -59,7 +59,7 @@ async function injectImage(driver, imagepath) {
 
 Given that the `injectImage` function was already declared in the previous section, use it to begin the image injection process:
 
-.Example (javascript)
+.Example (JavaScript)
 [source,javascript]
 
     await injectImage(driver, 'path_to_image/image.jpg');
@@ -70,7 +70,7 @@ This will replace the camera view with the specified file in the relative path `
 
 To stop image injection use:
 
-.Example (javascript)
+.Example (JavaScript)
 [source,javascript]
 
     await driver.execute('kobiton:clearImage');
