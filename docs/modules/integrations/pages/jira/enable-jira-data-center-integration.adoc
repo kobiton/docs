@@ -1,0 +1,92 @@
+= Enable Jira Data Center integration
+:navtitle: Enable Jira Data Center integration
+
+Learn how to integrate with Jira Data Center so your users can create Jira tickets right from the xref:session-explorer:manage-sessions.adoc[session overview].
+
+== Before you start
+
+* Set up a Jira Data Center instance in the cloud or on-premise.
+* For Cloud and Hybrid customers, ensure that the Jira Data Center can connect to the Kobiton portal. The most straightforward way is to host Jira Data Center on a public server. If this is not an option, additional instructions will come soon.
+* For Standalone/On-prem customers, instructions to connect to Jira Data Center will come soon.
+* An admin account on Jira Data Center and an account with ADMIN predefined role in Kobiton.
+* Subscribe your Kobiton account to a plan with the Jira Integration item.
+
+== Create application links
+
+Log into Jira Data Center as an admin.
+
+Select the **gear (Setting)** icon, then **Applications**.
+
+image::integrations:integration-jira-enable-jira-dc-integration-gear-application.PNG[width=300,alt="Opening the Settings menu and going to Applications"]
+
+Enter your username and password again and choose **Confirm**.
+
+Select **Application links** under Integrations, then **Create link**.
+
+image::integrations:integration-jira-enable-jira-dc-integration-app-link-create-link.PNG[width=700,alt="Selecting Applications links under Integrations option and clicking the Create Link button"]
+
+Select **External Application** for Application type, then select **Incoming** for Direction.
+
+image::integrations:integration-jira-enable-jira-dc-integration-external-app-incoming.PNG[width=700,alt="In the Create link menu, selecting External application and incoming options, and then clicking continue"]
+
+In the Configure an incoming link page, input all the required fields below:
+
+* A name for the link.
+* For redirect url, input `https://api.kobiton.com/v1/jira-integration/callback` .
+* For permission, select **Write**.
+
+image::integrations:integration-jira-enable-jira-dc-integration-write-configure-incoming-link.PNG[width=700,alt="Filling in the incoming link detials: name, redirect url, and permissoin"]
+
+Select **Save** when done.
+
+The Credentials page displays.
+
+image::integrations:integration-jira-enable-jira-dc-integration-credentials.PNG[]
+
+[TIP]
+===============================
+You can always revisit the Credentials page by select the **more** icon of the link in the Application links list and choose **View credentials**.
+
+image::integrations:integration-jira-enable-jira-dc-integration-tip-application-links.PNG[width=600,alt="Choosing View credentials by clicking the more icon"]
+
+===============================
+
+Copy **Client ID** and **Client secret** and note them down.
+
+Select the **System** tab.
+
+Copy the value of **Base URL** and note it down
+
+image::integrations:integration-jira-enable-jira-dc-integration-base-url-administration.PNG[width=700,alt="Going to the systems tab and copying the Base URL to note it down or save it"]
+
+== Enable Jira Data Center integration
+
+Log into the Kobiton portal with an account with ADMIN predefined role.
+
+Select the profile picture, then **Settings**.
+
+Select **Integration**.
+
+Under Jira Integration, select **Connect account**.
+
+image::integrations:integration-jira-enable-jira-dc-integration-kobiton-connect-account.PNG[width=700,alt="Selecting Connect accont under Jira Integration"]
+
+Select the **Jira Data Center** tab. Input the Base URL, Client ID and Client secret to the corresponding fields.
+
+image::integrations:integration-jira-enable-jira-dc-integration-jira-datacenter-jira-integration.PNG[width=400,alt="Entering Base URL, Client ID, and Client secret in Jira Data Center tab"]
+
+Select **Connect**.
+
+If you see an error, revise the connection information, and double-check the network between the Kobiton portal and Jira Data Center.
+
+A new browser tab opens. Allow Kobiton the permissions to access Jira Data Center.
+
+image::integrations:integration-jira-enable-jira-dc-integration-access-data-center-permissions.PNG[width=500,alt="Kobiton asking for permissoin to access your Jira account"]
+
+If you see the success message, your organization is now integrated with Jira Data Center. The Jira Data Center users can follow this guide to xref:jira/create-a-jira-ticket.adoc[create Jira tickets].
+
+See below for limitations and known issues.
+
+== Limitations
+
+An org can integrate with either Jira Cloud or Jira Data Center; an org cannot integrate with both at the same time.
