@@ -1,15 +1,15 @@
-= Create image injection script
-:navtitle: Create an image injection script
+= Add image injection to Appium script
+:navtitle: Add image injection to Appium script
 
-Learn how to automate the process of image injection, so you can automate your test suite.
+Learn how to add image injection to your Appium script.
 
 == Before you start
 
-Enable image injection for your app with either of these options:
+Enable image injection for your app with one of these options:
 
-* Either use the capability `'kobiton:instrumentenabled'` to xref:#appium_instrumentation_capability[instrument] your app.
+* Instrument your app and use the capability `'kobiton:instrumentenabled'` (Android only) to xref:#appium_instrumentation_capability[instrument your app] .
 
-* Or add Kobiton image injection SDK into your Android or iOS apps. Follow xref:apps:image-injection-sdk/add-the-sdk-to-your-android-app.adoc[this guide] for andriod, and xref:apps:image-injection-sdk/add-the-sdk-to-your-ios-app.adoc[this guide] for iOS.
+* Add Kobiton image injection SDK into your Android or iOS apps. Follow xref:apps:image-injection-sdk/add-the-sdk-to-your-android-app.adoc[this guide] for android, and xref:apps:image-injection-sdk/add-the-sdk-to-your-ios-app.adoc[this guide] for iOS.
 
 [#appium_instrumentation_capability]
 == Appium capability (instrumentation only)
@@ -22,7 +22,7 @@ Only include this Appium capability for image injection via app instrumentation.
 
 == Kobiton commands
 
-To automate the process of image injection, use commands provided by the Kobiton SDK.
+The below commands apply to both image injection using SDK and app instrumentation.
 
 [options="header"]
 |=======================
@@ -38,7 +38,7 @@ Ensure the image file you intend to inject is stored locally and accessible by t
 
 Pass the image file to the test script using `base64` encoding and include the command to inject it. Below is an example of an `injectImage` function demonstrating this process.
 
-.Example (javascript)
+.Example (JavaScript)
 [source,javascript]
 
 ----
@@ -59,7 +59,7 @@ async function injectImage(driver, imagepath) {
 
 Given that the `injectImage` function was already declared in the previous section, use it to begin the image injection process:
 
-.Example (javascript)
+.Example (JavaScript)
 [source,javascript]
 
     await injectImage(driver, 'path_to_image/image.jpg');
@@ -70,7 +70,7 @@ This will replace the camera view with the specified file in the relative path `
 
 To stop image injection use:
 
-.Example (javascript)
+.Example (JavaScript)
 [source,javascript]
 
     await driver.execute('kobiton:clearImage');
