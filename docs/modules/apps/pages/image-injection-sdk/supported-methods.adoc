@@ -1,9 +1,11 @@
 = Supported methods of image injection SDK
 :navtitle: Supported methods of image injection SDK
 
-This article list all supported methods for the custom `camera2` library for xref:apps:image-injection-sdk/add-the-sdk-to-your-android-app.adoc[image injection].
+This article list all supported methods for the custom SDK library for xref:apps:image-injection-sdk/add-the-sdk-to-your-android-app.adoc[Android] and xref:apps:image-injection-sdk/add-the-sdk-to-your-ios-app.adoc[iOS/iPadOS] image injection.
 
-== Supported methods
+== Android methods
+
+All methods below are from the `camera2` library.
 
 * CameraManager
 
@@ -168,3 +170,24 @@ This article list all supported methods for the custom `camera2` library for xre
 ** setSessionParameters(CaptureRequest params)
 
 ** getSessionParameters()
+
+== iOS/iPadOS methods
+
+[options="header"]
+|=======================
+| Method | Functions
+| UIViewController | `presentViewController:animated:completion:`
+| UIImagePickerController | `didFinishPickingMediaWithInfo:`
+| VNDocumentCameraScan | `title`, `pageCount`, `imageOfPageAtIndex:`
+|AVCapturePhoto | `fileDataRepresentation`, `CGImageRepresentation`
+| AVCaptureMovieFileOutput | `startRecordingToOutputFileURL:recordingDelegate:`
+| AVCaptureVideoPreviewLayer | `_handleNotification:payload:`, `setBounds:`
+| AVCapturePhotoOutput | `_handleStillImageCompleteNotificationWithPayload:forRequest:`, `capturePhotoWithSettings:delegate:`
+| AVCaptureConnection | `setVideoOrientation:`
+| AVCaptureStillImageOutput | `captureStillImageAsynchronouslyFromConnection:completionHandler:`
+| AVCaptureVideoDataOutput | `setSampleBufferDelegate:queue:`
+| AVCaptureFileOutput | `captureOutput:didStartRecordingToOutputFileAtURL:fromConnections:`, `captureOutput:didFinishRecordingToOutputFileAtURL:fromConnections:error:`
+| AVCapturePhotoCaptureDelegate | `captureOutput:didFinishCaptureForResolvedSettings:error:`
+| AVCaptureVideoDataOutputSampleBufferDelegate | `captureOutput:didDropSampleBuffer:fromConnection:`, `captureOutput:didOutputSampleBuffer:fromConnection:`
+| AVCaptureMetadataOutputObjectsDelegate | `captureOutput:didOutputMetadataObjects:fromConnection:`
+|=======================
