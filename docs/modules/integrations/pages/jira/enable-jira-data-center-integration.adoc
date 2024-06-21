@@ -1,7 +1,7 @@
 = Enable Jira Data Center integration
 :navtitle: Enable Jira Data Center integration
 
-Learn how to integrate with Jira Data Center so your users can create Jira tickets right from the xref:session-explorer:manage-sessions.adoc[session overview].
+Learn how to integrate with Jira Data Center so your users can create Jira tickets right from the xref:session-explorer:manage-sessions.adoc#_create_a_jira_ticket[Session Explorer].
 
 == Before you start
 
@@ -9,11 +9,11 @@ Learn how to integrate with Jira Data Center so your users can create Jira ticke
 * For Cloud and Hybrid customers, ensure that the Jira Data Center can connect to the Kobiton portal. The most straightforward way is to host Jira Data Center on a public server. If this is not an option, additional instructions will come soon.
 * For Standalone/On-prem customers, instructions to connect to Jira Data Center will come soon.
 * An admin account on Jira Data Center and an account with ADMIN predefined role in Kobiton.
-* Subscribe your Kobiton account to a plan with the Jira Integration item.
+* Your Kobiton subscription must include Jira integration.
 
 == Create application links
 
-Log into Jira Data Center as an admin.
+Log in to Jira Data Center as an admin.
 
 Select the **gear (Setting)** icon, then **Applications**.
 
@@ -43,25 +43,25 @@ The Credentials page displays.
 
 image::integrations:integration-jira-enable-jira-dc-integration-credentials.PNG[]
 
+Copy **Client ID** and **Client secret** and note them down.
+
 [TIP]
 ===============================
-You can always revisit the Credentials page by select the **more** icon of the link in the Application links list and choose **View credentials**.
+You can always revisit the Credentials page by selecting the **more** icon of the link in the Application links list and choose **View credentials**.
 
 image::integrations:integration-jira-enable-jira-dc-integration-tip-application-links.PNG[width=600,alt="Choosing View credentials by clicking the more icon"]
 
 ===============================
 
-Copy **Client ID** and **Client secret** and note them down.
-
 Select the **System** tab.
 
-Copy the value of **Base URL** and note it down
+Copy the value of **Base URL** and note it down.
 
 image::integrations:integration-jira-enable-jira-dc-integration-base-url-administration.PNG[width=700,alt="Going to the systems tab and copying the Base URL to note it down or save it"]
 
 == Enable Jira Data Center integration
 
-Log into the Kobiton portal with an account with ADMIN predefined role.
+Log in to the Kobiton portal with an account with ADMIN predefined role.
 
 Select the profile picture, then **Settings**.
 
@@ -83,7 +83,7 @@ A new browser tab opens. Allow Kobiton the permissions to access Jira Data Cente
 
 image::integrations:integration-jira-enable-jira-dc-integration-access-data-center-permissions.PNG[width=500,alt="Kobiton asking for permissoin to access your Jira account"]
 
-If you see the success message, your organization is now integrated with Jira Data Center. The Jira Data Center users can follow this guide to xref:jira/create-a-jira-ticket.adoc[create Jira tickets].
+If you see the success message, your organization is now integrated with Jira Data Center. Your Jira Data Center users can follow this guide to xref:jira/create-a-jira-ticket.adoc[create Jira tickets].
 
 See below for limitations and known issues.
 
