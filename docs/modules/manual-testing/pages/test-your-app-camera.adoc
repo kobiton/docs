@@ -10,6 +10,7 @@ Enable image injection for your app with one of these options:
 
 * Enable *Instrument application for camera injection* when xref:manual-testing:install-an-app.adoc[installing your app] before you test your in-app camera (Android only).
 * Add Kobiton image injection SDK into your Android or iOS apps. Follow xref:apps:image-injection-sdk/add-the-sdk-to-your-android-app.adoc[this guide] for android, and xref:apps:image-injection-sdk/add-the-sdk-to-your-ios-app.adoc[this guide] for iOS.
+* Ensure deviceConnect `Kobiton.UseInternalLegacyAppResigning` within `dc.ini` is set to `true`. Image injection will not work if this value is set to `false`.
 
 +
 [IMPORTANT]
