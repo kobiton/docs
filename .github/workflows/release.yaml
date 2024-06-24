@@ -1,48 +1,48 @@
-name: Build and Push Image to ECR 🚀
+name: Deploy to Production 🚀
+
 on:
-  # Enable manual trigger for easy debugging
-  workflow_dispatch:
   push:
     branches:
-      - main
-      - '**-rc'
-      - production
-      - 'production-hotfix'
-
+      - 'main'
+  # Enable manual trigger for easier debugging
+  workflow_dispatch:
 
 permissions:
   contents: read    # This is required for actions/checkout
 
 jobs:
-  build:
+  deploy:
+    timeout-minutes: 10
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        include:
+          - site: docs
+            cloudfrontid: ${{ secrets.DOCS_CLOUDFRONT_ID }}
+          - site: widget
+            cloudfrontid: ${{ secrets.WIDGET_CLOUDFRONT_ID }}
     steps:
       - name: Configure AWS credentials from PRODUCTION account
         uses: aws-actions/configure-aws-credentials@v4
         with:
           role-to-assume: arn:aws:iam::${{ secrets.AWS_ACCOUNT_ID }}:role/github-action-role
-          aws-region: ${{ secrets.AWS_REGION }}
-
-      - name: Set IMAGE_TAG
-        run: echo "IMAGE_TAG=`echo ${{ github.sha }} | cut -c1-7`" >> $GITHUB_ENV
+          aws-region: ${{ secrets.AWS_PROD_REGION }}
 
       - name: Build 
         uses: dagger/dagger-for-github@v5
         with:
           version: "0.11.8"
           verb: call
+          module: github.com/${{ github.repository }}@${{ github.ref }}
+
           args: |
             --ref ${{ github.ref }} \
-            publish \
-            --sites="docs,widget" \
-            --image-tag=$IMAGE_TAG \
+            release \
+            --site="${{ matrix.site }}" \
             --aws-region=$AWS_REGION \
-            --aws-account-id=$AWS_ACCOUNT_ID \
             --aws-access-key-id=env:AWS_ACCESS_KEY_ID \
             --aws-secret-access-key=env:AWS_SECRET_ACCESS_KEY \
             --aws-session-token=env:AWS_SESSION_TOKEN \
+            --cloudfront-id=${{ matrix.cloudfrontid }} \
         env:
-          IMAGE_TAG: ${{ env.IMAGE_TAG }}
-          AWS_REGION: ${{ secrets.AWS_REGION }}
-          AWS_ACCOUNT_ID: ${{ secrets.AWS_ACCOUNT_ID }}
-
+          AWS_REGION: ${{ secrets.AWS_PROD_REGION }}

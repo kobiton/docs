@@ -84,7 +84,7 @@ func (m *Ci) Server(
 		From("nginx:alpine").
 		WithoutEntrypoint().
 		WithWorkdir(path).
-		WithDirectory(path, dir.Directory(fmt.Sprintf("%s", site))).
+		WithDirectory(path, dir.Directory(site)).
 		WithFile(fmt.Sprintf("/%s/replace-env-vars.sh", site), m.Source.File("scripts/replace-env-vars.sh")).
 		WithFile("/etc/nginx/nginx.conf", m.Source.File(fmt.Sprintf("docker/%s/nginx.conf", site))).
 		WithFile("/etc/nginx/mime.types", m.Source.File("docker/mime.types")).
@@ -139,6 +139,7 @@ func (m *Ci) Publish(
 
 	var out string
 	for _, r := range sites {
+		r := r
 		eg.Go(func() error {
 			ecrWithRepo := fmt.Sprintf("%s/%s:%s", ecrHost, r, imageTag)
 			out, _ = m.Server(r).WithRegistryAuth(ecrHost, "AWS", secret).Publish(ctx, ecrWithRepo)
@@ -175,35 +176,27 @@ func (m *Ci) Release(
 	// AWS Region
 	awsRegion string,
 	// +optional
-	// +default=["docs", "widget"]
-	// Sites to release
-	sites []string,
+	// +default="docs"
+	// Site to release
+	site string,
 	// Cloudfront distribution ID
-	cloudfrontDistributionID []string,
+	cloudfrontID string,
 ) error {
 	ctr, err := m.AWS().AwsCli(ctx, awsAccessKeyID, awsSecretAccessKey, awsSessionToken, awsRegion)
 	if err != nil {
 		return err
 	}
 
-	listSites := make(map[string]string)
-
-	for i := range sites {
-		listSites[sites[i]] = cloudfrontDistributionID[i]
-	}
-
 	dir, _ := m.Build()
 
 	eg, ctx := errgroup.WithContext(ctx)
 
-	for site, cf := range listSites {
-		eg.Go(func() error {
-			_, err = ctr.WithDirectory("/app", dir.Directory(fmt.Sprintf("/%s", site))).
-				WithExec([]string{"s3", "sync", "/app", fmt.Sprintf("s3://%s.kobiton.com", site)}).
-				WithExec([]string{"cloudfront", "create-invalidation", "--distribution-id", cf, "--paths", "/*"}).Stdout(ctx)
-			return err
-		})
-	}
+	eg.Go(func() error {
+		_, err = ctr.WithDirectory("/app", dir.Directory(fmt.Sprintf("/%s", site))).
+			WithExec([]string{"s3", "sync", "/app", fmt.Sprintf("s3://%s.kobiton.com", site)}).
+			WithExec([]string{"cloudfront", "create-invalidation", "--distribution-id", cloudfrontID, "--paths", "/*"}).Stdout(ctx)
+		return err
+	})
 
 	return eg.Wait()
 }
@@ -228,10 +221,14 @@ func (m Ci) nodeJsBaseFromVersion(nodeVersion string) *Container {
 		WithWorkdir(mountPath).
 		WithMountedCache("/usr/local/share/.cache/yarn", dag.CacheVolume(fmt.Sprintf("yarn_cache:%s", nodeVersion))).
 		WithFile(fmt.Sprintf("%s/package.json", mountPath), src.File("package.json")).
-		//WithFile(fmt.Sprintf("%s/yarn.lock", mountPath), src.File("yarn.lock")).
+		// WithFile(fmt.Sprintf("%s/yarn.lock", mountPath), src.File("yarn.lock")).
 		WithExec([]string{"apk", "add", "bash"}).
 		WithExec([]string{"apk", "add", "git"}).
 		WithExec([]string{"apk", "add", "openssl"}).
+		WithExec([]string{"git", "config", "--global", "user.email", "'kobiton@kobiton.com'"}).
+		WithExec([]string{"git", "config", "--global", "user.name", "'Kobiton'"}).
+		WithExec([]string{"git", "init", "."}).
+		WithExec([]string{"git", "commit", "--allow-empty", "-m", "init"}).
 		WithExec([]string{"yarn", "install"}).
 		WithDirectory(mountPath, src)
 }
