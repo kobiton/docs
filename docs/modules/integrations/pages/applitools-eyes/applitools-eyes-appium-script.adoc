@@ -1,0 +1,123 @@
+= Run Appium script with Applitools Eyes SDK
+:navtitle: Appium script with Applitools Eyes SDK
+
+Learn how to run an Appium script with Applitools Eyes SDK on Kobiton devices.
+
+== Before you start
+
+* Enable xref:integrations:applitools-eyes/applitools-eyes-integration.adoc[Applitools Eyes integration].
+* Prepare an Appium script that implements the link:https://applitools.com/tutorials/guides/getting-started/running-your-first-test#integrate-with-the-eyes-sdk[Applitools Eyes SDK].
+* Obtain your Kobiton username and xref:profile:manage-your-api-credentials.adoc#_get_an_api_key[API key].
+* Obtain a link:https://help.applitools.com/hc/en-us/articles/360006914732-The-runner-API-key[runner API key] from Applitools.
+
+== Add server URL and capabilities to your script
+
+To run on Kobiton devices, add the server URL and capabilities to your Appium script. See xref:automation-testing:capabilities/auto-generate-capabilities.adoc[this guide] for more details.
+
+The following example is based on an Android test script written in Java from the link:https://applitools.com/tutorials/quickstart/native-mobile/appium/java[Applitools Eyes SDK tutorial page]. Alter the script from the tutorial in 3 places:
+
+*  Capabilities:
++
+----
+// Set desired capabilities.
+DesiredCapabilities capabilities = new DesiredCapabilities();
+
+  capabilities.setCapability("platformName", "Android");
+  // Use either deviceName or udid to select the device
+  // capabilities.setCapability("deviceName", "Pixel 7");
+  capabilities.setCapability("udid", "f40d06b2-daa4-4b62-896e-c0e675135ecd ");
+  capabilities.setCapability("platformVersion", "*");
+  capabilities.setCapability("app", "https://applitoolsnmlresources.z19.web.core.windows.net/TestApps/app-debug.apk");
+  capabilities.setCapability("browserName", "");
+  capabilities.setCapability("automationName", "UiAutomator2");
+  // Use the kobiton:runtime capability below if you want to launch a Basic Appium 2 session
+  // capabilities.setCapability("kobiton:runtime", "appium");
+----
+
+* Kobiton server URL:
++
+----
+// Open the app.
+WebDriver driver = new AndroidDriver(new URL("https://[username]:[api_key]@api.kobiton.com/wd/hub"), capabilities);
+----
+- Replace `[username]` and `[api_key]` with your Kobiton account details.
+- Replace `api.kobiton.com` with the custom domain of your organization (if applicable).
+
+* Additionally, replace `YOUR_API_KEY` below with the runner API key from Applitools.
++
+----
+// Initialize the eyes SDK and set your private API key.
+Eyes eyes = new Eyes();
+eyes.setApiKey("YOUR_API_KEY");
+----
+
+At the time of writing, the final test script would look like the below:
+----
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.remote.DesiredCapabilities;
+import io.appium.java_client.android.AndroidDriver;
+import java.net.URL;
+import com.applitools.eyes.appium.Eyes;
+
+
+
+public class Appium_native_java {
+
+    public static void main(String[] args) throws Exception {
+
+        // Set desired capabilities.
+        DesiredCapabilities capabilities = new DesiredCapabilities();
+
+          capabilities.setCapability("platformName", "Android");
+          // Use either deviceName or udid to select the device
+          // capabilities.setCapability("deviceName", "Pixel 7");
+          capabilities.setCapability("udid", "f40d06b2-daa4-4b62-896e-c0e675135ecd ");
+          capabilities.setCapability("platformVersion", "*");
+          capabilities.setCapability("app", "https://applitoolsnmlresources.z19.web.core.windows.net/TestApps/app-debug.apk");
+          capabilities.setCapability("browserName", "");
+          capabilities.setCapability("automationName", "UiAutomator2");
+          // Use the kobiton:runtime capability below if you want to launch a Basic Appium 2 session
+          // capabilities.setCapability("kobiton:runtime", "appium");
+
+        // Open the app.
+        WebDriver driver = new AndroidDriver(new URL("https://johndoe:6aba1969-720f-5453-9234-a65435823638@api.kobiton.com/wd/hub"), capabilities);
+
+        // Initialize the eyes SDK and set your private API key.
+        Eyes eyes = new Eyes();
+        eyes.setApiKey("ak9FuNVsyEsDi62buhydjLi7HASD5435fgdgdorEHXY110");
+
+        eyes.setForceFullPageScreenshot(true);
+
+        try {
+
+            // Start the test.
+            eyes.open(driver, "Contacts!", "My first Appium native Java test!");
+
+            // Visual validation.
+            eyes.checkWindow("Contact list!");
+
+            // End the test.
+            eyes.close();
+
+        } finally {
+
+            // Close the app.
+            driver.quit();
+
+            // If the test was aborted before eyes.close was called, ends the test as aborted.
+            eyes.abortIfNotClosed();
+
+        }
+
+    }
+
+}
+----
+
+Execute the script.
+
+After the script finishes and Kobiton has received the status from Applitools, an Applitools Eyes icon is displayed for the session in the **Session List**. And, a new status will be available in the **Automation** section of **Session Overview** allowing you to view the Applitools Eyes status and access a link to go directly to Applitools Eyes to review the details.
+
+== Limitations
+
+The Eyes status and link to Applitools in Session Explorer are not available for sessions Selenium with JavaScript. Visit link:https://eyes.applitools.com/[Applitools Eyes] directly to view the status of these sessions.
