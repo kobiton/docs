@@ -8,41 +8,30 @@ on:
   workflow_dispatch:
 
 permissions:
+  id-token: write   # This is required for requesting the JWT
   contents: read    # This is required for actions/checkout
 
 jobs:
-  deploy:
-    timeout-minutes: 10
+  docs:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        include:
-          - site: docs
-            cloudfrontid: ${{ secrets.DOCS_CLOUDFRONT_ID }}
-          - site: widget
-            cloudfrontid: ${{ secrets.WIDGET_CLOUDFRONT_ID }}
     steps:
-      - name: Configure AWS credentials from PRODUCTION account
-        uses: aws-actions/configure-aws-credentials@v4
+      - uses: actions/checkout@v4
+      - name: "Docs publish"
+        uses: ./.github/actions/call
         with:
-          role-to-assume: arn:aws:iam::${{ secrets.AWS_ACCOUNT_ID }}:role/github-action-role
+          site: "docs"
+          cloudfront-id: ${{ secrets.DOCS_CLOUDFRONT_ID }}
+          aws-account-id: ${{ secrets.AWS_ACCOUNT_ID }}
           aws-region: ${{ secrets.AWS_PROD_REGION }}
 
-      - name: Build 
-        uses: dagger/dagger-for-github@v5
+  widget:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: "Widget publish"
+        uses: ./.github/actions/call
         with:
-          version: "0.11.8"
-          verb: call
-          module: github.com/${{ github.repository }}@${{ github.ref }}
-
-          args: |
-            --ref ${{ github.ref }} \
-            release \
-            --site="${{ matrix.site }}" \
-            --aws-region=$AWS_REGION \
-            --aws-access-key-id=env:AWS_ACCESS_KEY_ID \
-            --aws-secret-access-key=env:AWS_SECRET_ACCESS_KEY \
-            --aws-session-token=env:AWS_SESSION_TOKEN \
-            --cloudfront-id=${{ matrix.cloudfrontid }} \
-        env:
-          AWS_REGION: ${{ secrets.AWS_PROD_REGION }}
+          site: "widget"
+          cloudfront-id: ${{ secrets.WIDGET_CLOUDFRONT_ID }}
+          aws-account-id: ${{ secrets.AWS_ACCOUNT_ID }}
+          aws-region: ${{ secrets.AWS_PROD_REGION }}

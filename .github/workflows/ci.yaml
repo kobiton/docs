@@ -11,6 +11,7 @@ on:
 
 
 permissions:
+  id-token: write   # This is required for requesting the JWT
   contents: read    # This is required for actions/checkout
 
 jobs:
@@ -31,6 +32,7 @@ jobs:
         with:
           version: "0.11.8"
           verb: call
+          module: github.com/${{ github.repository }}@${{ github.ref }}
           args: |
             --ref ${{ github.ref }} \
             publish \
