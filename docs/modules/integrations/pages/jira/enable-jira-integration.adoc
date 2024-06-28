@@ -1,31 +1,32 @@
-= Enable Jira integration
-:navtitle: Enable Jira integration
+=  Enable Jira Cloud integration
+:navtitle:  Enable Jira Cloud integration
 
-Learn how to enable Jira so everyone in your organization can create Jira tickets directly from their xref:session-explorer:manage-sessions.adoc[session overview].
+Learn how to enable Jira Cloud so everyone in your organization can create Jira tickets directly from their xref:session-explorer:manage-sessions.adoc[Session Explorer].
 
-[NOTE]
-Only *account owners* can enable the integration for Jira.
+== Before you start
+
+* A Jira Cloud account is required.
+* Your Kobiton subscription must include Jira integration.
 
 [#_create_jira_api_token]
 == Create Jira API token
 
-First you'll open Jira, navigate to your security settings, and select *Create and manage API Token*. After your token generates, copy and save it to a secure location.
+Follow the official guide for creating a https://support.atlassian.com/atlassian-account/docs/manage-api-tokens-for-your-atlassian-account/[Jira API token].
 
-image:integrations:create-jira-api-token-context.png[width=,alt=""]
+image::integrations:create-jira-api-token-context.png[width=1000,alt="The Create API token button under Security settings"]
 
-[NOTE]
-If you're having trouble creating a Jira API token, reference the link:https://support.atlassian.com/atlassian-account/docs/manage-api-tokens-for-your-atlassian-account/[Jira documentation].
+Copy and save the generated token to a secure location.
 
 == Connect your account
 
-Next you'll launch Kobiton, open *Settings*, and select *Integration*.
+Log into the Kobiton Portal.
 
-image:integrations:integration-setting-closeup.png[width=,alt="The settings page with the integration tab highlighted."]
+include::profile:partial$open-settings.adoc[]
 
-Under *Issue Tracking*, locate the Jira integration and select *Connect Account*.
+Select *Integration*. Under *Issue Tracking*, locate the Jira integration and select *Connect Account*.
 
-image:integrations:jira-closeup.png[width=1000,alt="A closeup image of the integrations page with Jira highlighted."]
+image::integrations:integration-jira-enable-jira-dc-integration-kobiton-connect-account.PNG[width=1000,alt="A closeup image of the integrations page with Jira highlighted."]
 
-Enter your Jira Host URL, email, and the xref:_create_jira_api_token[API Token] you created earlier, then select *Connect* to finish. Now users in your organization can create Jira tickets directly from a xref:session-explorer:manage-sessions.adoc[session overview].
+Select the **Jira Cloud** tab. Enter your Jira Host URL, email, and the xref:_create_jira_api_token[API Token] you created earlier, then select *Connect* to finish. Now users in your organization can create Jira tickets directly from the xref:session-explorer:manage-sessions.adoc#_create_a_jira_ticket[Session Explorer].
 
-image:integrations:jira-closeup1 (1).png[width=300,alt="A closeup image of the Jira account connection form."]
+image::integrations:integration-jira-enable-jira-cloud-integration-popup-closeup.png[width=400,alt="A closeup image of the Jira account connection form."]
