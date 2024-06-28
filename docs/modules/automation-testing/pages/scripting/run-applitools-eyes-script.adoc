@@ -12,12 +12,13 @@ Learn how to run an Appium script with Applitools Eyes SDK on Kobiton devices.
 
 == Add server URL and capabilities to your script
 
-To run on Kobiton devices, add the server URL and capabilities to your Appium script. See xref:automation-testing:capabilities/auto-generate-capabilities.adoc[this guide] for more details.
+To run on Kobiton devices, add the server URL and capabilities to your Appium script. See xref:capabilities/auto-generate-capabilities.adoc[this guide] for more details.
 
 The following example is based on an Android test script written in Java from the link:https://applitools.com/tutorials/quickstart/native-mobile/appium/java[Applitools Eyes SDK tutorial page]. Alter the script from the tutorial in 3 places:
 
 *  Capabilities:
 +
+[source,javascript]
 ----
 // Set desired capabilities.
 DesiredCapabilities capabilities = new DesiredCapabilities();
@@ -36,6 +37,7 @@ DesiredCapabilities capabilities = new DesiredCapabilities();
 
 * Kobiton server URL:
 +
+[source,javascript]
 ----
 // Open the app.
 WebDriver driver = new AndroidDriver(new URL("https://[username]:[api_key]@api.kobiton.com/wd/hub"), capabilities);
@@ -45,6 +47,7 @@ WebDriver driver = new AndroidDriver(new URL("https://[username]:[api_key]@api.k
 
 * Additionally, replace `YOUR_API_KEY` below with the runner API key from Applitools.
 +
+[source,javascript]
 ----
 // Initialize the eyes SDK and set your private API key.
 Eyes eyes = new Eyes();
@@ -52,6 +55,7 @@ eyes.setApiKey("YOUR_API_KEY");
 ----
 
 At the time of writing, the final test script would look like the below:
+[source,javascript]
 ----
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
