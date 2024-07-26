@@ -118,7 +118,7 @@ resolution:720x1080 # Returns all sessions using a device with a 720x1080 screen
 
 === `status:`
 
-Returns all sessions matching this status.For more information, see xref:session-explorer:search-for-a-session.adoc#_use_session_tags[Session tags].
+Returns all sessions matching this status. For more information, see xref:session-explorer:search-for-a-session.adoc#_use_session_tags[Session tags].
 
 .Example
 [source,plaintext]
@@ -129,12 +129,17 @@ status:running # Returns all sessions currently running.
 [#_type]
 === `type:`
 
-Returns all sessions with this session type: `manual` or `automation`. For scriptless sessions, see xref:_is[].
+Returns all sessions with this session type: `manual` or `appium`. For scriptless sessions, see xref:_is[].
 
 .Example
 [source,plaintext]
 ----
-type:manual # Returns all manual sessions.
+type:manual
+type:appium
+type:xcuitest
+type:espresso
+type:gaming
+type:mixed
 ----
 
 === `udid:`
