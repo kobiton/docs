@@ -15,6 +15,22 @@ image:session-explorer:custom-search-queries.png[width=1000,alt="The custom quer
 status:passed type:manual os:android # Returns all passing, manual sessions, using a device with an Android OS.
 ----
 
+To use the `OR` operation, include the parameters in brackets.
+
+.Example
+[source,plaintext]
+----
+(is:applitools OR is:sensitive) # Return Applitools Eyes session or session with sensitive data
+----
+
+To combine `AND` and `OR` operation, make sure OR parameters are inside brackets and `AND` operation are not inside brackets (and without the AND between parameters).
+
+.Example
+[source,plaintext]
+----
+(type:manual OR is:applitools) user:"johndoe" # Find manual sessions or Applitools Eyes sessions that were created by user johndoe
+----
+
 == Save a query
 
 After a query is built, select *Add Saved Search*, then *Save*. Now you can run this query any time you xref:session-explorer:search-for-a-session.adoc#_using_a_saved_search[search for a session].
@@ -35,15 +51,18 @@ application:"wingman api" # Returns all sessions using the Wingman API app.
 application:guardian # Returns all sessions using the Gaurdian app.
 ----
 
-[#_isscriptless]
-=== `is:scriptless`
+[#_is]
+=== `is:`
 
-Returns all Scriptless sessions.For manual or automation sessions, see xref:_type[].
+Returns all sessions that belong to a special category. For manual or automation sessions, see xref:_type[].
 
 .Example
 [source,plaintext]
 ----
-is:scriptless # Returns all Scriptless sessions.
+is:scriptless # Scriptless sessions.
+is:applitools # Applitools eyes sessions.
+is:sensitive # Sessions with sensitive data.
+
 ----
 
 === `manufacturer:`
@@ -110,7 +129,7 @@ status:running # Returns all sessions currently running.
 [#_type]
 === `type:`
 
-Returns all sessions with this session type: `manual` or `automation`. For scriptless sessions, see xref:_isscriptless[].
+Returns all sessions with this session type: `manual` or `automation`. For scriptless sessions, see xref:_is[].
 
 .Example
 [source,plaintext]
