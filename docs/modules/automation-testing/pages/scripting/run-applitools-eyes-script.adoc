@@ -10,6 +10,25 @@ Learn how to run an Appium script with Applitools Eyes SDK on Kobiton devices.
 * Obtain your Kobiton username and xref:profile:manage-your-api-credentials.adoc#_get_an_api_key[API key].
 * Obtain a link:https://help.applitools.com/hc/en-us/articles/360006914732-The-runner-API-key[runner API key] from Applitools.
 
+== Add custom domain name for the Kobiton Portal
+
+[NOTE]
+This section is required for Standalone/On-prem customers only.
+
+Set up a custom domain for the Kobiton Portal (the Dell server) that ends with `kobiton.com` on the script runner machine. You can do this by either:
+
+* Adding an entry in the DNS server in your organization.
+
+* Create a new entry like the below in the local `/etc/hosts` (Linux, MacOS) or `c:\Windows\System32\Drivers\etc\hosts` (Windows) of the script runner machine.
+
++
+
+[source]
+<Dell server IP address> example.kobiton.com
+
+
+Example of qualified domain name: `example.kobiton.com`, `lab1.kobiton.com`.
+
 == Add server URL and capabilities to your script
 
 To run on Kobiton devices, add the server URL and capabilities to your Appium script. See xref:capabilities/auto-generate-capabilities.adoc[this guide] for more details.
@@ -40,10 +59,17 @@ DesiredCapabilities capabilities = new DesiredCapabilities();
 [source,javascript]
 ----
 // Open the app.
-WebDriver driver = new AndroidDriver(new URL("https://[username]:[api_key]@api.kobiton.com/wd/hub"), capabilities);
+WebDriver driver = new AndroidDriver(new URL("https://[username]:[api_key]@<portal_domain>/wd/hub"), capabilities);
 ----
-- Replace `[username]` and `[api_key]` with your Kobiton account details.
-- Replace `api.kobiton.com` with the custom domain of your organization (if applicable).
+** Replace `[portal_domain]` with either:
+
+*** `api.kobiton.com` for Cloud/Hybrid customers,
+
+*** or `[custom_domain]:3000` for Standalone/Hybrid customer, where `[custom_domain]` is the domain specified in xref:#_add_custom_domain_name_for_the_kobiton_portal[this section]. Example: `example.kobiton.com:3000`.
+
+** Replace `[username]` and `[api_key]` with your Kobiton account details.
+
+** Replace `api.kobiton.com` with the custom domain of your organization (if applicable).
 
 * Additionally, replace `YOUR_API_KEY` below with the runner API key from Applitools.
 +
