@@ -46,9 +46,26 @@ To download the last mile speed test logs, select *Last Mile Speed Result*.
 
 image:session-explorer:logs-last-mile-speed.png[width=500,alt="Last mile speed result section in Session Overview"]
 
-[#_create_a_jira_ticket]
 === Create a Jira ticket
 
-If your xref:integrations:jira/index.adoc[Jira integration is enabled], select xref:integrations:jira/create-a-jira-ticket.adoc[Jira ticket] to create a ticket that's linked to this session.
+If your xref:integrations:jira/index.adoc[Jira integration is enabled], select *Jira Ticket* to create a ticket that's linked to this session.
 
 image:integrations:jira-create-ticket-button.png[width:500,alt="The Jira ticket button in Session Overview"]
+
+=== Review Applitools Eyes status
+
+If xref:integrations:applitools-eyes/applitools-eyes-integration.adoc[Applitools Eyes integration] is enabled and xref:automation-testing:scripting/run-applitools-eyes-script.adoc[Applitools Eyes script] was executed successfully, you can review the Applitools Eyes status under the *Automation Info* section.
+
+image:session-explorer:applitools-automation-info.png[width:250,alt="The Applitools Eyes status in Session Overview"]
+
+Click the status to access the details on Applitools Eyes site. Refer to https://applitools.com/docs/topics/working-with-test-batches/test-batch-status-values.html[this article,window=read-later] to know more about Applitools Eyes status.
+
+[TIP]
+
+====
+
+The Applitools Eyes status is also displayed from the session list. You can enter *_is:applitools_* into the search bar to find only Applitools session.
+
+image:session-explorer:applitools-session-list.png[width:500,alt="The Applitools Eyes status in Session Overview"]
+
+====

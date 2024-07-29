@@ -1,0 +1,151 @@
+= Run Appium script with Applitools Eyes SDK
+:navtitle: Appium script with Applitools Eyes SDK
+
+Learn how to run an Appium script with Applitools Eyes SDK on Kobiton devices.
+
+== Before you start
+
+* Enable xref:integrations:applitools-eyes/applitools-eyes-integration.adoc[Applitools Eyes integration].
+* Prepare an Appium script that implements the link:https://applitools.com/tutorials/guides/getting-started/running-your-first-test#integrate-with-the-eyes-sdk[Applitools Eyes SDK].
+* Obtain your Kobiton username and xref:profile:manage-your-api-credentials.adoc#_get_an_api_key[API key].
+* Obtain a link:https://help.applitools.com/hc/en-us/articles/360006914732-The-runner-API-key[runner API key] from Applitools.
+
+== Add custom domain name for the Kobiton Portal
+
+[NOTE]
+This section is required for Standalone/On-prem customers only.
+
+Set up a custom domain for the Kobiton Portal (the Dell server) that ends with `kobiton.com` on the script runner machine. You can do this by either:
+
+* Adding an entry in the DNS server in your organization.
+
+* Create a new entry like the below in the local `/etc/hosts` (Linux, MacOS) or `c:\Windows\System32\Drivers\etc\hosts` (Windows) of the script runner machine.
+
++
+
+[source]
+<Dell server IP address> example.kobiton.com
+
+
+Example of qualified domain name: `example.kobiton.com`, `lab1.kobiton.com`.
+
+== Add server URL and capabilities to your script
+
+To run on Kobiton devices, add the server URL and capabilities to your Appium script. See xref:capabilities/auto-generate-capabilities.adoc[this guide] for more details.
+
+The following example is based on an Android test script written in Java from the link:https://applitools.com/tutorials/quickstart/native-mobile/appium/java[Applitools Eyes SDK tutorial page]. Alter the script from the tutorial in 3 places:
+
+*  Capabilities:
++
+[source,javascript]
+----
+// Set desired capabilities.
+DesiredCapabilities capabilities = new DesiredCapabilities();
+
+  capabilities.setCapability("platformName", "Android");
+  // Use either deviceName or udid to select the device
+  // capabilities.setCapability("deviceName", "Pixel 7");
+  capabilities.setCapability("udid", "f40d06b2-daa4-4b62-896e-c0e675135ecd ");
+  capabilities.setCapability("platformVersion", "*");
+  capabilities.setCapability("app", "https://applitoolsnmlresources.z19.web.core.windows.net/TestApps/app-debug.apk");
+  capabilities.setCapability("browserName", "");
+  capabilities.setCapability("automationName", "UiAutomator2");
+  // Use the kobiton:runtime capability below if you want to launch a Basic Appium 2 session
+  // capabilities.setCapability("kobiton:runtime", "appium");
+----
+
+* Kobiton server URL:
++
+[source,javascript]
+----
+// Open the app.
+WebDriver driver = new AndroidDriver(new URL("https://[username]:[api_key]@<portal_domain>/wd/hub"), capabilities);
+----
+** Replace `[portal_domain]` with either:
+
+*** `api.kobiton.com` for Cloud/Hybrid customers.
+
+*** `[custom_domain]:3000` for Standalone/Hybrid customer, where `[custom_domain]` is the domain specified in xref:#_add_custom_domain_name_for_the_kobiton_portal[this section]. __Example__: `example.kobiton.com:3000`.
+
+** Replace `[username]` and `[api_key]` with your Kobiton account details.
+
+* Additionally, replace `YOUR_API_KEY` below with the runner API key from Applitools.
++
+[source,javascript]
+----
+// Initialize the eyes SDK and set your private API key.
+Eyes eyes = new Eyes();
+eyes.setApiKey("YOUR_API_KEY");
+----
+
+The final test script would look like the below:
+[source,javascript]
+----
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.remote.DesiredCapabilities;
+import io.appium.java_client.android.AndroidDriver;
+import java.net.URL;
+import com.applitools.eyes.appium.Eyes;
+
+
+
+public class Appium_native_java {
+
+    public static void main(String[] args) throws Exception {
+
+        // Set desired capabilities.
+        DesiredCapabilities capabilities = new DesiredCapabilities();
+
+          capabilities.setCapability("platformName", "Android");
+          // Use either deviceName or udid to select the device
+          // capabilities.setCapability("deviceName", "Pixel 7");
+          capabilities.setCapability("udid", "f40d06b2-daa4-4b62-896e-c0e675135ecd ");
+          capabilities.setCapability("platformVersion", "*");
+          capabilities.setCapability("app", "https://applitoolsnmlresources.z19.web.core.windows.net/TestApps/app-debug.apk");
+          capabilities.setCapability("browserName", "");
+          capabilities.setCapability("automationName", "UiAutomator2");
+          // Use the kobiton:runtime capability below if you want to launch a Basic Appium 2 session
+          // capabilities.setCapability("kobiton:runtime", "appium");
+
+        // Open the app.
+        WebDriver driver = new AndroidDriver(new URL("https://johndoe:6aba1969-720f-5453-9234-a65435823638@api.kobiton.com/wd/hub"), capabilities);
+
+        // Initialize the eyes SDK and set your private API key.
+        Eyes eyes = new Eyes();
+        eyes.setApiKey("ak9FuNVsyEsDi62buhydjLi7HASD5435fgdgdorEHXY110");
+
+        eyes.setForceFullPageScreenshot(true);
+
+        try {
+
+            // Start the test.
+            eyes.open(driver, "Contacts!", "My first Appium native Java test!");
+
+            // Visual validation.
+            eyes.checkWindow("Contact list!");
+
+            // End the test.
+            eyes.close();
+
+        } finally {
+
+            // Close the app.
+            driver.quit();
+
+            // If the test was aborted before eyes.close was called, ends the test as aborted.
+            eyes.abortIfNotClosed();
+
+        }
+
+    }
+
+}
+----
+
+Execute the script.
+
+After the script finishes, visit the xref:session-explorer:manage-sessions.adoc[session overview] in the Kobiton Portal to check and review the Applitools Eyes status.
+
+== Limitations
+
+The Eyes status and link to Applitools in Session Explorer are not available for Selenium JavaScript. Visit link:https://eyes.applitools.com/[Applitools Eyes] directly to view the status of these sessions.
