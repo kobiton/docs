@@ -1,6 +1,8 @@
 = Kobiton 4.13.2S release notes
 :navtitle: Kobiton 4.13.2S release notes
 
+_June 20, 2024_
+
 == New OS support
 
 Kobiton 4.13.2S adds support for the following:
@@ -13,7 +15,6 @@ Kobiton 4.13.2S adds support for the following:
 ====
 * At this time, we recommend hosting iOS 17+ devices via Standard mode deployments for improved performance.
 * For Android 15 Beta 3, the cleanup policy cannot remove a signed-in account.
-* For iOS/iPadOS 18 Beta, network payload capture is not supported.
 ====
 
 == Combined HAR files for network payload data
@@ -31,13 +32,15 @@ NOTE: The HAR file is downloaded as a .zip file. For Windows users, the .zip fil
 
 A custom iOS camera framework to use image injection on Kobiton devices is now available.
 
-[NOTES]
-====
-* Image injection via app instrumentation is no longer available for iOS devices.
-* Android still supports both the app instrumentation method and image injection SDK for Android.
+[NOTE]
 ====
 
-Prerequisites/Limitations:
+* Image injection via app instrumentation is no longer available for iOS devices.
+* Android still supports both the app instrumentation method and image injection SDK for Android.
+
+====
+
+_Prerequisites/Limitations_:
 
 * iOS/iPadOS 14 or later, Xcode 14 or later.
 * Download the Kobiton custom camera framework.
@@ -57,7 +60,7 @@ This feature introduces a custom capability (for instrumented apps) and commands
 ** `kobiton:setImage` : start image injection
 ** `kobiton:clearImage` : stop image injection (clear the image)
 
-Prerequisites/Limitations:
+_Prerequisites/Limitations_:
 
 * Image injection requirements for iOS and Android apply.
 * Using the `'kobiton:instrumentenabled'` capability to instrument the app for camera injection does not work if in the `dc.ini` file of the Mac mini host, the value of `'Kobiton.UseInternalLegacyAppResigning'` is `false`. Change this value to `true` to fix the issue.

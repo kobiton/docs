@@ -1,0 +1,107 @@
+= Kobiton 4.13.3S release notes
+:navtitle: Kobiton 4.13.3S release notes
+
+_July 19, 2024_
+
+== New OS support
+
+kobiton 4.13.3S add support for the following:
+
+* iOS/iPadOS 18 Beta
+* Xcode 16 Beta
+
+== CoreDevice: Lightning mode support for iOS 17.4 devices and later without networking changes
+
+When Apple introduced some major changes with the rollout of iOS 17, it requires significant network configuration to support Lightning mode with Kobiton. The additional network requirements are hard to implement and sometimes pose a security risks for some organizations.
+
+With this release, we are happy to introduce CoreDevice, which is a solution to the above problem. With CoreDevice, iOS 17.4 and later devices can have Lightning mode without the additional network requirements.
+
+With iOS 17.0 to 17.3 devices, the necessary components to support CoreDevice is not available. We recommend hosting these devices in Standard mode with the additional Mac mini instead.
+
+[NOTE]
+====
+
+* iOS 17.4 and later devices still need to be plugged into the Mac  mini to establish trust before connecting to the GEM.
+* Metrics is not available for iOS 17.0 to 17.3 devices.
+* virtualUSB is not available for iOS 17 and later.
+
+====
+
+== Mobile Test Management (Beta)
+We are excited to announce a significant expansion to our Test Case Management feature. With the introduction of Mobile Test Management, we now offer a comprehensive trio of features: Test Suites, Test Cases, and Test Runs. This enhancement allows for a more integrated and efficient workflow for managing your mobile testing.
+
+=== Key features
+* Test Suites: Previously, test cases had to be run one by one. Now, you can organize your test cases into suites and initiate a test run to test a set of test cases across multiple devices.
+* Test Cases: Creating a test case is now more intuitive. Use the Convert to Test Case option instead of Automated Test Case option in Session Explorer, or create a new test case directly from the Test Case List by searching for a session. We’ve also introduced a new Test Case Details screen, enhancing your control over test cases. Here, you can delete or remediate test steps, create different versions of a test case, or clone an existing test case.
+* Test Runs: Gain complete oversight of your testing efforts with our new test runs interface. View a comprehensive list of all your test runs, initiate new Test Runs, and access detailed, actionable insights from your Test Run results - all designed to streamline your testing process.
+
+=== Access to features
+* All users can create, view, and manage test cases and test suites.
+* Only users with Scriptless in their subscription can initiate test runs.
+* Only users with Appium Script Generation in their subscription can generate Appium Scripts.
+
+=== Support for Team assignments
+This feature allows organizations to control access to test cases, test suites, and test runs based on a user’s team, ensuring better security and collaboration. Details include:
+
+* The team assignment of test cases, test suites, and test runs is inherited from the baseline session from which they are created.
+* If the baseline session is created at the organization level, then test cases, test suites, and test runs created from it can only be accessed by users with the ADMIN predefined role who have selected the organization level from the team menu.
+* If the baseline session is created at the team level, then test cases, test suites, and test runs created from it can only be accessed by users assigned to that team who have selected that team from the team menu.
+
+[NOTE]
+====
+* Users with the ADMIN predefined role have access to all teams plus the organization level. To view test cases, test suites, and test runs of a specific team, select that team in the team menu.
+* Team assignment of test cases, test suites, and test cases cannot be changed.
+* Device bundles do not currently follow team assignments and can be accessed by all users.
+====
+
+=== Handling unsupported actions
+When there are actions that are unsupported by Scriptless in a test case:
+
+* Clear indications of the unsupported actions are displayed in test steps.
+* All steps containing unsupported actions must be removed from a test case before test runs can be triggered.
+
+=== Things to note:
+As this feature is in Beta, we welcome your feedback. Stay tuned for additional UI improvements and extended functionality in the coming months. We will publish a comprehensive User Guide on our documentation site soon. In the meantime, please note the following:
+
+* Launching Test Runs: test runs can be launched via:
+** The New Test Run button in the test run list.
+** The Run button in test case and test suite pages to make it easier to initiate a test run.
+** The Rerun button to the test run page. When selected, the configuration of the new test run will be pre-filled, including the specific device/device bundle previously used.
+
+* Testing Capabilities: With the Beta release, only crash and accessibility validations are available. We are actively developing performance, text/color, and visual validations. Data-driven testing is not supported in the Beta, but will be added in a future release.
+
+* Test Run Statuses:
+** Running: The test run session is either pending execution or in progress.
+** Needs Action: A blocker has been encountered, and remediation is required.
+** Error: A system error has been encountered.
+** Success: The test run completed.
+** Failed: The application crashed during the test run.
+
+* Search and filters:
+** Filter test runs, test suites, and test cases by name or app bundle name. Note: Hit Enter after inputting the search query to start filtering.
+** Filter test suites and test runs by a single test case by selecting the number of test runs/test suites in the test case list
+
+* Blocker Remediations: When a Blocker is encountered for a Touch action during a test run, you can now remediate the step where the Blocker happened or review and remediate in a previous step. The submitted remediation will apply to subsequent reruns from the same test case and on the same device model.
+
+* Create Test Case from Appium script: We do not currently support creating a Test Case from an Appium script using `scriptless:enable`  with this Beta version. We will reintroduce that feature in an upcoming release.
+
+Experience the next level of testing efficiency with Mobile Test Management!
+
+image:experience-the-next-level-of-testing-efficiency-with-mobile-test-management.PNG[width="800", alt="Experience the next level of testing efficiency with Mobile Test Management!"]
+
+== Minor improvements and bug fixes
+This release includes several enhancements and bug fixes to improve your day-to-day testing.
+
+* Addressed the following Script-based test automation and Device Inspector items:
+** Fixed a bug that prevents image injection via app instrumentation in Appium.
+** Implemented method `appium:optionalIntentArguments` .
+** The `sendKeys` action now works in generated C# Appium script.
+* Other items addressed:
+** Image injection via app instrumentation is now working with iOS devices.
+** Uploading app for installation in a manual session now works for Standalone Portal with SSL enabled.
+
+== Standalone limitation:
+* Mock location: setting coordinates with decimals (default option) does not work for iOS 16 and below. Change the coordinates to integer as a workaround.
+** Example of coordinates with decimals: `33.80309135289605` , `-84.39411527251653`
+** Example of coordinates with integer: `33` , `-84`
+
