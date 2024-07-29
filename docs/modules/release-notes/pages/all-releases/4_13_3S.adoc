@@ -20,45 +20,47 @@ With iOS 17.0 to 17.3 devices, the necessary components to support CoreDevice is
 
 [NOTE]
 ====
+
 * iOS 17.4 and later devices still need to be plugged into the Mac  mini to establish trust before connecting to the GEM.
 * Metrics is not available for iOS 17.0 to 17.3 devices.
 * virtualUSB is not available for iOS 17 and later.
+
 ====
 
 == Mobile Test Management (Beta)
 We are excited to announce a significant expansion to our Test Case Management feature. With the introduction of Mobile Test Management, we now offer a comprehensive trio of features: Test Suites, Test Cases, and Test Runs. This enhancement allows for a more integrated and efficient workflow for managing your mobile testing.
 
-== Key features
+=== Key features
 * Test Suites: Previously, test cases had to be run one by one. Now, you can organize your test cases into suites and initiate a test run to test a set of test cases across multiple devices.
 * Test Cases: Creating a test case is now more intuitive. Use the Convert to Test Case option instead of Automated Test Case option in Session Explorer, or create a new test case directly from the Test Case List by searching for a session. We’ve also introduced a new Test Case Details screen, enhancing your control over test cases. Here, you can delete or remediate test steps, create different versions of a test case, or clone an existing test case.
 * Test Runs: Gain complete oversight of your testing efforts with our new test runs interface. View a comprehensive list of all your test runs, initiate new Test Runs, and access detailed, actionable insights from your Test Run results - all designed to streamline your testing process.
 
-== Access to features
+=== Access to features
 * All users can create, view, and manage test cases and test suites.
 * Only users with Scriptless in their subscription can initiate test runs.
 * Only users with Appium Script Generation in their subscription can generate Appium Scripts.
 
-== Support for Team assignments
+=== Support for Team assignments
 This feature allows organizations to control access to test cases, test suites, and test runs based on a user’s team, ensuring better security and collaboration. Details include:
 
 * The team assignment of test cases, test suites, and test runs is inherited from the baseline session from which they are created.
 * If the baseline session is created at the organization level, then test cases, test suites, and test runs created from it can only be accessed by users with the ADMIN predefined role who have selected the organization level from the team menu.
 * If the baseline session is created at the team level, then test cases, test suites, and test runs created from it can only be accessed by users assigned to that team who have selected that team from the team menu.
 
-[TIP]
+[NOTE]
 ====
 * Users with the ADMIN predefined role have access to all teams plus the organization level. To view test cases, test suites, and test runs of a specific team, select that team in the team menu.
 * Team assignment of test cases, test suites, and test cases cannot be changed.
 * Device bundles do not currently follow team assignments and can be accessed by all users.
 ====
 
-== Handling unsupported actions
+=== Handling unsupported actions
 When there are actions that are unsupported by Scriptless in a test case:
 
 * Clear indications of the unsupported actions are displayed in test steps.
 * All steps containing unsupported actions must be removed from a test case before test runs can be triggered.
 
-== Things to note:
+=== Things to note:
 As this feature is in Beta, we welcome your feedback. Stay tuned for additional UI improvements and extended functionality in the coming months. We will publish a comprehensive User Guide on our documentation site soon. In the meantime, please note the following:
 
 * Launching Test Runs: test runs can be launched via:
@@ -85,7 +87,7 @@ As this feature is in Beta, we welcome your feedback. Stay tuned for additional 
 
 Experience the next level of testing efficiency with Mobile Test Management!
 
-image::experience-the-next-level-of-testing-efficiency-with-mobile-test-management.PNG[width="800", alt="Experience the next level of testing efficiency with Mobile Test Management!",float="right",align="center"]
+image:experience-the-next-level-of-testing-efficiency-with-mobile-test-management.PNG[width="800", alt="Experience the next level of testing efficiency with Mobile Test Management!"]
 
 == Minor improvements and bug fixes
 This release includes several enhancements and bug fixes to improve your day-to-day testing.

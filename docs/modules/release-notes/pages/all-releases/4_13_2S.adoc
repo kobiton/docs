@@ -32,13 +32,15 @@ NOTE: The HAR file is downloaded as a .zip file. For Windows users, the .zip fil
 
 A custom iOS camera framework to use image injection on Kobiton devices is now available.
 
-[NOTES]
-====
-* Image injection via app instrumentation is no longer available for iOS devices.
-* Android still supports both the app instrumentation method and image injection SDK for Android.
+[NOTE]
 ====
 
-Prerequisites/Limitations:
+* Image injection via app instrumentation is no longer available for iOS devices.
+* Android still supports both the app instrumentation method and image injection SDK for Android.
+
+====
+
+_Prerequisites/Limitations_:
 
 * iOS/iPadOS 14 or later, Xcode 14 or later.
 * Download the Kobiton custom camera framework.
@@ -58,7 +60,7 @@ This feature introduces a custom capability (for instrumented apps) and commands
 ** `kobiton:setImage` : start image injection
 ** `kobiton:clearImage` : stop image injection (clear the image)
 
-Prerequisites/Limitations:
+_Prerequisites/Limitations_:
 
 * Image injection requirements for iOS and Android apply.
 * Using the `'kobiton:instrumentenabled'` capability to instrument the app for camera injection does not work if in the `dc.ini` file of the Mac mini host, the value of `'Kobiton.UseInternalLegacyAppResigning'` is `false`. Change this value to `true` to fix the issue.
