@@ -5,23 +5,23 @@ _July 19, 2024_
 
 == New OS support
 
-kobiton 4.13.3S add support for the following:
+Kobiton 4.13.3S add support for the following:
 
 * iOS/iPadOS 18 Beta
 * Xcode 16 Beta
 
-== CoreDevice: Lightning mode support for iOS 17.4 devices and later without networking changes
+== Lightning mode.... support for iOS 17.4 devices and later without networking changes
 
-When Apple introduced some major changes with the rollout of iOS 17, it requires significant network configuration to support Lightning mode with Kobiton. The additional network requirements are hard to implement and sometimes pose a security risks for some organizations.
+When Apple introduced iOS 17, they rolled out new connectivity protocols that impacted how iOS 17 devices communicated with solutions like Kobiton. These protocols required special network configurations for Kobiton Lightning Mode deployments that were not always possible for customers to implement.
 
-With this release, we are happy to introduce CoreDevice, which is a solution to the above problem. With CoreDevice, iOS 17.4 and later devices can have Lightning mode without the additional network requirements.
+With iOS 17.4, Apple introduced the CoreDevice communication protocol that significantly enhances connections between iOS devices and the Kobiton platform.We implemented this innovative protocol with this release. CoreDevice eliminates the need for the special Lightning Mode networking changes introducedwith iOS 17 for iOS 17.4+ devices, simplifying your networking.
 
-With iOS 17.0 to 17.3 devices, the necessary components to support CoreDevice is not available. We recommend hosting these devices in Standard mode with the additional Mac mini instead.
+Apple's CoreDevice cannot be used with iOS 17.0-17.3 devices. These devices must be hosted on a separate Mac mini in Standard mode.
 
 [NOTE]
 ====
 
-* iOS 17.4 and later devices still need to be plugged into the Mac  mini to establish trust before connecting to the GEM.
+* iOS 17.4 and later devices still need to be plugged into the Mac mini to establish trust before connecting to the GEM.
 * Metrics is not available for iOS 17.0 to 17.3 devices.
 * virtualUSB is not available for iOS 17 and later.
 
@@ -64,7 +64,7 @@ When there are actions that are unsupported by Scriptless in a test case:
 As this feature is in Beta, we welcome your feedback. Stay tuned for additional UI improvements and extended functionality in the coming months. We will publish a comprehensive User Guide on our documentation site soon. In the meantime, please note the following:
 
 * Launching Test Runs: test runs can be launched via:
-** The New Test Run button in the test run list.
+** The Rerun button on the test run results page.
 ** The Run button in test case and test suite pages to make it easier to initiate a test run.
 ** The Rerun button to the test run page. When selected, the configuration of the new test run will be pre-filled, including the specific device/device bundle previously used.
 
@@ -72,7 +72,7 @@ As this feature is in Beta, we welcome your feedback. Stay tuned for additional 
 
 * Test Run Statuses:
 ** Running: The test run session is either pending execution or in progress.
-** Needs Action: A blocker has been encountered, and remediation is required.
+** Needs Action: A blocker has been encountered and remediation is required.
 ** Error: A system error has been encountered.
 ** Success: The test run completed.
 ** Failed: The application crashed during the test run.
