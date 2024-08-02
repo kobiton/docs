@@ -14,9 +14,14 @@ Kobiton 4.13.3S add support for the following:
 
 When Apple introduced iOS 17, they rolled out new connectivity protocols that impacted how iOS 17 devices communicated with solutions like Kobiton. These protocols required special network configurations for Kobiton Lightning Mode deployments that were not always possible for customers to implement.
 
-With iOS 17.4, Apple introduced the CoreDevice communication protocol that significantly enhances connections between iOS devices and the Kobiton platform.We implemented this innovative protocol with this release. CoreDevice eliminates the need for the special Lightning Mode networking changes introducedwith iOS 17 for iOS 17.4+ devices, simplifying your networking.
+With iOS 17.4, Apple introduced a new communication protocol that significantly enhances connections between iOS devices and the Kobiton platform. We implemented this innovative protocol with this release. This protocol eliminates the need for the special Lightning Mode networking changes introduced with iOS 17 for iOS 17.4+ devices, simplifying your networking.
 
-Apple's CoreDevice cannot be used with iOS 17.0-17.3 devices. These devices must be hosted on a separate Mac mini in Standard mode.
+[IMPORTANT]
+====
+
+* iOS 17.0-17.3 devices continue to require special networking to support Lightning mode, so we recommend those devices are hosted on a separate Mac mini in Standard mode.
+
+====
 
 [NOTE]
 ====
