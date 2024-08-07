@@ -32,8 +32,37 @@ With iOS 17.4, Apple introduced a new communication protocol that significantly 
 
 ====
 
-== SSO: allow non-SSO login for specific users in SSO-only organizations
+== SSO: allow non-SSO login for specific users in SSO only organizations
 
+With this release, it is now possible to specify some users in SSO only organizations to use the Kobiton username and password to log in.
+
+In SSO settings, when the option _Enforce users to login to Kobiton only through SSO_ is turned on, there is now a new field *_Choose users who are allowed to login without SSO_*. Search for and add existing Kobiton users to this field to allow them to log in using Kobiton username and password.
+
+When _Enforce users to login to Kobiton only through SSO_ is turned on, the password of all existing users are cleared from database. Therefore, the users that are allowed to log in using Kobiton username and password must use *Forgot password* to create a new password.
+
+
+== Indicator for Lightning mode devices in device lists
+
+Users can easily find devices that support Lightning mode in the device list by either:
+
+* Selecting *Lightning mode* in the device search bar and choose *Supported*...
+
+* Or choose *List View*, then *Edit Column*, and check *Lightning mode* to see devices with the Lightning icon.
+
+
+== Script-based automation: obfuscate sensitive data in HTTP headers and Inspector of Session Explorer
+
+Testers who input sensitive data for automated test cases can now use the new custom Appium setting `'kobiton:privateMode'` to hide the data in Session Explorer.
+
+If a test step or action happens while the value of `'kobiton:privateMode'` is `true`, the details of it will be hidden in the View HTTP Headers and Inspector sections of Session Explorer.
+
+== Auto-upgrade deviceConnect: force offline devices if deviceConnect is 2 major versions behind latest
+
+To ensure Cloud and Hybrid customers can always enjoy the latest features, we added a new policy to force devices offline on the Kobiton portal if deviceConnect on the host machine is 2 major versions behind the latest.
+
+When devices are offline due to deviceConnect version being too old, you will see the below message under Settings -> Device Management:
+
+When this happens, if automatic upgrade is enabled in your organization, deviceConnect will download the latest version and update automatically. If this is turned off, you can manually upgrade deviceConnect on the host machine by choosing Upgrade in Device Management:
 
 
 == Minor improvements and bug fixes
