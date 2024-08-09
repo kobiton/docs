@@ -75,7 +75,7 @@ image:session-explorer-obfuscate-private-data-inspector.png[width=500,alt="The o
 
 == Auto-upgrade deviceConnect: force offline devices if deviceConnect is 2 major versions behind latest
 
-To ensure Cloud and Hybrid customers can always enjoy the latest features, we added a new policy to force devices offline on the Kobiton portal if deviceConnect on the host machine is 2 major versions behind the latest.
+To ensure Cloud and Hybrid customers can always enjoy the latest features, we added a new policy to force devices offline on the Kobiton portal if deviceConnect on the host machine is 2 major versions behind the latest. This means for the 4.14 release, all devices hosted by deviceConnect 4.12 or below will become offline. Devices hosted by deviceConnect 4.13 are still online until 4.15 is released (if not updated).
 
 When devices are offline due to deviceConnect version being too old, you will see  `Kobiton upgrade required` under the device message in *Settings* -> *Device Management*:
 
@@ -86,6 +86,7 @@ When this happens, if automatic upgrade is enabled in your organization, the sys
 image:upgrade-host-machine-device-management.png[width=1000,alt="The Upgrade button next to the hosting machine name in Device Management"]
 
 == Minor improvements and bug fixes
+
 This release includes several enhancements and bug fixes to improve your day-to-day testing.
 
 * Addressed the following Script-based test automation and Device Inspector items:
