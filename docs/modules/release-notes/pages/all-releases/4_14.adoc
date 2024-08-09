@@ -1,0 +1,99 @@
+= Kobiton 4.14 release notes
+:navtitle: Kobiton 4.14 release notes
+
+_August 2, 2024_
+
+== New OS support
+
+Kobiton 4.14 adds support for the following:
+
+* iOS/iPadOS 18 Beta 3
+* Xcode 16 Beta
+
+== Lightning mode support for iOS 17.4 devices and later without networking changes
+
+When Apple introduced iOS 17, they rolled out new connectivity protocols that impacted how iOS 17 devices communicated with solutions like Kobiton. These protocols required special network configurations for Kobiton Lightning Mode deployments that were not always possible for customers to implement.
+
+With iOS 17.4, Apple introduced a new communication protocol that significantly enhances connections between iOS devices and the Kobiton platform. We implemented this innovative protocol with this release. This protocol eliminates the need for the special Lightning Mode networking changes introduced with iOS 17 for iOS 17.4+ devices, simplifying your networking.
+
+[IMPORTANT]
+====
+
+* iOS 17.0-17.3 devices continue to require special networking to support Lightning mode, so we recommend those devices are hosted on a separate Mac mini in Standard mode.
+
+====
+
+[NOTE]
+====
+
+* iOS 17.4 and later devices still need to be plugged into the Mac mini to establish trust before connecting to the GEM.
+* Metrics is not available for iOS 17.0 to 17.3 devices.
+* virtualUSB is not available for iOS devices.
+* Android 7 to 15, iOS 14 to 16 are still supported by both Standard and Lightning mode.
+
+====
+
+== SSO: allow non-SSO login for specific users in SSO only organizations
+
+It is now possible to specify some users in SSO only organizations to use the Kobiton username and password to log in.
+
+In SSO settings, when the option _Enforce users to login to Kobiton only through SSO_ is turned on, there is now a new field *_Choose users who are allowed to login without SSO_*. Search for and add existing Kobiton users to this field to allow them to log in using Kobiton username and password.
+
+When _Enforce users to login to Kobiton only through SSO_ is turned on, the password of all existing users are cleared from database. Therefore, the users that are allowed to log in using Kobiton username and password must use *Forgot password* to create a new password.
+
+
+== Indicator for Lightning mode devices in device lists
+
+Users can easily find devices that support Lightning mode in the device list by:
+
+* Selecting *Lightning mode* in the device search bar and choose *Supported*:
+
+image:lightning-mode-filter-device-list.png[width=400,alt="The Lightning mode filter options in Device List"]
+
+* Choosing *List View*, then *Edit Column*, and check *Lightning mode* to see devices with the Lightning icon:
+
+image:lightning-mode-list-view-column.png[width=250,alt="Show the Lightning mode column in the List View of Device List"]
+
+image:lightning-mode-indicator-device-list.png[width=1000,alt="The lightning indicator on the device under the list view"]
+
+== Script-based automation: obfuscate sensitive data in HTTP headers and Inspector of Session Explorer
+
+Testers who input sensitive data for automated test cases can now use the new custom Appium setting `'kobiton:privateMode'` to hide the data in *Session Explorer*.
+
+If a test step or action happens while the value of `'kobiton:privateMode'` is `true`, the details of it will be hidden in the *View HTTP Headers* and *Appium Inspector* menu of *Session Explorer*.
+
+Below are sample screens with obfuscated data for:
+
+* View HTTP Headers
+
+image:session-explorer-obfuscate-private-data-http-headers.png[width=500,alt="The obfuscated data in the View HTTP Headers section"]
+
+* Appium Inspector
+
+image:session-explorer-obfuscate-private-data-inspector.png[width=500,alt="The obfuscated data in the Appium Inspector section"]
+
+
+== Auto-upgrade deviceConnect: force offline devices if deviceConnect is 2 major versions behind latest
+
+To ensure Cloud and Hybrid customers can always enjoy the latest features, we added a new policy to force devices offline on the Kobiton portal if deviceConnect on the host machine is 2 major versions behind the latest.
+
+When devices are offline due to deviceConnect version being too old, you will see  `Kobiton upgrade required` under the device message in *Settings* -> *Device Management*:
+
+image:force-offline-devices-old-deviceconnect.png[width=1000,alt="The Kobiton upgrade required message under Device Management"]
+
+When this happens, if automatic upgrade is enabled in your organization, the system will download the latest version and update automatically. If this is turned off, you can manually upgrade deviceConnect on the host machine by choosing *Upgrade*.
+
+image:upgrade-host-machine-device-management.png[width=1000,alt="The Upgrade button next to the hosting machine name in Device Management"]
+
+== Minor improvements and bug fixes
+This release includes several enhancements and bug fixes to improve your day-to-day testing.
+
+* Addressed the following Script-based test automation and Device Inspector items:
+** Fixed a bug that prevents image injection via app instrumentation in Appium.
+** Implemented method `appium:optionalIntentArguments` .
+** The `sendKeys` action now works in generated C# Appium script.
+* Other items addressed:
+** Improve FPS (frames per second) in Manual sessions with Standard mode (up to 10 FPS).
+** Image injection via app instrumentation is now working with iOS devices.
+** Uploading app for installation in a manual session now works for Standalone Portal with SSL enabled.
+** Display the portal version in the help widget for both Standalone/On-prem and Cloud Portal.
