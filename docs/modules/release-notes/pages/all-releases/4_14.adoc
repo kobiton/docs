@@ -29,12 +29,13 @@ With iOS 17.4, Apple introduced a new communication protocol that significantly 
 * iOS 17.4 and later devices still need to be plugged into the Mac mini to establish trust before connecting to the GEM.
 * Metrics is not available for iOS 17.0 to 17.3 devices.
 * virtualUSB is not available for iOS 17 and later.
+* Android 7 to 15, iOS 14 to 16 are still supported by both Standard and Lightning mode.
 
 ====
 
 == SSO: allow non-SSO login for specific users in SSO only organizations
 
-With this release, it is now possible to specify some users in SSO only organizations to use the Kobiton username and password to log in.
+It is now possible to specify some users in SSO only organizations to use the Kobiton username and password to log in.
 
 In SSO settings, when the option _Enforce users to login to Kobiton only through SSO_ is turned on, there is now a new field *_Choose users who are allowed to login without SSO_*. Search for and add existing Kobiton users to this field to allow them to log in using Kobiton username and password.
 
@@ -43,18 +44,25 @@ When _Enforce users to login to Kobiton only through SSO_ is turned on, the pass
 
 == Indicator for Lightning mode devices in device lists
 
-Users can easily find devices that support Lightning mode in the device list by either:
+Users can easily find devices that support Lightning mode in the device list by:
 
-* Selecting *Lightning mode* in the device search bar and choose *Supported*...
+* Selecting *Lightning mode* in the device search bar and choose *Supported*:
 
-* Or choose *List View*, then *Edit Column*, and check *Lightning mode* to see devices with the Lightning icon.
+image:lightning-mode-filter-device-list.png[width=400,alt="The Lightning mode filter options in Device List"]
 
+* Choosing *List View*, then *Edit Column*, and check *Lightning mode* to see devices with the Lightning icon:
+
+image:lightning-mode-list-view-column.png[width=250,alt="Show the Lightning mode column in the List View of Device List"]
+
+image:lightning-mode-indicator-device-list.png[width=1000,alt="The lightning indicator on the device under the list view"]
 
 == Script-based automation: obfuscate sensitive data in HTTP headers and Inspector of Session Explorer
 
-Testers who input sensitive data for automated test cases can now use the new custom Appium setting `'kobiton:privateMode'` to hide the data in Session Explorer.
+Testers who input sensitive data for automated test cases can now use the new custom Appium setting `'kobiton:privateMode'` to hide the data in *Session Explorer*.
 
-If a test step or action happens while the value of `'kobiton:privateMode'` is `true`, the details of it will be hidden in the View HTTP Headers and Inspector sections of Session Explorer.
+If a test step or action happens while the value of `'kobiton:privateMode'` is `true`, the details of it will be hidden in the *View HTTP Headers* and *Inspector* sections of *Session Explorer*.
+
+
 
 == Auto-upgrade deviceConnect: force offline devices if deviceConnect is 2 major versions behind latest
 
@@ -63,6 +71,7 @@ To ensure Cloud and Hybrid customers can always enjoy the latest features, we ad
 When devices are offline due to deviceConnect version being too old, you will see the below message under Settings -> Device Management:
 
 When this happens, if automatic upgrade is enabled in your organization, deviceConnect will download the latest version and update automatically. If this is turned off, you can manually upgrade deviceConnect on the host machine by choosing Upgrade in Device Management:
+
 
 
 == Minor improvements and bug fixes
