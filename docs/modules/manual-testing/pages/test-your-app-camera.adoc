@@ -5,10 +5,12 @@ Learn how to test your app camera using image injection, so you can ensure end-u
 
 == Before you start
 
-There are 2 ways to enable image injection for your app:
 
-* Either enable *Instrument application for camera injection* when xref:manual-testing:install-an-app.adoc[installing your app] before you test your in-app camera.
-* Or follow xref:apps:image-injection-sdk/add-the-sdk-to-your-android-app.adoc[this guide] to add Kobiton image injection SDK into your Android apps.
+Enable image injection for your app with one of these options:
+
+* Enable *Instrument application for camera injection* when xref:manual-testing:install-an-app.adoc[installing your app] before you test your in-app camera (Android only).
+* Add Kobiton image injection SDK into your Android or iOS apps. Follow xref:apps:image-injection-sdk/add-the-sdk-to-your-android-app.adoc[this guide] for android, and xref:apps:image-injection-sdk/add-the-sdk-to-your-ios-app.adoc[this guide] for iOS.
+
 +
 [IMPORTANT]
 ====
@@ -29,6 +31,14 @@ image:manual-testing:image-injection-context.png[width=1000, alt="A manual sessi
 
 == Inject an image
 
+During a manual testing session, you can use the Kobiton portal to inject images into the camera view of your application. The portal provides the following buttons:
+
+* **Set Simulated Image**: Click the Set Simulated Image button to choose an image file from your computer.
+* **Inject Image**: Click the Inject button to inject the selected image into the camera view.
+* **Clear Image**: Click the Clear Image button to remove the uploaded images from the portal.
+* **Reset Camera**: Click the Reset Camera button to reset the camera view.
+
+
 To inject an image into your app, launch the app and open the in-app camera. Choose an image from the library, then select *Inject*.
 
 image:manual-testing:image-injection-closeup.png[width=500, alt="A close-up of the image injection library containing one image."]
@@ -37,25 +47,13 @@ When you're finished, select *Reset Camera* to stop image injection.
 
 == Limitations
 
-* Image Injection is available in a manual session only.
-
-* The Reset Camera button on the Image Injection dialog is always available even when no image is injected.
-
-* When injecting an image into an app that has not implemented the custom SDK or has not enabled image injection via instrumentation when installing, the system still sends an inject successfully message.
-
-* Images cannot be injected into some Android applications due to the immense number of required libraries, we currently support the most common libraries. If you encounter issues, please contact our Support team through support@kobiton.com.
-
-* App instrumentation is not working on a few Android applications, especially those applications that are obfuscated with DexGuard. For these apps, xref:apps:image-injection-sdk/add-the-sdk-to-your-android-app.adoc[add the image injection SDK] instead.
-
-* When using image injection, the injected image is rotated.
-
-* The injected image is zoomed a little when in use, compared to the actual size.
-
 * No image size in the image injection control's UI.
+
+include::apps:partials/image-injection-limitations.adoc[]
 
 == Known issues
 
-The application with custom SDK crashes when attempting to start the camera services.
+The Android application with custom SDK crashes when attempting to start the camera services.
 
 *Cause*: The custom SDK utilizes hidden APIs from Android, which may not be turned on and cause the app to crash.
 

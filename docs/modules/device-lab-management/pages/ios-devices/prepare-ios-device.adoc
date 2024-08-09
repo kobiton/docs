@@ -1,0 +1,164 @@
+= Prepare iOS device for hosting
+:navtitle: Prepare iOS device
+
+Learn how to prepare iOS/iPadOS devices to be utilized with Kobiton.
+
+Different models of devices and versions of iOS/iPadOS may have different layouts for settings and options. Refer to Apple's official manual if you cannot find the options mentioned in this document.
+
+== Before you start
+
+You'll need the following:
+
+* A supported xref:supported-platforms:mobile-operating-systems-and-devices.adoc[iOS/iPadOS device].
+* Any Mac machine with Xcode installed. You can also use the Mac mini host where deviceConnect is installed.
+
+== Factory reset the device (optional)
+
+[NOTE]
+This step is highly recommended for devices that were hosted by Legacy Kobiton or Legacy Gigafox.
+
+[IMPORTANT]
+This action will remove all data on the device. Back up the device before proceeding.
+
+Follow Apple's official guide to link:https://support.apple.com/guide/personal-safety/how-to-erase-all-content-and-settings-ips4603248a8/web[erase all contents and settings,window=_blank] for your device model.
+
+== Turn on developer mode and UI automation (required)
+
+[IMPORTANT]
+====
+
+This step is required for Kobiton software to control the device.
+
+====
+
+Plug the device into the Mac machine with Xcode installed. Open Xcode on the Mac machine.
+
+Tap *Trust* in Finder of the machine and on the *Trust this computer* alert on the iOS/iPadOS device.
+
+Follow the specific steps for your device's OS version.
+
+[tabs]
+====
+
+iOS 16 and later::
++
+--
+
+On the iOS/iPadOS device, under *Settings*, tap *Privacy & Security*.
+
+
+Scroll down to the *Security* section, tap *Developer Mode*.
+
+Turn on *Developer Mode*.
+
+image:ios-settings-context-privacy-security.png[width=240,alt="The Privacy and Security option under Settings"] -> image:ios-privacy-security-context-developer-mode.png[width=240,alt="The Developer Mode option under Security and Privacy"] -> image:ios-developer-mode-context.png[width=240,alt="The Developer Mode option switched on under the Developer Mode screen"]
+
+A restart is required. After the device restarts, confirm again on the popup to turn on Developer Mode.
+
+Open the *Settings* app, scroll down to the *Developer* option and tap it.
+
+Turn on *Enable UI Automation*.
+
+image:ios-settings-context-developer.png[width=240,alt="The Developer option under Settings"] -> image:ios-deverloper-context-enable-ui-automation.png[width=240,alt="The Enable UI Automation switched on under Developer"]
+
+--
+
+iOS 13 to 15::
++
+
+--
+
+On the iOS/iPadOS device, under *Settings*, scroll down to the *Developer* option and tap it.
+
+
+Turn on *Enable UI Automation*.
+
+image:ios-settings-context-developer-iphone-below-16.png[width=240,alt="The Developer option under Settings in iOS below 16 device"] -> image:ios-developer-context-enable-ui-automation-iphone-below-16.png[width=240,alt="The Enable UI Automation option swiched on under Developer settings for iOS below 16 device"]
+
+--
+
+====
+
+== Turn off auto update (optional)
+
+[NOTE]
+====
+
+A software update makes the device unavailable for use until the update is complete. Turning auto update off is recommended.
+
+====
+
+Open the Settings app. Tap *General* -> *Software Update* -> *Automatic Updates*.
+
+Turn off *Install iOS Updates*.
+
+image:ios-software-update-context.png[width=240,alt="The Software Update screen with the Automatic Updates option"] -> image:ios-automatic-update-context.png[width=240,alt="The Install iOS updates  switched off in the Automatic Updates screen"]
+
+Go back to the Settings screen and tap *App Store*.
+
+Under *Automatic Downloads*, turn off *App Updates*.
+
+image:ios-settings-context-app-store.png[width=240,alt="The App Store option in Settings"] -> image:ios-app-store-context-app-updates.png[width=240,alt="The App Updates switched off in the App Store settings"]
+
+== Turn off passcode, if one is set (required)
+
+[IMPORTANT]
+====
+
+Setting a passcode on a device prevents Kobiton software from controlling it.
+
+To use passcode on the device, contact Kobiton support to enable passcode mode for your organization.
+
+====
+
+In the *Settings* app, select *Face ID & Passcode* or *Touch ID & Passcode*.
+
+Enter the current passcode.
+
+Tap *Turn Passcode Off*.
+
+image:ios-settings-context-face-id-passcode.png[width=240,alt="The Face ID and Passcode option under Settings"] -> image:ios-enter-passcode-context.png[width=240,alt="The passcode input screen"] -> image:ios-face-id-passcode-turn-passcode-off.png[width=240,alt="The Face ID and passcode screen with the option Turn Passcode Off"]
+
+Enter the current passcode again to turn off passcode.
+
+== Turn on web inspector in Safari (required by specific features)
+
+[NOTE]
+====
+
+This step is required if you want to use the Kobiton Inspector and/or web automation on the device.
+
+====
+
+Under the *Settings* app, tap *Safari*.
+
+Scroll down to the *Advanced* option and tap it.
+
+Turn on *Web Inspector* and *Remote Automation*.
+
+image:ios-settings-context-safari.png[width=240,alt="The Safari option under Settings"] -> image:ios-safari-context-advanced.png[width=240,alt="The Advanced option under Safari settings"] -> image:ios-avanced-context-web-inspector.png[width=240,alt="Web Inspector and Remote Automation switched on under Advanced Safari settings"]
+
+== Turn off automatic brightness and auto-lock (optional)
+
+[NOTE]
+====
+
+Turning off automatic brightness allows Kobiton software to keep the device screen brightness at the minimum, thus saving battery life.
+
+Disabling auto-lock improves the experience of testers by not having to unlock the device after a certain amount of time.
+
+====
+
+Under the *Settings* app, tap *Display & Brightness*.
+
+Turn off *Automatic*.
+
+image:ios-settings-context-display-brightness.png[width=240,alt="The Display and Brightness option under Settings"] -> image:ios-display-brighness-context-automatic.png[width=240,alt="The Automatic otpion switched off under under Display and Brightness settings"]
+
+Tap *Auto-Lock*.
+
+Select *Never*.
+
+image:ios-display-brighness-context.png[width=240,alt="The Auto-Lock option under Display and Brightness settings"] -> image:ios-auto-lock-context.png[width=240,alt="The Never option selected under the Auto-Lock settings"]
+
+

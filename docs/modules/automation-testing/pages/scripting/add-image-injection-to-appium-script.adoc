@@ -1,0 +1,120 @@
+= Add image injection to Appium script
+:navtitle: Add image injection to Appium script
+
+Learn how to add image injection to your Appium script.
+
+== Before you start
+
+Enable image injection for your app with one of these options:
+
+* Instrument your app and use the capability `'kobiton:instrument'` (currently Android only) to xref:#appium_instrumentation_capability[instrument your app] .
+
+* Add Kobiton image injection SDK into your Android or iOS apps. Follow xref:apps:image-injection-sdk/add-the-sdk-to-your-android-app.adoc[this guide] for android, and xref:apps:image-injection-sdk/add-the-sdk-to-your-ios-app.adoc[this guide] for iOS.
+
+[#appium_instrumentation_capability]
+== Appium capability (instrumentation only)
+
+Add the `'kobiton:instrument'` capability to your script’s capabilities list. The value of this capability must be `'sdk'` to instrument the app for image injection.
+
+Below is a JavaScript example of the capability:
+
+.Example (JavaScript)
+[source,javascript]
+
+----
+
+capabilities: {
+    'platformName': 'Android',
+    'appium:noReset': false,
+    'appium:fullReset': true,
+    'appium:orientation': 'portrait',
+    'appium:deviceName': 'Galaxy S21',
+    'kobiton:instrument': 'sdk',
+    'appium:app': 'kobiton-store:v1'
+}
+
+----
+
+[IMPORTANT]
+Only include this Appium capability for image injection via app instrumentation. *Do not* include it for apps with image injection SDK embedded.
+
+== Kobiton commands
+
+The below commands apply to both image injection using SDK and app instrumentation.
+
+[options="header"]
+|=======================
+|Command | Description | Parameters
+| `kobiton:setImage` | Starts the image injection process by injecting a specified image into the camera view. | `data`: A base64 encoded string of the image you want to inject.
+| `kobiton:clearImage` |  This command stops the image injection process and reverts the camera view back to the live feed.
+ |
+|=======================
+
+=== Handle image file and injection
+
+Ensure the image file you intend to inject is stored locally and accessible by the test script.
+
+Pass the image file to the test script using `base64` encoding and include the command to inject it. Below is an example of an `injectImage` function demonstrating this process.
+
+.Example (JavaScript)
+[source,javascript]
+
+----
+
+async function injectImage(driver, imagepath) {
+  // assume the image is in the same folder as the test script so only need to provide a relative path to the image
+  const imagePath = path.join(__dirname, imagepath);
+
+  const base64Image = fs.readFileSync(imagePath, { encoding: 'base64' });
+
+  // the command to set image on the device
+  await driver.execute('kobiton:setImage', { data: base64Image });
+}
+
+----
+
+=== Start Image Injection
+
+Given that the `injectImage` function was already declared in the previous section, use it to begin the image injection process:
+
+.Example (JavaScript)
+[source,javascript]
+
+    await injectImage(driver, 'path_to_image/image.jpg');
+
+This will replace the camera view with the specified file in the relative path `path_to_image/image.jpg`.
+
+=== Stop image injection
+
+To stop image injection use:
+
+.Example (JavaScript)
+[source,javascript]
+
+    await driver.execute('kobiton:clearImage');
+
+This will revert the camera view back to the live feed.
+
+== Limitations
+
+* Only supported in Xium automation sessions.
+
+* The image must be located on the runner machine and be passed with `base64` encoding. Passing the image URL is not yet supported.
+
+include::apps:partials/image-injection-limitations.adoc[]
+
+== Known issues
+
+The Android application with custom SDK crashes when attempting to start the camera services.
+
+*Cause*: The custom SDK utilizes hidden APIs from Android, which may not be turned on and cause the app to crash.
+
+*Solution*: Enable a Cleanup Policy with *Device settings will be reset* option checked. If no Cleanup Policy is enabled, run the following `adb shell` command in your script before injecting the image:
+
+[source]
+.Example (JavaScript)
+----
+await driver.execute('mobile: shell', {
+    command: "settings put global hidden_api_policy 1",
+});
+----

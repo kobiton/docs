@@ -1,9 +1,8 @@
 name: 🔥 Deploy to Production.
 
 on:
-  push:
-    branches:
-      - 'main'
+  # This is here for manual trigger if the release workflow fails. It will be removed once the release workflow is working correctly
+  workflow_dispatch:
 
 permissions:
   id-token: write   # This is required for requesting the JWT

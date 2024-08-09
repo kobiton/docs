@@ -1,0 +1,132 @@
+= Add Android device
+:navtitle: Add Android device
+
+== Before you start
+
+* Follow xref:android-devices/prepare-android-device.adoc[this guide] to prepare the device before continuing.
+
+* Find the UDID of the device and note it down.
+
+== Connect Cambrionix hub to the host
+
+[NOTE]
+====
+
+Skip this step if the Mac mini host or GEM already has a Cambrionix hub connected.
+
+====
+
+Make sure you use a xref:/deviceConnect/hardware-requirements-for-deviceconnect.adoc[supported model] of Cambrionix hub.
+
+Connect the Cambrionix hub to a power source. The power LED indicator of the Cambrionix hub should turn on.
+
+For Standard mode, connect the Mac mini to the **host** port of the hub.
+
+For Lightning mode, connect the Graphic Extension Manager (GEM) to the **host** port of the hub. Make sure you connect the Cambrionix hub to the blue USB 3.0 port on the GEM.
+
+Refer to the hub model’s user manual from Cambrionix for the exact host port location.
+
+See below for an example of the SuperSync15 with the Host port visible.
+
+image::device-lab-management:device-lab-management-add-android-supersync15.PNG[width=500, alt="SuperSync15 with the Host port visible"]
+
+== Connect the device to the host
+
+Make sure you have properly xref:android-devices/prepare-android-device.adoc[prepared the device] for hosting on Kobiton.
+
+For Standard mode, connect the mobile device to the Cambrionix hub that is attached to the Mac mini host.
+
+For Lightning mode, connect the mobile device to the Cambrionix hub that is attached to the GEM.
+
+Check the device to see if it is charging after connecting. If it is not charging, the USB cable might be malfunctioning, or the Cambrionix hub is not connected to a power source.
+
+== Establish trust pairing between the device and the host
+
+Access the Mac mini host directly, or via screen sharing.
+
+Follow the appropriate steps based on whether you are using Standard or Lightning mode.
+
+[tabs]
+====
+
+Standard mode::
++
+--
+
+* Open Terminal and enter the following command. This must be run at least once after deviceConnect is installed:
+
+    /usr/local/deviceconnect/bin/adb devices
+
+* The UDID of the device should show up in the output.
+
+--
+
+Lightning mode::
++
+--
+
+* Make sure that `adb` is not running on the Mac mini by opening Terminal and enter the below command:
+
+    /usr/local/deviceconnect/bin/adb kill-server
+
+* Still in Terminal, SSH to the GEM using the customerAdmin account:
+
+    ssh customerAdmin@1.1.1.1
+
+** Replace 1.1.1.1 with the actual IP address of the GEM
+
+* Run the below command to check if the GEM can recognize the plugged in device:
+
+    adb devices
+
+* The UDID of the device should show up in the output.
+
+--
+
+====
+
+Check the device screen. Tap **Always allow from this computer** in the Allow USB debugging popup on the device screen, then tap **Allow**.
+
+image::device-lab-management:device-lab-management-add-android-allow-usbdebugging-tap-allow.PNG[width=400, alt="Allow USB debugging popup on the device screen"]
+
+On some device models (such as Xiaomi or Oppo), the *Use USB for* popup displays as below:
+
+image::device-lab-management:device-lab-management-add-android-alternate-allow-usbdebugging-tap-allow.PNG[width=400, alt="Alternate Allow USB debugging popup on the similar device screens"]
+
+Choose the **File Transfer** option.
+
+Wait until the device screen changes to the below before continuing:
+
+image::device-lab-management:device-lab-management-add-android-screen-changes-to-blue.PNG[width=400, alt="device screen changes and shows Kobiton name and logo"]
+
+== Verify device is available in Kobiton
+
+Open Chrome on the Mac mini, then open `localhost` and login.
+
+Navigate to Devices. The connected **device** displays as **Available**.
+
+image::device-lab-management:device-lab-management-add-android-verify-device-availability.PNG[width=600, alt="The connected device displays as Available in the Devices section"]
+
+Still in Chrome, open the Kobiton web portal and log in using an account with ADMIN role.
+
+Select the profile picture and choose **Settings**, then choose **Device Management**.
+
+In the search bar, enter the device’s UDID and hit Enter to filter.
+
+The device should appear in the filter result. If the state of the device is *Utilizing*, it is being cleaned up. Wait about 2-3 minutes for the cleanup to complete.
+
+When the cleanup is done, the device state becomes *Online* and the **Launch** button is available. Select it to launch a Manual session on the device.
+
+image::device-lab-management:device-lab-management-add-android-launch-a-manual-session.png[width=1200, alt="Device state is Online and the Launch button is now available"]
+
+In the Manual session, try the following to verify if the device is working properly:
+
+* xref:manual-testing:device-controls.adoc[Navigate around, window=_blank].
+
+* xref:manual-testing:install-an-app.adoc[Install an app, window=_blank].
+
+* Browse the web (if the device has a Wi-Fi connection).
+
+* xref:manual-testing:device-controls.adoc#_speedometer[Enable Lightning mode, window=_blank] (if the device is configured for Lightning mode).
+
+If all the above works, you have successfully added the device.
