@@ -73,14 +73,14 @@ image:session-explorer-obfuscate-private-data-http-headers.png[width=500,alt="Th
 image:session-explorer-obfuscate-private-data-inspector.png[width=500,alt="The obfuscated data in the Appium Inspector section"]
 
 
-== Auto-upgrade deviceConnect: force offline devices if deviceConnect is 2 major versions behind latest
+== Auto-upgrade deviceConnect: force offline devices if deviceConnect is 2 major versions behind the latest
 
 To ensure Cloud and Hybrid customers can always enjoy the latest features, we added a new policy to force devices offline on the Kobiton portal if deviceConnect on the host machine is 2 major versions behind the latest.
 
-This means for the 4.14 release, all devices hosted by deviceConnect 4.12 or below will become offline. Devices hosted by deviceConnect 4.13 are still online until 4.15 is released (if not updated).
+This means for the v4.14 release, all devices hosted by deviceConnect v4.12 or below will become offline. Devices hosted by deviceConnect v4.13 are still online until v4.15 is released (if not updated).
 
 [WARNING]
-There is a known issue that if a new hosting machine is added to an organization, and it has deviceConnect 4.12 or below installed, the devices and hosting machine are not displayed in the Device Management page in the portal. Therefore, make sure you *install deviceConnect 4.13 or later* to new hosting machines.
+There is a known issue that if a new hosting machine with deviceConnect v4.12 or below is added to an organization , the hosting machine and all its devices are not displayed in the Device Management page in the portal. Therefore, make sure you *install deviceConnect v4.13 or later* to new hosting machines.
 
 When devices are offline due to deviceConnect version being too old, you will see  `Kobiton upgrade required` under the device message in *Settings* -> *Device Management*:
 
@@ -95,11 +95,23 @@ image:upgrade-host-machine-device-management.png[width=1000,alt="The Upgrade but
 This release includes several enhancements and bug fixes to improve your day-to-day testing.
 
 * Addressed the following Script-based test automation and Device Inspector items:
+
+** Added support for JSON strings passed as parameters.
+** Fixed an issue with uploading test runner to the Portal.
 ** Fixed a bug that prevents image injection via app instrumentation in Appium.
 ** Implemented method `appium:optionalIntentArguments` .
 ** The `sendKeys` action now works in generated C# Appium script.
+** Fixed an issue with `childSelector` in `UIAutomator` only returns 1 element when there is a list of elements.
+
 * Other items addressed:
+
+** Videos downloaded from iOS sessions can now be opened by Quicktime and Windows Media Player.
+** Exported HAR files (Network Payload Capture) can now be extracted in Windows without downloading 3rd-party apps.
+** Fixed an issue with devices stuck in Utlizing on the Portal if multiple devices come online at the same time in organizations with no Cleanup Policy.
 ** Improve FPS (frames per second) in Manual sessions with Standard mode (up to 10 FPS).
 ** Image injection via app instrumentation is now working with iOS devices.
 ** Uploading app for installation in a manual session now works for Standalone Portal with SSL enabled.
-** Display the portal version in the help widget for both Standalone/On-prem and Cloud Portal.
+** Displayed the portal version in the help widget for both Standalone/On-prem and Cloud Portal.
+** Improved the PIN generator's algorithm to not generate simple passcodes for organizations with passcode mode 1.
+** Fixed an issue with custom cleanup policies not working properly after restarting the device.
+** Fixed an issue in the Edit Team page where validation error does now show when inputting blank or invalid values.
