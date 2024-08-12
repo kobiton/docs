@@ -7,7 +7,7 @@ _August 2, 2024_
 
 Kobiton 4.14 adds support for the following:
 
-* iOS/iPadOS 18 Beta 3
+* iOS/iPadOS 18.0 Beta 3, 18.1 Beta
 * Xcode 16 Beta
 
 == Lightning mode support for iOS 17.4 devices and later without networking changes
@@ -27,9 +27,10 @@ With iOS 17.4, Apple introduced a new communication protocol that significantly 
 ====
 
 * iOS 17.4 and later devices still need to be plugged into the Mac mini to establish trust before connecting to the GEM.
-* Metrics is not available for iOS 17.0 to 17.3 devices.
+* Metrics are not available for iOS 17.0 to 17.3 devices.
 * virtualUSB is not available for iOS devices.
 * Android 7 to 15, iOS 14 to 16 are still supported by both Standard and Lightning mode.
+* There is a known issue with iOS 17.5 to 18.1 Beta devices becoming offline when starting a Network Payload Capture session. Restart deviceConnect services to make the device online again.
 
 ====
 
