@@ -1,7 +1,7 @@
 = Kobiton 4.14 release notes
 :navtitle: Kobiton 4.14 release notes
 
-_August 2, 2024_
+_August 10, 2024_
 
 == New OS support
 
@@ -28,8 +28,7 @@ With iOS 17.4, Apple introduced a new communication protocol that significantly 
 
 * iOS 17.4 and later devices still need to be plugged into the Mac mini to establish trust before connecting to the GEM.
 * Metrics are not available for iOS 17.0 to 17.3 devices.
-* virtualUSB is not available for iOS devices.
-* Android 7 to 15, iOS 14 to 16 are still supported by both Standard and Lightning mode.
+* virtualUSB is not available for *all* iOS devices.
 * There is a known issue with iOS 17.5 to 18.1 Beta devices becoming offline when starting a Network Payload Capture session. Restart deviceConnect services to make the device online again.
 
 ====
@@ -40,12 +39,11 @@ It is now possible to specify some users in SSO only organizations to use the Ko
 
 In SSO settings, when the option _Enforce users to login to Kobiton only through SSO_ is turned on, there is now a new field *_Choose users who are allowed to login without SSO_*. Search for and add existing Kobiton users to this field to allow them to log in using Kobiton username and password.
 
-When _Enforce users to login to Kobiton only through SSO_ is turned on, the password of all existing users are cleared from database. Therefore, the users that are allowed to log in using Kobiton username and password must use *Forgot password* to create a new password.
+The designated users will be required to use the Forgot Password feature upon their next log in to the Portal to log in without SSO.
 
+== Indicator for Lightning mode devices in Device List
 
-== Indicator for Lightning mode devices in device lists
-
-Users can easily find devices that support Lightning mode in the device list by:
+Users can easily find devices that support Lightning mode in the Device List by:
 
 * Selecting *Lightning mode* in the device search bar and choose *Supported*:
 
@@ -63,6 +61,8 @@ Testers who input sensitive data for automated test cases can now use the new cu
 
 If a test step or action happens while the value of `'kobiton:privateMode'` is `true`, the details of it will be hidden in the *View HTTP Headers* and *Appium Inspector* menu of *Session Explorer*.
 
+For test steps that do not contain private data, change the value of `'kobiton:privateMode'` back to `false` to stop the obfuscation.
+
 Below are sample screens with obfuscated data for:
 
 * View HTTP Headers
@@ -73,21 +73,30 @@ image:session-explorer-obfuscate-private-data-http-headers.png[width=500,alt="Th
 
 image:session-explorer-obfuscate-private-data-inspector.png[width=500,alt="The obfuscated data in the Appium Inspector section"]
 
+[NOTE]
+* Automatic sessions that have obfuscated data are not marked as sensitive sessions and can be accessed by admins and team members.
+* Data obfuscation is only available for XIUM and Appium 2 Basic sessions.
 
-== Auto-upgrade deviceConnect: force offline devices if deviceConnect is 2 major versions behind the latest
+== Auto-upgrade deviceConnect: force devices offline if deviceConnect is two major versions behind the latest
 
-To ensure Cloud and Hybrid customers can always enjoy the latest features, we added a new policy to force devices offline on the Kobiton portal if deviceConnect on the host machine is 2 major versions behind the latest.
+We have a new policy to ensure that Cloud and Hybrid customers have access to the latest features. Devices will now be automatically taken offline on the Kobiton portal if the deviceConnect version on the host machine is two major versions behind the current release.
 
 This means for the v4.14 release, all devices hosted by deviceConnect v4.12 or below will become offline. Devices hosted by deviceConnect v4.13 are still online until v4.15 is released (if not updated).
 
 [WARNING]
-There is a known issue that if a new hosting machine with deviceConnect v4.12 or below is added to an organization , the hosting machine and all its devices are not displayed in the Device Management page in the portal. Therefore, make sure you *install deviceConnect v4.13 or later* to new hosting machines.
+====
+
+When adding a new hosting machine with deviceConnect v4.12 or earlier to an organization, neither the machine nor its devices appear on the Device Management page in the portal.
+
+To avoid this issue, ensure that deviceConnect v4.13 or later is installed on all new hosting machines.
+
+====
 
 When devices are offline due to deviceConnect version being too old, you will see  `Kobiton upgrade required` under the device message in *Settings* -> *Device Management*:
 
 image:force-offline-devices-old-deviceconnect.png[width=1000,alt="The Kobiton upgrade required message under Device Management"]
 
-When this happens, if automatic upgrade is enabled in your organization, the system will download the latest version and update automatically. If this is turned off, you can manually upgrade deviceConnect on the host machine by choosing *Upgrade*.
+If this issue occurs and automatic upgrade is enabled in your organization, the system will automatically download and install the latest version of deviceConnect. If automatic upgrades are disabled, you can manually upgrade deviceConnect on the host machine by selecting *Upgrade*.
 
 image:upgrade-host-machine-device-management.png[width=1000,alt="The Upgrade button next to the hosting machine name in Device Management"]
 
@@ -109,10 +118,10 @@ This release includes several enhancements and bug fixes to improve your day-to-
 ** Videos downloaded from iOS sessions can now be opened by Quicktime and Windows Media Player.
 ** Exported HAR files (Network Payload Capture) can now be extracted in Windows without downloading 3rd-party apps.
 ** Fixed an issue with devices stuck in Utlizing on the Portal if multiple devices come online at the same time in organizations with no Cleanup Policy.
-** Improve FPS (frames per second) in Manual sessions with Standard mode (up to 10 FPS).
+** Improve FPS (frames per second) in Manual sessions with Standard mode.
 ** Image injection via app instrumentation is now working with iOS devices.
-** Uploading app for installation in a manual session now works for Standalone Portal with SSL enabled.
 ** Displayed the portal version in the help widget for both Standalone/On-prem and Cloud Portal.
 ** Improved the PIN generator's algorithm to not generate simple passcodes for organizations with passcode mode 1.
 ** Fixed an issue with custom cleanup policies not working properly after restarting the device.
 ** Fixed an issue in the Edit Team page where validation error does now show when inputting blank or invalid values.
+** Fixed an issue that prevents devices from coming online after rebooting the GEM.
