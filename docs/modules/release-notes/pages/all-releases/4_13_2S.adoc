@@ -1,0 +1,118 @@
+= Kobiton 4.13.2S release notes
+:navtitle: Kobiton 4.13.2S release notes
+
+_June 20, 2024_
+
+== New OS support
+
+Kobiton 4.13.2S adds support for the following:
+
+* iOS/iPadOS 17.4.1, 17.5 Beta, 17.5.1
+* Mac OS Sonoma 14.4.1, 14.5
+* Android 15 Beta 3
+
+[NOTE]
+====
+* At this time, we recommend hosting iOS 17+ devices via Standard mode deployments for improved performance.
+* For Android 15 Beta 3, the cleanup policy cannot remove a signed-in account.
+====
+
+== Combined HAR files for network payload data
+
+Previously, the network payload capture log was split into multiple .payload files. We can now consolidate multiple network log files into a single payload file, making it easier to convert to load test scripts on products like Grafana K6, JMeter, and Neoload for performance testing.
+
+We also introduced two options for downloading the payload data:
+
+* Include both request and response payloads.
+* Include request payloads only (reduced size and optimized for load testing).
+
+NOTE: The HAR file is downloaded as a .zip file. For Windows users, the .zip file cannot currently be extracted by the default extract tool in File Explorer. Instead, use WinRar or 7-zip to extract the HAR file on Windows.
+
+== Image injection SDK for iOS
+
+A custom iOS camera framework to use image injection on Kobiton devices is now available.
+
+[NOTE]
+====
+
+* Image injection via app instrumentation is no longer available for iOS devices.
+* Android still supports both the app instrumentation method and image injection SDK for Android.
+
+====
+
+_Prerequisites/Limitations_:
+
+* iOS/iPadOS 14 or later, Xcode 14 or later.
+* Download the Kobiton custom camera framework.
+* Access to the application’s source code (to implement custom library).
+* There is no indicator that an app has the Kobiton camera framework implemented in the app repo.
+* Inject the image after launching the camera. Doing this before launching the camera might crash the app.
+* It may take up to 5 seconds for the injected image to appear in the camera view. Be patient!
+
+A detailed user guide for the image injection SDK for iOS is xref:apps:image-injection-sdk/add-the-sdk-to-your-ios-app.adoc[available].
+
+== Image injection automation support
+
+This feature introduces a custom capability (for instrumented apps) and commands to support injecting images during automation. Details are as follows:
+
+* Set the capability 'kobiton:instrumentenabled' to true for the app instrumentation method. This capability is not required for the SDK method.
+* Use the below two actions in your scripts for both instrumentation and SDK methods:
+** `kobiton:setImage` : start image injection
+** `kobiton:clearImage` : stop image injection (clear the image)
+
+_Prerequisites/Limitations_:
+
+* Image injection requirements for iOS and Android apply.
+* Using the `'kobiton:instrumentenabled'` capability to instrument the app for camera injection does not work if in the `dc.ini` file of the Mac mini host, the value of `'Kobiton.UseInternalLegacyAppResigning'` is `false`. Change this value to `true` to fix the issue.
+* Only supported in Xium automation sessions.
+* The image must be located on the runner machine and be passed with `base64` encoding. Passing the image URL is not yet supported. Inject the image after launching the camera.
+* Injecting the image before launching the camera might crash the app.
+* Add a wait time for the image injection process to complete (up to 5 seconds) before performing the next command.
+
+A user guide is xref:automation-testing:scripting/add-image-injection-to-appium-script.adoc[available].
+
+== Minor improvements and bug fixes
+
+This release includes several enhancements and bug fixes to improve your day-to-day testing.
+
+* Added more information about the device in the Kobiton Portal to help customer admins locate devices for troubleshooting and testers to be more efficient:
+** Display the host machine name and address in the *More info* panel of a manual session.
+** Add the *Slot* column in the *Device management* page to show the slot number of the device on the Cambrionix hub.
+** Display the device name instead of the device model number in the Session List.
+
+* Improved load performance and capability of Session Explorer for long sessions:
+** Improve the load time of sessions with 500 test steps or more.
+** Extend the maximum displayable number of steps in Session Explorer from 1000 to 5000.
+
+* Enhanced and fixed some bugs in SSO integration:
+** Change the label of the *SSO Enabled* and *Enable SSO* buttons to *SSO only*.
+** When the Kobiton system automatically creates a user that logs in for the first time using SSO, set the *SSO only* attribute of that user to *true* (meaning the user can only log in using SSO).
+** Change the label *Validation value* in SSO-related settings to *Assertion value*.
+** Fixed a bug that prevents any ADMIN user with the *SSO only* attribute set to true from updating the *SSO only* attribute of that user and other users in an organization that does not enforce SSO login.
+
+* Addressed the following Script-based test automation and Device Inspector items:
+** Add actions, screenshots, and HTTP headers in Session Explorer for Basic Appium 2 sessions.
+** Fix an issue where `sendKeys` method cannot send text to password fields in iOS.
+** Fix an issue with Chrome WebView being returned instead of the desired application view in sessions with Android hybrid apps.
+** Fix an issue with missing inspection data for a 4-5MB XML tree.
+** Exclude some unused attributes in the XML of inspector data.
+** Make the `deviceOrientation` desired capability work as intended in the automation session.
+** Return `resourceId` in Device Inspector.
+** New capability `'kobiton:xpath2'` to control the Xpath version used. (Use Xpath 2.0 when `true` ).
+** Fixed the error `kAXErrorServerNotFound` that prevents the Device Inspector from finding elements. This fixes issues for both script-based automation and Passcode devices.
+** Handle an issue with arguments wrapped in arrays when executing the automation script.
+** Handle an issue retrieving element by Xpath in recent versions of Chrome driver.
+** Implement capability `'Mobile:isKeyboardShown'`.
+** Fix automation issues on iOS 17.4.1 devices.
+
+* Other items addressed:
+** Optimize gesture performance to execute faster and smoother.
+** Update the *GigaCap* service to improve performance.
+** Make the *download session video* button easier to see in the Session Overview.
+** Network Payload Capture: implement retry logic for iOS devices for better stability.
+** API v2: the endpoint Get applications on a device now returns apps installed from both the App Repo and the Device details screen.
+** Allow `.zip` file created from Windows machine that has whitespace to be uploaded and used in the App Repository.
+** Admin can now re-enable an inactive account using the *Enable* button on the User management page.
+** Fix the Cleanup Policy to reset the device language to *English (US)* in some device models.
+
+* Docs site updates. Check out our new xref:device-lab-management:index.adoc[Device Lab Management section] of our docs to assist our customer admins in maintaining their Kobiton system.
