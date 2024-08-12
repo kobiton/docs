@@ -1,94 +1,39 @@
 = Obfuscate private data in Appium script
 :navtitle: Obfuscate private data in Appium script
 
-Learn how to obfuscate (hide) private data in an Appium test script.
+Learn how to obfuscate (hide) private data in an Appium test script in the *View HTTP Headers* and *Appium Inspector* section of Session Explorer.
 
-== Before you start
+=== Data obfuscation Appium setting
 
-* Prepare an Appium script with private data
-
-== Appium
-
-Add the `'kobiton:instrument'` capability to your script’s capabilities list. The value of this capability must be `'sdk'` to instrument the app for image injection.
-
-Below is a JavaScript example of the capability:
-
-.Example (JavaScript)
-[source,javascript]
-
-----
-
-capabilities: {
-    'platformName': 'Android',
-    'appium:noReset': false,
-    'appium:fullReset': true,
-    'appium:orientation': 'portrait',
-    'appium:deviceName': 'Galaxy S21',
-    'kobiton:instrument': 'sdk',
-    'appium:app': 'kobiton-store:v1'
-}
-
-----
-
-[IMPORTANT]
-Only include this Appium capability for image injection via app instrumentation. *Do not* include it for apps with image injection SDK embedded.
-
-== Kobiton commands
-
-The below commands apply to both image injection using SDK and app instrumentation.
+We introduced a new custom setting to start and stop obfuscation for private data in an Appium sesssion:
 
 [options="header"]
 |=======================
-|Command | Description | Parameters
-| `kobiton:setImage` | Starts the image injection process by injecting a specified image into the camera view. | `data`: A base64 encoded string of the image you want to inject.
-| `kobiton:clearImage` |  This command stops the image injection process and reverts the camera view back to the live feed.
-|
+|Appium setting | Description | Default value
+| `kobiton:privateMode` | Set to `true` to start obfuscating data, or to `false` to stop obfuscating | `false`
 |=======================
 
-=== Handle image file and injection
+=== Start data obfuscation
 
-Ensure the image file you intend to inject is stored locally and accessible by the test script.
-
-Pass the image file to the test script using `base64` encoding and include the command to inject it. Below is an example of an `injectImage` function demonstrating this process.
+Before starting a test action that involves private data, such as passing account password, use the `Update Settings` Appium command to set `'kobiton:privateMode'` to `true`.
 
 .Example (JavaScript)
 [source,javascript]
 
-----
+await driver.updateSettings({'kobiton:privateMode': true})
 
-async function injectImage(driver, imagepath) {
-  // assume the image is in the same folder as the test script so only need to provide a relative path to the image
-  const imagePath = path.join(__dirname, imagepath);
+As long as the setting is `true`, the data provided is marked for obfuscation.
 
-  const base64Image = fs.readFileSync(imagePath, { encoding: 'base64' });
+=== Stop data obfuscation
 
-  // the command to set image on the device
-  await driver.execute('kobiton:setImage', { data: base64Image });
-}
-
-----
-
-=== Start Image Injection
-
-Given that the `injectImage` function was already declared in the previous section, use it to begin the image injection process:
+When test steps no longer involve private data, use the `Update Settings` Appium command to set `'kobiton:privateMode'` back to `false`.
 
 .Example (JavaScript)
 [source,javascript]
 
-    await injectImage(driver, 'path_to_image/image.jpg');
+await driver.updateSettings({'kobiton:privateMode': false})
 
-This will replace the camera view with the specified file in the relative path `path_to_image/image.jpg`.
-
-=== Stop image injection
-
-To stop image injection use:
-
-.Example (JavaScript)
-[source,javascript]
-
-    await driver.execute('kobiton:clearImage');
-
-This will revert the camera view back to the live feed.
+When the setting is `false`, data is no longer obfuscated.
 
 == Limitations/Notes
 
@@ -96,18 +41,4 @@ This will revert the camera view back to the live feed.
 
 * Unlike Manual sessions with sensitive data, Automation sessions with obfuscated data are not marked as sensitive sessions and can be accessed by admins or other team members.
 
-== Known issues
-
-The Android application with custom SDK crashes when attempting to start the camera services.
-
-*Cause*: The custom SDK utilizes hidden APIs from Android, which may not be turned on and cause the app to crash.
-
-*Solution*: Enable a Cleanup Policy with *Device settings will be reset* option checked. If no Cleanup Policy is enabled, run the following `adb shell` command in your script before injecting the image:
-
-[source]
-.Example (JavaScript)
-----
-await driver.execute('mobile: shell', {
-    command: "settings put global hidden_api_policy 1",
-});
-----
+* Although the private data is obfuscated in _View HTTP Headers_ and _Appium Inspector_, it may not be obfuscated in session video, screenshots, and logs.
