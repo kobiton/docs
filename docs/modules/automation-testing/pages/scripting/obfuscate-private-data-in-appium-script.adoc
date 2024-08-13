@@ -35,6 +35,116 @@ await driver.updateSettings({'kobiton:privateMode': false})
 
 After this command, the data is no longer obfuscated.
 
+== Examples
+
+Below is a full example of a JavaScript code using `wd` that perform a simple login on a website and obfuscates the username and password during login:
+
+.Example (JavaScript)
+[source,javascript]
+
+----
+
+import 'babel-polyfill'
+import 'colors'
+import wd from 'wd'
+import {assert} from 'chai'
+
+const username = process.env.KOBITON_USERNAME
+const apiKey = process.env.KOBITON_API_KEY
+const deviceUdid = process.env.KOBITON_DEVICE_UDID
+const protocol = 'https'
+const host = 'api.kobiton.com'
+
+if (!username || !apiKey || !deviceUdid) {
+  console.log('Error: Environment variables KOBITON_USERNAME, KOBITON_API_KEY or KOBITON_DEVICE_UDID are required to execute script')
+  process.exit(1)
+}
+
+const kobitonServerConfig = {protocol, host, auth: `${username}:${apiKey}`}
+
+const desiredCaps = {
+  sessionName: 'Automation test data obfuscation',
+  sessionDescription: 'An automation test with private data to obfuscate',
+  udid: deviceUdid,
+  noReset: true,
+  fullReset: false,
+  browserName: 'chrome',
+  autoWebview: 'true',
+}
+
+let driver
+
+function sleep(ms) {
+  return new Promise((resolve) => setTimeout(resolve, ms))
+}
+
+describe('Android Web sample', () => {
+  before(async () => {
+    driver = wd.promiseChainRemote(kobitonServerConfig)
+
+    driver.on('status', (info) => {
+      console.log(info.cyan)
+    })
+    driver.on('command', (meth, path, data) => {
+      console.log(' > ' + meth.yellow, path.grey, data || '')
+    })
+    driver.on('http', (meth, path, data) => {
+      console.log(' > ' + meth.magenta, path, (data || '').grey)
+    })
+
+    try {
+      await driver.init(desiredCaps)
+    }
+    catch (err) {
+      if (err.data) {
+        console.error(`init driver: ${err.data}`)
+      }
+      throw err
+    }
+  })
+
+  it('should perform a simple login', async () => {
+    await driver.settings()
+
+    // Start obfuscating data before passing username and password.
+    await driver.updateSettings({'kobiton:privateMode': true})
+    await driver.settings()
+
+    // Send username and password to log in.
+    await driver.get('https://the-internet.herokuapp.com/login')
+     .waitForElementByName('username')
+     .sendKeys('tomsmith')
+     .sleep(1000)
+     .waitForElementByName('password')
+     .sendKeys('SuperSecretPassword!')
+     .sleep(3000)
+     .keys(wd.SPECIAL_KEYS.Enter)
+
+    // Login completes. Stop obfuscating data.
+    await driver.updateSettings({'kobiton:privateMode': false})
+    await driver.settings()
+
+    await driver.get('https://the-internet.herokuapp.com/')
+    await sleep(2000)
+    await driver.title()
+
+  })
+
+  after(async () => {
+    if (driver != null) {
+    try {
+      await driver.quit()
+    }
+    catch (err) {
+      console.error(`quit driver: ${err}`)
+    }
+  }
+  })
+})
+
+
+----
+
 == Obfuscated data in Session Explorer
 
 When an Appium script with data obfuscation finishes running, the private data is obfuscated in the Session Explorer page in these places:
