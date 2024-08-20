@@ -13,13 +13,20 @@ Cloud and Hybrid customers hosting dedicated devices can perform a remote update
 
 == Perform a remote deviceConnect update manually
 
-Log in to the Kobiton Portal with an administrator account.
+When the below notification banner appears in the Portal, a deviceConnect update is available for at least 1 Mac mini host in your organisation:
+
+image:new-version-available.png[width=1000,alt="The banner about new version of deviceConnect"]
+
+To update deviceConnect remotely, log into the Kobiton Portal with an administrator account.
 
 include::profile:partial$open-settings.adoc[]
 
 Select the *Device Management* tab.
 
 The *Device Management* page lists all dedicated mobile devices for the org grouped by Mac mini host. Locate the Mac mini host you want to update and select the corresponding *Upgrade* button.
+
+[TIP]
+A Mac mini host that does not have the latest deviceConnect version has a warning icon next to its name in Device Management.
 
 [IMPORTANT]
 Make sure the current deviceConnect version on the Mac mini host is at least 4.13.0 before continuing, as deviceConnect below this version cannot be remotely updated.
@@ -40,7 +47,7 @@ The update only starts when all devices hosted by the Mac mini are not in use, i
 
 To check the current automatic update setting for your organization, or to enable/disable automatic update, follow the steps below:
 
-Log in to the Kobiton Portal with an administrator account.
+Log into the Kobiton Portal with an administrator account.
 
 include::profile:partial$open-settings.adoc[]
 
