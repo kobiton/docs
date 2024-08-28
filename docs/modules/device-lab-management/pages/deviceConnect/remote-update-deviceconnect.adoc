@@ -41,7 +41,7 @@ After the update finishes, the devices should automatically come back online. Do
 
 == Enable or disable automatic deviceConnect update for an organization
 
-By default, automatic deviceConnect update is enabled for an organization. When automatic update is enabled, the system will periodically check for the latest deviceConnect version, download it, then update.
+By default, automatic deviceConnect update is disabled for an organization. When automatic update is enabled, the system will periodically check for the latest deviceConnect version, download it, then update.
 
 The update only starts when all devices hosted by the Mac mini are not in use, i.e. there is no active sessions on the devices. If there are active sessions on the devices, the update is skipped until the next update check (about 30 minutes between each check).
 
@@ -51,13 +51,13 @@ Log in to the Kobiton Portal with an administrator account.
 
 include::profile:partial$open-settings.adoc[]
 
-Select the *Device Management* tab. If the organization has at least 1 Mac mini host with online devices, the *New version upgrade* section displays and *Automatic* is selected by default:
+Select the *Device Management* tab. If the organization has at least 1 Mac mini host with online devices, the *New version upgrade* section displays and *Manual* is selected by default:
 
-image:device-management-new-version-upgrade.png[width=800,alt="The New version upgrade option in Device Management"]
+image:device-management-new-version-upgrade-manual.png[width=800,alt="The New version upgrade option in Device Management"]
 
-To disable automatic update, select the drop-down list, choose *Manual*, then choose *Save*:
+To enable automatic update, select the drop-down list, choose *Automatic*, then choose *Save*:
 
-image:device-management-new-version-upgrade-manual.png[width=500,alt="The New version upgrade set to Manual"]
+image:device-management-new-version-upgrade-automatic.png[width=500,alt="The New version upgrade set to Automatic"]
 
 == Force offline devices for old deviceConnect versions
 
