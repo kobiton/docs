@@ -1,11 +1,33 @@
 // Verify and save configuration
 
-If you enable *Enforce users to login to Kobiton only through SSO*, you'll also gain access to *Specify Organization Access Restrictions* with the ability to enable *Pass role/team assignments to users in the SAML validations*.
+*Important*: Make sure you have created an account with the same email as the currently logged in Kobiton account and assign the new SAML application to that user on the IdP side before continuing.
 
-Choose the method that's best for your organization.
+Select *Verify* to test your SSO configuration.
+
+image:organization:sso-verify-configuration.png[width=1000, alt="The Verify button under Verify Configuration"]
+
+The system will open a new browser tab to the SSO login page. In this new tab, logs in using the account that has the same email as the current Kobiton account.
+
+If logged in successfully, go back to the previous browser tab with the SSO Settings opened.
+
+Wait for a while for the SSO Settings page to automatically reload (*do not force reload the page*) and a success message displays like the below:
+
+image:organization:sso-verify-configuration-verified.png[width=1000, alt="The success message under Verify Configuration"]
+
+After receiving the success response, select *Save* to complete your SSO configuration.
+
+After verifying and saving the configuration, you can turn on *Enforce users to login to Kobiton only through SSO* to force the users to log in only via SSO (optional).
+
+When SSO login enforcement is turned on:
+
+* You can add existing users to be exempted from the SSO login enforcement by adding the username into the *Choose users who are allowed to login without SSO* field.
+
++
+
+image:organization:sso-choose-non-sso-users.png[width=500, alt="The list of users that are exempted from the enforcement list when SSO enforcement is enabled"]
+
+* You also gain access to *Specify Organization Access Restrictions* with the ability to enable *Pass role/team assignments to users in the SAML validations*. Choose the method that's best for your organization.
+
++
 
 image:organization:sso-organization-access-restrictions.png[width=1000, alt="The Specify Organization Access Restrictions step in SSO settings"]
-
-After you've chosen a method, select *Verify* to test your SSO configuration.
-
-If you received a successful response, select *Save* to complete your SSO configuration.

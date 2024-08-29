@@ -1,0 +1,166 @@
+= Obfuscate private data in Appium script
+:navtitle: Obfuscate private data in Appium script
+
+Learn how to obfuscate (hide) private data in an Appium test script in the *View HTTP Headers* and *Appium Inspector* section of Session Explorer.
+
+== Data obfuscation Appium setting
+
+We introduced a new custom setting to start and stop obfuscation for private data in an Appium sesssion:
+
+[options="header"]
+|=======================
+|Appium setting | Description | Default value
+| `kobiton:privateMode` | Set to `true` to start obfuscating data, or to `false` to stop obfuscating | `false`
+|=======================
+
+== Start data obfuscation
+
+Before starting a test action that involves private data, such as passing account password, use the `Update Settings` Appium command to set `'kobiton:privateMode'` to `true`.
+
+.Example (JavaScript)
+[source,javascript]
+
+await driver.updateSettings({'kobiton:privateMode': true})
+
+As long as the setting is `true`, the data provided is marked for obfuscation.
+
+== Stop data obfuscation
+
+When test steps no longer involve private data, use the `Update Settings` Appium command to set `'kobiton:privateMode'` back to `false`.
+
+.Example (JavaScript)
+[source,javascript]
+
+await driver.updateSettings({'kobiton:privateMode': false})
+
+After this command, the data is no longer obfuscated.
+
+== Examples
+
+Below is a complete example of JavaScript code using `wd` that demonstrates a simple login on a website, with the username and password obfuscated during the process.
+
+.Example (JavaScript)
+[source,javascript]
+
+----
+
+import 'babel-polyfill'
+import 'colors'
+import wd from 'wd'
+import {assert} from 'chai'
+
+const username = process.env.KOBITON_USERNAME
+const apiKey = process.env.KOBITON_API_KEY
+const deviceUdid = process.env.KOBITON_DEVICE_UDID
+const protocol = 'https'
+const host = 'api.kobiton.com'
+
+if (!username || !apiKey || !deviceUdid) {
+  console.log('Error: Environment variables KOBITON_USERNAME, KOBITON_API_KEY or KOBITON_DEVICE_UDID are required to execute script')
+  process.exit(1)
+}
+
+const kobitonServerConfig = {protocol, host, auth: `${username}:${apiKey}`}
+
+const desiredCaps = {
+  sessionName: 'Automation test data obfuscation',
+  sessionDescription: 'An automation test with private data to obfuscate',
+  udid: deviceUdid,
+  noReset: true,
+  fullReset: false,
+  browserName: 'chrome',
+  autoWebview: 'true',
+}
+
+let driver
+
+function sleep(ms) {
+  return new Promise((resolve) => setTimeout(resolve, ms))
+}
+
+describe('Android Web sample', () => {
+  before(async () => {
+    driver = wd.promiseChainRemote(kobitonServerConfig)
+
+    driver.on('status', (info) => {
+      console.log(info.cyan)
+    })
+    driver.on('command', (meth, path, data) => {
+      console.log(' > ' + meth.yellow, path.grey, data || '')
+    })
+    driver.on('http', (meth, path, data) => {
+      console.log(' > ' + meth.magenta, path, (data || '').grey)
+    })
+
+    try {
+      await driver.init(desiredCaps)
+    }
+    catch (err) {
+      if (err.data) {
+        console.error(`init driver: ${err.data}`)
+      }
+      throw err
+    }
+  })
+
+  it('should perform a simple login', async () => {
+    await driver.settings()
+
+    // Start obfuscating data before passing username and password.
+    await driver.updateSettings({'kobiton:privateMode': true})
+    await driver.settings()
+
+    // Send username and password to log in.
+    await driver.get('https://the-internet.herokuapp.com/login')
+     .waitForElementByName('username')
+     .sendKeys('tomsmith')
+     .sleep(1000)
+     .waitForElementByName('password')
+     .sendKeys('SuperSecretPassword!')
+     .sleep(3000)
+     .keys(wd.SPECIAL_KEYS.Enter)
+
+    // Login completes. Stop obfuscating data.
+    await driver.updateSettings({'kobiton:privateMode': false})
+    await driver.settings()
+
+    await driver.get('https://the-internet.herokuapp.com/')
+    await sleep(2000)
+    await driver.title()
+
+  })
+
+  after(async () => {
+    if (driver != null) {
+    try {
+      await driver.quit()
+    }
+    catch (err) {
+      console.error(`quit driver: ${err}`)
+    }
+  }
+  })
+})
+
+
+----
+
+== Obfuscated private data in Session Explorer
+
+When an Appium script with data obfuscation finishes running, the private data is obfuscated in the Session Explorer page in these places:
+
+* View HTTP Headers
+
+image:session-explorer-obfuscate-private-data-http-headers.png[width=500,alt="The obfuscated data in the View HTTP Headers section"]
+
+* Appium Inspector
+
+image:session-explorer-obfuscate-private-data-inspector.png[width=500,alt="The obfuscated data in the Appium Inspector section"]
+
+== Limitations/Notes
+
+* Only supported in Xium and Appium 2 Basic automation sessions.
+
+* Unlike Manual sessions with sensitive data, Automation sessions with obfuscated data are not marked as sensitive sessions and can be accessed by admins or other team members.
+
+* Although the private data is obfuscated in _View HTTP Headers_ and _Appium Inspector_, it may not be obfuscated in session video, screenshots, and logs.
