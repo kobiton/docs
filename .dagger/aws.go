@@ -2,13 +2,14 @@ package main
 
 import (
 	"context"
+	"dagger/ci/internal/dagger"
 )
 
 type AWS struct {
 	Ci *Ci // +private
 }
 
-func (m *AWS) AwsCli(ctx context.Context, awsAccessKeyID, awsSecretAccessKey, awsSessionToken *Secret, awsRegion string) (*Container, error) {
+func (m *AWS) AwsCli(ctx context.Context, awsAccessKeyID, awsSecretAccessKey, awsSessionToken *dagger.Secret, awsRegion string) (*dagger.Container, error) {
 	ctr := dag.Container().
 		From("public.ecr.aws/aws-cli/aws-cli:latest").
 		WithSecretVariable("AWS_ACCESS_KEY_ID", awsAccessKeyID).
@@ -24,11 +25,11 @@ func (m *AWS) EcrGetLoginPassword(
 	ctx context.Context,
 
 	// +optional
-	awsAccessKeyID *Secret,
+	awsAccessKeyID *dagger.Secret,
 	// +optional
-	awsSecretAccessKey *Secret,
+	awsSecretAccessKey *dagger.Secret,
 	// +optional
-	awsSessionToken *Secret,
+	awsSessionToken *dagger.Secret,
 	// +optional
 	awsRegion string,
 ) (string, error) {
