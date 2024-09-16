@@ -10,19 +10,19 @@ This dagger module is used to define the CI for the docs, widget sites.
 
 Build the docs and widget sites using the following command.
 ```bash
-dagger call --source=.:default build export --path=./build
+dagger call build export --path=./build
 ```
 
 ### Run the docs site locally
 
 Run the docs site locally using the following command.
 ```bash
-dagger call --source=.:default server-docs up --ports=8080:80
+dagger call server-docs up --ports=8080:80
 ```
 
 ### Build docker image and push to ECR repo
 ```bash
-dagger call --source=. publish \
+dagger call publish \
     --sites="docs" \
     --aws-region=ap-southeast-1 \
     --aws-access-key-id=env:AWS_ACCESS_KEY_ID \
@@ -40,7 +40,7 @@ dagger call --source=. publish \
 
 Build the docs site and deploy to S3. This is for CI deployment.
 ```bash
-dagger call --source=. release \
+dagger call release \
     --sites="docs" \
     --aws-region=<region s3 bucket> \
     --aws-access-key-id=env:AWS_ACCESS_KEY_ID \

@@ -11,20 +11,22 @@ import (
 
 type Ci struct {
 	// +private
-	Source *Directory
+	Source *dagger.Directory
 }
 
 func New(
 	// Project source directory.
 	// +optional
-	source *Directory,
+	// +defaultPath="/"
+	// +ignore=[".git", "**/node_modules", "!.git/HEAD", "!.git/refs", "!.git/config"]
+	source *dagger.Directory,
 
 	// Checkout the repository (at the designated ref) and use it as the source directory instead of the local one.
 	// +optional
 	ref string,
 ) (*Ci, error) {
 	if source == nil && ref != "" {
-		source = dag.Git("https://github.com/kobiton/docs.git", GitOpts{
+		source = dag.Git("https://github.com/kobiton/docs.git", dagger.GitOpts{
 			KeepGitDir: true,
 		}).Ref(ref).Tree()
 	}
@@ -44,17 +46,17 @@ const (
 )
 
 // Build the project
-func (m *Ci) Build() (*Directory, error) {
+func (m *Ci) Build() (*dagger.Directory, error) {
 	var eg errgroup.Group
 
-	var docs *Directory
+	var docs *dagger.Directory
 	eg.Go(func() error {
 		docs = m.nodeJsBase().
 			WithExec([]string{"yarn", "build-docs"}).
 			Directory("/app/build/docs")
 		return nil
 	})
-	var widget *Directory
+	var widget *dagger.Directory
 	eg.Go(func() error {
 		widget = m.nodeJsBase().
 			WithExec([]string{"yarn", "build-widget"}).
@@ -67,15 +69,15 @@ func (m *Ci) Build() (*Directory, error) {
 	}
 
 	return dag.Directory().
-		WithDirectory("/docs", docs).
-		WithDirectory("/widget", widget), nil
+		WithDirectory("docs", docs).
+		WithDirectory("widget", widget), nil
 }
 
 // Create a production image
 func (m *Ci) Server(
 	// Site to build
 	site string,
-) *Container {
+) *dagger.Container {
 	dir, _ := m.Build()
 
 	path := fmt.Sprintf("/%s", site)
@@ -94,7 +96,7 @@ func (m *Ci) Server(
 		WithExposedPort(80)
 }
 
-func (m *Ci) ServerDocs() *Service {
+func (m *Ci) ServerDocs() *dagger.Service {
 	return m.Server("docs").
 		WithExec([]string{"sh", "-c", "/bin/bash /docs/replace-env-vars.sh /docs && nginx -g 'daemon off;'"}).
 		AsService()
@@ -106,13 +108,13 @@ func (m *Ci) Publish(
 
 	// AWS Access Key ID
 	// +optional
-	awsAccessKeyID *Secret,
+	awsAccessKeyID *dagger.Secret,
 	// AWS Secret Access Key
 	// +optional
-	awsSecretAccessKey *Secret,
+	awsSecretAccessKey *dagger.Secret,
 	// AWS Session Token
 	// +optional
-	awsSessionToken *Secret,
+	awsSessionToken *dagger.Secret,
 	// +optional
 	// AWS Region
 	awsRegion string,
@@ -165,13 +167,13 @@ func (m *Ci) Release(
 
 	// AWS Access Key ID
 	// +optional
-	awsAccessKeyID *Secret,
+	awsAccessKeyID *dagger.Secret,
 	// AWS Secret Access Key
 	// +optional
-	awsSecretAccessKey *Secret,
+	awsSecretAccessKey *dagger.Secret,
 	// AWS Session Token
 	// +optional
-	awsSessionToken *Secret,
+	awsSessionToken *dagger.Secret,
 	// +optional
 	// AWS Region
 	awsRegion string,
@@ -201,12 +203,12 @@ func (m *Ci) Release(
 	return eg.Wait()
 }
 
-func (m Ci) nodeJsBase() *Container {
+func (m Ci) nodeJsBase() *dagger.Container {
 	// Use the LTS version by default
 	return m.nodeJsBaseFromVersion(nodeVersionLTS)
 }
 
-func (m Ci) nodeJsBaseFromVersion(nodeVersion string) *Container {
+func (m Ci) nodeJsBaseFromVersion(nodeVersion string) *dagger.Container {
 	appDir := "app"
 	src := m.Source
 
@@ -220,6 +222,7 @@ func (m Ci) nodeJsBaseFromVersion(nodeVersion string) *Container {
 		WithoutEntrypoint().
 		WithWorkdir(mountPath).
 		WithMountedCache("/usr/local/share/.cache/yarn", dag.CacheVolume(fmt.Sprintf("yarn_cache:%s", nodeVersion))).
+		WithMountedCache("/app/node_modules", dag.CacheVolume("node_modules_cache")).
 		WithFile(fmt.Sprintf("%s/package.json", mountPath), src.File("package.json")).
 		// WithFile(fmt.Sprintf("%s/yarn.lock", mountPath), src.File("yarn.lock")).
 		WithExec([]string{"apk", "add", "bash"}).
