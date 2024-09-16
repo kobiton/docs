@@ -39,6 +39,6 @@ func (m *AWS) EcrGetLoginPassword(
 	}
 
 	return ctr.
-		WithExec([]string{"--region", awsRegion, "ecr", "get-login-password"}).
+		WithExec([]string{"aws", "--region", awsRegion, "ecr", "get-login-password"}).
 		Stdout(ctx)
 }
