@@ -18,7 +18,7 @@ func New(
 	// Project source directory.
 	// +optional
 	// +defaultPath="/"
-	// +ignore=[".git", "**/node_modules", "!.git/HEAD", "!.git/refs", "!.git/config"]
+	// +ignore=[".git", "**/node_modules"]
 	source *dagger.Directory,
 
 	// Checkout the repository (at the designated ref) and use it as the source directory instead of the local one.
@@ -69,8 +69,8 @@ func (m *Ci) Build() (*dagger.Directory, error) {
 	}
 
 	return dag.Directory().
-		WithDirectory("docs", docs).
-		WithDirectory("widget", widget), nil
+		WithDirectory("/docs", docs).
+		WithDirectory("/widget", widget), nil
 }
 
 // Create a production image
@@ -195,8 +195,8 @@ func (m *Ci) Release(
 
 	eg.Go(func() error {
 		_, err = ctr.WithDirectory("/app", dir.Directory(fmt.Sprintf("/%s", site))).
-			WithExec([]string{"s3", "sync", "/app", fmt.Sprintf("s3://%s.kobiton.com", site)}).
-			WithExec([]string{"cloudfront", "create-invalidation", "--distribution-id", cloudfrontID, "--paths", "/*"}).Stdout(ctx)
+			WithExec([]string{"aws", "s3", "sync", "/app", fmt.Sprintf("s3://%s.kobiton.com", site)}).
+			WithExec([]string{"aws", "cloudfront", "create-invalidation", "--distribution-id", cloudfrontID, "--paths", "/*"}).Stdout(ctx)
 		return err
 	})
 
