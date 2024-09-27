@@ -1,0 +1,185 @@
+= Kobiton 4.15S release notes
+:navtitle: Kobiton 4.15S release notes
+
+_September 27, 2024_
+
+== New OS support
+
+This release adds support for the following:
+
+* iOS/iPadOS 18 beta 8, 18.1 Beta
+* iOS/iPadsOS 18 official
+* Xcode 16 Beta
+* Xcode 16 official
+
+[NOTE]
+====
+
+For iOS/iPadOS 18, the cleanup policy does not currently clear signed-in accounts in the Mail app and Safari browser
+cache.
+
+====
+
+[WARNING]
+====
+
+Do not update Mac mini hosts to MacOS Sequoia 15. Kobiton does not currently work with MacOS Sequoia 15 due to an Apple
+change that impacted Microsoft .NET. Microsoft is planning a fix in October; we will reassess support then.
+
+====
+
+== SSO: Allow non-SSO login for specific users in SSO Only organizations
+
+You can now specify users in SSO Only organizations to log in using a username and password instead of SSO.
+
+In the *SSO Settings*, when *Enforce users to log in to Kobiton only through SSO* is enabled, a new field appears:
+*Choose users who are allowed to log in without SSO*. Use this field to search for and select existing users to be able
+to log in using their Kobiton username and password.
+
+Designated non-SSO users will be required to use the *Forgot Password* feature the next time they log in to the Portal to
+set up their username and password login.
+
+== Indicator for Lightning mode devices in Device List
+
+Users can easily find devices that support Lightning mode in the Device List by:
+
+* Selecting *Lightning mode* in the device search bar and choosing *Supported*:
+
+image:devices:lightning-mode-filter-device-list.png[width=400,alt="The Lightning mode filter options in Device List"]
+
+* Choosing *List View*, then *Edit Column*, and check *Lightning mode* to see devices with the Lightning icon:
+
+image:devices:lightning-mode-list-view-column.png[width=250,alt="Show the Lightning mode column in the List View of Device List"]
+
+image:devices:lightning-mode-indicator-device-list.png[width=1000,alt="The lightning indicator on the device under the list view"]
+
+== Script-based automation: Obfuscate sensitive data in HTTP headers and Inspector of Session Explorer
+
+Testers who input sensitive data for automated test cases can use the new custom Appium setting `kobiton:privateMode`
+to hide the data in *Session Explorer*.
+
+If a test step or action happens while the value of `kobiton:privateMode` is `true`, the details of it will be hidden in
+the *View HTTP Headers* and *Appium Inspector* menu of *Session Explorer*.
+
+For test steps that do not contain private data, change the value of `kobiton:privateMode` back to `false` to stop the
+obfuscation.
+
+Below are sample views of obfuscated data in *Session Explorer*:
+
+* *View HTTP Headers*
+
+image:automation-testing:session-explorer-obfuscate-private-data-http-headers.png[width=500,alt="The obfuscated data in the View HTTP Headers section"]
+
+* *Appium Inspector
+
+image:automation-testing:session-explorer-obfuscate-private-data-inspector.png[width=500,alt="The obfuscated data in the Appium Inspector section"]
+
+[NOTE]
+====
+
+_Limitations/Notes_
+
+* Automation sessions that obfuscate data are not marked as sensitive sessions and can be accessed by admins and team
+members.
+* Although private data is obfuscated in *View HTTP Headers* and *Appium Inspector* using the custom setting, it may not
+be obfuscated in session video, screenshots, and logs.
+* Data obfuscation is only available for XIUM and Appium 2 Basic sessions.
+
+====
+
+== Restart a device for users without ADMIN role
+
+Previously, only users with the *ADMIN* predefined role could restart a private or local device, and this action could
+only be performed from the *Device Management* page.
+
+With this release, users with the appropriate permission can restart a device by selecting *Restart* via
+
+[NOTE]
+====
+
+* Users without ADMIN role must be assigned a custom role with the permission `org_setting.reboot_private_device` to use this feature.
+* Non-ADMIN users with the reboot permission may only restart devices they can access via their assigned teams.
+* Only devices with *Available* status or *Retained* by the current user can be restarted from the device details.
+
+====
+
+== Option to enable/disable unlimited retention for devices
+
+This release introduces the option to enable/disable unlimited retention of devices for an org. In *Settings → Other Settings*,
+we added the checkbox: *Allow unlimited retention*. Check or uncheck this box, then choose *Save* to enable/disable unlimited retention of devices.
+
+[NOTE]
+====
+
+* To access the *Other Settings* page, the user must be assigned a role with the `permission org_setting.modify`.
+* The *Allow unlimited retention setting* applies to the whole org. By default, this option is `true`.
+
+====
+
+== Monitor number of device offline errors in the last hour
+
+Device admins can now monitor the number of device offline errors within the last hour. This information is available in
+the *Error Count (1hr)* column under *Settings → Device Management*. This feature provides real-time insight, enabling
+quicker identification and resolution of connectivity issues.
+
+If the number of device offline errors in the past hour exceeds 10, a warning icon will appear next to the error count.
+This icon indicates that there may be a potential hardware issue with the device. Hover over the warning icon to view
+suggested actions for resolving the issue.
+
+[NOTE]
+====
+
+In addition to hardware issues, certain actions can cause the device to go offline and increase the error count. These
+actions include restarting services, unplugging and reconnecting the device, or rebooting the Mac mini/Dell server.
+
+====
+
+== Minor improvements and bug fixes
+
+This release includes several enhancements and bug fixes to improve your day-to-day testing. Here are the highlights:
+
+* Addressed the following Script-based test automation and Device Inspector items:
+
+** Added support for JSON strings passed as parameters.
+** Fixed an issue with uploading test runner to the Portal.
+** Fixed a bug that prevents image injection via app instrumentation in Appium.
+** Implemented this method: appium:optionalIntentArguments.
+** The sendKeys action now works in generated C# Appium scripts.
+** Fixed an issue with childSelector in UIAutomator that only returned 1 element when there was a list of elements.
+** Enabled the ability to kick off sequential Xium sessions while in a mixed session.
+** Fixed an issue with running Appium automation using the Appium Selenium WebDriver 5.0.0 or above.
+** Added support for UIAutomator locator when using Appium Inspector.
+** Added support for slider element in Appium Inspector.
+
+* Addressed the following Scriptless enhancements and bug fixes:
+
+** Adjusted settings for the following flags in a session: `IgnoreUnimportantViews`, `IncludeSystemWindows`.
+*** Default setting for manual and Appium automation sessions is `false`.
+*** If a user selects Capture mode in a Manual session, both flags are set to `true`.
+
+* Other items addressed:
+
+** Videos downloaded from iOS sessions can now be opened by Quicktime and Windows Media Player.
+** Exported HAR files (Network Payload Capture) can now be extracted in Windows without downloading 3rd-party apps.
+** Fixed devices that were getting stuck in Utilizing due to the following:
+*** When multiple devices come online at the same time in organizations with no Cleanup Policy.
+*** After restarting services on the GEM or rebooting the GEM.
+** Improved FPS (frames per second) in Manual sessions with Standard mode.
+** Fixed issue with image injection via app instrumentation for iOS devices.
+** Now display the Portal version in the help widget for both Standalone/On-prem and Cloud Portal.
+** To better support orgs with MDM passcode requirements, the PIN generator's algorithm has been enhanced to prevent the generation of simple passcodes.
+** Fixed an issue with custom cleanup policies not working properly after restarting the device.
+** Fixed an issue in the Edit Team page where the validation error does not show when inputting blank or invalid values.
+** Fixed an issue that prevents devices from coming online after rebooting the GEM.
+** Added wildcard support to the `deviceName` query parameter for the get all devices API v2 endpoint. Example: Use
+`/v2/devices?deviceName=iPad*` to return devices whose name starts with iPad.
+** Network Payload Capture: fixed an issue with converting payload files with `%%%` in the content.
+** Improved stability of Lightning-mode devices.
+** Improved device battery information reporting in the Device List: temperature, percent charged, battery health, and status.
+
+
+
+
+
+
+
