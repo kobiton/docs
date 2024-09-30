@@ -134,6 +134,26 @@ actions include restarting services, unplugging and reconnecting the device, or 
 
 ====
 
+== Script-based Automation: Launch an Appium Server session using the Flutter Integration driver (Beta)
+
+Previously, we introduced support for launching an automation session using the Appium Flutter driver. With this released, support for automation sessions using the Appium Flutter Integration driver is available.
+
+Before you can start using the Appium Flutter Integration driver, ensure the following prerequisites are met:
+
+* *Flutter App Preparation*: Pre-process your Flutter app-under-test to enable the Flutter Integration driver extension. This step is crucial for the Appium Flutter Integration driver to interact with your app.
+
+* *Server Selection*: Run your automation test script using our basic Appium 2.0 server. To do this, set `'kobiton:runtime'` to `'appium'`. Please note that the Appium Flutter driver is not supported by Xium.
+
+* *Capability Configuration*: Change the value of the capability `'appium:automationName'` to `'FlutterIntegration'`. This tells the Appium server to use the Flutter Integration driver for your test session.
+
+* *Minimum Appium Java Client version* (for Java - TestNG or JUnit): Appium Java Client 9.3 or later is required for Appium Flutter Integration driver test script.
+
+Appium Flutter Integration driver is in Beta version with the following limitations:
+
+* All limitations of our basic Appium 2.0 functionality apply.
+
+A detailed guide is coming soon!
+
 == Minor improvements and bug fixes
 
 This release includes several enhancements and bug fixes to improve your day-to-day testing. Here are the highlights:
