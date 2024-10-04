@@ -85,11 +85,21 @@ Once these changes are made, your script is ready to run basic Appium 2 sessions
 
 == Notes/Limitations
 
-* Android testing with basic Appium 2 is only available for Ubuntu GEM or Standard mode; iOS can be tested with Ubuntu GEM, nixOS GEM, and Standard mode.
-* No session exhaust is available, which means there are no screenshots, device logs, Appium logs, system metrics at this time. When reviewing sessions, only Session Overview has content; Session Explorer is not available.
-* Session video is available.
-* Mixed sessions are available, but manual interactions in those sessions are not supported.
+* Limited session exhaust is available, which means there are no device logs, device metrics, Appium inspector data, and network payload capture data at this time.
+
+[NOTE]
+====
+
+Although there is a device logs file downloadable from the Overview page of a basic Appium session, the file only contains logs before the basic Appium script started.
+
+====
+
+* Mixed sessions are available with the following limitations:
+
+include::automation-testing:partial$mixed-sessions-basic-appium-limitations.adoc[]
+
 * AI features - including Scriptless, generate Appium script, validations, and flexCorrect - are not supported for basic Appium 2 sessions as they rely heavily on exhaust.
+
 * Devices with passcodes are not currently supported with basic Appium 2.
 
 == Additional notes
