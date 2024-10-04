@@ -61,9 +61,11 @@ Now you can view your script running on the device and fix issues in realtime.
 
 * Mixed sessions can only be initiated with Appium or basic Appium 2 automation tests; other automation frameworks, e.g. Espresso, XCUITest, are not currently supported.
 
-* Mixed sessions with basic Appium 2 have the following limitations:
-
 include::automation-testing:partial$mixed-sessions-basic-appium-limitations.adoc[]
+
+* Session Explorer is not available for Mixed Sessions; i.e. it's not possible to view detailed steps and screenshots for Mixed Sessions.
+
+* Mixed sessions cannot be turned into test cases. They cannot be used for our AI functionality: Scriptless, generating Appium Scripts, self-healing.
 
 * When you have a mixed Session on a Public Device, you will be charged minutes for the total time usage on the device; you will not be double-charged for an automation and a manual session.
 
