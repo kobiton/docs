@@ -121,13 +121,13 @@ In addition to hardware issues, certain actions can cause the device to go offli
 
 == Script-based Automation: Launch an Appium Server session using the Flutter Integration driver (Beta)
 
-Previously, we introduced support for launching an automation session using the Appium Flutter driver. With this released, support for automation sessions using the Appium Flutter Integration driver is available.
+Previously, we introduced support for launching automation sessions with the Appium Flutter driver. With this release, we've expanded support to include automation sessions using the Appium Flutter Integration driver.
 
 Before you can start using the Appium Flutter Integration driver, ensure the following prerequisites are met:
 
 * *Flutter App Preparation*: Pre-process your Flutter app-under-test to enable the Flutter Integration driver extension. This step is crucial for the Appium Flutter Integration driver to interact with your app.
 
-* *Server Selection*: Run your automation test script using our basic Appium 2.0 server. To do this, set `'kobiton:runtime'` to `'appium'`. Please note that the Appium Flutter driver is not supported by Xium.
+* *Server Selection*: Run your automation test script using our basic Appium 2.0 server. To do this, set `'kobiton:runtime'` to `'appium'`. Please note that the Appium Flutter Integration driver cannot be used with Xium, Kobiton's default mobile automation method.
 
 * *Capability Configuration*: Change the value of the capability `'appium:automationName'` to `'FlutterIntegration'`. This tells the Appium server to use the Flutter Integration driver for your test session.
 
