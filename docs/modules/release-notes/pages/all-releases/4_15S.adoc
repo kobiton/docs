@@ -15,8 +15,7 @@ This release adds support for the following:
 [NOTE]
 ====
 
-For iOS/iPadOS 18, the cleanup policy does not currently clear signed-in accounts in the Mail app and Safari browser
-cache.
+For iOS/iPadOS 18, the cleanup policy does not currently clear signed-in accounts in the Mail app and Safari browser cache.
 
 ====
 
@@ -33,11 +32,9 @@ change that impacted Microsoft .NET. Microsoft is planning a fix in October; we 
 You can now specify users in SSO Only organizations to log in using a username and password instead of SSO.
 
 In the *SSO Settings*, when *Enforce users to log in to Kobiton only through SSO* is enabled, a new field appears:
-*Choose users who are allowed to log in without SSO*. Use this field to search for and select existing users to be able
-to log in using their Kobiton username and password.
+*Choose users who are allowed to log in without SSO*. Use this field to search for and select existing users to be able to log in using their Kobiton username and password.
 
-Designated non-SSO users will be required to use the *Forgot Password* feature the next time they log in to the Portal to
-set up their username and password login.
+Designated non-SSO users will be required to use the *Forgot Password* feature the next time they log in to the Portal to set up their username and password login.
 
 == Indicator for Lightning mode devices in Device List
 
@@ -55,14 +52,11 @@ image:devices:lightning-mode-indicator-device-list.png[width=1000,alt="The light
 
 == Script-based automation: Obfuscate sensitive data in HTTP headers and Inspector of Session Explorer
 
-Testers who input sensitive data for automated test cases can use the new custom Appium setting `kobiton:privateMode`
-to hide the data in *Session Explorer*.
+Testers who input sensitive data for automated test cases can use the new custom Appium setting `kobiton:privateMode` to hide the data in *Session Explorer*.
 
-If a test step or action happens while the value of `kobiton:privateMode` is `true`, the details of it will be hidden in
-the *View HTTP Headers* and *Appium Inspector* menu of *Session Explorer*.
+If a test step or action happens while the value of `kobiton:privateMode` is `true`, the details of it will be hidden in the *View HTTP Headers* and *Appium Inspector* menu of *Session Explorer*.
 
-For test steps that do not contain private data, change the value of `kobiton:privateMode` back to `false` to stop the
-obfuscation.
+For test steps that do not contain private data, change the value of `kobiton:privateMode` back to `false` to stop the obfuscation.
 
 Below are sample views of obfuscated data in *Session Explorer*:
 
@@ -70,7 +64,7 @@ Below are sample views of obfuscated data in *Session Explorer*:
 
 image:automation-testing:session-explorer-obfuscate-private-data-http-headers.png[width=500,alt="The obfuscated data in the View HTTP Headers section"]
 
-* *Appium Inspector
+* *Appium Inspector*
 
 image:automation-testing:session-explorer-obfuscate-private-data-inspector.png[width=500,alt="The obfuscated data in the Appium Inspector section"]
 
@@ -79,20 +73,17 @@ image:automation-testing:session-explorer-obfuscate-private-data-inspector.png[w
 
 _Limitations/Notes_
 
-* Automation sessions that obfuscate data are not marked as sensitive sessions and can be accessed by admins and team
-members.
-* Although private data is obfuscated in *View HTTP Headers* and *Appium Inspector* using the custom setting, it may not
-be obfuscated in session video, screenshots, and logs.
+* Automation sessions that obfuscate data are not marked as sensitive sessions and can be accessed by admins and team members.
+* Although private data is obfuscated in *View HTTP Headers* and *Appium Inspector* using the custom setting, it may not be obfuscated in session video, screenshots, and logs.
 * Data obfuscation is only available for XIUM and Appium 2 Basic sessions.
 
 ====
 
 == Restart a device for users without ADMIN role
 
-Previously, only users with the *ADMIN* predefined role could restart a private or local device, and this action could
-only be performed from the *Device Management* page.
+Previously, only users with the *ADMIN* predefined role could restart a private or local device, and this action could only be performed from the *Device Management* page.
 
-With this release, users with the appropriate permission can restart a device by selecting *Restart* via
+With this release, users with the appropriate permission can restart a device by selecting *Restart* via the *Device List* page.
 
 [NOTE]
 ====
@@ -105,8 +96,7 @@ With this release, users with the appropriate permission can restart a device by
 
 == Option to enable/disable unlimited retention for devices
 
-This release introduces the option to enable/disable unlimited retention of devices for an org. In *Settings → Other Settings*,
-we added the checkbox: *Allow unlimited retention*. Check or uncheck this box, then choose *Save* to enable/disable unlimited retention of devices.
+This release introduces the option to enable/disable unlimited retention of devices for an org. In *Settings → Other Settings*, we added the checkbox: *Allow unlimited retention*. Check or uncheck this box, then choose *Save* to enable/disable unlimited retention of devices.
 
 [NOTE]
 ====
@@ -118,19 +108,14 @@ we added the checkbox: *Allow unlimited retention*. Check or uncheck this box, t
 
 == Monitor number of device offline errors in the last hour
 
-Device admins can now monitor the number of device offline errors within the last hour. This information is available in
-the *Error Count (1hr)* column under *Settings → Device Management*. This feature provides real-time insight, enabling
-quicker identification and resolution of connectivity issues.
+Device admins can now monitor the number of device offline errors within the last hour. This information is available in the *Error Count (1hr)* column under *Settings → Device Management*. This feature provides real-time insight, enabling quicker identification and resolution of connectivity issues.
 
-If the number of device offline errors in the past hour exceeds 10, a warning icon will appear next to the error count.
-This icon indicates that there may be a potential hardware issue with the device. Hover over the warning icon to view
-suggested actions for resolving the issue.
+If the number of device offline errors in the past hour exceeds 10, a warning icon will appear next to the error count. This icon indicates that there may be a potential hardware issue with the device. Hover over the warning icon to view suggested actions for resolving the issue.
 
 [NOTE]
 ====
 
-In addition to hardware issues, certain actions can cause the device to go offline and increase the error count. These
-actions include restarting services, unplugging and reconnecting the device, or rebooting the Mac mini/Dell server.
+In addition to hardware issues, certain actions can cause the device to go offline and increase the error count. These actions include restarting services, unplugging and reconnecting the device, or rebooting the Mac mini/Dell server.
 
 ====
 
