@@ -32,6 +32,9 @@ With https://appium.io/docs/en/2.1/guides/migrating-1-to-2/[Appium 2], vendor pr
 
 For non-standard capabilities, unless there are specific instructions from Kobiton to use the `kobiton:` vendor prefix, add `appium:` prefix to all of them.
 
+[IMPORTANT]
+For `'app'`, use `'kobiton:app'` instead of `'appium:app'`.
+
 === Example
 
 Below is a sample list of capabilities that can be used on a Xium session:
@@ -67,14 +70,14 @@ const desiredCaps = {
       'appium:automationName': 'XCUITest',
       'appium:bundleId': 'com.example.ToDoApp',
       'appium:deviceOrientation': 'portrait',
-      'appium:sessionName': 'Automation iOS Hybrid App',
-      'appium:sessionDescription': 'Automation session',
+      'kobiton:sessionName': 'Automation iOS Hybrid App',
+      'kobiton:sessionDescription': 'Automation session',
       'appium:noReset': true,
       'appium:fullReset': false,
       'appium:captureScreenshots': true,
       'appium:networkActivity': false,
-      'appium:app': 'kobiton-store:v657531',
-      'appium:deviceGroup': 'ORGANIZATION',
+      'kobiton:app': 'kobiton-store:v657531',
+      'kobiton:deviceGroup': 'ORGANIZATION',
       'appium:deviceName': '*',
       'appium:udid': 'aa2ace81ea5b7e6164965b97c5bf432432',
       'platformName': 'iOS'
