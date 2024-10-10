@@ -1,0 +1,104 @@
+= Kobiton 4.15 release notes
+:navtitle: Kobiton 4.15 release notes
+
+_September 14, 2024_
+
+== New OS support
+
+This release adds support for the following:
+
+* iOS/iPadOS 18 beta 8
+* iOS/iPadOS 18 official
+
+[WARNING]
+MacOS Sequoia 15 is *not supported* and will prevent deviceConnect from working. Do not update Mac mini hosts to MacOS 15.
+
+[NOTE]
+For iOS/IPadOS 18 Beta 8 and 18 official, the cleanup policy does not clear signed in accounts in the Mail app and Safari browser cache.
+
+
+
+== Restart a device for users without ADMIN role
+
+Before this release, only users with the `ADMIN` predefined role could restart a private/local device, and they could only do this from the Device Management page.
+
+With this release, users with the appropriate permission can restart a device by selecting *Restart* via the *Device List* page.
+
+[NOTE]
+====
+
+* Users without ADMIN role must be assigned a custom role with the permission `org_setting.reboot_private_device` to use this feature.
+
+* Non-admin users with restart permission may only restart devices they can access via their assigned teams.
+
+* Only devices with *Available* status or *Retained* by the current user can be restarted from the device details.
+
+====
+
+== Option to enable/disable unlimited retention for devices
+
+This release introduces the option to enable/disable unlimited retention of devices for an org. In *Settings → Other Settings*, we added the checkbox: *Allow unlimited retention*. Check or uncheck this box, then choose *Save* to enable/disable unlimited retention of devices.
+
+[NOTE]
+
+====
+
+* To access the *Other Settings* page, the user must be assigned a role with the permission `org_setting.modify`.
+
+* The *Allow unlimited retention* checkbox applies to the whole org. By default, this checkbox is checked.
+
+====
+
+== Script-based Automation: Launch an Appium Server session using the Flutter Integration driver (Beta)
+
+Previously, we introduced support for launching automation sessions with the Appium Flutter driver. With this release, we've expanded support to include automation sessions using the Appium Flutter Integration driver.
+
+Before you can start using the Appium Flutter Integration driver, ensure the following prerequisites are met:
+
+* *Flutter App Preparation*: Pre-process your Flutter app-under-test to enable the Flutter Integration driver extension. This step is crucial for the Appium Flutter Integration driver to interact with your app.
+
+* *Server Selection*: Run your automation test script using our basic Appium 2.0 server. To do this, set `'kobiton:runtime'` to `'appium'`. Please note that the Appium Flutter Integration driver cannot be used with Xium, Kobiton's default mobile automation method.
+
+* *Capability Configuration*: Change the value of the capability `'appium:automationName'` to `'FlutterIntegration'`. This tells the Appium server to use the Flutter Integration driver for your test session.
+
+* *Minimum Appium Java Client version* (for Java - TestNG or JUnit): Appium Java Client 9.3 or later is required for Appium Flutter Integration driver test script.
+
+Appium Flutter Integration driver is in Beta version with the following limitations:
+
+* All limitations of our basic Appium 2.0 functionality apply.
+
+A detailed guide is coming soon!
+
+== Minor improvements and bug fixes
+
+This release includes several enhancements and bug fixes to improve your day-to-day testing.
+
+* Addressed the following Script-based test automation and Device Inspector items:
+
+** Enable the ability to kick off sequential Xium sessions while in a mixed session.
+
+** Fixed an issue with running Appium automation using the Appium Selenium WebDriver 5.0.0 or above.
+
+** Added support for UIAutomator locator when using Appium Inspector.
+
+** Added support for slider element in Appium Inspector.
+
+* Addressed the following Scriptless enhancements and bug fixes:
+
+** Adjust settings for the following flags in a session: `IgnoreUnimportantViews`, `IncludeSystemWindows`
+
+*** Default setting for manual and Appium automation sessions is `false`.
+
+*** If a user selects Capture mode in a Manual session, both flags are set to `true`.
+
+** Some minor improvements and bug fixes.
+
+* Other items addressed:
+
+**  Added wildcard support to the deviceName query parameter for the get all devices API v2 endpoint. Example: Use `/v2/devices?deviceName=iPad*` to return devices whose name starts with *iPad*.
+
+** Network Payload Capture: fixed an issue with converting payload files to K6 script with `%%%` in the content.
+
+** Improve stability of Lightning-mode devices.
+
+** Improved device battery information reporting in the Device List: temperature, percent charged, battery health, and status.

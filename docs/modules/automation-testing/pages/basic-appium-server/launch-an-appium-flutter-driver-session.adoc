@@ -131,6 +131,21 @@ The Appium Flutter driver is supported only via our basic Appium 2 server functi
 
 Then, change the value of `'appium:automationName'` to `'Flutter'` to use the Appium Flutter driver.
 
+Example Android capabilities:
+
+[source,javascript]
+----
+const capabilities = {
+    'platformName':'Android'
+    'kobiton:app': 'https://kobiton-us-east.s3.amazonaws.com/.../flutter_app.apk',
+    'appium:udid': '39201F****01XV',
+
+    'appium:automationName': 'Flutter', // -> required to use Appium Flutter Driver
+    'kobiton:runtime':'appium', // -> required to use Basic Appium Server
+}
+----
+
+
 Example iOS capabilities:
 
 [source,javascript]
@@ -138,22 +153,8 @@ Example iOS capabilities:
 const capabilities = {
 'platformName': 'iOS',
 'appium:autoAcceptAlerts': true,
-'appium:app': 'https://kobiton-us-east.s3.amazonaws.com/.../flutter_app.ipa',
+'kobiton:app': 'https://kobiton-us-east.s3.amazonaws.com/.../flutter_app.ipa',
 'appium:udid': '00008020-0004***41123402E',
-
-    'appium:automationName': 'Flutter', // -> required to use Appium Flutter Driver
-    'kobiton:runtime':'appium', // -> required to use Basic Appium Server
-}
-----
-
-Example Android capabilities:
-
-[source,javascript]
-----
-const capabilities = {
-    'platformName':'Android'
-    'appium:app': 'https://kobiton-us-east.s3.amazonaws.com/.../flutter_app.apk',
-    'appium:udid': '39201F****01XV',
 
     'appium:automationName': 'Flutter', // -> required to use Appium Flutter Driver
     'kobiton:runtime':'appium', // -> required to use Basic Appium Server

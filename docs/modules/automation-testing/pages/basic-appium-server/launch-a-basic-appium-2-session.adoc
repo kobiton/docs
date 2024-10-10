@@ -32,6 +32,9 @@ With https://appium.io/docs/en/2.1/guides/migrating-1-to-2/[Appium 2], vendor pr
 
 For non-standard capabilities, unless there are specific instructions from Kobiton to use the `kobiton:` vendor prefix, add `appium:` prefix to all of them.
 
+[IMPORTANT]
+For `'app'`, use `'kobiton:app'` instead of `'appium:app'`.
+
 === Example
 
 Below is a sample list of capabilities that can be used on a Xium session:
@@ -67,14 +70,14 @@ const desiredCaps = {
       'appium:automationName': 'XCUITest',
       'appium:bundleId': 'com.example.ToDoApp',
       'appium:deviceOrientation': 'portrait',
-      'appium:sessionName': 'Automation iOS Hybrid App',
-      'appium:sessionDescription': 'Automation session',
+      'kobiton:sessionName': 'Automation iOS Hybrid App',
+      'kobiton:sessionDescription': 'Automation session',
       'appium:noReset': true,
       'appium:fullReset': false,
       'appium:captureScreenshots': true,
       'appium:networkActivity': false,
-      'appium:app': 'kobiton-store:v657531',
-      'appium:deviceGroup': 'ORGANIZATION',
+      'kobiton:app': 'kobiton-store:v657531',
+      'kobiton:deviceGroup': 'ORGANIZATION',
       'appium:deviceName': '*',
       'appium:udid': 'aa2ace81ea5b7e6164965b97c5bf432432',
       'platformName': 'iOS'
@@ -85,12 +88,20 @@ Once these changes are made, your script is ready to run basic Appium 2 sessions
 
 == Notes/Limitations
 
-* Android testing with basic Appium 2 is only available for Ubuntu GEM or Standard mode; iOS can be tested with Ubuntu GEM, nixOS GEM, and Standard mode.
-* No session exhaust is available, which means there are no screenshots, device logs, Appium logs, system metrics at this time. When reviewing sessions, only Session Overview has content; Session Explorer is not available.
-* Session video is available.
-* Mixed sessions are available, but manual interactions in those sessions are not supported.
+* Limited session exhaust is available, which means there are no device logs, device metrics, Appium inspector data, and network payload capture data at this time.
+
+[NOTE]
+====
+
+Although there is a device logs file downloadable from the Overview page of a basic Appium session, the file only contains logs before the basic Appium script started.
+
+====
+
+include::automation-testing:partial$mixed-sessions-basic-appium-limitations.adoc[]
+
 * AI features - including Scriptless, generate Appium script, validations, and flexCorrect - are not supported for basic Appium 2 sessions as they rely heavily on exhaust.
-* Devices with passcodes are not currently supported with basic Appium 2.
+
+* Basic Appium 2 script does not support iOS 15 and later devices with passcode enabled.
 
 == Additional notes
 
