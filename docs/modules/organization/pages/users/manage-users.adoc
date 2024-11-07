@@ -92,3 +92,31 @@ When you're finished, select *Save*.
 == View user history
 
 In *User History*, you can view the xref:organization:users/use-the-user-history-report.adoc[user's history report].
+
+== Export all users
+
+You can export user data as a CSV file, making it easy to retrieve a list of all users in your organization for analysis and reporting.
+
+To export a list of all users:
+
+1. Navigate to *Org Management*, then select the *Users* tab.
+2. In the *Users* tab, click on the Export Users button. A CSV file named UserExport.csv will automatically download to your device.
+[NOTE]
+You must be an Org Admin to access the *Users* tab.
+
+3. Open the `UserExport.csv` file to view the list of users and their associated information.
+
+image:export-users-button.png[width=1000,alt="Button to export all users"]
+
+The `UserExport.csv` file includes the following information for each user:
+
+- User ID
+- Email
+- First Name
+- Last Name
+- Invitation Status (Accepted or Pending)
+- isDeactivated (False or True)
+- isOrgOwner (False or True)
+- SSO Only (False or True)
+- Teams
+- Roles
