@@ -1,0 +1,146 @@
+= Add action groups in Appium script
+:navtitle: Add action groups in Appium script
+
+To enhance test analysis, you can group related Appium actions. Grouping actions can help in troubleshooting by marking specific phases of a test and aligning them with your testing objectives.
+
+== Action group Appium setting
+
+To add actions within your script, use the below Appium setting to assign actions to a specific group.
+
+[options="header"]
+|=======================
+|Appium setting | Description | Default value
+| `kobiton:stepGroup` | Set to any string value to assign actions to a group with the value as name. | `''` (blank)
+|=======================
+
+== Add action group
+
+Before starting a test action, use the `Update Settings` Appium command to set `'kobiton:stepGroup'` to a string.
+
+.Example (JavaScript)
+[source,javascript]
+
+await driver.updateSettings({'kobiton:setGroup': 'Test case A5423'})
+
+All the update settings command, all actions will be added to the group. To assign subsequent actions to a different group, execute the command again with the new group name.
+
+== Examples
+
+Below is a complete example of JavaScript code using `wd` that demonstrates actions being put into 2 groups: '
+
+.Example (JavaScript)
+[source,javascript]
+
+----
+
+import 'babel-polyfill'
+import 'colors'
+import wd from 'wd'
+import {assert} from 'chai'
+
+const username = process.env.KOBITON_USERNAME
+const apiKey = process.env.KOBITON_API_KEY
+const deviceUdid = process.env.KOBITON_DEVICE_UDID
+const protocol = 'https'
+const host = 'api.kobiton.com'
+
+if (!username || !apiKey || !deviceUdid) {
+  console.log('Error: Environment variables KOBITON_USERNAME, KOBITON_API_KEY or KOBITON_DEVICE_UDID are required to execute script')
+  process.exit(1)
+}
+
+const kobitonServerConfig = {protocol, host, auth: `${username}:${apiKey}`}
+
+const desiredCaps = {
+  sessionName: 'Automation test action groups',
+  sessionDescription: 'An automation test with action groups',
+  udid: deviceUdid,
+  noReset: true,
+  fullReset: false,
+  browserName: 'chrome',
+  autoWebview: 'true',
+}
+
+let driver
+
+function sleep(ms) {
+  return new Promise((resolve) => setTimeout(resolve, ms))
+}
+
+describe('Android Web sample', () => {
+  before(async () => {
+    driver = wd.promiseChainRemote(kobitonServerConfig)
+
+    driver.on('status', (info) => {
+      console.log(info.cyan)
+    })
+    driver.on('command', (meth, path, data) => {
+      console.log(' > ' + meth.yellow, path.grey, data || '')
+    })
+    driver.on('http', (meth, path, data) => {
+      console.log(' > ' + meth.magenta, path, (data || '').grey)
+    })
+
+    try {
+      await driver.init(desiredCaps)
+    }
+    catch (err) {
+      if (err.data) {
+        console.error(`init driver: ${err.data}`)
+      }
+      throw err
+    }
+  })
+
+  it('should perform a simple login', async () => {
+    await driver.settings()
+
+    //Start adding actions to group 'Test login'
+    await driver.updateSettings({'kobiton:setGroup': 'Test login'})
+
+    // Send username and password to log in.
+    await driver.get('https://the-internet.herokuapp.com/login')
+     .waitForElementByName('username')
+     .sendKeys('tomsmith')
+     .sleep(1000)
+     .waitForElementByName('password')
+     .sendKeys('SuperSecretPassword!')
+     .sleep(3000)
+     .keys(wd.SPECIAL_KEYS.Enter)
+
+    // Login completes. Start adding actions to group 'Test home page'
+    await driver.updateSettings({'kobiton:setGroup': 'Test home page'})
+    await driver.settings()
+
+    await driver.get('https://the-internet.herokuapp.com/')
+    await sleep(2000)
+    await driver.title()
+
+  })
+
+  after(async () => {
+    if (driver != null) {
+    try {
+      await driver.quit()
+    }
+    catch (err) {
+      console.error(`quit driver: ${err}`)
+    }
+  }
+  })
+})
+
+
+----
+
+== Grouped actions in Session Explorer
+
+
+
+== Limitations/Notes
+
+* Only supported in Xium and Appium 2 Basic automation sessions.
+
+* Although any value can be set as action group name, avoid very long name.
+
+* After adding action group, setting the group name to empty assigns the subsequent commands to the previous group.
