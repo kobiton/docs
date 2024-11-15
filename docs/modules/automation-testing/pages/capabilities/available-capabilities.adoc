@@ -16,8 +16,6 @@ To use these in Basic Appium 2 script, use the `'kobiton:'` vendor prefix. Examp
 [IMPORTANT]
 Not all Kobiton capabilities can be used in Basic Appium 2 script.
 
-
-
 === `app`
 
 The app to use during the test session. If the app is not already installed on the device, the value of the second parameter will be used to download and install the app. *Only available for app testing*.
@@ -218,6 +216,7 @@ Kobiton supports most Appium capabilities. The capabilities documented below are
 [NOTE]
 For Basic Appium 2 session, follow the https://appium.io/docs/en/2.0/guides/migrating-1-to-2/#capabilities[Appium 2 guidelines] for vendor prefix.
 
+[#_accessKey]
 === `accessKey`
 
 The Kobiton xref:profile:manage-your-api-credentials.adoc#_get_an_api_key[API key,window=read-later] for authentication. Only required for Appium `java-client` 9.2.2 or above.
@@ -331,6 +330,7 @@ The device Unique Device Identifier (UDID).
 capabilities.setCapability("appium:udid", "01234567-89ab-cdef-0123-456789abcdef"); // Use the device with this UDID.
 ----
 
+[#_username]
 === `username`
 
 The Kobiton xref:profile:manage-your-profile.adoc[username,window=read-later] for authentication. Only required for Appium `java-client` 9.2.2 or above.
