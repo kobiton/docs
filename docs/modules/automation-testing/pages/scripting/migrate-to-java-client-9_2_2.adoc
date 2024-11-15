@@ -1,0 +1,81 @@
+= Migrate Java test to Java Appium Client 9.2.2 or above
+:navtitle: Migrate Java test to Java Appium Client 9.2.2 or above
+
+
+Java Appium Client (`java-client`) 9.2.2 or above introduce several changes that cause issues with automation test:
+
+* *Authentication Issue*: The Appium Java Client 9.2.2 no longer includes authentication (username and key) in API requests by default. This change means credentials aren’t being transmitted as they were in previous versions.
+
+* *Capabilities Issue*: The library now defaults to using `firstMatch` capabilities instead of the `alwaysMatch` or `desiredCapabilities` that Kobiton system expects.
+
+To successfully migrate Java test script using lower 'java-version' versions to 9.2.2 or above, the following changes are required:
+
+* Remove the username and API key from the Appium request.
+
+* Provide the `username` and `accessKey` capabilities for authentication.
+
+== Update Java test script for migration
+
+[IMPORTANT]
+Standalone/On-Prem customers with version 4.15S or below must update to 4.16.1S before migrating.
+
+. Open the Java test script for editing.
+
+. Remove the username and API key from Kobiton Appium server's URL (`kobitonServerUrl`).
+
++
+
+[tabs]
+====
+
+Cloud and Hybrid::
+
++
+
+.Examples
+[source,java]
+----
+
+// Before editing
+String kobitonServerUrl = "https://johndoe:301***8-6**3-42ab-8**1-d87cc*****3@api.kobiton.com/wd/hub";
+
+// After editing
+String kobitonServerUrl = "https://api.kobiton.com/wd/hub";
+
+----
+
+Standalone/On-Prem::
+
++
+
+.Examples
+[source,java]
+----
+
+// Before editing
+String kobitonServerUrl = "http[s]://johndoe:301***8-6**3-42ab-8**1-d87cc*****3@[Portal server hostname or IP]:3000/wd/hub";
+
+// After editing
+String kobitonServerUrl = "http[s]://[Portal server hostname or IP]:3000/wd/hub";
+
+----
+
+====
+
+. Add 2 new capabilities xref:capabilities/available-capabilities.adoc#_username[username,window=read-later] and xref:capabilities/available-capabilities.adoc#_accessKey[accessKey,window=read-later] into the list of capabilities.
+
++
+
+.Examples
+[source,java]
+----
+
+
+
+capabilities.setCapability("appium:username","johndoe");
+
+capabilities.setCapability("appium:accessKey","301***8-6**3-42ab-8**1-d87cc*****3");
+
+----
+
+. Run the script to verify the authentication.
