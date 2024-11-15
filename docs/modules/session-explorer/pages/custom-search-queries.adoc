@@ -116,9 +116,19 @@ Returns all sessions using devices with this screen resolution.
 resolution:720x1080 # Returns all sessions using a device with a 720x1080 screen resolution.
 ----
 
+=== `session_tag:`
+
+You can search for sessions using a specific tag.
+
+.Example
+[source,plaintext]
+----
+session_tag:login-flow # Find all sessions with the tag `login-flow`.
+----
+
 === `status:`
 
-Returns all sessions matching this status. For more information, see xref:session-explorer:search-for-a-session.adoc#_use_session_tags[Session tags].
+Returns all sessions matching this status. For more information, see xref:session-explorer:search-for-a-session.adoc#_use_session_status_or_type[Session tags].
 
 .Example
 [source,plaintext]
