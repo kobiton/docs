@@ -1,0 +1,167 @@
+= Create and manage test run
+:navtitle: Create and manage test run
+
+Learn how to create and manage test runs to efficiently execute tests across multiple devices.
+
+== What is a test run?
+
+A test run consists of one or more sessions in which the AI performs the test steps from a test case or test suite on one or more devices. This type of session is called a revisit execution.
+
+Things to note regarding test runs:
+
+* The revisit session appears in the sessions list with the *Type* as Appium and the *Name* as `Revisit execution <revisit ID>` .
+* A revisit session only executes one test case on one device. If a test run includes multiple test cases (a test suite) or multiple devices, it will generate multiple revisit sessions.
+
+== Before you start
+
+* Create a baseline session
+* Create a test case
+* (Optional) Remediate test steps
+* (Optional) Create a test suite
+
+== Create a Test Run
+
+From the menu, select the *Test Management* icon. Then select *Test Runs*.
+Select *New Test Run*.
+
+IMAGE-----------------
+
+The *Test Run Setup* screen displays.
+
+IMAGE-----------------
+
+In this screen, input the following:
+
+* Name
+* Description (optional)
+
+Follow the next sections to configure:
+
+* Test Case or Test Suite
+* Application Versions
+* Device Bundle or Individual Devices
+* Device Allocation Strategy
+
+=== Test Case or Test Suite
+
+On *Test Run Setup* page, you can choose either *Test Case* or *Test Suite*, then choose one test case or one test suite from the dropdown list.
+
+IMAGE----------------
+
+Optionally, you can select *Customize* to customize the test case or test suite.
+
+* For Test Case, you can select the version to run. By default, the latest version is selected.
+
+IMAGE----------------
+
+* For Test Suite, you can select or deselect the individual test cases to run, as well as the version to run for each test case.
+
+IMAGE----------------
+
+After customizing, select *Save* to confirm the changes.
+
+=== Application Versions
+
+After selecting a test suite or test case, the available *Application Versions* for the test case or test suite will be displayed. If an application has multiple versions, you can choose the specific version using the dropdown.
+
+IMAGE----------------
+
+=== Device Bundle or Individual Devices
+
+After selecting an application version, choose either *Device Bundle* or *Individual Devices* to run the test case or test suite on.
+
+You can select either:
+
+* One device bundle,
+
+IMAGE----------------
+
+NOTE: The NOVA Recommended Devices bundle is automatically created by the system. To create a custom bundle, follow https://docs.kobiton.com/organization/device-bundles/create-a-device-bundle[this guide].
+
+* Or at least one device in the dropdown list for *Individual Devices*, which includes all public and private devices assigned to your current team.
+
+IMAGE ----------------
+
+NOTE: Only online devices in the portal are available for selection in the *Individual Devices* list.
+
+If *Device Bundle* is selected, select *Customize* to choose the devices to run in that bundle, then choose *Save*.
+
+IMAGE-----------------
+
+=== Device Allocation Strategy
+
+Next, choose a *Device Allocation Strategy*. This only applies when running a test suite.
+
+IMAGE-----------------
+
+=== Execute the test run
+
+After filling in all required fields, select *Run* to create and execute the test run.
+
+IMAGE-----------------
+
+Once the test run is created, the success message appears with the option to *View Test Run*.
+
+IMAGE-----------------
+
+Either select *View Test Run* on the success message, or select the newly created test run *ID* in the *Test Runs* list to view the test run results.
+
+IMAGE-----------------
+
+Alternatively, you can create a test run from a test case or a test suite.
+
+== Run a test case or test suite
+
+To create a test run from a test case, go to *Test Management → Test Cases*, then either:
+
+* Select the *Play* icon in the *Test Case Details* page.
+
+IMAGE-----------------
+
+* Choose the *3-dot* icon under *Actions* in the Test Case list, then select *Run Test Case*.
+
+To create a test run from a test suite, go to *Test Management → Test Suite*, choose the *3-dot* icon, then select *Run Test Suite*.
+
+IMAGE-----------------
+
+The *Test Run Setup* displays with the following information pre-filled:
+
+* Test Case or Test Suite
+* Application Versions
+
+Choose the *Device Bundle* or *Individual Devices* to run on and *Device Allocation Strategy* (if needed), then select *Run* to create and execute the test run.
+
+== Rerun a test run
+
+After creating a test Run, you can quickly create a new test run with the same setup. This is called a rerun.
+
+To do this, select the *3-dot* icon in the *Test Runs* list or *Test Run Results* page, then select *Rerun Test Run*.
+
+IMAGE-----------------
+
+The *Test Run Setup* uses the last run’s configuration, pre-filling the following informating with the same values selected in the original test run:
+
+* Test Case or Test Suite
+* Application Versions
+* Individual Devices or Device Bundle
+* Device Allocation Strategy
+
+Select *Run* to create and execute the test run.
+
+== Manage a test run
+
+To manage a test run, select the *Test Management* icon from the menu, then select *Test Runs*.
+
+The Test Run list page displays.
+
+IMAGE-----------------
+
+On this page, you can do the following:
+
+* Search for test run by name, tags, OS, created by, and created on.
+* Open the *Test Run Results* page by selecting the test run *ID*.
+* Select the *3-dot* icon, then:
+** *Rerun Test Run* to create a new test run with the same setup.
+** *Terminate Test Run* to terminate all running revisit session(s).
+** *Delete Test Run* to delete the test run.
+
