@@ -9,17 +9,17 @@ After creating a test run, you can view the test run results using one of the fo
 
 * After creating a test run, select *View Test Run* from the success notification.
 
-IMAGE--------------
+image:test-management:test-run-review-test-run-results-view-test-run.PNG[width=700,alt="Selecting the View Test Run options from the success notification popup"]
 
 * Select the test run *ID* from the *Test Runs* page.
 
-IMAGE--------------
+image:test-management:test-run-review-test-run-results-id-from-test-runs.PNG[width=700,alt="Selecting the test run ID from the Test Runs page"]
 
 == Test Run Results
 
 The following is an example of the Test Run Results page:
 
-IMAGE--------------
+image:test-management:test-run-review-test-run-results-test-run-results.PNG[width=700,alt="A view of the Test Run Results page"]
 
 The *Test Run Results* page contains:
 
@@ -31,13 +31,13 @@ The *Test Run Results* page contains:
 
 The following details displayed on the *Test Run Results* page provide an overview of the test run’s key information:
 
-IMAGE--------------
+image:test-management:test-run-review-test-run-results-test-run-results-general-information.PNG[width=700,alt="A view of the details on the Test Run Results page"]
 
 * *App version*: the app version used for the test run.
 * *Test*: the name of the test run.
 * *Test Run ID*: the unique identifier assigned to the test run.
 * *Creator*: the user who created the test run.
-The icon representing the OS (Android or iOS) and number of devices being tested.
+* The icon representing the OS (Android or iOS) and number of devices being tested.
 * *Created on*: the date and time the test run was created.
 * *Elapsed*: the total time that has passed since the test run began.
 * *Crash*: number of instances where an app crash is detected. You can select this button to filter revisit executions that contains Crash instances.
@@ -47,7 +47,7 @@ The icon representing the OS (Android or iOS) and number of devices being tested
 
 By selecting the *3-dot icon*, you can select the following actions for the test run:
 
-IMAGE---------------
+image:test-management:test-run-review-test-run-results-more-actions-3dot-icon.PNG[width=700,alt="A view of action that can be performed by clicking the 3-dot icon"]
 
 * *Rerun Test Run*: create a new test run with the same setup.
 * *Terminate Test Run*: terminate all running revisit execution(s).
@@ -55,7 +55,7 @@ IMAGE---------------
 
 Selecting the *Show* button will open a dialog to filter the revisit executions by status:
 
-IMAGE---------------
+image:test-management:test-run-review-test-run-results-more-actions-show-button.PNG[width=700,alt="Filtering the revisit executions by status via the Show button"]
 
 === Revisit execution results
 
@@ -63,7 +63,7 @@ Below the general information, a grid displays the status of each test case’s 
 
 NOTE: The latest status of the revisit executions and validation icons will be refreshed periodically.
 
-IMAGE----------------
+image:test-management:test-run-review-test-run-results-revisit-execution-results.PNG[width=700,alt="Revisiting the execution resutls"]
 
 Possible revisit execution statuses are:
 
@@ -78,27 +78,25 @@ Once the revisit session is created, select the status to open the *Explorer* pa
 Next to each test case in the grid, there are several icons:
 
 * *Sensitive data indicator*: if the Test Case has sensitive data, a lock icon displays.
-
-IMAGE-----------------
-
++
+image:test-management:test-run-review-test-run-results-revisit-execution-results-sensitive-data-indicator.PNG[width=500,alt="The sensitive data indicator and the helper text associated with it"]
 * *View Test Case Details*: go to the Test Case Details screen.
-
-IMAGE-----------------
-
++
+image:test-management:test-run-review-test-run-results-revisit-execution-results-tast-case-results.PNG[width=500,alt="The icon to view test case details"]
 * *View Camera Roll*: see the Camera Roll section.
-
-IMAGE-----------------
++
+image:test-management:test-run-review-test-run-results-revisit-execution-results-camera-roll.PNG[width=500,alt="The icon to view the camera roll"]
 
 == Test Run Overview (Camera Roll)
 
 Select *View Camera Roll* to compare the steps outlined in the test case with the steps executed during each test run session.
 
-IMAGE-----------------
+image:test-management:test-run-review-test-run-results-test-run-overview-view-camera-roll.PNG[width=700,alt="Viewing the camera roll to compare the steps of the test case with the steps executed during each test run session"]
 
 To view the actual test steps for a device, expand the individual session.
 
 NOTE: Only completed sessions can be expanded to view the test steps.
 
-IMAGE-----------------
+image:test-management:test-run-review-test-run-results-test-run-overview-individual-sections.PNG[width=700,alt="Viewing the actual test steps for a device"]
 
 If a blocker is encountered, select *Resolve Blocker* to remediate it.
