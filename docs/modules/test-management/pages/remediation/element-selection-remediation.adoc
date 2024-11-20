@@ -1,12 +1,70 @@
-= Element selection remediation
-:navtitle: Element selection remediation
+= Resolve a blocker
+:navtitle: Resolve a blocker
 
-The User Interface (UI) of an element often changes across multiple devices. This can interrupt revisits on different devices because it's challenging to manage the appearance of an element through various device ratios, like 18:9, 17:9, and 16:9. But, with Scriptless Automation, you can easily handle these challenges through the UI without any scripting.
+Learn how to resolve a blocker using Blocker Remediation, so you can execute the test run successfully.
 
-image:scriptless-automation:ui-remediation-window.png[width=700,alt="UI Remediation window"]
+== What is a blocker?
 
-When revisiting on a Galaxy J5, a blocker is raised because a UI change covers and makes the **Login** button un-clickable. You can resolve this by manually selecting the **Login** button in the Scriptless Automation Remediation. This selection becomes the new 'baseline' for the test case, ensuring smooth execution.
+In test steps that use the touch action, the user interface (UI) of an element often changes across multiple devices. If the difference is significant, the AI will raise a blocker and is unable to select the element.
 
-image:scriptless-automation:ui-remediation2.png[width=700,alt="Another view of UI Remediation window"]
+This situation can disrupt revisits on different devices due to difficulties in managing element appearance across various screen ratios, such as 18:9, 17:9, and 16:9. However, you can easily resolve these issues in Test Management without scripting by using Blocker Remediation.
 
-In situations where different screen ratios crop a list view cell, making it undetectable, this would typically result in a failed test case with other “Record & Playback” technologies. However, with Scriptless Automation, you can select the correct list view cell and submit the remediation to continue the test.
+== Resolve a blocker
+
+When a blocker is encountered, the *Test Run Results* page will display the *Needs Actions* status:
+
+image:test-management:remediation-resolve-a-blocker-needs-action-status.PNG[width=750]
+
+Select the *Needs Actions* status to go to the *Session Explorer* page.
+
+In the Session Timeline, the step with the blocker is marked with a red icon. Select this icon, then choose *Resolve Blocker*.
+
+image:test-management:remediation-resolve-a-blocker-session-explorer.PNG[width=750,alt="Session timeline with blocker marked with a red icon."]
+
+The *Blocker Remediation* popup appears:
+
+image:test-management:remediation-resolve-a-blocker-blocker-remediation-popup.PNG[width=750,alt="Blocker Remediation popup with Baseline and Revisit screens"]
+
+The following tools will help you remediate:
+
+* Navigation buttons to switch between test steps.
+
+image:test-management:remediation-resolve-a-blocker-navigation-buttons.PNG[width=750,alt="Navigation buttons to switch between test steps"]
+
+* The original screenshot of the baseline session is shown alongside the screenshot of the revisit session.
+** The selected element is highlighted in the *Baseline* screenshot.
+** Hover the mouse over the *Revisit* screenshot to highlight the element closest to it.
+
+image:test-management:remediation-resolve-a-blocker-baseline-revisit.PNG[width=750,alt="Selected element is highlighted. Hover over the Revisit screenshot to highlight the element."]
+
+To remediate a test step:
+
+. Navigate to the desired test step using the navigation buttons.
++
+NOTE: You can only navigate to test steps that use the touch action
+. Select an element from the Revisit screenshot.
+. When finished, select Submit.
+
+NOTE: You can only resolve blocker for one test step in one revisit session. If a test run has many test steps that require Blocker Remediation, rerun the test run again, resolve the next blocker, and repeat until there is no blocker left.
+
+CAUTION: Once you submit, you cannot resolve the blocker for the current session again. Proceed with caution.
+
+After submitting, the submitted test step will be set as the new baseline when running the same test case on any device with the same model and OS version. To verify, rerun the test run again on any device with the same model and OS version.
+
+== Notes
+
+Blocker Remediation does not work in the following cases:
+
+* The element does not involve a touch action, such as swiping or scrolling.
+* The element’s position and appearance is not static, such as:
+** Floating element.
+** Element that can hide or display based on user behavior (playback button in videos player).
+** Element with animations.
+* The element cannot be identified via Appium Inspector, such as _label_ or _xPath_, and requires touching on an exact coordinate on the screen. For example, an object in a mobile game.
+* The element is outside the current view and requires additional actions to be visible, such as scrolling vertically more than 5 pages, scrolling horizontally, or swiping left/right.
++
+NOTE: The AI can automatically find the element by scrolling vertically within a 5-page range.
+* The element is not selectable due to a bug.
+* An in-app pop-up (that did not appear in the baseline session) blocks the element from being selected.
+
+NOTE: System pop-ups, such as software update notices, are automatically dismissed by the AI.

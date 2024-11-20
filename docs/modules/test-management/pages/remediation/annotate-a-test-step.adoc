@@ -1,37 +1,73 @@
-= Annotate a test step for Scriptless Automation
-:navtitle: Annotate a test step
+= Remediate element selection
+:navtitle: Remediate element selection
 
-Learn how to annotate a test step from your xref:scriptless-automation:create-a-baseline-session.adoc[baseline session], so you can...
+Learn how to remediate element selection when the AI struggles to accurately identify elements due to complex layout or overlapping elements. Remediation ensures that all test steps are correct, improving the reliability and success rate of automated test runs.
+
+== What is element selection remediation?
+
+When you complete the baseline session, Kobiton's AI Engine analyzes the performed actions and identifies which visual elements were interacted with. However, there are cases where multiple visual elements overlap, causing the AI Engine to return low confidence in selecting the correct element.
+
+In these cases, the AI requires user input to select the correct element.
+
+NOTE: You can only remediate steps with Touch action.
+
+NOTE: Element selection remediation is optional but recommended. Without remediation, the AI may select the wrong element during a test run, decreasing the likelihood of success.
 
 == Before you start
 
-You'll need to xref:scriptless-automation:create-a-baseline-session.adoc[create a baseline session].
+* Create a baseline session.
+* Convert the baseline session to test case.
 
-== Annotate a test step
+== Remediate element selection
 
-In *Sessions*, xref:session-explorer:search-for-a-session.adoc[search for a session], then select the session.
+After converting a session to a test case, if any steps needs remediation, the following message appears next to Test Steps:
 
-image:select-a-session-context.png[width=1000,alt="Search and select a session"]
+image:test-management:remediation-remediate-element-selection-test-steps-message.PNG[width=750,alt="Remediation required message with warning that a specific number of steps require remediation"]
 
-Select *Automation Test Case*.
+Select the *Remediate test steps* button.
 
-image:select-automated-test-case-context.png[width=1000,alt="Select Automated Test Case"]
+The *Element Selection Remediation* popup appears as shown for steps with touch action:
 
-If one of your test steps were flagged, you'll see a warning similar to the following:
+image:test-management:remediation-remediate-element-selection-touch-action-steps.PNG[width=750,alt="Steps with touch action"]
 
-image:annotate-warning-context.png[width=1000,alt="Test steps are flagged with the below warning"]
+In this popup, you are provided with the following tools to assist in remediating:
 
-Scroll through your test steps and look for any steps highlighted in red with the option to annotate.
+* Navigation buttons to switch between test step:
 
-image:select-annotate-closeup.png[width=900,alt="Select Annotate"]
+image:test-management:remediation-remediate-element-selection-naigation-steps.PNG[width=300,atl="Next page and previous page buttons"]
 
-Select *Annotate*.
+* The element inspector with element hierarchy and attributes:
 
-image:test-case-ready-to-go-context.png[width=1000,alt="Test cases are ready to go"]
+image:test-management:remediation-remediate-element-selection-element-inspector.PNG[width=750,alt="element inspector with element hierarchy and attributes"]
 
-== Annotation options
+* Screenshot of the test step with the selected element highlighted, and the dot showing the coordinates of the touch action:
 
-These are the different options for annotating a test step:
+image:test-management:remediation-remediate-element-selection-touch-action-coordinates.PNG[width=300,alt="dot showing the coordinates of the touch action"]
 
-** xref:test-management:remediation/crash-remediation.adoc[]
-** xref:test-management:remediation/element-selection-remediation.adoc[]
+To remediate a test step:
+
+. Navigate to the test step using the navigation buttons.
+. Select an element from either the element hierarchy or the screenshot. Refer to the https://kobiton.atlassian.net/wiki/spaces/KOBITON/pages/3640131693/Remediate+element+selection+Review#Remediation-guidelines[remediation guidelines] when selecting the element.
++
+NOTE: You can hover the mouse over the screenshot to highlight the element closest to it.
+. When finished, select *Submit*.
++
+CAUTION: Once you submit, you cannot remediate the same test step again. Proceed with caution.
+
+Repeat these steps for all test steps that need remediation. Once all test steps have been remediated, the following message will appear:
+
+image:test-management:remediation-remediate-element-selection-test-steps-message-success.PNG[width=750,alt="Remediation steps completion popup, success message"]
+
+Select the *Save* button to save the changes to a new test case version.
+
+CAUTION: Changes will not be automatically saved.
+
+At this point, the test case is fully prepared and ready for test runs.
+
+== Remediation guidelines
+
+When remediating, follow these guidelines:
+
+* Select the element that is as low in the hierarchy as possible, while ensuring it is still the correct element.
+* Chose the element closest to the original touch action.
+* Whenever possible, select an element with a unique attribute.
