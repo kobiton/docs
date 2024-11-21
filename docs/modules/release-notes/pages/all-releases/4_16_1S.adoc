@@ -26,7 +26,14 @@ To reduce the occurrence of this issue, update *Play Store services*, *Chrome*, 
 [NOTE]
 For iOS/iPadOS 18.0.1, the cleanup policy does not clear signed-in accounts in the Mail app and Safari browser cache.
 
-* MacOS 15 Sequoia (requires deviceConnect 4.16)
+* MacOS 15 Sequoia (*except* Standalone portal with self-signed SSL certificate)
+
+[WARNING]
+====
+
+Portal with a *self-signed SSL certificate* does not support Mac mini hosts with MacOS Sequoia. *Do not* update to Sequoia on the Mac mini host in this case until further notice.
+
+====
 
 [NOTE]
 ====
@@ -122,21 +129,18 @@ You cannot set `“kobiton:stepGroup"` to a blank value. If you do, the steps wi
 
 image:session-explorer-timeline-with-grouping.png[width=1000,alt="The timeline with steps grouped"]
 
-== Hybrid Enterprise Lightning: update `adb` version
+== Standalone/On-Prem Lightning: update `adb` version
 
 This release upgraded `adb` to version 35.0.2 on the Mac mini and GEM.
 
 * For the Mac mini, the `adb` service is automatically updated when you upgrade to deviceConnect 4.16.
-* For our Hybrid Enterprise Lightning customers who have a GEM, please contact Kobiton Support to update the Kobiton software and `adb` on your GEM.
+* For our Standalone/On-Prem Lightning customers, please contact Kobiton Support to update the Kobiton software and `adb` on your GEM.
 
 == New virtualUSB client
 
 New virtualUSB clients for macOS and Windows are available with this release. They provide support for Android Studio Jellyfish and address an issue with blocked connections with unpaired iOS/iPadOS devices.
 
-Cloud and Hybrid customers can download the new clients from the download links in the left-hand nav of the Kobiton Portal.
-
-[NOTE]
-Standalone customers can contact Kobiton support for the latest download links after the 4.16S release.
+Standalone customers can contact Kobiton support for the latest download links.
 
 [NOTE]
 ====
