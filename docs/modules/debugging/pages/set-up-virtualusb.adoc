@@ -11,16 +11,34 @@ You'll need to xref:debugging:local-devices/configure-your-personal-computer.ado
 
 You'll need a personal computer with the following system specifications:
 
-* *macOS:* Monterey 12 or later, and Xcode 13 or later.
-* *Windows:* Windows 10 or later.
-
-== Add `adb` environment variables
-
-To debug Android devices, install link:https://developer.android.com/tools/releases/platform-tools[Android Debug Bridge (adb)] and add the following `adb` environment variables to your path:
 
 [tabs]
 ======
 macOS::
++
+
+* MacOS Monterey 12 or later.
+
+* Xcode 13 or higher (be sure to select a version that works with the iOS versions to be tested)
+
+Windows::
+
+* Windows 10 or later.
+
+======
+
+[IMPORTANT]
+For both MacOS and Windows, administrative privilege is required to set up and use virtualUSB.
+
+== Android requirements
+
+To connect to Android devices via virtualUSB, you must install Android Debug Bridge (`adb`) from the https://developer.android.com/tools/releases/platform-tools#downloads[Android SDK Platform-Tools,window=read-later] package. If you don't already have `adb` on your workstation, download it from Android or install an IDE like Android Studio.
+
+Follow the https://developer.android.com/studio/command-line/variables[official Android developer guide] to set up the required environment variables for adb. You can also run the below example commands to set the environment variables.
+
+[tabs]
+======
+macOS with Zsh shell::
 +
 --
 [source,shell]
@@ -28,6 +46,8 @@ macOS::
 export ANDROID_HOME=path/to/Android/sdk
 export PATH=$PATH:$ANDROID_HOME/tools:$ANDROID_HOME/tools/bin:$ANDROID_HOME/platform-tools
 ----
+[NOTE]
+Replace `path/to/Android/sdk` with the actual location of SDK installation directory (the folder containing `platform-tools`).
 --
 
 Windows::
@@ -38,12 +58,31 @@ Windows::
 set ANDROID_HOME=C:\path\to\Android\Sdk
 set PATH=%PATH%;%ANDROID_HOME%\tools;%ANDROID_HOME%\platform-tools
 ----
+[NOTE]
+Replace `C:\path\to\Android\Sdk` with the actual location of SDK installation directory (the folder containing `platform-tools`).
 --
 ======
 
-== Install iTunes and third-party libraries
+== For MacOS only: Prepare debug symbols for iOS devices
 
-For Windows, link:https://support.apple.com/HT210384[install iTunes]. Optionally, install a third-party library that helps Windows natively communicate with iOS devices.
+If your network has a low bandwidth, fetching debug symbol files for Xcode via virtualUSB can be slow and unreliable. In such cases, you'll need to manually prepare the debug symbols, which are specific to the device’s iOS version. If needed, contact our Support team and request the debug symbols for your devices. Then, copy the debug symbols to your local Mac folder:
+[source]
+/Users/<your username>/Library/Developer/Xcode/iOS DeviceSupport/
+
+== Clean up previous virtualUSB version before installing new version
+
+If you have installed virtualUSB previously, we recommend uninstalling the old version before installing a new one. See xref:uninstall-virtualusb.adoc[Uninstall virtualUSB,window=read-later] for guidance.
+
+== Download virtualUSB
+
+Download the appropriate virtualUSB for the current OS:
+
+* MacOS: https://kobiton-us-east.s3.amazonaws.com/downloads/virtualUSB/virtualUSB.pkg[virtualUSB.pkg]
+* Windows: https://kobiton-us-east.s3.amazonaws.com/downloads/virtualUSB/virtualUSB.msi[virtualUSB.msi]
+
+Alternatively, click the Download button on the navigation bar of the Kobiton Portal, then download the appropriate virtualUSB package (for Cloud and Hybrid customers only).
+
+image:debugging:download-virtualusb-closeup.png[width=500,alt="Download virtual USB from Kobiton portal"]
 
 == Install virtualUSB
 
@@ -52,33 +91,78 @@ For Windows, link:https://support.apple.com/HT210384[install iTunes]. Optionally
 macOS::
 +
 --
-Download virtualUSB from the link:https://portal.kobiton.com/[Kobiton portal].
+[WARNING]
+Do not install virtualUSB on a Mac that has an existing deviceConnect installation.
 
-image:debugging:download-virtualusb-closeup.png[width=500,alt="Download virtual USB from Kobiton portal"]
+Open the downloaded *virtualUSB.pkg* file to begin the installation. Select *Continue* and follow the on-screen guide to install.
+
+image:
+
+After the installation completes, go to the *Applications* folder in Finder, and open *virtualUSB*:
+
+image:
+
+If this is the first time launching the app, provide the administrator password to install the required daemon:
+
+image:
+
+Agree to the License terms and select Continue:
+
+image:
+
 --
 
 Windows::
 +
 --
-Download virtualUSB from the link:https://portal.kobiton.com/[Kobiton portal].
+Open the downloaded virtualUSB.msi file. When the virtualUSB Setup Wizard starts, select Next, then follow the on-screen guide to install.
 
-image:debugging:download-virtualusb-closeup.png[width=500,alt="Download virtual USB from Kobiton portal"]
+image:
 
-When your installation is complete, enter the following commands:
+During installation, select *Yes* in the *User Account Control* pop-up to give the installer administrative permission:
 
-.Windows
-[source,powershell]
-----
-cd C:\Program Files\virtualUSB
-vusb setup-ios
-----
+image:
+
+When your installation is complete, launch *virtualUSB* from the Windows Start menu:
+
+image:
+
+Upon the first time launching the app, you must agree to the License terms and select *Continue*:
 --
 ======
 
-== Launch virtualUSB
+== Launch virtualUSB and log in
 
-Finally, launch virtualUSB and sign in using your email address and password or xref:profile:manage-your-api-credentials.adoc[Kobiton API key].
+[tabs]
+====
+
+Cloud/Hybrid::
++
+--
+
+Launch virtualUSB and sign in using your email address and password or xref:profile:manage-your-api-credentials.adoc[Kobiton API key].
 
 image:debugging:sign-in-virtualusb-context.png[width=1000,alt="Sign in Virtual USB using email or API Key"]
 
-Now you can debug cloud devices using virtualUSB. If you plan on debugging _local_ devices using virtualUSB, you'll need to xref:debugging:local-devices/configure-your-personal-computer.adoc[configure your personal computer for debugging local devices].
+--
+
+Cloud/Hybrid with custom domain::
++
+--
+
+Select the **Login to your custom domain portal** checkbox in the login screen.
+
+Input the values for the two additional fields as below, replacing `<custom-domain>` with the customer's domain name:
+
+API Base Url: _https://api.<custom-domain>.com_
+
+API GRPC Base Url: _https://proxy-api-public-grpc-server.<custom-domain>.com_
+
+Input the *Username/Email* and *Password/API Key* to log in.
+
+The values for API Base Url and API GRPC Base Url are remembered and prefilled the next time you open the app.
+
+--
+
+
+====
