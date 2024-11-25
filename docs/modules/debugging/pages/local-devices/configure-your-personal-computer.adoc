@@ -10,109 +10,65 @@ Learn how to configure your personal computer, so you can debug local or private
 You'll need to complete the following:
 
 * xref:debugging:set-up-virtualusb.adoc[Set up virtualUSB] on your personal computer.
-* To debug on Kobiton Standalone, get xref:debugging:local-devices/configure-kobiton-standalone-server.adoc#_get_server_details_for_your_team[server details] from your system administrator.
 
-== Modify `config.ini`
+== Trust self-signed SSL certificate (Standalone/On-Prem only)
 
-In the terminal, open the `virtualUSB` directory:
+[NOTE]
+The below steps are only needed if the Standalone/On=Prem portal is using a self-signed SSL certificate.
+
+Request the IT administrator of your organization for the root CA certificate from which the SSL cert of the OP server is issued. It should be a file named `root.crt` or `ca.crt`. Then proceed to import the certificates.
 
 [tabs]
-======
-macOS::
+====
+
+MacOS::
 +
 --
-[source,shell]
-----
-cd ~/Library/"Application Support"/virtualUSB
-----
+
+Request the IT administrator of your organization for the end-entity certificate from which the SSL cert of the OP server is issued. It should be a file named `ssl.crt`. Tranfer the certificate file to the MacOS machine.
+
+Open the Keychain Access application.
+
+image:
+
+Open Finder, go to the location of the `ssl.crt` file, then drag and drop the file into the Keychain Access application.
+
+Double-click on the newly added certificate file. In the dialog, choose the Always Trust option from the dropdown list for the two fields:
+
+* Secure Sockets Layer (SSL)
+
+* X.509 Basic Policy
+
+image:
+
+Close the dialog and enter the admin password of the user workstation to save the changes.
+
 --
 
 Windows::
 +
 --
-[source,shell]
-----
-cd C:\Users\<your-user-name>\AppData\Roaming\virtualUSB
-----
+
+Request the IT administrator of your organization for the root CA certificate from which the SSL cert of the OP server is issued. It should be a file named `root.crt` or `ca.crt`. Tranfer the certificate file to the Windows machine.
+
+On the Windows machine, double-click the file, then select Install Certificate on the Certificate window.
+
+image:
+
+On the next screen, choose Local Machine. This requires administrators privileges.
+
+image:
+
+On the next screen, choose Place all certificates in the following store, then select Browse.
+
+image:
+
+Choose Trusted Root Certification Authorities, then select OK.
+
+image:
+
+Select Next, then Finish. The root CA certificate is now imported to the end-user workstation trust store.
+
+image:
+
 --
-======
-
-Open `config.ini` in a text editor and look for the following lines:
-
-[tabs]
-======
-Kobiton Cloud::
-+
---
-[source,plaintext]
-----
-Kobiton.ApiBaseUrl: https://<network-address>/
-Kobiton.ApiGrpcBaseUrl: https://<network-address>/
-----
---
-
-Kobiton Standalone::
-+
---
-[source,plaintext]
-----
-Kobiton.ApiBaseUrl: https://<network-address>:<api-port-baseurl>
-Kobiton.ApiGrpcBaseUrl: https://<network-address>:<api-port-grpc-baseurl>
-----
---
-======
-
-Debugging a local device on *Kobiton Cloud* versus *Kobiton Standalone* requires different values. Use the following table to assign the correct values:
-
-[tabs]
-======
-Kobiton Cloud::
-+
---
-[cols="1,2,2"]
-|===
-|Placeholder|Description|Kobiton Cloud
-
-|`<network-address>`
-|The server's network address.
-|Set to `kobiton`, or your organization's private domain name.
-|===
-
-.Example
-[source,plaintext]
-----
-Kobiton.ApiBaseUrl: https://api.mycompany.com
-Kobiton.ApiGrpcBaseUrl: https://proxy-api-public-grpc-server.mycompany.com
-----
---
-
-Kobiton Standalone::
-+
---
-[cols="1,2,2"]
-|===
-|Placeholder|Description|Kobiton Standalone
-
-|`<network-address>`
-|The server's network address.
-|Set to the value listed in your xref:_before_you_start[server information].
-
-|`<api-port-baseurl>`
-|The server's API port number for `Kobiton.ApiBaseUrl`.
-|Set to the value listed in your xref:_before_you_start[server information].
-
-|`<api-port-grpc-baseurl>`
-|The server's API Port number for `Kobiton.ApiGrpcBaseUrl`.
-|Set to the value listed in your xref:_before_you_start[server information].
-|===
-
-.Example
-[source,plaintext]
-----
-Kobiton.ApiBaseUrl: https://192.168.36.24:3000
-Kobiton.ApiGrpcBaseUrl: https://192.168.36.24:3001
-----
---
-======
-
-When you're finished, save the file, then restart your virtualUSB application.

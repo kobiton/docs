@@ -164,5 +164,31 @@ The values for API Base Url and API GRPC Base Url are remembered and prefilled t
 
 --
 
+Stanadlone/On-Prem::
++
+--
+
+Select the *Login to your custom domain portal* checkbox on the login screen, then input the values for two the additional fields as `<http/https>://<Portal private domain or IP>:<REST API port>`, where:
+
+* `<http/https>`: if the OP server uses HTTPS, then use https. Otherwise, use http.
+
+* `<Portal private domain or IP>`: if the OP server has a private domain, use its private domain. Otherwise, use the OP server’s IP address.
+
+* `<REST API port>`:
+
+** For *API Base Url*, use `3000`.
+
+** For *API GRPC Base Url*, use `3001`.
+
+*Example:*
+
+* API Base Url: `http://129.168.36.24:3000` or `https://www.acme.local:3000`
+
+* API GRPC Base Url: `http://129.168.36.24:3001` or `https://www.acme.local:3001`
+
+Then input the *Username/Email* and *Password/API Key* to log in.
+
+--
+
 
 ====

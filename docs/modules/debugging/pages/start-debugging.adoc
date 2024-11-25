@@ -11,18 +11,140 @@ You can also start a debug session using the xref:debugging:virtualusb-cli-comma
 You'll need to complete the following:
 
 * xref:debugging:set-up-virtualusb.adoc[] on your personal computer.
-* xref:debugging:local-devices/configure-your-personal-computer.adoc[Configure your personal computer].
+* xref:debugging:local-devices/configure-your-personal-computer.adoc[Configure your personal computer] (for *Standalone/On-Prem with self-signed SSL certificate only*).
 
-== Start a debug session
+== Start a virtualUSB session
 
 Launch the virtualUSB desktop app.
 
 image:debugging:launch-vu-context.png[width=1000,alt="A context to launching virtualUSB"]
 
-Search for a device.
+Search for a device using the search bar. You can search by *Display Name*, *Model Name*, or *UDID*.
 
 image:debugging:search-devices-vu-context.png[width=1000,alt="A context to search for a device"]
 
-Select *Connect* to start a debug session using the selected device.
+Select *Connect* to start a virtualUSB session using the selected device.
 
 image:debugging:connect-device-context.png[width=1000,alt="A context to connect a device"]
+
+Once connected:
+
+* The device status changes to *Retained*. This status persists for 24 hours unless the device is disconnected sooner.
+
+* The *Connection Status* column displays the value *Connected*.
+
+image:
+
+Repeat this step to connect to additional devices.
+
+To filter and view the list of currently connected devices, select the *Show Connected Devices* checkbox. Unselect the checkbox to clear the filter and view all devices.
+
+image:
+
+== Check connected devices
+
+[tabs]
+====
+
+Android::
++
+--
+
+Open *Android Studio*.
+
+In Android Studio, select *Device Manager* from the run configurations dropdown menu:
+
+image:
+
+Select the *Physical* tab to see the list of connected devices:
+
+image:
+
+--
+
+iOS/iPadOS::
++
+--
+
+On *MacOS*, iOS devices connected via virtualUSB are accessible in Xcode:
+
+image:
+
+[NOTE]
+iOS/iPadOS devices cannot be seen in Finder but can still be accessed by Xcode normally.
+
+=====
+
+--
+
+
+====
+
+== Observe mobile screen in a virtualUSB session
+
+To observe what is happening on the device screen while connected to a device via virtualUSB:
+
+. Sign in to the Kobiton Portal.
+
+. Find the device and launch a manual session with a virtualUSB.
+
+[TIP]
+Copy the device UDID from virtualUSB and paste it in the search bar of the Kobiton Portal Device List.
+
+Manual sessions will end after staying idle for a certain period of time. To prevent an accidental session end:
+
+. Open the *Manual Session Settings* while in the manual session.
++
+image:
+
+. Uncheck *Quit session after staying idle for 10 minutes* in the pop-up.
++
+image:
+
+. Select *Apply*.
+
+== Disconnect a device
+
+To disconnect and release a device back to the team, go to virtualUSB and click *Disconnect* under the *Action* column:
+
+image:
+
+Confirm the action by selecting *Disconnect* in the next dialog:
+
+image:
+
+== Save log
+
+To save a log of activities in virtualUSB, click the *Save Logs* icon:
+
+image:
+
+In the next dialog, choose a time period from the dropdown list and click *Save*. A zip archive containing all the logs in the selected period will be downloaded.
+
+image:
+
+== Considerations
+
+* Admins are able to cancel a device retained for virtualUSB. Once cancelled, the device will be released, meaning that device is no longer connected with user's workstation. However, the user will see the Connection status as *Error* and the button stays at *Disconnect*. To re-connect to this device, the user needs to disconnect and then connect again.
+
+* After clicking the *Connect* button, users may occasionally see the connection status change to *Offline* or *Error* before showing *Connected*.
+
+* If a user right-clicks on any part of the virtualUSB app and selects *Reload*, the user will be directed back to the login page and must sign in again.
+
+* You cannot run virtualUSB from a Mac that has deviceConnect or Kobiton Desktop installed.
+
+* Device connection status is not synced across machines when a user logs in to virtualUSB on different machines simultaneously.
+
+* When a device is connected via virtualUSB and you restart the device:
+
+** The virtualUSB connection will be re-established.
+
+** The device status will be back to *Retained* until timed out.
+
+* The connection status of the devices may not sync between virtualUSB with UI and virtualUSB command-line interface (CLI). It is recommended to use only 1 interface of virtualUSB when connecting and disconnecting devices on 1 machine.
+
+* In the zip file exported using the *save log* feature, the created and modified date time of some of the files and folders are displayed incorrectly as _January 1, 1980 at 12:00 AM_.
+
+* iOS 17 and above devices are not supported.
+
+* iOS device support for virtualUSB on Windows is not available.
