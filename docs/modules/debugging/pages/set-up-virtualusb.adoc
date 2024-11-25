@@ -75,20 +75,20 @@ If you have installed virtualUSB previously, we recommend uninstalling the old v
 
 == Download virtualUSB
 
-For Cloud and Hybrid customers, select the Download button on the navigation bar of the Kobiton Portal, then download the appropriate virtualUSB package.
+For *Cloud and Hybrid* customers, select the *Download* button on the navigation bar of the Kobiton Portal, then download the appropriate virtualUSB package.
 
-For Standalone/On-Prem customers, the latest virtualUSB package download links are provided together with other Standalone update packages.
+image:debugging:download-virtualusb-closeup.png[width=500,alt="Download virtual USB from Kobiton portal"]
+
+For *Standalone/On-Prem* customers, the latest virtualUSB package download links are provided together with other Standalone update packages.
 
 [NOTE]
 Contact Kobiton Support for the latest download links if you have trouble finding them.
-
-image:debugging:download-virtualusb-closeup.png[width=500,alt="Download virtual USB from Kobiton portal"]
 
 == Install virtualUSB
 
 [tabs]
 ======
-macOS::
+MacOS::
 +
 --
 [WARNING]
@@ -104,7 +104,7 @@ image:virtualusb-applications-macos.png[width=600,alt="The virtualUSB app under 
 
 If this is the first time launching the app, provide the administrator password to install the required daemon:
 
-image:osascript-popup-macos.png[width=400,alt="The pop-up for permission to install daemon"]
+image:osascript-popup-macos.png[width=200,alt="The pop-up for permission to install daemon"]
 
 [IMPORTANT]
 The daemon needs to be installed for virtualUSB to work. If you dismiss the above pop-up by mistake, quit and re-open virtualUSB to view and accept the prompt.
@@ -124,7 +124,7 @@ image:install-virtualusb-windows.png[width=600,alt="The virtualUSB installationw
 
 During installation, select *Yes* in the *User Account Control* pop-up to give the installer administrative permission:
 
-image:user-access-control-virtualusb-windows.png[width=400,alt="The User Account Control pop-up with the Yes option highlighted"]
+image:user-access-control-virtualusb-windows.png[width=300,alt="The User Account Control pop-up with the Yes option highlighted"]
 
 When your installation is complete, launch *virtualUSB* from the Windows Start menu:
 
@@ -132,7 +132,7 @@ image:virtualusb-start-menu-windows.png[width=600,alt="The virtualUSB app in the
 
 Upon the first time launching the app, you must agree to the License terms and select *Continue*:
 
-image:virtualusb-license-agreement.png[width=600,alt="The virtualUSB License agreement with the accept option checked"]
+image:virtualusb-license-agreement.png[width=400,alt="The virtualUSB License agreement with the accept option checked"]
 
 --
 ======
@@ -159,7 +159,7 @@ Cloud/Hybrid with custom domain::
 
 Select the **Login to your custom domain portal** checkbox in the login screen.
 
-image:login-virtualusb-custom-domain.png[width=600,alt="The virtualUSB login screen with the additional fields for custom domain"]
+image:login-virtualusb-custom-domain.png[width=450,alt="The virtualUSB login screen with the additional fields for custom domain"]
 
 Input the values for the two additional fields as below, replacing `<custom-domain>` with the customer's domain name:
 
@@ -179,13 +179,13 @@ Standalone/On-Prem::
 
 Select the *Login to your custom domain portal* checkbox on the login screen
 
-image:login-virtualusb-custom-domain.png[width=600,alt="The virtualUSB login screen with the additional fields for custom domain"]
+image:login-virtualusb-custom-domain.png[width=450,alt="The virtualUSB login screen with the additional fields for custom domain"]
 
 Input the values for two the additional fields as `<http/https>://<Portal private domain or IP>:<REST API port>`, where:
 
-* `<http/https>`: if the OP server uses HTTPS, then use https. Otherwise, use http.
+* `<http/https>`: if the Portal server uses HTTPS, then use https. Otherwise, use http.
 
-* `<Portal private domain or IP>`: if the OP server has a private domain, use its private domain. Otherwise, use the OP server’s IP address.
+* `<Portal private domain or IP>`: if the Portal server has a private domain, use its private domain. Otherwise, use the Portal server’s IP address.
 
 * `<REST API port>`:
 
@@ -202,6 +202,5 @@ Input the values for two the additional fields as `<http/https>://<Portal privat
 Then input the *Username/Email* and *Password/API Key* to log in.
 
 --
-
 
 ====
