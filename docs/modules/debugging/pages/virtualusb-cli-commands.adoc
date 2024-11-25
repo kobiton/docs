@@ -8,8 +8,40 @@ These are the commands you can use with the virtualUSB command-line interface (C
 You'll need to complete the following:
 
 * xref:debugging:set-up-virtualusb.adoc[] on your personal computer.
-* xref:debugging:add-virtualusb-to-your-path.adoc[].
-* xref:debugging:local-devices/configure-your-personal-computer.adoc[Configure your personal computer].
+* xref:debugging:add-virtualusb-to-your-path.adoc[] (Optional).
+* xref:debugging:local-devices/configure-your-personal-computer.adoc[Configure your personal computer] (Standalone/On-Prem with self-signed SSL certificate only).
+
+== Locate virtualUSB CLI
+
+Navigate to the installation directory of virtualUSB.
+
+Open a terminal *with administrative privileges* on Windows, or a terminal on macOS and enter the following command:
+
+[tabs]
+====
+
+MacOS::
++
+--
+[source,bash]
+cd /Applications/virtualUSB.app/Contents/macOS
+--
+
+Windows::
++
+--
+[source,shell]
+cd "C:\Program Files\virtualUSB"
+
+--
+
+====
+
+[NOTE]
+* *All subsequent commands* assume that the current location is the virtualUSB CLI folder.
+
+* Replace `vusb` with `./vusb` for MacOS for the subsequent commands.
+
 
 == `help`
 
@@ -43,8 +75,12 @@ If your organization uses a custom domain for Kobiton, append the following flag
 vusb login --apibaseurl <url> --grpcbaseurl <url> --username <username> --password <password>
 ----
 
+[IMPORTANT]
+Follow xref:set-up-virtualusb.adoc#_launch_vusb_and_log_in[this guide] on how to fill in the `--apibaseurl` and `--grpcbaseurl` values.
+
 [NOTE]
 Using flags will expose your credentials in the terminal. *Do not use this method while sharing your screen or around others*.
+
 
 == `logout`
 
@@ -63,6 +99,13 @@ To connect to a device using the device UDID, run:
 ----
 vusb connect --udid <device-udid>
 ----
+
+[IMPORTANT]
+====
+The first time you run a `vusb connect` command on a *MacOS* machine, ensure it’s run directly on the machine or through a remote session with full UI access to allow virtualUSB to install the daemon. The permission prompt won’t appear if run in an SSH session. This step is only required once.
+
+image:
+====
 
 == `disconnect`
 
@@ -149,20 +192,15 @@ Please wait
 Exported to /Users/Alex/Downloads/vulogs.zip
 ----
 
-== `setup-ios` (Windows only)
-
-To install iOS dependencies on your Windows computer, run:
-
-[source,shell]
-----
-vusb setup-ios
-----
-
 == `setup-adb` (Windows only)
 
-To install Android dependencies on your Windows computer, run:
+To install Android dependencies on your Windows computer, run the below command in a terminal with *administrator privilege* once:
 
 [source,shell]
 ----
 vusb setup-adb
 ----
+
+== Considerations
+
+See xref:start-debugging.adoc#_considerations[this section,window=read-later] for considerations when using virtualUSB CLI.
