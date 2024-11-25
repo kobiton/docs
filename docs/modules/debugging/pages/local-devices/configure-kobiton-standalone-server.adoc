@@ -1,71 +1,24 @@
-= Configure Kobiton Standalone server for local or private devices
-:navtitle: Configure Kobiton Standalone server
+= Configure Mac mini hosts for Hybrid or Standalone
+:navtitle: Configure Mac mini hosts for Hybrid or Standalone
 
-Learn how to configure your Kobiton Standalone server so users can debug with your organization's devices using virtualUSB.
+Learn how to configure the Mac mini hosts so Hybrid and Standalone/On-Prem users can debug with your organization's devices using virtualUSB.
 
 == Before you start
 
 You'll need to verify your system administrator privileges for your Kobiton Standalone server.
 
-[#_get_server_details_for_your_team]
-== Get server details for your team
 
-When users xref:debugging:local-devices/configure-your-personal-computer.adoc[configure their personal computer], they'll need your server's IP address and REST API port numbers.
-
-Save these details to a secure location your team can easily access:
-
-[source,plaintext]
-----
-# Required server details for:
-# https://docs.kobiton.com/debugging/debug-local-devices/configure-personal-computer
-
-<network-address> : VALUE
-<api-port-baseurl> : VALUE
-<api-port-grpc-baseurl> : VALUE
-----
-
-=== Get network address
-
-Users can use your private domain name _or_ the Kobiton server's IP address. If you prefer the Kobiton server's IP address, enter the following command in the terminal and save the output to a secure location for your team:
-
-[source,shell]
-----
-hostname -I
-----
-
-=== Get REST API port numbers
-
-To get the Kobiton server's REST API port numbers, open `~/config/app.yaml` and check for the following port keys:
-
-[source,plaintext]
-----
-rest_api_ingress_advertised_port: <port-number>
-grpc_ingress_gateway_public_advertised_port: <port-number>
-----
-
-If the keys are present, save their values to a secure location. If they're not, save these details instead:
-
-* Set the port number for `Kobiton.ApiBaseUrl` to `3000`.
-* Set the port number for `Kobiton.ApiGrpcBaseUrl` to `3001`.
-
-== Modify `dc.ini`
+== Modify `dc.ini` on the Mac mini host
 
 [NOTE]
-The `dc.ini` file needs to be modified for _each Mac mini server_.
+The `dc.ini` file needs to be modified for _each Mac mini host_ before virtualUSB can be used.
 
-In the terminal, open the `deviceconnect` directory:
-
-[source,shell]
-----
-cd ~/usr/local/deviceconnect
-----
-
-Open `dc.ini` and add the following environment variables:
+On the Mac mini host, edit the `dc.ini` file located under `/usr/local/deviceconnect` and add the following environment variables:
 
 [source,plaintext]
 ----
-GatewayPublicAddress=<ip-address> # Set to your private or public IP address.
-ExternalAirstreamTlsPort=<port-number> # Set to 10161 or public IP address.
+GatewayPublicAddress=<ip-address> # Set to the Mac mini host's private or public IP address.
+ExternalAirstreamTlsPort=<port-number> # Set to 10161 or public port.
 ----
 
 .Example
@@ -75,11 +28,6 @@ GatewayPublicAddress=192.168.36.36
 ExternalAirstreamTlsPort=10161
 ----
 
-Save your changes, then enter the following command to restart the server:
+Save the file, then xref:device-lab-management:deviceConnect/restart-deviceconnect-services.adoc[restart deviceConnect services] to apply the changes.
 
-[source,shell]
-----
-sudo sv restart dc-services dc-webviewer dc-watchdog
-----
-
-Now users in your organization can debug local devices hosted on your local Kobiton server.
+Now users in your organization can use virtualUSB for private or local devices hosted on the Hybrid or Standalone/On-Prem Mac mini hosts.
