@@ -75,12 +75,12 @@ If you have installed virtualUSB previously, we recommend uninstalling the old v
 
 == Download virtualUSB
 
-Download the appropriate virtualUSB for the current OS:
+For Cloud and Hybrid customers, select the Download button on the navigation bar of the Kobiton Portal, then download the appropriate virtualUSB package.
 
-* MacOS: https://kobiton-us-east.s3.amazonaws.com/downloads/virtualUSB/virtualUSB.pkg[virtualUSB.pkg]
-* Windows: https://kobiton-us-east.s3.amazonaws.com/downloads/virtualUSB/virtualUSB.msi[virtualUSB.msi]
+For Standalone/On-Prem customers, the latest virtualUSB package download links are provided together with other Standalone update packages.
 
-Alternatively, click the Download button on the navigation bar of the Kobiton Portal, then download the appropriate virtualUSB package (for Cloud and Hybrid customers only).
+[NOTE]
+Contact Kobiton Support for the latest download links if you have trouble finding them.
 
 image:debugging:download-virtualusb-closeup.png[width=500,alt="Download virtual USB from Kobiton portal"]
 
@@ -96,19 +96,22 @@ Do not install virtualUSB on a Mac that has an existing deviceConnect installati
 
 Open the downloaded *virtualUSB.pkg* file to begin the installation. Select *Continue* and follow the on-screen guide to install.
 
-image:
+image:install-virtualusb-macos.png[width=600,alt="The virtualUSB installation screen on MacOS"]
 
 After the installation completes, go to the *Applications* folder in Finder, and open *virtualUSB*:
 
-image:
+image:virtualusb-applications-macos.png[width=600,alt="The virtualUSB app under Applications"]
 
 If this is the first time launching the app, provide the administrator password to install the required daemon:
 
-image:
+image:osascript-popup-macos.png[width=400,alt="The pop-up for permission to install daemon"]
 
-Agree to the License terms and select Continue:
+[IMPORTANT]
+The daemon needs to be installed for virtualUSB to work. If you dismiss the above pop-up by mistake, quit and re-open virtualUSB to view and accept the prompt.
 
-image:
+Agree to the License terms and select *Continue*:
+
+image:virtualusb-license-agreement.png[width=600,alt="The virtualUSB License agreement with the accept option checked"]
 
 --
 
@@ -117,17 +120,20 @@ Windows::
 --
 Open the downloaded virtualUSB.msi file. When the virtualUSB Setup Wizard starts, select Next, then follow the on-screen guide to install.
 
-image:
+image:install-virtualusb-windows.png[width=600,alt="The virtualUSB installationw wizard start screen on Windows"]
 
 During installation, select *Yes* in the *User Account Control* pop-up to give the installer administrative permission:
 
-image:
+image:user-access-control-virtualusb-windows.png[width=400,alt="The User Account Control pop-up with the Yes option highlighted"]
 
 When your installation is complete, launch *virtualUSB* from the Windows Start menu:
 
-image:
+image:virtualusb-start-menu-windows.png[width=600,alt="The virtualUSB app in the Start Menu"]
 
 Upon the first time launching the app, you must agree to the License terms and select *Continue*:
+
+image:virtualusb-license-agreement.png[width=600,alt="The virtualUSB License agreement with the accept option checked"]
+
 --
 ======
 
@@ -153,15 +159,17 @@ Cloud/Hybrid with custom domain::
 
 Select the **Login to your custom domain portal** checkbox in the login screen.
 
+image:login-virtualusb-custom-domain.png[width=600,alt="The virtualUSB login screen with the additional fields for custom domain"]
+
 Input the values for the two additional fields as below, replacing `<custom-domain>` with the customer's domain name:
 
-API Base Url: _https://api.<custom-domain>.com_
+* API Base Url: _https://api.<custom-domain>.com_
 
-API GRPC Base Url: _https://proxy-api-public-grpc-server.<custom-domain>.com_
+* API GRPC Base Url: _https://proxy-api-public-grpc-server.<custom-domain>.com_
 
 Input the *Username/Email* and *Password/API Key* to log in.
 
-The values for API Base Url and API GRPC Base Url are remembered and prefilled the next time you open the app.
+The values for *API Base Url* and *API GRPC Base Url* are remembered and prefilled the next time you open the app.
 
 --
 
@@ -169,7 +177,11 @@ Standalone/On-Prem::
 +
 --
 
-Select the *Login to your custom domain portal* checkbox on the login screen, then input the values for two the additional fields as `<http/https>://<Portal private domain or IP>:<REST API port>`, where:
+Select the *Login to your custom domain portal* checkbox on the login screen
+
+image:login-virtualusb-custom-domain.png[width=600,alt="The virtualUSB login screen with the additional fields for custom domain"]
+
+Input the values for two the additional fields as `<http/https>://<Portal private domain or IP>:<REST API port>`, where:
 
 * `<http/https>`: if the OP server uses HTTPS, then use https. Otherwise, use http.
 
