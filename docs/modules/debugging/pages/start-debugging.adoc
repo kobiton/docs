@@ -1,5 +1,5 @@
 = Start debugging using virtualUSB desktop application
-:navtitle: Start debugging
+:navtitle: Start using virtualUSB
 
 Learn how to start debugging using the virtualUSB desktop app so you can debug devices from anywhere.
 
@@ -11,18 +11,130 @@ You can also start a debug session using the xref:debugging:virtualusb-cli-comma
 You'll need to complete the following:
 
 * xref:debugging:set-up-virtualusb.adoc[] on your personal computer.
-* xref:debugging:local-devices/configure-your-personal-computer.adoc[Configure your personal computer].
+* xref:debugging:local-devices/configure-your-personal-computer.adoc[Configure your personal computer] (for *Standalone/On-Prem with self-signed SSL certificate only*).
 
-== Start a debug session
+== Start a virtualUSB session
 
 Launch the virtualUSB desktop app.
 
 image:debugging:launch-vu-context.png[width=1000,alt="A context to launching virtualUSB"]
 
-Search for a device.
+Search for a device using xref:search-for-a-device.adoc[the search bar and filter,window=read-later].
 
 image:debugging:search-devices-vu-context.png[width=1000,alt="A context to search for a device"]
 
-Select *Connect* to start a debug session using the selected device.
+Select *Connect* to start a virtualUSB session using the selected device.
 
 image:debugging:connect-device-context.png[width=1000,alt="A context to connect a device"]
+
+Once connected:
+
+* The device status changes to *Retained*. This status persists for 24 hours unless the device is disconnected sooner.
+
+* The *Connection Status* column displays the value *Connected*.
+
+image:virtualusb-connected-device.png[width=1000,alt="A Connected device in virtualUSB"]
+
+Repeat this step to connect to additional devices.
+
+== Check connected devices
+
+[tabs]
+====
+
+Android::
++
+--
+
+Open *Android Studio*.
+
+In Android Studio, select *Device Manager* from the run configurations dropdown menu:
+
+image:virtualusb-android-studio-device-manager.png[width=600,alt="The Device Manager option in Android Studio"]
+
+Select the *Physical* tab to see the list of connected devices:
+
+image:virtualusb-android-studio-device-list-physical.png[width=600,alt="The list of physical device in Android Studio"]
+
+--
+
+iOS/iPadOS::
++
+--
+
+On *MacOS*, iOS devices connected via virtualUSB are accessible in Xcode:
+
+image:virtualusb-xcode-device-list.png[width=600,alt="The list of devices in Xcode"]
+
+[NOTE]
+iOS/iPadOS devices cannot be seen in Finder but can still be accessed by Xcode normally.
+
+--
+
+
+====
+
+== Observe mobile screen in a virtualUSB session
+
+To observe what is happening on the device screen while connected to a device via virtualUSB:
+
+. Sign in to the Kobiton Portal.
+
+. Find the device and launch a xref:manual-testing:start-a-manual-session.adoc[manual session] with a virtualUSB connected device.
+
+[TIP]
+Copy the device UDID from virtualUSB and paste it in the search bar of the Kobiton Portal Device List.
+
+Manual sessions will end after staying idle for a certain period of time. To prevent an accidental session end:
+
+. Open the *Manual Session Settings* while in the manual session.
++
+image:manual-session-setting-menu.png[width=800,alt="The Manual Session Setting shortcut in a manual session"]
+
+. Uncheck *Quit session after staying idle for 10 minutes* in the pop-up.
++
+image:manual-session-settings-stay-idle.png[width=400,alt="The Quit session after staying idle for 10 minutes option disabled in manual settings"]
+
+. Select *Apply*.
+
+== Disconnect a device
+
+To disconnect and release a device back to the team, go to virtualUSB and choose *Disconnect* under the *Action* column:
+
+image:virtualusb-disconnect-device.png[width=800,alt="The disconnect button next to a connected device in virtualUSB"]
+
+Confirm the action by selecting *Disconnect* in the pop-up.
+
+== Save log
+
+To save a log of activities in virtualUSB, select the *Save Logs* icon:
+
+image:virtualusb-save-logs-shortcut.png[width=800,alt="The save logs shortcut in virtualUSB"]
+
+In the next dialog, choose a time period from the dropdown list and click *Save*. A zip archive containing all the logs in the selected period will be downloaded.
+
+image:virtualusb-save-logs-popup.png[width=400,alt="The time period dropdown in the save logs pop-up"]
+
+== Considerations
+
+* Admins are able to cancel a device retained for virtualUSB. Once cancelled, the device will be released, meaning that device is no longer connected with user's workstation. However, the user will see the Connection status as *Error* and the button stays at *Disconnect*. To re-connect to this device, the user needs to disconnect and then connect again.
+
+* After clicking the *Connect* button, users may occasionally see the connection status change to *Offline* or *Error* before showing *Connected*.
+
+* If a user right-clicks on any part of the virtualUSB app and selects *Reload*, the user will be directed back to the login page and must sign in again.
+
+* Device connection status is not synced across machines when a user logs in to virtualUSB on different machines simultaneously.
+
+* When a device is connected via virtualUSB, and you restart the device:
+
+** The virtualUSB connection will be re-established.
+
+** The device status will be back to *Retained* until timed out.
+
+* The connection status of the devices may not sync between virtualUSB with UI and virtualUSB command-line interface (CLI). It is recommended to use only 1 interface of virtualUSB when connecting and disconnecting devices on 1 machine.
+
+* In the zip file exported using the *save log* feature, the created and modified date time of some of the files and folders are displayed incorrectly as _January 1, 1980 at 12:00 AM_.
+
+* *iOS 17 and above devices* are not supported.
+
+* iOS device support for *virtualUSB on Windows* is not available.
