@@ -1,36 +1,39 @@
 = Add virtualUSB to your PATH
 :navtitle: Add virtualUSB to your PATH
 
-Learn how to add virtualUSB to your PATH so you can run xref:debugging:virtualusb-cli-commands.adoc[virtualUSB commands] in the terminal to debug your devices.
+[WARNING]
+Adding virtualUSB CLI commands to your PATH is no longer supported until further notice
 
-== Add virtualUSB to your PATH
-
-In the terminal, enter the following command to add virtualUSB to your system PATH:
-
-[tabs]
-======
-macOS::
-+
---
-[source,shell]
-----
-echo 'export PATH=/Applications/virtualUSB.app/Contents/Resources:$PATH' >> ~/.zshrc
-----
---
-
-Windows::
-+
---
-[source,shell]
-----
-setx PATH "%PATH%;C:\${pathToProgramFiles}\Program Files\virtualUSB"
-----
---
-======
-
-Then, verify your changes:
-
-[source,shell]
-----
-vusb --version
-----
+// Learn how to add virtualUSB to your PATH so you can run xref:debugging:virtualusb-cli-commands.adoc[virtualUSB commands] in the terminal to debug your devices.
+//
+// == Add virtualUSB to your PATH
+//
+// In the terminal, enter the following command to add virtualUSB to your system PATH:
+//
+// [tabs]
+// ======
+// macOS::
+// +
+// --
+// [source,shell]
+// ----
+// echo 'export PATH=/Applications/virtualUSB.app/Contents/Resources:$PATH' >> ~/.zshrc
+// ----
+// --
+//
+// Windows::
+// +
+// --
+// [source,shell]
+// ----
+// setx PATH "%PATH%;C:\${pathToProgramFiles}\Program Files\virtualUSB"
+// ----
+// --
+// ======
+//
+// Then, verify your changes:
+//
+// [source,shell]
+// ----
+// vusb --version
+// ----
