@@ -1,5 +1,5 @@
 = Start debugging using virtualUSB desktop application
-:navtitle: Start debugging
+:navtitle: Start using virtualUSB
 
 Learn how to start debugging using the virtualUSB desktop app so you can debug devices from anywhere.
 
@@ -19,7 +19,7 @@ Launch the virtualUSB desktop app.
 
 image:debugging:launch-vu-context.png[width=1000,alt="A context to launching virtualUSB"]
 
-Search for a device using the search bar. You can search by *Display Name*, *Model Name*, or *UDID*.
+Search for a device using xref:search-for-a-device.adoc[the search bar and filter,window=read-later].
 
 image:debugging:search-devices-vu-context.png[width=1000,alt="A context to search for a device"]
 
@@ -33,13 +33,9 @@ Once connected:
 
 * The *Connection Status* column displays the value *Connected*.
 
-image:
+image:virtualusb-connected-device.png[width=1000,alt="A Connected device in virtualUSB"]
 
 Repeat this step to connect to additional devices.
-
-To filter and view the list of currently connected devices, select the *Show Connected Devices* checkbox. Unselect the checkbox to clear the filter and view all devices.
-
-image:
 
 == Check connected devices
 
@@ -54,11 +50,11 @@ Open *Android Studio*.
 
 In Android Studio, select *Device Manager* from the run configurations dropdown menu:
 
-image:
+image:virtualusb-android-studio-device-manager.png[width=600,alt="The Device Manager option in Android Studio"]
 
 Select the *Physical* tab to see the list of connected devices:
 
-image:
+image:virtualusb-android-studio-device-list-physical.png[width=600,alt="The list of physical device in Android Studio"]
 
 --
 
@@ -68,12 +64,10 @@ iOS/iPadOS::
 
 On *MacOS*, iOS devices connected via virtualUSB are accessible in Xcode:
 
-image:
+image:virtualusb-xcode-device-list.png[width=600,alt="The list of devices in Xcode"]
 
 [NOTE]
 iOS/iPadOS devices cannot be seen in Finder but can still be accessed by Xcode normally.
-
-=====
 
 --
 
@@ -86,7 +80,7 @@ To observe what is happening on the device screen while connected to a device vi
 
 . Sign in to the Kobiton Portal.
 
-. Find the device and launch a manual session with a virtualUSB.
+. Find the device and launch a xref:manual-testing:start-a-manual-session.adoc[manual session] with a virtualUSB connected device.
 
 [TIP]
 Copy the device UDID from virtualUSB and paste it in the search bar of the Kobiton Portal Device List.
@@ -95,11 +89,11 @@ Manual sessions will end after staying idle for a certain period of time. To pre
 
 . Open the *Manual Session Settings* while in the manual session.
 +
-image:
+image:manual-session-setting-menu.png[width=800,alt="The Manual Session Setting shortcut in a manual session"]
 
 . Uncheck *Quit session after staying idle for 10 minutes* in the pop-up.
 +
-image:
+image:manual-session-settings-stay-idle.png[width=400,alt="The Quit session after staying idle for 10 minutes option disabled in manual settings"]
 
 . Select *Apply*.
 
