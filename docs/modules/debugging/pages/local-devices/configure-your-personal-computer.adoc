@@ -1,8 +1,8 @@
-= Configure your personal computer for debugging
-:navtitle: Configure personal computer
+= Configure your personal computer for Standalone Portal
+:navtitle: Configure personal computer for Standalone Portal
 :tabs-sync-option:
 
-Learn how to configure your personal computer, so you can debug local or private devices using virtualUSB.
+Learn how to configure your personal computer for Standalone Portal, so you can debug local or private devices using virtualUSB.
 
 [#_before_you_start]
 == Before you start
@@ -27,19 +27,17 @@ MacOS::
 
 Request the IT administrator of your organization for the end-entity certificate from which the SSL cert of the OP server is issued. It should be a file named `ssl.crt`. Tranfer the certificate file to the MacOS machine.
 
-Open the Keychain Access application.
+Open the *Keychain Access* application.
 
-image:
-
-Open Finder, go to the location of the `ssl.crt` file, then drag and drop the file into the Keychain Access application.
+Open *Finder*, go to the location of the `ssl.crt` file, then drag and drop the file into the *Keychain Access* application.
 
 Double-click on the newly added certificate file. In the dialog, choose the Always Trust option from the dropdown list for the two fields:
 
-* Secure Sockets Layer (SSL)
+* *Secure Sockets Layer (SSL)*
 
-* X.509 Basic Policy
+* *X.509 Basic Policy*
 
-image:
+image:macos-ssl-cert-trust.png[width=800,alt="The trust option for the imported certificate in keychain access with the 2 options set as Always Trust"]
 
 Close the dialog and enter the admin password of the user workstation to save the changes.
 
@@ -51,25 +49,23 @@ Windows::
 
 Request the IT administrator of your organization for the root CA certificate from which the SSL cert of the OP server is issued. It should be a file named `root.crt` or `ca.crt`. Tranfer the certificate file to the Windows machine.
 
-On the Windows machine, double-click the file, then select Install Certificate on the Certificate window.
+On the Windows machine, double-click the file, then select *Install Certificate* on the *Certificate* window.
 
-image:
+image:windows-certificate-install.png[width=400,alt="The certificate information screen with an option to Install Cerficicate"]
 
-On the next screen, choose Local Machine. This requires administrators privileges.
+On the next screen, choose *Local Machine*. This requires administrators privileges.
 
-image:
+image:windows-certificate-install-store.png[width=400,alt="The Certificate Import Wizard with the Store Location set to Local Machine"]
 
-On the next screen, choose Place all certificates in the following store, then select Browse.
+On the next screen, choose *Place all certificates in the following store*, then select *Browse*.
 
-image:
+image:windows-certificate-browse-store.png[width=400,alt="The Certificate Store selector with the option Place all certificates in the following store selected"]
 
-Choose Trusted Root Certification Authorities, then select OK.
+Choose *Trusted Root Certification Authorities*, then select *OK*.
 
-image:
+image:windows-certificate-trusted-root.png[width=400,alt="The Select Certificate Store screen with Trusted Root Certification Authorities selected"]
 
-Select Next, then Finish. The root CA certificate is now imported to the end-user workstation trust store.
-
-image:
+Select *Next*, then *Finish*. The root CA certificate is now imported to the end-user workstation trust store.
 
 --
 
