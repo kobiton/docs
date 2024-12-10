@@ -22,7 +22,7 @@ jobs:
       WIDGET_CLOUDFRONT_ID: ${{ vars.WIDGET_CLOUDFRONT_ID || 'E2JIGAHT81K3UG' }}
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           lfs: true
 
