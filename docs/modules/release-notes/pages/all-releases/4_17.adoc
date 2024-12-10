@@ -19,7 +19,7 @@ This release improves error reporting for Test Runs, making it easier to identif
 
 A shortened error message can also be viewed from the tooltip next to the session status on *Session Overview* for the Test Run session.
 
-=== Session Overview: Improved Error Message When Session Terminated
+== Session Overview: Improved Error Message When Session Terminated
 
 When a session is terminated by the system (session status is *Terminated*), we now offer more detailed information about the issue. Additionally, you can easily copy the error message to share with our support team for faster assistance.
 
@@ -27,9 +27,13 @@ When a session is terminated by the system (session status is *Terminated*), we 
 
 Previously, color contrast validation issues were identified using WCAG 2.1 (AA) standards. With this release, we’ve expanded support to include WCAG 2.2 (AAA) standards, providing even more rigorous accessibility compliance checks.
 
-*Notes:*
+[NOTE]
+====
+
 * Validation issues are raised separately for AA and AAA standards. So, if an element fails both AA and AAA standards, two issues will be raised.
 * WCAG 2.2 AAA standards are web accessibility guidelines that we adapt and apply to mobile apps.
+
+====
 
 == More Session Explorer UI Enhancements
 
@@ -55,25 +59,28 @@ This release includes several enhancements and bug fixes to improve your day-to-
 ** Improved scroll/swipe action handling in Scriptless sessions.
 ** Improved ability to search for Scriptless sessions in *Session List*.
 
-=== Addressed the Following Script-Based Test Automation Items:
-* Improved support for `appium:autodismissalerts` to dismiss pop-ups on Android device variations.
-* Support for the following commands in Xium:
-* `mobile: isLocked`
-* `mobile: pressKey`
-* `mobile: hideKeyboard`
-* `mobile: lock`
-* `mobile: deepLink` (added support for iOS alongside Android).
+*  Addressed the Following Script-Based Test Automation Items:
 
-=== Other Items Addressed:
-* Improvements to handle adb instability to improve the stability of Android devices.
-* Addressed issue where *Device Health Orange* screen was not showing for *Lightning mode* Android devices with no Wi-Fi.
-* Fixed issue where subscription expiration banner was not displaying for some self-serve customers.
-* Fixed performance of the *Device List* when the sort button is clicked multiple times.
-* Successive delete actions (pressing the delete key) are now counted as 1 action in *Session Explorer*.
-* Ability to clean up browser cache for iOS 18.1 Beta using cleanup policy.
+** Improved support for `appium:autodismissalerts` to dismiss pop-ups on Android device variations.
+** Support for the following commands in Xium:
+** `mobile: isLocked`
+** `mobile: pressKey`
+** `mobile: hideKeyboard`
+** `mobile: lock`
+** `mobile: deepLink` (added support for iOS alongside Android).
+
+* Other Items Addressed:
+
+** Improvements to handle adb instability to improve the stability of Android devices.
+** Addressed issue where *Device Health Orange* screen was not showing for *Lightning mode* Android devices with no Wi-Fi.
+** Fixed issue where subscription expiration banner was not displaying for some self-serve customers.
+** Fixed performance of the *Device List* when the sort button is clicked multiple times.
+** Successive delete actions (pressing the delete key) are now counted as 1 action in *Session Explorer*.
+** Ability to clean up browser cache for iOS 18.1 Beta using cleanup policy.
 
 == A Few Additional Notes/Limitations
 
-=== When Working with the Apple Security Modal:
+When Working with the Apple Security Modal:
+
 * If the modal does not send the verification code to the device or the modal doesn’t appear for users trying to log out of iCloud, users should end the session and relaunch a new session.
 * The modal does not automatically focus on the password field when logging into a web app. Users should manually click the password field before entering credentials.
