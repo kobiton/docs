@@ -15,13 +15,19 @@ With version 4.16, we introduced support for macOS Sequoia. However, a fresh ins
 
 == Scriptless Automation: Detailed Error Messages for Test Runs
 
-This release improves error reporting for Test Runs, making it easier to identify, address, or report issues. The updated error messages are more informative, now including error codes for added clarity. You can view these detailed messages on the Test Run Camera Roll page.
+This release improves error reporting for Test Runs, making it easier to identify, address, or report issues. The updated error messages are more informative, now including error codes for added clarity. You can view these detailed messages on the *Test Run Camera Roll* page:
 
-A shortened error message can also be viewed from the tooltip next to the session status on *Session Overview* for the Test Run session.
+image:revisit-session-camera-roll-error-message.png[width=800,alt="The detailed error message in the Camera Roll page of the Test Run"]
+
+A shortened error message can also be viewed from the tooltip next to the session status on *Session Overview* for the Test Run session:
+
+image:revisit-session-overview-error-message.png[width=600,alt="The shortened error message shown next to the session status in the Session Overview of Test Run"]
 
 == Session Overview: Improved Error Message When Session Terminated
 
 When a session is terminated by the system (session status is *Terminated*), we now offer more detailed information about the issue. Additionally, you can easily copy the error message to share with our support team for faster assistance.
+
+image:terminated-session-error-message.png[width=600,alt="The shortened error message shown next to the session status in the Session Overview of terminated session"]
 
 == Enhanced Accessibility: WCAG 2.2 AAA Color Contrast Validation
 
@@ -45,7 +51,8 @@ Building on the new UI for *Session Explorer* introduced in the last release, we
 * Deep Link for Validation Issues: Users can now copy the URL for a specific validation issue, making it easy to share with colleagues or save for future reference.
 * Performance and UI improvements in loading images and navigation.
 
-*Note:* *Session Explorer* currently does not support more than 1,000 steps.
+[NOTE]
+Session Explorer currently does not support more than 1,000 steps.
 
 == Minor Improvements and Bug Fixes
 
@@ -71,7 +78,7 @@ This release includes several enhancements and bug fixes to improve your day-to-
 
 * Other Items Addressed:
 
-** Improvements to handle adb instability to improve the stability of Android devices.
+** Improvements to handle `adb` instability to improve the stability of Android devices.
 ** Addressed issue where *Device Health Orange* screen was not showing for *Lightning mode* Android devices with no Wi-Fi.
 ** Fixed issue where subscription expiration banner was not displaying for some self-serve customers.
 ** Fixed performance of the *Device List* when the sort button is clicked multiple times.
@@ -80,7 +87,7 @@ This release includes several enhancements and bug fixes to improve your day-to-
 
 == A Few Additional Notes/Limitations
 
-When Working with the Apple Security Modal:
+When working with the *Apple Security Modal*:
 
 * If the modal does not send the verification code to the device or the modal doesn’t appear for users trying to log out of iCloud, users should end the session and relaunch a new session.
 * The modal does not automatically focus on the password field when logging into a web app. Users should manually click the password field before entering credentials.
