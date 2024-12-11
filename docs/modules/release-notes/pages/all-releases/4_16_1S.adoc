@@ -1,7 +1,7 @@
-= Kobiton 4.16 release notes
-:navtitle: Kobiton 4.16 release notes
+= Kobiton 4.16.1S release notes
+:navtitle: Kobiton 4.16.1S release notes
 
-_November 2, 2024_
+_November 22, 2024_
 
 == New OS support
 
@@ -26,7 +26,14 @@ To reduce the occurrence of this issue, update *Play Store services*, *Chrome*, 
 [NOTE]
 For iOS/iPadOS 18.0.1, the cleanup policy does not clear signed-in accounts in the Mail app and Safari browser cache.
 
-* MacOS 15 Sequoia (requires deviceConnect 4.16)
+* MacOS 15 Sequoia (*except* Standalone portal with self-signed SSL certificate)
+
+[WARNING]
+====
+
+Portals that use a *self-signed SSL certificate* do not currently support Mac mini hosts with MacOS Sequoia. *Do not* update to Sequoia on the Mac mini host in this case until further notice.
+
+====
 
 [NOTE]
 ====
@@ -122,21 +129,18 @@ You cannot set `“kobiton:stepGroup"` to a blank value. If you do, the steps wi
 
 image:session-explorer-timeline-with-grouping.png[width=1000,alt="The timeline with steps grouped"]
 
-== Hybrid Enterprise Lightning: update `adb` version
+== Standalone/On-Prem Lightning: update `adb` version
 
 This release upgraded `adb` to version 35.0.2 on the Mac mini and GEM.
 
 * For the Mac mini, the `adb` service is automatically updated when you upgrade to deviceConnect 4.16.
-* For our Hybrid Enterprise Lightning customers who have a GEM, please contact Kobiton Support to update the Kobiton software and `adb` on your GEM.
+* For our Standalone/On-Prem Lightning customers, please contact Kobiton Support to update the Kobiton software and `adb` on your GEM.
 
 == New virtualUSB client
 
 New virtualUSB clients for macOS and Windows are available with this release. They provide support for Android Studio Jellyfish and address an issue with blocked connections with unpaired iOS/iPadOS devices.
 
-Cloud and Hybrid customers can download the new clients from the download links in the left-hand nav of the Kobiton Portal.
-
-[NOTE]
-Standalone customers can contact Kobiton support for the latest download links after the 4.16S release.
+Standalone customers can contact Kobiton support for the latest download links.
 
 [NOTE]
 ====
@@ -173,3 +177,12 @@ This release includes several enhancements and bug fixes to improve your day-to-
 ** Addressed an issue with Developer Disk Image not found.
 ** Fixed issues related to logging into iCloud via Kobiton Apple Security Enablement prompt and with Apple ID's 2FA 6 digits field disappearing.
 ** Improved last mile speed test functionality.
+** Fixed an issue with the Standalone Portal URL under SSO settings not updating after changing the Portal server's SSL certificate.
+** Fixed an issue with device running Android 15 not responding in a manual session if Gmail or Chrome is open in the background.
+
+== Standalone known issues/limitations
+
+* If Lightning mode is not turning on for a device, restart the device and try again.
+
+* Appium Self-healing (`flexCorrect`) is not supported in Standalone.
+
