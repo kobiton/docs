@@ -31,7 +31,7 @@ For iOS/iPadOS 18.0.1, the cleanup policy does not clear signed-in accounts in t
 [WARNING]
 ====
 
-Portal with a *self-signed SSL certificate* does not support Mac mini hosts with MacOS Sequoia. *Do not* update to Sequoia on the Mac mini host in this case until further notice.
+Portals that use a *self-signed SSL certificate* do not currently support Mac mini hosts with MacOS Sequoia. *Do not* update to Sequoia on the Mac mini host in this case until further notice.
 
 ====
 
@@ -144,7 +144,7 @@ Standalone customers can contact Kobiton support for the latest download links.
 
 [NOTE]
 ====
-* iOS/iPadOS devices is not supported by virtualUSB for Windows.
+* iOS/iPadOS devices are not supported by virtualUSB for Windows.
 * iOS/iPadOS 17 and higher is not currently supported by virtualUSB.
 * If the device that is connected to virtualUSB cannot be released after disconnecting, quit the virtualUSB app to release it.
 ====
@@ -184,5 +184,5 @@ This release includes several enhancements and bug fixes to improve your day-to-
 
 * If Lightning mode is not turning on for a device, restart the device and try again.
 
-* The flexCorrect Appium capabilitity is currently not supported for Standalone.
+* Appium Self-healing (`flexCorrect`) is not supported in Standalone.
 
