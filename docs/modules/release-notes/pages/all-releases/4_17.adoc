@@ -1,0 +1,93 @@
+= Kobiton 4.17 Release Notes
+:navtitle: Kobiton 4.17 release notes
+
+_December 7, 2024_
+
+== New OS Support
+
+This release adds support for the following:
+
+* iOS/iPadOS 18.1.1
+* iOS/iPadOS 18.2 Beta
+
+[NOTE]
+With version 4.16, we introduced support for macOS Sequoia. However, a fresh installation of `deviceConnect` onto a Mac mini required installing version 4.15 first. In this release, version 4.17 can now be installed directly on a macOS Sequoia Mac mini, eliminating the need for prior installations.
+
+== Scriptless Automation: Detailed Error Messages for Test Runs
+
+This release improves error reporting for Test Runs, making it easier to identify, address, or report issues. The updated error messages are more informative, now including error codes for added clarity. You can view these detailed messages on the *Test Run Camera Roll* page:
+
+image:revisit-session-camera-roll-error-message.png[width=800,alt="The detailed error message in the Camera Roll page of the Test Run"]
+
+A shortened error message can also be viewed from the tooltip next to the session status on *Session Overview* for the Test Run session:
+
+image:revisit-session-overview-error-message.png[width=600,alt="The shortened error message shown next to the session status in the Session Overview of Test Run"]
+
+== Session Overview: Improved Error Message When Session Terminated
+
+When a session is terminated by the system (session status is *Terminated*), we now offer more detailed information about the issue. Additionally, you can easily copy the error message to share with our support team for faster assistance.
+
+image:terminated-session-error-message.png[width=600,alt="The shortened error message shown next to the session status in the Session Overview of terminated session"]
+
+== Enhanced Accessibility: WCAG 2.2 AAA Color Contrast Validation
+
+Previously, color contrast validation issues were identified using WCAG 2.1 (AA) standards. With this release, we’ve expanded support to include WCAG 2.2 (AAA) standards, providing even more rigorous accessibility compliance checks.
+
+[NOTE]
+====
+
+* Validation issues are raised separately for AA and AAA standards. So, if an element fails both AA and AAA standards, two issues will be raised.
+* WCAG 2.2 AAA standards are web accessibility guidelines that we adapt and apply to mobile apps.
+
+====
+
+== More Session Explorer UI Enhancements
+
+Building on the new UI for *Session Explorer* introduced in the last release, we’ve added several enhancements:
+
+* Added baseline screenshot for comparison when reviewing Appium self-healing (`flexCorrect`) findings.
+* For a blocked Test Run, added a *Resolve Blocker* button next to *Start Analysis*.
+* Added Response Time Validations for test runs where *Network Payload Capture* is enabled.
+* Deep Link for Validation Issues: Users can now copy the URL for a specific validation issue, making it easy to share with colleagues or save for future reference.
+* Performance and UI improvements in loading images and navigation.
+
+[NOTE]
+Session Explorer currently does not support more than 1,000 steps.
+
+== Minor Improvements and Bug Fixes
+
+This release includes several enhancements and bug fixes to improve your day-to-day testing.
+
+* We have removed our old documentation from `support.kobiton.com`, which is now exclusively for submitting and reviewing support tickets.
+
+* Addresses the Following Scriptless Automation Items:
+
+** For those users who use custom device names, the custom device name now displays in *Test Run Details*, *Camera Roll*, and *Create a Test Run* (in the device selection dropbox) so that it’s easier to know what devices are being used/reviewed.
+** Improved scroll/swipe action handling in Scriptless sessions.
+** Improved ability to search for Scriptless sessions in *Session List*.
+
+*  Addressed the Following Script-Based Test Automation Items:
+
+** Improved support for `appium:autodismissalerts` to dismiss pop-ups on Android device variations.
+** Support for the following commands in Xium:
+** `mobile: isLocked`
+** `mobile: pressKey`
+** `mobile: hideKeyboard`
+** `mobile: lock`
+** `mobile: deepLink` (added support for iOS alongside Android).
+
+* Other Items Addressed:
+
+** Improvements to handle `adb` instability to improve the stability of Android devices.
+** Addressed issue where *Device Health Orange* screen was not showing for *Lightning mode* Android devices with no Wi-Fi.
+** Fixed issue where subscription expiration banner was not displaying for some self-serve customers.
+** Fixed performance of the *Device List* when the sort button is clicked multiple times.
+** Successive delete actions (pressing the delete key) are now counted as 1 action in *Session Explorer*.
+** Ability to clean up browser cache for iOS 18.1 Beta using cleanup policy.
+
+== A Few Additional Notes/Limitations
+
+When working with the *Apple Security Modal*:
+
+* If the modal does not send the verification code to the device or the modal doesn’t appear for users trying to log out of iCloud, users should end the session and relaunch a new session.
+* The modal does not automatically focus on the password field when logging into a web app. Users should manually click the password field before entering credentials.
