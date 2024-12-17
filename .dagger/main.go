@@ -97,9 +97,7 @@ func (m *Ci) Server(
 }
 
 func (m *Ci) ServerDocs() *dagger.Service {
-	return m.Server("docs").
-		WithExec([]string{"sh", "-c", "/bin/bash /docs/replace-env-vars.sh /docs && nginx -g 'daemon off;'"}).
-		AsService()
+	return m.Server("docs").AsService()
 }
 
 // Publish image to ECR repo
