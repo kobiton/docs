@@ -1,10 +1,14 @@
 = Available capabilities
+:page-aliases: automation-testing:capabilities:add-visualvalidation.adoc
 :navtitle: Available capabilities
 
 These are the capabilities you can use during an automation session.
 
 [NOTE]
 You can also xref:automation-testing:capabilities/auto-generate-capabilities.adoc[auto-generate your capabilities].
+
+[NOTE]
+The `kobiton:visualValidation` capability is deprecated.
 
 == Kobiton Capabilities
 
@@ -18,7 +22,7 @@ These capabilities are unique to Kobiton.
 ====
 
 [IMPORTANT]
-Not all Kobiton capabilities can be used in Basic Appium 2 script.
+Not all Kobiton capabilities can be used in Basic Appium 2 scripts.
 
 === `app`
 
@@ -220,31 +224,12 @@ The device configuration to use during the test session. *Only available for web
 capabilities.setCapability("useConfiguration", "kobiton"); // Use this pre-defined configuration for the test session.
 ----
 
-[#_visualValidation]
-=== `kobiton:visualValidation`
-
-Validates UI output across different devices, operating systems, and form factors. For more information, see xref:automation-testing:capabilities/add-visualvalidation.adoc[].
-
-* *Type:* `boolean`
-* *Required capabilities:* xref:_ensureWebviewsHavePages[], xref:_baselineSessionId[]
-* *Optional capabilities:* None
-
-.Example
-[source,java]
-----
-capabilities.setCapability("ensureWebviewsHavePages", true); // Set to true.
-capabilities.setCapability("kobiton:visualValidation", true);  // Set to true.
-----
-
-[NOTE]
-This capability cannot be used in Basic Appium 2 sessions.
-
 == Appium Capabilities
 
-Kobiton supports most Appium capabilities. The capabilities documented below are either usually required or have a special use case in Kobiton.
+Kobiton supports most Appium capabilities. The capabilities listed below are typically required or have specific use cases unique to Kobiton.
 
 [NOTE]
-For Basic Appium 2 session, follow the https://appium.io/docs/en/2.0/guides/migrating-1-to-2/#capabilities[Appium 2 guidelines] for vendor prefix.
+For Basic Appium 2 sessions, follow the https://appium.io/docs/en/2.0/guides/migrating-1-to-2/#capabilities[Appium 2 guidelines] for vendor prefix.
 
 [#_accessKey]
 === `accessKey`

@@ -2,13 +2,13 @@
 :navtitle: Migrate Java test to Java Appium Client 9.2.2 or above
 
 
-Java Appium Client (`java-client`) 9.2.2 or above introduce several changes that cause issues with automation test:
+Java Appium Client (`java-client`) 9.2.2 or above introduces several changes that may cause the following issues with automation testing:
 
 * *Authentication Issue*: The Appium Java Client 9.2.2 no longer includes authentication (username and key) in API requests by default. This change means credentials aren’t being transmitted as they were in previous versions.
 
 * *Capabilities Issue*: The library now defaults to using `firstMatch` capabilities instead of the `alwaysMatch` or `desiredCapabilities` that Kobiton system expects.
 
-To successfully migrate Java test script using lower 'java-version' versions to 9.2.2 or above, the following changes are required:
+To successfully migrate Java test scripts using lower 'java-version' versions to 9.2.2 or above, the following changes are required:
 
 * Remove the username and API key from the Appium request.
 
@@ -17,7 +17,7 @@ To successfully migrate Java test script using lower 'java-version' versions to 
 == Update Java test script for migration
 
 [IMPORTANT]
-Standalone/On-Prem customers with version 4.15S or below must update to 4.16.1S before migrating.
+Standalone/On-Prem customers with version 4.15S or below must update to 4.16.1S before migrating to Appium Java Client 9.2.2 or above.
 
 . Open the Java test script for editing.
 
