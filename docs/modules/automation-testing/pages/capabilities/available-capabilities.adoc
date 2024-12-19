@@ -1,10 +1,14 @@
 = Available capabilities
+:page-aliases: automation-testing:capabilities:add-visualvalidation.adoc
 :navtitle: Available capabilities
 
 These are the capabilities you can use during an automation session.
 
 [NOTE]
 You can also xref:automation-testing:capabilities/auto-generate-capabilities.adoc[auto-generate your capabilities].
+
+[NOTE]
+The `kobiton:visualValidation` capability is deprecated.
 
 == Kobiton Capabilities
 
@@ -216,25 +220,6 @@ The device configuration to use during the test session. *Only available for web
 ----
 capabilities.setCapability("useConfiguration", "kobiton"); // Use this pre-defined configuration for the test session.
 ----
-
-[#_visualValidation]
-=== `kobiton:visualValidation`
-
-Validates UI output across different devices, operating systems, and form factors. For more information, see xref:automation-testing:capabilities/add-visualvalidation.adoc[].
-
-* *Type:* `boolean`
-* *Required capabilities:* xref:_ensureWebviewsHavePages[], xref:_baselineSessionId[]
-* *Optional capabilities:* None
-
-.Example
-[source,java]
-----
-capabilities.setCapability("ensureWebviewsHavePages", true); // Set to true.
-capabilities.setCapability("kobiton:visualValidation", true);  // Set to true.
-----
-
-[NOTE]
-This capability cannot be used in Basic Appium 2 sessions.
 
 == Appium Capabilities
 
