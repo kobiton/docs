@@ -1,31 +1,39 @@
 = Create a test case
 :navtitle: Create a test case
 
-Learn how to create a test case so you can run xref:scriptless-automation:index.adoc[Scriptless Automation].
+Learn how to create a test case from a baseline session. A test case is a template that includes all test steps performed in the baseline session. This test case can then be used to re-run test steps on different devices using Scriptless Automation.
 
 == Before you start
 
 You'll need to complete the following:
 
-* xref:scriptless-automation:create-a-baseline-session.adoc[Create a baseline session].
-* If applicable, xref:remediation/annotate-a-test-step.adoc[annotate any flagged test steps].
+* xref:scriptless-automation:create-a-baseline-session.adoc[Create a baseline session for Scriptless Automation].
 
-== Create a test case
+== Create a new test case
 
-In *Sessions*, xref:session-explorer:search-for-a-session.adoc[search for a session], then select a session.
+There are two possible ways to create a test case:
 
-image:search-for-a-session-context.png[width=1000,alt="Select Sessions and search for a session"]
+=== Convert an existing session into a new test case in Session Explorer
 
-Select *Automated Test Case*.
+Access the Session Overview or Session Explorer page using either option:
 
-image:select-automated-test-case-context.png[width=1000,alt="Select Automated Test Case"]
+* Automatic redirection after completing a manual session.
+* Select a session from the Session List.
 
-If your test case has any issues, you'll need to xref:remediation/annotate-a-test-step.adoc[annotate your flagged test steps] first. When your test case is good to go, you'll see the following message:
+If the session qualifies for scriptless, the Convert to Test Case button is available. Select it to convert the session into a test case.
 
-image:test-case-ready-to-go-context.png[width=1000,alt="Test case after all annotating"]
+If the AI analysis is complete, the Convert to Test Case button turns into View Test Case. Select it to view the test case details.
 
-When you're ready, select *Convert to Test Case*.
+If the AI is still analyzing, an error message displays instead. Wait a while before selecting Convert to Test Case again.
 
-image:convert-to-test-case-context.png[width=1000,alt="Click Convert to Test case"]
+=== Create a test case from a list of available sessions in Test Management
 
-If you'd like to make changes to your test case before running Scriptless Automation, see xref:manage-test-steps.adoc[].
+Select the Test Management icon from the menu, then choose the Test Cases tab. Select New Test Case.
+
+Choose a baseline session to convert to test case. Only sessions that qualify for scriptless and have not been converted appear here. Select Convert.
+
+If the AI analysis is complete, a success message with an option to View Test Case displays. To navigate to the test case details, you can either:
+
+* Select View Test Case.
+* Select the new ID in the Test Cases List.
+
