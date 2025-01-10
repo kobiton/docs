@@ -41,3 +41,4 @@ runs:
           --aws-secret-access-key=env:AWS_SECRET_ACCESS_KEY \
           --aws-session-token=env:AWS_SESSION_TOKEN \
           --cloudfront-id=${{ inputs.cloudfront-id }} \
+        cloud-token: ${{ secrets.DAGGER_CLOUD_TOKEN }}
