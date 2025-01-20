@@ -23,6 +23,7 @@ jobs:
           cloudfront-id: ${{ secrets.DOCS_CLOUDFRONT_ID }}
           aws-account-id: ${{ secrets.AWS_ACCOUNT_ID }}
           aws-region: ${{ secrets.AWS_PROD_REGION }}
+          dagger-token: ${{ secrets.DAGGER_CLOUD_TOKEN }}
 
   widget:
     runs-on: ubuntu-latest
@@ -35,3 +36,4 @@ jobs:
           cloudfront-id: ${{ secrets.WIDGET_CLOUDFRONT_ID }}
           aws-account-id: ${{ secrets.AWS_ACCOUNT_ID }}
           aws-region: ${{ secrets.AWS_PROD_REGION }}
+          dagger-token: ${{ secrets.DAGGER_CLOUD_TOKEN }}

@@ -17,6 +17,10 @@ inputs:
     description: "The AWS region to use"
     required: true
 
+  dagger-token:
+    description: "The Dagger Cloud token"
+    required: true
+
 runs:
   using: "composite"
   steps:
@@ -27,9 +31,9 @@ runs:
         aws-region: ${{ inputs.aws-region }}
 
     - name: Release-docs
-      uses: dagger/dagger-for-github@e49f5bfe7f9a3593f38b9d7391f110d6dff48f94 # v6.8.0
+      uses: dagger/dagger-for-github@847ae4458ef34fe9b5f566655957bde6d4891112 # v7.0.3
       with:
-        version: "0.13.0"
+        version: "0.15.1"
         verb: call
         module: github.com/${{ github.repository }}@${{ github.ref }}
         args: |
@@ -41,3 +45,4 @@ runs:
           --aws-secret-access-key=env:AWS_SECRET_ACCESS_KEY \
           --aws-session-token=env:AWS_SESSION_TOKEN \
           --cloudfront-id=${{ inputs.cloudfront-id }} \
+        cloud-token: ${{ inputs.dagger-token }}

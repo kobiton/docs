@@ -11,7 +11,7 @@ type AWS struct {
 
 func (m *AWS) AwsCli(ctx context.Context, awsAccessKeyID, awsSecretAccessKey, awsSessionToken *dagger.Secret, awsRegion string) (*dagger.Container, error) {
 	ctr := dag.Container().
-		From("public.ecr.aws/aws-cli/aws-cli:latest").
+		From("public.ecr.aws/aws-cli/aws-cli:2.22.18").
 		WithSecretVariable("AWS_ACCESS_KEY_ID", awsAccessKeyID).
 		WithSecretVariable("AWS_SECRET_ACCESS_KEY", awsSecretAccessKey).
 		WithSecretVariable("AWS_SESSION_TOKEN", awsSessionToken).
