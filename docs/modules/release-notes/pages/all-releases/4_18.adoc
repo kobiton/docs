@@ -1,0 +1,95 @@
+= Kobiton 4.18 Release Notes
+:navtitle: Kobiton 4.18 release notes
+
+_January 11, 2025_
+
+== New OS Support
+
+This release adds support for the following:
+
+* iOS/iPadOS 18.2
+
+[NOTE]
+For iOS/iPadOS 18.2, native XCUITest automation script cannot run.
+
+== Changes to the Auto-Upgrade Settings for Cloud/Hybrid Organizations
+
+With this release, we have updated the auto-upgrade settings of all Cloud/Hybrid organizations to *Automatic*. Reasons for this update include:
+
+* Preventing offline devices due to outdated version of deviceConnect (2 major releases behind the latest version).
+* Ensuring the best compatibility with the new version of Cloud Portal.
+
+[NOTE]
+If the organization does not want to auto-upgrade deviceConnect, turn it off by going to *Settings → Device Management* in the Kobiton Portal, then change the auto-upgrade option back to *Manual* (requires an admin account).
+
+== Deprecation of Android 9 and Below for Passcode-Enabled Organizations
+
+With this release, we have decided to deprecate support for *Android 9 and below* for organizations with passcode mode enabled.
+
+If Android 9 and below devices are still needed for organizations with passcode enabled, contact Kobiton support for assistance in disabling passcode for only these devices.
+
+== Major Improvements to Network Payload Capture Setup Process for iOS
+
+Before this release, the process of setting up Network Payload Capture (NPC) for iOS devices could only be done manually (to install the NPC certificate on the device).
+
+With the new process introduced in this release:
+
+* NPC certificate can be deployed automatically to the device, as long as the device is supervised.
+* The 10-second wait just after starting an NPC session (to set up the proxy connection) is no longer needed.
+* The below steps are no longer needed to enable NPC on Mac mini hosts:
+** Install Apple Configurators and Automation Tools.
+** Generate trusted ssh connection to 127.0.0.1 and reboot the Mac mini.
+
+[NOTE]
+The setup process for Android devices stays the same.
+
+With these changes, additional requirements must be met:
+
+* The iOS devices that need NPC must be supervised by a single supervision identity.
+* The supervision identity files (`organization.crt` and `organization.der`) must be copied to the folder `/usr/local/deviceconnect` on the Mac mini hosts.
+
+[IMPORTANT]
+ In a Mac mini, all iOS devices must be supervised by only one supervision identity for NPC to work. If the devices are supervised by multiple identities, re-supervise the devices to only one identity for NPC to work on them.
+
+== Scriptless Automation and Mobile Test Management Enhancements
+
+* Enhanced ability to dismiss iOS and Android popups during Scriptless test runs.
+* Improved screen capture capabilities.
+* Upgraded Appium Script generation for Android and iOS Web tests.
+* Improved handling of scroll/swipe actions.
+
+== Script-Based Test Automation Enhancements
+
+*Updates for Xium:*
+
+* Fixed issue with `processArgument` capability parameters not displaying for iOS devices.
+* Addressed an issue on some Pixel devices where an element of type `ImageButton` appeared clickable, but the drawer did not open upon interaction.
+* Added the ability to retrieve slider element values in the inspector.
+
+*Updates for basic Appium 2:*
+
+* Added support for running basic Appium 2 on Android devices with MDM.
+* Improved compatibility by translating non-vendor-prefixed capabilities (e.g., `automationName`) into vendor-prefixed ones (e.g., `appium:automationName`).
+* Updated device automation settings to include vendor prefixes in the *Automation Settings* on the *Device Modal*.
+* Translated deprecated Appium 1 touch actions for compatibility with Appium 2.
+
+== APIv2 Improvements
+
+* Improved detail provided in error messages.
+* Corrected the *created by* field to show the original uploader for apps uploaded by multiple users.
+
+== General Improvements and Fixes
+
+* Fixed an issue in the Device List modal where *Select App from Apps Repo* failed to open the App Repo in *Automation Settings*.
+* Resolved a display issue where some iOS devices did not show IMEI and mobile numbers in the Device List.
+* Fixed navigation issues on iPads in landscape mode when no cleanup policy was set and a new session was started.
+* Enhanced Inspector behavior and results in Manual Sessions and Session Explorer.
+* Improved sorting functionality throughout Mobile Test Management.
+* Enhanced Accessibility validations to support level AAA color contrast validations.
+* Enabled search for elements in the Inspector using special characters during Manual sessions.
+* Added the ability to reactivate a subscription after cancellation without contacting support.
+* Fixed an issue in Session Explorer where application links were not filtering to the `appID`.
+* Fixed the *Uninstall All* button under *Device Modal → Apps*. This button now uninstalls all apps on the device that were installed using the *Apps* menu under the *Device Modal* screen.
+* Enhanced handling of a user switching between Portal and virtualUSB UI for the same device interaction.
+* Ensured quick action menus are fully visible, even at the bottom of the screen.
+* Improved behavior when the *Automatically Clean-Up After Session* option is unchecked during a Manual Session.
