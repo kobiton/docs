@@ -79,10 +79,10 @@ On a Mac Mini, all iOS devices must be supervised under a single supervision ide
 
 * Added support for running basic Appium 2 on Android devices with MDM.
 * Translated deprecated Appium 1 touch actions to work with Appium 2. The actions are: `press`, `longPress`, `tap`, `moveTo`, `wait`, `release`.
-* Appium 1 scripts often rely on non-vendor-prefixed capabilities such as `automationName` instead of the proper `appium:automationName`. To assist with compatibility when running against our basic Appium 2 server:
+* Appium 1 scripts often rely on non-vendor-prefixed capabilities such as `automationName` instead of the proper `appium:automationName`. To assist with compatibility when running against our basic Appium 2 server, we have:
 
-** Automatically added vendor prefixes to most of the capabilities.
-** Updated device automation settings to include vendor prefixes in the *Automation Settings* in the *Device Modal*.
+** automatically added vendor prefixes to most of the capabilities.
+** updated device automation settings to include vendor prefixes in the *Automation Settings* in the *Device Modal*.
 
 == APIv2 Improvements
 
