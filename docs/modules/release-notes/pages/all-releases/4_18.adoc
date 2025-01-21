@@ -10,35 +10,44 @@ This release adds support for the following:
 * iOS/iPadOS 18.2
 
 [NOTE]
-For iOS/iPadOS 18.2, native XCUITest automation script cannot run.
+Native XCUITest automation script is not currently supported on iOS/iPadOS 18.2.
 
 == Changes to the Auto-Upgrade Settings for Cloud/Hybrid Organizations
 
-With this release, we have updated the auto-upgrade settings of all Cloud/Hybrid organizations to *Automatic*. Reasons for this update include:
+In this release, we updated the auto-upgrade settings for all Cloud/Hybrid organizations to *Automatic*. This change ensures your organization benefits from the latest improvements and optimizations. Key reasons for this update include:
 
-* Preventing offline devices due to outdated version of deviceConnect (2 major releases behind the latest version).
-* Ensuring the best compatibility with the new version of Cloud Portal.
+* Preventing device outages caused by running outdated versions of deviceConnect (two or more major releases behind the latest version).
+* Ensuring compatibility with the newest version of the Cloud Portal.
+
+This update helps maintain consistent performance and reliability across your devices and platforms.
 
 [NOTE]
-If the organization does not want to auto-upgrade deviceConnect, turn it off by going to *Settings → Device Management* in the Kobiton Portal, then change the auto-upgrade option back to *Manual* (requires an admin account).
+If your organization prefers not to use the auto-upgrade feature for deviceConnect, an admin can switch the auto-upgrade option to *Manual* from the *Device Management* page in the Kobiton Portal. We recommend discussing this change with your Kobiton account team to ensure it aligns with your organization's needs.
 
-== Deprecation of Android 9 and Below for Passcode-Enabled Organizations
+== Deprecation of passcode support for Android 9 and below
 
-With this release, we have decided to deprecate support for *Android 9 and below* for organizations with passcode mode enabled.
+With this release, we are deprecating passcode support for *Android 9 and earlier*.
 
-If Android 9 and below devices are still needed for organizations with passcode enabled, contact Kobiton support for assistance in disabling passcode for only these devices.
+If your organization still needs to test Android 9 or earlier devices without a passcode, contact Kobiton Support for assistance disabling the passcode for these devices.
 
-== Major Improvements to Network Payload Capture Setup Process for iOS
+== Major improvements to the Network Payload Capture (NPC) setup process for iOS
 
-Before this release, the process of setting up Network Payload Capture (NPC) for iOS devices could only be done manually (to install the NPC certificate on the device).
+Previously, setting up Network Payload Capture (NPC) for iOS devices required a manual process to install the NPC certificate on the device. With this release, we’ve introduced significant improvements to simplify and streamline the setup process:
 
-With the new process introduced in this release:
+*Automatic NPC Certificate Deployment:*
 
-* NPC certificate can be deployed automatically to the device, as long as the device is supervised.
-* The 10-second wait just after starting an NPC session (to set up the proxy connection) is no longer needed.
-* The below steps are no longer needed to enable NPC on Mac mini hosts:
-** Install Apple Configurators and Automation Tools.
-** Generate trusted ssh connection to 127.0.0.1 and reboot the Mac mini.
+* The NPC certificate can now be automatically deployed to supervised devices, eliminating the need for manual installation.
+
+*Faster NPC Session Start:*
+
+* The 10-second wait period after starting an NPC session (previously required to set up the proxy connection) is no longer necessary for iOS devices.
+
+*Simplified Setup on Mac Mini Hosts:*
+
+* The following steps are no longer required to enable NPC on Mac Mini hosts:
+
+** Installing Apple Configurator and automation tools.
+** Generating a trusted SSH connection to `127.0.0.1` and rebooting the Mac Mini.
 
 [NOTE]
 The setup process for Android devices stays the same.
@@ -49,7 +58,7 @@ With these changes, additional requirements must be met:
 * The supervision identity files (`organization.crt` and `organization.der`) must be copied to the folder `/usr/local/deviceconnect` on the Mac mini hosts.
 
 [IMPORTANT]
- In a Mac mini, all iOS devices must be supervised by only one supervision identity for NPC to work. If the devices are supervised by multiple identities, re-supervise the devices to only one identity for NPC to work on them.
+On a Mac Mini, all iOS devices must be supervised under a single supervision identity. If devices are supervised by multiple identities, you will need to re-supervise them under a single identity for NPC to function properly.
 
 == Scriptless Automation and Mobile Test Management Enhancements
 
@@ -69,9 +78,11 @@ With these changes, additional requirements must be met:
 *Updates for basic Appium 2:*
 
 * Added support for running basic Appium 2 on Android devices with MDM.
-* Improved compatibility by translating non-vendor-prefixed capabilities (e.g., `automationName`) into vendor-prefixed ones (e.g., `appium:automationName`).
-* Updated device automation settings to include vendor prefixes in the *Automation Settings* on the *Device Modal*.
-* Translated deprecated Appium 1 touch actions for compatibility with Appium 2.
+* Translated deprecated Appium 1 touch actions to work with Appium 2. The actions are: `press`, `longPress`, `tap`, `moveTo`, `wait`, `release`.
+* Appium 1 scripts often rely on non-vendor-prefixed capabilities such as `automationName` instead of the proper `appium:automationName`. To assist with compatibility when running against our basic Appium 2 server, we have:
+
+** automatically added vendor prefixes to most of the capabilities.
+** updated device automation settings to include vendor prefixes in the *Automation Settings* in the *Device Modal*.
 
 == APIv2 Improvements
 
@@ -85,7 +96,7 @@ With these changes, additional requirements must be met:
 * Fixed navigation issues on iPads in landscape mode when no cleanup policy was set and a new session was started.
 * Enhanced Inspector behavior and results in Manual Sessions and Session Explorer.
 * Improved sorting functionality throughout Mobile Test Management.
-* Enhanced Accessibility validations to support level AAA color contrast validations.
+* Enhanced Accessibility validations to clearly distinguish between AA and AAA color contrast validations.
 * Enabled search for elements in the Inspector using special characters during Manual sessions.
 * Added the ability to reactivate a subscription after cancellation without contacting support.
 * Fixed an issue in Session Explorer where application links were not filtering to the `appID`.
@@ -93,3 +104,5 @@ With these changes, additional requirements must be met:
 * Enhanced handling of a user switching between Portal and virtualUSB UI for the same device interaction.
 * Ensured quick action menus are fully visible, even at the bottom of the screen.
 * Improved behavior when the *Automatically Clean-Up After Session* option is unchecked during a Manual Session.
+* StepGroup improvements in Session Explorer, including performance when navigating steps, supporting long `stepGroup` names, and allowing `stepGroup` name to be blank after having a `stepGroup`.
+* Addressed issue where an iPad with no cleanup policy is put into landscape mode when a session ends and then the next session cannot navigate properly.
