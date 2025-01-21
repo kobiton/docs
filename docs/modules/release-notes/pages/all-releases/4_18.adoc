@@ -10,23 +10,25 @@ This release adds support for the following:
 * iOS/iPadOS 18.2
 
 [NOTE]
-For iOS/iPadOS 18.2, native XCUITest automation script cannot run.
+Native XCUITest automation script is not currently supported on iOS/iPadOS 18.2.
 
 == Changes to the Auto-Upgrade Settings for Cloud/Hybrid Organizations
 
-With this release, we have updated the auto-upgrade settings of all Cloud/Hybrid organizations to *Automatic*. Reasons for this update include:
+In this release, we updated the auto-upgrade settings for all Cloud/Hybrid organizations to *Automatic*. This change ensures your organization benefits from the latest improvements and optimizations. Key reasons for this update include:
 
-* Preventing offline devices due to outdated version of deviceConnect (2 major releases behind the latest version).
-* Ensuring the best compatibility with the new version of Cloud Portal.
+* Preventing device outages caused by running outdated versions of deviceConnect (two or more major releases behind the latest version).
+* Ensuring compatibility with the newest version of the Cloud Portal.
+
+This update helps maintain consistent performance and reliability across your devices and platforms.
 
 [NOTE]
-If the organization does not want to auto-upgrade deviceConnect, turn it off by going to *Settings → Device Management* in the Kobiton Portal, then change the auto-upgrade option back to *Manual* (requires an admin account).
+If your organization prefers not to use the auto-upgrade feature for deviceConnect, an admin can switch the auto-upgrade option to *Manual* from the *Device Management* page in the Kobiton Portal. We recommend discussing this change with your Kobiton account team to ensure it aligns with your organization's needs.
 
-== Deprecation of Android 9 and Below for Passcode-Enabled Organizations
+== Deprecation of passcode support for Android 9 and below
 
-With this release, we have decided to deprecate support for *Android 9 and below* for organizations with passcode mode enabled.
+With this release, we are deprecating passcode support for *Android 9 and earlier*.
 
-If Android 9 and below devices are still needed for organizations with passcode enabled, contact Kobiton support for assistance in disabling passcode for only these devices.
+If your organization still needs to test Android 9 or earlier devices without a passcode, contact Kobiton Support for assistance disabling the passcode for these devices.
 
 == Major Improvements to Network Payload Capture Setup Process for iOS
 
@@ -49,7 +51,7 @@ With these changes, additional requirements must be met:
 * The supervision identity files (`organization.crt` and `organization.der`) must be copied to the folder `/usr/local/deviceconnect` on the Mac mini hosts.
 
 [IMPORTANT]
- In a Mac mini, all iOS devices must be supervised by only one supervision identity for NPC to work. If the devices are supervised by multiple identities, re-supervise the devices to only one identity for NPC to work on them.
+On a Mac Mini, all iOS devices must be supervised under a single supervision identity. If devices are supervised by multiple identities, you will need to re-supervise them under a single identity for NPC to function properly.
 
 == Scriptless Automation and Mobile Test Management Enhancements
 
