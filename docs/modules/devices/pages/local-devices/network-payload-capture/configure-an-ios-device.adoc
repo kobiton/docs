@@ -59,6 +59,60 @@ Input the administrator password in the pop-up and select *Update Settings*.
 
 Your organization should now appear in the list. Select it.
 
+Click the *three-dot icon* and select *Export Supervision Identity*:
+
+* Select a location to save the exported files.
+
+* Select *Unencrypted DER …* for *Format*.
+
+* Select *Save*, then *Export*.
+
+Under the selected location, there is now a `.crt` and a `.der` file with the same name. Rename those files to `organization.crt` and `organization.der`, in that order. Transfer these 2 files into the Mac mini host and follow xref:something[this guide] to copy them to the correct folder.
+
+== Supervise the device
+
+Locate the iOS/iPadOS device to set up NPC.
+
+Disconnect the device from the Mac mini host.
+
+Open Settings on the device and sign out of any Apple ID. A signed in Apple ID will prevent the supervision of the device.
+
+Connect the iOS device to the Mac machine that has all steps from the previous section performed on it. Tap Trust on the device.
+
+Open Apple Configurator on the Mac machine.
+
+In the main screen of Apple Configurator, check if the device is already supervised or not.
+
+Select the *Supervised* and the *Unsupervised* tabs to check where the device appears.
+
+If the device is under the *Supervised* tab, then it is already supervised.
+
+Right-click the device and select *Get info*.
+
+Double-check the Organization that supervises the device.
+
+* If it is the same organization that you created, skip to the next section.
+
+* If it is not the same organization, double-check with your team that you can erase and re-supervise it. If yes, https://support.apple.com/en-vn/guide/apple-configurator-mac/cad8cb745a89/2.17/mac/14.0[erase the device], then follow the steps for an unsupervised device.
+
+If the device is under the *Unsupervised* tab, right-click the device and select *Prepare*.
+
+Select *Manual Configuration* for *Prepare with*, check *Supervise devices*, then choose *Next*.
+
+Select *Do not enroll in MDM*, then *Next*.
+
+Choose your organization in *Organization*, then select *Next*.
+
+Select *Don’t show any of these steps* for *Setup Assistant*, then *Prepare*.
+
+If there is a *Configurator could not perform the requested action…* pop-up, select *Erase*.
+
+The device will be factory reset. When you can access the device, follow the on-screen prompts until you are at the Home screen.
+
+At this time, the device should be under the *Supervised* tab. Right-click the device and select *Get info*, then double-check the Organization that supervises the device.
+
+Now, prepare and connect the device into the Mac mini host. See the linked guides for instructions.
+
 On the device, open *Settings*, then *General*.
 
 image:devices:ios-settings-general.png[width=500, alt="Open Settings then select General"]
