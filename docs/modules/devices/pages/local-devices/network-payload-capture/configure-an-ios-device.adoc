@@ -1,7 +1,7 @@
 = Configure an iOS device for network payload capture
 :navtitle: Configure an iOS device
 
-Learn how to configure an iOS device for network payload capture so you can xref:devices:local-devices/network-payload-capture/create-a-configuration.adoc[create a configuration for network payload capture].
+Learn how to configure an iOS device for network payload capture, so you can xref:devices:local-devices/network-payload-capture/create-a-configuration.adoc[create a configuration for network payload capture].
 
 [NOTE]
 You'll need to configure each iOS device you want to use for network payload capture.
@@ -12,14 +12,52 @@ You'll need to configure each iOS device you want to use for network payload cap
 You'll need to:
 
 * Confirm your system administrator xref:devices:local-devices/network-payload-capture/configure-the-host-machine.adoc[configured your local Kobiton server].
-* Open the network payload capture certificate xref:attachment$kobiton-network-payload-capture-certificate-1.3.crt[download link] from the iOS device's browser and save it onto the device.
+* Any Mac machine that *is not* running Kobiton software such as _deviceConnect_ or _deviceShare_. This machine will be used to supervise the device.
+
+[IMPORTANT]
+====
+
+During this process:
+
+* The device will be unplugged from the Mac mini host to be supervised.
+
+* The device's data will be erased. Back up the device data before proceeding (if needed).
+
+
+
+====
+
+== Install Apple Configurator and automation tools
+
+Access the Mac machine that *is not* running Kobiton software.
+
+Open the *App Store*, search for and install *Apple Configurator*.
 
 [NOTE]
-====
-You can also use https://support.apple.com/en-vn/guide/mac-help/mh35868/mac[AirDrop] to send the certificate from any MacOS machine (the Mac mini host machine, for example) to the device.
-====
+An Apple is required to download and install Apple Configurator.
 
-== Install certificate
+Open *Apple Configurator*. On the menu bar, select *Apple Configurator*.
+
+Select *Install Automation Tools*.
+
+A pop-up appears, select *Install* and provide the administrator password to continue.
+
+
+== Create an organization, then export the supervision identity
+
+On the *Apple Configurator* menu, select Settings.
+
+Select the *Organizations* tab. Select the *Plus* sign to add a new organization.
+
+Select *Next* and log in using the Apple Business or School Manager account. If you do not have such an account, select *Skip*.
+
+Enter your organization’s information in the below screen and choose *Next*.
+
+Choose *Generate a new supervision identity* and select *Done*.
+
+Input the administrator password in the pop-up and select *Update Settings*.
+
+Your organization should now appear in the list. Select it.
 
 On the device, open *Settings*, then *General*.
 
