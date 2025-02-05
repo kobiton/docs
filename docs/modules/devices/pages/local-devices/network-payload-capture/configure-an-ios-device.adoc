@@ -1,52 +1,155 @@
 = Configure an iOS device for network payload capture
 :navtitle: Configure an iOS device
 
-Learn how to configure an iOS device for network payload capture so you can xref:devices:local-devices/network-payload-capture/create-a-configuration.adoc[create a configuration for network payload capture].
+Learn how to configure an iOS device for network payload capture, so you can xref:devices:local-devices/network-payload-capture/create-a-configuration.adoc[create a configuration for network payload capture].
 
 [NOTE]
 You'll need to configure each iOS device you want to use for network payload capture.
 
-[#_before_you_start]
 == Before you start
 
 You'll need to:
 
+* Make sure that the current deviceConnect version on the Mac mini hosting the device is at least *4.18*. xref:device-lab-management:deviceConnect/remote-update-deviceconnect.adoc[Update deviceConnect] if the version is lower.
+
 * Confirm your system administrator xref:devices:local-devices/network-payload-capture/configure-the-host-machine.adoc[configured your local Kobiton server].
-* Open the network payload capture certificate xref:attachment$kobiton-network-payload-capture-certificate-1.3.crt[download link] from the iOS device's browser and save it onto the device.
+
+* Any Mac machine that *is not* running Kobiton software such as _deviceConnect_ or _deviceShare_. This machine will be used to supervise the device.
+
+== Install Apple Configurator and automation tools
+
+Access the Mac machine that *is not* running Kobiton software.
+
+Open the *App Store*, search for and install *Apple Configurator*.
+
+image:apple-configurator-mac-app-store.png[width=800,alt="Apple Configurator in the Mac App Store"]
 
 [NOTE]
+An Apple ID is required to download and install Apple Configurator.
+
+Open *Apple Configurator*.On the menu bar, select *Apple Configurator*, then *Install Automation Tools*.
+
+image:apple-configurator-menu-install-automation-tools.png[width=400,alt="The Install Automation Tools option under the Apple Configurator menu bar"]
+
+A pop-up appears, select *Install* and provide the administrator password to continue.
+
+image:apple-configurator-install-automation-tools-popup.png[width=300,alt="The Install Automation Tools confirmation pop-up"]
+
+[#_create_an_organization_then_export_the_supervision_identity]
+== Create an organization, then export the supervision identity
+
+On the *Apple Configurator* menu, select *Settings*.
+
+image:apple-configurator-menu-settings.png[width=400,alt="The Settings option under the Apple Configurator menu bar"]
+
+Select the *Organizations* tab. Select the *Plus* sign to add a new organization.
+
+image:apple-configurator-organizations-settings.png[width=500,alt="The Organizations tab under Apple Configurator Settings"]
+
+Select *Next* and log in using the Apple Business or School Manager account.If you do not have such an account, select *Skip*. The next step assumes that you have selected the *Skip* button.
+
+image:apple-configurator-sign-in-apple-manager.png[width=500,alt="The Sign in to Apple School or Apple Business Managager screen with the field to input Apple ID and the Skip button"]
+
+Enter your organization’s information in the below screen and choose *Next*.
+
+image:apple-configurator-create-organization.png[width=500,alt="The form to input the organization details with the Next button"]
+
+Choose *Generate a new supervision identity* and select *Done*.
+
+image:apple-configurator-choose-supervision-identity.png[width=500,alt="Choose Generate a new supervision identity option and select Done"]
+
+Input the administrator password in the pop-up and select *Update Settings*.
+
+Your organization should now appear in the list. Highlight it, then click the *three-dot icon* and select *Export Supervision Identity*.
+
+image:apple-configurator-organizations-actions.png[width=500,alt="The newly created organization under the list with the menu expanded and the Export Supervision Identity option visible"]
+
+In the export supervision identity pop-up:
+
+* Select a location to save the exported files.
+
+* Select *Unencrypted DER …* for *Format*.
+
+* Select *Save*, then *Export*.
+
+image:apple-configurator-export-organization-options.png[width=500,alt="The Export Supervision Identity pop-up with the Unencrypted DER select for Format"]
+
+Under the selected location, there is now a `.crt` and a `.der` file with the same name. Rename those files to `organization.crt` and `organization.der`, in that order. Transfer these 2 files into the Mac mini host and follow xref:local-devices/network-payload-capture/configure-the-host-machine.adoc#_copy_supervision_identity[this guide] to copy them to the correct folder.
+
+== Supervise the device
+
+[WARNING]
 ====
-You can also use https://support.apple.com/en-vn/guide/mac-help/mh35868/mac[AirDrop] to send the certificate from any MacOS machine (the Mac mini host machine, for example) to the device.
+
+During this process:
+
+* The device will be unplugged from the Mac mini host to be supervised.
+
+* The device's data will be erased. Back up the device data before proceeding (if needed).
+
+
 ====
 
-== Install certificate
+Locate the iOS/iPadOS device to set up NPC.
 
-On the device, open *Settings*, then *General*.
+Disconnect the device from the Mac mini host.
 
-image:devices:ios-settings-general.png[width=500, alt="Open Settings then select General"]
+Open *Settings* on the device and sign out of any Apple ID. A signed in Apple ID will prevent the supervision of the device.
 
-Select *VPN & Device Management* (iOS 16 or later) or *Profiles & Device Management* (iOS 15 and earlier), then open *Kobiton Certification Authority*.
+Connect the iOS device to the Mac machine that has all steps from the previous section performed on it. Tap *Trust* on the device.
 
-image:devices:ios-vpn-and-device.png[width=500, alt="Select VPN and Device Management, then open Kobiton Certification Authority"]
+image:device-lab-management:device-lab-management-ios-add-ios-trust-this-computer-trust.PNG[width=300,alt="The Trust this computer prompt on the iOS device screen"]
 
-Select *Install* on the next few steps. After the installation completes, select *Done*.
+Open *Apple Configurator* on the Mac machine.
 
-image:devices:ios-select-certificate.png[width=500, alt="Select Install, then select Done when installation completes"]
+In the main screen of Apple Configurator, select the *Supervised* and the *Unsupervised* tabs to check where the device appears.
 
-== Enable full trust for certificate
+If the device is under the *Supervised* tab, then it is already supervised. Right-click the device and select *Get info*.
 
-On the device, open *Settings*, then *General*.
+image:apple-configurator-supervised-device-get-info.png[width=700,alt="The device under the Supervised tab with the Get Info option"]
 
-image:devices:ios-settings-general.png[width=500, alt="Open Settings then select General"]
+Double-check the Organization that supervises the device:
 
-Select *About*.
+* If it is the same organization that you created, skip supervising the device.
 
-image:devices:ios-settings-about.png[width=500, alt="Select About"]
+* If it is not the same organization, double-check with your team that you can erase and re-supervise it. If yes, https://support.apple.com/en-vn/guide/apple-configurator-mac/cad8cb745a89/2.17/mac/14.0[erase the device], then follow the steps for an unsupervised device.
 
-Select *Certificate Trust Settings*.
+image:apple-configurator-device-info.png[width=600,alt="The device info screen with the supervision Organizatin information visible"]
 
-image:devices:ios-settings-certficate-trust.png[width=500, alt="Select Certificate Trust Settings"]
+If the device is under the *Unsupervised* tab, right-click the device and select *Prepare*.
 
-Turn on *Kobiton Certification Authority*. Select *Continue* in the pop-up.
+image:apple-configurator-prepare-device-menu.png[width=700,alt="The prepare option after right-clicking the device in Apple Configurator"]
 
-image:ios-trust-kobiton-certficate.png[width=500, alt="Turn on Kobiton Certification Authority then select Continue in the pop-up"]
+Select *Manual Configuration* for *Prepare with*, check *Supervise devices*, then choose *Next*.
+
+image:apple-configurator-prepare-with.png[width=500,alt="The prepare devices screen with the Manual Configuration selected and Supervise devices checked"]
+
+Select *Do not enroll in MDM*, then *Next*.
+
+image:apple-configurator-enroll-mdm.png[width=500,alt="The Enroll in MDM Server screen with Do not enroll in MDM selected"]
+
+Choose your organization in *Organization*, then select *Next*.
+
+image:apple-configurator-assign-organization.png[width=500,alt="The Assign to Organization screen with the created Organization selected"]
+
+Select *Don’t show any of these steps* for *Setup Assistant*, then *Prepare*.
+
+image:apple-configurator-configure-setup-assistant.png[width=500,alt="The Configure iOS Setup Assistant screen with Don't show any of these steps selected"]
+
+If there is a *Configurator could not perform the requested action…* pop-up, select *Erase*.
+
+image:apple-configurator-erase-device.png[width=300,alt="The Configurator could not perform the selected action pop-up with the Erase button"]
+
+The device will be factory reset. When you can access the device, follow the on-screen prompts until you are at the Home screen.
+
+At this time, the device should be under the *Supervised* tab. Right-click the device and select *Get info*, then double-check the Organization that supervises the device.
+
+image:apple-configurator-supervised-device-get-info.png[width=700,alt="The device under the Supervised tab with the Get Info option"]
+
+Now, xref:device-lab-management:ios-devices/prepare-ios-device.adoc[prepare] and xref:device-lab-management:ios-devices/add-ios-device.adoc[connect] the device into the Mac mini host. See the linked guides for instructions.
+
+The device is now ready for Network Payload Capture.
+
+== Next steps
+
+xref:local-devices/network-payload-capture/create-a-configuration.adoc[], launch a xref:manual-testing:local-devices/capture-network-payload-data.adoc[manual] or xref:automation-testing:local-devices/capture-network-payload-data.adoc[automation] session with NPC enabled, then xref:session-explorer:analytics/review-network-payload-data.adoc[review the network payload data].

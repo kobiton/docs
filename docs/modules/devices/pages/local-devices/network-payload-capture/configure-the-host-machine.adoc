@@ -1,34 +1,32 @@
-= Configure the host machine for network payload capture
-:navtitle: Configure the host machine
+= Configure the Mac mini host for network payload capture
+:navtitle: Configure Mac mini host
 
-Learn how to configure your local Cloud or Standalone Kobiton host machine so you and your team can use network payload capture during a xref:manual-testing:local-devices/capture-network-payload-data.adoc[manual session] or xref:automation-testing:local-devices/capture-network-payload-data.adoc[automation session].
+Learn how to configure your local Cloud or Standalone Kobiton Mac mini host so you and your team can use network payload capture during a xref:manual-testing:local-devices/capture-network-payload-data.adoc[manual session] or xref:automation-testing:local-devices/capture-network-payload-data.adoc[automation session].
 
 [#_before_you_start]
 == Before you start
 
 You'll need to:
 
-* Verify your system administrator privileges for the local Cloud or Standalone Kobiton host machine. The *host machine* is the Mac mini computer in the Kobiton cart.
-* Download and install link:https://apps.apple.com/app/id1037126344[Apple Configurator] on the host machine.
+* Access the Mac mini host as the *deviceconnect* user for all the operations below.
+* Make sure the Mac mini is connected to a network that satisfies the network requirements for Network Payload Capture before proceeding.
 
 == Modify the `dc.ini` file
 
-Open the Terminal app on the host machine or `ssh` to the host machine.
 
-Next, you'll edit the `dc.ini` within the `/usr/local/deviceconnect` directory. Open the file in your preferred text editor.
 
-.Example
-[source,shell]
-----
-nano /usr/local/deviceconnect/dc.ini
-----
+Edit the `dc.ini` file from the location `/usr/local/deviceconnect/` using any text editor (Create a backup of the `dc.ini` file prior to making updates).
 
-If the following lines are present, simply verify the IP address, then go to xref:_check_for_an_existing_ssh_key[]. Otherwise, add these lines to the end of the file and replace `HOST_MACHINE_IP_ADDRESS` with the correct value.
+Check if the below content exists in the file. Otherwise, append the content to the end of the file.
+
+[IMPORTANT]
+
+Make sure the below is under the `[set]` tag, not `[config]`.
 
 [source,plaintext]
 ----
 # Payload Capture
-DeviceNetworkCapture.NetworkCaptureProxyHost=HOST_MACHINE_IP_ADDRESS
+DeviceNetworkCapture.NetworkCaptureProxyHost=[deviceConnect IP address]
 DeviceNetworkCapture.NetworkCaptureProxyIsLocal=true
 DeviceNetworkCapture.NetworkCaptureProxyControlPort=8225
 DeviceNetworkCapture.NetworkCaptureProxyHttpListenPort=8080
@@ -37,85 +35,50 @@ DeviceNetworkCapture.Trace=true
 DeviceNetworkCapture.ExternalDebugLog=false
 ----
 
-When you're finished, save your changes, then run the following command to restart deviceConnect.
+Replace `[deviceConnect IP address]` with the local IP address of the Mac mini host. You can retrieve the local IP address of the Mac mini by either:
 
+* Navigating to *Settings > Network > Ethernet* or *Wi-Fi* and copying the IP address value. For Wi-Fi, click the *Details…* button next to the connected network to view the IP.
+
+* Opening *Terminal*, then entering the `ifconfig` command. The IP address is usually under the `e `en0` entry (for Etheret) or `en1` entry (for Wi-Fi), next to `inet`.
+
++
+
+.example of ifconfig command
 [source,shell]
 ----
-sudo sv restart /usr/local/var/service/*
+en0: flags=8863<UP,BROADCAST,SMART,RUNNING,SIMPLEX,MULTICAST> mtu 1500
+	options=50b<RXCSUM,TXCSUM,VLAN_HWTAGGING,AV,CHANNEL_IO>
+	ether **:**:**:**:ad:a1
+	inet6 fe80::140b:b7b:e8a0:c90f%en0 prefixlen 64 secured scopeid 0x4
+	inet 192.168.50.86 netmask 0xffffff00 broadcast 192.168.50.255
+
+en1: flags=8863<UP,BROADCAST,SMART,RUNNING,SIMPLEX,MULTICAST> mtu 1500
+	options=6460<TSO4,TSO6,CHANNEL_IO,PARTIAL_CSUM,ZEROINVERT_CSUM>
+	ether **:**:**:**:**:19
+	inet6 fe80::1834:8865:82ea:2b5c%en1 prefixlen 64 secured scopeid 0x7
+	inet 192.168.50.118 netmask 0xffffff00 broadcast 192.168.50.255
 ----
 
 [NOTE]
-====
-If you are only hosting Android devices, you can move on to configure your xref:devices:local-devices/network-payload-capture/configure-an-android-device.adoc[Android device] now. The next steps are only required for hosting iOS devices.
-====
+If the Mac mini is connected to more than 1 network at the same time (for example, both Ethernet and Wi-Fi), make sure `[deviceconnect IP address]` is the IP address obtained from the interface that is connected to the same network as the mobile devices.
 
-[#_check_for_an_existing_ssh_key]
-== Check for an existing SSH key
+Save the file, then xref:device-lab-management:deviceConnect/restart-deviceconnect-services.adoc[restart services] on the Mac mini host to apply the changes.
 
-In the terminal, open the `.ssh` directory, then list the contents of the directory.
+If you are only hosting Android devices, you can move on to configure your xref:devices:local-devices/network-payload-capture/configure-an-android-device.adoc[Android device] now.The next section are only required for iOS devices.
 
-[source,shell]
-----
-cd ~/.ssh && ls -a
-----
+[#_copy_supervision_identity]
+== Copy supervision identity
 
-If you see an `id_rsa` file, go to xref:_modify_the_ssh_key[]. Otherwise, continue to the next section.
+Follow this guide to xref:local-devices/network-payload-capture/configure-an-ios-device.adoc#_create_an_organization_then_export_the_supervision_identity[export the supervision identity] from the Mac machine not running Kobiton software.There should be 2 exported files after the process: `organization.crt` and `organization.der`.
 
-[#_generate_a_new_ssh_key]
-== Generate a new SSH key
+Open *Finder*, copy the 2 files above, then enter *Shift + Command + G* on the keyboard and input the following location: `/usr/local/deviceconnect`.
 
-In the `.ssh` directory, enter the following command:
+Paste the 2 files into the folder.The result in Finder should look similar to the below:
 
-[source,shell]
-----
-ssh-keygen -t rsa
-----
+image:supervise-org-finder.png[width=400,alt="The organization.crt and organization.der file under the deviceconnect folder in Finder"]
 
-Leave the passphrase empty and press *Enter*.
+The Mac mini host setup steps for iOS are now complete.Now, you can configure an xref:devices:local-devices/network-payload-capture/configure-an-ios-device.adoc[iOS device] for network payload capture.
 
-[source,shell]
-----
-> Enter passphrase (empty for no passphrase): [Leave empty]
-> Enter same passphrase again: [Leave empty]
-----
+== Next steps
 
-Now you're ready to xref:_modify_the_ssh_key[modify the SSH key].
-
-[#_modify_the_ssh_key]
-== Modify the SSH key
-
-In the `.ssh` directory, copy the contents from your `id_rsa` public key into the `authorized_keys_` file.
-
-[source,shell]
-----
-cat id_rsa.pub >> ./authorized_keys
-----
-
-[NOTE]
-If an `authorized_keys_` file doesn't exist, one will be automatically created.
-
-Login using your SSH key. If prompted to _trust this connection_, type *yes* and press *Enter*.
-
-[source,shell]
-----
-ssh 127.0.0.1
-----
-
-After you're successfully logged in, exit the SSH session, then restart the host machine.
-
-[source,shell]
-----
-exit && sudo shutdown -r now
-----
-
-== Set up Apple Configurator
-
-Open the Apple Configurator app you xref:_before_you_start[installed previously].
-
-In the menu bar, select *Apple Configurator 2*, then select *Install Automation Tools*:
-
-image:devices:apple-configurator-install-automation-tools.png[width="500", alt="From menu bar, select Apple Configurator, then Install Automation Tools"]
-
-Select *Install*, then enter your admin password. Once the automation tools are installed, you can close Apple Configurator since it doesn't need to be open for network payload capture.
-
-Now, you can configure your xref:devices:local-devices/network-payload-capture/configure-an-android-device.adoc[Android device] or xref:devices:local-devices/network-payload-capture/configure-an-ios-device.adoc[iOS device] for network payload capture.
+Configure the xref:devices:local-devices/network-payload-capture/configure-an-android-device.adoc[Android] and xref:devices:local-devices/network-payload-capture/configure-an-ios-device.adoc[iOS devices].

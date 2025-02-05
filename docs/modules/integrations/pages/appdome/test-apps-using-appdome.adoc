@@ -1,0 +1,123 @@
+= Test Secured Android & iOS Apps Using Appdome
+:navtitle: Appdome
+
+Learn how to test Appdome-secured Android & iOS Apps using Kobiton. Appdome helps customers achieve comprehensive mobile app security at DevSecOps speed and agility, all within the app's existing application lifecycle.
+
+Use Appdome's Build2Test service to test iOS and Android-protected applications on Kobiton with automated testing.
+
+Customers with an Appdome SRM license can use Appdome's Build2Test service to quickly and easily test their Appdome-secured mobile apps using Kobiton without the need for different Fusion Sets. With Appdome's Build2Test service, Appdome's in-app defense model recognizes the unique signature of Kobiton and allows for easy testing without issuing a security alert or forcing the app to exit, even if these services use tools such as Magisk or Frida. For more details, see link:https://www.appdome.com/how-to/devsecops-automation-mobile-cicd/test-secured-mobile-apps/use-appdomes-build-to-test-service/[How to Use Appdome Mobile App Automation Testing].
+
+This knowledge-base article covers the steps needed to test iOS and Android mobile apps secured by Appdome using Kobiton's mobile test automation suite.
+
+== Appdome Protection Triggers  for Android
+
+Manual and automation testing can be used to test Appdome-protected Android mobile apps. Note that there are no specific capabilities for Kobiton to trigger Appdome protection features for Android. 
+
+When testing an Appdome-protected app, some security protections may be triggered due to the nature of Kobiton's test environment. The following table describes which Appdome protection features may be triggered, the reason why, and how to avoid it (during the app building stage on Appdome):
+
+[cols="1h,1,1"]
+|===
+|Appdome Feature |Reason |How to prevent such identification
+
+|Detect Developer Options 
+|Required to interact with the device.
+|Enable Threat Events for Detect Developer Options with **In-App Detection** mode - Appdome will detect developer options is enabled, but will not close the app.
+
+|Block Android Debug Bridge (ADB)
+|Required to interact with the device.
+|Enable Threat Events for Block Android Debug Bridge (ADB) with **In-App Detection** mode - Appdome will detect ADB is enabled, but will not close the app.
+
+|App is Debuggable
+|Kobiton signs the app as debuggable during installation. 
+|Enable Threat Events for **Anti-Debugging** with **In-App Detection** mode - Appdome will detect debuggable apps, but will not close the app.
+
+|App Integrity
+|Kobiton resigns the app 
+|Enable Threat Events for Anti-Tampering with In-App-Detection mode. Appdome will detect app tampering but will not close the app.
+
+|Prevent App Screen Sharing
+|Kobiton performs screen recording, so if this feature is enabled, all test videos may show a black screen. 
+|Disable Prevent App Screen Sharing.
+|=== 
+
+1. To enable Threat Events for Detect Developer Options on Appdome:
+  * Where: Inside the Appdome Console, go to Build > Security Tab > OS Integrity section
+  * How: Toggle (turn ON) Detect Developer Options, as shown below.
+  * Select the Threat Events option In-App Detection.
+  image:integrations:appdome-testing-app-using-appdome-enable-threat-events-detection-developer.png[width=1000,alt="Threat Events for Detect Developer Options on Appdome"]
+
+2. To enable Threat Events for Block Android Debug Bridge (ADB) on Appdome:
+  * Where: Inside the Appdome Console, go to Build > Anti Fraud Tab > Mobile Fraud Detection section
+  * How: Toggle (turn ON) Block Android Debug Bridge (ADB) as shown below.
+  * Select the Threat Events option In-App Detection.
+  image:integrations:appdome-testing-app-using-appdome-enable-threat-events-block-android.png[width=1000,alt="Threat Events for Block Android Debug Bridge (ADB) on Appdome"]
+
+3. To enable Threat Events for Anti-Debugging on Appdome:
+  * Where: Inside the Appdome Console, go to Build > Security Tab > ONEShield™ section
+  * How: Toggle (turn ON) Anti-Debugging as shown below.
+  * Select the Threat Events option In-App Detection.
+  image:integrations:appdome-testing-app-using-appdome-enable-threat-events-anti-debugging.png[width=1000,alt="Threat Events for Anti-Debugging on Appdome"]
+
+4. To enable Threat Events for Anti-Tampering:
+  * Where: Inside the Appdome Console, go to Build > Security Tab > ONEShield™  section
+  * How: Toggle (turn ON) Anti-Tampering as shown below.
+  * Select the Threat Events option In-App Detection.
+  * Note: This will not prevent Appdome's protection from detecting Anti-Tampering, but it will not close the app.
+  image:integrations:appdome-testing-app-using-appdome-enable-threat-events-anti-tampering.png[width=1000,alt="Threat Events for Anti-Tampering"]
+
+5. To disable Prevent App Screen Sharing on Appdome:
+  * Where: Inside the Appdome Console, go to Build > Security Tab > Mobile Privacy section
+  * How: Toggle (turn OFF) Prevent App Screen Sharing as shown below.
+  image:integrations:appdome-testing-app-using-appdome-disable-prevent-app-screen-sharing.png[width=1000,alt="Prevent App Screen Sharing on Appdome"]
+
+== How to Disable Google Play Protect
+
+Google Play Protect might also prevent an app from running on some Kobiton test devices. You may encounter a message like the following:
+
+image:integrations:appdome-testing-app-using-appdome-disable-google-play-protect.png[width=500,alt="Disable Google Play Protect"]
+
+To disable Google Play Protect on a device:
+
+* Launch Google Play on the device.
+* Click the three dots in the upper right corner.
+
+image:integrations:appdome-testing-app-using-appdome-disable-google-play-protect-three-dot-icon.png[width=300,alt="Click the three dots in the upper right corner"]
+
+* Select Play Protect
+
+image:integrations:appdome-testing-app-using-appdome-disable-google-play-select-play-protect.png[width=300,alt="Select Play Protect"]
+
+* Click the gear icon on the top right corner.
+* Disable Play Protect can scan this device and warn you about harmful apps.
+* Confirm "Turn off app scanning?" by clicking Turn off.
+
+image:integrations:appdome-testing-app-using-appdome-disable-google-play-turn-off-app-scanning.png[width=300,alt="Confirm Turn off app scanning?"]
+
+image:integrations:appdome-testing-app-using-appdome-disable-google-play-turn-off-app-scanning-2.png[width=300,alt="Confirm Turn off app scanning? 2"]
+
+== Appdome Protection Triggers  for iOS
+
+Manual and automation testing can be used to test Appdome-protected iOS mobile apps. Note that there are no specific capabilities for Kobiton to trigger Appdome protection features for iOS. 
+
+When testing an Appdome-protected iOS app, some security protections may be triggered due to the nature of Kobiton's test environment. The following table describes which Appdome protection features may be triggered, the reason why, and how to avoid it (during the app building stage on Appdome):
+
+[cols="1h,1,1"]
+|===
+|Appdome Feature |Reason |How to prevent such identification
+
+|Prevent App Screen Sharing 
+|Kobiton allows a live view of the device screen while the test is running
+|Enable Threat Events for Prevent App Screen Sharing with **In-App Detection** mode - Appdome will detect the screen sharing but will not close the app.
+|=== 
+
+To enable Prevent App Screen Sharing on Appdome.
+* Where: Inside the Appdome Console, go to Build > Security Tab > Mobile Privacy section
+* How: Toggle (turn ON) Prevent App Screen Sharing as shown below.
+
+image:integrations:appdome-testing-app-using-appdome-toggle-prevent-app-screen-sharing.png[width=1000,alt="revent App Screen Sharing"]
+
+== Troubleshooting Tips
+
+Most automation test tools can typically be used in one of two modes: emulator mode and real device mode (specific terms may vary according to the testing tool). If you use the automation test tool in “emulator mode” instead of “real device mode”, the Appdome-secured application will not run on the device. This is expected because Appdome ONEShield protects apps from running on emulators/simulators. Instead, we recommend running the automation test tool in real-device mode.
+
+If you see a message such as: “Application has violated security policies and it will be shut down”, this means that (1) techniques such as emulators, tampering, or reverse engineering are present, and (2) the Fusion Set does not contain Appdome Threat-Events. This is expected because Appdome ONEShield protects against those conditions. You can either remove the triggering condition or use Appdome Threat Events if applicable. For more information, visit link:https://www.appdome.com/how-to/devsecops-automation-mobile-cicd/test-secured-mobile-apps/testing-secured-android-ios-apps-using-kobiton-mobile-devsecops-best-practices/[Appdome help].
