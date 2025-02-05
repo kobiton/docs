@@ -6,12 +6,11 @@ Learn how to configure an iOS device for network payload capture, so you can xre
 [NOTE]
 You'll need to configure each iOS device you want to use for network payload capture.
 
-[#_before_you_start]
 == Before you start
 
 You'll need to:
 
-* Make sure that the current deviceConnect version on the Mac mini hosting the device is at least `4.18`. xref:device-lab-management:deviceConnect/remote-update-deviceconnect.adoc[Update deviceConnect] if the version is lower.
+* Make sure that the current deviceConnect version on the Mac mini hosting the device is at least *4.18*. xref:device-lab-management:deviceConnect/remote-update-deviceconnect.adoc[Update deviceConnect] if the version is lower.
 
 * Confirm your system administrator xref:devices:local-devices/network-payload-capture/configure-the-host-machine.adoc[configured your local Kobiton server].
 
@@ -28,41 +27,42 @@ image:apple-configurator-mac-app-store.png[width=800,alt=""]
 [NOTE]
 An Apple ID is required to download and install Apple Configurator.
 
-Open *Apple Configurator*. On the menu bar, select *Apple Configurator*, then *Install Automation Tools*.
+Open *Apple Configurator*.On the menu bar, select *Apple Configurator*, then *Install Automation Tools*.
 
 image:apple-configurator-menu-install-automation-tools.png[width=400,alt=""]
 
 A pop-up appears, select *Install* and provide the administrator password to continue.
 
-image:apple-configurator-install-automation-tools-popup.png[width=400,alt=""]
+image:apple-configurator-install-automation-tools-popup.png[width=300,alt=""]
 
+[#_create_an_organization_then_export_the_supervision_identity]
 == Create an organization, then export the supervision identity
 
 On the *Apple Configurator* menu, select *Settings*.
 
 image:apple-configurator-menu-settings.png[width=400,alt=""]
 
-Select the *Organizations* tab. Select the *Plus* sign to add a new organization.
+Select the *Organizations* tab.Select the *Plus* sign to add a new organization.
 
-image:apple-configurator-organizations-settings.png[width=600,alt=""]
+image:apple-configurator-organizations-settings.png[width=500,alt=""]
 
-Select *Next* and log in using the Apple Business or School Manager account. If you do not have such an account, select *Skip*.
+Select *Next* and log in using the Apple Business or School Manager account.If you do not have such an account, select *Skip*.
 
-image:apple-configurator-sign-in-apple-manager.png[width=600,alt=""]
+image:apple-configurator-sign-in-apple-manager.png[width=500,alt=""]
 
 Enter your organization’s information in the below screen and choose *Next*.
 
-image:apple-configurator-create-organization.png[width=600,alt=""]
+image:apple-configurator-create-organization.png[width=500,alt=""]
 
 Choose *Generate a new supervision identity* and select *Done*.
 
-image:apple-configurator-choose-supervision-identity.png[width=600,alt=""]
+image:apple-configurator-choose-supervision-identity.png[width=500,alt=""]
 
 Input the administrator password in the pop-up and select *Update Settings*.
 
 Your organization should now appear in the list. Select it.
 
-image:apple-configurator-organizations-actions.png[width=600,alt=""]
+image:apple-configurator-organizations-actions.png[width=500,alt=""]
 
 Click the *three-dot icon* and select *Export Supervision Identity*.
 
@@ -74,7 +74,7 @@ In the export supervision identity pop-up:
 
 * Select *Save*, then *Export*.
 
-image:apple-configurator-export-organization-options.png[width=600,alt=""]
+image:apple-configurator-export-organization-options.png[width=500,alt=""]
 
 Under the selected location, there is now a `.crt` and a `.der` file with the same name. Rename those files to `organization.crt` and `organization.der`, in that order. Transfer these 2 files into the Mac mini host and follow xref:something[this guide] to copy them to the correct folder.
 
@@ -100,7 +100,7 @@ Open *Settings* on the device and sign out of any Apple ID. A signed in Apple ID
 
 Connect the iOS device to the Mac machine that has all steps from the previous section performed on it. Tap *Trust* on the device.
 
-image:device-lab-management:device-lab-management-ios-add-ios-trust-this-computer-trust.PNG[width=600,alt=""]
+image:device-lab-management:device-lab-management-ios-add-ios-trust-this-computer-trust.PNG[width=300,alt=""]
 
 Open *Apple Configurator* on the Mac machine.
 
@@ -108,7 +108,7 @@ In the main screen of Apple Configurator, select the *Supervised* and the *Unsup
 
 If the device is under the *Supervised* tab, then it is already supervised. Right-click the device and select *Get info*.
 
-image:apple-configurator-supervised-device-get-info.png[width=800,alt=""]
+image:apple-configurator-supervised-device-get-info.png[width=700,alt=""]
 
 Double-check the Organization that supervises the device:
 
@@ -116,31 +116,31 @@ Double-check the Organization that supervises the device:
 
 * If it is not the same organization, double-check with your team that you can erase and re-supervise it. If yes, https://support.apple.com/en-vn/guide/apple-configurator-mac/cad8cb745a89/2.17/mac/14.0[erase the device], then follow the steps for an unsupervised device.
 
-image:apple-configurator-device-info.png[width=700,alt=""]
+image:apple-configurator-device-info.png[width=600,alt=""]
 
 If the device is under the *Unsupervised* tab, right-click the device and select *Prepare*.
 
-image:apple-configurator-prepare-device-menu.png[width=800,alt=""]
+image:apple-configurator-prepare-device-menu.png[width=700,alt=""]
 
 Select *Manual Configuration* for *Prepare with*, check *Supervise devices*, then choose *Next*.
 
-image:apple-configurator-prepare-with.png[width=600,alt=""]
+image:apple-configurator-prepare-with.png[width=500,alt=""]
 
 Select *Do not enroll in MDM*, then *Next*.
 
-image:apple-configurator-enroll-mdm.png[width=600,alt=""]
+image:apple-configurator-enroll-mdm.png[width=500,alt=""]
 
 Choose your organization in *Organization*, then select *Next*.
 
-image:apple-configurator-assign-organization.png[width=600,alt=""]
+image:apple-configurator-assign-organization.png[width=500,alt=""]
 
 Select *Don’t show any of these steps* for *Setup Assistant*, then *Prepare*.
 
-image:apple-configurator-configure-setup-assistant.png[width=600,alt=""]
+image:apple-configurator-configure-setup-assistant.png[width=500,alt=""]
 
 If there is a *Configurator could not perform the requested action…* pop-up, select *Erase*.
 
-image:apple-configurator-erase-device.png[width=400,alt=""]
+image:apple-configurator-erase-device.png[width=300,alt=""]
 
 The device will be factory reset. When you can access the device, follow the on-screen prompts until you are at the Home screen.
 
@@ -150,6 +150,8 @@ image:apple-configurator-supervised-device-get-info.png[width=800,alt=""]
 
 Now, xref:device-lab-management:ios-devices/prepare-ios-device.adoc[prepare] and xref:device-lab-management:ios-devices/add-ios-device.adoc[connect] the device into the Mac mini host. See the linked guides for instructions.
 
+The device is now ready for Network Payload Capture.
+
 == Next steps
 
-
+xref:local-devices/network-payload-capture/create-a-configuration.adoc[], launch a xref:manual-testing:local-devices/capture-network-payload-data.adoc[manual] or xref:automation-testing:local-devices/capture-network-payload-data.adoc[automation] session with NPC enabled, then xref:session-explorer:analytics/review-network-payload-data.adoc[review the network payload data].
