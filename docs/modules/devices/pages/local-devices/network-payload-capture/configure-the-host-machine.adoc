@@ -64,19 +64,20 @@ If the Mac mini is connected to more than 1 network at the same time (for exampl
 
 Save the file, then xref:device-lab-management:deviceConnect/restart-deviceconnect-services.adoc[restart services] on the Mac mini host to apply the changes.
 
-If you are only hosting Android devices, you can move on to configure your xref:devices:local-devices/network-payload-capture/configure-an-android-device.adoc[Android device] now. The next section are only required for iOS devices.
+If you are only hosting Android devices, you can move on to configure your xref:devices:local-devices/network-payload-capture/configure-an-android-device.adoc[Android device] now.The next section are only required for iOS devices.
 
+[#_copy_supervision_identity]
 == Copy supervision identity
 
-Follow this guide to xref:local-devices/network-payload-capture/configure-an-ios-device.adoc#_create_an_organization_then_export_the_supervision_identity[export the supervision identity] from the Mac machine not running Kobiton software. There should be 2 exported files after the process: `organization.crt` and `organization.der`.
+Follow this guide to xref:local-devices/network-payload-capture/configure-an-ios-device.adoc#_create_an_organization_then_export_the_supervision_identity[export the supervision identity] from the Mac machine not running Kobiton software.There should be 2 exported files after the process: `organization.crt` and `organization.der`.
 
 Open *Finder*, copy the 2 files above, then enter *Shift + Command + G* on the keyboard and input the following location: `/usr/local/deviceconnect`.
 
-Paste the 2 files into the folder. The result in Finder should look similar to the below:
+Paste the 2 files into the folder.The result in Finder should look similar to the below:
 
-image:supervise-org-finder.png[width=400,alt=""]
+image:supervise-org-finder.png[width=400,alt="The organization.crt and organization.der file under the deviceconnect folder in Finder"]
 
-The Mac mini host setup steps for iOS are now complete. Now, you can configure an xref:devices:local-devices/network-payload-capture/configure-an-ios-device.adoc[iOS device] for network payload capture.
+The Mac mini host setup steps for iOS are now complete.Now, you can configure an xref:devices:local-devices/network-payload-capture/configure-an-ios-device.adoc[iOS device] for network payload capture.
 
 == Next steps
 

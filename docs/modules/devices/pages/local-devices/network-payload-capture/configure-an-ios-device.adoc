@@ -22,49 +22,47 @@ Access the Mac machine that *is not* running Kobiton software.
 
 Open the *App Store*, search for and install *Apple Configurator*.
 
-image:apple-configurator-mac-app-store.png[width=800,alt=""]
+image:apple-configurator-mac-app-store.png[width=800,alt="Apple Configurator in the Mac App Store"]
 
 [NOTE]
 An Apple ID is required to download and install Apple Configurator.
 
 Open *Apple Configurator*.On the menu bar, select *Apple Configurator*, then *Install Automation Tools*.
 
-image:apple-configurator-menu-install-automation-tools.png[width=400,alt=""]
+image:apple-configurator-menu-install-automation-tools.png[width=400,alt="The Install Automation Tools option under the Apple Configurator menu bar"]
 
 A pop-up appears, select *Install* and provide the administrator password to continue.
 
-image:apple-configurator-install-automation-tools-popup.png[width=300,alt=""]
+image:apple-configurator-install-automation-tools-popup.png[width=300,alt="The Install Automation Tools confirmation pop-up"]
 
 [#_create_an_organization_then_export_the_supervision_identity]
 == Create an organization, then export the supervision identity
 
 On the *Apple Configurator* menu, select *Settings*.
 
-image:apple-configurator-menu-settings.png[width=400,alt=""]
+image:apple-configurator-menu-settings.png[width=400,alt="The Settings option under the Apple Configurator menu bar"]
 
-Select the *Organizations* tab.Select the *Plus* sign to add a new organization.
+Select the *Organizations* tab. Select the *Plus* sign to add a new organization.
 
-image:apple-configurator-organizations-settings.png[width=500,alt=""]
+image:apple-configurator-organizations-settings.png[width=500,alt="The Organizations tab under Apple Configurator Settings"]
 
-Select *Next* and log in using the Apple Business or School Manager account.If you do not have such an account, select *Skip*.
+Select *Next* and log in using the Apple Business or School Manager account.If you do not have such an account, select *Skip*. The next step assumes that you have selected the *Skip* button.
 
-image:apple-configurator-sign-in-apple-manager.png[width=500,alt=""]
+image:apple-configurator-sign-in-apple-manager.png[width=500,alt="The Sign in to Apple School or Apple Business Managager screen with the field to input Apple ID and the Skip button"]
 
 Enter your organization’s information in the below screen and choose *Next*.
 
-image:apple-configurator-create-organization.png[width=500,alt=""]
+image:apple-configurator-create-organization.png[width=500,alt="The form to input the organization details with the Next button"]
 
 Choose *Generate a new supervision identity* and select *Done*.
 
-image:apple-configurator-choose-supervision-identity.png[width=500,alt=""]
+image:apple-configurator-choose-supervision-identity.png[width=500,alt="Choose Generate a new supervision identity option and select Done"]
 
 Input the administrator password in the pop-up and select *Update Settings*.
 
-Your organization should now appear in the list. Select it.
+Your organization should now appear in the list. Highlight it, then click the *three-dot icon* and select *Export Supervision Identity*.
 
-image:apple-configurator-organizations-actions.png[width=500,alt=""]
-
-Click the *three-dot icon* and select *Export Supervision Identity*.
+image:apple-configurator-organizations-actions.png[width=500,alt="The newly created organization under the list with the menu expanded and the Export Supervision Identity option visible"]
 
 In the export supervision identity pop-up:
 
@@ -74,9 +72,9 @@ In the export supervision identity pop-up:
 
 * Select *Save*, then *Export*.
 
-image:apple-configurator-export-organization-options.png[width=500,alt=""]
+image:apple-configurator-export-organization-options.png[width=500,alt="The Export Supervision Identity pop-up with the Unencrypted DER select for Format"]
 
-Under the selected location, there is now a `.crt` and a `.der` file with the same name. Rename those files to `organization.crt` and `organization.der`, in that order. Transfer these 2 files into the Mac mini host and follow xref:something[this guide] to copy them to the correct folder.
+Under the selected location, there is now a `.crt` and a `.der` file with the same name. Rename those files to `organization.crt` and `organization.der`, in that order. Transfer these 2 files into the Mac mini host and follow xref:local-devices/network-payload-capture/configure-the-host-machine.adoc#_copy_supervision_identity[this guide] to copy them to the correct folder.
 
 == Supervise the device
 
@@ -100,7 +98,7 @@ Open *Settings* on the device and sign out of any Apple ID. A signed in Apple ID
 
 Connect the iOS device to the Mac machine that has all steps from the previous section performed on it. Tap *Trust* on the device.
 
-image:device-lab-management:device-lab-management-ios-add-ios-trust-this-computer-trust.PNG[width=300,alt=""]
+image:device-lab-management:device-lab-management-ios-add-ios-trust-this-computer-trust.PNG[width=300,alt="The Trust this computer prompt on the iOS device screen"]
 
 Open *Apple Configurator* on the Mac machine.
 
@@ -108,7 +106,7 @@ In the main screen of Apple Configurator, select the *Supervised* and the *Unsup
 
 If the device is under the *Supervised* tab, then it is already supervised. Right-click the device and select *Get info*.
 
-image:apple-configurator-supervised-device-get-info.png[width=700,alt=""]
+image:apple-configurator-supervised-device-get-info.png[width=700,alt="The device under the Supervised tab with the Get Info option"]
 
 Double-check the Organization that supervises the device:
 
@@ -116,37 +114,37 @@ Double-check the Organization that supervises the device:
 
 * If it is not the same organization, double-check with your team that you can erase and re-supervise it. If yes, https://support.apple.com/en-vn/guide/apple-configurator-mac/cad8cb745a89/2.17/mac/14.0[erase the device], then follow the steps for an unsupervised device.
 
-image:apple-configurator-device-info.png[width=600,alt=""]
+image:apple-configurator-device-info.png[width=600,alt="The device info screen with the supervision Organizatin information visible"]
 
 If the device is under the *Unsupervised* tab, right-click the device and select *Prepare*.
 
-image:apple-configurator-prepare-device-menu.png[width=700,alt=""]
+image:apple-configurator-prepare-device-menu.png[width=700,alt="The prepare option after right-clicking the device in Apple Configurator"]
 
 Select *Manual Configuration* for *Prepare with*, check *Supervise devices*, then choose *Next*.
 
-image:apple-configurator-prepare-with.png[width=500,alt=""]
+image:apple-configurator-prepare-with.png[width=500,alt="The prepare devices screen with the Manual Configuration selected and Supervise devices checked"]
 
 Select *Do not enroll in MDM*, then *Next*.
 
-image:apple-configurator-enroll-mdm.png[width=500,alt=""]
+image:apple-configurator-enroll-mdm.png[width=500,alt="The Enroll in MDM Server screen with Do not enroll in MDM selected"]
 
 Choose your organization in *Organization*, then select *Next*.
 
-image:apple-configurator-assign-organization.png[width=500,alt=""]
+image:apple-configurator-assign-organization.png[width=500,alt="The Assign to Organization screen with the created Organization selected"]
 
 Select *Don’t show any of these steps* for *Setup Assistant*, then *Prepare*.
 
-image:apple-configurator-configure-setup-assistant.png[width=500,alt=""]
+image:apple-configurator-configure-setup-assistant.png[width=500,alt="The Configure iOS Setup Assistant screen with Don't show any of these steps selected"]
 
 If there is a *Configurator could not perform the requested action…* pop-up, select *Erase*.
 
-image:apple-configurator-erase-device.png[width=300,alt=""]
+image:apple-configurator-erase-device.png[width=300,alt="The Configurator could not perform the selected action pop-up with the Erase button"]
 
 The device will be factory reset. When you can access the device, follow the on-screen prompts until you are at the Home screen.
 
 At this time, the device should be under the *Supervised* tab. Right-click the device and select *Get info*, then double-check the Organization that supervises the device.
 
-image:apple-configurator-supervised-device-get-info.png[width=800,alt=""]
+image:apple-configurator-supervised-device-get-info.png[width=700,alt="The device under the Supervised tab with the Get Info option"]
 
 Now, xref:device-lab-management:ios-devices/prepare-ios-device.adoc[prepare] and xref:device-lab-management:ios-devices/add-ios-device.adoc[connect] the device into the Mac mini host. See the linked guides for instructions.
 
