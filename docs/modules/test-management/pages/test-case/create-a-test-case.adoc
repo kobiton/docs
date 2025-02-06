@@ -5,65 +5,64 @@
 :navtitle: Create a test case
 
 
-Learn how to create a test case from a baseline session. A test case is a template that includes all test steps performed in the baseline session. This test case can then be used to re-run test steps on different devices using Scriptless Automation.
+Learn how to create a test case from a baseline session. A test case serves as a template, capturing the test steps performed in the baseline session. You can use this test case to generate an Appium script or rerun it using Scriptless Automation.
 
 == Before you start
 
 You'll need to complete the following:
 
-* xref:scriptless-automation:create-a-baseline-session.adoc[Create a baseline session for Scriptless Automation].
+* xref:scriptless-automation:create-a-baseline-session.adoc[Create a baseline session for Scriptless Automation]
 
 == Create a new test case
 
-There are two possible ways to create a test case:
+You can create a test case in two ways: from Session Explorer or the Test Case List. This section explains both methods.
 
-=== Convert an existing session into a new test case in Session Explorer
+=== Create a test case from an existing session in Session Explorer
 
-Access the *Session Overview* or *Session Explorer* page using either option:
+First, select a session to view in Session Explorer. You will either be redirected to Session Explorer after completing a manual session or can select a session from the Session List.
 
-* Automatic redirection after completing a manual session.
-* Select a session from the *Session List*.
-
-If the session qualifies for scriptless, the *Convert to Test Case* button is available. Select it to convert the session into a test case.
+In the Test Result Analysis Insights Panel in the top left of Session Explorer, select *Convert to Test Case*.
 
 image:session-explorer-convert-to-test-case.png[width=1000,alt="The Convert to Test Case button in the Session Explorer page"]
 
-After the conversion finishes, the *Convert to Test Case* button turns into *View Test Case*. Select it to view the test case details.
+Once the conversion is complete, the *Convert to Test Case* button changes to *View Test Case*. Select it to access the test case details.
 
 image:session-explorer-view-test-case.png[width=1000,alt="The View Test Case button in the Session Explorer page"]
 
 [NOTE]
 ====
 
-If the AI is still analyzing, an error message displays instead. Wait a while before selecting *Convert to Test Case* again.
+* If a baseline session does not meet minimum requirements to become a test case (e.g. no actions performed), the button will not be clickable.
+* If your session just ended, you may see a tooltip when you select the button asking you to wait a few moments for the session to complete processing before trying again.
 
 image:convert-to-text-case-disabled.png[width=600,alt="The Convert to Test Case button disabled as the session is still being processed"]
 
 ====
 
-=== Create a test case from a list of available sessions in Test Management
+=== Create a test case from the list of available sessions in Test Management
 
-Select the *Test Management* icon from the menu, then choose the *Test Cases* tab. Select *New Test Case*.
+Select *Test Management* from the left-hand menu and choose the *Test Cases* tab. Select *New Test Case*.
 
 image:test-case-list-empty.png[width=1000,alt="The Test Case list with the New Test Case button"]
 
-Choose a baseline session to convert to test case. Only sessions that qualify for scriptless and have not been converted appear here. Select *Convert*.
+Choose a baseline session from the list. Only sessions that qualify for scriptless and have not already been converted appear here. Select *Convert*.
 
 image:select-session-for-conversion.png[width=800,alt="Select a session from the list to convert"]
 
 If the AI analysis is complete, a success message with an option to *View Test Case* displays. To navigate to the test case details, you can either:
 
-* Select *View Test Case*.
-* Select the new *ID* in the Test Cases List.
+* Select *View Test Case* from the message.
+* Select the new *ID* from the Test Cases List.
 
 image:test-case-conversion-success.png[width=1000,alt="The test case list with the test case conversion success message"]
 
 [NOTE]
 ====
 
-If the AI is still analyzing, an error message displays instead. Wait a while before selecting *Convert* again.
+If the AI is still analyzing, an error message displays instead. Wait a few moments before selecting *Convert* again.
 
 image:test-case-conversion-unsuccessful.png[width=600,alt="The test case conversion unsuccessful message"]
 
 ====
 
+Next, learn how to xref:test-case/manage-test-steps.adoc[view, manage, and run your test case].
