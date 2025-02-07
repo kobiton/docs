@@ -11,6 +11,18 @@ You'll need to:
 * Access the Mac mini host as the *deviceconnect* user for all the operations below.
 * Make sure the Mac mini is connected to a network that satisfies the network requirements for Network Payload Capture before proceeding.
 
+== Install Rosetta (for Mac mini with Apple Silicon)
+
+[NOTE]
+This section is only required for Mac mini host with Apple Silicon
+
+Open *Terminal* on the Mac mini host.
+
+Run the below command to install Rosetta:
+
+[source,shell]
+softwareupdate --install-rosetta --agree-to-license
+
 == Modify the `dc.ini` file
 
 
