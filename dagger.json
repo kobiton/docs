@@ -1,6 +1,13 @@
 {
   "name": "ci",
-  "engineVersion": "v0.15.1",
+  "engineVersion": "v0.15.3",
   "sdk": "go",
+  "dependencies": [
+    {
+      "name": "node",
+      "source": "git@github.com:kobiton/deployment.git/modules/node@303e3e8bf7219cef3bea93cbdcc67e2d5fda7290",
+      "pin": "303e3e8bf7219cef3bea93cbdcc67e2d5fda7290"
+    }
+  ],
   "source": ".dagger"
 }

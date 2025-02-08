@@ -9,7 +9,7 @@ on:
       - ready_for_review
   # Enable manual trigger for easier debugging
   workflow_dispatch:
-  
+
 permissions:
   contents: read    # This is required for actions/checkout
   pull-requests: write
@@ -22,7 +22,6 @@ jobs:
       - name: Build 
         uses: dagger/dagger-for-github@847ae4458ef34fe9b5f566655957bde6d4891112 # v7.0.3
         with:
-          version: "0.15.1"
-          module: github.com/${{ github.repository }}@${{ github.ref }}
+          version: "0.15.3"
           verb: call
-          args: --ref ${{ github.ref }} build
+          args: build

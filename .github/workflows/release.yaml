@@ -24,6 +24,7 @@ jobs:
           aws-account-id: ${{ secrets.AWS_ACCOUNT_ID }}
           aws-region: ${{ secrets.AWS_PROD_REGION }}
           dagger-token: ${{ secrets.DAGGER_CLOUD_TOKEN }}
+          ssh-key: ${{ secrets.SSH_PRIVATE_KEY }}
 
   widget:
     runs-on: ubuntu-latest
@@ -37,3 +38,4 @@ jobs:
           aws-account-id: ${{ secrets.AWS_ACCOUNT_ID }}
           aws-region: ${{ secrets.AWS_PROD_REGION }}
           dagger-token: ${{ secrets.DAGGER_CLOUD_TOKEN }}
+          ssh-key: ${{ secrets.SSH_PRIVATE_KEY }}
