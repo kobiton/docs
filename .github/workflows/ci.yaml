@@ -18,6 +18,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v4
       - name: Configure AWS credentials from PRODUCTION account
         uses: aws-actions/configure-aws-credentials@v4
         with:

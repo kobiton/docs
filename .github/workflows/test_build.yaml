@@ -12,13 +12,19 @@ on:
 
 permissions:
   contents: read    # This is required for actions/checkout
-  pull-requests: write
 
 jobs:
   test-build:
     name: Test Build
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v4
+      - name: ssh-agent setup
+        uses: webfactory/ssh-agent@v0.9.0
+        with:
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+          ssh: |
+            default=${{ env.SSH_AUTH_SOCK }}
       - name: Build 
         uses: dagger/dagger-for-github@847ae4458ef34fe9b5f566655957bde6d4891112 # v7.0.3
         with:
