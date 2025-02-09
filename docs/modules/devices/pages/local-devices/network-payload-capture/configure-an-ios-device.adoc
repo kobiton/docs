@@ -1,7 +1,7 @@
 = Configure an iOS device for network payload capture
 :navtitle: Configure an iOS device
 
-Learn how to configure an iOS device for network payload capture, so you can xref:devices:local-devices/network-payload-capture/create-a-configuration.adoc[create a configuration for network payload capture].
+Learn how to configure an iOS device for network payload capture (NPC), so you can xref:devices:local-devices/network-payload-capture/create-a-configuration.adoc[create a configuration for network payload capture].
 
 [NOTE]
 You'll need to configure each iOS device you want to use for network payload capture.
@@ -14,7 +14,7 @@ You'll need to:
 
 * Confirm your system administrator xref:devices:local-devices/network-payload-capture/configure-the-host-machine.adoc[configured your local Kobiton server].
 
-* Any Mac machine that *is not* running Kobiton software such as _deviceConnect_ or _deviceShare_. This machine will be used to supervise the device.
+* Have access to a Mac machine that *is not* running Kobiton software including _deviceConnect_ or _deviceShare_. This machine will be used to supervise iOS devices.
 
 == Install Apple Configurator and automation tools
 
@@ -27,7 +27,7 @@ image:apple-configurator-mac-app-store.png[width=800,alt="Apple Configurator in 
 [NOTE]
 An Apple ID is required to download and install Apple Configurator.
 
-Open *Apple Configurator*.On the menu bar, select *Apple Configurator*, then *Install Automation Tools*.
+Open *Apple Configurator*. On the menu bar, select *Apple Configurator*, then *Install Automation Tools*.
 
 image:apple-configurator-menu-install-automation-tools.png[width=400,alt="The Install Automation Tools option under the Apple Configurator menu bar"]
 
@@ -46,7 +46,7 @@ Select the *Organizations* tab. Select the *Plus* sign to add a new organization
 
 image:apple-configurator-organizations-settings.png[width=500,alt="The Organizations tab under Apple Configurator Settings"]
 
-Select *Next* and log in using the Apple Business or School Manager account.If you do not have such an account, select *Skip*. The next step assumes that you have selected the *Skip* button.
+Select *Next* and log in using the Apple Business or School Manager account. If you do not have such an account, select *Skip*. The next step assumes that you have selected the *Skip* button.
 
 image:apple-configurator-sign-in-apple-manager.png[width=500,alt="The Sign in to Apple School or Apple Business Managager screen with the field to input Apple ID and the Skip button"]
 
@@ -74,7 +74,13 @@ In the export supervision identity pop-up:
 
 image:apple-configurator-export-organization-options.png[width=500,alt="The Export Supervision Identity pop-up with the Unencrypted DER select for Format"]
 
-Under the selected location, there is now a `.crt` and a `.der` file with the same name. Rename those files to `organization.crt` and `organization.der`, in that order. Transfer these 2 files into the Mac mini host and follow xref:local-devices/network-payload-capture/configure-the-host-machine.adoc#_copy_supervision_identity[this guide] to copy them to the correct folder.
+Under the selected location, there is now a `.crt` and a `.der` file with the same name. Rename those files to `organization.crt` and `organization.der`, in that order. Transfer these 2 files into the Mac mini host (the Mac mini with Kobiton software running).
+
+On the Mac mini host, open *Finder*, copy the 2 files above, then enter *Shift + Command + G* on the keyboard and input the following location: `/usr/local/deviceconnect`.
+
+Paste the 2 files into the folder. The result in Finder should look similar to the below:
+
+image:supervise-org-finder.png[width=400,alt="The organization.crt and organization.der file under the deviceconnect folder in Finder"]
 
 == Supervise the device
 
@@ -96,7 +102,7 @@ Disconnect the device from the Mac mini host.
 
 Open *Settings* on the device and sign out of any Apple ID. A signed in Apple ID will prevent the supervision of the device.
 
-Connect the iOS device to the Mac machine that has all steps from the previous section performed on it. Tap *Trust* on the device.
+Connect the iOS device to the Mac machine that is not running Kobiton software and has all steps from the previous section performed on it. Tap *Trust* on the device.
 
 image:device-lab-management:device-lab-management-ios-add-ios-trust-this-computer-trust.PNG[width=300,alt="The Trust this computer prompt on the iOS device screen"]
 
