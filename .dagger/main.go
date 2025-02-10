@@ -3,61 +3,47 @@ package main
 import (
 	"context"
 	"dagger/ci/internal/dagger"
+	"errors"
 	"fmt"
 
 	"golang.org/x/sync/errgroup"
 )
 
 type Ci struct {
-	Source    *dagger.Directory // +private
-	Container *dagger.Container // +private
+	// +private
+	Source *dagger.Directory
 }
 
 func New(
 	// Project source directory.
+	// +optional
 	// +defaultPath="/"
 	// +ignore=[".git", "**/node_modules"]
 	source *dagger.Directory,
-	// SSH socket
-	// +optional
-	sock *dagger.Socket,
 
-	// NPM token
+	// Checkout the repository (at the designated ref) and use it as the source directory instead of the local one.
 	// +optional
-	npmToken *dagger.Secret,
-) *Ci {
-	dependencyFiles := dag.
-		Directory().
-		WithFile("package.json", source.File("package.json"))
+	ref string,
+) (*Ci, error) {
+	if source == nil && ref != "" {
+		source = dag.Git("https://github.com/kobiton/docs.git", dagger.GitOpts{
+			KeepGitDir: true,
+		}).Ref(ref).Tree()
+	}
 
-	m := dag.
-		Node().
-		WithYarn().
-		WithSource(dependencyFiles).
-		Install().
-		WithSource(source).
-		Container().
-		WithEnvVariable("KOBITON_ENVIRONMENT", "standalone").
-		WithExec([]string{"git", "config", "--global", "user.email", "'kobiton@kobiton.com'"}).
-		WithExec([]string{"git", "config", "--global", "user.name", "'Kobiton'"}).
-		WithExec([]string{"git", "init", "."}).
-		WithExec([]string{"git", "commit", "--allow-empty", "-m", "init"})
+	if source == nil {
+		return nil, errors.New("either source or ref is required")
+	}
 
 	return &Ci{
-		Source:    source,
-		Container: m,
-	}
+		Source: source,
+	}, nil
 }
 
-func (m *Ci) Generate(name string) *dagger.File {
-	path := fmt.Sprintf("/work/src/ui-bundle-%s/css", name)
-	return m.Container.
-		WithExec([]string{"sh", "-c",
-			fmt.Sprintf("find %s -type f -not -name 'site.css' -name '*.css' -exec cat {} \\; | npx postcss --use postcss-import postcss-clean --no-map > %s/temp.css", path, path)}).
-		WithExec([]string{"sh", "-c", fmt.Sprintf("sed -i 's|/\\*.*\\*/||g' %s/temp.css", path)}).
-		WithExec([]string{"sh", "-c", fmt.Sprintf("echo \"/* DO NOT EDIT: 'site.css' is auto-generated from the minified output of 'default-styles.css' and 'custom-styles.css'. */\n$(cat %s/temp.css)\" > %s/temp.css", path, path)}).
-		File(path + "/temp.css")
-}
+const (
+	nodeVersionMaintenance = "16"
+	nodeVersionLTS         = "20"
+)
 
 // Build the project
 func (m *Ci) Build() (*dagger.Directory, error) {
@@ -65,18 +51,16 @@ func (m *Ci) Build() (*dagger.Directory, error) {
 
 	var docs *dagger.Directory
 	eg.Go(func() error {
-		docs = m.Container.
-			WithFile("/work/src/ui-bundle-docs/css/site.css", m.Generate("docs")).
-			WithExec([]string{"yarn", "build-docs:ci"}).
-			Directory("/work/src/build/docs")
+		docs = m.nodeJsBase().
+			WithExec([]string{"yarn", "build-docs"}).
+			Directory("/app/build/docs")
 		return nil
 	})
 	var widget *dagger.Directory
 	eg.Go(func() error {
-		widget = m.Container.
-			WithFile("/work/src/ui-bundle-docs/css/site.css", m.Generate("widget")).
-			WithExec([]string{"yarn", "build-widget:ci"}).
-			Directory("/work/src/build/widget")
+		widget = m.nodeJsBase().
+			WithExec([]string{"yarn", "build-widget"}).
+			Directory("/app/build/widget")
 		return nil
 	})
 
@@ -100,6 +84,7 @@ func (m *Ci) Server(
 
 	return dag.Container(dagger.ContainerOpts{Platform: "linux/amd64"}).
 		From("nginx:alpine").
+		WithoutEntrypoint().
 		WithWorkdir(path).
 		WithDirectory(path, dir.Directory(site)).
 		WithFile(fmt.Sprintf("/%s/replace-env-vars.sh", site), m.Source.File("scripts/replace-env-vars.sh")).
@@ -216,3 +201,35 @@ func (m *Ci) Release(
 	return eg.Wait()
 }
 
+func (m Ci) nodeJsBase() *dagger.Container {
+	// Use the LTS version by default
+	return m.nodeJsBaseFromVersion(nodeVersionLTS)
+}
+
+func (m Ci) nodeJsBaseFromVersion(nodeVersion string) *dagger.Container {
+	appDir := "app"
+	src := m.Source
+
+	mountPath := fmt.Sprintf("/%s", appDir)
+
+	nodeVersionImage := fmt.Sprintf("node:%s-alpine", nodeVersion)
+
+	return dag.Container(dagger.ContainerOpts{Platform: "linux/amd64"}).
+		// ⚠️  Keep this in sync with the engine version defined in package.json
+		From(nodeVersionImage).
+		WithoutEntrypoint().
+		WithWorkdir(mountPath).
+		WithMountedCache("/usr/local/share/.cache/yarn", dag.CacheVolume(fmt.Sprintf("yarn_cache:%s", nodeVersion))).
+		WithMountedCache("/app/node_modules", dag.CacheVolume("node_modules_cache")).
+		WithFile(fmt.Sprintf("%s/package.json", mountPath), src.File("package.json")).
+		// WithFile(fmt.Sprintf("%s/yarn.lock", mountPath), src.File("yarn.lock")).
+		WithExec([]string{"apk", "add", "bash"}).
+		WithExec([]string{"apk", "add", "git"}).
+		WithExec([]string{"apk", "add", "openssl"}).
+		WithExec([]string{"git", "config", "--global", "user.email", "'kobiton@kobiton.com'"}).
+		WithExec([]string{"git", "config", "--global", "user.name", "'Kobiton'"}).
+		WithExec([]string{"git", "init", "."}).
+		WithExec([]string{"git", "commit", "--allow-empty", "-m", "init"}).
+		WithExec([]string{"yarn", "install"}).
+		WithDirectory(mountPath, src)
+}
