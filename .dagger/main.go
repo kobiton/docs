@@ -196,10 +196,17 @@ func (m *Ci) Release(
 	site string,
 	// Cloudfront distribution ID
 	cloudfrontID string,
+	// S3 bucket
+	// +optional
+	bucket string,
 ) error {
 	ctr, err := m.AWS().AwsCli(ctx, awsAccessKeyID, awsSecretAccessKey, awsSessionToken, awsRegion)
 	if err != nil {
 		return err
+	}
+
+	if bucket == "" {
+		bucket = site
 	}
 
 	dir, _ := m.Build()
@@ -208,7 +215,7 @@ func (m *Ci) Release(
 
 	eg.Go(func() error {
 		_, err = ctr.WithDirectory("/app", dir.Directory(fmt.Sprintf("/%s", site))).
-			WithExec([]string{"aws", "s3", "sync", "/app", fmt.Sprintf("s3://%s.kobiton.com", site)}).
+			WithExec([]string{"aws", "s3", "sync", "/app", fmt.Sprintf("s3://%s.kobiton.com", bucket)}).
 			WithExec([]string{"aws", "cloudfront", "create-invalidation", "--distribution-id", cloudfrontID, "--paths", "/*"}).Stdout(ctx)
 		return err
 	})
