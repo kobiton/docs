@@ -18,11 +18,18 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v4
       - name: Configure AWS credentials from PRODUCTION account
         uses: aws-actions/configure-aws-credentials@v4
         with:
           role-to-assume: arn:aws:iam::${{ secrets.AWS_ACCOUNT_ID }}:role/github-action-role
           aws-region: ${{ secrets.AWS_REGION }}
+      - name: ssh-agent setup
+        uses: webfactory/ssh-agent@v0.9.0
+        with:
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+          ssh: |
+            default=${{ env.SSH_AUTH_SOCK }}
 
       - name: Set IMAGE_TAG
         run: echo "IMAGE_TAG=`echo ${{ github.sha }} | cut -c1-7`" >> $GITHUB_ENV
@@ -30,11 +37,9 @@ jobs:
       - name: Build 
         uses: dagger/dagger-for-github@847ae4458ef34fe9b5f566655957bde6d4891112 # v7.0.3
         with:
-          version: "0.15.1"
+          version: "0.15.3"
           verb: call
-          module: github.com/${{ github.repository }}@${{ github.ref }}
           args: |
-            --ref ${{ github.ref }} \
             publish \
             --sites="docs,widget" \
             --image-tag=$IMAGE_TAG \
