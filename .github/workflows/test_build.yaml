@@ -27,7 +27,7 @@ jobs:
           ssh: |
             default=${{ env.SSH_AUTH_SOCK }}
       - name: Build
-        uses: dagger/dagger-for-github@847ae4458ef34fe9b5f566655957bde6d4891112 # v7.0.3
+        uses: dagger/dagger-for-github@31393402b06d9d3524e2bc67a14f63d1462821ab # v7.0.5
         with:
           version: "0.15.3"
           verb: call
