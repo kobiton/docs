@@ -37,7 +37,6 @@ func New(
 		Install().
 		WithSource(source).
 		Container().
-		WithEnvVariable("KOBITON_ENVIRONMENT", "standalone").
 		WithExec([]string{"git", "config", "--global", "user.email", "'kobiton@kobiton.com'"}).
 		WithExec([]string{"git", "config", "--global", "user.name", "'Kobiton'"}).
 		WithExec([]string{"git", "init", "."}).
@@ -54,7 +53,8 @@ func (m *Ci) Generate(name string) *dagger.File {
 	return m.Container.
 		WithExec([]string{"sh", "-c",
 			fmt.Sprintf("find %s -type f -not -name 'site.css' -name '*.css' -exec cat {} \\; | npx postcss --use postcss-import postcss-clean --no-map > %s/temp.css", path, path)}).
-		WithExec([]string{"sh", "-c", fmt.Sprintf("sed -i 's|/\\*.*\\*/||g' %s/temp.css", path)}).
+		//WithExec([]string{"sh", "-c", fmt.Sprintf("sed -i 's|/\\*.*\\*/||g' %s/temp.css", path)}).
+		WithExec([]string{"sh", "-c", fmt.Sprintf("sed -i 's/\\/\\*.*\\*\\///g' %s/temp.css", path)}).
 		WithExec([]string{"sh", "-c", fmt.Sprintf("echo \"/* DO NOT EDIT: 'site.css' is auto-generated from the minified output of 'default-styles.css' and 'custom-styles.css'. */\n$(cat %s/temp.css)\" > %s/temp.css", path, path)}).
 		File(path + "/temp.css")
 }
