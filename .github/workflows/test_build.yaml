@@ -11,6 +11,7 @@ on:
   workflow_dispatch:
 
 permissions:
+  id-token: write   # This is required for requesting the JWT
   contents: read    # This is required for actions/checkout
 
 jobs:
@@ -25,9 +26,24 @@ jobs:
           ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
           ssh: |
             default=${{ env.SSH_AUTH_SOCK }}
-      - name: Build 
+      - name: Build
         uses: dagger/dagger-for-github@847ae4458ef34fe9b5f566655957bde6d4891112 # v7.0.3
         with:
           version: "0.15.3"
           verb: call
           args: build
+
+  publish-docs-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: "Docs publish"
+        uses: ./.github/actions/call
+        with:
+          site: "docs"
+          cloudfront-id: ${{ secrets.DOCS_TEST_CLOUDFRONT_ID }}
+          aws-account-id: ${{ secrets.AWS_ACCOUNT_ID_TEST }}
+          aws-region: ${{ secrets.AWS_PROD_REGION_TEST }}
+          dagger-token: ${{ secrets.DAGGER_CLOUD_TOKEN }}
+          ssh-key: ${{ secrets.SSH_PRIVATE_KEY }}
+          bucket: "docs-test"
