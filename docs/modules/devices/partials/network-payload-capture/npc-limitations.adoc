@@ -1,0 +1,12 @@
+
+* Network Payload Capture is not supported on Espresso and XCUITest automation sessions.
+
+* NPC does not support capturing network traffic on domains that use a self-signed SSL certificate.
+
+* Certificate pinning prevents network payload capture. If you want to capture payload for a native application, make sure to disable certificate pinning in your app.
+
+* iOS devices cannot access any Apple domains (including App Store) in an NPC session.
+
+* A custom configuration profile is needed to enable the HTTP Proxy on iOS devices. Therefore, NPC does not work if there is another HTTP Proxy configuration profile installed on the device.
+
+* If iOS devices hosted on a Mac mini are supervised by multiple supervision identities (organizations), only one supervision identity—the one imported into the Mac mini host—will work with NPC.
