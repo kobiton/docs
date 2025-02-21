@@ -1,0 +1,31 @@
+= Kobiton 4.18.3 Release Notes
+:navtitle: Kobiton 4.18.3 release notes
+
+_February 23, 2025_
+
+== New OS Support
+
+This release adds support for the following:
+
+* iOS/iPadOS 18.3.1 [TBC]
+
+[NOTE]
+For iOS/iPadOS 18.3.1, [TODO]
+
+== Scriptless Automation and Mobile Test Management Enhancements
+
+* Generated Appium scripts can now run on other cloud device platform such as BrowserStack, LambdaTest, and Sauce Labs.
+
+== Script-based Test Automation Enhancements
+
+* (Passcode enabled organization only) Addressed the inconsistencies of the unlock action between Basic Appium 2 and XIUM automation script. Now, unlock will automatically unlocks the device for both Basic Appium 2 and XIUM.
+
+== General Improvements and Fixes
+
+* Fixed an issue with the iOS/iPadOS Developer Disk Images (DDI) not automatically remount when there is an update to the DDI, causing the below error:
+[source]
+Can't find iOS device <UDID> with BoardID <number> and ChipID <number> in DDI BuildManifest.plist. Xcode may need to be updated.
+
+* Improve the latency when there are more than 4 concurrent sessions with video capture turned on.
+
+* Automatically disable Google Play Protect scanning as it can cause the manual session to become unresponsive for Android devices.
