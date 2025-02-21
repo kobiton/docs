@@ -4,23 +4,38 @@
 
 Learn how to set up virtualUSB on your personal computer so you can debug *local* and *private* devices.
 
-[NOTE]
-You'll need to xref:debugging:local-devices/configure-your-personal-computer.adoc[configure your personal computer] after you complete these steps.
-
 == Before you start
 
 You'll need a personal computer with the following system specifications:
 
-* *macOS:* Monterey 12 or later, and Xcode 13 or later.
-* *Windows:* Windows 10 or later.
-
-== Add `adb` environment variables
-
-To debug Android devices, install link:https://developer.android.com/tools/releases/platform-tools[Android Debug Bridge (adb)] and add the following `adb` environment variables to your path:
 
 [tabs]
 ======
 macOS::
++
+
+* MacOS Monterey 12 or later.
+
+* Xcode 13 or higher (be sure to select a version that works with the iOS versions to be tested)
+
+Windows::
+
+* Windows 10 or later.
+
+======
+
+[IMPORTANT]
+For both MacOS and Windows, administrative privilege is required to set up and use virtualUSB.
+
+== Android requirements
+
+To connect to Android devices via virtualUSB, you must install Android Debug Bridge (`adb`) from the https://developer.android.com/tools/releases/platform-tools#downloads[Android SDK Platform-Tools,window=read-later] package. If you don't already have `adb` on your workstation, download it from Android or install an IDE like Android Studio.
+
+Follow the https://developer.android.com/studio/command-line/variables[official Android developer guide] to set up the required environment variables for adb. You can also run the below example commands to set the environment variables.
+
+[tabs]
+======
+macOS with Zsh shell::
 +
 --
 [source,shell]
@@ -28,6 +43,8 @@ macOS::
 export ANDROID_HOME=path/to/Android/sdk
 export PATH=$PATH:$ANDROID_HOME/tools:$ANDROID_HOME/tools/bin:$ANDROID_HOME/platform-tools
 ----
+[NOTE]
+Replace `path/to/Android/sdk` with the actual location of SDK installation directory (the folder containing `platform-tools`).
 --
 
 Windows::
@@ -38,47 +55,152 @@ Windows::
 set ANDROID_HOME=C:\path\to\Android\Sdk
 set PATH=%PATH%;%ANDROID_HOME%\tools;%ANDROID_HOME%\platform-tools
 ----
+[NOTE]
+Replace `C:\path\to\Android\Sdk` with the actual location of SDK installation directory (the folder containing `platform-tools`).
 --
 ======
 
-== Install iTunes and third-party libraries
+== For MacOS only: Prepare debug symbols for iOS devices
 
-For Windows, link:https://support.apple.com/HT210384[install iTunes]. Optionally, install a third-party library that helps Windows natively communicate with iOS devices.
+If your network has a low bandwidth, fetching debug symbol files for Xcode via virtualUSB can be slow and unreliable. In such cases, you'll need to manually prepare the debug symbols, which are specific to the device’s iOS version. If needed, contact our Support team and request the debug symbols for your devices. Then, copy the debug symbols to your local Mac folder:
+[source]
+/Users/<your username>/Library/Developer/Xcode/iOS DeviceSupport/
+
+== Clean up previous virtualUSB version before installing new version
+
+If you have installed virtualUSB previously, we recommend uninstalling the old version before installing a new one. See xref:uninstall-virtualusb.adoc[Uninstall virtualUSB,window=read-later] for guidance.
+
+== Download virtualUSB
+
+For *Cloud and Hybrid* customers, select the *Download* button on the navigation bar of the Kobiton Portal, then download the appropriate virtualUSB package.
+
+image:debugging:download-virtualusb-closeup.png[width=500,alt="Download virtual USB from Kobiton portal"]
+
+For *Standalone/On-Prem* customers, the latest virtualUSB package download links are provided together with other Standalone update packages.
+
+[NOTE]
+Contact Kobiton Support for the latest download links if you have trouble finding them.
 
 == Install virtualUSB
 
 [tabs]
 ======
-macOS::
+MacOS::
 +
 --
-Download virtualUSB from the link:https://portal.kobiton.com/[Kobiton portal].
+[WARNING]
+Do not install virtualUSB on a Mac that has an existing deviceConnect installation.
 
-image:debugging:download-virtualusb-closeup.png[width=500,alt="Download virtual USB from Kobiton portal"]
+Open the downloaded *virtualUSB.pkg* file to begin the installation. Select *Continue* and follow the on-screen guide to install.
+
+image:install-virtualusb-macos.png[width=600,alt="The virtualUSB installation screen on MacOS"]
+
+After the installation completes, go to the *Applications* folder in Finder, and open *virtualUSB*:
+
+image:virtualusb-applications-macos.png[width=600,alt="The virtualUSB app under Applications"]
+
+If this is the first time launching the app, provide the administrator password to install the required daemon:
+
+image:osascript-popup-macos.png[width=200,alt="The pop-up for permission to install daemon"]
+
+[IMPORTANT]
+The daemon needs to be installed for virtualUSB to work. If you dismiss the above pop-up by mistake, quit and re-open virtualUSB to view and accept the prompt.
+
+Agree to the License terms and select *Continue*:
+
+image:virtualusb-license-agreement.png[width=600,alt="The virtualUSB License agreement with the accept option checked"]
+
 --
 
 Windows::
 +
 --
-Download virtualUSB from the link:https://portal.kobiton.com/[Kobiton portal].
+Open the downloaded virtualUSB.msi file. When the virtualUSB Setup Wizard starts, select Next, then follow the on-screen guide to install.
 
-image:debugging:download-virtualusb-closeup.png[width=500,alt="Download virtual USB from Kobiton portal"]
+image:install-virtualusb-windows.png[width=600,alt="The virtualUSB installationw wizard start screen on Windows"]
 
-When your installation is complete, enter the following commands:
+During installation, select *Yes* in the *User Account Control* pop-up to give the installer administrative permission:
 
-.Windows
-[source,powershell]
-----
-cd C:\Program Files\virtualUSB
-vusb setup-ios
-----
+image:user-access-control-virtualusb-windows.png[width=300,alt="The User Account Control pop-up with the Yes option highlighted"]
+
+When your installation is complete, launch *virtualUSB* from the Windows Start menu:
+
+image:virtualusb-start-menu-windows.png[width=600,alt="The virtualUSB app in the Start Menu"]
+
+Upon the first time launching the app, you must agree to the License terms and select *Continue*:
+
+image:virtualusb-license-agreement.png[width=400,alt="The virtualUSB License agreement with the accept option checked"]
+
 --
 ======
 
-== Launch virtualUSB
+[#_launch_vusb_and_log_in]
+== Launch virtualUSB and log in
 
-Finally, launch virtualUSB and sign in using your email address and password or xref:profile:manage-your-api-credentials.adoc[Kobiton API key].
+[tabs]
+====
+
+Cloud/Hybrid::
++
+--
+
+Launch virtualUSB and sign in using your email address and password or xref:profile:manage-your-api-credentials.adoc[Kobiton API key].
 
 image:debugging:sign-in-virtualusb-context.png[width=1000,alt="Sign in Virtual USB using email or API Key"]
 
-Now you can debug cloud devices using virtualUSB. If you plan on debugging _local_ devices using virtualUSB, you'll need to xref:debugging:local-devices/configure-your-personal-computer.adoc[configure your personal computer for debugging local devices].
+--
+
+Cloud/Hybrid with custom domain::
++
+--
+
+Select the **Login to your custom domain portal** checkbox in the login screen.
+
+image:login-virtualusb-custom-domain.png[width=450,alt="The virtualUSB login screen with the additional fields for custom domain"]
+
+Input the values for the two additional fields as below, replacing `<custom-domain>` with the customer's domain name:
+
+* API Base Url: _https://api.<custom-domain>.com_
+
+* API GRPC Base Url: _https://proxy-api-public-grpc-server.<custom-domain>.com_
+
+Input the *Username/Email* and *Password/API Key* to log in.
+
+The values for *API Base Url* and *API GRPC Base Url* are remembered and prefilled the next time you open the app.
+
+--
+
+Standalone/On-Prem::
++
+--
+
+[IMPORTANT]
+xref:debugging:local-devices/configure-your-personal-computer.adoc[Configure your computer for Standalone Portal with self-signed SSL] before logging in.
+
+Select the *Login to your custom domain portal* checkbox on the login screen
+
+image:login-virtualusb-custom-domain.png[width=450,alt="The virtualUSB login screen with the additional fields for custom domain"]
+
+Input the values for two the additional fields as `<http/https>://<Portal private domain or IP>:<REST API port>`, where:
+
+* `<http/https>`: if the Portal server uses HTTPS, then use https. Otherwise, use http.
+
+* `<Portal private domain or IP>`: if the Portal server has a private domain, use its private domain. Otherwise, use the Portal server’s IP address.
+
+* `<REST API port>`:
+
+** For *API Base Url*, use `3000`.
+
+** For *API GRPC Base Url*, use `3001`.
+
+*Example:*
+
+* API Base Url: `http://129.168.36.24:3000` or `https://www.acme.local:3000`
+
+* API GRPC Base Url: `http://129.168.36.24:3001` or `https://www.acme.local:3001`
+
+Then input the *Username/Email* and *Password/API Key* to log in.
+
+--
+
+====
