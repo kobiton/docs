@@ -1,0 +1,232 @@
+= Generate HTML Reports for Appium (C#) Tests
+
+Learn how to generate an HTML report for Appium (C#) tests.
+
+== Project Structure and Requirements
+
+* **.NET SDK** (version 6.0 or later)
+    - Install from https://dotnet.microsoft.com/en-us/download
+* **NuGet Packages**:
+    - `Appium.WebDriver` (for Appium in .NET)
+    - NUnit (for testing)
+    - `NUnit3TestAdapter` (so `dotnet test` discovers your tests)
+    - `Microsoft.NET.Test.Sdk`
+    - `ExtentReports` (version 5.x)
+
+== Code Overview
+
+**ApiDemos.cs**
+
+* **Setup**: Initializes the test, sets desired capabilities for your device, and starts the Appium driver.
+* **Test Method** (`TestViewNavigation`): Performs the actual UI interactions on the app.
+* **TearDown**: Quits the driver.
+* **OneTimeSetup / OneTimeTeardown**: Creates and flushes the Extent report.
+
+[source,.net]
+----
+using NUnit.Framework;
+using OpenQA.Selenium.Appium;
+using OpenQA.Selenium.Appium.Android;
+using System;
+using AventStack.ExtentReports;                        
+using AventStack.ExtentReports.Reporter;
+
+namespace MyAppiumTests
+{
+   [TestFixture]
+   public class ApiDemos
+   {
+       private AndroidDriver<AndroidElement>? driver;
+       private ExtentTest? _test;
+       private static ExtentReports? _extent;
+
+       [OneTimeSetUp]
+       public void OneTimeSetup()
+       {
+           // Directly create ExtentReports instance here:
+           var sparkReporter = new ExtentSparkReporter("ExtentReport.html");
+          
+           sparkReporter.Config.DocumentTitle = "ApiDemos Report";
+           sparkReporter.Config.ReportName = "My Test Execution";
+
+           _extent = new ExtentReports();
+           _extent.AttachReporter(sparkReporter);
+       }
+
+       [SetUp]
+       public void Setup()
+       {
+           // Create a test entry in Extent for this individual test
+           _test = _extent?.CreateTest(TestContext.CurrentContext.Test.Name);
+
+           // Now do your Kobiton/Appium driver setup:
+           var kobitonServerUrl = new Uri("https://api.kobiton.com/wd/hub");
+           var capabilities = new AppiumOptions();
+
+           // Kobiton Credentials
+           capabilities.AddAdditionalCapability("kobiton:username", "sushmakannedari+1");
+           capabilities.AddAdditionalCapability("kobiton:accessKey", "1982d9eb-392a-4836-a623-7ccbad26df93");
+
+           // Basic Device Info
+           capabilities.AddAdditionalCapability("platformName", "Android");
+           capabilities.AddAdditionalCapability("deviceName", "Pixel 9 Pro");
+           capabilities.AddAdditionalCapability("platformVersion", "14");
+           capabilities.AddAdditionalCapability("kobiton:groupId", "12785");
+           capabilities.AddAdditionalCapability("appium:app","kobiton-store:v708486");
+           capabilities.AddAdditionalCapability("appPackage", "io.appium.android.apis");
+           capabilities.AddAdditionalCapability("appActivity", "io.appium.android.apis.ApiDemos");
+           capabilities.AddAdditionalCapability("automationName", "uiautomator2");
+
+           try
+           {
+               driver = new AndroidDriver<AndroidElement>(kobitonServerUrl, capabilities, TimeSpan.FromSeconds(120));
+               driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(10);
+
+               // Log in Extent
+               _test?.Info("Driver initialized successfully.");
+           }
+           catch (Exception ex)
+           {
+               _test?.Fail($"Driver initialization failed: {ex.Message}");
+               throw;
+           }
+       }
+
+       [Test]
+       public void TestViewNavigation()
+       {
+           try
+           {
+               _test?.Info("Tapping 'Views'...");
+               var viewsOption = driver.FindElementByAccessibilityId("Views");
+               viewsOption.Click();
+
+               _test?.Info("Tapping 'Controls'...");
+               var controlsOption = driver.FindElementByAccessibilityId("Controls");
+               controlsOption.Click();
+
+               _test?.Info("Tapping '1. Light Theme'...");
+               var lightThemeOption = driver.FindElementByAccessibilityId("1. Light Theme");
+               lightThemeOption.Click();
+
+               _test?.Info("Entering text in the EditText field...");
+               var editTextField = driver.FindElementById("io.appium.android.apis:id/edit");
+               editTextField.SendKeys("Hello from Appium!");
+
+               //  screenshot
+               TakeScreenshot("AfterEnteringText");
+
+               // Mark test as passed in Extent
+               _test?.Pass("Successfully navigated & interacted with ApiDemos!");
+           }
+           catch (Exception e)
+           {
+               _test?.Fail($"Test failed: {e.Message}");
+               TakeScreenshot("OnError");
+               throw;
+           }
+       }
+
+       [TearDown]
+       public void Teardown()
+       {
+           driver?.Quit();
+           driver?.Dispose();
+       }
+
+       [OneTimeTearDown]
+       public void OneTimeTeardown()
+       {
+           // Flush Extent to write everything to HTML
+           _extent?.Flush();
+       }
+
+       private void TakeScreenshot(string stepName)
+       {
+           try
+           {
+               var screenshot = driver?.GetScreenshot();
+               var fileName = $"{stepName}_{DateTime.Now:yyyyMMdd_HHmmss}.png";
+               screenshot?.SaveAsFile(fileName, OpenQA.Selenium.ScreenshotImageFormat.Png);
+
+
+               // Attach screenshot to the report
+               _test?.AddScreenCaptureFromPath(fileName, stepName);
+           }
+           catch (Exception ex)
+           {
+               _test?.Warning($"Could not capture screenshot: {ex.Message}");
+           }
+       }
+   }
+}
+----
+
+== Running the Tests  
+
+=== Step 1: Restore NuGet Packages
+
+From your project root folder (where your `.csproj` file is located), run:
+
+
+`dotnet restore`
+
+Note: The above command installs or updates all NuGet dependencies.
+
+=== Step 2: Build the Project
+
+`dotnet build`
+
+=== Step 3: Run the Tests
+
+`dotnet test`
+
+* **Executes** the tests. During execution, the driver connects to Kobiton and runs your test logic.
+* **Generates** the Extent report as `ExtentReport.html` in your output folder.
+
+== Viewing the Extent Report 
+
+1. Locate the `ExtentReport.html` file. By default, it will be in your project's **current working directory** at test runtime. Common locations:
+** `<ProjectRoot>/bin/Debug/net6.0/`
+** `<ProjectRoot>/bin/Release/net6.0/`
+2. Open ExtentReport.html in any web browser:
+** Double-click from your file explorer/finder, or
+** open `ExtentReport.html` (on macOS), or
+** Drag the file into a browser window. Or via terminal “open ExtentReport.html”
+3. Review the test results:
+
+** You will see **Passed / Failed** status of each test.
+** **Screenshots** are embedded under each step (if you used `_test?.AddScreenCaptureFromPath(...)`).
+
+== Troubleshooting
+
+* **Namespaces Missing?**
++
+Make sure all `using` directives reference `AventStack.ExtentReports` and `AventStack.ExtentReports.Reporter`.
+* **No Tests Found?**
++
+Confirm you added `NUnit3TestAdapter` and `Microsoft.NET.Test.Sdk`, and your `[TestFixture]/[Test]` attributes are properly defined.
+* **Report Missing or Empty?**
++
+Ensure `OneTimeTeardown` calls `_extent?.Flush()`. Otherwise, the report may not write final results.
+
+=== Example Project Structure
+
+1. MyAppiumTests/
+2.  ┣ MyAppiumTests.csproj
+3.  ┣ ApiDemos.cs
+4.  ┣ ExtentManager.cs
+5.  ┣ bin/
+6.  ┃ ┗ Debug/
+7.  ┃   ┗ net6.0/
+8.  ┃     ┗ ExtentReport.html  <-- Generated after tests run
+9.  ┗ obj/
+
+== Summary
+
+1. `dotnet restore`, `dotnet build`, and then `dotnet test` your project.
+2. After tests are complete, open `ExtentReport.html` to review detailed test results with screenshots.
+
+
+
+
