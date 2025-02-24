@@ -7,25 +7,33 @@ _February 23, 2025_
 
 This release adds support for the following:
 
-* iOS/iPadOS 18.3.1 [TBC]
+* iOS/iPadOS 18.3.1
 
 [NOTE]
-For iOS/iPadOS 18.3.1, [TODO]
+====
+
+For iOS/iPadOS 18.3.1:
+
+* Native XCUITest automation script is currently not supported.
+
+* (Passcode-enabled organization only) If a manual session launches when the device is locked, the device is stuck on lock screen. As a workaround, press the power button twice, then swipe up on the lock screen to bypass it.
+
+====
 
 == Scriptless Automation and Mobile Test Management Enhancements
 
-* Generated Appium scripts can now run on other cloud device platform such as BrowserStack, LambdaTest, and Sauce Labs.
+* Enhanced our Appium script generation feature, making it easier to execute generated scripts on other cloud device platforms, such as BrowserStack, LambdaTest, and Sauce Labs.
 
 == Script-based Test Automation Enhancements
 
-* (Passcode enabled organization only) Addressed the inconsistencies of the unlock action between Basic Appium 2 and XIUM automation script. Now, unlock will automatically unlocks the device for both Basic Appium 2 and XIUM.
+* (Passcode enabled organization only) Updated the `unlock` action of XIUM automation script to be the same as Appium 2 Basic for iOS devices. Now, `unlock` for both XIUM and Appium 2 Basic will unlock the device instead of simulating the power button press.
 
 == General Improvements and Fixes
 
-* Fixed an issue with the iOS/iPadOS Developer Disk Images (DDI) not automatically remount when there is an update to the DDI, causing the below error:
+* Fixed an issue where the iOS/iPadOS Developer Disk Images (DDI) did not automatically remount after an update, resulting in the following error:
 [source]
 Can't find iOS device <UDID> with BoardID <number> and ChipID <number> in DDI BuildManifest.plist. Xcode may need to be updated.
 
-* Improve the latency when there are more than 4 concurrent sessions with video capture turned on.
+* Improve the performance when there are more than four concurrent sessions with video capture enabled.
 
 * Automatically disable Google Play Protect scanning as it can cause the manual session to become unresponsive for Android devices.
