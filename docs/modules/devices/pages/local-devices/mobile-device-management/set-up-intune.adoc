@@ -1,0 +1,105 @@
+= Set up a device for Microsoft Intune MDM
+:navtitle: Set up Microsoft Intune MDM
+
+Learn how to set up Microsoft Intune, a Mobile Device Management (MDM) program on an iOS/iPadOS or Android device.
+
+== Requirements
+
+* For configuring Intune:
+
+** An administrator account on https://endpoint.microsoft.com/[Intune Endpoint Manager].
+
+** Strong familiarity with Intune Endpoint Manager features.
+
+* For configuring Kobiton settings:
+
+** A Kobiton user account with the `ADMIN` role assigned.
+
+** Physical access to the devices in case physical touch is needed to complete setup steps.
+
+== Supported device enrollment types
+
+It is highly recommend that devices need to be registered to Kobiton first and then enrolled to Intune via a Manual session. This approach can be supported by the following Intune enrollment types:
+
+* Android: https://learn.microsoft.com/en-us/mem/intune/fundamentals/deployment-guide-enrollment-android#byod-android-enterprise-personally-owned-devices-with-a-work-profile[Enterprise personally owned devices with a work profile].
+
+* iOS: https://learn.microsoft.com/en-us/mem/intune/fundamentals/deployment-guide-enrollment-ios-ipados#byod-user-and-device-enrollment[User and Device enrollment].
+
+If your organization requires enrollment types not included in the list above, contact Kobiton Support with the type of enrollment being used for a custom solution.
+
+== Configure Intune for Kobiton devices
+
+For the best security and performance of Kobiton devices, we have outlined our recommended settings for Intune’s Configuration Profiles and Compliance Policy.
+
+[NOTE]
+Settings that are marked as required must follow Kobiton’s recommendation, otherwise the Kobiton platform cannot work.
+
+=== Device passcode
+
+A common use of MDMs such as Intune is to enforce a passcode or password policy on mobile devices. Passcodes add complexity to device lab management. So, if passcodes are not required for your use case, do not set up passcode policies in Intune.
+
+If your organization requires a passcode policy for Intune, additional device setup and configuration are needed to integrate Intune with Kobiton platform. Contact Kobiton Support for assistance in setting up passcodes.
+
+In our standard passcode process, Kobiton sets a random PIN with 8 numeric digits and no more than 2 repeated numbers or increasing or decreasing numbers. Example: `125811` and `341109` are acceptable, but  `123456` and `654119` are not.
+
+Make sure that your organization's Intune passcode policy does not conflict with the above passcode specifications.
+
+=== Configuration profile
+
+The Kobiton software installed on devices requires specific access to the device settings. Intune has many permissions about device settings access. Below are the guidelines for those settings.
+
+==== Android Enterprise → Personally Owned Work Profile → Device Restrictions
+
+[options="header"]
+|===
+| Section | Setting name | Required | Recommended value | Notes
+| Work profile settings | Screen capture | Yes | Not configured | Kobiton requires this permission to view and access work profile apps.
+| Work profile settings | Camera | No | Not configured | Image injection feature will be disabled if set to Block.
+| Work profile settings | Require Work Profile Password | No | Not configured | If set to Yes, requires additional setup to work with Kobiton platform.
+| Work profile settings | Password expiration (days) | Yes* | 365 | Set this value to maximum to avoid changing device passcode.
+| Work profile settings | Face unlock | No | Not configured | Biometrics features will be disabled if set to Block.
+| Work profile settings | Fingerprint unlock | No | Not configured | Biometrics features will be disabled if set to Block.
+| Work profile settings | Work Profile Password Complexity | Yes* | Medium, High | Kobiton’s passcode option does not allow simple passcode with repeating (4444) or ordered (1234, 4321, 2468) sequences.
+| Work profile settings | Required Password Type | Yes* | Numeric complex | PIN must not be simple.
+| Work profile settings | Minimum password length | Yes* | 8 or less | Kobiton automatically sets an 8-digit passcode on the device.
+| Password | Password expiration (days) | Yes* | 365 | Set this value to maximum to avoid changing device passcode.
+| Password | Face unlock | No | Not configured | Biometrics features will be disabled if set to Block.
+| Password | Fingerprint unlock | No | Not configured | Biometrics features will be disabled if set to Block.
+| Password | Password Complexity | Yes* | Medium, High | Passcode setting for personal profile. Set this to the same value as the work profile’s passcode policy.
+| Password | Required Password Type | Yes* | Numeric complex | Passcode setting for personal profile. Set this to the same value as the work profile’s passcode policy.
+| Password | Minimum password length | Yes* | 8 or less | Passcode setting for personal profile. Set this to the same value as the work profile’s passcode policy.
+| System Security | Prevent app installations from unknown sources in the personal profile | No | Not configured | Kobiton cannot install app from unknown sources if this is set to Block.
+|===
+
+*: Only if passcode is enforced.
+
+==== iOS → Settings Catalog
+
+[options="header"]
+|===
+| Section | Setting name | Required | Recommended value | Notes
+| App Management > App Lock | App | Yes | Unchecked (removed from configuration profile) | Kobiton platform cannot control the device if App Lock is enabled.
+| Networking > Cellular | APNs | No | Unchecked (removed from configuration profile) | This will add restriction to the network that Kobiton devices use.
+| Networking > Cellular | Attach APN | No | Unchecked (removed from configuration profile) | This will add restrictions to the network that Kobiton devices use.
+| Security > Passcode | Max PIN Age In Days | Yes* | 730 | Set this value to maximum to avoid changing device passcode.
+| Security > Passcode | Force PIN | Yes* | TRUE | Must enforce PIN mode.
+| Security > Passcode | Min Length | Yes* | 8 or less | Kobiton automatically sets an 8-digit passcode on the device.
+| Security > Passcode | Require alphanumeric passcode | No | FALSE | If set to True, make sure to select Password option in the Kobiton Portal when setting up the passcode.
+| Security > Passcode | Allow Simple Passcode | Yes* | FALSE | Kobiton’s passcode option does not allow simple passcodes with repeating (4444) or ordered (1234, 4321, 2468) sequences.
+| Security > Passcode | Min Complex Character | Yes* | 0 | Password cannot contain special characters.
+| Restrictions | Allow App Removal | Yes | TRUE | Kobiton needs this permission to control the device.
+| Restrictions | Allow Camera | No | TRUE | Image injection feature will be disabled if set to False.
+| Restrictions | Allow Enterprise App Trust | No | TRUE | Kobiton may not be able to access Enterprise applications if set to False.
+| Restrictions | Allow Fingerprint for Unlock | No | TRUE | Biometrics features will be disabled if set to Block.
+| Restrictions | Allow Host Pairing | Yes | TRUE | Kobiton needs this permission to host devices.
+| Restrictions | Allow Listed App Bundle IDs | Yes | include com.mobilelabsinc.deviceControl in the list | Must allow the deviceControl app to run on the device.
+| Restrictions | Allow Passcode Modification | Yes* | TRUE | Must allow Kobiton to modify the passcode.
+| Restrictions | Allow Safari | No | TRUE | Web testing features will be disabled if set to False.
+| Restrictions | Allow Screen Shot | Yes | TRUE | Required to stream device screen to the Kobiton portal.
+| Restrictions | Allow UI Configuration Profile Installation | Yes* | TRUE | Network payload capture and passcode features require this permission.
+| Restrictions | Autonomous Single App Mode Permitted App IDs | Yes | Not configured | Kobiton platform cannot control the device if Single App Mode is enabled.
+| Restrictions | Blocked App Bundle IDs | Yes | do not include com.mobilelabsinc.deviceControl in the list | Must allow the deviceControl app to run on the device.
+| Restrictions | Allow Files USB Drive Access | Yes | TRUE | Required to connect to the device.
+|===
+
+*: Only if passcode is enforced.
