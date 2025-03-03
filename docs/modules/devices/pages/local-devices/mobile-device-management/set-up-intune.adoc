@@ -103,3 +103,149 @@ The Kobiton software installed on devices requires specific access to the device
 |===
 
 *: Only if passcode is enforced.
+
+==== iOS → Templates → Device Restrictions
+
+[options="header"]
+|===
+| Section | Setting name | Required | Recommended value | Notes
+| Autonomous Single App Mode | App name | Yes | blank | Kobiton platform cannot control the device if Single App Mode is enabled.
+| Autonomous Single App Mode | App Bundle ID | Yes | blank | Kobiton platform cannot control the device if Single App Mode is enabled.
+| Built-in apps | Block camera | No | Not configured | Image injection feature will be disabled if set to Yes.
+| Built-in apps | Block Safari | No | Not configured | Web testing features will be disabled if set to Yes.
+| Connected devices | Block pairing with non-Configurator hosts | Yes | Not configured | Kobiton needs this permission to host devices.
+| Connected devices | Block access to USB drive in Files app | Yes | Not configured | Required to connect to the device.
+| General | Block screenshots and screen recording | Yes | Not configured | Required to stream device screen to the Kobiton portal.
+| General | Block removing apps | Yes | Not configured | Kobiton needs this permission to control the device.
+| Kiosk | App to run in kiosk mode | Yes | Not configured | Kobiton platform cannot control the device if Kiosk mode is enabled.
+| Password | Require password | No | Not configured | If set to Yes, requires additional setup to work with Kobiton platform.
+| Password | Block simple passwords | Yes* | Yes | Kobiton’s passcode option does not allow simple passcodes with repeating (4444) or ordered (1234, 4321, 2468) sequences.
+| Password | Required password type | Yes* | Numeric | Must enforce PIN mode.
+| Password | Number of non-alphanumeric characters in password | Yes* | Not configured | Password cannot contain special characters.
+| Password | Minimum password length | Yes* | 8 or less | Kobiton automatically sets an 8-digit passcode on the device.
+| Password | Password expiration (days) | Yes* | 730 | Set this value to maximum to avoid changing device passcode.
+| Password | Block Touch ID and Face ID unlock | No | Not configured | Biometrics features will be disabled if set to Yes.
+| Password | Block passcode modification | Yes* | Not configured | Must allow Kobiton to modify the passcode.
+| Restricted Apps | Type of restricted apps list | No | Not configured | It is not recommended to restrict apps.
+| Restricted Apps | Apps list | Yes | See Notes | Do not include com.mobilelabsinc.deviceControl in blocked apps list. Include com.mobilelabsinc.deviceControl in allowed apps list. If apps must be restricted, allow the deviceControl app to run on the device.
+| Show or Hide Apps | Type of apps list | No | Not configured | It is not recommended to hide apps.
+| Show or Hide Apps | Apps list | Yes | See Notes | Do not include com.mobilelabsinc.deviceControl in hidden apps list. Include com.mobilelabsinc.deviceControl in visible apps list. If apps must be hidden, allow the deviceControl app to show and run on the device.
+|===
+
+*: Only if passcode is enforced.
+
+[NOTE]
+Other items in the configuration profile may not be relevant or have no impact to Kobiton features. Contact Kobiton Support if you determine other settings that affect Kobiton features.
+
+=== Compliance policy
+
+The settings below do not directly limit the features of a device, but will mark it as non-compliant and prevent it from accessing Intune managed resources. To allow Kobiton platform to access these resources, set the value as recommended.
+
+==== Android Enterprise → Personally-owned work profile
+
+[options="header"]
+|===
+| Section | Setting name | Required | Recommended value | Notes
+| System Security | Block apps from unknown sources | No | Not configured | Kobiton cannot install app from unknown sources if this is set to Yes.
+| System Security | Block USB debugging on device | Yes | Not configured | Kobiton requires USB debugging to control the device.
+| System Security | Require a password to unlock mobile devices | No | Not configured | If set to Yes, requires additional setup to work with Kobiton platform.
+| System Security | Number of days until password expires | Yes | 365 | Set this value to maximum to avoid changing device passcode.
+| System Security | Password complexity | Yes* | Medium, High | Passcode setting for personal profile. Set this to the same value as the work profile’s passcode policy.
+| System Security | Required password types | Yes* | Numeric complex | PIN must not be simple.
+| System Security | Minimum password length | Yes* | 8 or less | Kobiton automatically sets an 8-digit passcode on the device.
+|===
+
+*: Only if passcode is enforced.
+
+==== iOS → iOS compliance policy
+
+[options="header"]
+|===
+| Section | Setting name | Required | Recommended value | Notes
+| System Security | Require a password to unlock mobile devices | No | Not configured | If set to Yes, requires additional setup to work with Kobiton platform.
+| System Security | Simple passwords | Yes* | Block | Kobiton’s passcode option does not allow simple passcodes with repeating (4444) or ordered (1234, 4321, 2468) sequences.
+| System Security | Minimum password length | Yes* | 8 or less | Kobiton automatically sets an 8-digit passcode on the device.
+| System Security | Required password types | Yes* | Numeric | Must enforce PIN mode.
+| System Security | Number of non-alphanumeric characters in password | Yes* | Not configured | Password cannot contain special characters.
+| System Security | Password expiration (days) | Yes* | 55365 | Set this value to maximum to avoid changing device passcode.
+| System Security | Restricted apps | Yes | do not include com.mobilelabsinc.deviceControl in the list | Must allow the deviceControl app to run on the device.
+|===
+
+*: Only if passcode is enforced.
+
+[NOTE]
+Other items in the compliance policy may not be relevant or have no impact to Kobiton. Contact Kobiton Support, if you have questions about other settings that may affect Kobiton functionality.
+
+== Configure the Kobiton platform and enroll devices
+
+=== Enable passcode for your organization
+
+[NOTE]
+Only perform these steps if your organization requires passcode or password policy in Intune.
+
+Make a request via Kobiton Support to help you enable *passcodes* for your organization. Your devices must also be configured to support passcodes.
+
+=== Disable cleanup on the Kobiton Portal
+
+Kobiton’s default cleanup process will remove the Intune Company Portal app after any session. If you want the Intune Company Portal app to remain for other sessions, we recommend turning off the full cleanup policy. Instructions are below. (Another option is to create a custom policy that turns off removal of apps installed during a session.)
+
+Login to the Kobiton Portal using an account with the `ADMIN` role.
+
+On the Portal home page, click your avatar and select *Settings*:
+
+image::TODO
+
+On the next page, select *Cleanup Policy* in the navigation bar. Click anywhere on the *No Cleanup* policy role in the list to highlight it, then click the *Mark as Default* button.
+
+image::TODO
+
+Click *OK* in the pop-up to confirm the action:
+
+image::TODO
+
+The above steps should be done before any teams are created in the platform. If there are existing teams created previously, perform the below steps to all those teams:
+
+In the Portal home page, click the *Org Management* icon on the main navigation pane and select *Teams*. Click a team name to edit it, such as _Intune_ in the example below:
+
+image::TODO
+
+Navigate to the *Settings* tab and make sure *No Cleanup* is selected under *Cleanup Policy*. Click Save to apply the changes.
+
+image::TODO
+
+=== Enroll devices to Intune without passcode
+
+The process to enroll devices for Android and iOS is largely the same. Any action required for a specific OS will be noted separately.
+
+Set up Android and iOS enrollments in https://endpoint.microsoft.com/[Intune Endpoint Manager].
+
+Create or modify configuration profiles and compliance policies in Intune Endpoint Manager according to Kobiton’s recommendations.
+
+[IMPORTANT]
+Make sure passcode is not set as mandatory in all applicable profiles and policies.
+
+If the devices are already enrolled into Intune, remove the enrollment. Remove any passcode in the devices as well.
+
+Ensure that the devices to be enrolled are online in the Kobiton Portal and a Manual Session can be launched on the device from the Kobiton Portal.
+
+Log into the Kobiton Portal and select *Devices* in the navigation. Click the *Launch* icon on a device:
+
+image::TODO
+
+In the Manual Session, open the *Google Play Store* (Android) or *App Store* (iOS) and log in using a Google or Apple account.
+
+Search for and install the *Intune Company Portal* app:
+
+image::TODO
+
+When the installation is complete, launch the app. Sign in using the organization’s Microsoft account:
+
+image::TODO
+
+The device enrollment screen will come up.
+
+Enroll the device using the official Microsoft enrollment guide for Android or iOS. When the enrollment is complete, exit the manual session.
+
+
+
+
