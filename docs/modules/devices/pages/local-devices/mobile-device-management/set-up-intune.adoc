@@ -244,8 +244,105 @@ image::TODO
 
 The device enrollment screen will come up.
 
-Enroll the device using the official Microsoft enrollment guide for Android or iOS. When the enrollment is complete, exit the manual session.
+Enroll the device using the official Microsoft enrollment guide for https://learn.microsoft.com/en-us/mem/intune/user-help/enroll-device-android-work-profile[Android] or https://learn.microsoft.com/en-us/mem/intune/user-help/enroll-your-device-in-intune-ios[iOS/iPadOS]. When the enrollment is complete, exit the manual session.
 
+Your Intune managed devices are now ready for use.
+
+=== Enroll devices to Intune with passcode
+
+The process to enroll devices for Android and iOS is largely the same. Any action required for a specific OS will be noted separately.
+
+Set up Android and iOS enrollments in https://endpoint.microsoft.com/[Intune Endpoint Manager].
+
+Create or modify configuration profiles and compliance policies in Intune Endpoint Manager according to Kobiton’s recommendations.
+
+If the devices are already enrolled into Intune, remove the enrollment. Remove any passcode in the devices as well.
+
+Ensure that the devices to be enrolled are online in the Kobiton Portal and a Manual Session can be launched on the device from the Kobiton Portal.
+
+Log into the Kobiton Portal and select *Devices*. Click the *Launch* button on a device to set it up.
+
+image::TODO[]
+
+System sets a random PIN as passcode on the device.
+
+[tabs]
+====
+
+iOS/iPadOS::
++
+
+--
+
+In the Manual Session, open the App Store and log in using an Apple account.
+
+Search for and install the Intune Company Portal app. When the installation is complete, launch the app. Sign in using the organization’s Microsoft account.
+
+The device enrollment screen will come up. Enroll the device by following the official https://learn.microsoft.com/en-us/mem/intune/user-help/enroll-your-device-in-intune-ios[Microsoft enrollment guide].
+
+Intune requires installing a management profile:
+
+image::TODO[]
+
+Go back to the Home screen and navigate to Settings and select Profile Downloaded:
+
+image::TODO[]
+
+Tap *Install*:
+
+The next step requires entering the device’s current passcode. The passcode is displayed at the top of the Manual Session. Tap the black space and input the passcode. Due to Apple security, you will not be able to see the passcode as you type:
+
+image::TODO[]
+
+After inputting the whole passcode, press the *backspace* or *delete* key on your keyboard once, then input the last digit of the passcode. Tap the *Done* button when it is enabled:
+
+image::TODO[]
+
+Continue with the setup process.
+
+After Intune verifies that the device is now compliant, the below screen will appear:
+
+image::TODO[]
+
+At this point, the Intune enrollment is complete. You can end the Manual session.
+
+--
+
+Android::
+
++
+
+--
+
+In the Manual Session, open the Google Play Store and log in using a Google account.
+
+Search for and install the Intune Company Portal app. When the installation is complete, launch the app. Sign in using the organization’s Microsoft account.
+
+The device enrollment screen will come up. Enroll the device by following the official https://learn.microsoft.com/en-us/mem/intune/user-help/enroll-device-android-work-profile[Microsoft enrollment guide].
+
+After Intune verifies that the device is now compliant, the below screen will appear:
+
+image:TODO[]
+
+Open the *Settings* app and tap *Lock screen*:
+
+image::TODO[]
+
+On some devices, tap *Work profile* instead of Lock screen:
+
+image::TODO[]
+
+Make sure the *Use one lock* setting under *Work profile security* or *Work profile* is enabled. Kobiton does not support having two separate passcodes for Personal and Work profiles.
+
+image::TODO[]
+
+image::TODO[]
+
+At this point, the Intune enrollment is complete. You can end the Manual session.
+
+--
+
+====
 
 
 
