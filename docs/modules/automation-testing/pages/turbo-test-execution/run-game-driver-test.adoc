@@ -36,7 +36,7 @@ Select the profile picture, then navigate to *Settings*.
 
 image:profile:choose-settings-context.png[width="1000",alt="Navigate to Settings in Kobiton Portal"]
 
-In the API Keys page, note down the *Server URL* but remove `/wd/hub`. For example, if the Server URL is _https://api.kobiton.com/wd/hub_, then only note down _https://api.kobiton.com_. This is the `<api base url>` to be used later.
+In the API Keys page, note down the *Server URL* but remove `/wd/hub`. For example, if the Server URL is `\https://api.kobiton.com/wd/hub`, then only note down `\https://api.kobiton.com`. This is the `<api base url>` to be used later.
 
 image:automation-testing:api-server-url.png[width=1000,alt="Note down the API Server URL"]
 
@@ -156,7 +156,7 @@ Fill in the variable information in the command based on the below table:
 |`<api base url>`
 |string
 |Yes
-|https://api.kobiton.com
+|\https://api.kobiton.com
 |API base URL
 
 |`<credentials>`
@@ -208,7 +208,7 @@ Default value: Session created at <date> <time>
 |<test runner url>
 |string
 |Yes
-|https://kobiton-prod-blue.s3.amazonaws.com/test-runner/users/17/test_runner-cfc2d590-5067-11ee-b387-71e5b022613e.zip
+|\https://kobiton-*.s3.amazonaws.com/test-runner/users/17/test_runner-cfc290-5067-11ee-b387-71613e.zip
 |Download URL of the test runner
 
 |`<root directory name>`
