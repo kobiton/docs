@@ -195,21 +195,21 @@ include::profile:partial$open-settings.adoc[]
 
 On the next page, select *Cleanup Policy* in the navigation bar. Click anywhere on the *No Cleanup* policy role in the list to highlight it, then click the *Mark as Default* button.
 
-image:intune-default-org-no-cleanup.png[]
+image:intune-default-org-no-cleanup.png[width=800,alt="The No Cleanup policy selected in the Cleanup Policies list with the button Mark as Default visible"]
 
 Click *OK* in the pop-up to confirm the action:
 
-image:intune-cleanup-mark-as-default.png[]
+image:intune-cleanup-mark-as-default.png[width=300,alt="The Mark as Default pop-up with the OK button visible"]
 
 The above steps should be done before any teams are created in the platform. If there are existing teams created previously, perform the below steps to all those teams:
 
 In the Portal home page, click the *Org Management* icon on the main navigation pane and select *Teams*. Click a team name to edit it, such as _Intune_ in the example below:
 
-image:intune-teams-list.png[]
+image:intune-teams-list.png[width=800,alt="The Intune team visible in the Teams list under the Organization menu that can be selected for editing"]
 
 Navigate to the *Settings* tab and make sure *No Cleanup* is selected under *Cleanup Policy*. Click Save to apply the changes.
 
-image:intune-team-edit.png[]
+image:intune-team-edit.png[width=600,alt="The Cleanup Policy drop-down list with No Cleanup selected under Team Settings"]
 
 === Enroll devices to Intune without passcode
 
@@ -228,17 +228,17 @@ Ensure that the devices to be enrolled are online in the Kobiton Portal and a Ma
 
 Log into the Kobiton Portal and select *Devices* in the navigation. Click the *Launch* icon on an iOS or Android device:
 
-image:intune-device-list-ios.png[] image:intune-device-list-android.png[]
+image:intune-device-list-ios.png[width=800,alt="The Launch button under an iOS device in the Private or local devices list"] image:intune-device-list-android.png[width=800,alt="The Launch button under an Android device in the Private or local devices list"]
 
-In the Manual Session, open the *Google Play Store* (Android) or *App Store* (iOS) and log in using a Google or Apple account.
+In the Manual Session, open the *App Store* (iOS) or *Google Play Store* (Android) and log in using an Apple or Google account.
 
 Search for and install the *Intune Company Portal* app:
 
-image:intune-play-store-android.png[] image:intune-app-store-ios.png[]
+image:intune-app-store-ios.png[width=240,alt="The Intune Company Portal app with the Get button visible in Apple App Store"] image:intune-play-store-android.png[width=240,alt="The Intune Company Portal app with the Install button visible in Google Play Store"]
 
 When the installation is complete, launch the app. Sign in using the organization’s Microsoft account:
 
-image:intune-sign-in.png[]
+image:intune-sign-in.png[width=240,alt="The start screen of the Intune Company Portal app with the sign in button"]
 
 The device enrollment screen will come up.
 
@@ -268,7 +268,7 @@ iOS/iPadOS::
 
 Log into the Kobiton Portal and select *Devices*. Click the *Launch* button on a device to set it up.
 
-image:intune-device-list-ios.png[]
+image:intune-device-list-ios.png[width=800,alt="The Launch button under an iOS device in the Private or local devices list"]
 
 System sets a random PIN as passcode on the device.
 
@@ -276,37 +276,37 @@ In the Manual Session, open the App Store and log in using an Apple account.
 
 Search for and install the Intune Company Portal app.
 
-image:intune-app-store-ios.png[]
+image:intune-app-store-ios.png[width=240,alt="The Intune Company Portal app with the Get button visible in Apple App Store"]
 
 When the installation is complete, launch the app. Sign in using the organization’s Microsoft account.
 
-image:intune-sign-in.png[]
+image:intune-sign-in.png[width=240,alt="The start screen of the Intune Company Portal app with the sign in button"]
 
 The device enrollment screen will come up. Enroll the device by following the official https://learn.microsoft.com/en-us/mem/intune/user-help/enroll-your-device-in-intune-ios[Microsoft enrollment guide].
 
 Intune requires installing a management profile:
 
-image:intune-install-management-profile.png[]
+image:intune-install-management-profile.png[width=240,alt="The instructions to install management profile in the enrollment process in Intune Company Portal"]
 
 Go back to the Home screen and navigate to Settings and select Profile Downloaded:
 
-image:intune-settings-profile-downloaded.png[]
+image:intune-settings-profile-downloaded.png[width=240,alt="The Profile Downloaded option in the Settings app"]
 
 Tap *Install*:
 
 The next step requires entering the device’s current passcode. The passcode is displayed at the top of the Manual Session. Tap the black space and input the passcode. Due to Apple security, you will not be able to see the passcode as you type:
 
-image:intune-passcode-enter.png[]
+image:intune-passcode-enter.png[width=240,alt="The passcode input screen"]
 
 After inputting the whole passcode, press the *backspace* or *delete* key on your keyboard once, then input the last digit of the passcode. Tap the *Done* button when it is enabled:
 
-image:intune-passcode-confirm.png[]
+image:intune-passcode-confirm.png[width=240,alt="The passcode confirmation screen with the Done button visible"]
 
 Continue with the setup process.
 
 After Intune verifies that the device is now compliant, the below screen will appear:
 
-image:intune-ios-enroll-complete.png[]
+image:intune-ios-enroll-complete.png[width=240,alt="The enrollment complete screen with the You're all set message"]
 
 At this point, the Intune enrollment is complete. You can end the Manual session.
 
@@ -320,7 +320,7 @@ Android::
 
 Log into the Kobiton Portal and select *Devices*. Click the *Launch* button on a device to set it up.
 
-image:intune-device-list-android.png[]
+image:intune-device-list-android.png[width=800,alt="The Launch button under an Android device in the Private or local devices list"]
 
 System sets a random PIN as passcode on the device.
 
@@ -328,25 +328,25 @@ In the Manual Session, open the Play Store and log in using a Google account.
 
 Search for and install the Intune Company Portal app.
 
-image:intune-play-store-android.png[]
+image:intune-play-store-android.png[width=240,alt="The Intune Company Portal app with the Install button visible in Google Play Store"]
 
 When the installation is complete, launch the app. Sign in using the organization’s Microsoft account.
 
-image:intune-sign-in.png[]
+image:intune-sign-in.png[width=240,alt="The start screen of the Intune Company Portal app with the sign in button"]
 
 The device enrollment screen will come up. Enroll the device by following the official https://learn.microsoft.com/en-us/mem/intune/user-help/enroll-device-android-work-profile[Microsoft enrollment guide].
 
 After Intune verifies that the device is now compliant, the below screen will appear:
 
-image:intune-android-enroll-complete.png[]
+image:intune-android-enroll-complete.png[width=240,alt="The enrollment complete screen with the You're all set message"]
 
 Open the *Settings* app and tap *Lock screen*. Make sure the Use one lock setting under *Work profile security* is enabled.
 
-image:intune-settings-lock-screen.png[] -> image:intune-use-one-lock-lock-screen.png[]
+image:intune-settings-lock-screen.png[width=240,alt="The Lock screen option in the Settings app"] -> image:intune-use-one-lock-lock-screen.png[width=240,alt="The Use one lock switch turned on under Work profile security in the Lock screen page"]
 
 On some devices, tap *Work profile* instead of Lock screen. Make sure the Use one lock setting under *Work profile* is enabled.
 
-image:intune-settings-work-profile.png[] -> image:intune-use-one-lock-work-profile.png[]
+image:intune-settings-work-profile.png[width=240,alt="The Work profile option in the Settings app"] -> image:intune-use-one-lock-work-profile.png[width=240,alt="The Use one lock switch turned on in the Work profile screen"]
 
 At this point, the Intune enrollment is complete. You can end the Manual session.
 
