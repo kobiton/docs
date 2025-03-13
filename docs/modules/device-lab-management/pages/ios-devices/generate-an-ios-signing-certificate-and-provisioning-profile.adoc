@@ -11,9 +11,8 @@ Learn how to generate the signing certificate and mobile provisioning profile fi
 
 For more information, see Apple's link:https://help.apple.com/xcode/mac/current/#/dev3a05256b8[What is app signing?].
 
-== Purpose
-
-
+[NOTE]
+You can use any macOS machine, including the Mac mini host, to generate signing certificates and provisioning profiles. If you have multiple Mac mini hosts, it is recommended to generate the certificates and provisioning profiles for them on only 1 or 2 machines for better management.
 
 == Before you start
 
@@ -28,43 +27,57 @@ Only Apple Development certificate can be used by Kobiton. Apple Distribution ce
 
 === Submit a certificate signing request
 
-On any MacOS device, launch *Keychain Access*.
+On any macOS machine, launch *Keychain Access*.
 
 From the Keychain Access menu, choose *Certificate Assistant*, then select *Request a Certificate From a Certificate Authority*.
 
-image::ios-signing-certificate-request-a-certificate-from-certi-authority-context.png[width=1000, alt="launch *Keychain Access*"]
+image:ios-signing-certificate-request-a-certificate-from-certi-authority-context.png[width=1000, alt="launch *Keychain Access*"]
 
-Enter your email and name, but leave *CA Email Address* blank. Then choose *Saved to disk* and select *Continue*.
+Input the *Email Address* and *Common Name*, but leave *CA Email Address* blank. Then choose *Saved to disk* and select *Continue*.
 
-image::ios-signing-certificate-save-to-disk-option-context.png[width=500, alt="Enter your email and name, but leave *CA Email Address* blank. Then choose *Save to disk* and select *Continue*"]
+image:ios-signing-certificate-save-to-disk-option-context.png[width=500, alt="Enter your email and name, but leave *CA Email Address* blank. Then choose *Save to disk* and select *Continue*"]
 
-Select *Save* to download your `.certSigningRequest` file.
+Select *Save* to download your `.certSigningRequest` file. You can rename the signing request.
 
-image::ios-signing-certificate-select-save-context.png[width=500,alt="Select *Save* to download your `.certSigningRequest` file."]
+image:ios-signing-certificate-select-save-context.png[width=500,alt="Select *Save* to download your `.certSigningRequest` file."]
+
+When the signing request is created, the system creates a public and private key (the key pair) under the *login* keychain. The name of the key pair is the same as the value you provided under *Common Name* when creating the signing request. This key pair can be viewed from the *Keys* tab of the *Login* keychain:
+
+image:TODO[]
+
+[IMPORTANT]
+The generated key pair must not be removed from the keychain, as the signing request (and the subsequent signing certificate) cannot be used without the key pair.
+
 
 === Submit the signing request to generate a `.cer` file
 
+[NOTE]
+These steps should be done using the same machine that you generated the signing request on.
+
 Log into link:https://developer.apple.com/account[Apple Developer]. Under *Certificate, IDs & Profiles*, select *Certificates*.
 
-image::ios-signing-certificate-open-apple-dev-context.png[width=1000,alt="The Certificates option under Certificate, Identifiers and Profiles"]
+image:ios-signing-certificate-open-apple-dev-context.png[width=1000,alt="The Certificates option under Certificate, Identifiers and Profiles"]
 
 Select the *plus* icon to create a new certificate.
 
-image::ios-signing-certificate-create-new-certificate-icon.png[width=1000,alt="The plus icon to create a new certificate"]
+image:ios-signing-certificate-create-new-certificate-icon.png[width=1000,alt="The plus icon to create a new certificate"]
 
 Choose *Apple Development*, then select *Continue*.
 
-image::ios-signing-certificate-select-apple-dev-context.png[width=1000,alt="Choose *Apple Development*, then select *Continue*"]
+image:ios-signing-certificate-select-apple-dev-context.png[width=1000,alt="Choose *Apple Development*, then select *Continue*"]
 
-Select *Choose File*, choose the `.certSigningRequest` file, then select *Continue*.
+Select *Choose File*, choose the `.certSigningRequest` file you generated, then select *Continue*.
 
-image::ios-signing-certificate-choose-file-context.png[width=1000,alt="Select *Choose File*, choose the `.certSigningRequest` file, then select *Continue*"]
+image:ios-signing-certificate-choose-file-context.png[width=1000,alt="Select *Choose File*, choose the `.certSigningRequest` file, then select *Continue*"]
 
 Select *Download* to save the `development.cer` file to the local machine.
 
-image::ios-signing-certificate-select-download-context.png[width=1000,alt="Select *Download* to download your `.cert` file"]
+image:ios-signing-certificate-select-download-context.png[width=1000,alt="Select *Download* to download your `.cert` file"]
 
 === Generate `.p12` file
+
+[IMPORTANT]
+These steps *must be* done on the same machine you generated the certificate signing request on.
 
 On the macOS device, launch *Keychain Access*.
 
@@ -73,37 +86,46 @@ Select the *login* keychain, select *Certificates*, then drag and drop the `deve
 [IMPORTANT]
 Make sure the *login* keychain is highlighted before you drag and drop the file into *Certificates*. If another keychain is highlighted instead, such as *System*, you cannot export the `.p12` file.
 
-image::ios-signing-certificate-launch-keychain-access-context.png[width="",alt="On your macOS device, launch *Keychain Access*"]
+image:ios-signing-certificate-launch-keychain-access-context.png[width="",alt="On your macOS device, launch *Keychain Access*"]
 
-Right-click the recently imported certificate, then select *Export <your-certificate-name>*.
+Confirm that after dropping the `.cer` file into the *login* keychain, you can expand the cert to view the private key associated with it:
 
-image::ios-signing-certificate-right-click-to-export-context.png[width="",alt="Right-click your `.cert` file, then select *Export <your-cert-file>*"]
+image:TODO[]
 
-Choose the *Personal Information Exchange (. p12)* file format, then select *Save*.
+Select both the recently imported certificate and its private key, then select *Export <your-certificate-name>*.
 
-image::ios-signing-certificate-personal-info-exchange-context.png[width="",alt="Choose the *Personal Information Exchange (.p12)* file format, then select *Save*"]
+image:ios-signing-certificate-right-click-to-export-context.png[width="",alt="Right-click your `.cert` file, then select *Export <your-cert-file>*"]
 
-Enter a password to protect the certificate. If you don't want to enter a password, leave the field blank and select *OK*.
+Choose the *Personal Information Exchange (.p12)* file format, then select *Save*.
 
-image::ios-signing-certificate-protect-certificate-with-password.png[width=500,alt="Enter a password to protect the certificate, or leave the fields blank and select *OK*"]
+image:ios-signing-certificate-personal-info-exchange-context.png[width="",alt="Choose the *Personal Information Exchange (.p12)* file format, then select *Save*"]
 
-Input the MacOS administrator password to export the `.p12` certificate file. Move the file to the Mac mini host to xref:ios-devices/add-ios-device.adoc#_import_developer_certificates[import] it later.
+Enter a password to protect the certificate and select *OK*. If you don't want to enter a password, leave the field blank.
+
+image:ios-signing-certificate-protect-certificate-with-password.png[width=500,alt="Enter a password to protect the certificate, or leave the fields blank and select *OK*"]
+
+Input the macOS administrator password to export the `.p12` certificate file. Store this file in a safe location.
+
+Move the file to the Mac mini host to xref:ios-devices/add-ios-device.adoc#_import_developer_certificates[import] it later.
 
 == Generate a provisioning profile
 
 === Create an identifier
 
+[NOTE]
+Skip this step if you have created an identifier before.
+
 At the Apple Developer https://developer.apple.com/account/resources/[resources] page, select *Identifiers*. Select the *plus* icon to create a new identifier.
 
-image::ios-signing-certificate-create-new-identifier-closeup.png[width=1000,alt="The plus icon to create a new identifier"]
+image:ios-signing-certificate-create-new-identifier-closeup.png[width=1000,alt="The plus icon to create a new identifier"]
 
 Choose *App IDs*, then select *Continue*.
 
-image::ios-signing-certificate-select-app-id-closeup.png[width=1000,alt="A closeup to Select App ID"]
+image:ios-signing-certificate-select-app-id-closeup.png[width=1000,alt="A closeup to Select App ID"]
 
 Select *App* as type, then *Continue*.
 
-image::ios-signing-certificate-select-type-closeup.png[width=1000,alt="A closeup to Select type"]
+image:ios-signing-certificate-select-type-closeup.png[width=1000,alt="A closeup to Select type"]
 
 Add a description for the app ID. For *Bundle ID*, choose *Wildcard*. Input the appropriate Bundle ID into the box according to the use cases below:
 
@@ -114,21 +136,24 @@ Add a description for the app ID. For *Bundle ID*, choose *Wildcard*. Input the 
 [NOTE]
 If you are unsure, input `com.*` as it will work in most cases.
 
-image::ios-signing-certificate-choose-wildcard-option-closeup.png[width=1000,alt="A closeup to choose Wildcard option"]
+image:ios-signing-certificate-choose-wildcard-option-closeup.png[width=1000,alt="A closeup to choose Wildcard option"]
 
 When you're finished, select *Continue*.
 
 Review the information, then select *Register* to create the identifier.
 
-image::ios-signing-certificate-confirm-app-id-closeup.png[width=1000,alt="A closeup to confirm app ID"]
+image:ios-signing-certificate-confirm-app-id-closeup.png[width=1000,alt="A closeup to confirm app ID"]
 
 === Register device UDID
+
+[NOTE]
+Skip this step if you have registered the UDID before.
 
 Note down the UDID of all iOS/iPadOS devices you want to host.
 
 At the Apple Developer https://developer.apple.com/account/resources/[resources] page, select *Devices*. Choose the *plus* icon to register new devices.
 
-image::ios-signing-certificate-register-a-device-closeup.png[width=1000,alt="The plus icon to register new device"]
+image:ios-signing-certificate-register-a-device-closeup.png[width=1000,alt="The plus icon to register new device"]
 
 Choose *iOS, iPadOS, tvOS, watchOS, visionOS* for *Platform*, then enter the device name and UDID to add a single device.
 
@@ -136,38 +161,39 @@ Alternatively, select *Download sample files* and follow the official https://de
 
 Select *Continue* when you are finished.
 
-image::ios-signing-certificate-select-platform-device-name-closeup.png[width=1000,alt="The register new device screen with options to add single or multiple devices"]
+image:ios-signing-certificate-select-platform-device-name-closeup.png[width=1000,alt="The register new device screen with options to add single or multiple devices"]
 
 Review the information and select *Register*.
 
-image::ios-signing-certificate-review-device-register-closeup.png[width=1000,alt="The register new device review information screen with the Register button"]
+image:ios-signing-certificate-review-device-register-closeup.png[width=1000,alt="The register new device review information screen with the Register button"]
 
 === Generate `.mobileprovision` file
 
 At the Apple Developer https://developer.apple.com/account/resources/[resources] page, select *Profiles*. Choose the *plus* icon to create a new profile.
 
-image::ios-signing-certificate-select-generate-a-profile-closeup.png[width=1000,alt="Plus icon to create a new Profile"]
+image:ios-signing-certificate-select-generate-a-profile-closeup.png[width=1000,alt="Plus icon to create a new Profile"]
 
 Select *iOS App Development* under *Development*, then *Continue*.
 
-image::ios-signing-certificate-select-ios-app-dev-closeup.png[width=1000,alt="The iOS App Development option under Development"]
+image:ios-signing-certificate-select-ios-app-dev-closeup.png[width=1000,alt="The iOS App Development option under Development"]
 
 Choose the xref:#_create_an_identifier[app ID] you created earlier from the dropdown list, then *Continue*.
 
-image::ios-signing-certificate-select-app-id-from-dropdown-closeup.png[width=1000,alt="The app ID selection dropdown when generating a profile"]
+image:ios-signing-certificate-select-app-id-from-dropdown-closeup.png[width=1000,alt="The app ID selection dropdown when generating a profile"]
 
 Choose the xref:#_generate_a_signing_certificate[certificate] you created earlier, then *Continue*.
 
-image::ios-signing-certificate-choose-certificate-from-dropdown-closeup.png[width=1000,alt="The certificate selection dropdown when generating a profile"]
+image:ios-signing-certificate-choose-certificate-from-dropdown-closeup.png[width=1000,alt="The certificate selection dropdown when generating a profile"]
 
 Choose the xref:#_register_device_udid[devices] you registered earlier, then *Continue*.
 
-image::ios-signing-certificate-select-device-from-dropdown-closeup.png[width=1000,alt="The device selection dropdown when generating a profile"]
+image:ios-signing-certificate-select-device-from-dropdown-closeup.png[width=1000,alt="The device selection dropdown when generating a profile"]
 
 Input the *Provisioning Profile Name*, review the information, then select *Generate*.
 
-image::ios-signing-certificate-review-profile-closeup.png[width=1000,alt="The review profile information screen with the Generate button"]
+image:ios-signing-certificate-review-profile-closeup.png[width=1000,alt="The review profile information screen with the Generate button"]
+
 
 Select *Download* to save the `.mobileprovision` file. Move the file to the Mac mini host for importing to xref:ios-devices/add-ios-device.adoc#_import_provisioning_profiles_to_deviceconnect[deviceConnect] and xref:ios-devices/add-ios-device.adoc#_import_developer_certificates_and_provisioning_profiles_to_deviceshare[deviceShare] later.
 
-image::ios-signing-certificate-select-download-context.png[width=1000,alt="The download profile screen with the Download button"]
+image:ios-signing-certificate-select-download-context.png[width=1000,alt="The download profile screen with the Download button"]
