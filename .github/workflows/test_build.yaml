@@ -2,6 +2,8 @@ name: Test Build
 
 on:
   pull_request:
+    branches:
+      - '**-rc'
     types:
       - opened
       - synchronize
