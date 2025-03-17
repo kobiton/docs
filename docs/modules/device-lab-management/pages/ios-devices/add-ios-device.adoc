@@ -39,6 +39,19 @@ For Lightning mode with iOS 17 and above, connect the device to one of the USB p
 
 Check the device to see if it is charging after connecting. If it is not charging, the USB cable might be malfunctioning, or the Cambrionix hub is not connected to a power source.
 
+== Import certificates and provisioning profiles
+
+Follow xref:ios-devices/import-ios-signing-certificates-and-provisioning-profiles.adoc[this section,window=read_later] to import certificates and provisioning profiles to the Mac mini host.
+
+[NOTE]
+====
+
+If the iOS/iPadOS device to add is already included in the existing certificates and provisioning profiles on the Mac mini host, skip this step.
+
+To know if the device is included
+
+====
+
 == Establish trust pairing between the device and the host
 
 Access the Mac mini host directly or via screen sharing.
@@ -158,10 +171,6 @@ Continue with connecting iOS 17 and above devices to the air-gapped Mac mini hos
 [IMPORTANT]
 Apple has not published whether the personalized DDI will expire or how long it will last in an air-gapped environment. If connection errors occur and other troubleshooting steps do not resolve the issue, the personalized DDI may be expired, and you will need to repeat this process.
 
-== Import certificates and provisioning profiles to the Mac mini host
-
-
-
 == Verify device is available in Kobiton
 
 Open Chrome on the Mac mini, then open *localhost* and log in.
@@ -169,6 +178,14 @@ Open Chrome on the Mac mini, then open *localhost* and log in.
 Navigate to **Devices**. The connected device displays as **Available**.
 
 image::device-lab-management:device-lab-management-ios-add-ios-localhost-system-ios-device-available.PNG[width=600,alt="Verifying device is avaiable on Kobiton"]
+
+[IMPORTANT]
+====
+
+If you see the *deviceControl* warning or the error under the device's name with the message `Device is not associated with any valid installed provisioning profile`, follow this section to troubleshoot the issue and re-generate the certificates and provisioning profiles.
+
+
+====
 
 Still in Chrome, open the Kobiton web portal and log in using an account with ADMIN role.
 
