@@ -1,0 +1,216 @@
+= Import iOS signing certificate and provisioning profile into the Mac mini host
+
+:navtitle: Import an iOS signing certificate and a provisioning profile
+
+Learn how to import the signing certificate and mobile provisioning profile files used for signing your iOS app.
+
+
+[#_before_you_start]
+== Before you start
+
+* Export the appropriate xref:ios-devices/generate-an-ios-signing-certificate-and-provisioning-profile.adoc#_generate_a_signing_certificate[signing certificates] (`.p12`) and xref:ios-devices/generate-an-ios-signing-certificate-and-provisioning-profile.adoc#_generate_a_provisioning_profile[provisioning profiles] (`.mobileprovision`) for the UDID of the device, then transfer the exported files into the Mac mini host. *Note*: These are only required if you are importing to a different Mac machine that the one you generated the files on.
+
+* Download the https://www.apple.com/certificateauthority/AppleWWDRCAG3.cer[Apple Worldwide Developer Relations - G3,window=read-later] (`AppleWWDRCAG3.cer`) file. *Note*: This is only required if you have not imported the Apple G3 Intermediate Certificate into the System keychain.
+
+* Log into the Mac mini host(s) as the `deviceconnect` user. All the below sections needs to be performed on the Mac mini host.
+
+== Import Apple Worldwide Developer Relations G3 certificate
+
+Open *Keychain Access* on the Mac mini host.
+
+Select the *System* keychain, then select the tab *Certificates*.
+
+Drag and drop the `AppleWWDRCAG3.cer` file into the Certificates list of the System keychain.
+
+Input the admin password to continue.
+
+Double-check that the *Apple Worldwide Developer Relations Certification Authority* certificate appears in the list.
+
+Double-click the above certificate to view its details. Double-check that under *Details*, the *Organizational Unit* is *G3*. If the value is different, such as *G2* or *G6*, download link:++https://www.apple.com/certificateauthority/AppleWWDRCAG3.cer[the correct certificate,window=read-later] and import again.
+
+
+== Copy developer certificates between keychains (certificates generated on the same machine)
+
+[NOTE]
+Follow this section if you generated the certificates and provisioning profiles on *the same machine*.
+
+
+
+== Import developer certificates (certificates generated on a different machine)
+
+[NOTE]
+Follow this section if you generated the certificates and provisioning profiles on *a different machine*.
+
+You can use either the Keychain Access app or Terminal commands to import the developer certificates.
+
+[tabs]
+====
+
+Keychain access::
+
++
+
+--
+
+Open *Keychain Access* on the Mac mini host.
+
+Select the *System* keychain, then select the tab *Certificates*.
+
+Drag and drop the `.p12` file(s) into the Certificates list of the System keychain.
+
+[IMPORTANT]
+To be able to drag and drop the `.p12` file(s) into the Keychain Access app, the file(s) must be password-protected. If the file(s) are not password-protected, use the *Terminal command* to import them instead.
+
+* Input the admin password to continue.
+
+* Double check that the certificate(s) appear in the list and there is a private key associated when expanding the certificate.
+
+
+
+--
+
+Terminal::
+
++
+
+--
+
+[IMPORTANT]
+These steps require accessing the Mac mini host’s screen and cannot be done via SSH.
+
+Open **Terminal** on the Mac mini host and enter the following command:
+
+----
+sudo security add-certificates -k /Library/Keychains/System.keychain <Path to the cert>/AppleWWDRCAG3.cer
+----
+
+Replace *<Path to the cert>* with the full path to the folder containing the Apple WWDR Intermediate certificate file (`AppleWWDRCAG3.cer`). Enter the administration password if required.
+
+Next, enter the following command, replacing *<Path to the cert>* with the full path to the `.p12` certificate files and *<Name of the cert>* with the filename.
+
+----
+sudo security import <Path to the cert>/<Name of the cert>.p12 -k /Library/Keychains/System.keychain -A
+----
+
+Enter the certificate password. If the certificate has no password, leave the field blank and click **OK**.
+
+image::device-lab-management:device-lab-management-ios-add-ios-certificate-password.PNG[width=300,alt="Enter Password for Kobiton"]
+
+Repeat the above commands for each `.p12` file if there are multiple files.
+
+--
+
+
+====
+
+== Import provisioning profiles to deviceConnect
+
+[IMPORTANT]
+Before importing, if your deployment include multiple Mac mini hosts, make sure the Mac mini host has deviceConnect installed by opening the Chrome browser, navigating to the address: *localhost/#/System/IOS*, and logging in.
+
+Only proceed if you can access the page and log in. Else, move on to the next Mac mini host.
+
+Under **Available signing certificates**, you can see all imported certificates from the above step.
+
+Click **Choose File** under **Upload provisioning profile**.
+
+image::device-lab-management:device-lab-management-ios-add-ios-localhost-system-ios.PNG[width=600,alt="Loggin into GigaFox local host"]
+
+Select a *.mobileprovision* file, and click **Open** to upload it.
+
+image::device-lab-management:device-lab-management-ios-add-ios-upload-provisioning-profile.PNG[width=600,alt="Choosing and uploading provisioning profile"]
+
+The uploaded profile should display under **Installed provisioning profiles**:
+
+image::device-lab-management:device-lab-management-ios-add-ios-installed-provisioning-profile.PNG[width=600,alt="Checking uploaded profile under installed provisioning profiles"]
+
+[IMPORTANT]
+xref:deviceConnect/restart-deviceconnect-services.adoc[Restart deviceConnect services] to apply the new provisioning profiles.
+
+== Import developer certificates and provisioning profiles to deviceShare
+
+[NOTE]
+Skip this section if you do not use Kobiton app re-signing service.
+
+[IMPORTANT]
+====
+
+If your deployment includes multiple Mac mini hosts, ensure that deviceShare is installed on the current Mac mini host before proceeding.
+
+To check if deviceShare is installed on the Mac mini host, navigate to the path `/usr/local/kobiton/` and check for the presence of the `deviceshare` folder. If there is no such folder or the folder is empty, it means deviceShare is not installed. In this case, locate another Mac mini host where deviceShare is installed to continue with this section.
+
+====
+
+Open the **Keychain Access** app.
+
+Select the **System** keychain, and then **Certificates**. You will see your **Apple Development** signing certificates along with all the other certificates. Expand all the **Apple Development** signing certificates to show the private key like the below:
+
+image::device-lab-management:device-lab-management-ios-add-ios-system-certificate-apple-development.PNG[width=600,alt="Private key inside the Apple Development certificates"]
+
+Shift-click to select all the **Apple Development** certificates and their private key, then right-click and select **Copy items**.
+
+image::device-lab-management:device-lab-management-ios-add-ios-system-certificate-apple-development-copy-items.PNG[width=600,alt="Copying the keys from Apple Development certificates"]
+
+Select the **deviceshare** keychain and then **Certificates**. Right-click the empty area and choose **Paste items**. You will be prompted to enter your login keychain password and the password for the *deviceshare* keychain for each certificate imported.
+
+image::device-lab-management:device-lab-management-ios-add-ios-system-certificate-apple-development-paste-items.PNG[width=600,alt="Pasting the keys of Apple Develeopment certificates in deiceshare certificates"]
+
+Verify that the certificates and keys are imported successfully into the deviceshare keychain.
+
+Open the *deviceshare_config.toml* file located under */usr/local/kobiton/deviceshare/*.
+
+Locate the line starting with `ios_provisioning_profile_paths` .
+
+If the line is the same as below, skip this section as deviceShare is using the same folder with deviceConnect for provisioning profiles:
+
+----
+ios_provisioning_profile_paths = [
+    "/usr/local/deviceconnect/ProvisioningProfiles"
+]
+----
+
+If the line is the same as below instead, continue on the next step:
+
+----
+ios_provisioning_profile_paths = [
+    "/usr/local/kobiton/deviceshare/provisioning_profiles"
+]
+----
+
+Move all provisioning profile files into one folder and note down the location. Open Terminal and execute the below command, where */path/to/profiles/* is the location of all the provisioning profile files:
+
+----
+cp -R /path/to/profiles/*.mobileprovision /usr/local/kobiton/deviceshare/provisioning_profiles
+----
+
+Restart deviceShare signing service to apply all the configurations above by running this command:
+
+----
+sudo /bin/launchctl unload -w /Library/LaunchDaemons/com.kobiton.deviceshare.signing.plist && sleep 5 && sudo /bin/launchctl load -w /Library/LaunchDaemons/com.kobiton.deviceshare.signing.plist
+----
+
+Verify that the deviceShare signing service is running normally by executing the below command:
+
+----
+tail -100 /usr/local/kobiton/deviceshare/deviceshare_signing.log
+----
+
+A successful execution should show the output as below:
+
+----
+2022-02-24 23:23:20.873521 INFO  [deviceshare::logging] initialized log config from /usr/local/kobiton/deviceshare/deviceshare_signing_log_config.yaml
+2022-02-24 23:23:20.873612 INFO  [deviceshare::signing::signingserver] attempting to connect to Kobiton signing portal
+2022-02-24 23:23:20.873630 INFO  [deviceshare::signing::signingserver] authentication not enabled for Kobiton signing service portal
+2022-02-24 23:23:20.873653 INFO  [deviceshare::signing::signingserver] attempting to connect to Kobiton signing service portal at http://10.2.122.251:6000/
+2022-02-24 23:23:20.873729 DEBUG [hyper::client::connect::http] connecting to 10.2.122.251:6000
+2022-02-24 23:23:20.874310 DEBUG [hyper::client::connect::http] connected to 10.2.122.251:6000
+2022-02-24 23:23:20.886689 INFO  [deviceshare::signing::signingserver] connected to Kobiton signing portal
+.... truncated ...
+2022-02-24 23:23:20.902941 DEBUG [deviceshare::signing::keychain] signing_certificates_all: elapsed: 0 ms
+2022-02-24 23:23:20.905563 DEBUG [deviceshare::signing::signingserver] monitor_resource_changes: resources have not changed since 2022-02-24 23:23:20.902087
+2022-02-24 23:24:20.927290 DEBUG [deviceshare::signing::signingserver] sending keepalive message
+2022-02-24 23:24:20.943450 DEBUG [deviceshare::signing::signingserver] monitor_resource_changes: polling current
+----
+
+== Verify the imported certificates and provisioning profiles
+

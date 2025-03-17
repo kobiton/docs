@@ -117,7 +117,14 @@ Choose the *Personal Information Exchange (.p12)* file format, then select *Save
 
 image:ios-signing-certificate-personal-info-exchange-context.png[width="",alt="Choose the *Personal Information Exchange (.p12)* file format, then select *Save*"]
 
-Enter a password to protect the certificate and select *OK*. If you don't want to enter a password, leave the field blank.
+Enter a password to protect the certificate and select *OK*. Note down the password as you need to enter it when importing the file to another machine. If you don't want to enter a password, leave the field blank.
+
+[NOTE]
+====
+
+Not entering a password for the `.p12` file will require the use of Terminal commands to import it to the keychain of another machine. If you are not familiar with the Terminal, it is recommended to enter a password.
+
+====
 
 image:ios-signing-certificate-protect-certificate-with-password.png[width=500,alt="Enter a password to protect the certificate, or leave the fields blank and select *OK*"]
 
