@@ -123,16 +123,17 @@ Enter a password to protect the certificate and select *OK*. Note down the passw
 [NOTE]
 ====
 
-Not entering a password for the `.p12` file will require the use of Terminal commands to import it to the keychain of another machine. If you are not familiar with the Terminal, it is recommended to enter a password.
+Not entering a password for the `.p12` file will require the use of Terminal commands to import it to the keychain of another machine.If you are not familiar with the Terminal, it is recommended to enter a password.
 
 ====
 
 image:ios-signing-certificate-protect-certificate-with-password.png[width=500,alt="Enter a password to protect the certificate, or leave the fields blank and select *OK*"]
 
-Input the macOS administrator password to export the `.p12` certificate file. Store this file in a safe location.
+Input the macOS administrator password to export the `.p12` certificate file.Store this file in a safe location.
 
 Move the file to the Mac mini host(s) to xref:ios-devices/import-ios-signing-certificates-and-provisioning-profiles.adoc#_import_developer_certificates[import] it later.
 
+[#_generate_a_provisioning_profile]
 == Generate a provisioning profile
 
 [NOTE]
@@ -239,6 +240,8 @@ Follow this section to edit an existing provisioning profile to add new certific
 * You can edit an expired provisioning profile. A new expiry date will be set when saving the changes.
 
 * After saving the changes, you must download the edited provisioning profile and import it again to the Mac mini host(s).
+
+====
 
 At the Apple Developer https://developer.apple.com/account/resources/[resources] page, select *Profiles*.
 

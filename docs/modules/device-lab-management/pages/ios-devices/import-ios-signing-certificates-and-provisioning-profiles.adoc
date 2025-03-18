@@ -114,9 +114,6 @@ Under **Available signing certificates**, you can see all imported certificates 
 
 image::device-lab-management:device-lab-management-ios-add-ios-localhost-system-ios.PNG[width=600,alt="Loggin into GigaFox local host"]
 
-[IMPORTANT]
-If you see the `Failed: An associated private key has restricted access` error under the certificate, set the *Access Control* of its associated private key to  xref:_key_access_control[Allow all applications to access this item], then xref:deviceConnect/restart-deviceconnect-services.adoc[restart deviceConnect,window=read-later] and make sure the error no longer displays before continuing.
-
 Click **Choose File** under **Upload provisioning profile**.
 
 Select a *.mobileprovision* file, and click **Open** to upload it.
@@ -130,18 +127,102 @@ image::device-lab-management:device-lab-management-ios-add-ios-installed-provisi
 [IMPORTANT]
 xref:deviceConnect/restart-deviceconnect-services.adoc[Restart deviceConnect services] to apply the new provisioning profiles.
 
-== Verify certificates and provisioning profiles with device UDIDs
-
-This section provides common ways to verify that the certificates and provisioning profiles matches the connected device's UDID.
+[#_resolve_common_errors_with_certificates_and_provisioning_profiles]
+== Resolve common errors with certificates and provisioning profiles
 
 [NOTE]
-You must follow the guide to xref:device-lab-management:ios-devices/add-ios-device.adoc[add iOS devices,window=read_later] before continuing.
+This section provides possible resolutions to common errors related to certificates and provisioning profiles.
 
 Open the Chrome browser on the Mac mini host, then navigate to the address: *localhost/#/System/IOS*, and log in.
 
-If you have connected the device and deviceConnect can recognize it, it will display in the list under *Devices*.
+[TIP]
+This page can also be accessed from the menu by selecting *System*, then choose *iOS Management*.
 
-For each connected device, check the *Provisioning Profile* columns first. If you see the green check icon, then there is no issue with the certificate or provisioning profile.
+The *iOS Provisioning Status* page displays. This page has the following main sections:
+
+* *Devices*: If you have xref:ios-devices/add-ios-device.adoc[connected the device,window=read_later] and deviceConnect can recognize it, it will display in the list under *Devices*.
+** For each connected device, check the *Provisioning Profile* columns first. If you see the green check icon, then there is no issue with the certificate or provisioning profile.
+** If you see the red cross icon instead, then there is one or more issues that needs to be addressed. You can select *Details* to view the issue.
+
+* *Installed provisioning profile*: All imported provisioning profiles are included here. If there is an error with the provisioning profile, a message starting with
+_Failed:_ displays.
+
+* *Available signing certificates*: All imported signing certificates are included here. If there is an error with the certificate, a message starting with
+_Failed:_ displays.
+
+
+
+[NOTE]
+====
+
+When there is an issue regarding signing certificate and profiles with at least 1 device, a warning permanently displays on the page until all issues are resolved. To dismiss the warning when all issues a resolved, a xref:deviceConnect/restart-deviceconnect-services.adoc[service restart,window=read_later] is required.
+
+
+
+====
+
+Below are common error messages and how to fix them.
+
+=== Common errors with signing certificate
+
+Issues with signing certificates are reported under *Available signing certificates*.
+
+* _There are no signing certificates available._
+
+** No signing certificate can be recognized by the system. Ensure you have imported the xref:#_import_developer_certificates[signing certificate] into the correct location.
+
+*  _Failed: An associated private key has restricted access_: The private key access is limited.
+
+** Set the *Access Control* of its associated private key to  xref:_key_access_control[Allow all applications to access this item], then xref:deviceConnect/restart-deviceconnect-services.adoc[restart deviceConnect,window=read-later] and make sure the error no longer displays.
+
+* _Failed: certificate is expired_
+
+** If all imported certificates are expired, xref:device-lab-management:ios-devices/generate-an-ios-signing-certificate-and-provisioning-profile.adoc#_generate_a_signing_certificate[generate a new certificate] then xref:#_import_developer_certificates[import] it.
+
+** If there is already a working certificate that is not expired, there is no issue to resolve. You can remove the expired certificates.
+
+=== Common errors with provisioning profiles
+
+Issues with signing certificates are reported under *Installed provisioning profiles*.
+
+* _There are no provisioning profiles installed_
+
+**  Ensure you have imported the xref:#_verify_imported_certificates_and_upload_provisioning_profiles_for_deviceconnect[provisioning profile] into the correct location.
+
+* _Failed: profile expired_
+
+** If all provisioning profiles are expired, xref:device-lab-management:ios-devices/generate-an-ios-signing-certificate-and-provisioning-profile.adoc#_generate_a_provisioning_profile[generate,window=read_later] or xref:ios-devices/generate-an-ios-signing-certificate-and-provisioning-profile.adoc#_edit_a_provisioning_profile[edit,window=read_later] a provisioning profile then xref:#_import_developer_certificates[import] it.
+
+** If there is already a working provisioning profile that is not expired, there is no issue to resolve. You can remove the expired provisioning profiles.
+
+* _Failed: No signing certificate available._
+
+** *Explanation:* The provisioning profile is not associated with any certificate(s) that is recognized by the system. Either there is no signing certificate imported, or the imported signing certificates are not selected when generating the provisioning profile.
+
+** Make sure you have selected the correct signing certificate when generating the provisioning profile. You can always xref:ios-devices/generate-an-ios-signing-certificate-and-provisioning-profile.adoc#_edit_a_provisioning_profile[edit,window=read_later] and add the certificate.
+
++
+
+[TIP]
+====
+
+* To verify that a certificate matches a provisioning profile, select the *Plus* icon of a provisioning profile to expand it, then compare the *Certificate ID* information under the provisioning profile with that of the signing certificate. If they are the same, then the certificate matches the provisioning profile.
+
+* A provisioning profile can match multiple certificates and vice versa.
+
+* On the Apple Developer site, the certificates do not have the certificate ID displayed and may have duplicated names. If in doubt, select all possible signing certificate when generating or editing the provisioning profile.
+
+====
+
+=== Common errors with provisioned device UDIDs
+
+The errors regarding provisioned device UDIDs can be found in the *Details* of a device when there is a red cross icon.
+
+* _Failed: ProvisionedDevices does not contain device udid_
+
+** *Explanation*: The device's UDID is not included in any installed provisioning profiles. It is possible that the device is not added to Apple Developer, or the device UDID is not checked when generating or editing the provisioning profile.
+
+** Make sure you have added the device to Apple Developer and selected the device UDID when generating the provisioning profile. You can always xref:ios-devices/generate-an-ios-signing-certificate-and-provisioning-profile.adoc#_edit_a_provisioning_profile[edit,window=read_later] and add the device UDID.
 
 
 
