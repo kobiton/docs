@@ -26,7 +26,7 @@ Input the admin password to continue.
 
 Double-check that the *Apple Worldwide Developer Relations Certification Authority* certificate appears in the list.
 
-Double-click the above certificate to view its details.Double-check that under *Details*, the *Organizational Unit* is *G3*.If the value is different, such as *G2* or *G6*, download link:++https://www.apple.com/certificateauthority/AppleWWDRCAG3.cer[the correct certificate,window=read-later] and import again.
+Double-click the above certificate to view its details. Double-check that under *Details*, the *Organizational Unit* is *G3*. If the value is different, such as *G2* or *G6*, download link:++https://www.apple.com/certificateauthority/AppleWWDRCAG3.cer[the correct certificate,window=read-later] and import again.
 
 
 
@@ -103,12 +103,12 @@ In the next pop-up, input `deviceconnect` for username and its password, then ch
 Close the key information pop-up.
 
 [#_verify_imported_certificates_and_upload_provisioning_profiles_for_deviceconnect]
-== Verify imported certificates and upload provisioning profiles for deviceConnect
+== Confirm imported certificates and upload provisioning profiles for deviceConnect
 
 Before importing, if your deployment include multiple Mac mini hosts, make sure the Mac mini host has deviceConnect installed by opening the Chrome browser, navigating to the address: *localhost/#/System/IOS*, and logging in.
 
 [IMPORTANT]
-Only proceed if you can access the page and log in.Else, move on to the next Mac mini host.
+Only proceed if you can access the page and log in. Else, move on to the next Mac mini host.
 
 Under **Available signing certificates**, you can see all imported certificates from the above step.
 
@@ -130,8 +130,22 @@ image::device-lab-management:device-lab-management-ios-add-ios-installed-provisi
 [IMPORTANT]
 xref:deviceConnect/restart-deviceconnect-services.adoc[Restart deviceConnect services] to apply the new provisioning profiles.
 
-== Verify devices
+== Verify certificates and provisioning profiles with device UDIDs
 
+This section provides common ways to verify that the certificates and provisioning profiles matches the connected device's UDID.
+
+[NOTE]
+You must follow the guide to xref:device-lab-management:ios-devices/add-ios-device.adoc[add iOS devices,window=read_later] before continuing.
+
+Open the Chrome browser on the Mac mini host, then navigate to the address: *localhost/#/System/IOS*, and log in.
+
+If you have connected the device and deviceConnect can recognize it, it will display in the list under *Devices*.
+
+For each connected device, check the *Provisioning Profile* columns first. If you see the green check icon, then there is no issue with the certificate or provisioning profile.
+
+
+
+[#_import_developer_certificates_and_provisioning_profiles_to_deviceshare]
 == Import developer certificates and provisioning profiles to deviceShare
 
 [NOTE]

@@ -18,11 +18,12 @@ You can use any macOS machine, including the Mac mini host, to generate signing 
 
 * Enroll into either the https://developer.apple.com/programs/[Apple Developer] or https://developer.apple.com/programs/enterprise/[Apple Developer Enterprise] Program.
 
-* Ensure that the enrolled account has 1 available Apple Development certificate slot, as the total number of slots are limited. See link:https://help.apple.com/xcode/mac/current/#/dev3a05256b8[this article] for more details.
+* Ensure that the enrolled account has 1 available Apple Development certificate slot, as the total number of slots are limited.See link:https://help.apple.com/xcode/mac/current/#/dev3a05256b8[this article] for more details.
 
 [IMPORTANT]
 Only Apple Development certificate can be used by Kobiton. Apple Distribution certificate cannot be used.
 
+[#_generate_a_signing_certificate]
 == Generate a signing certificate
 
 [#_create_a_certificate_signing_request]
@@ -34,7 +35,7 @@ From the Keychain Access menu, choose *Certificate Assistant*, then select *Requ
 
 image:ios-signing-certificate-request-a-certificate-from-certi-authority-context.png[width=1000,alt="launch *Keychain Access*"]
 
-Input the *Email Address* and *Common Name*, but leave *CA Email Address* blank.Then choose *Saved to disk* and select *Continue*.
+Input the *Email Address* and *Common Name*, but leave *CA Email Address* blank. Then choose *Saved to disk* and select *Continue*.
 
 image:ios-signing-certificate-save-to-disk-option-context.png[width=500,alt="Enter your email and name, but leave *CA Email Address* blank. Then choose *Save to disk* and select *Continue*"]
 
@@ -134,12 +135,16 @@ Move the file to the Mac mini host(s) to xref:ios-devices/import-ios-signing-cer
 
 == Generate a provisioning profile
 
+[NOTE]
+If you have created a provisioning profile that followed the steps in this section, it is not necessary to create a new one for a new signing certificate or adding new UDIDs. xref:#_edit_a_provisioning_profile[Edit a provisioning profile] instead.
+
+[#_create_an_identifier]
 === Create an identifier
 
 [NOTE]
 Skip this step if you have created an identifier before.
 
-At the Apple Developer https://developer.apple.com/account/resources/[resources] page, select *Identifiers*. Select the *plus* icon to create a new identifier.
+At the Apple Developer https://developer.apple.com/account/resources/[resources] page, select *Identifiers*.Select the *plus* icon to create a new identifier.
 
 image:ios-signing-certificate-create-new-identifier-closeup.png[width=1000,alt="The plus icon to create a new identifier"]
 
@@ -168,6 +173,7 @@ Review the information, then select *Register* to create the identifier.
 
 image:ios-signing-certificate-confirm-app-id-closeup.png[width=1000,alt="A closeup to confirm app ID"]
 
+[#_register_device_udid]
 === Register device UDID
 
 [NOTE]
@@ -175,7 +181,7 @@ Skip this step if you have registered the UDID before.
 
 Note down the UDID of all iOS/iPadOS devices you want to host.
 
-At the Apple Developer https://developer.apple.com/account/resources/[resources] page, select *Devices*. Choose the *plus* icon to register new devices.
+At the Apple Developer https://developer.apple.com/account/resources/[resources] page, select *Devices*.Choose the *plus* icon to register new devices.
 
 image:ios-signing-certificate-register-a-device-closeup.png[width=1000,alt="The plus icon to register new device"]
 
@@ -191,6 +197,7 @@ Review the information and select *Register*.
 
 image:ios-signing-certificate-review-device-register-closeup.png[width=1000,alt="The register new device review information screen with the Register button"]
 
+[#_generate_mobileprovision_file]
 === Generate `.mobileprovision` file
 
 At the Apple Developer https://developer.apple.com/account/resources/[resources] page, select *Profiles*. Choose the *plus* icon to create a new profile.
@@ -220,3 +227,22 @@ image:ios-signing-certificate-review-profile-closeup.png[width=1000,alt="The rev
 Select *Download* to save the `.mobileprovision` file. Move the file to the Mac mini host(s) for importing to xref:ios-devices/import-ios-signing-certificates-and-provisioning-profiles.adoc#_verify_imported_certificates_and_upload_provisioning_profiles_for_deviceconnect[deviceConnect] and xref:ios-devices/import-ios-signing-certificates-and-provisioning-profiles.adoc#_import_developer_certificates_and_provisioning_profiles_to_deviceshare[deviceShare] later.
 
 image:ios-signing-certificate-select-profile-download-context.png[width=1000,alt="The download profile screen with the Download button"]
+
+[#_edit_a_provisioning_profile]
+== Edit a provisioning profile
+
+Follow this section to edit an existing provisioning profile to add new certificates or device UDIDs.
+
+[NOTE]
+====
+
+* You can edit an expired provisioning profile. A new expiry date will be set when saving the changes.
+
+* After saving the changes, you must download the edited provisioning profile and import it again to the Mac mini host(s).
+
+At the Apple Developer https://developer.apple.com/account/resources/[resources] page, select *Profiles*.
+
+image:device-lab-management:ios-signing-certificate-select-generate-a-profile-closeup.png[]
+
+
+

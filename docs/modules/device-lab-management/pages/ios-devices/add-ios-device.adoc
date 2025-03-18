@@ -37,20 +37,14 @@ For Lightning mode with iOS 16 and below, connect the mobile device to the Cambr
 
 For Lightning mode with iOS 17 and above, connect the device to one of the USB ports of the Mac mini host to establish trust pairing first, then follow the next section before connecting the device to the Cambrionix hub attached to the GEM.
 
-Check the device to see if it is charging after connecting. If it is not charging, the USB cable might be malfunctioning, or the Cambrionix hub is not connected to a power source.
+Check the device to see if it is charging after connecting.If it is not charging, the USB cable might be malfunctioning, or the Cambrionix hub is not connected to a power source.
 
+[#_import_certificates_and_provisioning_profiles]
 == Import certificates and provisioning profiles
 
 Follow xref:ios-devices/import-ios-signing-certificates-and-provisioning-profiles.adoc[this section,window=read_later] to import certificates and provisioning profiles to the Mac mini host.
 
-[NOTE]
-====
-
-If the iOS/iPadOS device to add is already included in the existing certificates and provisioning profiles on the Mac mini host, skip this step.
-
-To know if the device is included
-
-====
+Skip this section if the certificates and provisioning profiles have already been imported. If you are unsure, you can always xref:_verify_device_is_available_in_kobiton[verify the certificates and provisioning profiles] after connecting the devices.
 
 == Establish trust pairing between the device and the host
 
@@ -182,7 +176,11 @@ image::device-lab-management:device-lab-management-ios-add-ios-localhost-system-
 [IMPORTANT]
 ====
 
-If you see the *deviceControl* warning or the error under the device's name with the message `Device is not associated with any valid installed provisioning profile`, follow this section to troubleshoot the issue and re-generate the certificates and provisioning profiles.
+If you see the *deviceControl* warning or the error under the device's name with either of the below messages, follow this section to troubleshoot the issue and generate and/or import the correct certificates and provisioning profiles.
+
+* _Device is not associated with any valid installed provisioning profile._
+
+* _No provisioned deviceControl or signing profiles are available. iOS devices will not be usable._
 
 
 ====
