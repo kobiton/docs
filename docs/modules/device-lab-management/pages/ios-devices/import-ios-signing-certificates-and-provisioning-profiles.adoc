@@ -12,7 +12,7 @@ Learn how to import the signing certificate and mobile provisioning profile file
 
 * Download the https://www.apple.com/certificateauthority/AppleWWDRCAG3.cer[Apple Worldwide Developer Relations - G3,window=read-later] (`AppleWWDRCAG3.cer`) file.
 
-* Log into the Mac mini host(s) as the `deviceconnect` user.All the below sections needs to be performed on the Mac mini host.
+* Log into the Mac mini host(s) as the `deviceconnect` user. All the below sections needs to be performed on the Mac mini host.
 
 [#_import_apple_worldwide_developer_relations_g3_certificate]
 == Import Apple Worldwide Developer Relations G3 certificate
@@ -400,11 +400,12 @@ image::device-lab-management:device-lab-management-ios-add-ios-system-certificat
 
 Select the **deviceshare** keychain and then **Certificates**. Right-click the empty area and choose **Paste items**. You will be prompted to enter your login keychain password and the password for the *deviceshare* keychain for each certificate imported.
 
+image::device-lab-management:device-lab-management-ios-add-ios-system-certificate-apple-development-paste-items.PNG[width=600,alt="Pasting the keys of Apple Develeopment certificates in deiceshare certificates"]
+
 [NOTE]
 ====
 
-
-Retrieve the *deviceshare* keychain passwword from the `deviceshare_config.toml` file under the location `/usr/local/kobiton/deviceshare/`. The password is the <secret> value of the below line in the file:
+Retrieve the *deviceshare* keychain passwword from the `deviceshare_config.toml` file under the location `/usr/local/kobiton/deviceshare/`. The password is the `<secret>` value of the below line in the file:
 
 ----
 
@@ -425,8 +426,6 @@ ios_keychain_paths = [
 ----
 
 ====
-
-image::device-lab-management:device-lab-management-ios-add-ios-system-certificate-apple-development-paste-items.PNG[width=600,alt="Pasting the keys of Apple Develeopment certificates in deiceshare certificates"]
 
 Verify that the certificates and keys are imported successfully into the `deviceshare` keychain.
 

@@ -52,6 +52,7 @@ image:ios-signing-keys.png[width="",alt="The public and private key pair under t
 The generated key pair must not be removed from the keychain, as the signing request (and the subsequent signing certificate) cannot be used without the key pair.
 
 
+[#_submit_the_signing_request_to_generate_a_cer_file]
 === Submit the signing request to generate a `.cer` file
 
 [NOTE]
@@ -88,7 +89,7 @@ On the macOS device, launch *Keychain Access*.
 Select the *login* keychain, select *Certificates*, then drag and drop the `development.cer` file into the Certificates page.
 
 [IMPORTANT]
-Make sure the *login* keychain is highlighted before you drag and drop the file into *Certificates*.If another keychain is highlighted instead, such as *System*, you cannot export the `.p12` file.
+Make sure the *login* keychain is highlighted before you drag and drop the file into *Certificates*. If another keychain is highlighted instead, such as *System*, you cannot export the `.p12` file.
 
 image:ios-signing-certificate-launch-keychain-access-context.png[width="",alt="On your macOS device, launch *Keychain Access*"]
 
@@ -146,7 +147,7 @@ If you have created a provisioning profile that followed the steps in this secti
 [NOTE]
 Skip this step if you have created an identifier before.
 
-At the Apple Developer https://developer.apple.com/account/resources/[resources] page, select *Identifiers*.Select the *plus* icon to create a new identifier.
+At the Apple Developer https://developer.apple.com/account/resources/[resources] page, select *Identifiers*. Select the *plus* icon to create a new identifier.
 
 image:ios-signing-certificate-create-new-identifier-closeup.png[width=1000,alt="The plus icon to create a new identifier"]
 
@@ -183,7 +184,7 @@ Skip this step if you have registered the UDID before.
 
 Note down the UDID of all iOS/iPadOS devices you want to host.
 
-At the Apple Developer https://developer.apple.com/account/resources/[resources] page, select *Devices*.Choose the *plus* icon to register new devices.
+At the Apple Developer https://developer.apple.com/account/resources/[resources] page, select *Devices*. Choose the *plus* icon to register new devices.
 
 image:ios-signing-certificate-register-a-device-closeup.png[width=1000,alt="The plus icon to register new device"]
 
@@ -244,9 +245,31 @@ Follow this section to edit an existing provisioning profile to add new certific
 
 ====
 
-At the Apple Developer https://developer.apple.com/account/resources/[resources,window=read-later] page, select *Profiles*.
+At the Apple Developer https://developer.apple.com/account/resources/[resources,window=read-later] page, select *Profiles*. Select any profile to open it.
 
-image:device-lab-management:ios-signing-certificate-select-generate-a-profile-closeup.png[]
+image:device-lab-management:ios-signing-certificate-select-generate-a-profile-closeup.png[width="",alt="The Provisioning Profile list on Apple Developer"]
+
+In the *Review Provisioning Profile* page, select *Edit*.
+
+image:ios-signing-profile-details.png[width="",alt="The Review Provisioning Profile page with the Edit button visible"]
+
+The *Generate a Provisioning Profile* page displays with all the information of the selected provisioning profile:
+
+image:ios-signing-edit-profile.png[width="",alt="The Generate a Provisioning Profile page with all the information of the current profile"]
+
+On the above page, you can edit the following
+
+* Name of the profile.
+
+* The xref:#_create_an_identifier[App ID] to use.
+
+* The xref:#_submit_the_signing_request_to_generate_a_cer_file[signing certificate(s)] that are associated with the provisioning profile.
+
+* The xref:#_register_device_udid[device(s)] that are provisioned with the provisioning profile.
+
+After making all the changes, select *Save*. You can then *Download* the updated provisioning profile, then move the file to the Mac mini host(s) for importing to xref:ios-devices/import-ios-signing-certificates-and-provisioning-profiles.adoc#_verify_imported_certificates_and_upload_provisioning_profiles_for_deviceconnect[deviceConnect,window=read-later] and xref:ios-devices/import-ios-signing-certificates-and-provisioning-profiles.adoc#_import_developer_certificates_and_provisioning_profiles_to_deviceshare[deviceShare,window=read-later] later.
+
+image:ios-signing-certificate-select-profile-download-context.png[width=1000,alt="The download profile screen with the Download button"]
 
 
 
