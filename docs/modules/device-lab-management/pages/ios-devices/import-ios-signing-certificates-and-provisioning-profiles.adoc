@@ -10,11 +10,14 @@ Learn how to import the signing certificate and mobile provisioning profile file
 
 * Export the appropriate xref:ios-devices/generate-an-ios-signing-certificate-and-provisioning-profile.adoc#_generate_a_signing_certificate[signing certificates] (`.p12`) and xref:ios-devices/generate-an-ios-signing-certificate-and-provisioning-profile.adoc#_generate_a_provisioning_profile[provisioning profiles] (`.mobileprovision`) for the UDID of the device, then transfer the exported files into the Mac mini host.
 
-* Download the https://www.apple.com/certificateauthority/AppleWWDRCAG3.cer[Apple Worldwide Developer Relations - G3,window=read-later] (`AppleWWDRCAG3.cer`) file. *Note*: This is only required if you have not imported the Apple G3 Intermediate Certificate into the System keychain.
+* Download the https://www.apple.com/certificateauthority/AppleWWDRCAG3.cer[Apple Worldwide Developer Relations - G3,window=read-later] (`AppleWWDRCAG3.cer`) file.
 
 * Log into the Mac mini host(s) as the `deviceconnect` user. All the below sections needs to be performed on the Mac mini host.
 
 == Import Apple Worldwide Developer Relations G3 certificate
+
+[NOTE]
+Skip this step if the _Apple Worldwide Developer Relations Certification Authority - G3_ certificate is already imported to the *System* keychain.
 
 Open *Keychain Access* on the Mac mini host.
 
@@ -128,7 +131,7 @@ image::device-lab-management:device-lab-management-ios-add-ios-installed-provisi
 xref:deviceConnect/restart-deviceconnect-services.adoc[Restart deviceConnect services] to apply the new provisioning profiles.
 
 [#_resolve_common_errors_with_certificates_and_provisioning_profiles]
-== Resolve common errors with certificates and provisioning profiles
+== Resolve common errors with certificates and provisioning profiles in deviceConnect
 
 [NOTE]
 This section provides possible resolutions to common errors related to certificates and provisioning profiles.
@@ -138,42 +141,72 @@ Open the Chrome browser on the Mac mini host, then navigate to the address: *loc
 [TIP]
 This page can also be accessed from the menu by selecting *System*, then choose *iOS Management*.
 
-The *iOS Provisioning Status* page displays. This page has the following main sections:
+
+
+The *iOS Provisioning Status* page displays.
+
+image:ios-signing-ios-provisioning-status.png[width="",alt="The iOS Provisioning Status page that can be accessed by selecting Settings then iOS Management"]
+
+This page has the following main sections:
 
 * *Devices*: If you have xref:ios-devices/add-ios-device.adoc[connected the device,window=read_later] and deviceConnect can recognize it, it will display in the list under *Devices*.
 ** For each connected device, check the *Provisioning Profile* columns first. If you see the green check icon, then there is no issue with the certificate or provisioning profile.
 ** If you see the red cross icon instead, then there is one or more issues that needs to be addressed. You can select *Details* to view the issue.
 
++
+
+image:ios-signing-devices-list.png[width="",alt="The list of devices and their provisioning status which includes both working and non-working devices"]
+
 * *Installed provisioning profile*: All imported provisioning profiles are included here. If there is an error with the provisioning profile, a message starting with
 _Failed:_ displays.
+
++
+
+image:ios-signing-profiles-list.png[width="",alt="The list of provisioning profiles with error message for invalid profile"]
+
 
 * *Available signing certificates*: All imported signing certificates are included here. If there is an error with the certificate, a message starting with
 _Failed:_ displays.
 
++
 
-
-[NOTE]
-====
+image:ios-signing-certificates-list.png[width="",alt="The list of signing certificates with error message for invalid certificate"]
 
 When there is an issue regarding signing certificate and profiles with at least 1 device, a warning permanently displays on the page until all issues are resolved. To dismiss the warning when all issues a resolved, a xref:deviceConnect/restart-deviceconnect-services.adoc[service restart,window=read_later] is required.
 
+image:ios-signing-error-no-certificate-and-profile.png[width="",alt="The warning message when there is no certificate and/or provisioning profile"]
 
+''''
 
-====
+image:ios-signing-error-invalid-certificate-and-profile.png[width="",alt="The warning message when there is an error with a certificate and provisioning profile that results in a non-working device"]
 
-Below are common error messages and how to fix them.
+Below are common error messages and how to fix them:
 
 === Common errors with signing certificate
 
 Issues with signing certificates are reported under *Available signing certificates*.
 
+''''
+
 * _There are no signing certificates available._
 
 ** No signing certificate can be recognized by the system. Ensure you have imported the xref:#_import_developer_certificates[signing certificate] into the correct location.
 
++
+
+image:ios-signing-no-certificate.png[width="",alt="The error message when there is no certificate available"]
+
+'''
+
 *  _Failed: An associated private key has restricted access_: The private key access is limited.
 
 ** Set the *Access Control* of its associated private key to  xref:_key_access_control[Allow all applications to access this item], then xref:deviceConnect/restart-deviceconnect-services.adoc[restart deviceConnect,window=read-later] and make sure the error no longer displays.
+
++
+
+image:ios-signing-certificate-restricted-key.png[width="",alt="The error message when the private key has restricted access"]
+
+'''
 
 * _Failed: certificate is expired_
 
@@ -181,13 +214,27 @@ Issues with signing certificates are reported under *Available signing certifica
 
 ** If there is already a working certificate that is not expired, there is no issue to resolve. You can remove the expired certificates.
 
++
+
+image:ios-signing-certificates-expired.png[width="",alt="The error message when the certificate has expired"]
+
+'''
+
 === Common errors with provisioning profiles
 
 Issues with signing certificates are reported under *Installed provisioning profiles*.
 
+'''
+
 * _There are no provisioning profiles installed_
 
 **  Ensure you have imported the xref:#_verify_imported_certificates_and_upload_provisioning_profiles_for_deviceconnect[provisioning profile] into the correct location.
+
++
+
+image:ios-signing-no-certificate.png[width="",alt="The error message when there is no provisioning profile available"]
+
+'''
 
 * _Failed: profile expired_
 
@@ -195,28 +242,46 @@ Issues with signing certificates are reported under *Installed provisioning prof
 
 ** If there is already a working provisioning profile that is not expired, there is no issue to resolve. You can remove the expired provisioning profiles.
 
++
+
+image:ios-signing-profile-expired.png[width="",alt="The error message when the provisioning profile is expired"]
+
+'''
+
 * _Failed: No signing certificate available._
 
 ** *Explanation:* The provisioning profile is not associated with any certificate(s) that is recognized by the system. Either there is no signing certificate imported, or the imported signing certificates are not selected when generating the provisioning profile.
 
-** Make sure you have selected the correct signing certificate when generating the provisioning profile. You can always xref:ios-devices/generate-an-ios-signing-certificate-and-provisioning-profile.adoc#_edit_a_provisioning_profile[edit,window=read_later] and add the certificate.
+** Make sure you have selected the correct signing certificate when generating the provisioning profile and imported the correct certificate. You can always xref:ios-devices/generate-an-ios-signing-certificate-and-provisioning-profile.adoc#_edit_a_provisioning_profile[edit,window=read_later] and add the certificate.
 
 +
+
+image:ios-signing-profile-no-matching-certificate.png[width="",alt="The error message when there is no certificate that matches the provisioning profile"]
 
 [TIP]
 ====
 
 * To verify that a certificate matches a provisioning profile, select the *Plus* icon of a provisioning profile to expand it, then compare the *Certificate ID* information under the provisioning profile with that of the signing certificate. If they are the same, then the certificate matches the provisioning profile.
 
++
+
+image:ios-signing-profile-and-cert-matches.png[width="",alt="The provisioning profile details with a Certificate ID that matches the one in the signing certificate"]
+
 * A provisioning profile can match multiple certificates and vice versa.
 
-* On the Apple Developer site, the certificates do not have the certificate ID displayed and may have duplicated names. If in doubt, select all possible signing certificate when generating or editing the provisioning profile.
+* On the Apple Developer site, the certificates do not have the certificate ID displayed and may have duplicated names. When in doubt, select all possible signing certificate when generating or editing the provisioning profile.
 
 ====
 
+'''
+
 === Common errors with provisioned device UDIDs
 
-The errors regarding provisioned device UDIDs can be found in the *Details* of a device when there is a red cross icon.
+The errors regarding provisioned device UDIDs can be viewed by selecting *Details* of a device under *Devices*.
+
+image:ios-signing-devices-list.png[width="",alt="The Devices list with a error device related to signing certificate or provisioning profile and the selectable Details link"]
+
+'''
 
 * _Failed: ProvisionedDevices does not contain device udid_
 
@@ -224,6 +289,11 @@ The errors regarding provisioned device UDIDs can be found in the *Details* of a
 
 ** Make sure you have added the device to Apple Developer and selected the device UDID when generating the provisioning profile. You can always xref:ios-devices/generate-an-ios-signing-certificate-and-provisioning-profile.adoc#_edit_a_provisioning_profile[edit,window=read_later] and add the device UDID.
 
++
+
+image:ios-signing-profile-no-udid.png[width="",alt="The error message when the device UDID is not included in the provisioning profile"]
+
+'''
 
 
 [#_import_developer_certificates_and_provisioning_profiles_to_deviceshare]
