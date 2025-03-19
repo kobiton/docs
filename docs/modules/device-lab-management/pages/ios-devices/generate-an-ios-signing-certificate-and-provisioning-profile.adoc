@@ -9,16 +9,16 @@ Learn how to generate the signing certificate and mobile provisioning profile fi
 
 * A provisioning profile (`.mobileprovision` file) authorizes your app to use certain app services and ensures that you’re a known developer developing, uploading, or distributing your app.
 
-For more information, see Apple's link:https://help.apple.com/xcode/mac/current/#/dev3a05256b8[What is app signing?].
+For more information, see Apple's link:https://help.apple.com/xcode/mac/current/#/dev3a05256b8[What is app signing?,window=read-later].
 
 [NOTE]
 You can use any macOS machine, including the Mac mini host, to generate signing certificates and provisioning profiles. If you have multiple Mac mini hosts, it is recommended to generate all the certificates and provisioning profiles for them on only 1 or 2 machines for better management.
 
 == Before you start
 
-* Enroll into either the https://developer.apple.com/programs/[Apple Developer] or https://developer.apple.com/programs/enterprise/[Apple Developer Enterprise] Program.
+* Enroll into either the https://developer.apple.com/programs/[Apple Developer,window=read-later] or https://developer.apple.com/programs/enterprise/[Apple Developer Enterprise,window=read-later] Program.
 
-* Ensure that the enrolled account has 1 available Apple Development or iOS App Development certificate slot, as the total number of slots are limited. See link:https://help.apple.com/xcode/mac/current/#/dev3a05256b8[this article] for more details.
+* Ensure that the enrolled account has 1 available Apple Development or iOS App Development certificate slot, as the total number of slots are limited. See link:https://help.apple.com/xcode/mac/current/#/dev3a05256b8[this article,window=read-later] for more details.
 
 [IMPORTANT]
 Only Apple Development or iOS App Development certificate can be used. Apple Distribution or iOS Distribution certificate cannot be used.
@@ -57,7 +57,7 @@ The generated key pair must not be removed from the keychain, as the signing req
 [NOTE]
 These steps should be done using the same machine that you created the signing request on.
 
-Log into link:https://developer.apple.com/account[Apple Developer]. Under *Certificate, IDs & Profiles*, select *Certificates*.
+Log into link:https://developer.apple.com/account[Apple Developer,window=read-later]. Under *Certificate, IDs & Profiles*, select *Certificates*.
 
 image:ios-signing-certificate-open-apple-dev-context.png[width=1000,alt="The Certificates option under Certificate, Identifiers and Profiles"]
 
@@ -132,7 +132,7 @@ image:ios-signing-certificate-protect-certificate-with-password.png[width=500,al
 
 Input the macOS administrator password to export the `.p12` certificate file. Store this file in a safe location.
 
-Move the file to the Mac mini host(s) to xref:ios-devices/import-ios-signing-certificates-and-provisioning-profiles.adoc#_import_developer_certificates[import] it later.
+Move the file to the Mac mini host(s) to xref:ios-devices/import-ios-signing-certificates-and-provisioning-profiles.adoc#_import_developer_certificates[import,window=read-later] it later.
 
 [#_generate_a_provisioning_profile]
 == Generate a provisioning profile
@@ -189,7 +189,7 @@ image:ios-signing-certificate-register-a-device-closeup.png[width=1000,alt="The 
 
 Choose *iOS, iPadOS, tvOS, watchOS, visionOS* for *Platform*, then enter the device name and UDID to add a single device.
 
-Alternatively, select *Download sample files* and follow the official https://developer.apple.com/help/account/register-devices/register-multiple-devices/[instructions] to register multiple devices, then upload the file by selecting *Choose File*.
+Alternatively, select *Download sample files* and follow the official https://developer.apple.com/help/account/register-devices/register-multiple-devices/[instructions,window=read-later] to register multiple devices, then upload the file by selecting *Choose File*.
 
 Select *Continue* when you are finished.
 
@@ -202,7 +202,7 @@ image:ios-signing-certificate-review-device-register-closeup.png[width=1000,alt=
 [#_generate_mobileprovision_file]
 === Generate `.mobileprovision` file
 
-At the Apple Developer https://developer.apple.com/account/resources/[resources] page, select *Profiles*. Choose the *plus* icon to create a new profile.
+At the Apple Developer https://developer.apple.com/account/resources/[resources,window=read-later] page, select *Profiles*. Choose the *plus* icon to create a new profile.
 
 image:ios-signing-certificate-select-generate-a-profile-closeup.png[width=1000,alt="Plus icon to create a new Profile"]
 
@@ -226,7 +226,7 @@ Input the *Provisioning Profile Name*, review the information, then select *Gene
 
 image:ios-signing-certificate-review-profile-closeup.png[width=1000,alt="The review profile information screen with the Generate button"]
 
-Select *Download* to save the `.mobileprovision` file. Move the file to the Mac mini host(s) for importing to xref:ios-devices/import-ios-signing-certificates-and-provisioning-profiles.adoc#_verify_imported_certificates_and_upload_provisioning_profiles_for_deviceconnect[deviceConnect] and xref:ios-devices/import-ios-signing-certificates-and-provisioning-profiles.adoc#_import_developer_certificates_and_provisioning_profiles_to_deviceshare[deviceShare] later.
+Select *Download* to save the `.mobileprovision` file. Move the file to the Mac mini host(s) for importing to xref:ios-devices/import-ios-signing-certificates-and-provisioning-profiles.adoc#_verify_imported_certificates_and_upload_provisioning_profiles_for_deviceconnect[deviceConnect,window=read-later] and xref:ios-devices/import-ios-signing-certificates-and-provisioning-profiles.adoc#_import_developer_certificates_and_provisioning_profiles_to_deviceshare[deviceShare,window=read-later] later.
 
 image:ios-signing-certificate-select-profile-download-context.png[width=1000,alt="The download profile screen with the Download button"]
 
@@ -244,7 +244,7 @@ Follow this section to edit an existing provisioning profile to add new certific
 
 ====
 
-At the Apple Developer https://developer.apple.com/account/resources/[resources] page, select *Profiles*.
+At the Apple Developer https://developer.apple.com/account/resources/[resources,window=read-later] page, select *Profiles*.
 
 image:device-lab-management:ios-signing-certificate-select-generate-a-profile-closeup.png[]
 
