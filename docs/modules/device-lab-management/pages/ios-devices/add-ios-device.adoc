@@ -42,7 +42,11 @@ Check the device to see if it is charging after connecting. If it is not chargin
 [#_import_certificates_and_provisioning_profiles]
 == Import certificates and provisioning profiles
 
-Follow xref:ios-devices/import-ios-signing-certificates-and-provisioning-profiles.adoc[this section,window=read-later] to import certificates and provisioning profiles to the Mac mini host.
+Follow xref:ios-devices/import-ios-signing-certificates-and-provisioning-profiles.adoc[this section,window=read-later] to import signing certificates and provisioning profiles to the Mac mini host. The signing certificates and provisioning profiles are needed for:
+
+* Provisioning the Kobiton control agent app to install it on all devices that are hosted by the Mac mini host (for deviceConnect). This is *required*.
+
+* Re-signing applications uploaded to the Kobiton portal to install them on the devices (for deviceShare). This is only required if you use the Kobiton re-signing service.
 
 Skip this section if the certificates and provisioning profiles have already been imported. If you are unsure, you can always xref:_verify_device_is_available_in_kobiton[verify the certificates and provisioning profiles] after connecting the devices.
 
