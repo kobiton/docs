@@ -1,12 +1,12 @@
 name: Test Build
 
 on:
-  #pull_request:
-  #  types:
-  #    - opened
-  #    - synchronize
-  #    - reopened
-  #    - ready_for_review
+  pull_request:
+    types:
+      - opened
+      - synchronize
+      - reopened
+      - ready_for_review
   # Enable manual trigger for easier debugging
   workflow_dispatch:
 
