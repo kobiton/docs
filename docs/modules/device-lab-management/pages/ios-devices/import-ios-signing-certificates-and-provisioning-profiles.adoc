@@ -12,8 +12,9 @@ Learn how to import the signing certificate and mobile provisioning profile file
 
 * Download the https://www.apple.com/certificateauthority/AppleWWDRCAG3.cer[Apple Worldwide Developer Relations - G3,window=read-later] (`AppleWWDRCAG3.cer`) file.
 
-* Log into the Mac mini host(s) as the `deviceconnect` user. All the below sections needs to be performed on the Mac mini host.
+* Log into the Mac mini host(s) as the `deviceconnect` user.All the below sections needs to be performed on the Mac mini host.
 
+[#_import_apple_worldwide_developer_relations_g3_certificate]
 == Import Apple Worldwide Developer Relations G3 certificate
 
 [NOTE]
@@ -23,25 +24,34 @@ Open *Keychain Access* on the Mac mini host.
 
 Select the *System* keychain, then select the tab *Certificates*.
 
+image:ios-signing-system-keychain.png[width="",alt="The Certificates screen under the System keychain in Keychain Access"]
+
 Drag and drop the `AppleWWDRCAG3.cer` file into the Certificates list of the System keychain.
 
-Input the admin password to continue.
+image:ios-signing-system-keychain-drop-applewwdrca.png[width="",alt="The Apple Worldwide Developer certificate file dropped into the System keychain in Keychain Access"]
+
+Input the password of the `deviceconnect` user to continue.
+
+image:ios-signing-system-keychain-admin-password.png[width="",alt="Input the password of the deviceconnect user to continue"]
 
 Double-check that the *Apple Worldwide Developer Relations Certification Authority* certificate appears in the list.
 
+image:ios-signing-system-keychain-apple-intermediate-cert.png[width="",alt="The Apple Worldwide Developer Relation certificate inside the System keychain"]
+
 Double-click the above certificate to view its details. Double-check that under *Details*, the *Organizational Unit* is *G3*. If the value is different, such as *G2* or *G6*, download link:++https://www.apple.com/certificateauthority/AppleWWDRCAG3.cer[the correct certificate,window=read-later] and import again.
 
+image:ios-signing-keychain-apple-intermediate-cert-details.png[width="",alt="The Apple Worldwide Developer Relation certificate details with the Organizational Unit's value of G3"]
 
 
 [#_import_developer_certificates]
 == Import developer certificates
 
-You can use either the Keychain Access app or Terminal commands to import the developer certificates.
+You can use either the *Keychain Access* app or *Terminal* commands to import the developer certificates.
 
 [tabs]
 ====
 
-Keychain access::
+Keychain Access::
 
 +
 
@@ -49,14 +59,24 @@ Keychain access::
 
 Open *Keychain Access* on the Mac mini host.
 
-Select the *System* keychain, then select the tab *Certificates*.
+Select the *System* keychain, then select the tab *Certificates*. Make sure the xref:#_import_apple_worldwide_developer_relations_g3_certificate[Apple Worldwide Developer Relations G3 certificate] exists before continuing.
+
+image:ios-signing-system-keychain-apple-intermediate-cert.png[width="",alt="The Apple Worldwide Developer Relation certificate inside the System keychain"]
 
 Drag and drop the `.p12` file(s) into the Certificates list of the System keychain.
 
 [IMPORTANT]
 To be able to drag and drop the `.p12` file(s) into the Keychain Access app, the file(s) must be password-protected. If the file(s) are not password-protected, use the *Terminal command* to import them instead.
 
-Input the admin password to continue.
+image:ios-signing-system-keychain-drop-certificate.png[width="",alt="The signing certificate file dropped into the System keychain"]
+
+Input the password of the `deviceconnect` user to continue.
+
+image:ios-signing-system-keychain-admin-password.png[width="",alt="Input the password of the deviceconnect user to continue"]
+
+Input the password to protect the `.p12` file to finish the import.
+
+image:ios-signing-keychain-cert-password.png[width="",alt="Input the password of the signing certificate to continue"]
 
 --
 
@@ -77,7 +97,7 @@ sudo security import <Path to the cert>/<Name of the cert>.p12 -k /Library/Keych
 
 Enter the certificate password. If the certificate has no password, leave the field blank and click **OK**.
 
-image::device-lab-management:device-lab-management-ios-add-ios-certificate-password.PNG[width=300,alt="Enter Password for Kobiton"]
+image:ios-signing-keychain-cert-password.png[width="",alt="Input the password of the signing certificate to continue"]
 
 Repeat the above commands for each `.p12` file if there are multiple files.
 
@@ -90,18 +110,75 @@ After importing, open *Keychain Access* on the Mac mini host (if not already ope
 
 Select the *System* keychain, then select the tab *Certificates*. Double-check that:
 
+image:ios-signing-system-keychain-signing-certificate-with-key.png[width="",alt="The certificate after being imported into the System keychain with the private key and the valid status"]
+
+'''
+
 * The imported certificate(s) appear in the list and there is an associated private key when expanding the certificate.
+
++
+
+[NOTE]
+If there is no associated private key, make sure you have imported the `.p12` file that was xref:ios-devices/generate-an-ios-signing-certificate-and-provisioning-profile.adoc#_generate_p12_file[exported,window=read_later] from the machine you created the certificate signing request.
+
+'''
 
 * The certificate status says *This certificate is valid*.
 
++
+
+[NOTE]
+====
+
+If the certificate status says *certificate is not trusted*, you have not imported the xref:_import_apple_worldwide_developer_relations_g3_certificate[Apple Worldwide Developer Relations - G3] certificate.
+
+image:ios-signing-system-keychain-signing-certificate-not-trusted.png[width="",alt="The certificate not trusted status of a signing certificate in System keychain"]
+
+====
+
++
+
+[IMPORTANT]
+====
+
+*Do not* manually trust the signing certificate using the _Always Trust_ option in the certificate details when you see the _certificate is not trusted_ message, as this will cause issues later.
+
+If you see a signing certificate that has the status *This certificate is marked as trusted for all users*, follow the below steps to undo the manual trust:
+
+image:ios-signing-system-keychain-signing-certificate-always-trust.png[width="",alt="The certificate is marked as trusted status of a signing certificate in System keychain"]
+
+* In Keychain Access, double-click the signing certificate to vew its details.
+
+* In the certificate details, expand the *Trust* section. All the options under this section should be *Always Trust* if you manually trust the certificate.
+
+image:ios-signing-system-keychain-signing-certificate-always-trust-expanded.png[width="",alt="The certificate details screen with the Trust section expanded and all options set to Always Trust"]
+
+* Set the value of *When using the certificate* to *Use System Defaults*. Doing so will set the rest of the options to *no value specified*.
+
+image:ios-signing-system-keychain-signing-certificate-use-system-defaults.png[width="",alt="The certificate details screen with the Trust section expanded and the When using this certificate option set to Use System Defaults]
+
+* Close the certificate details pop-up, then enter the password of the `deviceconnect` user to save the changes if prompted.
+
+* If the status of the certificate is now *certificate is not trusted*, proceed to import the xref:_import_apple_worldwide_developer_relations_g3_certificate[Apple Worldwide Developer Relations - G3] certificate and the status will change to *This certificate is valid*.
+
+====
+
+'''
+
 [#_key_access_control]
-Expand the certificate, then right-click the associated private key and select *Get info*.
+Expand the signing certificate, then right-click the associated private key and select *Get info*.
 
-Select the *Access Control* tab, then choose *Allow all applications to access this item* (skip this step if the option is already selected).
+image:ios-signing-system-keychain-key-get-info.png[width="",alt="The Get info option when right-clicking the private key of the singing certificate]
 
-Enter the admin password to continue in the pop-up.
+Select the *Access Control* tab, then choose *Allow all applications to access this item* (skip this step if the option is already selected). Choose *Save Changes*.
+
+image:ios-signing-system-keychain-key-access-control.png[width="",alt="The Access Control tab with Allow all applications to access this item option selected]
+
+Enter the password of the `deviceconnect` user if prompted.
 
 In the next pop-up, input `deviceconnect` for username and its password, then choose *Allow*.
+
+image:ios-signing-system-keychain-kcproxy-pop-up.png[width="",alt="The pop-up to input the username and password before changes can be made to the key]
 
 Close the key information pop-up.
 

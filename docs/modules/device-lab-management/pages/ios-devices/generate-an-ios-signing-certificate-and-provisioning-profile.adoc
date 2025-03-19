@@ -18,10 +18,10 @@ You can use any macOS machine, including the Mac mini host, to generate signing 
 
 * Enroll into either the https://developer.apple.com/programs/[Apple Developer] or https://developer.apple.com/programs/enterprise/[Apple Developer Enterprise] Program.
 
-* Ensure that the enrolled account has 1 available Apple Development certificate slot, as the total number of slots are limited.See link:https://help.apple.com/xcode/mac/current/#/dev3a05256b8[this article] for more details.
+* Ensure that the enrolled account has 1 available Apple Development or iOS App Development certificate slot, as the total number of slots are limited. See link:https://help.apple.com/xcode/mac/current/#/dev3a05256b8[this article] for more details.
 
 [IMPORTANT]
-Only Apple Development certificate can be used by Kobiton. Apple Distribution certificate cannot be used.
+Only Apple Development or iOS App Development certificate can be used. Apple Distribution or iOS Distribution certificate cannot be used.
 
 [#_generate_a_signing_certificate]
 == Generate a signing certificate
@@ -65,7 +65,7 @@ Select the *plus* icon to create a new certificate.
 
 image:ios-signing-certificate-create-new-certificate-icon.png[width=1000,alt="The plus icon to create a new certificate"]
 
-Choose *Apple Development*, then select *Continue*.
+Choose *Apple Development* or *iOS App Development*, then select *Continue*.
 
 image:ios-signing-certificate-select-apple-dev-context.png[width=1000,alt="Choose *Apple Development*, then select *Continue*"]
 
@@ -77,6 +77,7 @@ Select *Download* to save the `development.cer` file to the local machine.
 
 image:ios-signing-certificate-select-download-context.png[width=1000,alt="Select *Download* to download your `.cert` file"]
 
+[#_generate_p12_file]
 === Generate `.p12` file
 
 [IMPORTANT]
@@ -87,7 +88,7 @@ On the macOS device, launch *Keychain Access*.
 Select the *login* keychain, select *Certificates*, then drag and drop the `development.cer` file into the Certificates page.
 
 [IMPORTANT]
-Make sure the *login* keychain is highlighted before you drag and drop the file into *Certificates*. If another keychain is highlighted instead, such as *System*, you cannot export the `.p12` file.
+Make sure the *login* keychain is highlighted before you drag and drop the file into *Certificates*.If another keychain is highlighted instead, such as *System*, you cannot export the `.p12` file.
 
 image:ios-signing-certificate-launch-keychain-access-context.png[width="",alt="On your macOS device, launch *Keychain Access*"]
 
@@ -123,13 +124,13 @@ Enter a password to protect the certificate and select *OK*. Note down the passw
 [NOTE]
 ====
 
-Not entering a password for the `.p12` file will require the use of Terminal commands to import it to the keychain of another machine.If you are not familiar with the Terminal, it is recommended to enter a password.
+Not entering a password for the `.p12` file will require the use of Terminal commands to import it to the keychain of another machine. If you are not familiar with the Terminal, it is recommended to enter a password.
 
 ====
 
 image:ios-signing-certificate-protect-certificate-with-password.png[width=500,alt="Enter a password to protect the certificate, or leave the fields blank and select *OK*"]
 
-Input the macOS administrator password to export the `.p12` certificate file.Store this file in a safe location.
+Input the macOS administrator password to export the `.p12` certificate file. Store this file in a safe location.
 
 Move the file to the Mac mini host(s) to xref:ios-devices/import-ios-signing-certificates-and-provisioning-profiles.adoc#_import_developer_certificates[import] it later.
 
