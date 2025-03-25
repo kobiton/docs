@@ -166,10 +166,13 @@ This section is only required for Mac mini hosts with no Internet access with iO
 
 Access any macOS machine with Internet access. This will be referred to as the Internet Mac.
 
-Ensure Xcode is installed on the Internet Mac. Make sure the Xcode version is compatible with the iOS 17 device.
-
 [NOTE]
 Kobiton software, such as deviceConnect and deviceShare, does not need to be installed on the Internet Mac.
+
+Ensure *Xcode* is installed on the Internet Mac. Make sure the Xcode version is compatible with the iOS 17 device.
+
+[IMPORTANT]
+Make sure the Xcode version on the Internet Mac *is the same or greater* than the version on the Mac mini host to transfer the DDI to.
 
 Unplug the iOS 17 device from the air-gapped Mac (Standard mode) or the GEM (Lightning mode) and connect it to the Internet Mac.
 
@@ -185,7 +188,23 @@ image::device-lab-management:device-lab-management-ios-add-ios-copying-shared-ca
 
 Unplug the device from the Internet Mac.
 
-Continue with connecting iOS 17 and above devices to the air-gapped Mac mini hosts.
+Repeat the above processes for all iOS/iPadOS 17 and later devices to be hosted on the air-gapped Mac mini.
+
+Open *Finder* on the Internet Mac. Press *Shift + Command + G* on the keyboard, then input the following path depending on the version of Xcode:
+
+* `/Library/Developer/DeveloperDiskImages` (Xcode 16 and above)
+
+* `~/Library/Developer/DeveloperDiskImages` (Xcode below 16)
+
+Copy the 2 files `iOS_DDI-version.plist` and `iOS_DDI.dmg` to the *air-gapped Mac mini* that will host the iOS/iPadOS 17 and later devices. Put the copied file into the following folder on the air-gapped Mac mini:
+
+* `/Library/Developer/DeveloperDiskImages` if the current Xcode version is 16 or above.
+
+* ``~/Library/Developer/DeveloperDiskImages ``if the current Xcode version is below 16.
+
+Repeat the above process for all air-gapped Mac mini hosts with iOS/iPadOS 17 and later devices.
+
+Continue with connecting iOS 17 and above devices to the air-gapped Mac mini hosts or the GEM.
 
 [IMPORTANT]
 Apple has not published whether the personalized DDI will expire or how long it will last in an air-gapped environment.If connection errors occur and other troubleshooting steps do not resolve the issue, the personalized DDI may be expired, and you will need to repeat this process.
@@ -211,7 +230,7 @@ If you see the *deviceControl* warning or the error under the device's name with
 
 ====
 
-Still in Chrome, open the Kobiton web portal and log in using an account with ADMIN role.
+Still in Chrome, open the Kobiton web portal and log in using an account with *ADMIN* role.
 
 Select the profile picture and choose **Settings**, then choose **Device Management**.
 
