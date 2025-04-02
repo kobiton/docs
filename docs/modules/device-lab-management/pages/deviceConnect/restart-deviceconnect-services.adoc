@@ -19,13 +19,13 @@ Select the *Device Management* tab.
 
 The *Device Management* page lists all dedicated mobile devices for the org grouped by Mac mini host. Locate the Mac mini host you want to restart and click the corresponding *Restart services* button.
 
-image:device-lab-management:restart-dc-restart-services-button.PNG[]
+image:device-lab-management:restart-dc-restart-services-button.PNG[width=750, alt="Restart services button"]
 
 In the confirmation modal, choose *Restart Services* again to proceed.
 
 Any active sessions on devices hosted by that Mac mini will be terminated. During the service restart, no actions can be performed on the Mac mini or the connected devices (all the buttons are grayed out). A notification is displayed when the restart completes successfully.
 
-image:device-lab-management:restart-dc-services-restart-successful-popup.PNG[]
+image:device-lab-management:restart-dc-services-restart-successful-popup.PNG[width=750, alt="Successful restart message"]
 
 After the service restart completes, the devices should automatically come back online.
 
@@ -34,7 +34,7 @@ When a Mac mini host's services are restarted using the above method, active ses
 
 * In the Manual or Mixed session, the user receives a _Device disconnected_ error message and the session is terminated with a status of _Terminated_.
 +
-image:device-lab-management:restart-dc-devices-disconnect-popup.PNG[]
+image:device-lab-management:restart-dc-devices-disconnect-popup.PNG[width=750, alt="Error message to indicate a terminated status"]
 
 * Automation and revisit sessions are also terminated with a status of _Terminated_.
 

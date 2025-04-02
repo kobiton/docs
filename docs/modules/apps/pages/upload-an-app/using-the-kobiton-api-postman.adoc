@@ -5,13 +5,13 @@ Learn how to use Postman to upload an app to the xref:manage-apps.adoc[app repos
 
 == Before you start
 
-* Make sure your app package belongs to a xref:apps:supported-filetypes.adoc[supported filetype].
+* Make sure your app package belongs to a xref:apps:supported-filetypes.adoc[supported filetype and size].
 * xref:profile:manage-your-api-credentials.adoc[Get your API credentials].
 * Familiarity with using Postman to link:https://learning.postman.com/docs/getting-started/first-steps/sending-the-first-request/[send API request] is required.
 
 [IMPORTANT]
 ====
-Throughtout this document, replace https://api.kobiton.com with `[http/https]://[Dell server IP or hostname]:3000` if you are using Standalone server.
+Throughtout this document, replace `\https://api.kobiton.com` with `[http/https]://[Dell server IP or hostname]:3000` if you are using Standalone server.
 ====
 
 [#_configure_authorization_in_postman]
@@ -31,7 +31,7 @@ image:apps:postman-authorization.png[width=1000,alt="Authorization of Kobiton AP
 
 In Postman, create a new request with the `POST` method. This request requires authorization.
 
-For `URL`, input https://api.kobiton.com/v2/apps/upload-url.
+For `URL`, input `\https://api.kobiton.com/v2/apps/upload-url`.
 
 Under the *Body* tab, select *raw*, then choose the *JSON* format and input the following details:
 
@@ -114,7 +114,7 @@ Click *Send*. A blank response and `Status: 200 OK` indicates a successful uploa
 
 In Postman, create a new request with `POST` method. This request requires authorization.
 
-For `URL`, input https://api.kobiton.com/v2/apps.
+For `URL`, input `\https://api.kobiton.com/v2/apps`.
 
 [IMPORTANT]
 In the *Header* tab, remove the `x-amz-tagging` and `Content-Type` from the previous request (Upload app file to S3 storage) if they exist.
@@ -166,7 +166,7 @@ If the app file is too large, it may take a while to process the file and the va
 
 In Postman, create a new request with `GET` method. This request requires authorization.
 
-For `URL`, input https://api.kobiton.com/v2/apps/parsing-status?appVersionId=${version_id}.
+For `URL`, input `\https://api.kobiton.com/v2/apps/parsing-status?appVersionId=${version_id}`.
 
 Provide in the `URL` above the `version_id` obtained from the xref:_create_app_or_app_version[previous step]. Continuing on with the example, the `URL` would be:
 

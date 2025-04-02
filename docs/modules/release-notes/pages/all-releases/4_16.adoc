@@ -1,0 +1,175 @@
+= Kobiton 4.16 release notes
+:navtitle: Kobiton 4.16 release notes
+
+_November 2, 2024_
+
+== New OS support
+
+This release adds support for the following:
+
+* Android 15
+
+[NOTE]
+====
+During a Manual session, Android 15 devices may become unresponsive after one of the following actions:
+
+* Using Chrome or Gmail.
+* Typing on the virtual keyboard.
+
+To make the device responsive again, restart the device using the Restart button in the Device Details or the Device Management page (appropriate permission required).
+
+To reduce the occurrence of this issue, update *Play Store services*, *Chrome*, and *Gmail* on the device to the latest version.
+====
+
+* iOS/iPadOS 18.0.1
+
+[NOTE]
+For iOS/iPadOS 18.0.1, the cleanup policy does not clear signed-in accounts in the Mail app and Safari browser cache.
+
+* MacOS 15 Sequoia (requires deviceConnect 4.16)
+
+[NOTE]
+====
+
+For a *fresh installation* of deviceConnect 4.16 on a Mac mini with macOS 15 Sequoia, contact Kobiton Support.
+
+To update to macOS 15 Sequoia on a Mac mini that already hosts deviceConnect 4.15, follow the below steps before you upgrade to deviceConnect 4.16:
+
+* Upgrade the Mac mini to macOS 15 Sequoia.
+* Open Terminal, then run this command:
++
+[source,bash]
+sudo spctl --master-disable
+
+* If *System Settings* is currently opened, close it.
+* Open *System Settings > Privacy & Security*.
+* Under *Security*, set *Allow applications from* to *Anywhere*.
+* Enter your admin password to confirm and choose *Allow from Anywhere*.
+
+Then proceed with updating Kobiton to 4.16.
+
+====
+
+== Update to Session Explorer and Session Overview
+
+We’ve redesigned the user experience of Session Explorer and Session Overview to streamline usability, optimize test result analysis, and support our AI validations and partner ecosystem. Key enhancements include:
+
+* *Improved user flows*
+
+** Upon ending a manual session or selecting a session from *Session List*, users now land on *Session Explorer* to begin test analysis. The session video and basic session details are still available on the *Session Overview* tab.
+** New validation review flow with the *Start Analysis* button to make the review process more efficient.
+** *Real-time* event updates, so you don’t have to refresh the page as session processing finishes.
+
+* *Revised layout for accessibility and speed*
+
+** Simplified layout, prioritizing key information, and making navigation smoother.
+** Quick access to essential details such as *Session Info* and *Device Info*.
+
+* *New insights panel on Session Explorer for Test Analysis*
+
+** Displays AI analysis results across multiple criteria, including *Crash Detection*, *Accessibility*, *Response Time* (*for xref:manual-testing:local-devices/capture-network-payload-data.adoc[Network Payload Capture] sessions*), and *Appium Self-Healing* (*for Appium sessions using xref:automation-testing:capabilities/add-flexcorrect.adoc[flexCorrect]*).
+
+** Centralized view of all validation insights, streamlining test review.
+
+image:session-explorer-test-result-analysis.png[width=800,alt="Overview of Test Result Analysis"]
+
+[NOTE]
+Figma integration is not currently supported with the redesigned Session Explorer.
+
+== Tag and view tagged sessions
+
+This release introduces session tagging capabilities, allowing for easy organization and tracking of related sessions. Whether you want to tag a nightly run or tag test sessions related to a particular function, tagging will help you identify trends with your testing.
+
+* *Tag sessions in Appium script*
+
+** Tags can be added directly within automation scripts using: `capabilities.setCapability("kobiton:tags", ['tag_name_1', 'tag_name_2', ... 'tag_name_n'])`.
+
+* *Tag sessions and manage tags via API*
+
+** New APIs enable users to assign tags after a session is complete.
+** You can also use the APIs to un-assign and retrieve tags, offering additional flexibility and integration possibilities.
+** These APIs can be used to tag any type of session.
+
+* *Session List: search by tag*
+
+** Search sessions by tag in the Session List by entering `session_tag:<session_tag_name>`.
+
+** Search suggestions display your 5 most recently used tags within the selected time range, ensuring faster, more relevant results.
+
+* *Execution history for tagged sessions*
+
+** Session Overview now includes an *Execution History* section for tagged sessions.
+** Displays up to five related sessions by tag, including their statuses. The last 3 sessions shown are always the most recent.
+** Select a session to navigate to it or hover to see details like *Session ID* and *Creation Date*.
+** The circled status indicates the current session being viewed.
+** When you see _...._ it means that the session being viewed is not in the most recent five sessions.
+** Selecting the tag name opens the Session List filtered by the sessions related to that tag.
+
+image:session-overview-execution-history.png[width=600,alt="Execution History by Tag"]
+
+== Group actions in Session Explorer timeline
+
+Enhance your test analysis with grouped Appium commands, allowing you to better understand related steps within the timeline. Streamlined grouping helps with troubleshooting by identifying specific phases in a test sequence, improving traceability for app scenarios and alignment with test management frameworks.
+
+*To group actions with Appium settings:*
+
+* Use the `"kobiton:stepGroup": "<step_group_name>"` setting within your script to create named groups of related actions.
+* Each command within the same group is visually represented on the Session Explorer timeline.
+* Flexible naming options for step groups.
+
+[NOTE]
+You cannot set `“kobiton:stepGroup"` to a blank value. If you do, the steps will still be assigned to the previous group.
+
+image:session-explorer-timeline-with-grouping.png[width=1000,alt="The timeline with steps grouped"]
+
+== Hybrid Enterprise Lightning: update `adb` version
+
+This release upgraded `adb` to version 35.0.2 on the Mac mini and GEM.
+
+* For the Mac mini, the `adb` service is automatically updated when you upgrade to deviceConnect 4.16.
+* For our Hybrid Enterprise Lightning customers who have a GEM, please contact Kobiton Support to update the Kobiton software and `adb` on your GEM.
+
+== New virtualUSB client
+
+New virtualUSB clients for macOS and Windows are available with this release. They provide support for Android Studio Jellyfish and address an issue with blocked connections with unpaired iOS/iPadOS devices.
+
+Cloud and Hybrid customers can download the new clients from the download links in the left-hand nav of the Kobiton Portal.
+
+[NOTE]
+Standalone customers can contact Kobiton support for the latest download links after the 4.16S release.
+
+[NOTE]
+====
+* iOS/iPadOS devices are not supported by virtualUSB for Windows.
+* iOS/iPadOS 17 and higher is not currently supported by virtualUSB.
+* If the device that is connected to virtualUSB cannot be released after disconnecting, quit the virtualUSB app to release it.
+====
+
+== Improvements to Scriptless Automation
+
+This release introduced several changes to the Scriptless automation workflow:
+
+* *Real-time tracking for test run statuses*, improving the experience for users monitoring in-progress test runs.
+* *Ability to view a live Scriptless Automation session* via a xref:manual-testing:start-a-mixed-session.adoc[mixed session].
++
+[NOTE]
+Avoid performing manual actions on the device during the mixed session, as they can block the running Scriptless flow.
+
+* Improved Test Management remediation flow adds more details for remediation, including an *XML Tree* to help select the correct element.
+
+== Minor improvements and bug fixes
+
+This release includes several enhancements and bug fixes to improve your day-to-day testing.
+
+* Addressed the following Script-based test automation items:
+
+** Fixed issue in XIUM where  `'-ios predicate string'` locators were not performing auto-scrolling.
+** Improved support for running more than 60 basic Appium 2 sessions on the same device.
+
+* Other items addressed:
+
+**  Fixed issue where some colors were not the same when using lightning mode.
+** Addressed an issue with modifying an existing cleanup policy.
+** Addressed an issue with Developer Disk Image not found.
+** Fixed issues related to logging into iCloud via Kobiton Apple Security Enablement prompt and with Apple ID's 2FA 6 digits field disappearing.
+** Improved last mile speed test functionality.

@@ -1,7 +1,13 @@
-= Run scriptless with the Kobiton API
+= *Under construction:* Run scriptless with the Kobiton API
 :navtitle: Run scriptless with the Kobiton API
 
-Learn how to run scriptless automation using the Kobiton API. For more information, see link:https://api.kobiton.com/docs/#start-scriptless-automation[Kobiton API v1].
+The content of this page is being revamped. Check back soon!
+
+Meanwhile, you can xref:run-scriptless-with-the-kobiton-portal.adoc[run scriptless with the Kobiton portal] instead.
+
+////
+
+Learn how to run Scriptless Automation using the Kobiton API. For more information, see link:https://api.kobiton.com/docs/#start-scriptless-automation[Kobiton API v1].
 
 [#_before_you_start]
 == Before you start
@@ -20,7 +26,7 @@ include::automation-testing:partial$configure-your-authorization-header.adoc[]
 [#_get_your_parameter_values]
 == Get your parameter values
 
-Determine which link:https://api.kobiton.com/docs/#start-scriptless-automation[scriptless automation parameters] you want to use during your session, then get the necessary values. The `/revisitPlans/start` endpoint supports up to 11 parameters, but only the following are required:
+Determine which link:https://api.kobiton.com/docs/#start-scriptless-automation[Scriptless Automation parameters] you want to use during your session, then get the necessary values. The `/revisitPlans/start` endpoint supports up to 11 parameters, but only the following are required:
 
 [cols="1,1,1,3"]
 |===
@@ -29,12 +35,12 @@ Determine which link:https://api.kobiton.com/docs/#start-scriptless-automation[s
 |`exploringSessionIds`
 |`[integer]`
 |Always
-|A list of one or more xref:get-a-session-id/using-the-kobiton-api.adoc[baseline session IDs], where each baseline session is run as its own scriptless automation session. Up to 10 baseline session IDs can be assigned; however, the same device platform must be used for each session (such as `iOS` or `Android`).
+|A list of one or more xref:get-a-session-id/using-the-kobiton-api.adoc[baseline session IDs], where each baseline session is run as its own Scriptless Automation session. Up to 10 baseline session IDs can be assigned; however, the same device platform must be used for each session (such as `iOS` or `Android`).
 
 |`deviceSelections`
 |`[object]`
 |Yes, if `deviceBundleId` is unassigned
-|An array of one or more devices, where each device is assigned a `deviceCapabilities` object (required) and `dataSetId` (optional). For more information, see link:https://api.kobiton.com/docs/#start-scriptless-automation[scriptless automation parameters].
+|An array of one or more devices, where each device is assigned a `deviceCapabilities` object (required) and `dataSetId` (optional). For more information, see link:https://api.kobiton.com/docs/#start-scriptless-automation[Scriptless Automation parameters].
 
 |`deviceBundleId`
 |`[integer]`
@@ -166,3 +172,5 @@ If the `POST` request is successful, the following will be returned:
     }
 ]
 ----
+
+////

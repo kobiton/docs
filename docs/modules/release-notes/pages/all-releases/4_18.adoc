@@ -1,0 +1,108 @@
+= Kobiton 4.18 Release Notes
+:navtitle: Kobiton 4.18 release notes
+
+_January 11, 2025_
+
+== New OS Support
+
+This release adds support for the following:
+
+* iOS/iPadOS 18.2
+
+[NOTE]
+Native XCUITest automation script is not currently supported on iOS/iPadOS 18.2.
+
+== Changes to the Auto-Upgrade Settings for Cloud/Hybrid Organizations
+
+In this release, we updated the auto-upgrade settings for all Cloud/Hybrid organizations to *Automatic*. This change ensures your organization benefits from the latest improvements and optimizations. Key reasons for this update include:
+
+* Preventing device outages caused by running outdated versions of deviceConnect (two or more major releases behind the latest version).
+* Ensuring compatibility with the newest version of the Cloud Portal.
+
+This update helps maintain consistent performance and reliability across your devices and platforms.
+
+[NOTE]
+If your organization prefers not to use the auto-upgrade feature for deviceConnect, an admin can switch the auto-upgrade option to *Manual* from the *Device Management* page in the Kobiton Portal. We recommend discussing this change with your Kobiton account team to ensure it aligns with your organization's needs.
+
+== Deprecation of passcode support for Android 9 and below
+
+With this release, we are deprecating passcode support for *Android 9 and earlier*.
+
+If your organization still needs to test Android 9 or earlier devices without a passcode, contact Kobiton Support for assistance disabling the passcode for these devices.
+
+== Major improvements to the Network Payload Capture (NPC) setup process for iOS
+
+Previously, setting up Network Payload Capture (NPC) for iOS devices required a manual process to install the NPC certificate on the device. With this release, we’ve introduced significant improvements to simplify and streamline the setup process:
+
+*Automatic NPC Certificate Deployment:*
+
+* The NPC certificate can now be automatically deployed to supervised devices, eliminating the need for manual installation.
+
+*Faster NPC Session Start:*
+
+* The 10-second wait period after starting an NPC session (previously required to set up the proxy connection) is no longer necessary for iOS devices.
+
+*Simplified Setup on Mac Mini Hosts:*
+
+* The following steps are no longer required to enable NPC on Mac Mini hosts:
+
+** Installing Apple Configurator and automation tools.
+** Generating a trusted SSH connection to `127.0.0.1` and rebooting the Mac Mini.
+
+[NOTE]
+The setup process for Android devices stays the same.
+
+With these changes, additional requirements must be met:
+
+* The iOS devices that need NPC must be supervised by a single supervision identity.
+* The supervision identity files (`organization.crt` and `organization.der`) must be copied to the folder `/usr/local/deviceconnect` on the Mac mini hosts.
+
+[IMPORTANT]
+On a Mac Mini, all iOS devices must be supervised under a single supervision identity. If devices are supervised by multiple identities, you will need to re-supervise them under a single identity for NPC to function properly.
+
+== Scriptless Automation and Mobile Test Management Enhancements
+
+* Enhanced ability to dismiss iOS and Android popups during Scriptless test runs.
+* Improved screen capture capabilities.
+* Upgraded Appium Script generation for Android and iOS Web tests.
+* Improved handling of scroll/swipe actions.
+
+== Script-Based Test Automation Enhancements
+
+*Updates for Xium:*
+
+* Fixed issue with `processArgument` capability parameters not displaying for iOS devices.
+* Addressed an issue on some Pixel devices where an element of type `ImageButton` appeared clickable, but the drawer did not open upon interaction.
+* Added the ability to retrieve slider element values in the inspector.
+
+*Updates for basic Appium 2:*
+
+* Added support for running basic Appium 2 on Android devices with MDM.
+* Translated deprecated Appium 1 touch actions to work with Appium 2. The actions are: `press`, `longPress`, `tap`, `moveTo`, `wait`, `release`.
+* Appium 1 scripts often rely on non-vendor-prefixed capabilities such as `automationName` instead of the proper `appium:automationName`. To assist with compatibility when running against our basic Appium 2 server, we have:
+
+** automatically added vendor prefixes to most of the capabilities.
+** updated device automation settings to include vendor prefixes in the *Automation Settings* in the *Device Modal*.
+
+== APIv2 Improvements
+
+* Improved detail provided in error messages.
+* Corrected the *created by* field to show the original uploader for apps uploaded by multiple users.
+
+== General Improvements and Fixes
+
+* Fixed an issue in the Device List modal where *Select App from Apps Repo* failed to open the App Repo in *Automation Settings*.
+* Resolved a display issue where some iOS devices did not show IMEI and mobile numbers in the Device List.
+* Fixed navigation issues on iPads in landscape mode when no cleanup policy was set and a new session was started.
+* Enhanced Inspector behavior and results in Manual Sessions and Session Explorer.
+* Improved sorting functionality throughout Mobile Test Management.
+* Enhanced Accessibility validations to clearly distinguish between AA and AAA color contrast validations.
+* Enabled search for elements in the Inspector using special characters during Manual sessions.
+* Added the ability to reactivate a subscription after cancellation without contacting support.
+* Fixed an issue in Session Explorer where application links were not filtering to the `appID`.
+* Fixed the *Uninstall All* button under *Device Modal → Apps*. This button now uninstalls all apps on the device that were installed using the *Apps* menu under the *Device Modal* screen.
+* Enhanced handling of a user switching between Portal and virtualUSB UI for the same device interaction.
+* Ensured quick action menus are fully visible, even at the bottom of the screen.
+* Improved behavior when the *Automatically Clean-Up After Session* option is unchecked during a Manual Session.
+* StepGroup improvements in Session Explorer, including performance when navigating steps, supporting long `stepGroup` names, and allowing `stepGroup` name to be blank after having a `stepGroup`.
+* Addressed issue where an iPad with no cleanup policy is put into landscape mode when a session ends and then the next session cannot navigate properly.

@@ -5,17 +5,17 @@ _April 19, 2021_
 
 == Updates to the Kobiton Platform
 
-=== Kobiton Intelligent Quality Suite and scriptless automation
+=== Kobiton Intelligent Quality Suite and Scriptless Automation
 
 * Performance remediation tests now include support for Performance assertions- in addition to the already released crash, visual, and text assertions. NOVA will identify each test step that takes longer than the set baseline time and will identify them on the session explorer.
 * Data from a scroll wheel gesture is now captured and can be played back and simulated when run against multiple devices.
-* Scriptless automation sessions can be set to run on different device bundles from the Kobiton UI. This improves automated testing sessions in a few ways:
+* Scriptless Automation sessions can be set to run on different device bundles from the Kobiton UI. This improves automated testing sessions in a few ways:
 ** You no longer need to use Kobiton's API to select different bundles to run a session on
 ** Instead of running a second manual session, just choose a different bundle on the UI's bundle list
 ** Tests on bundles can be run in parallel
 * Automation scripts can be set by desired capabilities rather than just being able to run those tests from the the portal
-* Appium Export Script Flow: there can be a bit of a learning curve when going from manual testing to testing with Appium. Although Kobiton does lessen the curve by exporting an appium script based on a manual session, they were only available when using scriptless automation. Now, users can access those scripts after a manual session and are available on all Scriptless revisit sessions.
-* This release introduces the ability to edit the manual session meant to be used as the baseline session for NOVA's Scriptless automation runs. This will provide you with more flexibility, allows for the removal of unnecessary or redundant test steps which will give you a much better testing experience.
+* Appium Export Script Flow: there can be a bit of a learning curve when going from manual testing to testing with Appium. Although Kobiton does lessen the curve by exporting an appium script based on a manual session, they were only available when using Scriptless Automation. Now, users can access those scripts after a manual session and are available on all Scriptless revisit sessions.
+* This release introduces the ability to edit the manual session meant to be used as the baseline session for NOVA's Scriptless Automation runs. This will provide you with more flexibility, allows for the removal of unnecessary or redundant test steps which will give you a much better testing experience.
 
 === Script-based Test Automation
 
@@ -54,7 +54,7 @@ Our previous release introduced Visual Assertion to catch visual issues apps may
 
 == Bug Fixes and Enhancements
 
-=== Kobiton Intelligent Quality Suite and scriptless automation
+=== Kobiton Intelligent Quality Suite and Scriptless Automation
 
 * Revisit session live views now display the latest state- without having to reload any session pages.
 * By increasing the pixel comparison size, we've improved NOVA's Text Color Assertion remediation which will help prevent false positive remediation results when testing text color.
