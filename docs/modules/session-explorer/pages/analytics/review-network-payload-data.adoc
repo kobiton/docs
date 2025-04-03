@@ -5,7 +5,7 @@ Learn how to review network payload capture data after your test session so you 
 
 == Before you start
 
-You'll need to complete a xref:manual-testing:local-devices/capture-network-payload-data.adoc[manual session] _or_ an xref:automation-testing:local-devices/capture-network-payload-data.adoc[automation session] with network payload capture enabled.
+You'll need to complete a xref:manual-testing:local-devices/capture-network-payload-data.adoc[manual session,window=read-later] _or_ an xref:automation-testing:local-devices/capture-network-payload-data.adoc[automation session,window=read-later] with network payload capture enabled.
 
 == Launch Session Explorer
 
@@ -19,6 +19,9 @@ Next, review xref:_review_payload_data[payload data] or xref:_review_response_ti
 In Session Explorer, select *Device Network Payloads*.
 
 image:observe-request.png[width=1000,alt="Select Observe Request/ Response Payloads"]
+
+[NOTE]
+Only xref:manual-testing:local-devices/capture-network-payload-data.adoc[manual] and xref:automation-testing:local-devices/capture-network-payload-data.adoc[automation] sessions that were run with a custom configuration on a xref:devices:local-devices/network-payload-capture/index.adoc#_set_up[NPC-enabled devices] can have network payload data.
 
 In the session timeline, select a *purple marker* to see the list of payloads sent and received during that time.
 
