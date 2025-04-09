@@ -1,0 +1,74 @@
+= Launch a Work Profile App on Android
+:navtitle: Launch a Work Profile App on Android
+
+Learn how to launch work profile apps on Android devices that are enrolled in a Mobile Device Management (MDM) system.
+
+== What are Work Profile apps?
+
+An *Android work profile* can be set up on an Android device to separate work apps and data from personal apps and data.
+
+Work profile apps appear in a Work list under the app drawer, separated from the normal apps. Work profile apps have a suitcase badge to differentiate them from normal apps.
+
+Work profile apps cannot be launched using normal Appium app capabilities, as they are managed under a profile that Appium cannot access.
+
+== Prerequisites
+
+* Samsung Galaxy and Google Pixel devices running Android 12 and later only.Other models or older Android versions are not currently supported.
+
+* The device must be enrolled in an MDM that has work profile apps.
+
+* Disable the app cleanup policy to prevent the work profile apps from being cleaned up.
+
+[#_install_and_prepare_the_work_profile_app]
+== Install and prepare the work profile app
+
+Before you can perform automation testing on the work profile app, you must install it and set it up.
+
+Install the work profile app either using the MDM portal or the Google Play Store (Play Store must be launched under the work profile).
+
+[IMPORTANT]
+Do not use the Kobiton App Repository to install the work profile app package, as it will be installed to the normal (personal) profile.
+
+Make sure that the work profile app appears in the Work tab of the app drawer.The app drawer is usually accessed by swiping up from the Home screen.When Work Profile is enabled, the app drawer includes 2 tabs: Personal and Work.
+
+[IMPORTANT]
+Do not install a third-party launcher as it may disable the app drawer. A work profile app cannot be launched from the Home screen.
+
+If the work profile app is already installed, but does not appear in the app drawer, double check that:
+
+* It is not located in an https://www.samsung.com/hk_en/support/mobile-devices/create-app-folders-on-galaxy-smartphones/[app folder,window=read-later] (Samsung Galaxy devices). If the app is in a folder, drag it out of the folder.
+
+* It is not https://www.samsung.com/au/support/mobile-devices/hiding-apps-on-samsung-phone/[hidden,window=read-later] (Samsung Galaxy devices). If an app is hidden, open Settings → Hide apps, then remove the app from the hidden list.
+
+* The https://support.google.com/work/android/answer/7029561?sjid=14931715197430774361-NC[Pause work apps,window=read-later] feature is not turned on (Google Pixel devices). Turn Pause work apps off in the app drawer if it is on.
+
+The below requirements depend on the behavior of the app drawer when there are multiple pages or lines of apps.
+
+=== Swipe left/right (Samsung Galaxy devices)
+
+Take note of the below behaviors of the system when launching the Work Profile app:
+
+* The system opens the Work Profile app drawer and then navigates to the first/leftmost page.
+
+* If the app cannot be found, the system attempts to swipe left for 10 pages maximum to find the app.
+
+To ensure the app under test can be launched reliably, make sure it is located on page 10 or lower. If the app is on page 11 or higher, drag it to page 10 or lower.
+
+=== Scroll down/up (Google Pixel devices)
+
+Take note of the below behaviors of the system when launching the Work Profile app:
+
+* The system always opens the Work Profile app drawer at the topmost position.
+
+* If the app cannot be found, the system attempts to scroll down 10 lines maximum to find the app.
+
+To ensure the app under test launches successfully every time, make sure the total number of app rows does not exceed 10. If there are more than 10 rows, remove apps until there are 10 or fewer.
+
+[NOTE]
+Google Pixel devices do not allow reorganizing the apps in the app drawer.
+
+== Appium capability
+
+For automation, use the `kobiton:workApp` capability in your script:
+
+include::partial$work-profile-capability.adoc[]
