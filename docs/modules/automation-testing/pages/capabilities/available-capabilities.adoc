@@ -224,6 +224,14 @@ The device configuration to use during the test session. *Only available for web
 capabilities.setCapability("useConfiguration", "kobiton"); // Use this pre-defined configuration for the test session.
 ----
 
+[#_work_app]
+=== `kobiton:workApp`
+
+[IMPORTANT]
+Before using this capability, you must xref:scripting/launch-work-profile-app-android.adoc#_install_and_prepare_the_work_profile_app[install and prepare the Work Profile app,window=read-later].
+
+include::partial$work-profile-capability.adoc[]
+
 == Appium Capabilities
 
 Kobiton supports most Appium capabilities. The capabilities listed below are typically required or have specific use cases unique to Kobiton.

@@ -1,0 +1,24 @@
+Launch a Work Profile app using the name that appears in the app drawer (case-sensitive). This capability only accepts 1 app name.
+
+* *Type*: `string`
+* *Required capabilities*: None
+* *Optional capabilities*: None
+
+.Example
+[source,java]
+capabilities.setCapability("kobiton:workApp", "Firefox");
+
+[NOTE]
+====
+
+* This capability cannot be used in Basic Appium 2 sessions.
+
+* The following capabilities will be ignored when using `kobiton:workApp`:
+
+** `app`
+
+** `appium:appPackage`
+
+** `appium:appActivity`
+
+====
