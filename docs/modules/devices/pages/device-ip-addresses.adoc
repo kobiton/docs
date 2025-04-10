@@ -1,7 +1,7 @@
-= Allow-list requirements for Public and Kobiton-hosted devices
-:navtitle: Whitelist requirements for Public and Kobiton-hosted devices
+= Allowlist requirements for Public and Kobiton-hosted devices
+:navtitle: Allowlist requirements for Public and Kobiton-hosted devices
 
-These are the allow-list requirements for Public and Kobiton-hosted devices for xref:devices:local-devices/connect-to-a-private-network.adoc[connecting devices to your private network] or enabling Lightning mode.
+These are the allowlist requirements for Public and Kobiton-hosted devices for xref:devices:local-devices/connect-to-a-private-network.adoc[connecting devices to your private network] or enabling Lightning mode.
 
 == Public and Kobiton-hosted private devices
 
@@ -30,8 +30,8 @@ If your organization uses *Zscaler or other endpoint security solutions* that pe
 
 ** This includes `portal.kobiton.com`, `api.kobiton.com`, and any custom subdomains like `yourcompany.kobiton.com`
 
-Additionally, if your organization employs *FortiGate or other firewalls* that filter network traffic, you must also allow the STUN protocol in the firewall policy:
+If your organization employs *FortiGate or other firewalls* that filter network traffic, you must also allow the STUN protocol in the firewall policy:
 
 * Follow https://community.fortinet.com/t5/FortiGate/Technical-Tip-How-to-enable-STUN-protocol-in-policy/ta-p/254217[this article,window=read-later] to learn more about enabling the STUN protocol in FortiGate Next Generation Firewall.
 
-Allow-listing these domains ensures connectivity and optimal performance when using Lightning Mode.
+Allowlisting these domains and STUN protocol ensures connectivity and optimal performance when using Lightning Mode.
