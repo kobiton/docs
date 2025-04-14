@@ -8,15 +8,20 @@ _February 23, 2025_
 This release adds support for the following:
 
 * iOS/iPadOS 18.3.1
+* iOS/iPadOS 18.4
 
 [NOTE]
 ====
 
-For iOS/iPadOS 18.3.1:
+Known issues:
 
-* Native XCUITest automation script is currently not supported.
+* iOS/iPadOS 18.4 only:
+**  Cannot set time zone during a manual session for iOS devices (works with iPadOS devices).
+** The cleanup policy does not remove all signed-in accounts in the Mail app.
 
-* (For passcode-enabled organizations only) Starting a manual session on a locked device can leave it stuck on the lock screen. To unlock it, press the power button twice, then swipe up from the bottom of the lock screen.
+* Both iOS/iPadOS 18.3.1 and 18.4:
+** (For passcode-enabled organizations only) Starting a manual session on a locked device can leave it stuck on the lock screen. To unlock it, press the power button twice, then swipe up from the bottom of the lock screen.
+** The cleanup policy does not reset language and view mode to the default values (English for language, Standard for view mode).
 
 ====
 
