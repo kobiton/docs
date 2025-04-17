@@ -14,6 +14,7 @@
     "build-docs:ci": "antora antora-playbook-docs.yml",
     "build-widget": "./scripts/minify-css.sh && antora antora-playbook-widget.yml",
     "build-widget:ci": "antora antora-playbook-widget.yml",
+    "pdf": "yarn run build-pdf && ./scripts/beautify-logs.py",
     "local": "yarn run build && ./scripts/beautify-logs.py",
     "server-docs": "http-server build/docs -c-1",
     "server-widget": "http-server build/widget -c-1",
