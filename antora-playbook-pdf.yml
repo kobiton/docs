@@ -1,0 +1,47 @@
+site:
+  title: Kobiton Docs
+  url: https://docs.kobiton.com/
+  keys:
+    google_analytics: 'G-3EDKJJNC3S'
+
+urls:
+  html_extension_style: drop
+
+content:
+  sources:
+    - url: .
+      start_paths: docs
+      branches: HEAD
+
+antora:
+  extensions:
+    - '@antora/pdf-extension'
+    - require: '@antora/lunr-extension'
+      index_latest_only: true
+    - require: '@sntke/antora-mermaid-extension'
+      mermaid_library_url: https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js
+      script_stem: header-scripts
+      mermaid_initialize_options: { startOnLoad: true }
+
+asciidoc:
+  extensions:
+    - '@asciidoctor/tabs'
+  attributes:
+    standalone-only: false
+    cloud-only: true
+
+runtime:
+  log:
+    format: json
+    # noinspection YAMLSchemaValidation
+    destination:
+      file: ./logs/docs-logs.adoc
+      append: false
+
+ui:
+  bundle:
+    url: ui-bundle-docs
+    snapshot: true
+  supplemental_files: './ui-bundle-docs/supplemental_ui'
+output:
+  dir: ./build/docs

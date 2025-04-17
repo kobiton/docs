@@ -9,6 +9,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "./scripts/minify-css.sh && antora antora-playbook-docs.yml && antora antora-playbook-widget.yml",
+    "build-pdf": "./scripts/minify-css.sh && antora antora-playbook-pdf.yml",
     "build-docs": "./scripts/minify-css.sh && antora antora-playbook-docs.yml",
     "build-docs:ci": "antora antora-playbook-docs.yml",
     "build-widget": "./scripts/minify-css.sh && antora antora-playbook-widget.yml",
@@ -31,6 +32,7 @@
   "homepage": "https://github.com/kobiton/documentation#readme",
   "dependencies": {
     "@antora/lunr-extension": "^1.0.0-alpha.8",
+    "@antora/pdf-extension": "^1.0.0-alpha.11",
     "@asciidoctor/tabs": "^1.0.0-beta.5",
     "@mermaid-js/mermaid-cli": "^9.1.7",
     "asciidoctor": "^3.0.2",
