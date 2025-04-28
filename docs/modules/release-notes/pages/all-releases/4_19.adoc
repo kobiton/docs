@@ -1,0 +1,179 @@
+= Kobiton 4.19 Release Notes
+:navtitle: Kobiton 4.19 release notes
+
+_April 26, 2025_
+
+== Reintegrate iOS 12 and 13 support
+
+With this release, we reintegrated support for iOS 12 and 13 to support our customers who have users with these versions.
+
+*Limitations to be aware of:*
+
+*For iOS 12 only:*
+
+* Basic Appium 2 automation is not supported.
+
+*For both iOS 12 and 13:*
+
+* Assistive Touch is not supported.
+
+* Setting location via latitude and longitude does not update the GPS location.
+
+* Cannot reset system settings adjustments for sound (ringer alarm) or brightness.
+
+* Cannot reset View mode to Standard.
+
+* The following XIUM endpoints are not supported: getAppState, mobile:siriCommand.
+
+* Screen rotation is not supported in manual sessions using Lightning mode.
+
+== Audio Injection via Automation (Beta)
+
+We’ve introduced a new audio testing feature that enables remote testing of audio input without physical access to the device and provides audio output files for measuring voice quality for our Enterprise customers. The feature is currently in beta.
+
+*What's new:*
+
+* Inject an audio file into a device to simulate audio input during an automation session.
+
+* Download the device’s audio output after the session for analysis.
+
+* New Appium capabilities and execute methods to support audio testing:
+
+** *Capability:* `'kobiton:bluetooth'`
+
+*** Set to `true` to enable audio injection and/or audio output capture.
+
+*** Requirements: Device must be paired with a Bluetooth bridge server, and audio configuration must be present in `dc.ini`.
+
+** *Execute Methods:*
+
+***  `'kobiton:startaudioinjection'` — Input a HashMap containing a direct link to the audio file to inject. (Audio format: 8 kHz, 16-bit, mono PCM WAV)
+
+*** `'kobiton:pollaudioinjection'` — Returns the status of the audio injection.
+
+*** `'kobiton:stopaudioinjection'` — Stops the audio injection.
+
+* This feature requires additional hardware for Hybrid and On-Prem customers to support the Bluetooth bridge server. Your Account Manager can provide more information if you are interested in testing the Beta release.
+
+*When this feature is used:*
+
+* A microphone icon appears next to the session in the Session List
+
+* Audio Tracks download options for *Injected Audio* and *Output Audio* will appear in Session Overview.
+
+*Current limitations in Beta:*
+
+* Standard mode only.
+
+* Supported in XIUM sessions; Basic Appium 2 not supported.
+
+* One Bluetooth bridge server supports up to two devices; one Mac mini supports one bridge server.
+
+* Audio output capture is supported only for calls, not media apps like _YouTube_.
+
+Not available in Public Cloud devices.
+
+[NOTE]
+This feature is for automation sessions and differs from audio playback in manual sessions (e.g., YouTube audio), which requires a GEM setup for iOS and Orion for Android.
+
+== For Hybrid Customers: Improved deviceConnect Installation and Login Process
+
+deviceConnect (also known as the GigaFox Portal) is where you manage adding and removing real devices. With this release, we have updated the installation and login process to deliver a more consistent user experience across Kobiton software and streamline authentication with Kobiton Cloud services.
+
+*What's new:*
+
+* Updated look and feel with Kobiton branding for a unified experience.
+
+* New login process using your *Kobiton account* and *API Key/password* instead of a standard admin account.
+
+* After the first login, the following fields are now automatically populated in `dc.ini`:
+
+** `Kobiton.ApiBaseUrl`
+
+** `Kobiton.TenantUsername`
+
+** `Kobiton.TenantApiKey`
+
+== Session Resilience and Performance Improvements
+
+We’ve made several enhancements to improve the stability and responsiveness of manual sessions:
+
+* Significantly reduced command latency by optimizing screenshot size and transmission.
+
+* Improved connection reliability by enabling automatic fallbacks.
+
+* Resolved an issue where iOS device pop-ups could cause devices to go offline.
+
+* Enhanced the responsiveness of touch actions in manual sessions.
+
+== Scriptless and Appium Script Generation Improvements
+
+* Prevent false-positive crash validations from appearing in session results:
+
+** Ignore _Siri Search Feedback_ in Crash detector as it is not accurate.
+
+* Generated Appium script fixes:
+
+** Fix an issue with element not found for ParkMobileApp (C#).
+
+** Fix element not found and session timeout (JUnit).
+
+** Fix failure in scroll/swipe test step for LAUSD app in Android.
+
+** Fix incomplete text input when using the SendKeys command for Android Web app.
+
+* Test Case Management fixes:
+
+** Prevent user from converting a session to a test case without any commands.
+
+** Fix issue with Android tag being added to test case incorrectly.
+
+** Fix behavior when select validation in Test Run Matrix.
+
+** Addressed empty purple screen after clicking on _View Test Case_ after converting the test case.
+
+** Improve the user experience of the scroll bar for the _Select individual device_ dropdown when creating test runs.
+
+** Fixed an issue with the system automatically selecting other test steps after user delete some test steps of a test case.
+
+* Addressed _flexCorrect_ issue for Android.
+
+== General improvements and fixes
+
+* Fixed the format of Network Payload Capture (NPC) HAR file to be compatible with K6.
+
+* Added a missing body details of POST request in NPC HAR file for generating loadrunner script via VuGen software.
+
+* Session list - fixed mismatch data for session’s `endedat` between ElasticSearch and Database.
+
+* Properly close an Application after automation script ends in Mixed Sessions.
+
+* Fixed an issue with Appium incorrectly downloads Android app APK despite specifying `'noReset'=true`.
+
+* Fixed app installation via upload file in a manual session if the app file is a `.zip` file that is compressed from a `.ipa` or `.apk` file.
+
+* Fixed an issue preventing unsigned iOS apps from being resigned.
+
+* Address the issue of system still capturing screenshot for typing action even when the setting is disabled.
+
+* Address iOS file open issue related to app signing issue with _deviceConnect_.
+
+* Support detecting Apple password prompt and entitlement popup when the XML capture is turned off.
+
+* Fix UDID search in the _Device List_ filter.
+
+* Removed the _Subscribe to Enterprise_ account banner that displays on the SSO Setup page even when the account is already subscribed to Enterprise.
+
+* If you duplicate a tab for a manual session (copy URL to a new tab), you will now have a popup and will be redirected to the _Device List_ page instead of session ending on first tab.
+
+* Addressed the issue with installing app via URL/upload with the app instrumentation option checked (Image injection).
+
+* API v2 fixes with reservations, sessions, etc.
+
+* Fixed the search function in Application Repository to handle queries with spaces.
+
+* Device Management - fix the count of offline devices.
+
+* Session Explorer - address Inspector issue when resizing/scrolling window.
+
+* Hide the _Voiceover gesture_ option in Manual session as it is no longer supported.
