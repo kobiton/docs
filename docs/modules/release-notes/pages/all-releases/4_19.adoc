@@ -4,7 +4,7 @@
 _April 26, 2025_
 
 [WARNING]
-Standalone/On-Prem customer should not update deviceConnect to 4.19 as it is not compatible with 4.18 and below Portal. Please wait for 4.19S release before updating.
+Standalone/On-Prem customers should not update deviceConnect to version 4.19, as it is not compatible with Portal versions 4.18 and earlier. Please wait for the 4.19S release before proceeding with any updates.
 
 == New OS support
 
@@ -21,9 +21,10 @@ Error: Cannot initialize deviceControl: Could not find a part of the path '/Volu
 
 ====
 
-== Reintegrate iOS 12 and 13 support
+[#_re_enabled_ios_12_and_13_support]
+== Re-enabled iOS 12 and 13 support
 
-With this release, we reintegrated support for iOS 12 and 13 to support our customers who have users with these versions.
+With this release, we re-enabled support for iOS 12 and 13 to support our customers who have users with these versions.
 
 *Limitations to be aware of:*
 
@@ -96,7 +97,7 @@ This feature is for automation sessions and differs from audio playback in manua
 
 == For Hybrid Customers: Improved deviceConnect Installation and Login Process
 
-deviceConnect (also known as the GigaFox Portal) is where you manage adding and removing real devices. With this release, we have updated the installation and login process to deliver a more consistent user experience across Kobiton software and streamline authentication with Kobiton Cloud services.
+deviceConnect (also known as the GigaFox Portal) is installed on a Mac mini and is where you manage adding and removing real devices. With this release, we have updated the installation and login process to deliver a more consistent user experience across Kobiton software and streamline authentication with Kobiton Cloud services.
 
 *What's new:*
 
@@ -132,11 +133,9 @@ We’ve made several enhancements to improve the stability and responsiveness of
 
 * Generated Appium script fixes:
 
-** Fix an issue with element not found for ParkMobileApp (C#).
+** Fix an issue with element not found and session timeout (C# and JUnit).
 
-** Fix element not found and session timeout (JUnit).
-
-** Fix failure in scroll/swipe test step for LAUSD app in Android.
+** Fix failure in scroll/swipe test step for Android app.
 
 ** Fix incomplete text input when using the SendKeys command for Android Web app.
 
@@ -152,46 +151,40 @@ We’ve made several enhancements to improve the stability and responsiveness of
 
 ** Improve the user experience of the scroll bar for the _Select individual device_ dropdown when creating test runs.
 
-** Fixed an issue with the system automatically selecting other test steps after user delete some test steps of a test case.
+** Fixed an issue where deleting test steps caused others to be auto-selected.
 
 * Addressed _flexCorrect_ issue for Android.
 
 == General improvements and fixes
 
-* Fixed the format of Network Payload Capture (NPC) HAR file to be compatible with K6.
+* Updated the HAR file format in Network Payload Capture (NPC) for improved compatibility with load testing tools.
 
-* Added a missing body details of POST request in NPC HAR file for generating loadrunner script via VuGen software.
+* Ensured apps close properly after automation runs in Mixed Sessions.
 
-* Session list - fixed mismatch data for session’s `endedat` between ElasticSearch and Database.
+* Fixed an issue where Appium downloaded the Android app APK even when `'noReset'` was set to true.
 
-* Properly close an Application after automation script ends in Mixed Sessions.
-
-* Fixed an issue with Appium incorrectly downloads Android app APK despite specifying `'noReset'=true`.
-
-* Fixed app installation via upload file in a manual session if the app file is a `.zip` file that is compressed from a `.ipa` or `.apk` file.
+* Fixed an issue preventing app installation in manual sessions when uploading a `.zip` file containing a compressed `.ipa` or `.apk`.
 
 * Fixed an issue preventing unsigned iOS apps from being resigned.
 
-* Address the issue of system still capturing screenshot for typing action even when the setting is disabled.
+* Resolved an issue where the system captured a screenshot during typing actions, even when the setting was disabled.
 
-* Address iOS file open issue related to app signing issue with _deviceConnect_.
+* Addressed an iOS file open issue related to app re-signing.
 
-* Support detecting Apple password prompt and entitlement popup when the XML capture is turned off.
+* Added support for detecting Apple password prompts and entitlement popups when XML capture is disabled.
 
-* Fix UDID search in the _Device List_ filter.
+* Updated UDID filtering in the Device List.
 
-* Removed the _Subscribe to Enterprise_ account banner that displays on the SSO Setup page even when the account is already subscribed to Enterprise.
+* Removed the _Subscribe to Enterprise_ banner from the SSO Setup page.
 
-* If you duplicate a tab for a manual session (copy URL to a new tab), you will now have a popup and will be redirected to the _Device List_ page instead of session ending on first tab.
+* Improved behavior when duplicating a manual session tab—users are now redirected to the Device List page with a popup instead of ending the session in the original tab.
 
-* Addressed the issue with installing app via URL/upload with the app instrumentation option checked (Image injection).
+* Fixed an issue with app installation via URL when instrumentation was enabled.
 
-* API v2 fixes with reservations, sessions, etc.
+* Added API v2 enhancements for reservations and sessions.
 
-* Fixed the search function in Application Repository to handle queries with spaces.
+* Fixed App Repository search to support queries with spaces.
 
-* Device Management - fix the count of offline devices.
+* Fixed an issue in Device Management where the offline device count was incorrect.
 
-* Session Explorer - address Inspector issue when resizing/scrolling window.
-
-* Hide the _Voiceover gesture_ option in Manual session as it is no longer supported.
+* Addressed an Inspector issue in Session Explorer when resizing or scrolling the window.
