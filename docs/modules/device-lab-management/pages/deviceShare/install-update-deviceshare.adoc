@@ -1,0 +1,77 @@
+= Install or update deviceShare
+:navtitle: Install or update deviceShare
+
+Learn how to install and update deviceShare.
+
+[#_before_you_start]
+== Before you start
+
+Take a moment to gather the following information:
+
+* Confirm whether deviceShare is installed on the Mac in your Kobiton environment.If you aren’t sure, follow these instructions:
+
+** Open Terminal and run the below command to check the current version of deviceShare.
++
+[source,bash]
+/usr/local/kobiton/deviceshare/deviceshare --version
+
+** If there is no version returned, then deviceShare is not installed on the system and does not need to be updated. If there is a version returned, note down the version.
+
+[NOTE]
+deviceShare is required for Kobiton to resign an iOS app. It is not required for customers that do not need Kobiton to re-sign their iOS apps. Also, customers with multiple Mac mini hosts may not need deviceShare on every Mac mini.
+
+If you are unsure about any of the above information, contact our support team.
+
+== Download the latest software versions
+
+Access the Mac mini host running Kobiton (either remotely or physically) using the Mac account `deviceconnect`.
+
+Contact the support team for the latest software download links. Launch Chrome and download the latest version of the deviceShare package.
+
+== Perform deviceShare update
+
+Perform the steps here only if deviceShare is installed on the Mac mini host.
+
+Open Finder and navigate to the location of the deviceShare package file.
+
+[IMPORTANT]
+Make sure the update package version is newer than the current deviceShare version you noted in the xref:#_before_you_start[before you start] section.
+
+Double-click the file and follow the on-screen instructions to update deviceShare.
+
+Open *Terminal* and run the below command to confirm the new version of deviceShare after updating:
+
+[source,bash]
+/usr/local/kobiton/deviceshare/deviceshare --version
+
+Restart deviceShare service with this command:
+
+[source,bash]
+sudo /bin/launchctl unload -w /Library/LaunchDaemons/com.kobiton.deviceshare.signing.plist && sleep 5 && sudo /bin/launchctl load -w /Library/LaunchDaemons/com.kobiton.deviceshare.signing.plist
+
+Input the Mac mini’s admin password to continue.
+
+After the deviceShare service restart, check the log of deviceShare service with:
+
+[source,bash]
+tail -100 /usr/local/kobiton/deviceshare/deviceshare_signing.log
+
+If the output is similar to the below, then deviceShare has been restarted successfully:
+
+[source,bash]
+2023-11-27 20:35:12.153474 DEBUG [deviceshare::signing::signingserver] monitor_resource_changes: polling current signing resources
+2023-11-27 20:35:12.154243 DEBUG [deviceshare::signing::keychain] opened keychain /usr/local/kobiton/deviceshare/keychains/deviceshare.keychain
+2023-11-27 20:35:12.194375 DEBUG [deviceshare::task] spawning task: "handle signing message"
+2023-11-27 20:35:12.194469 DEBUG [deviceshare::signing::signingserver] received keepalive message
+2023-11-27 20:35:12.194490 DEBUG [deviceshare::signing::signingserver::drop] debug_drop: deviceshare::signing::signingserver::SigningServer
+2023-11-27 20:35:12.194513 DEBUG [deviceshare::task] detached task completed: "handle signing message"
+2023-11-27 20:35:12.211220 DEBUG [deviceshare::signing::keychain] unlocked keychain /usr/local/kobiton/deviceshare/keychains/deviceshare.keychain
+2023-11-27 20:35:12.212502 DEBUG [deviceshare::signing::keychain] signing_certificates_all: elapsed: 1 ms
+2023-11-27 20:35:12.219155 DEBUG [deviceshare::signing::signingserver] monitor_resource_changes: resources have not changed since 2023-11-27 18:50:12.123651
+
+Run this command to retrieve deviceShare version:
+
+[source,bash]
+/usr/local/kobiton/deviceshare/deviceshare --version
+
+If the deviceShare version is the same as in the update package name, the update completed successfully.
