@@ -1,5 +1,5 @@
 = Update deviceShare
-:navtitle: Install or update deviceShare
+:navtitle: Update deviceShare
 
 Learn how to update deviceShare to a new version.
 
@@ -8,7 +8,7 @@ Learn how to update deviceShare to a new version.
 
 Take a moment to gather the following information:
 
-* Confirm whether deviceShare is installed on the Mac in your Kobiton environment.If you aren’t sure, follow these instructions:
+* Confirm whether deviceShare is installed on the Mac in your Kobiton environment. If you aren’t sure, follow these instructions:
 
 ** Open Terminal and run the below command to check the current version of deviceShare.
 +
@@ -37,7 +37,62 @@ Open Finder and navigate to the location of the deviceShare package file.
 [IMPORTANT]
 Make sure the update package version is newer than the current deviceShare version you noted in the xref:#_before_you_start[before you start] section.
 
-Double-click the file and follow the on-screen instructions to update deviceShare.
+---
+
+The below instructions vary based on the macOS version:
+
+[tabs]
+====
+
+macOS 14::
++
+--
+
+*Do not* double-click the package. Doing so will launch a pop-up that blocks the installation.
+
+image:deviceshare-unidentified-developer.png[width=200,alt="The pop-up with warning about software from unidentified developer"]
+
+Instead, *right-click* the downloaded deviceShare `.pkg` file, then choose *Open*.
+
+image:deviceshare-right-click-to-open.png[width=600,alt="The Open option after right-clicking the package in Finder"]
+
+Select *Open* again in the below pop-up.
+
+image:deviceshare-confirm-open.png[width=200,alt="The confirmation pop-up with the Open option"]
+
+--
+
+macOS 15 and above::
++
+--
+
+Double-click the deviceShare package file.
+
+When the following pop-up displays, *do not* select *Move to Trash*. Select *Done* instead.
+
+image:deviceshare-not-opened.png[width=200,alt="The pop-up that warns about package not opened with the Done and Move to Trash options"]
+
+Open *System Settings* then navigate to *Privacy & Security*.
+
+Under *Security*, select *Open Anyway* in the message `“deviceShare...pkg" was blocked to protect your Mac`.
+
+image:settings-allow-deviceshare.png[width=500,alt="The Privacy and Security screen under Settings with the Open Anyway option for the deviceShare package"]
+
+Select *Open Anyway* again in the confirmation pop-up.
+
+image:deviceshare-open-anyway.png[width=200,alt="The confirmation pop-up with the Open Anyway option"]
+
+The installation should now start.
+
+_The macOS version-specific instructions end here._
+
+--
+
+====
+
+---
+
+After the installation starts, follow the on-screen instructions to install deviceShare.
 
 Open *Terminal* and run the below command to confirm the new version of deviceShare after updating:
 
