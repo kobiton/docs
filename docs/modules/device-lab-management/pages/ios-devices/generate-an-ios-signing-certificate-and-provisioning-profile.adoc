@@ -170,9 +170,16 @@ Add a description for the app ID. For *Bundle ID*, choose *Wildcard*. Input the 
 ** If you need to test apps with bundle ID starting with a custom domain, such as `org.company.appname` or `acme.company.appname`, *create another App ID* and input the custom domain followed by `.\*`. Example: `org.*`, `acme.*`.
 
 [IMPORTANT]
-* An App ID with `com.*` is required for hosting devices, so this must be created.
 
-* Create a new App ID
+====
+
+* Apple do not allow creating App ID with `<Team ID>.*`.
+
+* Create the App ID with `com.\*` as it is always required, then create a new App ID for each custom domain that your apps start with (`org.*`, `acme.*`).
+
+* Generate a new provisioning profile for each App ID that is created, as you can select only 1 App ID when creating a profile.
+
+====
 
 image:ios-signing-certificate-choose-wildcard-option-closeup.png[width=1000,alt="A closeup to choose Wildcard option"]
 
