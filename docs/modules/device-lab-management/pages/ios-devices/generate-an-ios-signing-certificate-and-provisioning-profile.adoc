@@ -161,12 +161,18 @@ image:ios-signing-certificate-select-type-closeup.png[width=1000,alt="A closeup 
 
 Add a description for the app ID. For *Bundle ID*, choose *Wildcard*. Input the appropriate Bundle ID into the box according to the use cases below:
 
-* If you do not use Kobiton re-signing service, input `com.mobilelabsinc.*`.
+* If you do not use Kobiton re-signing service, input `com.*`.
 
-* If you use Kobiton re-signing service and want to install any app, input `com.*`.
+* If you use Kobiton re-signing service:
 
-[NOTE]
-If you are unsure, input `com.*` as it will work in most cases.
+** Input `com.*`. This is required for signing the Kobiton iOS agent app, and can be used for any app that has bundle ID starting with `com.` such as `com.company.appname`.
+
+** If you need to test apps with bundle ID starting with a custom domain, such as `org.company.appname` or `acme.company.appname`, *create another App ID* and input the custom domain followed by `.\*`. Example: `org.*`, `acme.*`.
+
+[IMPORTANT]
+* An App ID with `com.*` is required for hosting devices, so this must be created.
+
+* Create a new App ID
 
 image:ios-signing-certificate-choose-wildcard-option-closeup.png[width=1000,alt="A closeup to choose Wildcard option"]
 
