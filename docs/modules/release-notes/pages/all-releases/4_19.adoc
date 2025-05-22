@@ -1,0 +1,190 @@
+= Kobiton 4.19 Release Notes
+:navtitle: Kobiton 4.19 release notes
+
+_April 26, 2025_
+
+[WARNING]
+Standalone/On-Prem customers should not update deviceConnect to version 4.19, as it is not compatible with Portal versions 4.18 and earlier. Please wait for the 4.19S release before proceeding with any updates.
+
+== New OS support
+
+* Xcode 16.3. Upgrade deviceConnect to 4.19 to ensure support.
+
+[IMPORTANT]
+====
+
+Xcode 16.3 introduces some changes to the Developer Disk Images (DDI) location, but may still work with deviceConnect 4.18.3 if the DDI is already cached by deviceConnect.
+
+If you see the below error on iOS 17.4 and later after rebooting devices or restarting services, upgrade to deviceConnect 4.19 to resolve the DDI issue.
+[source]
+Error: Cannot initialize deviceControl: Could not find a part of the path '/Volumes/Xcode_iOS_DDI_Personalized/Restore/BuildManifest.plist'.
+
+====
+
+[#_re_enabled_ios_12_and_13_support]
+== Re-enabled iOS 12 and 13 support
+
+With this release, we re-enabled support for iOS 12 and 13 to support our customers who have users with these versions.
+
+*Limitations to be aware of:*
+
+*For iOS 12 only:*
+
+* Basic Appium 2 automation is not supported.
+
+*For both iOS 12 and 13:*
+
+* Assistive Touch is not supported.
+
+* Setting location via latitude and longitude does not update the GPS location.
+
+* Cannot reset system settings adjustments for sound (ringer alarm) or brightness.
+
+* Cannot reset View mode to Standard.
+
+* The following XIUM endpoints are not supported: getAppState, mobile:siriCommand.
+
+* Screen rotation is not supported in manual sessions using Lightning mode.
+
+== Audio Injection via Automation (Beta)
+
+We’ve introduced a new audio testing feature that enables remote testing of audio input without physical access to the device and provides audio output files for measuring voice quality for our Enterprise customers. The feature is currently in beta.
+
+*What's new:*
+
+* Inject an audio file into a device to simulate audio input during an automation session.
+
+* Download the device’s audio output after the session for analysis.
+
+* New Appium capabilities and execute methods to support audio testing:
+
+** *Capability:* `'kobiton:bluetooth'`
+
+*** Set to `true` to enable audio injection and/or audio output capture.
+
+*** Requirements: Device must be paired with a Bluetooth bridge server, and audio configuration must be present in `dc.ini`.
+
+** *Execute Methods:*
+
+***  `'kobiton:startaudioinjection'` — Input a HashMap containing a direct link to the audio file to inject. (Audio format: 8 kHz, 16-bit, mono PCM WAV)
+
+*** `'kobiton:pollaudioinjection'` — Returns the status of the audio injection.
+
+*** `'kobiton:stopaudioinjection'` — Stops the audio injection.
+
+* This feature requires additional hardware for Hybrid and On-Prem customers to support the Bluetooth bridge server. Your Account Manager can provide more information if you are interested in testing the Beta release.
+
+*When this feature is used:*
+
+* A microphone icon appears next to the session in the Session List
+
+* Audio Tracks download options for *Injected Audio* and *Output Audio* will appear in Session Overview.
+
+*Current limitations in Beta:*
+
+* Standard mode only.
+
+* Supported in XIUM sessions; Basic Appium 2 not supported.
+
+* One Bluetooth bridge server supports up to two devices; one Mac mini supports one bridge server.
+
+* Audio output capture is supported only for calls, not media apps like _YouTube_.
+
+Not available in Public Cloud devices.
+
+[NOTE]
+This feature is for automation sessions and differs from audio playback in manual sessions (e.g., YouTube audio), which requires a GEM setup for iOS and Orion for Android.
+
+== For Hybrid Customers: Improved deviceConnect Installation and Login Process
+
+deviceConnect (also known as the GigaFox Portal) is installed on a Mac mini and is where you manage adding and removing real devices. With this release, we have updated the installation and login process to deliver a more consistent user experience across Kobiton software and streamline authentication with Kobiton Cloud services.
+
+*What's new:*
+
+* Updated look and feel with Kobiton branding for a unified experience.
+
+* New login process using your *Kobiton account* and *API Key/password* instead of a standard admin account.
+
+* After the first login, the following fields are now automatically populated in `dc.ini`:
+
+** `Kobiton.ApiBaseUrl`
+
+** `Kobiton.TenantUsername`
+
+** `Kobiton.TenantApiKey`
+
+== Session Resilience and Performance Improvements
+
+We’ve made several enhancements to improve the stability and responsiveness of manual sessions:
+
+* Significantly reduced command latency by optimizing screenshot size and transmission.
+
+* Improved connection reliability by enabling automatic fallbacks.
+
+* Resolved an issue where iOS device pop-ups could cause devices to go offline.
+
+* Enhanced the responsiveness of touch actions in manual sessions.
+
+== Scriptless and Appium Script Generation Improvements
+
+* Prevent false-positive crash validations from appearing in session results:
+
+** Ignore _Siri Search Feedback_ in Crash detector as it is not accurate.
+
+* Generated Appium script fixes:
+
+** Fix an issue with element not found and session timeout (C# and JUnit).
+
+** Fix failure in scroll/swipe test step for Android app.
+
+** Fix incomplete text input when using the SendKeys command for Android Web app.
+
+* Test Case Management fixes:
+
+** Prevent user from converting a session to a test case without any commands.
+
+** Fix issue with Android tag being added to test case incorrectly.
+
+** Fix behavior when select validation in Test Run Matrix.
+
+** Addressed empty purple screen after clicking on _View Test Case_ after converting the test case.
+
+** Improve the user experience of the scroll bar for the _Select individual device_ dropdown when creating test runs.
+
+** Fixed an issue where deleting test steps caused others to be auto-selected.
+
+* Addressed _flexCorrect_ issue for Android.
+
+== General improvements and fixes
+
+* Updated the HAR file format in Network Payload Capture (NPC) for improved compatibility with load testing tools.
+
+* Ensured apps close properly after automation runs in Mixed Sessions.
+
+* Fixed an issue where Appium downloaded the Android app APK even when `'noReset'` was set to true.
+
+* Fixed an issue preventing app installation in manual sessions when uploading a `.zip` file containing a compressed `.ipa` or `.apk`.
+
+* Fixed an issue preventing unsigned iOS apps from being resigned.
+
+* Resolved an issue where the system captured a screenshot during typing actions, even when the setting was disabled.
+
+* Addressed an iOS file open issue related to app re-signing.
+
+* Added support for detecting Apple password prompts and entitlement popups when XML capture is disabled.
+
+* Updated UDID filtering in the Device List.
+
+* Removed the _Subscribe to Enterprise_ banner from the SSO Setup page.
+
+* Improved behavior when duplicating a manual session tab—users are now redirected to the Device List page with a popup instead of ending the session in the original tab.
+
+* Fixed an issue with app installation via URL when instrumentation was enabled.
+
+* Added API v2 enhancements for reservations and sessions.
+
+* Fixed App Repository search to support queries with spaces.
+
+* Fixed an issue in Device Management where the offline device count was incorrect.
+
+* Addressed an Inspector issue in Session Explorer when resizing or scrolling the window.
