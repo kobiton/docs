@@ -40,6 +40,10 @@ Paste the following from your Kobiton settings:
 
 Save your changes and continue.
 
+By default, the application is not enabled. You need to manually enable it.
+
+image:ping-enable-application.png[width=450, "Enabled Kobiton SSO application in Ping Identity with the active toggle switch"]
+
 == Map Attributes and Download Certificate
 
 Open your newly created application and navigate to the *Attribute Mappings* tab.
@@ -54,7 +58,7 @@ Select the *edit icon* and add the following mappings:
 | firstName         | Given Name
 | lastName          | Family Name
 | phoneNumber       | Mobile Phone
-| memberOf          | Group IDs
+| memberOf          | Group Names
 |===
 
 image:ping-attribute-mappings.png[width=600, "Mapping interface aligning Kobiton user attributes with PingOne fields such as User ID and Email Address."]
