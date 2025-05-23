@@ -1,0 +1,85 @@
+= Use Ping Identity for SSO authentication
+:navtitle: Use Ping Identity
+
+Learn how to use link:https://www.pingidentity.com/[Ping Identity,window=read-later] for Single Sign-On (SSO) authentication with SAML 2.0 so members of your organization can sign in to Kobiton using their Ping credentials.
+
+[#_get_kobiton_parameters]
+== Get Kobiton parameters
+
+include::partial$sso-authentication/get-kobiton-parameters.adoc[]
+
+== Create a Ping Identity SSO Application
+
+Log into *Ping Identity* as an administrator.
+
+Select *Administrators* to select the default Administrators environment, or choose another environment.
+
+Navigate to *Applications* -> *Applications* and select the *plus* icon.
+
+In the *Add Application* page, enter an *Application name* (e.g., `Kobiton SSO`) and choose *SAML Application* under Application Type.
+
+Select *Configure*.
+
+On the configuration page, input the following:
+
+* Select *Manually Enter*.
+* *ACS URL*: Paste Kobiton’s _Reply (ACS) URL_.
+* *Entity ID*: Paste Kobiton’s _Entity ID (Audience URL)_.
+
+Select *Save*.
+
+== Map Attributes and Download Certificate
+
+Open the newly created application and go to the *Attribute Mappings* tab.
+
+Select the *edit* icon and add the following mappings:
+
+[cols="1,1",options="header"]
+|===
+|Kobiton Attribute |PingOne Attribute
+|saml_subject |User ID (added by default)
+|email        |Email Address
+|firstName    |Given Name
+|lastName     |Family Name
+|phoneNumber  |Mobile Phone
+|memberOf     |Group IDs
+|===
+
+Go to the *Overview* tab and click *Download Signing Certificate* under *Connection Details*.
+
+Choose the *X.509 PEM* format.
+
+*Important* :Rename the file from `<name>.crt` to `cert.pem`.
+
+== Create a Matching User in Ping Identity
+
+You must create a Ping user with the *same email address* as your *Kobiton admin account*. Follow the Ping Identity https://docs.pingidentity.com/pingone/directory/p1_adduser.html[official guide,window=read-later] to add a user.
+
+[IMPORTANT]
+====
+Log in at least once with the created account via the Ping Console to ensure that it works properly.
+====
+
+== Create a Group and Assign Access
+
+Ping Identity does *not* support direct app-user assignments. You must use *groups*:
+
+Create a group.
+
+Assign your new user to this group.
+
+Return to the Ping SSO application, go to the *Access* tab, and click *Edit*.
+
+Under *Groups*, select the group you created.
+
+Click *Save*.
+
+== Add IdP parameters and certificate to Kobiton
+
+include::partial$sso-authentication/add-idp-parameters-and-certificate-to-kobiton.adoc[]
+
+include::partial$sso-authentication/sso-provider-url-mappings.adoc[tag=ping]
+
+== Verify and save configuration
+
+include::partial$sso-authentication/verify-and-save-configuration.adoc[]
