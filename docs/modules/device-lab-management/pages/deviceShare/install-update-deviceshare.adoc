@@ -8,6 +8,11 @@ Learn how to update deviceShare to a new version.
 
 Take a moment to gather the following information:
 
+* Confirm whether your organization uses deviceShare.
+
+[NOTE]
+deviceShare is an optional service to re-sign an iOS app. It is not required for customers that do not need Kobiton to re-sign their iOS apps. Also, customers with multiple Mac mini hosts may not need deviceShare on every Mac mini.
+
 * Confirm whether deviceShare is installed on the Mac in your Kobiton environment. If you aren’t sure, follow these instructions:
 
 ** Open Terminal and run the below command to check the current version of deviceShare.
@@ -15,16 +20,13 @@ Take a moment to gather the following information:
 [source,bash]
 /usr/local/kobiton/deviceshare/deviceshare --version
 
-** If there is no version returned, then deviceShare is not installed on the system and does not need to be updated. If there is a version returned, note down the version.
-
-[NOTE]
-deviceShare is required for Kobiton to resign an iOS app. It is not required for customers that do not need Kobiton to re-sign their iOS apps. Also, customers with multiple Mac mini hosts may not need deviceShare on every Mac mini.
+** If no version is returned, deviceShare is not installed, and update instructions do not apply. If a version is returned, make a note of it.
 
 If you are unsure about any of the above information, contact our support team.
 
 == Download the latest software versions
 
-Access the Mac mini host running Kobiton (either remotely or physically) using the Mac account `deviceconnect`.
+Access the Mac mini host running Kobiton (either remotely or physically) using the Mac user `deviceconnect`.
 
 Contact the support team for the latest software download links. Launch Chrome and download the latest version of the deviceShare package.
 
