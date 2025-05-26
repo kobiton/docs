@@ -1,0 +1,111 @@
+= Use Ping Identity for SSO authentication
+:navtitle: Use Ping Identity
+
+Learn how to use link:https://www.pingidentity.com/[Ping Identity,window=read-later] for Single Sign-On (SSO) authentication with SAML 2.0 so members of your organization can sign in to Kobiton using their Ping Identity credentials.
+
+== What You’ll Need
+
+Before you begin, make sure you have:
+
+* An administrator account in both Kobiton and Ping Identity.
+* An active environment in Ping Identity.
+
+[#_get_kobiton_parameters]
+== Get Kobiton parameters
+
+include::partial$sso-authentication/get-kobiton-parameters.adoc[]
+
+== Create a Ping Identity SSO Application
+
+Log in to your Ping Identity admin account.
+
+From the dashboard, choose the default *Administrators* environment or select another if needed.
+
+Go to *Applications*, then select the plus icon to add a new app.
+
+image:ping-applications-menu.png[width=600, "Ping Identity console showing a list of configured applications with their names and IDs."]
+
+On the setup screen, enter a name for your application, such as `Kobiton SSO`, and choose *SAML Application* as the application type.
+
+image:ping-add-application-first-page.png[width=600, "Form to add a new application named 'Kobiton SSO' with type selection options like SAML, OIDC, and more."]
+
+Select *Configure*, then select *Manually Enter* on the configuration page.
+
+image:ping-add-application-second-page.png[width=600, "Manual SAML configuration screen showing fields for ACS URL and Entity ID."]
+
+Paste the following from your Kobiton settings:
+
+* *Reply (or SSO, or ACS) URL* into the *Reply URL* field
+* *Entity ID (or Audience URL)* into the *Entity ID* field
+
+Save your changes and continue.
+
+By default, the application is not enabled. You need to manually enable it.
+
+image:ping-enable-application.png[width=450, "Enabled Kobiton SSO application in Ping Identity with the active toggle switch"]
+
+== Map Attributes and Download Certificate
+
+Open your newly created application and navigate to the *Attribute Mappings* tab.
+
+Select the *edit icon* and add the following mappings:
+
+[options="header"]
+|===
+| Kobiton Attribute | PingOne Attribute
+| saml_subject      | User ID (default)
+| email             | Email Address
+| firstName         | Given Name
+| lastName          | Family Name
+| phoneNumber       | Mobile Phone
+| memberOf          | Group Names
+|===
+
+image:ping-attribute-mappings.png[width=600, "Mapping interface aligning Kobiton user attributes with PingOne fields such as User ID and Email Address."]
+
+Next, go to the *Overview* tab and note down the following fields to fill in the Kobiton SSO settings later:
+
+* *Issuer ID*
+* *Single Signon Service*
+* *Single Logout Service*
+
+image:ping-overview.png[width=600, "Overview tab displaying application identifiers and SSO connection URLs for the Kobiton integration."]
+
+Download the *Signing Certificate* in *X.509 PEM* format.
+
+image:ping-download-certificate.png[width=600, "Connection details screen with URLs and a dropdown for downloading the signing certificate in various formats."]
+
+Rename the downloaded file to `cert.pem`.
+
+== Create a User and Group in Ping Identity
+
+Create a new user in Ping Identity with the same email address as your Kobiton admin account.
+
+Then create a group and assign this user to the group.
+
+Return to the Ping SSO application, go to the *Access* tab, and click *Edit*.
+
+Under *Groups*, select the group you just created and save your changes.
+
+[TIP]
+====
+
+Refer to the Ping Identity guides on how to:
+
+* https://docs.pingidentity.com/pingone/directory/p1_adduser.html[Add a user,window=read-later]
+
+* https://docs.pingidentity.com/pingone/directory/p1_managing_groups.html#creating-a-group[Create a group,window=read-later]
+
+* https://docs.pingidentity.com/pingone/directory/p1_managing_groups.html#managing-group-membership[Manage group membership,window=read-later]
+
+====
+
+== Add IdP parameters and certificate to Kobiton
+
+include::partial$sso-authentication/add-idp-parameters-and-certificate-to-kobiton.adoc[]
+
+include::partial$sso-authentication/sso-provider-url-mappings.adoc[tag=ping]
+
+== Verify and save configuration
+
+include::partial$sso-authentication/verify-and-save-configuration.adoc[]
