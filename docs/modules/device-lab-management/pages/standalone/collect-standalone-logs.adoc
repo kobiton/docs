@@ -1,14 +1,14 @@
-= Retrieve logs from Standalone On-Prem
-:navtitle: Retrieve logs from Standalone On-Prem
+= Retrieve logs from Standalone/On-Prem
+:navtitle: Retrieve logs
 
 Learn how to gather logs from a Standalone/On-Prem environment for troubleshooting.
 
 [IMPORTANT]
-This guide is only applicable to customer-hosted Standalone/On-Prem deployments running version 4.11.2S and later.
+This guide is only applicable to customer-hosted Standalone/On-Prem deployments.
 
 == Gather system and Portal logs on the Dell server
 
-Remote access to the Mac Mini inside the Kobiton cart.
+Remote access to the Mac mini inside the Kobiton cart.
 
 Launch the *Terminal* app, then access the Dell server by running the below command (replace `<Dell’s IP>` with the private IP of the Dell server):
 
@@ -49,9 +49,9 @@ Wait until all the logs are collected. When the log collection finishes, the exa
 
 In the above example, the path of the log file is `/var/log/kobiton/k4s-20240410-034416.tgz`. Note down this path.
 
-Go back to the Terminal app (in the Mac Mini), open a new Terminal window.
+Go back to the Terminal app (in the Mac mini), open a new Terminal window.
 
-Run the below command to copy the file from the Dell server to `/Users/deviceconnect/Downloads/` in the Mac Mini (replace `<Dell’s IP>` with the private IP of the Dell server).
+Run the below command to copy the file from the Dell server to `/Users/deviceconnect/Downloads/` in the Mac mini (replace `<Dell’s IP>` with the private IP of the Dell server).
 
 [source,shell]
 scp kobitonSupport@<Dell's IP>:/path/to/log/k4s-log.tgz /Users/deviceconnect/Downloads
@@ -64,7 +64,7 @@ Replace `/path/to/log/k4s-log.tgz` with the exact path to the actual log file.
 scp kobitonSupport@192.168.35.75:/var/log/kobiton/k4s-20240410-034416.tgz /Users/deviceconnect/Downloads
 ----
 
-Copy the log file in the Mac Mini to your computer and send the log file to Kobiton support.
+Copy the log file in the Mac mini to your computer and send the log file to Kobiton support.
 
 === Information included in the Standalone system and Portal logs
 
@@ -89,7 +89,7 @@ This method typically only applies to system and Portal logs from Dell server. M
 
 === Split a large Dell log file into smaller files
 
-Assume that you have transferred the Dell log file to the Mac Mini at `/Users/deviceconnect/Downloads/k4s-20240410-034416.tgz`. In the below commands (in Terminal in Mac Mini), replace `k4s-20240410-034416.tgz` with the correct filename.
+Assume that you have transferred the Dell log file to the Mac mini at `/Users/deviceconnect/Downloads/k4s-20240410-034416.tgz`. In the below commands (in Terminal in Mac mini), replace `k4s-20240410-034416.tgz` with the correct filename.
 
 Split the logs file into smaller chunks using the below Terminal command in the Mac mini.
 
@@ -118,8 +118,8 @@ To concatenate the smaller files back into one large file, use:
 cat k4s-20250205-024634-* > k4s-20250205-024634.tgz
 ----
 
-* `k4s-20250205-024634-*`: matches all files that start with the prefix `k4s-20250205-024634-` (the prefix you used when splitting the file).
-* `k4s-20250205-024634.tgz`: the filename for concatenated output. *The extension needs to be the same as the original file, i.e. `.tgz`.*
+* `k4s-20250205-024634-*`: matches all files that start with the prefix `k4s-20250205-024634-` (the prefix you used when splitting the file)
+* `k4s-20250205-024634.tgz`: the filename for concatenated output *(The extension needs to be the same as the original file, i.e. `.tgz`)*
 
 (Optional) To ensure the concatenation was successful, you can compare the checksum of the original and concatenated files. The output of both commands below needs to be the same:
 
@@ -129,7 +129,7 @@ md5 -q original_log_file.tgz
 md5 -q concatenated_log_file.tgz
 ----
 [#gather-logs-mac-mini]
-== Gather logs on the Mac Mini host
+== Gather logs on the Mac mini host
 
 Follow the instructions for collecting xref:deviceConnect/retrieve-deviceconnect-logs.adoc[deviceConnect logs,window=read-later] from the Mac mini host.
 
