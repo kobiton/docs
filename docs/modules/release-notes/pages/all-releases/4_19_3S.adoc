@@ -124,6 +124,8 @@ We’ve made several enhancements to improve the stability and responsiveness of
 
 == Scriptless and Appium Script Generation Improvements
 
+* Reduce execution time and increase success rate of Kobiton Scriptless revisit sessions.
+
 * Prevent false-positive crash validations from appearing in session results:
 
 ** Ignore _Siri Search Feedback_ in Crash detector as it is not accurate.
@@ -185,3 +187,11 @@ We’ve made several enhancements to improve the stability and responsiveness of
 * Fixed an issue in Device Management where the offline device count was incorrect.
 
 * Addressed an Inspector issue in Session Explorer when resizing or scrolling the window.
+
+* Optimized RAM usage on the Dell server (GEM) for Lightning mode sessions.
+
+* Fixed disconnection issue in manual sessions when Lightning mode cannot be enabled.
+
+* Increase video quality for manual sessions where Lightning mode cannot be enabled.
+
+* Fixed the `only one gesture can be performed at a time` error in XIUM iOS automation sessions.
