@@ -110,6 +110,21 @@ deviceConnect (also known as the GigaFox Portal) is installed on a Mac mini and 
 
 ** `Kobiton.TenantApiKey`
 
+See the below quick instructions for logging into the deviceConnect Viewer after installing or updating to deviceConnect 4.19.3:
+
+[IMPORTANT]
+Make sure the Portal on the Standalone server has been updated to 4.19.3S before attempting to access the deviceConnect Viewer.
+
+* Make sure *Log in to your custom domain* is checked.
+
+* Input the following to the *Portal URL* field: `[http|https]://<GEM-IP-or-domain>:3001`. See the below examples:
+
+** Standalone Portal IP address without SSL: the Portal URL should be `\http://192.168.35.86:3001`.
+
+** Standalone Portal domain name with SSL: the Portal URL should be `\https://www.acme.local:3001`.
+
+* Input the *username* and *API Key* of the Kobiton account and select *Login*.
+
 == Session Resilience and Performance Improvements
 
 We’ve made several enhancements to improve the stability and responsiveness of manual sessions:
