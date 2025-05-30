@@ -1,18 +1,18 @@
 = Kobiton 4.19.3 Release Notes
 :navtitle: Kobiton 4.19.3 release notes
 
-_May , 2025_
+_May 23, 2025_
 
 == New OS support
 
-* Xcode 16.3. Upgrade deviceConnect to 4.19 to ensure support.
+* Xcode 16.3. Upgrade deviceConnect to 4.19.3 to ensure support.
 
 [IMPORTANT]
 ====
 
 Xcode 16.3 introduces some changes to the Developer Disk Images (DDI) location, but may still work with deviceConnect 4.18.3 if the DDI is already cached by deviceConnect.
 
-If you see the below error on iOS 17.4 and later after rebooting devices or restarting services, upgrade to deviceConnect 4.19 to resolve the DDI issue.
+If you see the below error on iOS 17.4 and later after rebooting devices or restarting services, upgrade to deviceConnect 4.19.3 to resolve the DDI issue.
 [source]
 Error: Cannot initialize deviceControl: Could not find a part of the path '/Volumes/Xcode_iOS_DDI_Personalized/Restore/BuildManifest.plist'.
 
@@ -94,7 +94,7 @@ This feature is for automation sessions and differs from audio playback in manua
 
 == Improved deviceConnect Installation and Login Process
 
-deviceConnect (also known as the GigaFox Portal) is installed on a Mac mini and is where you manage adding and removing real devices. With this release, we have updated the installation and login process to deliver a more consistent user experience across Kobiton software and streamline authentication with Kobiton Cloud services.
+deviceConnect (also known as the GigaFox Portal) is installed on a Mac mini and is where you manage adding and removing real devices. With this release, we have updated the installation and login process to deliver a more consistent user experience across Kobiton software and streamline authentication with Kobiton Standalone services.
 
 *What's new:*
 
