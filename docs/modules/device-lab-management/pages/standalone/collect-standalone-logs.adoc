@@ -1,0 +1,136 @@
+= Retrieve logs from Standalone/On-Prem
+:navtitle: Retrieve logs
+
+Learn how to gather logs from a Standalone/On-Prem environment for troubleshooting.
+
+[IMPORTANT]
+This guide is only applicable to customer-hosted Standalone/On-Prem deployments.
+
+== Gather system and Portal logs on the Dell server
+
+Remote access to the Mac mini inside the Kobiton cart.
+
+Launch the *Terminal* app, then access the Dell server by running the below command (replace `<Dell’s IP>` with the private IP of the Dell server):
+
+[source,shell]
+----
+ssh kobitonSupport@<Dell's IP>
+----
+
+If you do not have the password of `kobitonSupport`, please contact Kobiton to access the machine. Note that this password may have been changed as part of post-installation tasks.
+
+Switch to the `root` user:
+
+[source,shell]
+----
+sudo su -
+----
+
+The shell becomes the remote shell on the Dell server, then run the below command to collect all necessary Dell server logs:
+
+[source,shell]
+----
+bash /ml/var/kobiton-op/k3s/scripts/utils/collect-logs.sh
+----
+
+* The above command will collect logs of 3 most recent days by default. You can specify how long you would like to collect using the below command  (7 days, for example):
+
+[source,shell]
+----
+bash /ml/var/kobiton-op/k3s/scripts/utils/collect-logs.sh 7
+----
+
+Wait until all the logs are collected. When the log collection finishes, the exact path of the logs file will be printed out in the output:
+
+[source,shell]
+----
+✅ Logs collection completed. You can find the logs file at `/var/log/kobiton/k4s-20240410-034416.tgz`
+----
+
+In the above example, the path of the log file is `/var/log/kobiton/k4s-20240410-034416.tgz`. Note down this path.
+
+Go back to the Terminal app (in the Mac mini), open a new Terminal window.
+
+Run the below command to copy the file from the Dell server to `/Users/deviceconnect/Downloads/` in the Mac mini (replace `<Dell’s IP>` with the private IP of the Dell server).
+
+[source,shell]
+scp kobitonSupport@<Dell's IP>:/path/to/log/k4s-log.tgz /Users/deviceconnect/Downloads
+
+Replace `/path/to/log/k4s-log.tgz` with the exact path to the actual log file.
+
+.Example
+[source,shell]
+----
+scp kobitonSupport@192.168.35.75:/var/log/kobiton/k4s-20240410-034416.tgz /Users/deviceconnect/Downloads
+----
+
+Copy the log file in the Mac mini to your computer and send the log file to Kobiton support.
+
+=== Information included in the Standalone system and Portal logs
+
+* Network configuration, including IP, DNS, and gateway of the Dell server.
+* Disk and RAM usage
+* Ubuntu operating system version
+* Kobiton Portal logs
+* Kobiton Portal version
+* Kobiton Portal configuration
+
+[NOTE]
+The Standalone system and Portal logs do not include Lightning mode (`gigacap`) logs. Obtain `gigacap` log from the xref:#gather-logs-mac-mini[deviceConnect logs].
+
+== (Optional) Split and merge large log files
+
+[NOTE]
+====
+Some organizations restrict file transfer if the file size exceeds 1GB. To work around this, split large files into smaller chunks, send them separately, and then reassemble them.
+
+This method typically only applies to system and Portal logs from Dell server. Mac mini host logs rarely exceeds 1GB.
+====
+
+=== Split a large Dell log file into smaller files
+
+Assume that you have transferred the Dell log file to the Mac mini at `/Users/deviceconnect/Downloads/k4s-20240410-034416.tgz`. In the below commands (in Terminal in Mac mini), replace `k4s-20240410-034416.tgz` with the correct filename.
+
+Split the logs file into smaller chunks using the below Terminal command in the Mac mini.
+
+[source,shell]
+----
+split -b 900M k4s-20250205-024634.tgz k4s-20250205-024634-
+----
+
+Explanation of the options in the above command:
+
+* `-b 900M`: Specifies the size of each split file (900 Megabytes in this case). *Adjust this to stay within the required file size limit.*
+* `k4s-20240410-034416.tgz`: Path to the log file we want to split. *Replace this with the correct path to the file.*
+* `k4s-20240410-034416-`: The prefix for the names of the smaller files. You can name it whatever you want.
+
+The example command above will create several files named `k4s-20250205-024634-aa`, `k4s-20250205-024634-ab`, `k4s-20250205-024634-ac`, etc. while keeping the original `k4s-20250205-024634.tgz` file intact. Send all those chunks to Kobiton support.
+
+=== Concatenate the files and verify the concatenation
+
+[NOTE]
+These steps are usually done by Kobiton support, but you can try this to make sure the log files are not corrupted during splitting.
+
+To concatenate the smaller files back into one large file, use:
+
+[source,shell]
+----
+cat k4s-20250205-024634-* > k4s-20250205-024634.tgz
+----
+
+* `k4s-20250205-024634-*`: matches all files that start with the prefix `k4s-20250205-024634-` (the prefix you used when splitting the file)
+* `k4s-20250205-024634.tgz`: the filename for concatenated output *(The extension needs to be the same as the original file, i.e. `.tgz`)*
+
+(Optional) To ensure the concatenation was successful, you can compare the checksum of the original and concatenated files. The output of both commands below needs to be the same:
+
+[source,shell]
+----
+md5 -q original_log_file.tgz
+md5 -q concatenated_log_file.tgz
+----
+[#gather-logs-mac-mini]
+== Gather logs on the Mac mini host
+
+Follow the instructions for collecting xref:deviceConnect/retrieve-deviceconnect-logs.adoc[deviceConnect logs,window=read-later] from the Mac mini host.
+
+If the Mac mini host is operating in Lightning mode, the deviceConnect logs also include the Lightning mode (`gigacap`) logs of the Dell server under the folder `gigacap`.
