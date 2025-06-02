@@ -6,157 +6,7 @@
 
 * Find the UDID of the device and note it down.
 
-* Make sure the Mac mini host has the Xcode version that is compatible with the iOS/iPadOS version of the device.
-
-* Export the appropriate xref:ios-devices/generate-an-ios-signing-certificate-and-provisioning-profile.adoc#_generate_a_signing_certificate[signing certificates] (`.p12`) and xref:ios-devices/generate-an-ios-signing-certificate-and-provisioning-profile.adoc#_generate_a_provisioning_profile[provisioning profiles] (`.mobileprovision`) for the UDID of the device.
-
-* Download Apple Worldwide Relations (WWDR) Intermediate certificate file (`AppleWWDRCAG3.cer`) from https://www.apple.com/certificateauthority/AppleWWDRCAG3.cer[this link].
-
-== Import developer certificates and provisioning profiles
-
-Before proceeding, make sure you already have xref:#_before_you_start[exported and downloaded] the following files:
-
-* The `.p12` signing certificate(s).
-
-* The `.mobileprovison` provisioning profile(s).
-
-* The `AppleWWDRCAG3.cer` file.
-
-Follow each subsection below in order.
-
-=== Import developer certificates
-
-[IMPORTANT]
-These steps require accessing the Mac mini host’s screen and cannot be done via SSH.
-
-Open **Terminal** on the Mac mini host and enter the following command:
-
-----
-sudo security add-certificates -k /Library/Keychains/System.keychain <Path to the cert>/AppleWWDRCAG3.cer
-----
-
-Replace *<Path to the cert>* with the full path to the folder containing the Apple WWDR Intermediate certificate file (`AppleWWDRCAG3.cer`). Enter the administration password if required.
-
-Next, enter the following command, replacing *<Path to the cert>* with the full path to the `.p12` certificate files and *<Name of the cert>* with the filename.
-
-----
-sudo security import <Path to the cert>/<Name of the cert>.p12 -k /Library/Keychains/System.keychain -A
-----
-
-Enter the certificate password. If the certificate has no password, leave the field blank and click **OK**.
-
-image::device-lab-management:device-lab-management-ios-add-ios-certificate-password.PNG[width=300,alt="Enter Password for Kobiton"]
-
-Repeat the above commands for each `.p12` file if there are multiple files.
-
-=== Import provisioning profiles to deviceConnect
-
-[IMPORTANT]
-Before importing, if your deployment include multiple Mac mini hosts, make sure the Mac mini host has deviceConnect installed by opening the Chrome browser, navigating to the address: *localhost/#/System/IOS*, and logging in.
-
-Only proceed if you can access the page and log in. Else, move on to the next Mac mini host.
-
-Under **Available signing certificates**, you can see all imported certificates from the above step.
-
-Click **Choose File** under **Upload provisioning profile**.
-
-image::device-lab-management:device-lab-management-ios-add-ios-localhost-system-ios.PNG[width=600,alt="Loggin into GigaFox local host"]
-
-Select a *.mobileprovision* file, and click **Open** to upload it.
-
-image::device-lab-management:device-lab-management-ios-add-ios-upload-provisioning-profile.PNG[width=600,alt="Choosing and uploading provisioning profile"]
-
-The uploaded profile should display under **Installed provisioning profiles**:
-
-image::device-lab-management:device-lab-management-ios-add-ios-installed-provisioning-profile.PNG[width=600,alt="Checking uploaded profile under installed provisioning profiles"]
-
-[IMPORTANT]
-xref:deviceConnect/restart-deviceconnect-services.adoc[Restart deviceConnect services] to apply the new provisioning profiles.
-
-=== Import developer certificates and provisioning profiles to deviceShare
-
-[NOTE]
-Skip this section if you do not use Kobiton app re-signing service.
-
-[IMPORTANT]
-====
-
-If your deployment includes multiple Mac mini hosts, ensure that deviceShare is installed on the current Mac mini host before proceeding.
-
-To check if deviceShare is installed on the Mac mini host, navigate to the path `/usr/local/kobiton/` and check for the presence of the `deviceshare` folder. If there is no such folder or the folder is empty, it means deviceShare is not installed. In this case, locate another Mac mini host where deviceShare is installed to continue with this section.
-
-====
-
-Open the **Keychain Access** app.
-
-Select the **System** keychain, and then **Certificates**. You will see your **Apple Development** signing certificates along with all the other certificates. Expand all the **Apple Development** signing certificates to show the private key like the below:
-
-image::device-lab-management:device-lab-management-ios-add-ios-system-certificate-apple-development.PNG[width=600,alt="Private key inside the Apple Development certificates"]
-
-Shift-click to select all the **Apple Development** certificates and their private key, then right-click and select **Copy items**.
-
-image::device-lab-management:device-lab-management-ios-add-ios-system-certificate-apple-development-copy-items.PNG[width=600,alt="Copying the keys from Apple Development certificates"]
-
-Select the **deviceshare** keychain and then **Certificates**. Right-click the empty area and choose **Paste items**. You will be prompted to enter your login keychain password and the password for the *deviceshare* keychain for each certificate imported.
-
-image::device-lab-management:device-lab-management-ios-add-ios-system-certificate-apple-development-paste-items.PNG[width=600,alt="Pasting the keys of Apple Develeopment certificates in deiceshare certificates"]
-
-Verify that the certificates and keys are imported successfully into the deviceshare keychain.
-
-Open the *deviceshare_config.toml* file located under */usr/local/kobiton/deviceshare/*.
-
-Locate the line starting with `ios_provisioning_profile_paths` .
-
-If the line is the same as below, skip this section as deviceShare is using the same folder with deviceConnect for provisioning profiles:
-
-----
-ios_provisioning_profile_paths = [
-    "/usr/local/deviceconnect/ProvisioningProfiles"
-]
-----
-
-If the line is the same as below instead, continue on the next step:
-
-----
-ios_provisioning_profile_paths = [
-    "/usr/local/kobiton/deviceshare/provisioning_profiles"
-]
-----
-
-Move all provisioning profile files into one folder and note down the location. Open Terminal and execute the below command, where */path/to/profiles/* is the location of all the provisioning profile files:
-
-----
-cp -R /path/to/profiles/*.mobileprovision /usr/local/kobiton/deviceshare/provisioning_profiles
-----
-
-Restart deviceShare signing service to apply all the configurations above by running this command:
-
-----
-sudo /bin/launchctl unload -w /Library/LaunchDaemons/com.kobiton.deviceshare.signing.plist && sleep 5 && sudo /bin/launchctl load -w /Library/LaunchDaemons/com.kobiton.deviceshare.signing.plist
-----
-
-Verify that the deviceShare signing service is running normally by executing the below command:
-
-----
-tail -100 /usr/local/kobiton/deviceshare/deviceshare_signing.log
-----
-
-A successful execution should show the output as below:
-
-----
-2022-02-24 23:23:20.873521 INFO  [deviceshare::logging] initialized log config from /usr/local/kobiton/deviceshare/deviceshare_signing_log_config.yaml
-2022-02-24 23:23:20.873612 INFO  [deviceshare::signing::signingserver] attempting to connect to Kobiton signing portal
-2022-02-24 23:23:20.873630 INFO  [deviceshare::signing::signingserver] authentication not enabled for Kobiton signing service portal
-2022-02-24 23:23:20.873653 INFO  [deviceshare::signing::signingserver] attempting to connect to Kobiton signing service portal at http://10.2.122.251:6000/
-2022-02-24 23:23:20.873729 DEBUG [hyper::client::connect::http] connecting to 10.2.122.251:6000
-2022-02-24 23:23:20.874310 DEBUG [hyper::client::connect::http] connected to 10.2.122.251:6000
-2022-02-24 23:23:20.886689 INFO  [deviceshare::signing::signingserver] connected to Kobiton signing portal
-.... truncated ...
-2022-02-24 23:23:20.902941 DEBUG [deviceshare::signing::keychain] signing_certificates_all: elapsed: 0 ms
-2022-02-24 23:23:20.905563 DEBUG [deviceshare::signing::signingserver] monitor_resource_changes: resources have not changed since 2022-02-24 23:23:20.902087
-2022-02-24 23:24:20.927290 DEBUG [deviceshare::signing::signingserver] sending keepalive message
-2022-02-24 23:24:20.943450 DEBUG [deviceshare::signing::signingserver] monitor_resource_changes: polling current
-----
+* Make sure the Mac mini host has the Xcode version that is compatible with the iOS/iPadOS version of the device. Refer to the https://developer.apple.com/support/xcode/[Apple Xcode support page,window=read-later] for more information.
 
 == Connect Cambrionix hub to the host
 
@@ -177,9 +27,28 @@ See below for an example of the SuperSync15 with the Host port visible.
 
 image::device-lab-management:device-lab-management-add-android-supersync15.PNG[width=600, alt="SuperSync15 with the Host port visible"]
 
+[#network-requirements-wifi-pairing]
+== Connect the Mac mini host and the iOS 17.0 to 17.3.1 devices to a network that supports mDNS and Wi-Fi pairing
+
+[IMPORTANT]
+This section is only required for *iOS/iPadOS 17.0 to 17.3.1* devices with *Lightning mode* configuration.
+
+Prepare a network that satisfy the following requirements:
+
+* _mDNS UDP Messages_: The devices will broadcast mDNS UDP messages that the Mac mini must be capable of receiving. This communication is facilitated via the UDP port 5353.
+
+* _TCP Connection_: Processes housed on the Mac mini should have the capability to initiate a TCP connection to an iOS device. It's important to note that this connection uses one of the IPv6 addresses and port numbers that the device advertises. Since these addresses and port numbers aren't static and can change over time, flexibility in the network configuration is crucial.
+
+* _Optimal Setup_: The most straightforward way to implement this setup is by positioning both the Mac mini and the iOS devices on the same subnet within the same Wi-Fi network. Such an arrangement is compatible with the default configurations of a majority of network equipment, ensuring minimal overhead in terms of setup. However, if your network differs, adjustments can be made at the router level to support the necessary UDP broadcasts and TCP connections.
+
+When the network is ready, connect both the devices and the Mac mini host to this network.
+
+[NOTE]
+If the network requirements cannot be met, use *Standard mode* to host the iOS 17.0 to 17.3.1 devices instead. You will need at least 1 additional Mac mini to host in Standard mode.
+
 == Connect the device to the host
 
-Make sure you have properly xref:ios-devices/prepare-ios-device.adoc[prepared the device] for hosting on Kobiton.
+Make sure you have properly xref:ios-devices/prepare-ios-device.adoc[prepared the device] for hosting.
 
 For Standard mode, connect the mobile device to the Cambrionix hub attached to the Mac mini host.
 
@@ -188,6 +57,17 @@ For Lightning mode with iOS 16 and below, connect the mobile device to the Cambr
 For Lightning mode with iOS 17 and above, connect the device to one of the USB ports of the Mac mini host to establish trust pairing first, then follow the next section before connecting the device to the Cambrionix hub attached to the GEM.
 
 Check the device to see if it is charging after connecting. If it is not charging, the USB cable might be malfunctioning, or the Cambrionix hub is not connected to a power source.
+
+[#_import_certificates_and_provisioning_profiles]
+== Import certificates and provisioning profiles
+
+Follow xref:ios-devices/import-ios-signing-certificates-and-provisioning-profiles.adoc[this section,window=read-later] to import signing certificates and provisioning profiles to the Mac mini host. The signing certificates and provisioning profiles are needed for:
+
+* Provisioning the Kobiton control agent app to install it on all devices that are hosted by the Mac mini host (for deviceConnect). This is *required*.
+
+* Re-signing applications uploaded to the Kobiton portal to install them on the devices (for deviceShare). This is only required if you use the Kobiton re-signing service.
+
+Skip this section if the certificates and provisioning profiles have already been imported. If you are unsure, you can always xref:_verify_device_is_available_in_kobiton[verify the certificates and provisioning profiles] after connecting the devices.
 
 == Establish trust pairing between the device and the host
 
@@ -248,6 +128,8 @@ Lightning mode::
 +
 --
 
+*For iOS 17.0 to 17.3.1 only*: connect the devices and the Mac mini host to a network that xref:#network-requirements-wifi-pairing[satisfies the requirements].
+
 Open Xcode on the Mac mini host, then navigate to **Window → Devices and Simulators**. Do this before continuing to the next step.
 
 Make sure you connect the device **to the Mac mini host** first.
@@ -282,12 +164,15 @@ image::device-lab-management:device-lab-management-add-android-screen-changes-to
 [NOTE]
 This section is only required for Mac mini hosts with no Internet access with iOS 17 and above devices.
 
-Access any MacOS machine with Internet access. This will be referred to as the Internet Mac.
-
-Ensure Xcode is installed on the Internet Mac. Make sure the Xcode version is compatible with the iOS 17 device.
+Access any macOS machine with Internet access. This will be referred to as the Internet Mac.
 
 [NOTE]
 Kobiton software, such as deviceConnect and deviceShare, does not need to be installed on the Internet Mac.
+
+Ensure *Xcode* is installed on the Internet Mac. Make sure the Xcode version is compatible with the iOS 17 device.
+
+[IMPORTANT]
+Make sure the Xcode version on the Internet Mac *is the same or greater* than the version on the Mac mini host to transfer the DDI to.
 
 Unplug the iOS 17 device from the air-gapped Mac (Standard mode) or the GEM (Lightning mode) and connect it to the Internet Mac.
 
@@ -303,20 +188,49 @@ image::device-lab-management:device-lab-management-ios-add-ios-copying-shared-ca
 
 Unplug the device from the Internet Mac.
 
-Continue with connecting iOS 17 and above devices to the air-gapped Mac mini hosts.
+Repeat the above processes for all iOS/iPadOS 17 and later devices to be hosted on the air-gapped Mac mini.
+
+Open *Finder* on the Internet Mac. Press *Shift + Command + G* on the keyboard, then input the following path depending on the version of Xcode:
+
+* `/Library/Developer/DeveloperDiskImages` (Xcode 16 and above)
+
+* `~/Library/Developer/DeveloperDiskImages` (Xcode below 16)
+
+Copy the 2 files `iOS_DDI-version.plist` and `iOS_DDI.dmg` to the *air-gapped Mac mini* that will host the iOS/iPadOS 17 and later devices. Put the copied file into the following folder on the air-gapped Mac mini:
+
+* `/Library/Developer/DeveloperDiskImages` if the current Xcode version is 16 or above.
+
+* ``~/Library/Developer/DeveloperDiskImages ``if the current Xcode version is below 16.
+
+Repeat the above process for all air-gapped Mac mini hosts with iOS/iPadOS 17 and later devices.
+
+Continue with connecting iOS 17 and above devices to the air-gapped Mac mini hosts or the GEM.
 
 [IMPORTANT]
-Apple has not published whether the personalized DDI will expire or how long it will last in an air-gapped environment. If connection errors occur and other troubleshooting steps do not resolve the issue, the personalized DDI may be expired and you will need to repeat this process.
+Apple has not published whether the personalized DDI will expire or how long it will last in an air-gapped environment.If connection errors occur and other troubleshooting steps do not resolve the issue, the personalized DDI may be expired, and you will need to repeat this process.
 
+[#_verify_device_is_available_in_kobiton]
 == Verify device is available in Kobiton
 
 Open Chrome on the Mac mini, then open *localhost* and log in.
 
-Navigate to **Devices**. The connected device displays as **Available**.
+Navigate to **Devices**.The connected device displays as **Available**.
 
 image::device-lab-management:device-lab-management-ios-add-ios-localhost-system-ios-device-available.PNG[width=600,alt="Verifying device is avaiable on Kobiton"]
 
-Still in Chrome, open the Kobiton web portal and log in using an account with ADMIN role.
+[IMPORTANT]
+====
+
+If you see the *deviceControl* warning or the error under the device's name with either of the below messages, follow xref:ios-devices/import-ios-signing-certificates-and-provisioning-profiles.adoc#_resolve_common_errors_with_certificates_and_provisioning_profiles[this section,window=read-later] to troubleshoot the issue and generate and/or import the correct certificates and provisioning profiles.
+
+* _Device is not associated with any valid installed provisioning profile._
+
+* _No provisioned deviceControl or signing profiles are available. iOS devices will not be usable._
+
+
+====
+
+Still in Chrome, open the Kobiton web portal and log in using an account with *ADMIN* role.
 
 Select the profile picture and choose **Settings**, then choose **Device Management**.
 

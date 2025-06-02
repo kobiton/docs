@@ -1,0 +1,68 @@
+
+== Attribute mappings for SSO
+
+// tag::azure[]
+
+[cols="1,1",options="header"]
+|===
+|Field name | Value mapping
+|Identity provider issuer |Azure
+|Identity issuer URL |Azure AD Identifier
+|Identity provider sign in URL |Login URL
+|Identity provider sign out URL (optional) |Logout URL
+|===
+
+// end::azure[]
+
+// tag::google[]
+
+[cols="1,1",options="header"]
+|===
+|Field name | Value mapping
+|Identity provider issuer |Google Suite
+|Identity issuer URL |Entity ID
+|Identity provider sign in URL |SSO URL
+|Identity provider sign out URL (optional) |
+|===
+
+// end::google[]
+
+// tag::okta[]
+
+[cols="1,1",options="header"]
+|===
+|Field name | Value mapping
+|Identity provider issuer |Okta
+|Identity issuer URL |Audience URI (SP Entity ID)
+|Identity provider sign in URL |Single sign on URL
+|Identity provider sign out URL (optional) |
+|===
+
+// end::okta[]
+
+// tag::onelogin[]
+
+[cols="1,1",options="header"]
+|===
+|Field name | Value mapping
+|Identity provider issuer |OneLogin
+|Identity issuer URL |Issuer URL
+|Identity provider sign in URL |SAML 2.0 Endpoint (HTTP)
+|Identity provider sign out URL (optional) |SLO Endpoint (HTTP)
+|===
+
+// end::onelogin[]
+
+// tag::ping[]
+
+[cols="1,1",options="header"]
+|===
+|Field name | Value mapping
+|Identity provider issuer |Ping
+|Identity issuer URL |Issuer ID
+|Identity provider sign in URL |Single Sign-On Service
+|Identity provider sign out URL (optional) |Single Logout Service
+|===
+
+// end::ping[]
+
