@@ -5,12 +5,12 @@ To enhance test analysis, you can group related Appium actions. Grouping actions
 
 == Action group Appium setting
 
-To add actions within your script, use the below Appium setting to assign actions to a specific group.
+To add actions within your script, use the following Appium setting to assign actions to a specific group.
 
 [options="header"]
 |=======================
 |Appium setting | Description | Default value
-| `kobiton:stepGroup` | Set to any string value to assign actions to a group with the value as name. | `''` (blank)
+| `kobiton:stepGroup` | Set this field to any string value to assign actions to a group, using that value as the group name. | `''` (blank)
 |=======================
 
 == Add action group
@@ -22,11 +22,11 @@ Before starting a test action, use the `Update Settings` Appium command to set `
 
 await driver.updateSettings({'kobiton:setGroup': 'Test case A5423'})
 
-All the update settings command, all actions will be added to the group. To assign subsequent actions to a different group, execute the command again with the new group name.
+Using the `updateSettings` command, all actions will be added to the group. To assign subsequent actions to a different group, execute the command again with the new group name.
 
 == Examples
 
-Below is a complete example of JavaScript code using `wd` that demonstrates actions being put into 2 groups: `Test login` and `Test home page`.
+Below is a complete JavaScript example using `wd` that demonstrates how actions are organized into two distinct groups: `Test login` and `Test home page`.
 
 .Example (JavaScript)
 [source,javascript]
