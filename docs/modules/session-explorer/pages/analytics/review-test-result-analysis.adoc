@@ -1,0 +1,33 @@
+= Review test result analysis
+:navtitle: Review test result analysis
+
+Learn how to review  after your test session so
+
+== Open the device logs
+
+include::session-explorer:partial$launch-session-explorer.adoc[]
+
+*Test Result Analysis* is the default option that displays when you first land on the Session Explorer page.
+
+== Test result analysis overview
+
+The Test Result Analysis overview has the following information:
+
+* *Validation Type*: types of validation that were detected in the session. The following types are available:
+** Crash: available in all sessions.
+** Accessibility: available in all sessions.
+** Response time: only available for session with the Network Payload Capture configuration enabled.
+** Appium self-healing: only available for automation session with flexCorrect enabled.
+
+* *AI Progress*: whether the AI has finished analyzing all the test steps.
+
+* *Screens*: the number of screens (test steps) that has at least 1 issue belonging to the validation type.
+
+* *Issues*: the number of issues that occurred belonging to the validation type.
+
+* *View all*: here you can hide/show all available validation types, or hide/show individual validation type on the session timeline.
+
+== Start analysis
+
+From the Test Result Analysis overview, you can start further analysis by selecting *Start Analysis*.
+
