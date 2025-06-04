@@ -13,10 +13,12 @@ include::session-explorer:partial$launch-session-explorer.adoc[]
 
 The Test Result Analysis overview has the following information:
 
-* *Validation Type*: types of validation that were detected in the session. The following types are available:
+image:session-overview-test-result-analysis.png[width=800,alt="The Test Result Analysis overview table in Session Explorer"]
+
+* *Validation Type*: types of validation that were detected in the session.The following types are available:
 ** Crash \(C): available in all sessions.
 ** Accessibility (A): available in all sessions.
-** Response time (R): only available for session with the _Network Payload Capture_ configuration enabled.
+** Response time \(R): only available for session with the _Network Payload Capture_ configuration enabled.
 ** Appium self-healing (S): only available for automation session with _flexCorrect_ enabled.
 
 * *AI Progress*: whether the AI has finished analyzing all the test steps.
@@ -27,10 +29,11 @@ The Test Result Analysis overview has the following information:
 
 * *View all*: here you can hide/show all available validation types, or hide/show individual validation type on the session timeline.
 
+[#_start_analysis]
 == Start analysis
 
 From the Test Result Analysis overview, you can start further analysis by selecting *Start Analysis*.
 
-All the issues of validation types that were not hidden from the overview will be displayed one by one in details. You can use the arrow icons to navigate through them.
+All the issues of validation types that were not hidden from the overview will be displayed one by one in details.You can use the arrow icons to navigate through them.
 
-Alternatively, you can select the validation icon in the session timeline to view an issue's details.
+Alternatively, you can select the validation icon in the xref:analytics/use-the-session-timeline.adoc#_view_validation_issues[session timeline,window=read-later] to view an issue's details.
