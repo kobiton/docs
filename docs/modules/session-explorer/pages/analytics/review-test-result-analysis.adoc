@@ -14,10 +14,10 @@ include::session-explorer:partial$launch-session-explorer.adoc[]
 The Test Result Analysis overview has the following information:
 
 * *Validation Type*: types of validation that were detected in the session. The following types are available:
-** Crash: available in all sessions.
-** Accessibility: available in all sessions.
-** Response time: only available for session with the Network Payload Capture configuration enabled.
-** Appium self-healing: only available for automation session with flexCorrect enabled.
+** Crash \(C): available in all sessions.
+** Accessibility (A): available in all sessions.
+** Response time (R): only available for session with the _Network Payload Capture_ configuration enabled.
+** Appium self-healing (S): only available for automation session with _flexCorrect_ enabled.
 
 * *AI Progress*: whether the AI has finished analyzing all the test steps.
 
@@ -31,3 +31,6 @@ The Test Result Analysis overview has the following information:
 
 From the Test Result Analysis overview, you can start further analysis by selecting *Start Analysis*.
 
+All the issues of validation types that were not hidden from the overview will be displayed one by one in details. You can use the arrow icons to navigate through them.
+
+Alternatively, you can select the validation icon in the session timeline to view an issue's details.

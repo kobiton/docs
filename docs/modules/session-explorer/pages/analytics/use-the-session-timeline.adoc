@@ -41,9 +41,15 @@ To download a screenshot, select a test step in the timeline, then select the *D
 
 image:session-explorer:download-screenshot-closeup.png[width=500,alt="Download button to download screenshot of the selected step"]
 
-=== View accessibility issues
+[#_view_validation_issues]
+=== View validation issues
 
-To view an accessibility issue automatically flagged during your session, select a *green marker* in the timeline.
+To view a validation issue that was flagged during your session, select a *validation icon* in the timeline.Depending on the session, the possible validation icons are:
+
+* A: Accessibility
+* C: Crash
+* R: Response time (for _Network Payload Capture_ session)
+* S: Appium self-healing (for automation session with _flexCorrect_ enabled)
 
 image:session-explorer-accessibility-validation.png[width=250,alt="Yellow dots on the timeline showing Accessibility Validation"]
 
@@ -52,7 +58,17 @@ Then, select *View Details*.
 image:view-details-accessbility-validation-context.png[width=1000,alt=After select View Details button, users are directed to Accessibility Validation issues window]
 
 [NOTE]
-Learn more about xref:session-explorer:validations/validate-accessibility.adoc[accessibility validation].
+
+====
+
+Learn more about:
+
+* xref:session-explorer:validations/validate-accessibility.adoc[Accessibility validation]
+* xref:session-explorer:analytics/review-crash-logs.adoc#_review_the_crash_logs[Crash log]
+* xref:session-explorer:analytics/review-network-payload-data.adoc#_review_response_times[Response time]
+* xref:automation-testing:capabilities/add-flexcorrect.adoc[flexCorrect (Appium self-healing)]
+
+====
 
 [#_action_groups_timeline]
 === Action groups in timeline
