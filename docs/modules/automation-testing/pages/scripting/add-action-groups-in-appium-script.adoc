@@ -10,7 +10,7 @@ To add actions within your script, use the following Appium setting to assign ac
 [options="header"]
 |=======================
 |Appium setting | Description | Default value
-| `kobiton:stepGroup` | Set this field to any string value to assign actions to a group, using that value as the group name. | `''` (blank)
+| `kobiton:setGroup` | Set this field to any string value to assign actions to a group, using that value as the group name. | `''` (blank)
 |=======================
 
 == Add action group
@@ -32,7 +32,6 @@ Below is a complete JavaScript example using `wd` that demonstrates how actions 
 [source,javascript]
 
 ----
-
 import 'babel-polyfill'
 import 'colors'
 import wd from 'wd'
@@ -129,8 +128,6 @@ describe('Android Web sample', () => {
   }
   })
 })
-
-
 ----
 
 == Grouped actions in Session Explorer
