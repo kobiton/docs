@@ -1,0 +1,44 @@
+= Kobiton 4.18.3 Release Notes
+:navtitle: Kobiton 4.18.3 release notes
+
+_February 23, 2025_
+
+== New OS Support
+
+This release adds support for the following:
+
+* iOS/iPadOS 18.3.1
+* iOS/iPadOS 18.4
+
+[NOTE]
+====
+
+Known issues:
+
+* iOS/iPadOS 18.4 only:
+**  Cannot set time zone during a manual session for iOS devices (works with iPadOS devices).
+** The cleanup policy does not remove all signed-in accounts in the Mail app.
+
+* Both iOS/iPadOS 18.3.1 and 18.4:
+** (For passcode-enabled organizations only) Starting a manual session on a locked device can leave it stuck on the lock screen. To unlock it, press the power button twice, then swipe up from the bottom of the lock screen.
+** The cleanup policy does not reset language and view mode to the default values (English for language, Standard for view mode).
+
+====
+
+== Scriptless Automation and Mobile Test Management Enhancements
+
+* Enhanced our Appium script generation feature, making it easier to execute generated scripts on other cloud device platforms, such as BrowserStack, LambdaTest, and Sauce Labs.
+
+== Script-based Test Automation Enhancements
+
+* For passcode-enabled organizations only: Updated the unlock action when running XIUM for iOS devices to fully unlock the device, rather than simulating a power button press. This change aligns XIUM behavior with Basic Appium 2 automation.
+
+== General Improvements and Fixes
+
+* Fixed an issue where the iOS/iPadOS Developer Disk Images (DDI) did not automatically remount after an update, resulting in the following error:
+[source]
+Can't find iOS device <UDID> with BoardID <number> and ChipID <number> in DDI BuildManifest.plist. Xcode may need to be updated.
+
+* Improve the performance when there are more than four concurrent sessions with video capture enabled.
+
+* Automatically disable Google Play Protect scanning as it can cause the manual session to become unresponsive for Android devices.

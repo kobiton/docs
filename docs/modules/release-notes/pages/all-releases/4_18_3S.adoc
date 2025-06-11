@@ -1,0 +1,41 @@
+= Kobiton 4.18.3S Release Notes
+:navtitle: Kobiton 4.18.3S release notes
+
+_February 18, 2025_
+
+This release brings improvements and fixes to deviceConnect while still ensuring the best compatibility with 4.18S portal.
+
+[NOTE]
+If the standalone environment is already running 4.18S, only the software on the Mac mini hosts needs updating.
+
+== New OS Support
+
+This release adds support for the following:
+
+* iOS/iPadOS 18.3.1
+* iOS/iPadOS 18.4
+
+[NOTE]
+====
+
+Known issues:
+
+* iOS/iPadOS 18.4 only:
+**  Cannot set time zone during a manual session for iOS devices (works with iPadOS devices).
+** The cleanup policy does not remove all signed-in accounts in the Mail app.
+
+* Both iOS/iPadOS 18.3.1 and 18.4:
+** (For passcode-enabled organizations only) Starting a manual session on a locked device can leave it stuck on the lock screen. To unlock it, press the power button twice, then swipe up from the bottom of the lock screen.
+** The cleanup policy does not reset language and view mode to the default values (English for language, Standard for view mode).
+
+====
+
+== General Improvements and Fixes
+
+* Fixed an issue where the iOS/iPadOS Developer Disk Images (DDI) did not automatically remount after an update, resulting in the following error:
+[source]
+Can't find iOS device <UDID> with BoardID <number> and ChipID <number> in DDI BuildManifest.plist. Xcode may need to be updated.
+
+* Improve the performance when there are more than four concurrent sessions with video capture enabled.
+
+* Automatically disable Google Play Protect scanning as it can cause the manual session to become unresponsive for Android devices.

@@ -1,11 +1,11 @@
-= Device IP addresses
-:navtitle: Device IP addresses
+= Allowlist requirements for Public and Kobiton-hosted devices
+:navtitle: Allowlist requirements for Public and Kobiton-hosted devices
 
-These are the IP address for Kobiton devices. You can use a device IP address to xref:devices:local-devices/connect-to-a-private-network.adoc[connect devices to your private network].
+These are the allowlist requirements for Public and Kobiton-hosted devices for xref:devices:local-devices/connect-to-a-private-network.adoc[connecting devices to your private network] or enabling Lightning mode.
 
 == Public and Kobiton-hosted private devices
 
-You can use the following IP addresses for any public or private device:
+You can use the following IP addresses for any Public and Kobiton-hosted private device:
 
 * `173.213.234.253`
 * `64.19.222.131`
@@ -16,10 +16,22 @@ You can use the following IP address for POC devices:
 
 * `173.213.234.253`
 
-== Enable lightning mode
+== (Optional) Enable lightning mode
 
-(Optional) To enable lightning mode for public, Kobiton-hosted private, and POC devices, whitelist the following IP addresses and UDP port range:
+To enable lightning mode for public, Kobiton-hosted private, and POC devices, whitelist the following IP addresses and UDP port range:
 
 * `173.213.234.128/25`
 * `64.19.222.128/25`
 * port range for the above IPs: `30000-65535`
+
+If your organization uses *Zscaler or other endpoint security solutions* that perform SSL inspection or proxy traffic (such as Cisco Umbrella, Netskope, etc.), you must also configure your internal firewall to bypass inspection and allow direct access to Kobiton domains:
+
+* `*.kobiton.com`
+
+** This includes `portal.kobiton.com`, `api.kobiton.com`, and any custom subdomains like `yourcompany.kobiton.com`
+
+If your organization employs *FortiGate or other firewalls* that filter network traffic, you must also allow the STUN protocol in the firewall policy:
+
+* Follow https://community.fortinet.com/t5/FortiGate/Technical-Tip-How-to-enable-STUN-protocol-in-policy/ta-p/254217[this article,window=read-later] to learn more about enabling the STUN protocol in FortiGate Next Generation Firewall.
+
+Allowlisting these domains and STUN protocol ensures connectivity and optimal performance when using Lightning Mode.
