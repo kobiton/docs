@@ -1,0 +1,43 @@
+== If a device is not available, where should I check for its status and error message?
+
+There are 2 places to check a device status and error message:
+
+* *Kobiton Portal*
+
++
+
+--
+include::profile:partial$open-settings.adoc[]
+
+Select the *Device Management* tab.
+
+The page lists all dedicated mobile devices for the org grouped by Mac mini host. Look for the host using its internal IP address or hostname, or input the UDID of the device in the search bar.
+
+The device status should be display with an error or warning message.
+
+--
+
+* *deviceConnect Viewer*
+
++
+
+--
+
+Log into the deviceConnect Viewer.
+
+Select Devices. This should be the default page after login.
+
+Search for a device using its UDID.
+
+The device should display with the error or warning message.
+
+--
+
+After retrieving the error message, look it up in this document to find a possible solution.
+
+== What is the difference between a device error and warning message?
+
+A warning message indicates a minor issue that does not affect the availability of the device, such as not being able to complete some cleanup steps or no Internet connection.
+
+An error message indicates a critical issue that makes the device unavailable for use and should be addressed in order to use the device.
+
