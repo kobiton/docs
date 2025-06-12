@@ -6,8 +6,31 @@ include::partial$general-questions.adoc[]
 
 == A valid provisioning profile is missing
 
-* Message: `Error: Failed to check passcode state: Could not connect to device: ConnectionRefused Device is not associated with any valid installed provisioning profile.`
+* *Kobiton Portal message*: `NoMatchingAndValidProvisioningProfileError`
 
-* Solution: Follow this section to
+* *deviceConnect Viewer message:* any of the below:
+
+** `Error: Failed to check passcode state: Could not connect to device: ConnectionRefused Device is not associated with any valid installed provisioning profile.`
+
+** `Error: Cannot initialize deviceControl: No suitable provisioning profile located.`
+
+* *Solution:* Ensure you have imported the xref:ios-devices/import-ios-signing-certificates-and-provisioning-profiles.adoc#_verify_imported_certificates_and_upload_provisioning_profiles_for_deviceconnect[provisioning profile,window=read-later] into the correct location.
+
+== A valid developer certificate is missing
+
+* * *Kobiton Portal message*: `NoMatchingAndValidProvisioningProfileError`
+
+* *deviceConnect Viewer message:* any of the below:
+
+** `Error: Failed to check passcode state: Could not connect to device: ConnectionRefused Device is not associated with any valid installed provisioning profile.`
+
+** `Error: Cannot initialize deviceControl: No suitable provisioning profile located.`
+
+** `Error: NoMatchingAndValidProvisioningProfileError Device is not associated with any valid installed provisioning profile.`
+
+* *Solution:* Ensure you have imported valid xref:ios-devices/import-ios-signing-certificates-and-provisioning-profiles.adoc#_import_developer_certificates[signing certificates,window=read-later] and xref:ios-devices/import-ios-signing-certificates-and-provisioning-profiles.adoc#_verify_imported_certificates_and_upload_provisioning_profiles_for_deviceconnect[provisioning profiles,window=read-later] into the correct location.
+
+[TIP]
+Learn more about resolving issues related to iOS development certificate and provisioning profile xref:ios-devices/import-ios-signing-certificates-and-provisioning-profiles.adoc#_resolve_common_errors_with_certificates_and_provisioning_profiles[here,window=read-later].
 
 
