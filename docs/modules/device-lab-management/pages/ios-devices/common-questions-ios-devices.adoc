@@ -4,25 +4,17 @@
 
 include::partial$general-questions.adoc[]
 
-== A valid provisioning profile is missing
+== Questions related to devices not available in Kobiton Portal
 
-* *Kobiton Portal message*: `NoMatchingAndValidProvisioningProfileError`
+All questions in this section are related to a common issue: a device is not available in the Devices list on the Kobitol Portal, but it is still displayed under the deviceConnect Viewer.
 
-* *deviceConnect Viewer message:* any of the below:
+For this situation, use the content of the error message displayed in the Kobiton Portal (under Device Management) or in deviceConnect Viewer to identify the cause and solution.
 
-** `Error: Failed to check passcode state: Could not connect to device: ConnectionRefused Device is not associated with any valid installed provisioning profile.`
-
-** `Error: Cannot initialize deviceControl: No suitable provisioning profile located.`
-
-* *Solution:* Ensure you have imported the xref:ios-devices/import-ios-signing-certificates-and-provisioning-profiles.adoc#_verify_imported_certificates_and_upload_provisioning_profiles_for_deviceconnect[provisioning profile,window=read-later] into the correct location.
-
-== A valid developer certificate is missing
+=== A valid developer certificate or provisioning profile is missing
 
 * * *Kobiton Portal message*: `NoMatchingAndValidProvisioningProfileError`
 
 * *deviceConnect Viewer message:* any of the below:
-
-** `Error: Failed to check passcode state: Could not connect to device: ConnectionRefused Device is not associated with any valid installed provisioning profile.`
 
 ** `Error: Cannot initialize deviceControl: No suitable provisioning profile located.`
 
@@ -32,5 +24,31 @@ include::partial$general-questions.adoc[]
 
 [TIP]
 Learn more about resolving issues related to iOS development certificate and provisioning profile xref:ios-devices/import-ios-signing-certificates-and-provisioning-profiles.adoc#_resolve_common_errors_with_certificates_and_provisioning_profiles[here,window=read-later].
+
+=== iOS 17.0.x to 17.3.x with Lightning mode: Device needs to be paired with Mac mini
+
+[NOTE]
+This issue only occurs to iOS 17.0.x to 17.3.x devices with Lightning mode.
+
+* * *Message on both Kobiton Portal and deviceConnect Viewer*: `Cannot initialize deviceControl: Agent not responding.`
+
+
+=== iOS 17.0.x to 17.3.x with Lightning mode: Device is disconnected from Wi-Fi that supports remote pairing
+
+[NOTE]
+This issue only occurs to iOS 17.0.x to 17.3.x devices with Lightning mode.
+
+* *Message on both Kobiton Portal and deviceConnect Viewer*: `Cannot initialize deviceControl: Agent not responding.`
+
+* *Solution*:
+
+** Connect the device to the Wi-Fi connection that supports remote pairing requirements (requires physical touch) then restart deviceConnect services.
+** If your organization cannot satisfy the remote pairing requirements for Wi-Fi, consider hosting iOS 17.0.x to 17.3.x in Standard Mode.
+
+=== iOS 17 and above hosted by an air-gapped Mac mini: The Developer Disk Image is not verified
+
+===
+
+== General errors: Agent not responding, Connection refused, and A task was canceled.
 
 
