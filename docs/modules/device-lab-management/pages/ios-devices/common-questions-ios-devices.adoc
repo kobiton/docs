@@ -4,6 +4,19 @@
 
 include::partial$general-questions.adoc[]
 
+== How do I check for error message in Xcode?
+
+Access the Mac mini hosting the device and open Xcode.
+
+On the menu bar, select Windows -> Devices & Simulators
+
+Under the Devices tab, select the device to check.
+
+If the device has any error related to Xcode, the error message displays like below:
+
+[NOTE]
+For iOS 17.4 and above hosted in Lightning mode, the devices do not display in the Devices & Simulators window of Xcode. This is normal.
+
 == Questions related to devices not available in Kobiton Portal
 
 All questions in this section are related to a common issue: a device is not available in the Devices list on the Kobitol Portal, but it is still displayed under the deviceConnect Viewer.
@@ -25,13 +38,20 @@ For this situation, use the content of the error message displayed in the Kobito
 [TIP]
 Learn more about resolving issues related to iOS development certificate and provisioning profile xref:ios-devices/import-ios-signing-certificates-and-provisioning-profiles.adoc#_resolve_common_errors_with_certificates_and_provisioning_profiles[here,window=read-later].
 
-=== iOS 17.0.x to 17.3.x with Lightning mode: Device needs to be paired with Mac mini
+=== Standard mode: Need to tap trust on the device
+
+=== iOS 17.0.x to 17.3.x with Lightning mode: Device needs to be trust paired with Mac mini
 
 [NOTE]
 This issue only occurs to iOS 17.0.x to 17.3.x devices with Lightning mode.
 
 * * *Message on both Kobiton Portal and deviceConnect Viewer*: `Cannot initialize deviceControl: Agent not responding.`
 
+* *Message in the Devices & Simulator window in Xcode*: any of the below:
+
+** The device is not displayed in the list.
+
+** The device is displayed in the list with a message containing: Browsing the local area connection for iPhone/iPad.
 
 === iOS 17.0.x to 17.3.x with Lightning mode: Device is disconnected from Wi-Fi that supports remote pairing
 
@@ -40,6 +60,8 @@ This issue only occurs to iOS 17.0.x to 17.3.x devices with Lightning mode.
 
 * *Message on both Kobiton Portal and deviceConnect Viewer*: `Cannot initialize deviceControl: Agent not responding.`
 
+* *Message in the Devices & Simulator window in Xcode*: Browsing the local area connection for iPhone/iPad.
+
 * *Solution*:
 
 ** Connect the device to the Wi-Fi connection that supports remote pairing requirements (requires physical touch) then restart deviceConnect services.
@@ -47,8 +69,12 @@ This issue only occurs to iOS 17.0.x to 17.3.x devices with Lightning mode.
 
 === iOS 17 and above hosted by an air-gapped Mac mini: The Developer Disk Image is not verified
 
-===
+=== Developer mode is not enabled
 
-== General errors: Agent not responding, Connection refused, and A task was canceled.
+
+
+== General errors: Agent not responding, Failed to check passcode state: Connection refused, and A task was canceled.
+
+
 
 
