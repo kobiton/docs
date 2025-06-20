@@ -159,6 +159,8 @@ Select *App* as type, then *Continue*.
 
 image:ios-signing-certificate-select-type-closeup.png[width=1000,alt="A closeup to Select type"]
 
+[#_bundle_id]
+
 Add a description for the app ID. For *Bundle ID*, choose *Wildcard*. Input the appropriate Bundle ID into the box according to the use cases below:
 
 * If you do not use Kobiton re-signing service, input `com.*`.
@@ -225,6 +227,9 @@ Select *iOS App Development* under *Development*, then *Continue*.
 image:ios-signing-certificate-select-ios-app-dev-closeup.png[width=1000,alt="The iOS App Development option under Development"]
 
 Choose the xref:#_create_an_identifier[app ID] you created earlier from the dropdown list, then *Continue*.
+
+[IMPORTANT]
+As only 1 App ID can be selected per provisioning profile, you must create multiple provisioning profiles if you need to use xref:#_bundle_id[multiple App IDs] for signing.
 
 image:ios-signing-certificate-select-app-id-from-dropdown-closeup.png[width=1000,alt="The app ID selection dropdown when generating a profile"]
 
