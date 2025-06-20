@@ -167,15 +167,15 @@ Add a description for the app ID. For *Bundle ID*, choose *Wildcard*. Input the 
 
 ** Input `com.*`. This is required for signing the Kobiton iOS agent app, and can be used for any app that has bundle ID starting with `com.` such as `com.company.appname`.
 
-** If you need to test apps with bundle ID starting with a custom domain, such as `org.company.appname` or `acme.company.appname`, *create another App ID* and input the custom domain followed by `.\*`. Example: `org.*`, `acme.*`.
+** If you need to test apps with bundle ID starting with a custom domain, such as `org.company.appname` or `net.company.appname`, *create another App ID* and input the custom domain followed by `.\*`. Example: `org.*`, `net.*`.
 
 [IMPORTANT]
 
 ====
 
-* Apple do not allow creating App ID with `<Team ID>.*`.
+* It is no longer possible to create App ID with `<Team ID>.*`.
 
-* Create the App ID with `com.\*` as it is always required, then create a new App ID for each custom domain that your apps start with (`org.*`, `acme.*`).
+* Create the App ID with `com.\*` as it is always required, then create a new App ID for each custom domain that your apps start with (`org.*`, `net.*`).
 
 * Generate a new provisioning profile for each App ID that is created, as you can select only 1 App ID when creating a profile.
 
