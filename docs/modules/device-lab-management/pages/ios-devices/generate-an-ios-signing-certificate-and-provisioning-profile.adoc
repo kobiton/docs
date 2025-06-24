@@ -175,11 +175,9 @@ Add a description for the app ID. For *Bundle ID*, choose *Wildcard*. Input the 
 
 ====
 
-* It is no longer possible to create App ID with `<Team ID>.*`.
+* Create the App ID with _com.*_ as it is always required, then create a new App ID for each custom domain that your apps start with (_org.*_, _net.*_).
 
-* Create the App ID with `com.\*` as it is always required, then create a new App ID for each custom domain that your apps start with (`org.*`, `net.*`).
-
-* Generate a new provisioning profile for each App ID that is created, as you can select only 1 App ID when creating a profile.
+* Generate a new provisioning profile for each App ID that is created, as you can select only one App ID when creating a profile.
 
 ====
 
@@ -229,7 +227,7 @@ image:ios-signing-certificate-select-ios-app-dev-closeup.png[width=1000,alt="The
 Choose the xref:#_create_an_identifier[app ID] you created earlier from the dropdown list, then *Continue*.
 
 [IMPORTANT]
-As only 1 App ID can be selected per provisioning profile, you must create multiple provisioning profiles if you need to use xref:#_bundle_id[multiple App IDs] for signing.
+As only one App ID can be selected per provisioning profile, you must create multiple provisioning profiles if you need to use xref:#_bundle_id[multiple App IDs] for signing.
 
 image:ios-signing-certificate-select-app-id-from-dropdown-closeup.png[width=1000,alt="The app ID selection dropdown when generating a profile"]
 
