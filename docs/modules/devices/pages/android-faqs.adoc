@@ -1,0 +1,22 @@
+= Android frequently asked questions
+:navtitle: Android frequently asked questions
+
+Find answers to frequently asked questions related to Android devices.
+
+== How can I bypass the black screen when logging into Google Play Store (device with passcode)?
+
+On passcode-enabled devices, during a manual session, the screen turns black when logging into Google Play. The black screen is actually the passcode input screen.
+
+Copy the passcode in the top session bar.
+
+Open *adb shell* terminal in the device action.
+
+Type `input text <passcode>` (replace `<passcode>` with the copied passcode) and hit *Enter*.
+
+Type `input keyevent 66` and hit *Enter*.
+
+The black screen disappears and the user can view the screen again.
+
+== How do I resolve the black screen issue when testing a secure app that blocks screen capture (FLAG_SECURE)?
+
+
