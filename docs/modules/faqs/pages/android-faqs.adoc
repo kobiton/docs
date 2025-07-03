@@ -1,0 +1,37 @@
+= Android Android FAQs
+:navtitle: Android FAQs
+
+Find answers to frequently asked questions related to Android devices.
+
+== Manual sessions
+
+=== Why do I see a black screen during a manual session?
+
+As part of the secure sensitive activities, app developers can choose to disallow screenshots and casting the screen for certain app windows using `FLAG_SECURE`.
+
+When navigating to windows with `FLAG_SECURE`, the device screen turns black in a manual session.
+Learn more about `FLAG_SECURE` https://developer.android.com/security/fraud-prevention/activities[here,window=read-later].
+
+Suggested solutions and workarounds for the black screen issue:
+
+* Request app developers to provide a debug version of the app without enabling `FLAG_SECURE`.
+
+* Use the `adb shell` action in a manual session to send input to the device, given that the user knows exactly what the screen is and how to navigate it. See the below question for one such case where the black screen appears when logging into Google Play Store in a device with passcode.
+
+=== How can I bypass the black screen when logging into Google Play Store (device with passcode)?
+
+On passcode-enabled devices with Android 12 and later, during a manual session, the screen turns black when logging into Google Play.
+
+The black screen is actually the passcode input screen. This screen has been protected from screen sharing to prevent recording of passcode input.
+
+To bypass this screen in a manual session:
+
+* Copy the passcode in the top session bar.
+
+* Open xref:manual-testing:device-controls.adoc#_adb_shell[adb shell terminal,window=read-later] in the device action.
+
+* Type `input text <passcode>` (replace `<passcode>` with the copied passcode) and hit *Enter* on the keyboard. This inputs the passcode into the screen.
+
+* Type `input keyevent 66` and hit *Enter* on the keyboard. This simulates the *Enter* key in the virtual keyboard.
+
+* You can then move on to the next screen, which is no longer protected from screen sharing.
