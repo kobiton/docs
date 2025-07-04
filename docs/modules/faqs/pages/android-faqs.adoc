@@ -1,4 +1,4 @@
-= Android Android FAQs
+= Android FAQs
 :navtitle: Android FAQs
 
 Find answers to frequently asked questions related to Android devices.
@@ -10,6 +10,8 @@ Find answers to frequently asked questions related to Android devices.
 As part of the secure sensitive activities, app developers can choose to disallow screenshots and casting the screen for certain app windows using `FLAG_SECURE`.
 
 When navigating to windows with `FLAG_SECURE`, the device screen turns black in a manual session.
+
+image:faqs:android-black-screen-flag-secure.png[width=800,alt="Android manual session screen shows a black device screen likely caused by FLAG_SECURE, with inspector hierarchy visible."]
 
 Although the screen is black, you can still use the appium inspector in a xref:manual-testing:device-information/inspector.adoc[manual session,window=read-later] or xref:session-explorer:analytics/reinspect-appium-elements.adoc[Session Explorer,window=read-later] to inspect elements on the screen.
 
@@ -31,6 +33,10 @@ The black screen is actually the passcode input screen. This screen has been pro
 To bypass this screen in a manual session:
 
 * Copy the passcode in the session information (only for organizations with passcode enabled).
+
++
+
+image:faqs:passcode-device-manual-session.png[width=700,alt="Device details in a manual session reveal the passcode."]
 
 * Open xref:manual-testing:device-controls.adoc#_adb_shell[adb shell terminal,window=read-later] in the device action.
 
