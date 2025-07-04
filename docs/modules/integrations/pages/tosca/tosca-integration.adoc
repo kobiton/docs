@@ -1,0 +1,97 @@
+= User Guide: Mobile Test Automation with Tosca
+
+This guide explains how to create and execute a mobile test in Tosca, from project setup to test execution on a device.
+
+== 1. Create a new Tosca project
+
+. Open *Tosca Commander*.
+. Select *Project > New*.
+. In the *Create New Project* dialog box, enter a name for your project.
+. Select a storage type (e.g., *File-based*, *Common Repository*).
+. Choose a location or database connection.
+. Select *Create*.
+
+[NOTE]
+====
+✅ *Tip:* Always use a meaningful project name to help with future organization and version control.
+====
+
+== 2. Connect to a mobile device and scan mobile objects
+
+. In *Tosca Commander*, go to the *Modules* tab.
+. Select *Scan > Mobile*.
+. Choose a connected device from the list.
++
+If no device is shown, ensure your device is connected and the *Tosca Mobile Agent* is running.
+. Select the mobile application to test.
+. Navigate through the app on the device.
+. Click *Scan* to capture objects from the app screen.
+. Confirm the scanned objects, then select *Finish*.
+
+[NOTE]
+====
+🔎 *Note:* Scanned objects will appear under the *Modules* folder.
+====
+
+== 3. Create a new test case with scanned objects
+
+. Go to the *TestCases* tab.
+. Right-click the folder where you want to store the test case.
+. Select *Create TestCase*.
+. Drag and drop scanned Modules (objects) into the test case.
+. Configure test steps by editing values, actions, or input parameters as needed.
+
+[NOTE]
+====
+💡 *Best practice:* Name test steps clearly (e.g., "Tap Login Button", "Enter Username") for easy identification.
+====
+
+== 4. Execute the test case on a device
+
+. Select the created test case.
+. Right-click and choose *Run in ScratchBook* or use *Run > ScratchBook* on the toolbar.
+. Choose a device in the execution configuration.
+. Start execution.
+
+[NOTE]
+====
+🛠 *Troubleshooting:* If the device is not available, verify connectivity and that the Tosca Mobile Agent is running.
+====
+
+== 5. Create a test run on the Execution tab
+
+. Navigate to the *Execution* tab.
+. Right-click an ExecutionList or create a new one by selecting *Create ExecutionList*.
+. Right-click the list and choose *Add TestCase*.
+. Select the test case created earlier.
+
+[NOTE]
+====
+📁 *Tip:* You can add multiple test cases to a single ExecutionList to organize related scenarios.
+====
+
+== 6. Execute the test run on a device
+
+. Right-click the test case in the ExecutionList.
+. Select *Run > Execute Now*.
+. In the execution dialog, choose a mobile device.
+. Start the run.
+
+[NOTE]
+====
+📊 After execution, Tosca will display test results in the *ExecutionLog* tab.
+====
+
+== Summary
+
+[cols="1,3", options="header"]
+|===
+| Step | Action
+
+| 1 | Create new project
+| 2 | Connect to device and scan mobile app
+| 3 | Create test case from scanned modules
+| 4 | Run test case using ScratchBook
+| 5 | Add test case to ExecutionList
+| 6 | Execute test run on a device
+|===
