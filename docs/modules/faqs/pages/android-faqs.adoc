@@ -22,7 +22,7 @@ Suggested solutions and workarounds for the black screen issue:
 
 * Request app developers to provide a debug version of the app without enabling `FLAG_SECURE`.
 
-* Given that the layout of the screen is known, use the `adb shell` action in a manual session to send input to the device and bypass the screen. See the below question for one such case where the black screen appears when logging into Google Play Store in a device with passcode.
+* If you know the screen layout, open *adb shell* in the manual session and send input commands to bypass the black screen. The next question shows this in action for Google Play login on passcode-protected devices.
 
 === How can I bypass the black screen when logging into Google Play Store (device with passcode)?
 
