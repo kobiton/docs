@@ -2,62 +2,67 @@
 
 This guide explains how to create and execute a mobile test in Tosca, from project setup to test execution on a device.
 
+== Prerequisites
+
+* A Kobiton account with access to Public or Local/Private Devices.
+* A Tosca account.
+* Tosca Commander installed.
+
 == Create a new Tosca workspace
+
+[NOTE]
+This section is optional, you can open an existing workspace instead.
 
 Open *Tosca Commander*.
 
-Select *Create New*.
+Select *Create New* in the *Recent Projects* section.
 
-In the *Create New Workspace* dialog box, enter a name for your workspace.
+(Optional) Select *type of Repository*.
 
-(Optional) Select a storage type.
+Enter a name for your workspace.
 
-Choose a location or database connection.
-
-Select *Create*.
+Select *OK* to create the workspace.
 
 == Connect to a Kobiton mobile device and scan mobile objects
 
 In *Tosca Commander*, go to the *Modules* tab.
 
-Select *Scan > Mobile*.
+Select *Scan -> Mobile* from the *Modules* menu.
 
 In the *Mobile Scan* window, under *Select connection*, click *Add connection*.
 
-Enter a name for your connection, such as `Kobiton Cloud` or `Kobiton Standalone`.
+* Enter a name for your connection, such as `Kobiton Cloud` or `Kobiton Standalone`.
 
-Set *Type* to *Appium (Generic)*.
+* Set *Type* to *Appium (Generic)*.
 
-For *Server address*, enter: `https://api.kobiton.com/wd/hub`.
+* For *Server address*, enter: `https://api.kobiton.com/wd/hub`.
 
-Click *Add*.
+* Click *Add*.
 
 Under *Select device*, click *Add device*.
 
-Enter a name, such as `Galaxy Tab A7 Lite`.
+* Enter a name, such as `Galaxy Tab A7 Lite`.
 
-Enter the *device ID* from Kobiton.
+* Enter the *device ID* from Kobiton.
 
-Select *Android* or *iOS*, and choose *Real* or *Simulated* as needed.
+* Select *Android* or *iOS*, and choose *Real* or *Simulated* as needed.
 
-Click *Add*.
+* Click *Add*.
 
 Under *Select application*, click *Add app*.
 
-Enter a name for the app (for example, `APIDemos`). Use either:
+* Enter a name for the app (for example, `APIDemos`). Use either:
 
-* A direct download URL to the app, or
+** A direct download URL to the app, or
 
-* The app's `appPackage/appActivity` (e.g., `io.appium.android.apis/io.appium.android.apis.ApiDemos`).
-If you are using `appPackage/appActivity`, you must also provide the *Kobiton store app ID* under capabilities.
-Click *Add*.
+** The app's `appPackage/appActivity` (e.g., `io.appium.android.apis/io.appium.android.apis.ApiDemos`).
+** If you are using `appPackage/appActivity`, you must also provide the *Kobiton store app ID* under capabilities.
 
-(Optional) To scan using *Live View*, ensure *Run Live View* is checked.
+* Click *Add*.
 
-If using *Live View*, set the capability set type to *Basic Appium 2 (Android)*.
-Click *Set capabilities* to add required Appium capabilities:
+(Optional) To scan using *Live View*, ensure *Run Live View* is checked. If using *Live View*, set the capability set type to *Basic Appium 2 (Android)*.
 
-* Include at least:
+* Click *Set capabilities* to add required Appium capabilities. Include at least:
 
 +
 ----
@@ -67,7 +72,9 @@ app                kobiton-store:<app_id>
 kobiton:runtime    appium
 ----
 
-Click *Select Capability Set*, then *Connect*.
+* Click *Select Capability Set*
+
+Select the created connection, device, and app, then select *Connect*.
 
 Once the app loads, use your mouse to interact with the app's interface and navigate as needed.
 
@@ -77,31 +84,37 @@ When scanning is complete, select *Finish*.
 
 [IMPORTANT]
 ====
-After exiting the *Mobile Scan* window, your session may still be active. Go to the Kobiton Portal to manually terminate the session if needed.
+After exiting the *Mobile Scan* window, your session is still active. Go to the Kobiton Portal to manually terminate the session if needed.
 ====
 
-[NOTE]
-====
 Scanned elements are stored under the *Modules* folder and can be reused across test cases.
-====
 
 == Create a new test case with scanned objects
 
 In *Tosca Commander*, go to the *TestCases* tab.
+
 Right-click the folder where you want to store the test case.
+
 Select *Create TestCase* and give it a meaningful name (e.g., `Test APIDemos`).
 
 === Import standard modules
 
-Go to *Modules* tab and select *Import Subset*.
-Navigate to `C:\Tosca_Projects\ToscaCommander` and import the `standard.tsu` subset.
-After import, expand the folder: `Standard modules > TBox Automation Tools > Engines > Mobile`.
+Select *Import Subset* from the *Home* menu.
+
+Navigate to `C:\Tosca_Projects\ToscaCommander` and select the `standard.tsu` subset.
+
+After importing, select *Modules* tab and expand the newly added `Modules_import...` folder: `Standard modules > TBox Automation Tools > Engines > Mobile`. All standard modules to be added in the next section are located here.
 
 === Add mobile automation modules
 
 Drag and drop the following modules to your test case in this order:
 
-* *Set Desired Capabilities* (located under `Mobile > Capabilities`). This should be the first step in your test case. Enter the following capabilities:
+* *Set Desired Capabilities* (located under `Mobile > Capabilities`).
+
++
+
+This should be the first step in your test case. Enter the following capabilities at the minimum:
+
 +
 ----
 username           <kobiton_username>
@@ -111,7 +124,11 @@ app                kobiton-store:<app_id>
 kobiton:runtime    appium
 ----
 
-* *Open Mobile App*. For Android apps, fill in the following:
+* *Open Mobile App*.
+
++
+
+For Android apps, fill in the following:
 
 +
 
@@ -120,22 +137,17 @@ AppPackage   io.appium.android.apis
 AppActivity  io.appium.android.apis.ApiDemos
 ----
 
-* Add your scanned test modules (e.g., `Mobile App - Select Animation`, `Mobile App - Select Bouncing Balls`).
+* Add your scanned test modules for the next steps.
 
 * *End Appium Session* (place this module as the last step)
 
 === Configure Appium server
 
-Click on the test case node.
+Select the test case node.
 
 In the *Properties* pane, switch to the *Test Configuration* tab.
 
-Add the configuration key: `AppiumServer` and set its value to: `https://api.kobiton.com/wd/hub`
-
-[NOTE]
-====
-Use meaningful test step names like “Open App”, “Tap Animation”, or “Verify Action” to improve test readability.
-====
+Add the configuration key: `AppiumServer` and set its value to: `https://api.kobiton.com/wd/hub`.
 
 === Final Test Case Structure (Example)
 
@@ -143,8 +155,8 @@ Use meaningful test step names like “Open App”, “Tap Animation”, or “V
 Test APIDemos
 ├── Set Desired Capabilities
 ├── Open Mobile App
-├── Mobile App - Select Animation
-├── Mobile App - Select Bouncing Balls
+├── Mobile App - Test step 1
+├── Mobile App - Test step 2
 └── End Appium Session
 ----
 
