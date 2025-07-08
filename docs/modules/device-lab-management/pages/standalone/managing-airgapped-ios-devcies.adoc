@@ -28,25 +28,31 @@ For iOS 17+, each device requires a unique, Apple‑personalized DDI via a TSS r
 
 * Launch Xcode with the device active and foregrounded to establish trust and verify the certificate.
 
-=== 2. Personalized DDI Acquisition
-* For each iOS 17+ device:
+=== Personalized DDI Acquisition
+
+* For each iOS 17+ device:
 ** Connect via USB to the internet‑connected macOS host.
 ** Let Xcode request and download the personalized DDI signature from Apple.
 ** Confirm that the personalization ticket is recorded locally on the device.
 
-=== 3. Air‑Gapped Deployment
+=== Air‑Gapped Deployment
+
 * Remove the device from the online macOS host.
 * Connect it via USB or Cambrionix hub to the air‑gapped Kobiton device host.
-* Launch Kobiton’s `deviceControl` to mount and load the DDI.
+* xref:device-lab-management:deviceConnect/restart-deviceconnect-services.adoc[Restart deviceConnect services,window=read-later] on the Mac mini to mount and load the DDI.
 * If verification fails, reconnect the device to the internet‑enabled host and refresh credentials.
 
-=== 4. Monitoring & Remediation
+=== Monitoring & Remediation
+
 Kobiton logs will alert on:
-* DDI mount failures  
-* `deviceControl` launch issues  
-These typically indicate expired credentials or missing certificates. In such cases, repeat steps 1 and 2.
+
+* DDI mount failures.
+* `deviceControl` (Kobiton mobile agent) launch issues.
+
+These typically indicate expired credentials or missing certificates. In such cases, repeat the steps in the _Personalized DDI Acquisition_ and _Air‑Gapped Deployment_ sections.
 
 == System Administrator Checklist
+
 * A secure macOS machine with **Xcode installed** and internet access.
 * iOS devices connected via USB with **Developer Mode enabled**.
 * Kobiton’s `deviceConnect` deployed on air‑gapped hosts.
@@ -67,6 +73,7 @@ Kobiton plans to store **personalization tickets per device** by default—reduc
 
 == Summary
 Kobiton’s process enables secure iOS device management in air‑gapped environments by:
+
 * Using an online macOS host for Apple compliance steps
 * Mounting devices offline following credential and DDI setup
 * Maintaining a repeatable, compliant workflow even as Apple's requirements evolve
