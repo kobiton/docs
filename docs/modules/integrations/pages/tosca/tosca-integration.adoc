@@ -2,12 +2,12 @@
 
 This guide explains how to create and execute a mobile test in Tosca, from project setup to test execution on a device.
 
-== 1. Create a new Tosca project
+== 1. Create a new Tosca workspace
 
 . Open *Tosca Commander*.
-. Select *Project > New*.
-. In the *Create New Project* dialog box, enter a name for your project.
-. Select a storage type (e.g., *File-based*, *Common Repository*).
+. Select *Create New*.
+. In the *Create New Workspace* dialog box, enter a name for your workspace.
+. (Optional) Select a storage type.
 . Choose a location or database connection.
 . Select *Create*.
 
@@ -16,30 +16,124 @@ This guide explains how to create and execute a mobile test in Tosca, from proje
 ✅ *Tip:* Always use a meaningful project name to help with future organization and version control.
 ====
 
-== 2. Connect to a mobile device and scan mobile objects
+== 2. Connect to a Kobiton mobile device and scan mobile objects
 
 . In *Tosca Commander*, go to the *Modules* tab.
 . Select *Scan > Mobile*.
-. Choose a connected device from the list.
+. In the *Mobile Scan* window, under *Select connection*, click *Add connection*.
+.. Enter a name for your connection, such as `Kobiton Cloud`.
+.. Set *Type* to *Appium (Generic)*.
+.. For *Server address*, enter: `https://api.kobiton.com/wd/hub`.
+.. Click *Add*.
+
+. Under *Select device*, click *Add device*.
+.. Enter a name, such as `Galaxy Tab A7 Lite`.
+.. Enter the *device ID* from Kobiton.
+.. Select *Android* or *iOS*, and choose *Real* or *Simulated* as needed.
+.. Click *Add*.
+
+. Under *Select application*, click *Add app*.
+.. Enter a name for the app (for example, `APIDemos`).
+.. Use either:
+... A direct download URL to the app, or
+... The app's `appPackage/appActivity` (e.g., `io.appium.android.apis/io.appium.android.apis.ApiDemos`).
+.. If you are using `appPackage/appActivity`, you must also provide the *Kobiton store app ID* under capabilities.
+.. Click *Add*.
+
+. (Optional) To scan using *Live View*, ensure *Run Live View* is checked.
+.. If using *Live View*, set the capability set type to *Basic Appium 2 (Android)*.
+. Click *Set capabilities* to add required Appium capabilities:
+.. Include at least:
 +
-If no device is shown, ensure your device is connected and the *Tosca Mobile Agent* is running.
-. Select the mobile application to test.
-. Navigate through the app on the device.
-. Click *Scan* to capture objects from the app screen.
-. Confirm the scanned objects, then select *Finish*.
+----
+username           <your_kobiton_username>
+accessKey          <your_kobiton_access_key>
+app                kobiton-store:<app_id>
+kobiton:runtime    appium
+----
+
+. Click *Select Capability Set*, then *Connect*.
+. Once the app loads, use your mouse to interact with the app's interface and navigate as needed.
+. Click *Scan* to capture the mobile screen’s UI elements.
+. When scanning is complete, select *Finish*.
 
 [NOTE]
 ====
-🔎 *Note:* Scanned objects will appear under the *Modules* folder.
+📌 *Important*: After exiting the *Mobile Scan* window, your session may still be active. Go to the Kobiton Portal to manually terminate the session if needed.
+====
+[NOTE]
+====
+🔎 *Tip*: Scanned elements are stored under the *Modules* folder and can be reused across test cases.
 ====
 
 == 3. Create a new test case with scanned objects
 
-. Go to the *TestCases* tab.
+. In *Tosca Commander*, go to the *TestCases* tab.
 . Right-click the folder where you want to store the test case.
-. Select *Create TestCase*.
-. Drag and drop scanned Modules (objects) into the test case.
-. Configure test steps by editing values, actions, or input parameters as needed.
+. Select *Create TestCase* and give it a meaningful name (e.g., `Test APIDemos`).
+
+=== Import standard modules
+
+. Go to *Modules* tab and select *Import Subset*.
+. Navigate to `C:\Tosca_Projects\ToscaCommander` and import the `standard.tsu` subset.
+. After import, expand the folder: `Standard modules > TBox Automation Tools > Engines > Mobile`.
+
+=== Add mobile automation modules
+
+. Drag and drop the following modules to your test case in this order:
+
+.. *Set Desired Capabilities* (located under `Mobile > Capabilities`)
+... This should be the first step in your test case.
+... Enter the following capabilities:
++
+----
+username           <kobiton_username>
+accessKey          <kobiton_access_key>
+udid               <device_udid>
+app                kobiton-store:<app_id>
+kobiton:runtime    appium
+----
+
+.. *Open Mobile App*
+... For Android apps, fill in the following:
++
+----
+AppPackage   io.appium.android.apis
+AppActivity  io.appium.android.apis.ApiDemos
+----
+
+.. Add your scanned test modules (e.g., `Mobile App - Select Animation`, `Mobile App - Select Bouncing Balls`).
+
+.. *End Appium Session* (place this module as the last step)
+
+=== Configure Appium server
+
+. Click on the test case node.
+. In the *Properties* pane, switch to the *Test Configuration* tab.
+. Add the configuration key: `AppiumServer`
+. Set its value to: `https://api.kobiton.com/wd/hub`
+
+[NOTE]
+====
+🧩 *Tip:* Use meaningful test step names like “Open App”, “Tap Animation”, or “Verify Action” to improve test readability.
+====
+
+=== Final Test Case Structure (Example)
+
+----
+Test APIDemos
+├── Set Desired Capabilities
+├── Open Mobile App
+├── Mobile App - Select Animation
+├── Mobile App - Select Bouncing Balls
+└── End Appium Session
+----
+
+[NOTE]
+====
+📌 *Important:* This structure ensures the session is properly initialized with Kobiton and cleanly terminated afterward. Without the End Appium Session step, your session might stay active on the Kobiton Portal.
+====
+
 
 [NOTE]
 ====
@@ -57,41 +151,3 @@ If no device is shown, ensure your device is connected and the *Tosca Mobile Age
 ====
 🛠 *Troubleshooting:* If the device is not available, verify connectivity and that the Tosca Mobile Agent is running.
 ====
-
-== 5. Create a test run on the Execution tab
-
-. Navigate to the *Execution* tab.
-. Right-click an ExecutionList or create a new one by selecting *Create ExecutionList*.
-. Right-click the list and choose *Add TestCase*.
-. Select the test case created earlier.
-
-[NOTE]
-====
-📁 *Tip:* You can add multiple test cases to a single ExecutionList to organize related scenarios.
-====
-
-== 6. Execute the test run on a device
-
-. Right-click the test case in the ExecutionList.
-. Select *Run > Execute Now*.
-. In the execution dialog, choose a mobile device.
-. Start the run.
-
-[NOTE]
-====
-📊 After execution, Tosca will display test results in the *ExecutionLog* tab.
-====
-
-== Summary
-
-[cols="1,3", options="header"]
-|===
-| Step | Action
-
-| 1 | Create new project
-| 2 | Connect to device and scan mobile app
-| 3 | Create test case from scanned modules
-| 4 | Run test case using ScratchBook
-| 5 | Add test case to ExecutionList
-| 6 | Execute test run on a device
-|===
