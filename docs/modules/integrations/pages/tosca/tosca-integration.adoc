@@ -35,34 +35,40 @@ In the *Mobile Scan* window, under *Select connection*, click *Add connection*.
 
 * Set *Type* to *Appium (Generic)*.
 
-* For *Server address*, enter: `https://api.kobiton.com/wd/hub`.
+* For *Server address*:
 
-* Click *Add*.
+** For Cloud/Hybrid environments, enter `\https://api.kobiton.com/wd/hub`.
+** For Cloud/Hybrid environments with custom domain, enter `\https://api-<custom-domain>.kobiton.com/wd/hub`.
+** For Standalone/On-Prem environments, enter `/[http:https]://[dell_ip_or_hostname]/wd/hub`.
+
+* Select *Add*.
 
 Under *Select device*, click *Add device*.
 
-* Enter a name, such as `Galaxy Tab A7 Lite`.
+* Enter a device name, such as `Galaxy Tab A7 Lite` or `iPhone 14`.
 
-* Enter the *device ID* from Kobiton.
+* Enter the device's *UDID*.
 
 * Select *Android* or *iOS*, and choose *Real* or *Simulated* as needed.
 
-* Click *Add*.
+* Select *Add*.
 
 Under *Select application*, click *Add app*.
 
-* Enter a name for the app (for example, `APIDemos`). Use either:
+* Enter a name for the app.
+
+* For app path, use either:
 
 ** A direct download URL to the app, or
 
-** The app's `appPackage/appActivity` (e.g., `io.appium.android.apis/io.appium.android.apis.ApiDemos`).
-** If you are using `appPackage/appActivity`, you must also provide the *Kobiton store app ID* under capabilities.
+** The app's `appPackage/appActivity` (e.g., `io.appium.android.apis/io.appium.android.apis.ApiDemos`) for Android app, or `bundleId` for iOS app.
 
-* Click *Add*.
+[NOTE]
+If you are using `appPackage/appActivity` or `bundleId`, you must also provide the *Kobiton store app ID* (`app`) under capabilities.
 
-(Optional) To scan using *Live View*, ensure *Run Live View* is checked. If using *Live View*, set the capability set type to *Basic Appium 2 (Android)*.
+* Choose *Add*.
 
-* Click *Set capabilities* to add required Appium capabilities. Include at least:
+* Select *Set capabilities* to add required Appium capabilities. Include the following at minimum:
 
 +
 ----
@@ -72,13 +78,15 @@ app                kobiton-store:<app_id>
 kobiton:runtime    appium
 ----
 
-* Click *Select Capability Set*
+* Choose *Select Capability Set*.
 
-Select the created connection, device, and app, then select *Connect*.
+(Optional) To scan using *Live View*, ensure *Run Live View* is checked. If using *Live View*, you must set `kobiton:runtime` to `appium` in *Set capabilities*. Otherwise, open a manual session with the device on the Kobiton Portal to navigate the app.
 
-Once the app loads, use your mouse to interact with the app's interface and navigate as needed.
+Select the connection, device, app, capability set then choose *Connect*.
 
-Click *Scan* to capture the mobile screen’s UI elements.
+Once the scan starts, use your mouse to interact with the app's interface and navigate as needed.
+
+Choose *Scan* to capture the mobile screen’s UI elements.
 
 When scanning is complete, select *Finish*.
 
