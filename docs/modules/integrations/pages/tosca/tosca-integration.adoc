@@ -4,28 +4,18 @@ This guide explains how to create and execute a mobile test in Tosca, from proje
 
 == Prerequisites
 
-* A Kobiton account with access to Public or Local/Private Devices.
-* A Tosca account.
-* Tosca Commander installed.
+* A Kobiton account with access to Public or Local/Private Devices. Obtain the following information from your Kobiton account:
+** Username.
+** API key.
+* https://documentation.tricentis.com/tosca/2420/en/content/installation_tosca/installation.htm[Tosca Commander,window=read-later] installed and activated.
 
-== Create a new Tosca workspace
+== Create or open a Tosca workspace
 
-[NOTE]
-This section is optional, you can open an existing workspace instead.
-
-Open *Tosca Commander*.
-
-Select *Create New* in the *Recent Projects* section.
-
-(Optional) Select *type of Repository*.
-
-Enter a name for your workspace.
-
-Select *OK* to create the workspace.
+Follow Tosca's guidelines to https://documentation.tricentis.com/tosca/1600/en/content/tosca_commander/create_workspace_singleuser.htm#Createtheworkspace[create,window=read-later] or https://documentation.tricentis.com/tosca/1600/en/content/first_steps/get_to_know_tosca_workspace.htm?Highlight=workspace#Openaworkspace[open,window=read-later] a workspace in Tosca Commander.
 
 == Connect to a Kobiton mobile device and scan mobile objects
 
-In *Tosca Commander*, go to the *Modules* tab.
+In your workspace, go to the *Modules* tab.
 
 Select *Scan -> Mobile* from the *Modules* menu.
 
@@ -39,7 +29,7 @@ In the *Mobile Scan* window, under *Select connection*, click *Add connection*.
 
 ** For Cloud/Hybrid environments, enter `\https://api.kobiton.com/wd/hub`.
 ** For Cloud/Hybrid environments with custom domain, enter `\https://api-<custom-domain>.kobiton.com/wd/hub`.
-** For Standalone/On-Prem environments, enter `/[http:https]://[dell_ip_or_hostname]/wd/hub`.
+** For Standalone/On-Prem environments, enter `[http|https]://[dell_ip_or_hostname]/wd/hub`.
 
 * Select *Add*.
 
@@ -64,19 +54,27 @@ Under *Select application*, click *Add app*.
 ** The app's `appPackage/appActivity` (e.g., `io.appium.android.apis/io.appium.android.apis.ApiDemos`) for Android app, or `bundleId` for iOS app.
 
 [NOTE]
-If you are using `appPackage/appActivity` or `bundleId`, you must also provide the *Kobiton store app ID* (`app`) under capabilities.
+If you are using `appPackage/appActivity` or `bundleId`, you must also provide the *Kobiton store app ID* (`appium:app`) under *Set capabilities*.
 
 * Choose *Add*.
 
 * Select *Set capabilities* to add required Appium capabilities. Include the following at minimum:
 
 +
-----
-username           <your_kobiton_username>
-accessKey          <your_kobiton_access_key>
-app                kobiton-store:<app_id>
-kobiton:runtime    appium
-----
+[cols="1,1,1"]
+|===
+|Capability | Value | Required?
+
+|appium:username | <your_kobiton_username> | Yes
+|appium:accessKey | <your_kobiton_access_key> | Yes
+|appium:app | kobiton-store:<app_id> | No
+
+Used for apps from the Kobiton App Repo.
+|kobiton:runtime | appium | No
+
+Used for Appium Basic 2.
+
+|===
 
 * Choose *Select Capability Set*.
 
@@ -86,24 +84,32 @@ Select the connection, device, app, capability set then choose *Connect*.
 
 Once the scan starts, use your mouse to interact with the app's interface and navigate as needed.
 
-Choose *Scan* to capture the mobile screen’s UI elements.
+Choose *Scan* to capture the mobile screen’s UI elements. Follow Tosca's https://documentation.tricentis.com/tosca/1600/en/content/engines_3.0/mobile/mobile_scan_select_controls.htm[official guidelines,window=read-later] for more details about mobile scan.
 
 When scanning is complete, select *Finish*.
 
 [IMPORTANT]
 ====
-After exiting the *Mobile Scan* window, your session is still active. Go to the Kobiton Portal to manually terminate the session if needed.
+After closing the *Mobile Scan* window, your session on Kobiton is still active until timed out. Go to the Kobiton Portal to manually terminate the session to make the device available for others or reduce public minutes use.
 ====
 
-Scanned elements are stored under the *Modules* folder and can be reused across test cases.
+Scanned elements are stored under the *Modules* folder and can be used across test cases.
 
 == Create a new test case with scanned objects
 
-In *Tosca Commander*, go to the *TestCases* tab.
+In your workspace, go to the *TestCases* tab.
 
 Right-click the folder where you want to store the test case.
 
 Select *Create TestCase* and give it a meaningful name (e.g., `Test APIDemos`).
+
+=== Configure Appium server
+
+Select the test case node.
+
+In the *Properties* pane, switch to the *Test Configuration* tab.
+
+Add the configuration key: `AppiumServer` and set its value to: `https://api.kobiton.com/wd/hub`.
 
 === Import standard modules
 
@@ -149,14 +155,6 @@ AppActivity  io.appium.android.apis.ApiDemos
 
 * *End Appium Session* (place this module as the last step)
 
-=== Configure Appium server
-
-Select the test case node.
-
-In the *Properties* pane, switch to the *Test Configuration* tab.
-
-Add the configuration key: `AppiumServer` and set its value to: `https://api.kobiton.com/wd/hub`.
-
 === Final Test Case Structure (Example)
 
 ----
@@ -186,3 +184,7 @@ Select the created test case.
 Right-click and choose *Run in ScratchBook* or use *Run > ScratchBook* on the toolbar.
 
 Start execution.
+
+During execution, you can launch a mixed session on the device to monitor the test case.
+
+You can add the test case to https://documentation.tricentis.com/tosca/1600/en/content/tosca_commander/execution_overview.htm[test execution,window=read-later] if needed.
