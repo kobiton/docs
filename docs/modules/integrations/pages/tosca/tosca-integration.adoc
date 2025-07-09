@@ -1,6 +1,6 @@
 = User Guide: Mobile Test Automation with Tosca
 
-This guide explains how to create and execute a mobile test in Tosca, from project setup to test execution on a device.
+This guide explains how to create and execute a mobile test with Kobiton devices in Tosca, from project setup to test execution on a device.
 
 == Prerequisites
 
@@ -99,17 +99,15 @@ Scanned elements are stored under the *Modules* folder and can be used across te
 
 == Create a new test case with scanned objects
 
-In your workspace, go to the *TestCases* tab.
-
-Right-click the folder where you want to store the test case.
-
-Select *Create TestCase* and give it a meaningful name (e.g., `Test mobile app`).
+Follow Tosca's guidelines to https://documentation.tricentis.com/tosca/1600/en/content/tosca_commander/testcases_section_blue.htm#CreateanewTestCase[create a test case,window=read-later] and https://documentation.tricentis.com/tosca/1600/en/content/tosca_commander/teststep_from_module.htm[add scanned modules,window=read-later] to the test case.
 
 === Configure Appium server
 
 Select the created test case.
 
-In the *Detail* plane, switch to the *Test Configuration* tab.
+In the *Details* plane, switch to the *Test Configuration* tab.
+
+Right-click anywhere in the Test Configuration tab and select *Add Test Configuration*.
 
 Add the configuration key: `AppiumServer` and set its value to:
 
@@ -117,7 +115,7 @@ Add the configuration key: `AppiumServer` and set its value to:
 * For Cloud/Hybrid environments with custom domain, enter `\https://api-<custom-domain>.kobiton.com/wd/hub`.
 * For Standalone/On-Prem environments, enter `[http|https]://[dell_ip_or_hostname]/wd/hub`.
 
-=== Import standard modules
+=== Import standard subset
 
 Select *Import Subset* from the *Home* menu.
 
@@ -184,8 +182,6 @@ Fill in the following:
 
 `com.example.app`
 |===
-
-* Add your scanned test modules for the next steps.
 
 * (Optional) add *End Appium Session* as the last test step to cleanly exit the Kobiton session.
 
