@@ -15,11 +15,17 @@ Follow Tosca's guidelines to https://documentation.tricentis.com/tosca/1600/en/c
 
 == Connect to a Kobiton mobile device and scan mobile objects
 
-In your workspace, go to the *Modules* tab.
+In your workspace, go to the *Modules* tab. Select *Scan -> Mobile* from the *Modules* menu.
 
-Select *Scan -> Mobile* from the *Modules* menu.
+image:tosca-scan-mobile.png[width=600, alt="Tosca Modules tab showing options for scanning mobile applications and other formats."]
 
 In the *Mobile Scan* window, under *Select connection*, click *Add connection*.
+
+image:tosca-mobile-scan-setup.png[width=600, alt="Mobile scan setup screen in Tosca with only Local connection selected and no device or app configured."]
+
+In the _Add connection_ window:
+
+image:tosca-mobile-scan-add-connection.png[width=450, alt="Add connection screen in Tosca with connection named 'Kobiton Cloud' using Appium (Generic) type."]
 
 * Enter a name for your connection, such as `Kobiton Cloud` or `Kobiton Standalone`.
 
@@ -33,7 +39,9 @@ In the *Mobile Scan* window, under *Select connection*, click *Add connection*.
 
 * Select *Add*.
 
-Under *Select device*, click *Add device*.
+Under *Select device*, select *Add device*.
+
+image:tosca-mobile-scan-add-device.png[width=450, alt="Add device screen with Galaxy Tab A7 Lite specified as a real Android device with its device ID."]
 
 * Enter a device name, such as `Galaxy Tab A7 Lite` or `iPhone 14`.
 
@@ -43,7 +51,9 @@ Under *Select device*, click *Add device*.
 
 * Select *Add*.
 
-Under *Select application*, click *Add app*.
+Under *Select application*, choose *Add app*.
+
+image:tosca-mobile-scan-add-application.png[width=450, alt="Add native or hybrid application screen with Android option selected and APIDemos package specified."]
 
 * Enter a name for the app.
 
@@ -58,7 +68,17 @@ If you are using `appPackage/appActivity` or `bundleId`, you must also provide t
 
 * Choose *Add*.
 
-* Select *Set capabilities* to add required Appium capabilities. Include the following at minimum:
+Select *Set capabilities* to add required Appium capabilities.
+
+image:tosca-mobile-scan-setup-capability.png[width=600, alt="Tosca mobile scan setup screen with selected connection, device, and application ready for capability assignment."]
+
+* Select *Add capability set*.
+
++
+
+image:tosca-mobile-scan-capabilities.png[width=600, alt="Tosca capabilities screen prompting the user to add a new capability set."]
+
+* Add the following capabilities at minimum:
 
 +
 
@@ -77,16 +97,26 @@ Used for Appium Basic 2.
 
 |===
 
++
+
+image:tosca-mobile-scan-capabilties-populated.png[width=600, alt="Tosca capabilities screen showing a populated capability set for Android Cloud including accessKey, app, and runtime."]
+
 * Choose *Select Capability Set*.
+
+Ensure that the created connection, device, app, and capability set have been selected before continuing.
+
+image:tosca-mobile-scan-setup-complete.png[width=600, alt="Tosca mobile scan setup screen with Kobiton Cloud, Galaxy Tab A7 Lite, and APIDemos application selected."]
 
 (Optional) To scan using *Live View*, ensure *Run Live View* is checked.
 
 [NOTE]
 If using *Live View* on Android, you must set `kobiton:runtime` to `appium` in *Set capabilities* to navigate the app from the Live view. Otherwise, launch a manual session on the device to navigate the app.
 
-Select the created connection, device, app, capability set then choose *Connect*.
+Select *Connect* to start the connection.
 
 Select *Scan* to start scanning. Use your mouse to interact with the app's interface and navigate as needed. Follow Tosca's https://documentation.tricentis.com/tosca/1600/en/content/engines_3.0/mobile/mobile_scan_select_controls.htm[official guidelines,window=read-later] for more details about mobile scan controls.
+
+image:tosca-mobile-scan-start.png[width=800, alt="Mobile scan screen in Tosca showing connection established with the APIDemos app interface and Appium session details."]
 
 When scanning is complete, select *Close*.
 
@@ -221,29 +251,9 @@ image:tosca-import-subset-location.png[width=750, alt="File explorer window used
 
 image:tosca-import-subset.png[width=600, alt="Tosca Project menu with the Import Subset button highlighted under the Subset section."]
 
-image:tosca-mobile-scan-add-application.png[width=450, alt="Add native or hybrid application screen with Android option selected and APIDemos package specified."]
-
-image:tosca-mobile-scan-add-connection.png[width=450, alt="Add connection screen in Tosca with connection named 'Kobiton Cloud' using Appium (Generic) type."]
-
-image:tosca-mobile-scan-add-device.png[width=450, alt="Add device screen with Galaxy Tab A7 Lite specified as a real Android device with its device ID."]
-
-image:tosca-mobile-scan-capabilities.png[width=600, alt="Tosca capabilities screen prompting the user to add a new capability set."]
-
-image:tosca-mobile-scan-capabilties-populated.png[width=600, alt="Tosca capabilities screen showing a populated capability set for Android Cloud including accessKey, app, and runtime."]
-
-image:tosca-mobile-scan-setup-capability.png[width=600, alt="Tosca mobile scan setup screen with selected connection, device, and application ready for capability assignment."]
-
-image:tosca-mobile-scan-setup-complete.png[width=600, alt="Tosca mobile scan setup screen with Kobiton Cloud, Galaxy Tab A7 Lite, and APIDemos application selected."]
-
-image:tosca-mobile-scan-setup.png[width=600, alt="Mobile scan setup screen in Tosca with only Local connection selected and no device or app configured."]
-
-image:tosca-mobile-scan-start.png[width=800, alt="Mobile scan screen in Tosca showing connection established with the APIDemos app interface and Appium session details."]
-
 image:tosca-open-mobile-app.png[width=800, alt="Open Mobile App step in Tosca displaying input fields for app package, activity, and path."]
 
 image:tosca-run-in-scratchbook.png[width=600, alt="Tosca context menu showing 'Run in ScratchBook' option highlighted for test execution."]
-
-image:tosca-scan-mobile.png[width=600, alt="Tosca Modules tab showing options for scanning mobile applications and other formats."]
 
 image:tosca-scanned-modules.png[width=600, alt="Modules section in Tosca listing scanned modules including Mobile App - Select Animation and Bouncing Balls."]
 
