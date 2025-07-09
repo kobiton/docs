@@ -61,6 +61,7 @@ If you are using `appPackage/appActivity` or `bundleId`, you must also provide t
 * Select *Set capabilities* to add required Appium capabilities. Include the following at minimum:
 
 +
+
 [cols="1,1,1"]
 |===
 |Capability | Value | Required?
@@ -105,11 +106,15 @@ Select *Create TestCase* and give it a meaningful name (e.g., `Test APIDemos`).
 
 === Configure Appium server
 
-Select the test case node.
+Select the created test case.
 
-In the *Properties* pane, switch to the *Test Configuration* tab.
+In the *Detail* plane, switch to the *Test Configuration* tab.
 
-Add the configuration key: `AppiumServer` and set its value to: `https://api.kobiton.com/wd/hub`.
+Add the configuration key: `AppiumServer` and set its value to:
+
+* For Cloud/Hybrid environments, enter `\https://api.kobiton.com/wd/hub`.
+* For Cloud/Hybrid environments with custom domain, enter `\https://api-<custom-domain>.kobiton.com/wd/hub`.
+* For Standalone/On-Prem environments, enter `[http|https]://[dell_ip_or_hostname]/wd/hub`.
 
 === Import standard modules
 
@@ -117,7 +122,7 @@ Select *Import Subset* from the *Home* menu.
 
 Navigate to `C:\Tosca_Projects\ToscaCommander` and select the `standard.tsu` subset.
 
-After importing, select *Modules* tab and expand the newly added `Modules_import...` folder: `Standard modules > TBox Automation Tools > Engines > Mobile`. All standard modules to be added in the next section are located here.
+After importing, select *Modules* tab and expand the newly added `Modules_import...` folder: *Standard modules -> TBox Automation Tools -> Engines -> Mobile*. All standard modules to be added in the next section are located here.
 
 === Add mobile automation modules
 
@@ -130,30 +135,58 @@ Drag and drop the following modules to your test case in this order:
 This should be the first step in your test case. Enter the following capabilities at the minimum:
 
 +
-----
-username           <kobiton_username>
-accessKey          <kobiton_access_key>
-udid               <device_udid>
-app                kobiton-store:<app_id>
-kobiton:runtime    appium
-----
+
+[cols="1,1,1"]
+|===
+|Capability | Value | Required?
+
+|appium:username | <your_kobiton_username> | Yes
+|appium:accessKey | <your_kobiton_access_key> | Yes
+|appium:udid | <your_device_udid> | Yes
+|appium:app | kobiton-store:<app_id> | No
+
+Used for apps from the Kobiton App Repo.
+|kobiton:runtime | appium | No
+
+Used for Appium Basic 2.
+
+|===
 
 * *Open Mobile App*.
 
 +
 
-For Android apps, fill in the following:
+Fill in the following:
+
+* Android app
 
 +
 
-----
-AppPackage   io.appium.android.apis
-AppActivity  io.appium.android.apis.ApiDemos
-----
+[col=1,1,1]
+|===
+| Parameter | Description | Example
+
+| Application | Direct URL to the app or `AppPackage/AppActivity`. | `\https://www.example.com/app.apk`
+
+`io.appium.android.apis/io.appium.android.apis.ApiDemos`
+|===
+
+* iOS app
+
++
+
+[col=1,1]
+|===
+| Parameter | Description | Example
+
+| Application | Direct URL to the app or `bundleId`. | `\https://www.example.com/app.ipa`
+
+`com.example.app`
+|===
 
 * Add your scanned test modules for the next steps.
 
-* *End Appium Session* (place this module as the last step)
+* (Optional) add *End Appium Session* as the last test step to cleanly exit the Kobiton session.
 
 === Final Test Case Structure (Example)
 
@@ -168,23 +201,15 @@ Test APIDemos
 
 [IMPORTANT]
 ====
-This structure ensures the session is properly initialized with Kobiton and cleanly terminated afterward. Without the End Appium Session step, your session might stay active on the Kobiton Portal.
-====
-
-
-[NOTE]
-====
-Name test steps clearly (e.g., "Tap Login Button", "Enter Username") for easy identification.
+This structure ensures the session is properly initialized with Kobiton and cleanly terminated afterward. Without the End Appium Session step, your session might stay active on the Kobiton Portal until timed out
 ====
 
 == Execute the test case on a device
 
 Select the created test case.
 
-Right-click and choose *Run in ScratchBook* or use *Run > ScratchBook* on the toolbar.
-
-Start execution.
+Right-click and choose *Run in ScratchBook* or use *Run -> ScratchBook* on the toolbar to run the test case.
 
 During execution, you can launch a mixed session on the device to monitor the test case.
 
-You can add the test case to https://documentation.tricentis.com/tosca/1600/en/content/tosca_commander/execution_overview.htm[test execution,window=read-later] if needed.
+You can also add the test case to https://documentation.tricentis.com/tosca/1600/en/content/tosca_commander/execution_overview.htm[test execution,window=read-later] if needed.
