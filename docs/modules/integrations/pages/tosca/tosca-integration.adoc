@@ -4,9 +4,9 @@ This guide explains how to create and execute a mobile test in Tosca, from proje
 
 == Prerequisites
 
-* A Kobiton account with access to Public or Local/Private Devices. Obtain the following information from your Kobiton account:
-** Username.
-** API key.
+* A Kobiton account with access to Public or Local/Private Devices. Obtain the following information from your Kobiton account in the Portal:
+** xref:profile:manage-your-profile.adoc#_open_your_profile[Username,window=read-later].
+** xref:profile:manage-your-api-credentials.adoc#_get_an_api_key[API key].
 * https://documentation.tricentis.com/tosca/2420/en/content/installation_tosca/installation.htm[Tosca Commander,window=read-later] installed and activated.
 
 == Create or open a Tosca workspace
@@ -79,15 +79,16 @@ Used for Appium Basic 2.
 
 * Choose *Select Capability Set*.
 
-(Optional) To scan using *Live View*, ensure *Run Live View* is checked. If using *Live View*, you must set `kobiton:runtime` to `appium` in *Set capabilities*. Otherwise, open a manual session with the device on the Kobiton Portal to navigate the app.
+(Optional) To scan using *Live View*, ensure *Run Live View* is checked.
 
-Select the connection, device, app, capability set then choose *Connect*.
+[NOTE]
+If using *Live View* on Android, you must set `kobiton:runtime` to `appium` in *Set capabilities* to navigate the app from the Live view. Otherwise, launch a manual session on the device to navigate the app.
 
-Once the scan starts, use your mouse to interact with the app's interface and navigate as needed.
+Select the created connection, device, app, capability set then choose *Connect*.
 
-Choose *Scan* to capture the mobile screen’s UI elements. Follow Tosca's https://documentation.tricentis.com/tosca/1600/en/content/engines_3.0/mobile/mobile_scan_select_controls.htm[official guidelines,window=read-later] for more details about mobile scan.
+Select *Scan* to start scanning. Use your mouse to interact with the app's interface and navigate as needed. Follow Tosca's https://documentation.tricentis.com/tosca/1600/en/content/engines_3.0/mobile/mobile_scan_select_controls.htm[official guidelines,window=read-later] for more details about mobile scan controls.
 
-When scanning is complete, select *Finish*.
+When scanning is complete, select *Close*.
 
 [IMPORTANT]
 ====
@@ -102,7 +103,7 @@ In your workspace, go to the *TestCases* tab.
 
 Right-click the folder where you want to store the test case.
 
-Select *Create TestCase* and give it a meaningful name (e.g., `Test APIDemos`).
+Select *Create TestCase* and give it a meaningful name (e.g., `Test mobile app`).
 
 === Configure Appium server
 
