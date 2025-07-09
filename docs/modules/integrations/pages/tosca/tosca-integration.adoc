@@ -127,6 +127,8 @@ After closing the *Mobile Scan* window, your session on Kobiton is still active 
 
 Scanned elements are stored under the *Modules* folder and can be used across test cases.
 
+image:tosca-scanned-modules.png[width=600, alt="Modules section in Tosca listing scanned modules including Mobile App - Select Animation and Bouncing Balls."]
+
 == Create a new test case with scanned objects
 
 Follow Tosca's guidelines to https://documentation.tricentis.com/tosca/1600/en/content/tosca_commander/testcases_section_blue.htm#CreateanewTestCase[create a test case,window=read-later] and https://documentation.tricentis.com/tosca/1600/en/content/tosca_commander/teststep_from_module.htm[add scanned modules,window=read-later] to the test case.
@@ -139,7 +141,11 @@ In the *Details* plane, switch to the *Test Configuration* tab.
 
 Right-click anywhere in the _Test Configuration_ tab and select *Create Test configuration parameter* icon.
 
+image:tosca-create-test-configuration-parameter.png[width=750, alt="Tosca interface showing a context menu to create a test configuration parameter for the Test APIDemos case."]
+
 Add the configuration parameter `AppiumServer` and set its value to:
+
+image:tosca-appium-server-parameter.png[width=450, alt="Tosca test configuration screen showing the AppiumServer parameter set as a string."]
 
 * For Cloud/Hybrid environments, enter `\https://api.kobiton.com/wd/hub`.
 * For Cloud/Hybrid environments with custom domain, enter `\https://api-<custom-domain>.kobiton.com/wd/hub`.
@@ -149,15 +155,25 @@ Add the configuration parameter `AppiumServer` and set its value to:
 
 Select *Import Subset* from the *Home* menu.
 
+image:tosca-import-subset.png[width=600, alt="Tosca Project menu with the Import Subset button highlighted under the Subset section."]
+
 Navigate to `C:\Tosca_Projects\ToscaCommander` and select the `standard.tsu` subset.
 
-After importing, select *Modules* tab and expand the newly added `Modules_import...` folder: *Standard modules -> TBox Automation Tools -> Engines -> Mobile*. All standard modules to be added in the next section are located here.
+image:tosca-import-subset-location.png[width=750, alt="File explorer window used to import a Tosca subset file from the ToscaCommander directory."]
+
+After importing, select the *Modules* tab and expand the newly added `Modules_import...` folder: *Standard modules -> TBox Automation Tools -> Engines -> Mobile*. All standard modules to be added in the next section are located here.
+
+image:tosca-standard-modules-expanded.png[width=450, alt="Expanded view of standard Tosca modules including Mobile app management and capabilities."]
 
 === Add mobile automation modules
 
 Drag and drop the following modules to your test case in this order:
 
 * *Set Desired Capabilities* (located under `Mobile > Capabilities`).
+
++
+
+image:tosca-set-desired-capabilities.png[width=750, alt="Set Desired Capabilities test step in Tosca showing fields like udid, app, runtime, username, and accessKey."]
 
 +
 
@@ -185,35 +201,28 @@ Used for Appium Basic 2.
 
 +
 
+image:tosca-open-mobile-app.png[width=800, alt="Open Mobile App step in Tosca displaying input fields for app package, activity, and path."]
+
++
+
 Fill in the following:
 
-* Android app
-
 +
 
-[col=1,1,1]
+[col=1,1,1,1]
 |===
-| Parameter | Description | Example
+|Mobile OS | Parameter | Description | Example
 
-| Application | Direct URL to the app or `AppPackage/AppActivity`. | `\https://www.example.com/app.apk`
+| Android | Application | Direct URL to the app or `AppPackage/AppActivity` | `\https://www.example.com/app.apk`
 
 `io.appium.android.apis/io.appium.android.apis.ApiDemos`
-|===
 
-* iOS app
-
-+
-
-[col=1,1]
-|===
-| Parameter | Description | Example
-
-| Application | Direct URL to the app or `bundleId`. | `\https://www.example.com/app.ipa`
+|iOS | Application | Direct URL to the app or `bundleId` | `\https://www.example.com/app.ipa`
 
 `com.example.app`
 |===
 
-* (Optional) add *End Appium Session* as the last test step to cleanly exit the Kobiton session.
+** (Optional) add *End Appium Session* as the last test step to cleanly exit the Kobiton session.
 
 === Final Test Case Structure (Example)
 
@@ -237,26 +246,8 @@ Select the created test case.
 
 Right-click and choose *Run in ScratchBook* or use *Run in ScratchBook* on the toolbar to run the test case.
 
+image:tosca-run-in-scratchbook.png[width=600, alt="Tosca context menu showing 'Run in ScratchBook' option highlighted for test execution."]
+
 During execution, you can launch a mixed session on the device to monitor the test case.
 
 You can also add the test case to https://documentation.tricentis.com/tosca/1600/en/content/tosca_commander/execution_overview.htm[test execution,window=read-later] if needed.
-
-== (TEMP) images
-
-image:tosca-appium-server-parameter.png[width=450, alt="Tosca test configuration screen showing the AppiumServer parameter set as a string."]
-
-image:tosca-create-test-configuration-parameter.png[width=750, alt="Tosca interface showing a context menu to create a test configuration parameter for the Test APIDemos case."]
-
-image:tosca-import-subset-location.png[width=750, alt="File explorer window used to import a Tosca subset file from the ToscaCommander directory."]
-
-image:tosca-import-subset.png[width=600, alt="Tosca Project menu with the Import Subset button highlighted under the Subset section."]
-
-image:tosca-open-mobile-app.png[width=800, alt="Open Mobile App step in Tosca displaying input fields for app package, activity, and path."]
-
-image:tosca-run-in-scratchbook.png[width=600, alt="Tosca context menu showing 'Run in ScratchBook' option highlighted for test execution."]
-
-image:tosca-scanned-modules.png[width=600, alt="Modules section in Tosca listing scanned modules including Mobile App - Select Animation and Bouncing Balls."]
-
-image:tosca-set-desired-capabilities.png[width=750, alt="Set Desired Capabilities test step in Tosca showing fields like udid, app, runtime, username, and accessKey."]
-
-image:tosca-standard-modules-expanded.png[width=450, alt="Expanded view of standard Tosca modules including Mobile app management and capabilities."]
