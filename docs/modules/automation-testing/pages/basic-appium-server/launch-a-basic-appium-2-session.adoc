@@ -11,6 +11,105 @@ Note that basic Appium 2 support is a beta release, so it currently has several 
 
 A basic Appium 2 session can only be launched on devices hosted by Kobiton v4.9 or above.
 
+== Connecting to Appium Inspector
+
+To run a basic Appium 2 session, you need to connect Kobiton to your Cloud Provider. When you start an intended session in Appium, you will be prompted for two pieces of information:
+
+* **Your Kobiton Username**: You can find this in your profile
+* **Your Kobiton Access Key**: You can generate this by following the guide at xref:profile:manage-your-api-credentials.adoc[Manage your API credentials]
+
+=== Required Capabilities
+
+The following table lists the capabilities required to run a basic Appium 2 session on Kobiton:
+
+[cols="1,1,1,1"]
+|===
+|Capability |Type |Required |Description
+
+|`platformName`
+|String
+|Yes
+|The platform name (e.g., "Android", "iOS")
+
+|`appium:automationName`
+|String
+|Yes
+|The automation engine to use ("UIAutomator2" for Android, "XCUITest" for iOS)
+
+|`kobiton:sessionName`
+|String
+|Yes
+|A descriptive name for your automation session
+
+|`kobiton:sessionDescription`
+|String
+|Yes
+|A description of what the session will test
+
+|`kobiton:deviceGroup`
+|String
+|Yes
+|The device group to use (e.g., "KOBITON", "ORGANIZATION")
+
+|`appium:udid`
+|String
+|Yes
+|The unique device identifier
+
+|`kobiton:groupId`
+|String
+|Yes
+|The group ID for the device
+
+|`appium:deviceName`
+|String
+|Yes
+|The name of the device
+
+|`appium:platformVersion`
+|String
+|Yes
+|The platform version of the device
+
+|`kobiton:retainDurationInSeconds`
+|String
+|No
+|How long to retain the session (0 for immediate release)
+
+|`browserName`
+|String
+|Conditional
+|Required for web testing, omit for app testing
+
+|`kobiton:runtime`
+|String
+|Yes
+|Must be set to "appium" for basic Appium 2 sessions
+|===
+
+For detailed information about automation settings, see xref:devices:manage-devices.adoc#_automation_settings[Manage devices - Automation settings].
+
+=== Example Capabilities
+
+Here's an example of working capabilities for a basic Appium 2 session:
+
+[source,json]
+----
+{
+  "platformName": "Android",
+  "appium:automationName": "UIAutomator2",
+  "kobiton:sessionName": "Automation test session",
+  "kobiton:sessionDescription": "Automation session",
+  "kobiton:deviceGroup": "KOBITON",
+  "appium:udid": "5561f118",
+  "kobiton:groupId": "2576",
+  "appium:deviceName": "Pixel 8 Pro",
+  "appium:platformVersion": "15",
+  "kobiton:retainDurationInSeconds": "0",
+  "browserName": "chrome"
+}
+----
+
 == Modify the capabilities in your Appium script
 
 The following modifications must be made to the capabilities of your existing Xium script to run a basic Appium 2 session successfully:
