@@ -158,6 +158,8 @@ Wait until the device screen changes to the below before continuing. There will 
 
 image::device-lab-management:device-lab-management-add-android-screen-changes-to-blue.PNG[width=300, alt="device screen changes and shows Kobiton name and logo"]
 
+
+
 [#preload-ddi-air-gapped]
 === Preload DDI for air-gapped Mac mini hosts
 
@@ -169,7 +171,7 @@ Access any macOS machine with Internet access. This will be referred to as the I
 [NOTE]
 Kobiton software, such as deviceConnect and deviceShare, does not need to be installed on the Internet Mac.
 
-Ensure *Xcode* is installed on the Internet Mac. Make sure the Xcode version is compatible with the iOS 17 device.
+Ensure *Xcode* is installed on the Internet Mac. Make sure the Xcode version on the Internet Mac is the same as the air-gapped Mac.
 
 [IMPORTANT]
 Make sure the Xcode version on the Internet Mac *is the same or greater* than the version on the Mac mini host to transfer the DDI to.
@@ -190,17 +192,19 @@ Unplug the device from the Internet Mac.
 
 Repeat the above processes for all iOS/iPadOS 17 and later devices to be hosted on the air-gapped Mac mini.
 
+// tag::ddi[]
+
 Open *Finder* on the Internet Mac. Press *Shift + Command + G* on the keyboard, then input the following path depending on the version of Xcode:
+
+* `/Library/Developer/CoreDevice/CandidateDDIs/iOS_DDI.dmg` or `~/Library/Developer/CoreDevice/CandidateDDIs/iOS_DDI.dmg`, depending on where Xcode is installed (Xcode 16.3 and later)
 
 * `/Library/Developer/DeveloperDiskImages` (Xcode 16 and above)
 
 * `~/Library/Developer/DeveloperDiskImages` (Xcode below 16)
 
-Copy the 2 files `iOS_DDI-version.plist` and `iOS_DDI.dmg` to the *air-gapped Mac mini* that will host the iOS/iPadOS 17 and later devices. Put the copied file into the following folder on the air-gapped Mac mini:
+Copy the 2 files `iOS_DDI-version.plist` and `iOS_DDI.dmg` to the same location on the *air-gapped Mac mini* that will host the iOS/iPadOS 17 and later devices.
 
-* `/Library/Developer/DeveloperDiskImages` if the current Xcode version is 16 or above.
-
-* ``~/Library/Developer/DeveloperDiskImages ``if the current Xcode version is below 16.
+// end::ddi[]
 
 Repeat the above process for all air-gapped Mac mini hosts with iOS/iPadOS 17 and later devices.
 
