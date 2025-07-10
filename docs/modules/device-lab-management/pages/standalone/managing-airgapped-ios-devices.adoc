@@ -42,6 +42,14 @@ For iOS 17+, each device requires a unique, Apple‑personalized DDI via a TSS r
 * xref:device-lab-management:deviceConnect/restart-deviceconnect-services.adoc[Restart deviceConnect services,window=read-later] on the Mac mini to mount and load the DDI.
 * If verification fails, reconnect the device to the internet‑enabled host and refresh credentials.
 
+=== Air‑Gapped Deployment DDI Transfer
+
+For air-gapped or datacenter environments where it’s cumbersome to follow manual steps to allow Xcode to download this file, administrators can copy the base image from the Internet macOS host to the air-gapped host.
+
+Follow the steps from the previous sections to generate the DDI on the Internet host.
+
+include::device-lab-management:ios-devices/add-ios-device.adoc[tag=ddi]
+
 === Monitoring & Remediation
 
 Kobiton logs will alert on:
