@@ -5,24 +5,22 @@ Find answers to frequently asked questions related to Android devices.
 
 == Manual sessions
 
-=== Why do I see a black screen during a manual session?
+=== Why do I see a black screen during a manual session on Android?
 
-As part of the secure sensitive activities, app developers can choose to disallow screenshots and casting the screen for certain app windows using `FLAG_SECURE`.
-
-When navigating to windows with `FLAG_SECURE`, the device screen turns black in a manual session.
-
-image:faqs:android-black-screen-flag-secure.png[width=800,alt="Android manual session screen shows a black device screen likely caused by FLAG_SECURE, with inspector hierarchy visible."]
-
-Although the screen is black, you can still use the appium inspector in a xref:manual-testing:device-information/inspector.adoc[manual session,window=read-later] or xref:session-explorer:analytics/reinspect-appium-elements.adoc[Session Explorer,window=read-later] to inspect elements on the screen.
+A black screen can appear during an Android manual session for a few reasons. One common cause is the use of the `FLAG_SECURE` setting in an app. This setting helps protect sensitive content by blocking screenshots and screencast for specific windows, such as login screens.
 
 [NOTE]
 Learn more about `FLAG_SECURE` on https://developer.android.com/security/fraud-prevention/activities[Android Developers,window=read-later].
 
+image:faqs:android-black-screen-flag-secure.png[width=800,alt="Android manual session screen shows a black device screen likely caused by FLAG_SECURE, with inspector hierarchy visible."]
+
+Although the screen is black, you can still use the Inspector in a xref:manual-testing:device-information/inspector.adoc[manual session,window=read-later] or xref:session-explorer:analytics/reinspect-appium-elements.adoc[Session Explorer,window=read-later] to inspect elements on the screen.
+
 Suggested solutions and workarounds for the black screen issue:
 
-* Request app developers to provide a debug version of the app without enabling `FLAG_SECURE`.
+* Ask the app developers for a debug version of the app without the `FLAG_SECURE` setting enabled.
 
-* If you know the screen layout, open *adb shell* in the manual session and send input commands to bypass the black screen. The next question shows this in action for Google Play login on passcode-protected devices.
+* If you're familiar with the screen layout, open _adb shell_ during the manual session and use input commands to navigate past the black screen. The next question shows this in action for Google Play login on passcode-protected devices.
 
 === How can I bypass the black screen when logging into Google Play Store (device with passcode)?
 
@@ -38,9 +36,9 @@ To bypass this screen in a manual session:
 
 image:faqs:passcode-device-manual-session.png[width=700,alt="Device details in a manual session reveal the passcode."]
 
-* Open xref:manual-testing:device-controls.adoc#_adb_shell[adb shell terminal,window=read-later] in the device action.
+* Open xref:manual-testing:device-controls.adoc#_adb_shell[adb shell terminal,window=read-later] from the device actions toolbar.
 
-* Type `input text <passcode>` (replace `<passcode>` with the copied passcode) and hit *Enter* on the keyboard. This inputs the passcode into the screen.
+* Type `input text <passcode>` (replace `<passcode>` with the copied passcode) and hit *Enter* on the keyboard. This command enters the passcode on the device screen.
 
 * Type `input keyevent 66` and hit *Enter* on the keyboard. This simulates the *Enter* key in the virtual keyboard.
 
