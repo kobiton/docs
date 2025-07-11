@@ -7,7 +7,7 @@ This guide explains how to create and execute a mobile test with Kobiton devices
 == Prerequisites
 
 * An active Kobiton account. Get the following information from your Kobiton account in the Portal:
-** xref:profile:manage-your-profile.adoc#_open_your_profile[Username,window=read-later].
+** xref:profile:manage-your-profile.adoc#_open_your_profile[Username].
 ** xref:profile:manage-your-api-credentials.adoc#_get_an_api_key[API key].
 * https://documentation.tricentis.com/tosca/2420/en/content/installation_tosca/installation.htm[Tosca Commander,window=read-later] installed and activated.
 
@@ -108,7 +108,7 @@ image:tosca-mobile-scan-setup-complete.png[width=600, alt="Tosca mobile scan set
 (Optional) To scan using *Live View*, ensure *Run Live View* is checked.
 
 [NOTE]
-If using *Live View* on Android, you must set `kobiton:runtime` to `appium` in *Set capabilities* to navigate the app from the Live view. Otherwise, launch a manual session on the device to navigate the app.
+If using *Live View* on Android, you must set `kobiton:runtime` to `appium` in *Set capabilities* to navigate the app from the Live view. Otherwise, launch a xref:manual-testing:start-a-manual-session.adoc[Kobiton manual session,window=read-later] on the device to navigate the app.
 
 Select *Connect* to start the connection.
 
@@ -242,6 +242,6 @@ Right-click and choose *Run in ScratchBook* or use *Run in ScratchBook* on the t
 
 image:tosca-run-in-scratchbook.png[width=600, alt="Tosca context menu showing 'Run in ScratchBook' option highlighted for test execution."]
 
-During execution, you can launch a mixed session on the device to monitor the test case.
+During execution, you can launch a xref:manual-testing:start-a-mixed-session.adoc#_if_the_first_session_is_automation[Kobiton mixed session,window=read-later] on the device to monitor the test case in a manual session.
 
 You can also add the test case to https://documentation.tricentis.com/tosca/1600/en/content/tosca_commander/execution_overview.htm[test execution,window=read-later] if needed.
