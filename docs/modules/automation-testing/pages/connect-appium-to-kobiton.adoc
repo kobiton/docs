@@ -1,0 +1,66 @@
+= Connecting Appium Inspector to Kobiton
+:navtitle: Connecting Appium Inspector to Kobiton
+
+To run automated tests on real devices using Kobiton, you need to connect your Appium client to the Kobiton cloud. This process involves authenticating with your Kobiton credentials and configuring your test script with the correct capabilities.
+
+== 1. Obtain Your Kobiton Credentials
+
+You will need:
+* **Kobiton Username**: Find this in your Kobiton profile.
+* **Kobiton Access Key**: Generate or view this by following the guide at xref:profile:manage-your-api-credentials.adoc[Manage your API credentials].
+
+== 2. Configure Appium Capabilities
+
+Your test script must include a set of capabilities that tell Appium how to connect to Kobiton and which device to use. Here is an example for an Android session:
+
+[source,json]
+----
+{
+  "platformName": "Android",
+  "appium:automationName": "UIAutomator2",
+  "kobiton:sessionName": "Automation test session",
+  "kobiton:sessionDescription": "Automation session",
+  "kobiton:deviceGroup": "KOBITON",
+  "appium:udid": "YOUR_DEVICE_UDID",
+  "kobiton:groupId": "YOUR_GROUP_ID",
+  "appium:deviceName": "Pixel 8 Pro",
+  "appium:platformVersion": "15",
+  "kobiton:retainDurationInSeconds": "0",
+  "browserName": "chrome",
+  "kobiton:runtime": "appium"
+}
+----
+It should look like this:
+
+[source,json]
+----
+{
+  "platformName": "Android",
+  "appium:automationName": "UIAutomator2",
+  "kobiton:sessionName": "Automation test session",
+  "kobiton:sessionDescription": "Automation session",
+  "kobiton:deviceGroup": "KOBITON",
+  "appium:udid": "35091JEHN00212",
+  "kobiton:groupId": "2576",
+  "appium:deviceName": "Pixel 7a",
+  "appium:platformVersion": "14",
+  "kobiton:retainDurationInSeconds": "0",
+  "browserName": "chrome",
+  "appium:autoWebview": true,
+  "kobiton:runtime": "appium"
+}
+----
+
+image::automation-testing:appium-inspector-capabilities.png[Appium Inspector capability builder and JSON representation, width=100%]
+
+For a full list and explanation of each capability, see the Required Capabilities table in xref:basic-appium-server/launch-a-basic-appium-2-session.adoc[Launch a basic Appium 2 session (Beta)].
+
+== 3. Start Your Session
+
+Run your Appium inspector. Kobiton will allocate a device matching your capabilities and start the session.
+
+== Troubleshooting
+
+* Make sure your credentials are correct and have not expired.
+* Ensure the device UDID and group ID match a device available to your account.
+* For more details, see xref:devices:manage-devices.adoc#_automation_settings[Manage devices - Automation settings]. `
