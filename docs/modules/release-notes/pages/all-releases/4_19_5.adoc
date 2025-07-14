@@ -1,0 +1,95 @@
+= Kobiton 4.19.4 Release Notes
+:navtitle: Kobiton 4.19.5 release notes
+
+_, 2025_
+
+== New OS support
+
+* Xcode 26
+
+* iOS/iPadOS 26
+
+* Android 16
+
+== Add support for multiple bundle ID wildcards in Kobiton iOS App Signing
+
+With this release, we have added support for multiple bundle ID wildcards in Kobiton iOS App Signing. All the appropriate provisioning profiles that can accommodate all iOS apps' bundle IDs to resign and Kobiton App Signing will select the correct profile to re-sign the app during installation.
+
+A detailed guide to generate the appropriate provisioning profiles will be updated soon.
+
+
+== Session Resilience and Performance Improvements
+
+We’ve made several enhancements to improve the stability and responsiveness of manual sessions:
+
+* Significantly reduced command latency by optimizing screenshot size and transmission.
+
+* Improved connection reliability by enabling automatic fallbacks.
+
+* Resolved an issue where iOS device pop-ups could cause devices to go offline.
+
+* Enhanced the responsiveness of touch actions in manual sessions.
+
+== Scriptless and Appium Script Generation Improvements
+
+* Prevent false-positive crash validations from appearing in session results:
+
+** Ignore _Siri Search Feedback_ in Crash detector as it is not accurate.
+
+* Generated Appium script fixes:
+
+** Fix an issue with element not found and session timeout (C# and JUnit).
+
+** Fix failure in scroll/swipe test step for Android app.
+
+** Fix incomplete text input when using the SendKeys command for Android Web app.
+
+* Test Case Management fixes:
+
+** Prevent user from converting a session to a test case without any commands.
+
+** Fix issue with Android tag being added to test case incorrectly.
+
+** Fix behavior when select validation in Test Run Matrix.
+
+** Addressed empty purple screen after clicking on _View Test Case_ after converting the test case.
+
+** Improve the user experience of the scroll bar for the _Select individual device_ dropdown when creating test runs.
+
+** Fixed an issue where deleting test steps caused others to be auto-selected.
+
+* Addressed _flexCorrect_ issue for Android.
+
+== General improvements and fixes
+
+* Updated the HAR file format in Network Payload Capture (NPC) for improved compatibility with load testing tools.
+
+* Ensured apps close properly after automation runs in Mixed Sessions.
+
+* Fixed an issue where Appium downloaded the Android app APK even when `'noReset'` was set to true.
+
+* Fixed an issue preventing app installation in manual sessions when uploading a `.zip` file containing a compressed `.ipa` or `.apk`.
+
+* Fixed an issue preventing unsigned iOS apps from being resigned.
+
+* Resolved an issue where the system captured a screenshot during typing actions, even when the setting was disabled.
+
+* Addressed an iOS file open issue related to app re-signing.
+
+* Added support for detecting Apple password prompts and entitlement popups when XML capture is disabled.
+
+* Updated UDID filtering in the Device List.
+
+* Removed the _Subscribe to Enterprise_ banner from the SSO Setup page.
+
+* Improved behavior when duplicating a manual session tab—users are now redirected to the Device List page with a popup instead of ending the session in the original tab.
+
+* Fixed an issue with app installation via URL when instrumentation was enabled.
+
+* Added API v2 enhancements for reservations and sessions.
+
+* Fixed App Repository search to support queries with spaces.
+
+* Fixed an issue in Device Management where the offline device count was incorrect.
+
+* Addressed an Inspector issue in Session Explorer when resizing or scrolling the window.
