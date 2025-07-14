@@ -11,7 +11,7 @@ You will need:
 
 == 2. Configure Appium Capabilities
 
-Your test script must include a set of capabilities that tell Appium how to connect to Kobiton and which device to use. Here is an example for an Android session:
+Your test script must include a set of capabilities that tell Appium how to connect to Kobiton and which device to use. Here is an example of a complete set of capabilities for connecting Appium Inspector to Kobiton:
 
 [source,json]
 ----
@@ -21,26 +21,7 @@ Your test script must include a set of capabilities that tell Appium how to conn
   "kobiton:sessionName": "Automation test session",
   "kobiton:sessionDescription": "Automation session",
   "kobiton:deviceGroup": "KOBITON",
-  "appium:udid": "YOUR_DEVICE_UDID",
-  "kobiton:groupId": "YOUR_GROUP_ID",
-  "appium:deviceName": "Pixel 8 Pro",
-  "appium:platformVersion": "15",
-  "kobiton:retainDurationInSeconds": "0",
-  "browserName": "chrome",
-  "kobiton:runtime": "appium"
-}
-----
-It should look like this:
-
-[source,json]
-----
-{
-  "platformName": "Android",
-  "appium:automationName": "UIAutomator2",
-  "kobiton:sessionName": "Automation test session",
-  "kobiton:sessionDescription": "Automation session",
-  "kobiton:deviceGroup": "KOBITON",
-  "appium:udid": "35091JEHN00212",
+  "appium:udid": "11268FESJ33574898",
   "kobiton:groupId": "2576",
   "appium:deviceName": "Pixel 7a",
   "appium:platformVersion": "14",
@@ -63,4 +44,4 @@ Run your Appium inspector. Kobiton will allocate a device matching your capabili
 
 * Make sure your credentials are correct and have not expired.
 * Ensure the device UDID and group ID match a device available to your account.
-* For more details, see xref:devices:manage-devices.adoc#_automation_settings[Manage devices - Automation settings]. `
+* For more details, see xref:devices:manage-devices.adoc#_automation_settings[Manage devices - Automation settings].
