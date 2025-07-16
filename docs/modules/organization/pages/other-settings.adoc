@@ -23,26 +23,37 @@ The settings above will take precedent over all configurations related to video 
 
 === XML tree in Manual session
 
-* _Show only important layers in XML tree_
+* _Show only important layers in XML tree_: Enable/disable the display of layers that are marked as important for accessibility in Manual sessions on Android devices.
 
-* _Show Android's Navigation bar and Status bar layer_
+* _Show Android's Navigation bar and Status bar layer_: Enable/disable displaying of the Navigation bar and Status bar layer in Manual sessions on Android devices.
 
 === Kobiton Re-signing Process
 
-* _App signing using Kobiton Certificate (iOS)_
+* _App signing using Kobiton Certificate (iOS)_: Enable/disable the use of Kobiton app re-signing for iOS/iPadOS devices in all session types.
+
+[IMPORTANT]
+====
+
+When enabled, *all* apps installed on *all* iOS/iPadOS devices in the organization will be re-signed by Kobiton.
+
+For Hybrid and Standalone/On-Prem customer, deviceShare must be installed and appropriate developer certificates/provisioning profiles must be imported to deviceShare to use Kobiton re-signing.
+
+====
 
 === Default access for newly uploaded apps
 
-* _All users in the organization can access_
+Select the default access rights for new apps uploaded to the Kobiton App Repo with either of the below:
 
-* _Only the uploader can access_
+* _All users in the organization can access._
+
+* _Only the uploader can access._
 
 === Device Retention
 
-* _Allow unlimited retention_
+* _Allow unlimited retention_: Whether to allow unlimited device retention for the whole organization.
 
 === Other settings
 
-* _Show "Public Devices" Tab in Device List page_
+* _Show "Public Devices" Tab in Device List page_: Whether to display the Public Devices tab in the devices list.
 
-* _Show option to launch device with WebRTC debug panel_
+* _Show option to launch device with WebRTC debug panel_: Whether to display the option to launch a manual session on a device with WebRTC debug panel.
