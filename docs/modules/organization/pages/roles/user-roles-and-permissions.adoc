@@ -13,7 +13,7 @@ The owner of the Kobiton account is given xref:_permissions[all user permissions
 
 === ADMIN
 
-The ADMIN role must be assigned by the Organization Owner or another ADMIN. ADMINs are given xref:_permissions[all user permissions].
+The ADMIN role must be assigned by the Organization Owner or another ADMIN. ADMINs are given xref:_permissions[all user permissions] and permissions to manage all devices in the organization in the settings.
 
 === MEMBER
 
@@ -89,3 +89,8 @@ Allows a user to change session details and delete sessions.
 === `soft_book.terminate_other_soft_book`
 
 Allows a user to remove a reservation from any device.
+
+[#_org_setting_reboot_private_device]
+=== `org_setting.reboot_private_device`
+
+Allows a user without the `ADMIN` predefined role to restart assigned devices from the xref:devices:manage-devices.adoc#_restart_private_device[manage device,window=read-later] page.
