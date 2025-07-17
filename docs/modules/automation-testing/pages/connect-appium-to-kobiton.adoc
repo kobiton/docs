@@ -3,45 +3,143 @@
 
 To run automated tests on real devices using Kobiton, you need to connect your Appium client to the Kobiton cloud. This process involves authenticating with your Kobiton credentials and configuring your test script with the correct capabilities.
 
-== 1. Obtain Your Kobiton Credentials
+== Download and install Appium Inspector
+
+Download https://github.com/appium/appium-inspector/releases[Appium Inspector,window=read-later] for your OS.
+
+Follow the https://appium.github.io/appium-inspector/latest/quickstart/installation[official installation guide,window=read-later] to install Appium Inspector.
+
+== Obtain Your Kobiton Credentials
 
 You will need:
+
 * **Kobiton Username**: Find this in your Kobiton profile.
 * **Kobiton Access Key**: Generate or view this by following the guide at xref:profile:manage-your-api-credentials.adoc[Manage your API credentials].
 
-== 2. Configure Appium Capabilities
+== Configure connection to Kobiton
 
-Your test script must include a set of capabilities that tell Appium how to connect to Kobiton and which device to use. Here is an example of a complete set of capabilities for connecting Appium Inspector to Kobiton:
+Open *Appium Inspector*.
+
+Specify the Appium server you want to connect to:
+
+* For Cloud/Hybrid customers:
+
+** Choose *Select Cloud Providers*.
+
+** Select *Kobiton*, then choose *Done*.
+
+** Select the *Kobiton* tab.
+
+** Fill the Kobiton username and access key (API key).
+
+* For Standalone/On-prem customers:
+
+** Choose the *Appium Server* tab.
+
+** Fill in the following information:
+
+*** *Remote host*: fill in the address of the Portal server. You can find this information from the **kobitonServerUrl **value in Automation Settings. Example: `192.168.50.85` or `www.kobiton.local`.
+
+*** *Remote port*: input `3000`.
+
+*** *Remote path*: input `/wd/hub`.
+
+** Check the *SSL* box if the On-Prem Kobiton Portal has SSL enabled. If not, keep it unchecked.
+
+== Configure Appium Capabilities
+
+Under *Capability Builder*, use the JSON format to enter the required capabilities for launching the device. Keep the following information in mind:
+
+* To authenticate with the Kobiton Portal, provide the required capabilities below. Note: skip these capabilities for Cloud/Hybrid customers.
+
+**`` "appium:username"``: the Kobiton account’s username.
+
+** `"appium:accessKey`: the Kobiton account’s API key.
+
+* If you want to start a basic Appium 2 session, provide the below capability:
+
+** `“kobiton:runtime"`:"appium".
+
+** `"appium:automationName"`: must have one of the below values:
+
+*** `"XCUITest"` for iOS devices.
+
+*** `"UIAutomator2"` for Android devices.
+
+See below for examples:
+
+* Xium session (Xium is Kobiton’s high-speed reimplementation of Appium Server and is the default method to execute Appium tests):
+
 
 [source,json]
 ----
 {
-  "platformName": "Android",
-  "appium:automationName": "UIAutomator2",
-  "kobiton:sessionName": "Automation test session",
-  "kobiton:sessionDescription": "Automation session",
-  "kobiton:deviceGroup": "KOBITON",
-  "appium:udid": "11268FESJ33574898",
-  "kobiton:groupId": "2576",
-  "appium:deviceName": "Pixel 7a",
-  "appium:platformVersion": "14",
-  "kobiton:retainDurationInSeconds": "0",
-  "browserName": "chrome",
-  "appium:autoWebview": true,
-  "kobiton:runtime": "appium"
+"appium:bundleId": "com.example.ToDoApp",
+"appium:deviceOrientation": "portrait",
+"kobiton:sessionName": "Automation iOS Hybrid App",
+"kobiton:sessionDescription": "Automation session",
+"appium:noReset": true,
+"appium:fullReset": false,
+"appium:captureScreenshots": true,
+"appium:networkActivity": false,
+"kobiton:app": "kobiton-store:v657531",
+"appium:deviceGroup": "ORGANIZATION",
+"appium:deviceName": "*",
+"appium:udid": "aa2ace81ea5b7e6164965b97c5bf432432",
+"platformName": "iOS",
+"appium:username": "kobitonadmin",
+"appium:accessKey": "ac9b1******c-4485-82bb-c5bff3dfeed"
 }
 ----
 
-image::automation-testing:appium-inspector-capabilities.png[Appium Inspector capability builder and JSON representation, width=100%]
+* Basic Appium 2 session:
+
+[source,json]
+----
+{
+"kobiton:runtime": "appium",
+"appium:automationName": "XCUITest",
+"appium:bundleId": "com.example.ToDoApp",
+"appium:deviceOrientation": "portrait",
+"kobiton:sessionName": "Automation iOS Hybrid App",
+"kobiton:sessionDescription": "Automation session",
+"appium:noReset": true,
+"appium:fullReset": false,
+"appium:captureScreenshots": true,
+"appium:networkActivity": false,
+"kobiton:app": "kobiton-store:v657531",
+"appium:deviceGroup": "ORGANIZATION",
+"appium:deviceName": "*",
+"appium:udid": "aa2ace81ea5b7e6164965b97c5bf432432",
+"platformName": "iOS",
+"appium:username": "kobitonadmin",
+"appium:accessKey": "ac9*******c-4485-82bb-c5bff3dfeed"
+}
+----
 
 For a full list and explanation of each capability, see the Required Capabilities table in xref:basic-appium-server/launch-a-basic-appium-2-session.adoc[Launch a basic Appium 2 session (Beta)].
 
-== 3. Start Your Session
+== Start Your Session
 
-Run your Appium inspector. Kobiton will allocate a device matching your capabilities and start the session.
+When all required capabilities are filled in, select *Start Session* to launch a session and inspect with Appium Inspector.
 
 == Troubleshooting
 
 * Make sure your credentials are correct and have not expired.
 * Ensure the device UDID and group ID match a device available to your account.
-* For more details, see xref:devices:manage-devices.adoc#_automation_settings[Manage devices - Automation settings].
+* To use the context selector dropdown in the https://appium.github.io/appium-inspector/2023.12/session-inspector/header/#context-switcher[context switcher,window=read-later], you must launch a Basic Appium 2 session.
+* In Xium session, the context switcher is not available. Under the https://appium.github.io/appium-inspector/2023.12/session-inspector/commands/[Commands tab,window=read-later], use *Context → getContexts* to get the actual name of the web context, then use *switchContext* to switch to the web view.
+
+[NOTE]
+For more details, see xref:devices:manage-devices.adoc#_automation_settings[Manage devices - Automation settings].
+
+== Workarounds for issues with Appium Inspector and Basic Appium 2 server
+
+[NOTE]
+https://github.com/appium/appium-inspector[Appium Inspector,window=read-later] and https://github.com/appium/appium[Basic Appium 2 server,window=read-later] are community-driven projects and are not managed by Kobiton. Below are common workarounds and troubleshooting steps for known issues with these platforms.
+
+*Android*:
+
+* When `"browserName"` is set to `"chrome"` for Basic Appium 2 sessions, the actual web context name is `CHROMIUM` instead of `WEBVIEW_<activity>`, and cannot be selected from the context dropdown in web/hybrid app mode after switching to native context and back. As a workaround, use *Context → getContexts* under the https://appium.github.io/appium-inspector/2023.12/session-inspector/commands/[Commands tab,window=read-later] to get the actual name of the web context (`CHROMIUM`), then *switchContext* to switch to the web view.
+
+* __Tap/swipe by coordinates__ actions do not work in web context with Basic Appium 2 session. Switch to native context to perform these actions.
