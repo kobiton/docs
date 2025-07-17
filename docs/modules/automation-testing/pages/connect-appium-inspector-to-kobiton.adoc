@@ -1,7 +1,7 @@
 = Connecting Appium Inspector to Kobiton
 :navtitle: Connecting Appium Inspector to Kobiton
 
-To run automated tests on real devices using Kobiton, you need to connect your Appium client to the Kobiton cloud. This process involves authenticating with your Kobiton credentials and configuring your test script with the correct capabilities.
+While Kobiton has a built-in Inspector in Manual sessions and Session Explorer, it is possible to use https://github.com/appium/appium-inspector[Appium Inspector,window=read-later] with Kobiton.
 
 == Download and install Appium Inspector
 
@@ -9,7 +9,7 @@ Download https://github.com/appium/appium-inspector/releases[Appium Inspector,wi
 
 Follow the https://appium.github.io/appium-inspector/latest/quickstart/installation[official installation guide,window=read-later] to install Appium Inspector.
 
-== Obtain Your Kobiton Credentials
+== Obtain your Kobiton credentials
 
 You will need:
 
@@ -46,13 +46,13 @@ Specify the Appium server you want to connect to:
 
 ** Check the *SSL* box if the On-Prem Kobiton Portal has SSL enabled. If not, keep it unchecked.
 
-== Configure Appium Capabilities
+== Configure Appium capabilities
 
 Under *Capability Builder*, use the JSON format to enter the required capabilities for launching the device. Keep the following information in mind:
 
 * To authenticate with the Kobiton Portal, provide the required capabilities below. Note: skip these capabilities for Cloud/Hybrid customers.
 
-**`` "appium:username"``: the Kobiton account’s username.
+**`"appium:username"`: the Kobiton account’s username.
 
 ** `"appium:accessKey`: the Kobiton account’s API key.
 
@@ -75,20 +75,12 @@ See below for examples:
 ----
 {
 "appium:bundleId": "com.example.ToDoApp",
-"appium:deviceOrientation": "portrait",
 "kobiton:sessionName": "Automation iOS Hybrid App",
 "kobiton:sessionDescription": "Automation session",
-"appium:noReset": true,
-"appium:fullReset": false,
-"appium:captureScreenshots": true,
-"appium:networkActivity": false,
-"kobiton:app": "kobiton-store:v657531",
-"appium:deviceGroup": "ORGANIZATION",
-"appium:deviceName": "*",
+"kobiton:app": "kobiton-store:v10",
+"appium:deviceName": "iPhone 14",
 "appium:udid": "aa2ace81ea5b7e6164965b97c5bf432432",
-"platformName": "iOS",
-"appium:username": "kobitonadmin",
-"appium:accessKey": "ac9b1******c-4485-82bb-c5bff3dfeed"
+"platformName": "iOS"
 }
 ----
 
@@ -100,26 +92,18 @@ See below for examples:
 "kobiton:runtime": "appium",
 "appium:automationName": "XCUITest",
 "appium:bundleId": "com.example.ToDoApp",
-"appium:deviceOrientation": "portrait",
 "kobiton:sessionName": "Automation iOS Hybrid App",
 "kobiton:sessionDescription": "Automation session",
-"appium:noReset": true,
-"appium:fullReset": false,
-"appium:captureScreenshots": true,
-"appium:networkActivity": false,
-"kobiton:app": "kobiton-store:v657531",
-"appium:deviceGroup": "ORGANIZATION",
-"appium:deviceName": "*",
+"kobiton:app": "kobiton-store:v10",
+"appium:deviceName": "iPhone 14",
 "appium:udid": "aa2ace81ea5b7e6164965b97c5bf432432",
-"platformName": "iOS",
-"appium:username": "kobitonadmin",
-"appium:accessKey": "ac9*******c-4485-82bb-c5bff3dfeed"
+"platformName": "iOS"
 }
 ----
 
 For a full list and explanation of each capability, see the Required Capabilities table in xref:basic-appium-server/launch-a-basic-appium-2-session.adoc[Launch a basic Appium 2 session (Beta)].
 
-== Start Your Session
+== Start your session
 
 When all required capabilities are filled in, select *Start Session* to launch a session and inspect with Appium Inspector.
 
