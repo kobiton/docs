@@ -1,13 +1,15 @@
 = Inspector
 :navtitle: Inspector
 
-The Inspector tool provides powerful capabilities for analyzing and interacting with UI elements during manual testing sessions. Access it by selecting the *Inspector* tab in your manual session interface to copy specific xpath values, inspect UI elements, and download your device inventory for further analysis.
+The Inspector tool provides powerful capabilities for analyzing and interacting with UI elements during manual testing sessions. Access it by selecting the *Inspector* tab in your Manual session interface to copy specific `xpath` values, inspect UI elements, and download your device inventory for further analysis.
 
 image:manual-testing:inspector-context.png[width=1000, alt="A manual session displaying a device and the device inspector with XML hierarchy panel visible"]
 
 == Refresh inventory
 
-The *Refresh inventory* button captures the current state of the device screen and displays its complete XML hierarchy in a tree structure. This feature allows you to see all UI elements currently visible on the device, organized in their parent-child relationships. When you select any element from this hierarchy, it will be highlighted on the actual device screen, making it easy to identify and locate specific UI components.
+The *Refresh inventory* button captures the current state of the device screen and displays its complete XML hierarchy in a tree structure.
+
+This feature allows you to see all UI elements currently visible on the device, organized in their parent-child relationships. When you select any element from this hierarchy, it will be highlighted on the actual device screen, making it easy to identify and locate specific UI components.
 
 image:manual-testing:refresh-inventory-closeup.png[width=1000, alt="The XML hierarchy of the current device screen showing nested UI elements in a tree structure"]
 
@@ -18,13 +20,17 @@ Clicking *Refresh inventory* will reset all active filters and searches, returni
 
 == Inspect elements
 
-The *Inspect elements* feature enables real-time element inspection by allowing you to hover over any element on the device screen. When you hover over an element, it will be automatically highlighted in the XML hierarchy panel, creating a direct visual connection between the physical element on screen and its representation in the code structure. This interactive approach makes it much easier to understand the relationship between what you see and the underlying UI structure.
+The *Inspect elements* feature enables real-time element inspection by allowing you to hover over any element on the device screen.
+
+When you hover over an element, it will be automatically highlighted in the XML hierarchy panel, creating a direct visual connection between the physical element on screen and its representation in the code structure. This interactive approach makes it much easier to understand the relationship between what you see and the underlying UI structure.
 
 image:manual-testing:inspect-elements-closeup.png[width=1000, alt="The inspect elements icon showing the crosshair cursor for element selection"]
 
 == Download inventory
 
-Use the *Download inventory* function to export the current XML hierarchy as an `.xml` file to your local machine. This is particularly useful for offline analysis, sharing with team members, or archiving the UI structure for future reference. The downloaded file contains the complete hierarchical structure of all UI elements currently visible on the device screen.
+Use the *Download inventory* function to export the current XML hierarchy as an `.xml` file to your local machine.
+
+This is particularly useful for offline analysis, sharing with team members, or archiving the UI structure for future reference. The downloaded file contains the complete hierarchical structure of all UI elements currently visible on the device screen.
 
 image:manual-testing:download-inventory-closeup.png[width=1000, alt="The download icon for exporting the XML hierarchy as a file"]
 
@@ -35,7 +41,9 @@ The downloaded file will include all WebViews mixed into one file, not just the 
 
 == WebView
 
-The WebView dropdown allows you to filter the XML hierarchy based on different application contexts. By default, it shows `NATIVE_APP`, which displays native application elements. You can switch to other WebView contexts (such as web content within hybrid apps) to focus on specific types of UI elements. This filtering capability is essential when testing applications that contain both native and web-based components.
+The WebView dropdown allows you to filter the XML hierarchy based on different application contexts.
+
+By default, it shows `NATIVE_APP`, which displays native application elements. You can switch to other WebView contexts (such as web content within hybrid apps) to focus on specific types of UI elements. This filtering capability is essential when testing applications that contain both native and web-based components.
 
 image:manual-testing:inspector-dropdown-closeup.png[width=1000, alt="The WebView filter dropdown showing available context options"]
 
@@ -46,13 +54,17 @@ Selecting a different WebView will not change the hierarchy tree to show only th
 
 == Search bar
 
-The search functionality enables you to quickly locate specific elements within the XML hierarchy. Simply type the name, ID, or any attribute value of the element you're looking for, and the hierarchy will be filtered to show only matching elements. This powerful filtering capability saves time when working with complex UI structures containing many elements.
+The search functionality enables you to quickly locate specific elements within the XML hierarchy.
+
+Simply type the name, ID, or any attribute value of the element you're looking for, and the hierarchy will be filtered to show only matching elements. This powerful filtering capability saves time when working with complex UI structures containing many elements.
 
 image:manual-testing:inspector-search-closeup.png[width=1000, alt="Search bar for filtering elements in the XML hierarchy"]
 
 == Attributes
 
-The *Attributes* section displays detailed information about the currently selected UI element, including its properties, values, and metadata. This comprehensive view shows all available attributes such as element IDs, class names, accessibility labels, and custom properties that are essential for automation scripting and element identification.
+The *Attributes* section displays detailed information about the currently selected UI element, including its properties, values, and metadata.
+
+This comprehensive view shows all available attributes such as element IDs, class names, accessibility labels, and custom properties that are essential for automation scripting and element identification.
 
 image:manual-testing:hierarchy-closeup.png[width=1000, alt="The attributes panel showing detailed element properties and values"]
 
