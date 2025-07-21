@@ -16,16 +16,14 @@ You'll need to complete the following:
 [NOTE]
 These steps are only necessary if the Standalone/On-Prem portal uses a self-signed SSL certificate.
 
-Request the IT administrator of your organization for the root CA certificate from which the SSL cert of the OP server is issued. It should be a file named `root.crt` or `ca.crt`. Then proceed to import the certificates.
-
 [tabs]
 ====
 
-MacOS::
+macOS::
 +
 --
 
-Request the IT administrator of your organization for the end-entity certificate from which the SSL cert of the OP server is issued. It should be a file named `ssl.crt`. Transfer the certificate file to the macOS machine.
+Request the IT administrator of your organization for the SSL end-entity certificate. It should be a file named `ssl.crt`. Transfer the certificate file to the computer.
 
 Open the *Keychain Access* application.
 
@@ -47,7 +45,7 @@ Windows::
 +
 --
 
-Request the IT administrator of your organization for the root CA certificate from which the SSL cert of the OP server is issued. It should be a file named `root.crt` or `ca.crt`. Transfer the certificate file to the Windows machine.
+Request the IT administrator of your organization for the root CA certificate that issued the SSL end-entity certificate. It should be a file named `root.crt` or `ca.crt`. Transfer the certificate file to the computer.
 
 On the Windows machine, double-click the file, then select *Install Certificate* on the *Certificate* window.
 
