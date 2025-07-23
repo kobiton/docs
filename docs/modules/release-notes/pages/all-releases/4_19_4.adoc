@@ -9,9 +9,6 @@ _June 21, 2025_
 
 * iOS/iPadOS 26 Beta
 
-[IMPORTANT]
-Upgrade deviceConnect to 4.19.4 to enable support for Xcode 26 Beta and iOS/iPadOS 26 Beta.
-
 * iOS/iPadOS 18.4 official
 
 * iOS/iPadOS 18.5 official
@@ -21,7 +18,8 @@ Upgrade deviceConnect to 4.19.4 to enable support for Xcode 26 Beta and iOS/iPad
 == Enhanced App Signing Support for iOS Devices
 
 === What's new
-Kobiton App Signing now supports multiple provisioning profiles per device. This update improves compatibility when re-signing iOS apps that do not follow the standard bundle ID format.
+
+Support multiple provisioning profiles per device, ensuring compatibility when re-signing non-standard bundle IDs.
 
 === Why this matters
 Apple provisioning profiles allow only one wildcard bundle ID—typically in the form of `com.*`. Previously, Kobiton App Signing could only use one provisioning profile per device. This limitation made it difficult to re-sign and install apps with bundle IDs such as `org.example.app` or `co.example.app`.
@@ -29,11 +27,13 @@ Apple provisioning profiles allow only one wildcard bundle ID—typically in the
 With this release, Kobiton supports multiple provisioning profiles with different bundle ID wildcards, making app re-signing and installation more flexible and reliable.
 
 === What you need to do
+
 * Generate provisioning profiles that cover all the bundle ID formats you use.
 * Import the profiles to `deviceShare`, or contact *Kobiton Support* with the bundle ID of your apps to request profiles for Public devices.
 * A step-by-step guide for creating the correct provisioning profiles for Hybrid customers will be available soon.
 
 == Hybrid Lightning: update adb version
+
 This release upgraded adb to version 36.0.0 on the Mac mini and GEM.
 
 For the Mac mini, the adb service is automatically updated when you upgrade to deviceConnect 4.19.4.
@@ -44,7 +44,7 @@ For our Standalone/On-Prem customers, please wait until the Standalone release a
 
 == Session Resilience and Performance Improvements
 
-* Enhanced the reliability of the device booking process to reduce the chances of encountering `DH-500` errors when launching or booking a device.
+* Enhanced the reliability of the device booking process to reduce the chances of encountering errors when launching or booking a device.
 
-* Improve the performance of `adb` server on the Lightning Mode GEM to handle fetching multiple web contexts from Android device, preventing `adb` server crashing and making all connected devices offline.
+* Improve the performance of the `adb` server on the Lightning Mode GEM to better handle fetching multiple web contexts from Android devices.
 
