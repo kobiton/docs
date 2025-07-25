@@ -15,21 +15,24 @@ _June 21, 2025_
 
 * Android 16 official
 
-== Enhanced App Signing Support for iOS Devices
+== Changes to App Signing support for iOS Devices
 
-=== What's new
+=== The situation
 
-Support multiple provisioning profiles per device, ensuring compatibility when re-signing non-standard bundle IDs.
+* Apple no longer allows creating new App IDs with full wildcards like `\*` or `*.*`
+* Existing profiles using legacy wildcards still work - for now.
+* These profiles will eventually expire, and cannot be renewed or recreated.
 
 === Why this matters
-Apple provisioning profiles allow only one wildcard bundle ID—typically in the form of `com.*`. Previously, Kobiton App Signing could only use one provisioning profile per device. This limitation made it difficult to re-sign and install apps with bundle IDs such as `org.example.app` or `co.example.app`.
 
-With this release, Kobiton supports multiple provisioning profiles with different bundle ID wildcards, making app re-signing and installation more flexible and reliable.
+If you haven’t already, you’ll need to transition to profiles using partial wildcards, e.g.: `com.\*`, `org.*`, `co.\*`, `uk.*`
+
+Note that Kobiton requires at least one profile configured for and loaded into `deviceConnect` that has `com.*`
 
 === What you need to do
 
 * Generate provisioning profiles that cover all the bundle ID formats you use.
-* Import the profiles to `deviceShare`, or contact *Kobiton Support* with the bundle ID of your apps to request profiles for Public devices.
+* Import the profiles to `deviceConnect` and `deviceShare`, or contact *Kobiton Support* with the bundle ID of your apps to request profiles for Public devices.
 * A step-by-step guide for creating the correct provisioning profiles for Hybrid customers will be available soon.
 
 == Hybrid Lightning: update adb version
