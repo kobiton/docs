@@ -4,7 +4,7 @@
 _July 18, 2025_
 
 [IMPORTANT]
-This release does not introduce changes to the Portal software on the Standalone Dell server. Only upgrade `deviceConnect`, `deviceShare` on the Mac mini and `adb`, `gigacap` on the Dell server.
+This release does not include updates to the Portal software on the Standalone Dell server. Only `deviceConnect` and `deviceShare` on the Mac mini, and `adb` and `gigacap` on the Dell server should be upgraded.
 
 == New OS support
 
@@ -18,7 +18,7 @@ This release does not introduce changes to the Portal software on the Standalone
 
 * Android 16 official
 
-== Hybrid Lightning: update adb version
+== Update adb version
 
 This release upgraded adb to version `36.0.0` on the Mac mini and GEM.
 
@@ -28,12 +28,5 @@ For our Standalone/On-Prem customers, please contact Kobiton Support to update t
 
 == Session Resilience and Performance Improvements
 
-* Enhanced the reliability of the device booking process to reduce the chances of encountering errors when launching or booking a device.
-
-* Improved the performance of the `adb` server on the Lightning Mode GEM to better handle fetching multiple web contexts from Android devices.
-
-* Reduced frame tearing in Manual sessions when there are many concurrent Lightning mode sessions.
-
-* Improved the resilience of deviceConnect services to prevent hanging and crashing.
-
+Improved system stability and performance in several areas, including device booking, Lightning Mode sessions, and deviceConnect services to enhance reliability and reduce errors.
 
