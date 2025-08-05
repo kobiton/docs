@@ -26,29 +26,43 @@ Open *Katalon Studio* and log into your Katalon Enterprise account.
 
 Open an existing project or create a new one from the *Mobile* sample projects (see the sample project below).
 
+image:katalon-settings-create-new-project.png[width=661px,alt="Creating a new mobile test project in Katalon with Kobiton sample project template template."]
+
 Open the https://store.katalon.com/product/137/Kobiton-Integration[Kobiton Integration,window=read-later] web page in the Katalon Store. Make sure you are logged into the store using the same account in Katalon Studio.
 
 Select *Install*.
 
 Go back to Katalon Studio, select the account profile, then select *Reload Plugins*.
 
+image:katalon-plugin-reload-from-user-profile.png[width=600,alt="User menu in Katalon Studio with the Reload Plugins option selected."]
+
 If the plugin is loaded successfully, the *Kobiton Integration* plugin displays with the *Success* status.
+
+image:katalon-plugin-installed-kobiton-integration.png[width=600,alt="Katalon plugin manager showing Kobiton Integration plugin installed successfully."]
 
 Close the pop-up, then open *Kobiton Integration* settings:
 
 * Windows:
 ** From the menu bar, select *Window → Katalon Studio Preferences*.
++
+image:katalon-preferences-access-windows.png[width=450,alt="Accessing Katalon Studio Preferences from the Window menu in Windows environment."]
 
 * macOS:
 ** From the Katalon menu bar, select *Katalon Studio Enterprise* or *Katalon Studio → Settings*.
++
+image:katalon-menu-mac-open-settings.png[width=350,alt="Katalon Studio Enterprise menu on macOS with the Settings option highlighted."]
 
 * Linux (Ubuntu):
 ** From the menu bar, select *Window → Katalon Studio Preferences*.
++
+image:katalon-menu-windows-open-preferences.png[width=600,alt="Katalon Studio Window menu on Windows highlighting the Katalon Studio Preferences option."]
 
 The next steps are the same for all operating systems:
 
 * Expand *Katalon*, then select *Kobiton*.
 * In the _Kobiton Integration_ options, check the *Enable Kobiton Integration* checkbox.
+
+image:katalon-preferences-enable-kobiton-integration.png[width=600,alt="Katalon Studio Preferences screen showing Kobiton integration settings with API key and server configured."]
 
 Enter the following information:
 
@@ -68,8 +82,11 @@ These features are only available for Katalon Enterprise accounts.
 
 === Mark devices as favorites in the Kobiton Portal
 
-* Log in to your Kobiton Portal.
-* Follow xref:devices:manage-devices.adoc#_favorite_the_device[this guide,window=read-later] to mark any Public or Private and Local devices as favorites.
+Log in to your Kobiton Portal.
+
+Follow xref:devices:manage-devices.adoc#_favorite_the_device[this guide,window=read-later] to mark any Public or Private and Local devices as favorites.
+
+image:kobiton-device-list-favorites.png[width=746px,alt="Device list in Kobiton platform showing favorite Android and iOS devices available for testing."]
 
 [NOTE]
 ====
@@ -80,13 +97,19 @@ Only devices that are marked as favorites can be selected in the Spy and Record 
 
 If you want to test an app not already installed on the device, follow xref:apps:upload-an-app/using-the-kobiton-portal.adoc[this guide,window=read-later] to upload the app to the App Repo.
 
-== Perform Spy or Record actions
+image:kobiton-apps-dashboard.png[width=800px,alt="Kobiton Apps dashboard showing uploaded Android and iOS applications."]
+
+=== Perform Spy or Record actions
 
 Make sure you have marked device(s) as favorites and uploaded application(s) to the App Repo.
 
 Select the *Spy* or *Record* icon.
 
+image:katalon-toolbar-start-recording.png[width=400px,alt="Toolbar controls to start or stop recording mobile test steps."]
+
 Select *Kobiton Devices*.
+
+image:katalon-device-selection-kobiton.png[width=350,alt="Device source options in Katalon Studio showing Kobiton Devices selected among Android, iOS, and Remote Devices."]
 
 Wait for the device and application list to load.
 
@@ -94,7 +117,11 @@ Under *Configurations*, select a *Device Name*.
 
 To install an app from the App Repo, select *Application File* under *Start With*, then choose an app from the dropdown.
 
+image:katalon-mobile-config-start-application-file.png[width=350,alt="Mobile configuration panel in Katalon with an application file selected for a Google Pixel 8 Pro."]
+
 To test an app already installed on the device, select *Application ID* under *Start With*, then input the package name or bundle ID.
+
+image:katalon-mobile-config-start-application-id.png[width=350,alt="Katalon Studio configuration using Application ID to launch an app on Google Pixel 5."]
 
 Select *Refresh* to update the app list if needed.
 
@@ -107,7 +134,7 @@ Select *Start* to begin the Spy or Record action.
 * Learn more about the https://docs.katalon.com/katalon-studio/record-and-spy/mobile-record-and-spy-utilities/spy-mobile-utility[Spy,window=read-later] and https://docs.katalon.com/katalon-studio/record-and-spy/mobile-record-and-spy-utilities/mobile-recorder-utility[Record,window=read-later] mobile utilities in Katalon documentation.
 ====
 
-== Run a test
+=== Run a test
 
 Follow the Katalon official guide to https://docs.katalon.com/katalon-studio/create-test-cases/create-a-new-test-case-in-katalon-studio[create a test case,window=read-later]. You can use the sample https://docs.katalon.com/katalon-studio/get-started/sample-projects/mobile/mobile-create-and-run-android-test-case-in-katalon-studio[Android,window=read-later] or https://docs.katalon.com/katalon-studio/get-started/sample-projects/mobile/mobile-create-and-run-ios-test-case-in-katalon-studio[iOS,window=read-later] project.
 
@@ -116,13 +143,26 @@ Open the test case to test.
 Make the following changes:
 
 * Double-click the *input* column of the *Start Application* row.
-* Double-click the *Value* column of the *appFile* row
++
+image:katalon-test-case-verify-xfermodes-message-keyword-view.png[width=658px,alt="Keyword test steps to verify message display for Xfermodes using scrolling and validation."]
+
+* Double-click the *Value* column of the *appFile* row.
++
+image:katalon-start-application-params-local-app-variable.png[width=691px,alt="Configuring local app path using variable input for appFile in test input."]
+
 * Replace it with `"<app-version-id>"` or `"<direct-download-url>. Example: `"kobiton-store:v1"` or `"https://drive.example.com/sample.apk"`
++
+image:katalon-start-application-params-kobiton-app-id.png[width=692px,alt="Setting appFile parameter with Kobiton App ID in test input configuration."]
+
 * Select *OK* to save the changes.
 
 Select the *Run* or *Debug* dropdown icon.
 
+image:katalon-toolbar-run-or-debug-test.png[width=400px,alt="Toolbar buttons to run or debug a test case in Katalon Studio."]
+
 Select *Kobiton Device*.
+
+image:katalon-device-selection-dropdown-kobiton-device.png[width=350,alt="Device selection dropdown in Katalon Studio with Kobiton Device highlighted."]
 
 Wait for the device list to load and choose a device.
 
@@ -157,7 +197,11 @@ This process is available for both Free and Enterprise Katalon accounts.
 
 Open *Katalon Studio* and the test case.
 
+image:katalon-test-case-verify-correct-alarm-message-keyword-view.png[width=665px,alt="Keyword view of test case to verify correct alarm message using UI interactions."]
+
 Switch to the *Script view*.
+
+image:katalon-test-case-verify-correct-alarm-message-script-view.png[width=800px,alt="Script view showing Groovy test automation code for verifying alarm message."]
 
 Add the following lines *before the import directives*:
 
@@ -315,46 +359,3 @@ Select either the *Run* or *Debug* icon.
 Do _not_ select the Kobiton Device from the dropdown — Appium capabilities handle everything.
 
 Wait for test execution.
-
-
-== Temp
-
-image:katalon-device-selection-dropdown-kobiton-device.png[width=350,alt="Device selection dropdown in Katalon Studio with Kobiton Device highlighted."]
-
-image:katalon-device-selection-kobiton.png[width=350,alt="Device source options in Katalon Studio showing Kobiton Devices selected among Android, iOS, and Remote Devices."]
-
-image:katalon-menu-mac-open-settings.png[width=350,alt="Katalon Studio Enterprise menu on macOS with the Settings option highlighted."]
-
-image:katalon-menu-windows-open-preferences.png[width=600,alt="Katalon Studio Window menu on Windows highlighting the Katalon Studio Preferences option."]
-
-image:katalon-mobile-config-start-application-file.png[width=350,alt="Mobile configuration panel in Katalon with an application file selected for a Google Pixel 8 Pro."]
-
-image:katalon-mobile-config-start-application-id.png[width=350,alt="Katalon Studio configuration using Application ID to launch an app on Google Pixel 5."]
-
-image:katalon-plugin-installed-kobiton-integration.png[width=600,alt="Katalon plugin manager showing Kobiton Integration plugin installed successfully."]
-
-image:katalon-plugin-reload-from-user-profile.png[width=600,alt="User menu in Katalon Studio with the Reload Plugins option selected."]
-
-image:katalon-preferences-access-windows.png[width=450,alt="Accessing Katalon Studio Preferences from the Window menu in Windows environment."]
-
-image:katalon-preferences-enable-kobiton-integration.png[width=600,alt="Katalon Studio Preferences screen showing Kobiton integration settings with API key and server configured."]
-
-image:katalon-settings-create-new-project.png[width=661px,alt="Creating a new mobile test project in Katalon with Kobiton sample project template template."]
-
-image:katalon-start-application-params-kobiton-app-id.png[width=692px,alt="Setting appFile parameter with Kobiton App ID in test input configuration."]
-
-image:katalon-start-application-params-local-app-variable.png[width=691px,alt="Configuring local app path using variable input for appFile in test input."]
-
-image:katalon-test-case-verify-correct-alarm-message-keyword-view.png[width=665px,alt="Keyword view of test case to verify correct alarm message using UI interactions."]
-
-image:katalon-test-case-verify-correct-alarm-message-script-view.png[width=800px,alt="Script view showing Groovy test automation code for verifying alarm message."]
-
-image:katalon-test-case-verify-xfermodes-message-keyword-view.png[width=658px,alt="Keyword test steps to verify message display for Xfermodes using scrolling and validation."]
-
-image:katalon-toolbar-run-or-debug-test.png[width=400px,alt="Toolbar buttons to run or debug a test case in Katalon Studio."]
-
-image:katalon-toolbar-start-recording.png[width=400px,alt="Toolbar controls to start or stop recording mobile test steps."]
-
-image:kobiton-apps-dashboard.png[width=800px,alt="Kobiton Apps dashboard showing uploaded Android and iOS applications."]
-
-image:kobiton-device-list-favorites.png[width=746px,alt="Device list in Kobiton platform showing favorite Android and iOS devices available for testing."]
