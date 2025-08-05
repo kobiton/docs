@@ -140,12 +140,12 @@ The _Kobiton Device_ option only appears when the Kobiton Integration plugin is 
 This process is available for both Free and Enterprise Katalon accounts.
 ====
 
-== Create a test case in Katalon
+=== Create a test case in Katalon
 
 * Follow the Katalon official guide to https://docs.katalon.com/katalon-studio/create-test-cases/create-a-new-test-case-in-katalon-studio[create a test case,window=read-later].
 * You may also use the sample https://docs.katalon.com/katalon-studio/get-started/sample-projects/mobile/mobile-create-and-run-android-test-case-in-katalon-studio[Android,window=read-later] or https://docs.katalon.com/katalon-studio/get-started/sample-projects/mobile/mobile-create-and-run-ios-test-case-in-katalon-studio[iOS,window=read-later] project.
 
-== Retrieve Appium capabilities for Kobiton devices
+=== Retrieve Appium capabilities for Kobiton devices
 
 * Log in to the Kobiton Portal.
 * Follow xref:automation-testing:capabilities/auto-generate-capabilities.adoc[this guide] to retrieve the Appium capabilities.
@@ -153,7 +153,7 @@ This process is available for both Free and Enterprise Katalon accounts.
 * To test an app that has been uploaded to the App Repo, select *Hybrid/Native* under *App Type*, then the app.
 * Copy the capabilities.
 
-== Modify the Katalon script to add Appium capabilities
+=== Modify the Katalon script to add Appium capabilities
 
 Open *Katalon Studio* and the test case.
 
@@ -219,7 +219,7 @@ capabilities.setCapability("platformName", "Android");
 capabilities.setCapability("kobiton:retainDurationInSeconds", 0);
 ----
 
-== Complete example
+=== Complete example
 
 The below sample code was taken from the test case _Verify Correct Alarm Message_ in Katalon’s Sample Android Project, then modified to include the Kobiton capabilities:
 
@@ -308,10 +308,53 @@ Mobile.closeApplication()
 ----
 
 
-== Run the test
+=== Run the test
 
 Select either the *Run* or *Debug* icon.
 
 Do _not_ select the Kobiton Device from the dropdown — Appium capabilities handle everything.
 
 Wait for test execution.
+
+
+== Temp
+
+image:katalon-device-selection-dropdown-kobiton-device.png[width=350,alt="Device selection dropdown in Katalon Studio with Kobiton Device highlighted."]
+
+image:katalon-device-selection-kobiton.png[width=350,alt="Device source options in Katalon Studio showing Kobiton Devices selected among Android, iOS, and Remote Devices."]
+
+image:katalon-menu-mac-open-settings.png[width=350,alt="Katalon Studio Enterprise menu on macOS with the Settings option highlighted."]
+
+image:katalon-menu-windows-open-preferences.png[width=600,alt="Katalon Studio Window menu on Windows highlighting the Katalon Studio Preferences option."]
+
+image:katalon-mobile-config-start-application-file.png[width=350,alt="Mobile configuration panel in Katalon with an application file selected for a Google Pixel 8 Pro."]
+
+image:katalon-mobile-config-start-application-id.png[width=350,alt="Katalon Studio configuration using Application ID to launch an app on Google Pixel 5."]
+
+image:katalon-plugin-installed-kobiton-integration.png[width=600,alt="Katalon plugin manager showing Kobiton Integration plugin installed successfully."]
+
+image:katalon-plugin-reload-from-user-profile.png[width=600,alt="User menu in Katalon Studio with the Reload Plugins option selected."]
+
+image:katalon-preferences-access-windows.png[width=450,alt="Accessing Katalon Studio Preferences from the Window menu in Windows environment."]
+
+image:katalon-preferences-enable-kobiton-integration.png[width=600,alt="Katalon Studio Preferences screen showing Kobiton integration settings with API key and server configured."]
+
+image:katalon-settings-create-new-project.png[width=661px,alt="Creating a new mobile test project in Katalon with Kobiton sample project template template."]
+
+image:katalon-start-application-params-kobiton-app-id.png[width=692px,alt="Setting appFile parameter with Kobiton App ID in test input configuration."]
+
+image:katalon-start-application-params-local-app-variable.png[width=691px,alt="Configuring local app path using variable input for appFile in test input."]
+
+image:katalon-test-case-verify-correct-alarm-message-keyword-view.png[width=665px,alt="Keyword view of test case to verify correct alarm message using UI interactions."]
+
+image:katalon-test-case-verify-correct-alarm-message-script-view.png[width=800px,alt="Script view showing Groovy test automation code for verifying alarm message."]
+
+image:katalon-test-case-verify-xfermodes-message-keyword-view.png[width=658px,alt="Keyword test steps to verify message display for Xfermodes using scrolling and validation."]
+
+image:katalon-toolbar-run-or-debug-test.png[width=400px,alt="Toolbar buttons to run or debug a test case in Katalon Studio."]
+
+image:katalon-toolbar-start-recording.png[width=400px,alt="Toolbar controls to start or stop recording mobile test steps."]
+
+image:kobiton-apps-dashboard.png[width=800px,alt="Kobiton Apps dashboard showing uploaded Android and iOS applications."]
+
+image:kobiton-device-list-favorites.png[width=746px,alt="Device list in Kobiton platform showing favorite Android and iOS devices available for testing."]
