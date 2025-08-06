@@ -305,24 +305,12 @@ capabilities.setCapability("kobiton:sessionName", "Automation test session");
 capabilities.setCapability("kobiton:sessionDescription", "");
 capabilities.setCapability("kobiton:deviceOrientation", "portrait");
 capabilities.setCapability("kobiton:captureScreenshots", true);
-// The maximum size of application is 4096MB
-// By default, HTTP requests from testing library are expired
-// in 2 minutes while the app copying and installation may
-// take up-to 30 minutes. Therefore, you need to extend the HTTP
-// request timeout duration in your testing library so that
-// it doesn't interrupt while the device is being initialized.
 capabilities.setCapability("appium:app", "kobiton-store:v722859");
-
-// The given team is used for finding devices and the created session will be visible for all members within the team.
 capabilities.setCapability("kobiton:groupId", 13622); // Group: Test
 capabilities.setCapability("kobiton:deviceGroup", "KOBITON");
-// For deviceName, platformVersion Kobiton supports wildcard
-// character *, with 3 formats: *text, text* and *text*
-// If there is no *, Kobiton will match the exact text provided
 capabilities.setCapability("appium:deviceName", "Galaxy Tab S7");
 capabilities.setCapability("platformVersion", "12");
 capabilities.setCapability("platformName", "Android");
-// Set between 30 and 86400 to retain the device after ending the session.
 capabilities.setCapability("kobiton:retainDurationInSeconds", 0);
 
 AppiumDriverManager.createMobileDriver(MobileDriverType.ANDROID_DRIVER, capabilities, new URL(kobitonServerUrl))
@@ -356,6 +344,8 @@ Mobile.closeApplication()
 
 Select either the *Run* or *Debug* icon.
 
-Do _not_ select the Kobiton Device from the dropdown — Appium capabilities handle everything.
+image:katalon-toolbar-run-or-debug-test.png[width=400px,alt="Toolbar buttons to run or debug a test case in Katalon Studio."]
 
-Wait for test execution.
+Do _not_ select Kobiton Device from the dropdown as it is already handled by the Appium capabilities.
+
+Wait for test execution to complete.
