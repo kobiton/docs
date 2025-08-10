@@ -1,7 +1,7 @@
 = Search for a session
 :navtitle: Search for a session
 
-Learn how to search for a session so you can review the session timeline, analyze previous sessions, run Scriptless Automation, and more.
+Learn how to search for a session so you can review the session steps and insights, create Test Cases, and more.
 
 == Open Sessions
 
@@ -23,7 +23,7 @@ image:session-explorer:saved-search-context.png[width=1000,alt="Choose saved sea
 
 To search for a session within a specific date range, select *From* and *To*, then choose a date for each.
 
-image:date-range-context.png[width=1000,alt="Select date range to filter sessions"]
+image:date-range-context.png[width=750,alt="Select date range to filter sessions"]
 
 === Using the search bar
 
@@ -31,14 +31,14 @@ To search for a session using session metadata, select the search bar and enter 
 
 image:search-bar-session-criteria-context.png[width=1000,alt="Search for sessions using metadata criteria"]
 
-[#_use_session_tags]
-=== Using session tags
+[#_use_session_status_or_type]
+=== Using session status or type
 
-To search for a session using session tags, select the search bar, then choose from the list of tags.
+To search for a session using session status or type, select the search bar, then choose from the list of statuses and types.
 
-image:session-explorer:session-tags-context.png[width=500,alt="Sessions with Failed tag"]
+image:session-explorer:session-tags-context.png[width=500,alt="Sessions with Failed status"]
 
-The following table contains a list of all session tags:
+The following table contains a list of all session statuses/types:
 
 [cols="1,3"]
 |====
@@ -83,3 +83,9 @@ The following table contains a list of all session tags:
 |Mixed
 |Sessions combining manual and automation testing during a single session.
 |====
+
+=== Using session tags
+
+Use the `session:tag` xref:custom-search-queries.adoc#_session_tag[custom search query] to search sessions using specific tags, making it simple to locate related sessions within the sessions list.
+
+The search suggestions displays your five most recent tags used within the selected time range, helping you find relevant sessions quickly.
