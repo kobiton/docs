@@ -6,7 +6,7 @@
 == Prerequisites
 
 * A device that supports audio injection.
-** In **Card View** of the **Kobiton Device List**, compatible devices show a *microphone* icon under *Private & Local Devices*. For example, a device labeled `36.167 – Audio – Pixel 7` appears as online and ready to launch. _({Screenshot 1})_
+* In *Card View* of the *Kobiton Device List*, compatible devices show a *microphone* icon under *Private & Local Devices*. For example, a device labeled `36.167 – Audio – Pixel 7` appears as online and ready to launch. _({Screenshot 1})_
 * A valid audio file that meets the required format and size.
 
 === Supported audio format
@@ -23,89 +23,89 @@
 
 [WARNING]
 ====
-Only **8 kHz, 16-bit, mono PCM WAV** files up to **30 MB** are accepted. Other formats or sizes are rejected.
+Only *8 kHz, 16-bit, mono PCM WAV* files up to *30 MB* are accepted. Other formats or sizes are rejected.
 ====
 
 == Quick start
 
-. **Pick a compatible device.**
+. *Pick a compatible device.*
 In the Device List (Card View), choose a device marked with the microphone icon and launch a *Manual Session*. _({Screenshot 1})_
 
-. **Open the Audio Injection panel.**
-In the session, open **Inject Media** and select the **Audio Injection** tab. You’ll see an empty state inviting you to *click* or *drag-and-drop* a file. The **Inject** button is disabled until a file is uploaded. _({Screenshot 2})_
+. *Open the Audio Injection panel.*
+In the session, open *Inject Media* and select the *Audio Injection* tab. You’ll see an empty state inviting you to *click* or *drag-and-drop* a file. The *Inject* button is disabled until a file is uploaded. _({Screenshot 2})_
 
-. **Select your file.**
-Click the upload area to open your system file browser (e.g., *Downloads*). Highlight your WAV file (e.g., `sample.wav`) and press **Open**. File details such as size (e.g., *2.3 MB*), type (*Waveform audio*), and date added are shown in the OS dialog. _({Screenshot 4})_
+. *Select your file.*
+Click the upload area to open your system file browser (e.g., *Downloads*). Highlight your WAV file (e.g., `sample.wav`) and press *Open*. File details such as size (e.g., *2.3 MB*), type (*Waveform audio*), and date added are shown in the OS dialog. _({Screenshot 4})_
 
-. **Confirm upload.**
-After the file is uploaded, the panel lists its name (e.g., `sample.wav`) plus *size* and *duration* (e.g., `00:05`). The **Inject** button becomes active. _({Screenshot 3})_
+. *Confirm upload.*
+After the file is uploaded, the panel lists its name (e.g., `sample.wav`) plus *size* and *duration* (e.g., `00:05`). The *Inject* button becomes active. _({Screenshot 3})_
 
-. **Prepare the device to receive audio.**
+. *Prepare the device to receive audio.*
 Open the target application on the device (e.g., a voice recorder screen showing waveform/timer) so it’s ready to capture the injected playback. _({Screenshot 3})_
 
-. **Inject audio.**
-Click **Inject**. The panel shows the status **Injecting…** above the purple action bar. On the device screen, the waveform and recording timer confirm playback is occurring; the device log panel continues to stream real-time activity. _({Screenshot 5})_
+. *Inject audio.*
+Click *Inject*. The panel shows the status *Injecting…* above the purple action bar. On the device screen, the waveform and recording timer confirm playback is occurring; the device log panel continues to stream real-time activity. _({Screenshot 5})_
 
-. **Verify completion.**
+. *Verify completion.*
 When playback finishes, the session shows a confirmation banner: *“Audio file `sample.wav` has been injected successfully.”* The device waveform and elapsed time indicate playback ended, and logs continue to capture related activity. _({Screenshot 6})_
 
 == Reviewing session artifacts
 
-After the session, open the **Session Summary** to review metadata (session name, duration, status, timestamps) and device information (e.g., *Google Pixel 7 Pro, Android 16*). A session recording video is available for playback. _({Screenshot 7})_
+After the session, open the *Session Summary* to review metadata (session name, duration, status, timestamps) and device information (e.g., *Google Pixel 7 Pro, Android 16*). A session recording video is available for playback. _({Screenshot 7})_
 
-Under **Audio tracks**, you can download:
+Under *Audio tracks*, you can download:
 
-* **Input Audio** — the raw input captured from the device microphone during the session.
-* **Injected Audio** — the exact audio file that was injected.
-* **Output Audio** — the device’s output capture (what the app or device produced during/after injection).
+* *Input Audio* — the raw input captured from the device microphone during the session.
+* *Injected Audio* — the exact audio file that was injected.
+* *Output Audio* — the device’s output capture (what the app or device produced during/after injection).
 
 These assets let you compare what was sent to the device versus what the device/app recorded or output. _({Screenshot 7})_
 
 == Detailed workflow
 
 === 1) Identify and launch a compatible device
-* In the **Device List → Card View**, filter or visually scan for devices with the *microphone* icon indicating audio injection capability.
-* Launch a **Manual Session** on an available device. _({Screenshot 1})_
+* In the *Device List → Card View*, filter or visually scan for devices with the *microphone* icon indicating audio injection capability.
+* Launch a *Manual Session* on an available device. _({Screenshot 1})_
 
 === 2) Open the Audio Injection tab
-* In the session, open **Inject Media** → **Audio Injection**.
+* In the session, open *Inject Media* → *Audio Injection*.
 * The empty state clearly lists supported format and size limits (8 kHz, 16-bit, mono PCM WAV, ≤30 MB).
-* **Inject** remains inactive until a valid file is uploaded. _({Screenshot 2})_
+* *Inject* remains inactive until a valid file is uploaded. _({Screenshot 2})_
 
 === 3) Upload a file
 * Drag-and-drop a file into the panel *or* click to open the OS file picker.
-* In the file picker, select your `.wav` (e.g., `sample.wav`) and click **Open**. _({Screenshot 4})_
+* In the file picker, select your `.wav` (e.g., `sample.wav`) and click *Open*. _({Screenshot 4})_
 
 === 4) Validate file details
 * After upload, the panel shows:
-** File name (e.g., `sample.wav`)
-** File size (e.g., *2.3 MB*)
-** Duration (e.g., `00:05`)
-* The **Inject** button is now enabled. _({Screenshot 3})_
+* File name (e.g., `sample.wav`)
+* File size (e.g., *2.3 MB*)
+* Duration (e.g., `00:05`)
+* The *Inject* button is now enabled. _({Screenshot 3})_
 
 === 5) Prepare the app under test
 * Navigate the device to the target screen (e.g., voice recorder, voice chat, IVR/voice prompt, etc.).
 * Ensure it’s ready to record/receive the injected audio. _({Screenshot 3})_
 
 === 6) Start injection and monitor
-* Click **Inject** to begin playback into the connected device.
-* The UI shows **Injecting…**, and the device screen displays waveform/timer activity.
-* Watch the **device log panel** for real-time events during injection. _({Screenshot 5})_
+* Click *Inject* to begin playback into the connected device.
+* The UI shows *Injecting…*, and the device screen displays waveform/timer activity.
+* Watch the *device log panel* for real-time events during injection. _({Screenshot 5})_
 
 === 7) Completion and confirmation
 * On success, a banner confirms: *“Audio file `sample.wav` has been injected successfully.”*
 * The panel returns to post-playback state with your file listed; device UI reflects the finished audio. _({Screenshot 6})_
 
 === 8) Post-session review and downloads
-* In **Session Summary**, review session/device details and play back the session video.
-* Download **Input Audio**, **Injected Audio**, and **Output Audio** to compare sources and results. _({Screenshot 7})_
+* In *Session Summary*, review session/device details and play back the session video.
+* Download *Input Audio*, *Injected Audio*, and *Output Audio* to compare sources and results. _({Screenshot 7})_
 
 == Tips & best practices
 
-* **Verify format before upload.** Convert to *8 kHz, 16-bit, mono PCM WAV* and keep under *30 MB* to avoid rejections.
-* **Stage the device app first.** Open the recording or target app and get it ready *before* clicking **Inject**.
-* **Watch logs live.** Use the device log to confirm app events triggered by the injected audio.
-* **Use concise samples.** Shorter clips (a few seconds) make iteration faster and keep under size limits.
+* *Verify format before upload.* Convert to *8 kHz, 16-bit, mono PCM WAV* and keep under *30 MB* to avoid rejections.
+* *Stage the device app first.* Open the recording or target app and get it ready *before* clicking *Inject*.
+* *Watch logs live.* Use the device log to confirm app events triggered by the injected audio.
+* *Use concise samples.* Shorter clips (a few seconds) make iteration faster and keep under size limits.
 
 == Troubleshooting
 
@@ -113,25 +113,25 @@ These assets let you compare what was sent to the device versus what the device/
 |===
 | Symptom | Resolution
 
-| **Inject button is disabled** | Ensure a file is uploaded and that it meets the required format (8 kHz, 16-bit, mono PCM WAV) and size (≤30 MB). _({Screenshot 2})_
-| **Upload fails or file rejected** | Confirm the file type is PCM WAV, not compressed (e.g., MP3). Re-export/convert to the exact specs and try again.
-| **No audio recorded in the app** | Make sure the target app is actively recording or listening when you click **Inject**. Verify device volume and any in-app input settings. Check the device log panel for clues during playback. _({Screenshot 5})_
-| **Unsure what was actually played** | Download **Injected Audio** from the Session Summary and compare with **Input** and **Output** tracks to isolate source vs. recorded differences. _({Screenshot 7})_
+| *Inject button is disabled* | Ensure a file is uploaded and that it meets the required format (8 kHz, 16-bit, mono PCM WAV) and size (≤30 MB). _({Screenshot 2})_
+| *Upload fails or file rejected* | Confirm the file type is PCM WAV, not compressed (e.g., MP3). Re-export/convert to the exact specs and try again.
+| *No audio recorded in the app* | Make sure the target app is actively recording or listening when you click *Inject*. Verify device volume and any in-app input settings. Check the device log panel for clues during playback. _({Screenshot 5})_
+| *Unsure what was actually played* | Download *Injected Audio* from the Session Summary and compare with *Input* and *Output* tracks to isolate source vs. recorded differences. _({Screenshot 7})_
 |===
 
 == Glossary
 
-* **Audio Injection** — Playback of a local WAV file directly into the connected device during a manual session.
-* **Input Audio** — Microphone input captured from the device during the session.
-* **Injected Audio** — The exact audio file you sent into the device.
-* **Output Audio** — The device/application’s resulting audio capture (what was produced in response to the injection).
+* *Audio Injection* — Playback of a local WAV file directly into the connected device during a manual session.
+* *Input Audio* — Microphone input captured from the device during the session.
+* *Injected Audio* — The exact audio file you sent into the device.
+* *Output Audio* — The device/application’s resulting audio capture (what was produced in response to the injection).
 
 == Screenshot references
 
-* **Screenshot 1** — Selecting a device with audio injection capability (microphone icon in Card View; device online).
-* **Screenshot 2** — Audio Injection tab, empty state; supported format/size listed; **Inject** inactive.
-* **Screenshot 3** — File uploaded (`sample.wav`) with size/duration; **Inject** active; device app ready.
-* **Screenshot 4** — OS file picker showing `sample.wav` (size/type/date) in *Downloads*; **Open** available.
-* **Screenshot 5** — Injection in progress (**Injecting…**); device waveform/timer active; logs updating.
-* **Screenshot 6** — Success banner (“Audio file `sample.wav` has been injected successfully.”); playback ended.
-* **Screenshot 7** — Session Summary with downloads: **Input Audio**, **Injected Audio**, **Output Audio**; device info and recording video.
+* *Screenshot 1* — Selecting a device with audio injection capability (microphone icon in Card View; device online).
+* *Screenshot 2* — Audio Injection tab, empty state; supported format/size listed; *Inject* inactive.
+* *Screenshot 3* — File uploaded (`sample.wav`) with size/duration; *Inject* active; device app ready.
+* *Screenshot 4* — OS file picker showing `sample.wav` (size/type/date) in *Downloads*; *Open* available.
+* *Screenshot 5* — Injection in progress (*Injecting…*); device waveform/timer active; logs updating.
+* *Screenshot 6* — Success banner (“Audio file `sample.wav` has been injected successfully.”); playback ended.
+* *Screenshot 7* — Session Summary with downloads: *Input Audio*, *Injected Audio*, *Output Audio*; device info and recording video.
