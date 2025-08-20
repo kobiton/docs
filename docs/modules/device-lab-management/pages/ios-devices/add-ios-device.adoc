@@ -191,18 +191,18 @@ Access any macOS machine with Internet access. This will be referred to as the I
 [NOTE]
 Kobiton software, such as deviceConnect and deviceShare, does not need to be installed on the Internet Mac.
 
-Ensure *Xcode* is installed on the Internet Mac. Make sure the Xcode version is compatible with the iOS 17 device.
+Ensure *Xcode* is installed on the Internet Mac. Make sure the Xcode version is compatible with the iOS device.
 
 [IMPORTANT]
 Make sure the Xcode version on the Internet Mac *is the same or greater* than the version on the Mac mini host to transfer the DDI to.
 
-Unplug the iOS 17 device from the air-gapped Mac (Standard mode) or the GEM (Lightning mode) and connect it to the Internet Mac.
+Unplug the iOS device from the air-gapped Mac (Standard mode) or the GEM (Lightning mode) and connect it to the Internet Mac.
 
 Open Xcode.
 
-Tap Trust in the *Trust this computer* popup on the iOS 17 device. The *Trust this computer* prompts will reappear, tap *Trust* again. After this, there should be no more *Trust* prompts.
+Tap Trust in the *Trust this computer* popup on the iOS device. The *Trust this computer* prompts will reappear, tap *Trust* again. After this, there should be no more *Trust* prompts.
 
-In the Xcode menu bar, select *Window → Devices and Simulators*. Select the iOS 17 device under the *Devices* tab.
+In the Xcode menu bar, select *Window → Devices and Simulators*. Select the iOS device under the *Devices* tab.
 
 The `Copying shared cache symbols...` message appears. Wait for this process to complete and the message to clear.
 
@@ -210,7 +210,7 @@ image::device-lab-management:device-lab-management-ios-add-ios-copying-shared-ca
 
 Unplug the device from the Internet Mac.
 
-Repeat the above processes for all iOS/iPadOS 17 and later devices to be hosted on the air-gapped Mac mini.
+Repeat the above processes for all iOS/iPadOS 17 and above devices to be hosted on the air-gapped Mac mini.
 
 Open *Finder* on the Internet Mac. Press *Shift + Command + G* on the keyboard, then input the following path depending on the version of Xcode:
 
@@ -218,15 +218,15 @@ Open *Finder* on the Internet Mac. Press *Shift + Command + G* on the keyboard, 
 
 * `~/Library/Developer/DeveloperDiskImages` (Xcode below 16)
 
-Copy the 2 files `iOS_DDI-version.plist` and `iOS_DDI.dmg` to the *air-gapped Mac mini* that will host the iOS/iPadOS 17 and later devices. Put the copied file into the following folder on the air-gapped Mac mini:
+Copy the 2 files `iOS_DDI-version.plist` and `iOS_DDI.dmg` to the *air-gapped Mac mini* that will host the iOS devices. Put the copied file into the following folder on the air-gapped Mac mini:
 
 * `/Library/Developer/DeveloperDiskImages` if the current Xcode version is 16 or above.
 
 * ``~/Library/Developer/DeveloperDiskImages ``if the current Xcode version is below 16.
 
-Repeat the above process for all air-gapped Mac mini hosts with iOS/iPadOS 17 and later devices.
+Repeat the above process for all air-gapped Mac mini hosts with iOS/iPadOS 17 and above devices.
 
-Continue with connecting iOS 17 and above devices to the air-gapped Mac mini hosts or the GEM.
+Continue with connecting iOS devices to the air-gapped Mac mini hosts or the GEM.
 
 [IMPORTANT]
 Apple has not published whether the personalized DDI will expire or how long it will last in an air-gapped environment. If connection errors occur and other troubleshooting steps do not resolve the issue, the personalized DDI may be expired, and you will need to repeat this process.
