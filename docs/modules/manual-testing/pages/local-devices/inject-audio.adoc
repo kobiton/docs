@@ -1,11 +1,15 @@
-= Inject audio during a manual session
-:navtitle: Inject audio
+= Inject audio during a manual session (Beta)
+:navtitle: Inject audio (Beta)
 
-*Audio Injection* lets you play a local audio file directly into a connected device during a manual session—perfect for testing recording apps, voice flows, and audio handling.
+Learn how to inject an audio file directly into a connected device during a manual session to test recording apps, voice calls, and audio handling.
 
 == Prerequisites
 
-* A device with bluetooth audio enabled. Contact Kobiton support for more details on how to enable bluetooth audio.
+* A private device with bluetooth audio enabled running in *Standard mode*.
+
+[IMPORTANT]
+Bluetooth audio requires an additional _bluetooth-bridge_ server to enable. Contact Kobiton support for more details.
+
 * A valid audio file that meets the required format and size.
 
 === Supported audio format
@@ -22,58 +26,61 @@
 
 == Inject audio
 
-* In the *Device List*, choose a device marked with the microphone icon and launch a *Manual Session*. _({Screenshot 1})_
+* In the *Device List*, choose a device marked with the microphone icon and launch a *Manual Session*.
 
-[TIP]
-You can filter only devices with bluetooth audio enabled by selecting *Audio* -> *Supported* in the search bar.
+image:bluetooth-audio-devices.png[width=768px,alt="Filtered device list showing Pixel 7 Pro and Pixel 7 with audio capability icons"]
 
-* In the session, open *Inject Media* and select the *Audio Injection* tab. You’ll see an empty state inviting you to *click* or *drag-and-drop* a file. The *Inject* button is disabled until a file is uploaded. _({Screenshot 2})_
+* In the session, open *Inject Media* and select the *Audio Injection* tab. You’ll see an empty state inviting you to *click* or *drag-and-drop* a file. The *Inject* button is disabled until a file is uploaded.
 
-* Select the upload area to open your system file browser (e.g., *Downloads*). Highlight your WAV file (e.g., `sample.wav`) and press *Open*. File details such as size (e.g., *2.3 MB*), type (*Waveform audio*), and date added are shown in the OS dialog. _({Screenshot 4})_
+image:bluetooth-audio-injection-empty.png[width=768px,alt="Audio injection screen showing no file selected before injection"]
 
-* After the file is uploaded, the panel lists its name (e.g., `sample.wav`) plus *size* and *duration* (e.g., `00:05`). The *Inject* button becomes active. _({Screenshot 3})_
+* Select the upload area to open your system file browser (e.g., *Downloads*). Highlight your WAV file (e.g., `sample.wav`) and select *Open*.
 
-* Open the target application on the device (e.g., a voice recorder screen showing waveform/timer) so it’s ready to capture the injected playback. _({Screenshot 3})_
+image:bluetooth-audio-file-finder.png[width=768px,alt="Finder window highlighting a selected WAV file ready for injection"]
 
-* Choose *Inject*. The panel shows the status *Injecting…* above the purple action bar. On the device screen, the waveform and recording timer confirm playback is occurring; the device log panel continues to stream real-time activity. _({Screenshot 5})_
+* Open the target application on the device (e.g., a voice recorder app or phone app) so it’s ready to capture the injected audio.
 
-* When playback finishes, the session shows a confirmation banner: *“Audio file `sample.wav` has been injected successfully.”* The device waveform and elapsed time indicate playback ended, and logs continue to capture related activity. _({Screenshot 6})_
+image:bluetooth-audio-injection-uploaded.png[width=768px,alt="Audio injection screen with sample.wav file ready and inject button active"]
+
+* Choose *Inject*. The panel shows the status *Injecting…* above the purple action bar. On the device screen, the waveform and recording timer confirm playback is occurring.
+
+image:bluetooth-audio-injecting.png[width=768px,alt="Manual session screen showing the audio file sample.wav being injected into a Pixel 7 Pro"]
+
+* When the injection finishes, the session shows a confirmation banner: `Audio file [file_name] has been injected successfully.`
 
 == Reviewing session artifacts
 
-After the session, open the *Session Overview*. Under *Audio tracks*, you can download:
+After the session, open xref:session-explorer:manage-sessions.adoc[Session Overview,window=read-later]. Under *Audio tracks*, you can download:
 
-* *Input Audio* — the raw input captured from the device microphone during the session.
-* *Injected Audio* — the exact audio file that was injected.
-* *Output Audio* — the device’s output capture.
+* *Input audio*: the uploaded audio tracks.
+* *Injected audio*: the audio tracks that were injected to the device.
+* *Output audio*: the output audio tracks.
 
-These assets let you compare what was sent to the device versus what the device/app recorded or output. _({Screenshot 7})_
+image:bluetooth-audio-session-overview.png[width=768px,alt="Session summary showing audio tracks injected and details about the device and session"]
 
 == Tips & best practices
 
-* *Verify format before upload.* Convert to *8 kHz, 16-bit, mono PCM WAV* and keep under *30 MB* to avoid rejections.
-* *Stage the device app first.* Open the recording or target app and get it ready *before* clicking *Inject*.
-* *Watch logs live.* Use the device log to confirm app events triggered by the injected audio.
-* *Use concise samples.* Shorter clips (a few seconds) make iteration faster and keep under size limits.
+* *Filter devices with bluetooth audio enabled*
++
+Filter only devices with bluetooth audio enabled by selecting *Audio* -> *Supported* in the search bar.
+
+image:bluetooth-audio-device-filter.png[width=768px,alt="Device filter showing the Audio capability filter with Supported selected"]
+
+* *Verify format before upload.*
++
+Convert the audio file to *8 kHz, 16-bit, mono PCM WAV* and keep the file size under *30 MB*.
+* *Stage the device app first.*
++
+Open the recording or target app and get it ready *before* clicking *Inject*.
 
 == Troubleshooting
 
 [cols="1,2"]
 |===
-| Symptom | Resolution
+| Issue | Resolution
 
-| *Inject button is disabled* | Ensure a file is uploaded and that it meets the required format (8 kHz, 16-bit, mono PCM WAV) and size (≤30 MB). _({Screenshot 2})_
-| *Upload fails or file rejected* | Confirm the file type is PCM WAV, not compressed (e.g., MP3). Re-export/convert to the exact specs and try again.
-| *No audio recorded in the app* | Make sure the target app is actively recording or listening when you click *Inject*. Verify device volume and any in-app input settings. Check the device log panel for clues during playback. _({Screenshot 5})_
-| *Unsure what was actually played* | Download *Injected Audio* from the Session Summary and compare with *Input* and *Output* tracks to isolate source vs. recorded differences. _({Screenshot 7})_
+| *Inject button is disabled* | Ensure a file is uploaded and that it meets the required format (8 kHz, 16-bit, mono PCM WAV) and size (≤30 MB).
+| *No inject button* | Make sure the device has bluetooth audio enabled. Contact Kobiton support for more details on enabling bluetooth audio.
+| *No audio recorded in the app* | Make sure the target app is actively recording or listening when you click *Inject*. Verify device volume and any in-app input settings.
 |===
 
-== Screenshot references
-
-* *Screenshot 1* — Selecting a device with audio injection capability (microphone icon in Card View; device online).
-* *Screenshot 2* — Audio Injection tab, empty state; supported format/size listed; *Inject* inactive.
-* *Screenshot 3* — File uploaded (`sample.wav`) with size/duration; *Inject* active; device app ready.
-* *Screenshot 4* — OS file picker showing `sample.wav` (size/type/date) in *Downloads*; *Open* available.
-* *Screenshot 5* — Injection in progress (*Injecting…*); device waveform/timer active; logs updating.
-* *Screenshot 6* — Success banner (“Audio file `sample.wav` has been injected successfully.”); playback ended.
-* *Screenshot 7* — Session Summary with downloads: *Input Audio*, *Injected Audio*, *Output Audio*; device info and recording video.
