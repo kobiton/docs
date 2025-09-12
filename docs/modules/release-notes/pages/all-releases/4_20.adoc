@@ -1,0 +1,37 @@
+= Kobiton 4.20 Release Notes
+:navtitle: Kobiton 4.20 release notes
+
+_July 16, 2025_
+
+== New OS support
+
+* iOS/iPadOS 26 Beta
+** Passcode does not work for iOS/iPadOS 26 Beta devices.
+
+* iOS/iPadOS 18.6 official
+
+== Audio Injection in a manual session
+
+[NOTE]
+Audio injection requires at least one additional bluetooth bridge server to enable. Contact Kobiton support if you are interested in enabling this feature.
+
+Previously, the audio injection feature was introduced to automation sessions. With this release, audio injection is now available for manual sessions as well.
+
+To inject audio, start a manual session on a device that has bluetooth audio enabled, then upload a supported audio file using the Audio Injection option under Media Injection and select Inject.
+
+Devices that has bluetooth audio enabled have a microphone icon next to their name. You can also filter for bluetooth audio devices by choosing Audio -> Supported in the search bar on the Device List.
+
+[NOTE]
+====
+
+*
+
+====
+
+== New option to exempt apps from cleanup based on bundle ID or package name
+
+For customers who require specific apps to persist between test sessions but need to enable a cleanup policy, we introduced an option to specify the bundle ID or package name to be exempted from cleanup. The new option is available when creating or editing a custom cleanup policy, and you can specify exact bundle ID/package name or use the wildcard character `*`.
+
+[NOTE]
+
+==
