@@ -34,4 +34,50 @@ For customers who require specific apps to persist between test sessions but nee
 
 [NOTE]
 
-==
+== Streamlined Kobiton Portal login flow
+
+We have reduced the necessary steps to improve the experience of SSO login via Kobiton Portal. The details are as followed:
+
+* At the login screen, provide the username or email and choose *Continue*
+
+* Based on the username/email, fill in additional information:
+** For organizations without SSO enabled, fill in the password and log in.
+** For organizations that only allow SSO login, the user is redirected to the SSO login page.
+** For organizations that allow both SSO and Kobiton credentials login, the password field is displayed along with the *Login with SSO* button.
+
+== Improvements to test case remediation flow
+
+For customers using our AI-Augmented testing (Scriptless), several major improvements were introduced to the test case management page:
+
+* The trash icon and the checkbox under each test case have been removed.
+
+* New 3-dot icon displays under each test step. Selecting this icon reveals several possible options:
+** Delete test step
+** Remediate test step (for Touch action only)
+** Edit remediation (for test step that was remediated before).
+
+* You can now remediate test step for an unlimited number of time.
+
+[NOTE]
+
+== Appium Self-healing (flexCorrect) with automation session as baseline
+
+Another feature intruduced for AI-Augmeneted testing (Scriptless) is the ability to trigger Appium Self-healing using an automation session as a baseline instead of a baseline manual session (introduced earlier). To use this feature, follow the below steps:
+
+* Run an Appium automation script on a device and note down the session ID. Optionally, you can set the capability `kobiton:scriptlessEnable` and to `true` to turn on Synchronous Inventory Capturing while running the script.
+
+* Add to the script the following capabilities before your next run:
+** `kobiton:flexCorrect': set to `true` to enable Appium self-healing.
+** `kobiton:baselineSessionId`: set this value to the ID of the baseline session you executed earlier.
+
+* Execute the updated script on different models and OS versions within the same platform (Android, iOS).
+
+* During execution, if an element is not found (due to changes in locators), the AI will select the best match element.
+
+* See any Appium Self-healing changes in Session Explorer and easily copy them to update the script if needed.
+
+[NOTE]
+
+
+== Native framework automation improvements and bug fixes
+
