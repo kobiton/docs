@@ -50,7 +50,13 @@ For customers who require specific apps to persist between test sessions but nee
 
 [NOTE]
 
-* When a device reconnects after a restart or disconnection, the organization’s default cleanup policy (not the team’s) is applied. Assign a custom cleanup policy with app exemption as default for the organization to ensure that the specified apps are not cleaned up under any situation.
+====
+
+* When a device reconnects after a restart or disconnection, the organization’s default cleanup policy (not the team’s) is applied.
+
+* Assign a custom cleanup policy with app exemption as default for the organization to ensure that the specified apps are not cleaned up under any situation.
+
+====
 
 == Streamlined Kobiton Portal login flow
 
@@ -78,12 +84,15 @@ For customers using our AI-Augmented testing (Scriptless), several major improve
 
 [NOTE]
 
+====
+
 * Only touch actions can be remediated.
 
 * Only elements under the touch point can be selected for remediation. If an element falls outside this area, it cannot be selected.
 
 * Only remediation performed on the latest version of the test case can be saved. The remediate test step option still appears in older versions of the test case, but edits cannot be saved.
 
+====
 
 == Appium Self-healing (flexCorrect) with automation session as baseline
 
@@ -102,8 +111,7 @@ Another feature intruduced for AI-Augmeneted testing (Scriptless) is the ability
 * See any Appium Self-healing changes in Session Explorer and easily copy them to update the script if needed.
 
 [NOTE]
-
-* Appium Self-healing is only available in XIUM sessions; not supported in Basic Appium 2 sessions.
+Appium Self-healing is only available in XIUM sessions; not supported in Basic Appium 2 sessions.
 
 
 == Native framework automation improvements and bug fixes
@@ -151,8 +159,8 @@ With this release, we introduced the Device shuffler feature to mitigate overuse
 * This feature is only enabled for certain customers. Contact Kobiton Support if you want to enable this feature for your organization.
 
 * When sorting (OS version, Device Name, Friendly Name, Device Health):
-** List is first sorted by the selected option
-** Then re-ordered by the shuffle mechanism
+** List is first sorted by the selected option.
+** Then re-ordered by the shuffle mechanism.
 
 ====
 
