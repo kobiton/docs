@@ -5,10 +5,8 @@ _September 13, 2025_
 
 == New OS support
 
-* iOS/iPadOS 26 Beta 6
-** Passcode mode not currently supported.
-
 * iOS/iPadOS 26 official
+
 ** Passcode mode is not supported.
 ** App installation may fail with the error: `POST /app/launch, The request to open "app_name" failed`. After dismissing the error, the app installs and launches normally.
 ** iOS 26 only: The WEBVIEW context is not available for inspection in hybrid apps.
@@ -88,7 +86,7 @@ We simplified the steps required for signing in to the Kobiton Portal, making th
 
 == Scriptless Automation: Improvements to test case remediation flow
 
-For customers using AI-Augmented Testing (Scriptless), we introduced several enhancements to the test case details page to streamline test case verification and maintenance:
+For customers using AI-Augmented Testing (Scriptless), we introduced several enhancements to the Test Case Details page to streamline test case verification and maintenance:
 
 * Removed the trash icon and checkbox under each test case.
 
@@ -184,8 +182,6 @@ We continue to improve our Scriptless Automation. A few changes to note:
 
 * Fixed an error `Revisit has been panic` during revisit execution.
 
-* Update whitelist URL for Safari on iOS 26 to increase test case accuracy for iOS 26 on Safari app.
-
 * Public devices are now hidden on the Test Run creation page for organizations that do not use them.
 
 == General improvements and fixes
@@ -208,4 +204,4 @@ We continue to improve our Scriptless Automation. A few changes to note:
 
 * Manual sessions now support more responsive swiping from any screen edge, including swipes that begin outside the device screen.
 
-* Fixed an issue with auto-upgrading deviceConnect via the Kobiton Portal.
+* Fixed an issue with manually upgrading deviceConnect via the Device Management page.
