@@ -3,8 +3,17 @@
 
 Learn how to configure an iOS device for network payload capture (NPC).
 
-[NOTE]
-You'll need to configure each iOS device you want to use for network payload capture.
+== Understanding the available options for setting up iOS devices
+
+Network payload traffic from the devices are captured by a proxy server. For secure (SSL) traffic, the proxy server's certificate must be trusted by the devices. For iOS devices, this can be done using either of the below options:
+
+* Import the certificate and trust it on the device.
+** This process must be done manually on each device and is recommended for organization that prefer not to supervise their devices, or supervises the devices using multiple supervision identity in a Mac mini host.
+
+* Supervise the device. The certificate can then be imported and trusted automatically by deviceConnect.
+** Device supervision can be done automatically via Automated Device Enrollment (requires Apple School or Business Manager) or manually using Apple Configurator.
+** All devices hosted by one Mac mini must be supervised by a single supervision identity as a requirement.
+
 
 == Before you start
 
@@ -14,11 +23,19 @@ You'll need to:
 
 * Confirm your system administrator xref:devices:local-devices/network-payload-capture/configure-the-host-machine.adoc[configured your local Kobiton server].
 
-* Have access to a Mac machine that *is not* running Kobiton software including _deviceConnect_ or _deviceShare_. This machine will be used to supervise iOS devices.
+* Have access to a Mac machine that *is not* running Kobiton software including _deviceConnect_ or _deviceShare_. This machine - referred from now on as the non-Kobiton Mac machine - will be used to supervise iOS devices.
 
-== Install Apple Configurator and automation tools
+* Decide which option to use for setting up the iOS devices. You can perform both options on the devices, but only one option can be used at a time.
 
-Access the Mac machine that *is not* running Kobiton software.
+== Option 1: import and trust proxy certificate
+
+
+
+== Option 2: device supervision
+
+=== Install Apple Configurator and automation tools on the non-Kobiton Mac machine
+
+Access the non-Kobiton Mac machine.
 
 Open the *App Store*, search for and install *Apple Configurator*.
 
@@ -36,7 +53,12 @@ A pop-up appears, select *Install* and provide the administrator password to con
 image:apple-configurator-install-automation-tools-popup.png[width=300,alt="The Install Automation Tools confirmation pop-up"]
 
 [#_create_an_organization_then_export_the_supervision_identity]
-== Create an organization, then export the supervision identity
+=== Create an organization, then export the supervision identity on the non-Kobiton Mac machine
+
+[IMPORTANT]
+The process mentioned in this section should only be done once. Ignore this process if your organization already has a supervision identity exported.
+
+Access the non-Kobiton Mac machine and open Apple Configurator.
 
 On the *Apple Configurator* menu, select *Settings*.
 
@@ -82,7 +104,7 @@ Paste the 2 files into the folder. The result in Finder should look similar to t
 
 image:supervise-org-finder.png[width=400,alt="The organization.crt and organization.der file under the deviceconnect folder in Finder"]
 
-== Supervise the device
+=== Supervise the device
 
 [WARNING]
 ====
