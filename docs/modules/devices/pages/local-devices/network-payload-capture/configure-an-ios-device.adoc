@@ -3,34 +3,73 @@
 
 Learn how to configure an iOS device for network payload capture (NPC).
 
-== Understanding the available options for setting up iOS devices
-
-Network payload traffic from the devices are captured by a proxy server. For secure (SSL) traffic, the proxy server's certificate must be trusted by the devices. For iOS devices, this can be done using either of the below options:
-
-* Import the certificate and trust it on the device.
-** This process must be done manually on each device and is recommended for organization that prefer not to supervise their devices, or supervises the devices using multiple supervision identity in a Mac mini host.
-
-* Supervise the device. The certificate can then be imported and trusted automatically by deviceConnect.
-** Device supervision can be done automatically via Automated Device Enrollment (requires Apple School or Business Manager) or manually using Apple Configurator.
-** All devices hosted by one Mac mini must be supervised by a single supervision identity as a requirement.
-
-
 == Before you start
 
 You'll need to:
 
-* Make sure that the current deviceConnect version on the Mac mini hosting the device is at least *4.18*. xref:device-lab-management:deviceConnect/remote-update-deviceconnect.adoc[Update deviceConnect] if the version is lower.
+* Decide which option to use for setting up the iOS devices. You can perform both options on the devices, but only one option can be used at a time.
+
+* Make sure that the current deviceConnect version on the Mac mini hosting the device is at least *4.20*. xref:device-lab-management:deviceConnect/remote-update-deviceconnect.adoc[Update deviceConnect] if the version is lower.
 
 * Confirm your system administrator xref:devices:local-devices/network-payload-capture/configure-the-host-machine.adoc[configured your local Kobiton server].
 
-* Have access to a Mac machine that *is not* running Kobiton software including _deviceConnect_ or _deviceShare_. This machine - referred from now on as the non-Kobiton Mac machine - will be used to supervise iOS devices.
+== Understanding the available options for setting up iOS devices
 
-* Decide which option to use for setting up the iOS devices. You can perform both options on the devices, but only one option can be used at a time.
+Network payload traffic from the devices are captured by a proxy server. For secure (SSL) traffic, the proxy server's certificate must be trusted by the devices. For iOS devices, this can be done using either of the below options:
+
+* Option 1: Import the certificate and trust it on the device.
+** This process must be done manually on each device and is recommended for organization that prefer not to supervise their devices, or supervises the devices using multiple supervision identity in a Mac mini host.
+
+* Option 2: Supervise the device. The certificate can then be imported and trusted automatically by deviceConnect.
+** Device supervision can be done automatically via Automated Device Enrollment (requires Apple School or Business Manager) or manually using Apple Configurator.
+** All devices hosted by one Mac mini must be supervised by a single supervision identity as a requirement.
+** This option requires access to a Mac machine that *is not* running Kobiton software including _deviceConnect_ or _deviceShare_. This machine - referred from now on as the non-Kobiton Mac machine - will be used to supervise iOS devices.
+
 
 == Option 1: import and trust proxy certificate
 
 == Download and install proxy certificate
 
+Access the iOS device. You can launch a manual session from Kobiton during the setup process.
+
+Ensure the device has Internet access, then open Safari browser and open the xref:attachment$kobiton-network-payload-capture-certificate-1.3.crt[certificate download link]. Select *Allow*, then *Close* respectively for the following 2 pop-ups:
+
+
+
+[NOTE]
+====
+You can also use https://support.apple.com/en-vn/guide/mac-help/mh35868/mac[AirDrop] to send the certificate from any MacOS machine (the Mac mini host machine, for example) to the device.
+====
+
+open *Settings*, then *General*.
+
+image:devices:ios-settings-general.png[width=500, alt="Open Settings then select General"]
+
+Select *VPN & Device Management* (iOS 16 or later) or *Profiles & Device Management* (iOS 15 and earlier), then open *Kobiton Certification Authority*.
+
+image:devices:ios-vpn-and-device.png[width=500, alt="Select VPN and Device Management, then open Kobiton Certification Authority"]
+
+Select *Install* on the next few steps. After the installation completes, select *Done*.
+
+image:devices:ios-select-certificate.png[width=500, alt="Select Install, then select Done when installation completes"]
+
+== Enable full trust for certificate
+
+On the device, open *Settings*, then *General*.
+
+image:devices:ios-settings-general.png[width=500, alt="Open Settings then select General"]
+
+Select *About*.
+
+image:devices:ios-settings-about.png[width=500, alt="Select About"]
+
+Select *Certificate Trust Settings*.
+
+image:devices:ios-settings-certficate-trust.png[width=500, alt="Select Certificate Trust Settings"]
+
+Turn on *Kobiton Certification Authority*. Select *Continue* in the pop-up.
+
+image:ios-trust-kobiton-certficate.png[width=500, alt="Turn on Kobiton Certification Authority then select Continue in the pop-up"]
 
 
 == Option 2: device supervision
