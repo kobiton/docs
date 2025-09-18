@@ -11,7 +11,7 @@ You'll need to:
 * Access the Mac mini host as the *deviceconnect* user for all the operations below.
 * Make sure the Mac mini is connected to a network that satisfies the network requirements for Network Payload Capture before proceeding.
 
-== Install Rosetta (for Mac mini with Apple Silicon)
+== Mac mini with Apple Silicon: Install Rosetta
 
 [NOTE]
 This section is only required for Mac mini host with Apple Silicon.
@@ -45,11 +45,16 @@ DeviceNetworkCapture.Trace=true
 DeviceNetworkCapture.ExternalDebugLog=false
 ----
 
-Replace `[deviceConnect IP address]` with the local IP address of the Mac mini host. You can retrieve the local IP address of the Mac mini by either:
+Replace `[deviceConnect IP address]` with the local IP address of the Mac mini host.
+
+[NOTE]
+If the Mac mini is connected to more than one networks at the same time (for example, both Ethernet and Wi-Fi), make sure `[deviceconnect IP address]` is the IP address obtained from the interface that is connected to the same network as the mobile devices.
+
+You can retrieve the local IP address(es) of the Mac mini by either:
 
 * Navigating to *Settings > Network > Ethernet* or *Wi-Fi* and copying the IP address value. For Wi-Fi, click the *Details…* button next to the connected network to view the IP.
 
-* Opening *Terminal*, then entering the `ifconfig` command. The IP address is usually under the `e `en0` entry (for Etheret) or `en1` entry (for Wi-Fi), next to `inet`.
+* Opening *Terminal*, then entering the `ifconfig` command. The IP address is usually under the `en0` entry (for Etheret) or `en1` entry (for Wi-Fi), next to `inet`.
 
 +
 
@@ -69,10 +74,13 @@ en1: flags=8863<UP,BROADCAST,SMART,RUNNING,SIMPLEX,MULTICAST> mtu 1500
 	inet 192.168.50.118 netmask 0xffffff00 broadcast 192.168.50.255
 ----
 
-[NOTE]
-If the Mac mini is connected to more than 1 network at the same time (for example, both Ethernet and Wi-Fi), make sure `[deviceconnect IP address]` is the IP address obtained from the interface that is connected to the same network as the mobile devices.
-
 Save the file, then xref:device-lab-management:deviceConnect/restart-deviceconnect-services.adoc[restart services] on the Mac mini host to apply the changes.
+
+== Option 1: install Automation Tools and establish trusted ssh connection
+
+=== Install Automation Tools
+
+
 
 == Next steps
 

@@ -9,7 +9,7 @@ You'll need to:
 
 * Decide which option to use for setting up the iOS devices. You can perform both options on the devices, but only one option can be used at a time.
 
-* Make sure that the current deviceConnect version on the Mac mini hosting the device is at least *4.20*. xref:device-lab-management:deviceConnect/remote-update-deviceconnect.adoc[Update deviceConnect] if the version is lower.
+* Make sure that the current deviceConnect version on the Mac mini hosting the device is at least *4.19.5*. xref:device-lab-management:deviceConnect/remote-update-deviceconnect.adoc[Update deviceConnect] if the version is lower.
 
 * Confirm your system administrator xref:devices:local-devices/network-payload-capture/configure-the-host-machine.adoc[configured your local Kobiton server].
 
@@ -22,26 +22,26 @@ Network payload traffic from the devices are captured by a proxy server. For sec
 
 * Option 2: Supervise the device. The certificate can then be imported and trusted automatically by deviceConnect.
 ** Device supervision can be done automatically via Automated Device Enrollment (requires Apple School or Business Manager) or manually using Apple Configurator.
-** All devices hosted by one Mac mini must be supervised by a single supervision identity as a requirement.
+** All devices hosted by one Mac mini must be supervised by a single supervision identity.
 ** This option requires access to a Mac machine that *is not* running Kobiton software including _deviceConnect_ or _deviceShare_. This machine - referred from now on as the non-Kobiton Mac machine - will be used to supervise iOS devices.
 
 
 == Option 1: import and trust proxy certificate
 
-== Download and install proxy certificate
+=== Download and install proxy certificate
 
 Access the iOS device. You can launch a manual session from Kobiton during the setup process.
 
 Ensure the device has Internet access, then open Safari browser and open the xref:attachment$kobiton-network-payload-capture-certificate-1.3.crt[certificate download link]. Select *Allow*, then *Close* respectively for the following 2 pop-ups:
 
-
+image:devices:ios-download-profile-allow.png[width=250, alt="The pop-up to confirm download of configuration profile"] -> image:devices:ios-profile-downloaded.png[width=250, alt="The pop-up to notify that the configuration profile has been downloaded]
 
 [NOTE]
 ====
 You can also use https://support.apple.com/en-vn/guide/mac-help/mh35868/mac[AirDrop] to send the certificate from any MacOS machine (the Mac mini host machine, for example) to the device.
 ====
 
-open *Settings*, then *General*.
+Open *Settings*, then *General*.
 
 image:devices:ios-settings-general.png[width=500, alt="Open Settings then select General"]
 
@@ -53,7 +53,7 @@ Select *Install* on the next few steps. After the installation completes, select
 
 image:devices:ios-select-certificate.png[width=500, alt="Select Install, then select Done when installation completes"]
 
-== Enable full trust for certificate
+=== Enable full trust for certificate
 
 On the device, open *Settings*, then *General*.
 
@@ -69,8 +69,7 @@ image:devices:ios-settings-certficate-trust.png[width=500, alt="Select Certifica
 
 Turn on *Kobiton Certification Authority*. Select *Continue* in the pop-up.
 
-image:ios-trust-kobiton-certficate.png[width=500, alt="Turn on Kobiton Certification Authority then select Continue in the pop-up"]
-
+image:ios-trust-kobiton-certificate.png[width=500, alt="Turn on Kobiton Certification Authority then select Continue in the pop-up"]
 
 == Option 2: device supervision
 
@@ -97,7 +96,20 @@ image:apple-configurator-install-automation-tools-popup.png[width=300,alt="The I
 === Create an organization, then export the supervision identity on the non-Kobiton Mac machine
 
 [IMPORTANT]
-The process mentioned in this section should only be done once. Ignore this process if your organization already has a supervision identity exported.
+
+====
+
+The process mentioned in this section should only be done once. Skip this process if your organization already has a supervision identity.
+
+To check if there is already a supervision identity available:
+
+* Access the Mac mini host and open *Finder*.
+* Hold *Shift + Command + G* on the keyboard, then input the following path: `/usr/local/deviceconnect` and hit *Enter*.
+* In the above location, if there are 2 files `organization.crt` and `organization.der`, then the supervision identity already exists.
+
+image:supervise-org-finder.png[width=400,alt="The organization.crt and organization.der file under the deviceconnect folder in Finder"]
+
+====
 
 Access the non-Kobiton Mac machine and open Apple Configurator.
 
