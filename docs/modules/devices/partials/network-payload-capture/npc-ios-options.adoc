@@ -2,21 +2,7 @@
 
 Network payload traffic from the devices are captured by a proxy server. For secure (SSL) traffic, the proxy server's certificate must be trusted by the devices. For iOS devices, this can be done using either of the below options:
 
-=== Option 1: Manually import and trust the certificate
-
-This option is recommended for organizations that prefer not to supervise the devices, or is already supervising the devices using multiple supervision identities.
-
-The proxy server's SSL certificate needs to be manually imported to the device and trusted in Settings.
-
-This process also requires the following on the Mac mini host:
-
-* Apple Configurator and its Automation Tools.
-
-* Trusted ssh connection to `localhost`.
-
-* Configure the dc.ini file to include the option `
-
-=== Option 2: Supervise the device to deploy the certificate automatically
+=== Option 1 (default): Supervise the device to deploy the certificate automatically
 
 This option is recommended for organizations that prefer an automated solution to import and trust the proxy server certificate. The following requirements must be met for this option:
 
@@ -24,6 +10,26 @@ This option is recommended for organizations that prefer an automated solution t
 
 * Supervise the iOS devices either automatically via Automated Device Enrollment (requires Apple School or Business Manager), or manually via Apple Configurator.
 
++
+
+[IMPORTANT]
+Ensure that all devices in one Mac mini host are supervised by a single supervision identity. If devices are supervised by an identity that does not match the `organization.crt` and `organization.der` on the Mac mini host, NPC cannot be enabled on those devices.
+
 * If supervision is to be done via Apple Configurator, access to a Mac machine that *is not* running Kobiton software including _deviceConnect_ or _deviceShare_ is required to supervise the device.
+
+=== Option 2: Manually import and trust the certificate
+
+This option is recommended for organizations that prefer not to supervise the devices, or is already supervising the devices using multiple supervision identities. The following requirements must be met for this option:
+
+* The proxy server's SSL certificate needs to be manually imported to the device and trusted in Settings.
+
+* Additional software and configurations on the Mac mini host:
+
+** Apple Configurator and its Automation Tools.
+
+** Trusted ssh connection to `localhost`.
+
+** Configure the `dc.ini` file to use option 2.
+
 
 

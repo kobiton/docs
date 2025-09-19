@@ -15,52 +15,9 @@ You'll need to:
 
 include::partial$network-payload-capture/npc-ios-options.adoc[]
 
-== Option 1: import and trust proxy certificate
+Based on the decided option, prepare the device using either option 1 or 2.
 
-=== Download and install proxy certificate
-
-Access the iOS device. You can launch a manual session from Kobiton during the setup process.
-
-Ensure the device has Internet access, then open Safari browser and open the xref:attachment$kobiton-network-payload-capture-certificate-1.3.crt[certificate download link]. Select *Allow*, then *Close* respectively for the following 2 pop-ups:
-
-image:devices:ios-download-profile-allow.png[width=250, alt="The pop-up to confirm download of configuration profile"] -> image:devices:ios-profile-downloaded.png[width=250, alt="The pop-up to notify that the configuration profile has been downloaded]
-
-[NOTE]
-====
-You can also use https://support.apple.com/en-vn/guide/mac-help/mh35868/mac[AirDrop] to send the certificate from any MacOS machine (the Mac mini host machine, for example) to the device.
-====
-
-Open *Settings*, then *General*.
-
-image:devices:ios-settings-general.png[width=500, alt="Open Settings then select General"]
-
-Select *VPN & Device Management* (iOS 16 or later) or *Profiles & Device Management* (iOS 15 and earlier), then open *Kobiton Certification Authority*.
-
-image:devices:ios-vpn-and-device.png[width=500, alt="Select VPN and Device Management, then open Kobiton Certification Authority"]
-
-Select *Install* on the next few steps. After the installation completes, select *Done*.
-
-image:devices:ios-select-certificate.png[width=500, alt="Select Install, then select Done when installation completes"]
-
-=== Enable full trust for certificate
-
-On the device, open *Settings*, then *General*.
-
-image:devices:ios-settings-general.png[width=500, alt="Open Settings then select General"]
-
-Select *About*.
-
-image:devices:ios-settings-about.png[width=500, alt="Select About"]
-
-Select *Certificate Trust Settings*.
-
-image:devices:ios-settings-certficate-trust.png[width=500, alt="Select Certificate Trust Settings"]
-
-Turn on *Kobiton Certification Authority*. Select *Continue* in the pop-up.
-
-image:ios-trust-kobiton-certificate.png[width=500, alt="Turn on Kobiton Certification Authority then select Continue in the pop-up"]
-
-== Option 2: device supervision
+== Option 1: Device supervision
 
 === Install Apple Configurator and automation tools on the non-Kobiton Mac machine
 
@@ -234,6 +191,53 @@ At this time, the device should be under the *Supervised* tab. Right-click the d
 image:apple-configurator-supervised-device-get-info.png[width=700,alt="The device under the Supervised tab with the Get Info option"]
 
 Now, xref:device-lab-management:ios-devices/prepare-ios-device.adoc[prepare] and xref:device-lab-management:ios-devices/add-ios-device.adoc[connect] the device into the Mac mini host. See the linked guides for instructions.
+
+The device is now ready for Network Payload Capture.
+
+== Option 2: import and trust proxy certificate
+
+=== Download and install proxy certificate
+
+Access the iOS device. You can launch a manual session from Kobiton during the setup process.
+
+Ensure the device has Internet access, then open Safari browser and open the xref:attachment$kobiton-network-payload-capture-certificate-1.3.crt[certificate download link]. Select *Allow*, then *Close* respectively for the following 2 pop-ups:
+
+image:devices:ios-download-profile-allow.png[width=250, alt="The pop-up to confirm download of configuration profile"] -> image:devices:ios-profile-downloaded.png[width=250, alt="The pop-up to notify that the configuration profile has been downloaded]
+
+[NOTE]
+====
+You can also use https://support.apple.com/en-vn/guide/mac-help/mh35868/mac[AirDrop] to send the certificate from any MacOS machine (the Mac mini host machine, for example) to the device.
+====
+
+Open *Settings*, then *General*.
+
+image:devices:ios-settings-general.png[width=500, alt="Open Settings then select General"]
+
+Select *VPN & Device Management* (iOS 16 or later) or *Profiles & Device Management* (iOS 15 and earlier), then open *Kobiton Certification Authority*.
+
+image:devices:ios-vpn-and-device.png[width=500, alt="Select VPN and Device Management, then open Kobiton Certification Authority"]
+
+Select *Install* on the next few steps. After the installation completes, select *Done*.
+
+image:devices:ios-select-certificate.png[width=500, alt="Select Install, then select Done when installation completes"]
+
+=== Enable full trust for certificate
+
+On the device, open *Settings*, then *General*.
+
+image:devices:ios-settings-general.png[width=500, alt="Open Settings then select General"]
+
+Select *About*.
+
+image:devices:ios-settings-about.png[width=500, alt="Select About"]
+
+Select *Certificate Trust Settings*.
+
+image:devices:ios-settings-certficate-trust.png[width=500, alt="Select Certificate Trust Settings"]
+
+Turn on *Kobiton Certification Authority*. Select *Continue* in the pop-up.
+
+image:ios-trust-kobiton-certificate.png[width=500, alt="Turn on Kobiton Certification Authority then select Continue in the pop-up"]
 
 The device is now ready for Network Payload Capture.
 
