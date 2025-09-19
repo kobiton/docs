@@ -1,0 +1,42 @@
+At the start of an NPC-enabled session, the system sets a custom HTTP proxy on a device. This custom HTTP proxy is not cleared if the _Cleanup step called Device settings will be reset_ for both iOS and Android is not selected in the default organization/group’s Cleanup Policy.
+
+In the above case, devices will lose Internet connection if the NPC proxy configurations are set up incorrectly or the proxy is turned off. NPC proxy configurations also prevents devices to fetch updates from Apple/Google servers and blocks provisioning profile verification from Apple servers due to certificate pinning.
+
+To clear the custom proxy settings and restore Internet access to the device, follow either of the following options:
+
+* Enable a Cleanup policy that has _Device settings will be reset_ option checked, launch an NPC-enabled session on the device, and then exit the session without retaining the device. The Cleanup step will clear the custom HTTP proxy and restore Internet access.
+
++
+
+[IMPORTANT]
+The custom HTTP proxy is cleared at the end of an NPC-enabled session, but not a normal session.
+
+* Manually clear the custom proxy settings and restore Internet access:
+
+** For Android devices:
+
+*** Launch a manual session.
+
+*** On the controls toolbar, select *adb shell*.
+
+*** Run this adb shell command: `settings put global http_proxy :0`
+
+** For iOS devices that was set up using option 1:
+
+*** Launch a manual session.
+
+*** Open the *Settings* app, then select *General*.
+
+*** Select *VPN & Device Management*.
+
+*** Select the *Kobiton Certificate* under *Configuration Profiles*.
+
+*** Select *Remove Profile*.
+
+** For iOS devices that was set up using option 2:
+
+*** Open the *Settings* app, then select *Wi-Fi*.
+
+*** Select the *information icon* next to the currently connected network.
+
+*** Under *HTTP Proxy*, select *Configure Proxy*, then select *Off*.

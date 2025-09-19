@@ -12,10 +12,6 @@ You'll need to:
 * For iOS devices, decide which option to use for setting up the iOS devices.
 * Make sure the Mac mini is connected to a network that satisfies the network requirements for Network Payload Capture before proceeding.
 
-include::partial$network-payload-capture/npc-ios-options.adoc[]
-
-Based on the decided option, prepare the device using either option 1 or 2.
-
 == Mac mini with Apple Silicon: Install Rosetta
 
 [NOTE]
@@ -81,10 +77,13 @@ en1: flags=8863<UP,BROADCAST,SMART,RUNNING,SIMPLEX,MULTICAST> mtu 1500
 
 Save the file, then xref:device-lab-management:deviceConnect/restart-deviceconnect-services.adoc[restart services] on the Mac mini host to apply the changes.
 
-[NOTE]
-====
-If you are only hosting Android devices, you can move on to configure your xref:devices:local-devices/network-payload-capture/configure-an-android-device.adoc[Android device] now. The next steps are only required for hosting iOS devices.
-====
+If you are only hosting Android devices, you can move on to configure your xref:devices:local-devices/network-payload-capture/configure-an-android-device.adoc[Android device]. The next sections are only required for hosting iOS devices.
+
+---
+
+include::partial$network-payload-capture/npc-ios-options.adoc[]
+
+Based on the decided option, prepare the device using either option 1 or 2.
 
 == Option 1: Check the supervision identity and dc.ini configuration
 
@@ -94,15 +93,15 @@ Hold *Shift + Command + G* on the keyboard, then input the following path: `/usr
 
 In the above location, if there are 2 files `organization.crt` and `organization.der`, then the supervision identity already exists.
 
-If the 2 files do not exist, follow [this guide] to create and/or export the supervision identity files and transfer them to the Mac mini host.
+If the 2 files do not exist, follow [this guide] to create and/or export the supervision identity files on a Mac machine that is not running Kobiton software, then transfer them to the Mac mini host.
 
 Edit the `dc.ini` file from the location `/usr/local/deviceconnect/` using any text editor (Create a backup of the `dc.ini` file prior to making updates).
 
 Find the line `IOSDeviceController.WifiCaptureProxyAutomation=ui` in the content of the file.
 
-If there is no such line, move on to set up the devices.
+* If there is no such line, move on to the xref:next_steps[next steps].
 
-If there is such a line, change it to the following: `IOSDeviceController.WifiCaptureProxyAutomation=profile`. Restart deviceConnect services to apply the changes.
+* If there is such a line, change it to the following: `IOSDeviceController.WifiCaptureProxyAutomation=profile`. Restart deviceConnect services to apply the changes.
 
 == Option 2: Establish trusted ssh connection and install Automation Tools
 
@@ -169,6 +168,8 @@ exit && sudo shutdown -r now
 
 == Install Automation Tools from Apple Configurator
 
+Access the Mac mini host after it restarts.
+
 Open the *App Store*, search for and install *Apple Configurator*.
 
 image:apple-configurator-mac-app-store.png[width=800,alt="Apple Configurator in the Mac App Store"]
@@ -192,12 +193,18 @@ Edit the `dc.ini` file from the location `/usr/local/deviceconnect/` using any t
 
 Find the line starting with `IOSDeviceController.WifiCaptureProxyAutomation` in the content of the file.
 
-If there is no such line, add the following line to the end of the file `IOSDeviceController.WifiCaptureProxyAutomation=ui`.
+* If there is no such line, add this line to the end of the file:
 
-If the line exists, ensure the line matches exactly `IOSDeviceController.WifiCaptureProxyAutomation=ui`. Update the line if it does not match.
++
+
+[source]
+IOSDeviceController.WifiCaptureProxyAutomation=ui
+
+* If the line exists, ensure the line matches exactly `IOSDeviceController.WifiCaptureProxyAutomation=ui`. Update the line if it does not match.
 
 Restart deviceConnect services to apply the changes.
 
+[#next_steps]
 == Next steps
 
 Configure the xref:devices:local-devices/network-payload-capture/configure-an-android-device.adoc[Android] and xref:devices:local-devices/network-payload-capture/configure-an-ios-device.adoc[iOS devices] for network payload capture.
