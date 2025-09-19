@@ -93,15 +93,9 @@ A pop-up appears, select *Install* and provide the administrator password to con
 image:apple-configurator-install-automation-tools-popup.png[width=300,alt="The Install Automation Tools confirmation pop-up"]
 
 [#_create_an_organization_then_export_the_supervision_identity]
-=== Create an organization, then export the supervision identity on the non-Kobiton Mac machine
+=== Create or import a supervision identity on the non-Kobiton Mac machine
 
-[IMPORTANT]
-
-====
-
-The process mentioned in this section should only be done once. Skip this process if your organization already has a supervision identity.
-
-To check if there is already a supervision identity available:
+Check if there is already a supervision identity available on the Mac mini host.
 
 * Access the Mac mini host and open *Finder*.
 * Hold *Shift + Command + G* on the keyboard, then input the following path: `/usr/local/deviceconnect` and hit *Enter*.
@@ -109,7 +103,9 @@ To check if there is already a supervision identity available:
 
 image:supervise-org-finder.png[width=400,alt="The organization.crt and organization.der file under the deviceconnect folder in Finder"]
 
-====
+The next steps depend on whether the supervision identity already exists on the Mac mini host
+
+[]
 
 Access the non-Kobiton Mac machine and open Apple Configurator.
 
@@ -151,11 +147,32 @@ image:apple-configurator-export-organization-options.png[width=500,alt="The Expo
 
 Under the selected location, there is now a `.crt` and a `.der` file with the same name. Rename those files to `organization.crt` and `organization.der`, in that order. Transfer these 2 files into the Mac mini host (the Mac mini with Kobiton software running).
 
+[IMPORTANT]
+For newer versions of Apple Configurator, the exported files will have the extention `.crt` and `.cer` instead. It is still needed to rename the `.cer` file into `organization.der`.
+
 On the Mac mini host, open *Finder*, copy the 2 files above, then enter *Shift + Command + G* on the keyboard and input the following location: `/usr/local/deviceconnect`.
 
 Paste the 2 files into the folder. The result in Finder should look similar to the below:
 
 image:supervise-org-finder.png[width=400,alt="The organization.crt and organization.der file under the deviceconnect folder in Finder"]
+
+
+
+Transfer the existing `organization.crt` from `/usr/local/deviceconnect` on the Mac mini host to the non-Kobiton Mac machine.
+
+Open *Keychain Access* on the non-Kobiton Mac machine. Drag and drop the `organization.crt` from *Finder* into the *login* keychain in *Keychain Access*.
+
+Open *Apple Configurator* on the non-Kobiton Mac machine.
+
+On the *Apple Configurator* menu, select *Settings*.
+
+Select the *Organizations* tab. If there already is an organization, then move on to the next section.
+
+If there is no organization, select the *Plus* sign to add a new organization.
+
+Enter your organization’s information in the below screen and choose *Next*.
+
+
 
 === Supervise the device
 
