@@ -13,18 +13,7 @@ You'll need to:
 
 * Confirm your system administrator xref:devices:local-devices/network-payload-capture/configure-the-host-machine.adoc[configured your local Kobiton server].
 
-== Understanding the available options for setting up iOS devices
-
-Network payload traffic from the devices are captured by a proxy server. For secure (SSL) traffic, the proxy server's certificate must be trusted by the devices. For iOS devices, this can be done using either of the below options:
-
-* Option 1: Import the certificate and trust it on the device.
-** This process must be done manually on each device and is recommended for organization that prefer not to supervise their devices, or supervises the devices using multiple supervision identity in a Mac mini host.
-
-* Option 2: Supervise the device. The certificate can then be imported and trusted automatically by deviceConnect.
-** Device supervision can be done automatically via Automated Device Enrollment (requires Apple School or Business Manager) or manually using Apple Configurator.
-** All devices hosted by one Mac mini must be supervised by a single supervision identity.
-** This option requires access to a Mac machine that *is not* running Kobiton software including _deviceConnect_ or _deviceShare_. This machine - referred from now on as the non-Kobiton Mac machine - will be used to supervise iOS devices.
-
+include::partial$network-payload-capture/npc-ios-options.adoc[]
 
 == Option 1: import and trust proxy certificate
 

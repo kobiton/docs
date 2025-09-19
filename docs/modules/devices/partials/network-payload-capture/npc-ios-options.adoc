@@ -1,0 +1,29 @@
+== Understanding the available options for setting up iOS devices
+
+Network payload traffic from the devices are captured by a proxy server. For secure (SSL) traffic, the proxy server's certificate must be trusted by the devices. For iOS devices, this can be done using either of the below options:
+
+=== Option 1: Manually import and trust the certificate
+
+This option is recommended for organizations that prefer not to supervise the devices, or is already supervising the devices using multiple supervision identities.
+
+The proxy server's SSL certificate needs to be manually imported to the device and trusted in Settings.
+
+This process also requires the following on the Mac mini host:
+
+* Apple Configurator and its Automation Tools.
+
+* Trusted ssh connection to `localhost`.
+
+* Configure the dc.ini file to include the option `
+
+=== Option 2: Supervise the device to deploy the certificate automatically
+
+This option is recommended for organizations that prefer an automated solution to import and trust the proxy server certificate. The following requirements must be met for this option:
+
+* A single supervision identity that is exported into 2 files: `organization.crt` and `organization.der`. These 2 files must be transferred to the Mac mini host at the path `/usr/local/deviceconnect`.
+
+* Supervise the iOS devices either automatically via Automated Device Enrollment (requires Apple School or Business Manager), or manually via Apple Configurator.
+
+* If supervision is to be done via Apple Configurator, access to a Mac machine that *is not* running Kobiton software including _deviceConnect_ or _deviceShare_ is required to supervise the device.
+
+

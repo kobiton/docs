@@ -1,7 +1,7 @@
 = Configure the Mac mini host for network payload capture
 :navtitle: Configure Mac mini host
 
-Learn how to configure your local Cloud or Standalone Kobiton Mac mini host so you and your team can use network payload capture during a xref:manual-testing:local-devices/capture-network-payload-data.adoc[manual session] or xref:automation-testing:local-devices/capture-network-payload-data.adoc[automation session].
+Learn how to configure your local Cloud or Standalone Kobiton Mac mini host so you and your team can use network payload capture (NPC) during a xref:manual-testing:local-devices/capture-network-payload-data.adoc[manual session] or xref:automation-testing:local-devices/capture-network-payload-data.adoc[automation session].
 
 [#_before_you_start]
 == Before you start
@@ -9,7 +9,10 @@ Learn how to configure your local Cloud or Standalone Kobiton Mac mini host so y
 You'll need to:
 
 * Access the Mac mini host as the *deviceconnect* user for all the operations below.
+* For iOS devices, decide which option to use for setting up the iOS devices.
 * Make sure the Mac mini is connected to a network that satisfies the network requirements for Network Payload Capture before proceeding.
+
+include::partial$network-payload-capture/npc-ios-options.adoc[]
 
 == Mac mini with Apple Silicon: Install Rosetta
 
