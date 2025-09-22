@@ -9,7 +9,11 @@ Learn how to configure your local Cloud or Standalone Kobiton Mac mini host so y
 You'll need to:
 
 * Access the Mac mini host as the *deviceconnect* user for all the operations below.
-* For iOS devices, decide which option to use for setting up the iOS devices.
+
+* For iOS devices, decide which xref:decide_ios_option[option] to use for setting up the iOS devices, as each option requires different setup steps for the Mac mini host.
+
+* Make sure that the current deviceConnect version on the Mac mini hosting the device is at least *4.19.5*. xref:device-lab-management:deviceConnect/remote-update-deviceconnect.adoc[Update deviceConnect] if the version is lower.
+
 * Make sure the Mac mini is connected to a network that satisfies the network requirements for Network Payload Capture before proceeding.
 
 == Mac mini with Apple Silicon: Install Rosetta
@@ -81,11 +85,12 @@ If you are only hosting Android devices, you can move on to configure your xref:
 
 ---
 
+[#decide_ios_option]
 include::partial$network-payload-capture/npc-ios-options.adoc[]
 
 Based on the decided option, prepare the device using either option 1 or 2.
 
-== Option 1: Check the supervision identity and dc.ini configuration
+== (iOS only) Option 1: Check the supervision identity and dc.ini configuration
 
 Access the Mac mini host and open *Finder*.
 
@@ -101,9 +106,9 @@ Find the line `IOSDeviceController.WifiCaptureProxyAutomation=ui` in the content
 
 * If there is no such line, move on to the xref:next_steps[next steps].
 
-* If there is such a line, change it to the following: `IOSDeviceController.WifiCaptureProxyAutomation=profile`. Restart deviceConnect services to apply the changes.
+* If there is such a line, change it to the following: `IOSDeviceController.WifiCaptureProxyAutomation=profile`. xref:device-lab-management:deviceConnect/restart-deviceconnect-services.adoc[Restart deviceConnect services,window=read-later] to apply the changes.
 
-== Option 2: Establish trusted ssh connection and install Automation Tools
+== (iOS only) Option 2: Establish trusted ssh connection and install Automation Tools
 
 Access the Mac mini host.
 
@@ -202,7 +207,7 @@ IOSDeviceController.WifiCaptureProxyAutomation=ui
 
 * If the line exists, ensure the line matches exactly `IOSDeviceController.WifiCaptureProxyAutomation=ui`. Update the line if it does not match.
 
-Restart deviceConnect services to apply the changes.
+xref:device-lab-management:deviceConnect/restart-deviceconnect-services.adoc[Restart deviceConnect services,window=read-later] to apply the changes.
 
 [#next_steps]
 == Next steps
