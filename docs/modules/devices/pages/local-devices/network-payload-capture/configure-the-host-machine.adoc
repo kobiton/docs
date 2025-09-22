@@ -105,9 +105,11 @@ Open the `dc.ini` file from `/usr/local/deviceconnect/` using a text editor. Cre
 
 Locate the line `IOSDeviceController.WifiCaptureProxyAutomation=ui`.
 
-* If the line does not exist, continue to the xref:next_steps[next steps].
+* If the line does not exist, add `IOSDeviceController.WifiCaptureProxyAutomation=profile`.
 
-* If the line exists, change it to `IOSDeviceController.WifiCaptureProxyAutomation=profile`, then xref:device-lab-management:deviceConnect/restart-deviceconnect-services.adoc[restart deviceConnect services,window=read-later] to apply the changes.
+* If the line exists, change it to `IOSDeviceController.WifiCaptureProxyAutomation=profile`
+
+xref:device-lab-management:deviceConnect/restart-deviceconnect-services.adoc[Restart deviceConnect services,window=read-later] to apply the changes.
 
 === Option 2: Establish a trusted SSH connection and install Automation Tools
 
