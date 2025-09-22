@@ -25,9 +25,6 @@ This section applies to both hosting Android and iOS devices.
 
 === Mac mini with Apple Silicon: Install Rosetta
 
-[NOTE]
-This section is only required for Mac mini host with Apple Silicon.
-
 Open *Terminal* on the Mac mini host.
 
 Run the below command to install Rosetta:
@@ -92,41 +89,41 @@ If you are only hosting Android devices, you can move on to configure your xref:
 
 == Additional setup for hosting iOS devices
 
-Based on the decided xref:decide_ios_option[option], prepare the device using either option 1 or 2.
+Configure the Mac mini host based on the selected xref:decide_ios_option[option].
 
-=== Option 1: Check the supervision identity and dc.ini configuration
+=== Option 1: Verify supervision identity and dc.ini configuration
 
 Access the Mac mini host and open *Finder*.
 
-Hold *Shift + Command + G* on the keyboard, then input the following path: `/usr/local/deviceconnect` and hit *Enter*.
+Press *Shift + Command + G*, enter `/usr/local/deviceconnect`, and press *Enter*.
 
-In the above location, if there are 2 files `organization.crt` and `organization.der`, then the supervision identity already exists.
+* If the files `organization.crt` and `organization.der` are present, the supervision identity already exists.
 
-If the 2 files do not exist, follow [this guide] to create and/or export the supervision identity files on a Mac machine that is not running Kobiton software, then transfer them to the Mac mini host.
+* If the files are not present, follow xref:devices:local-devices/network-payload-capture/configure-an-ios-device.adoc#_create_an_organization_then_export_the_supervision_identity[this guide,window=read-later] to create and export the supervision identity files on a Mac that is not running Kobiton software, then transfer the files to the Mac mini host.
 
-Edit the `dc.ini` file from the location `/usr/local/deviceconnect/` using any text editor (Create a backup of the `dc.ini` file prior to making updates).
+Open the `dc.ini` file from `/usr/local/deviceconnect/` using a text editor. Create a backup before making changes.
 
-Find the line `IOSDeviceController.WifiCaptureProxyAutomation=ui` in the content of the file.
+Locate the line `IOSDeviceController.WifiCaptureProxyAutomation=ui`.
 
-* If there is no such line, move on to the xref:next_steps[next steps].
+* If the line does not exist, continue to the xref:next_steps[next steps].
 
-* If there is such a line, change it to the following: `IOSDeviceController.WifiCaptureProxyAutomation=profile`. xref:device-lab-management:deviceConnect/restart-deviceconnect-services.adoc[Restart deviceConnect services,window=read-later] to apply the changes.
+* If the line exists, change it to `IOSDeviceController.WifiCaptureProxyAutomation=profile`, then xref:device-lab-management:deviceConnect/restart-deviceconnect-services.adoc[restart deviceConnect services,window=read-later] to apply the changes.
 
-=== Option 2: Establish trusted ssh connection and install Automation Tools
+=== Option 2: Establish a trusted SSH connection and install Automation Tools
 
 Access the Mac mini host.
 
 [#_check_for_an_existing_ssh_key]
 ==== Check for an existing SSH key
 
-In the terminal, open the `.ssh` directory, then list the contents of the directory.
+In the terminal, open the `.ssh` directory and list its contents.
 
 [source,shell]
 ----
 cd ~/.ssh && ls -a
 ----
 
-If you see an `id_rsa` file, go to xref:_modify_the_ssh_key[]. Otherwise, continue to the next section.
+If the file `id_rsa` is present, proceed to xref:_modify_the_ssh_key[modifying the SSH key]. If not, continue to generate a new key.
 
 [#_generate_a_new_ssh_key]
 ==== Generate a new SSH key
@@ -138,7 +135,7 @@ In the `.ssh` directory, enter the following command:
 ssh-keygen -t rsa
 ----
 
-Leave the passphrase empty and press *Enter*.
+Leave the passphrase empty and press *Enter* when prompted.
 
 [source,shell]
 ----
@@ -146,12 +143,10 @@ Leave the passphrase empty and press *Enter*.
 > Enter same passphrase again: [Leave empty]
 ----
 
-Now you're ready to xref:_modify_the_ssh_key[modify the SSH key].
-
 [#_modify_the_ssh_key]
 ==== Modify the SSH key
 
-In the `.ssh` directory, copy the contents from your `id_rsa` public key into the `authorized_keys` file.
+Copy the contents of the `id_rsa.pub` file into the `authorized_keys` file:
 
 [source,shell]
 ----
@@ -159,16 +154,16 @@ cat id_rsa.pub >> ./authorized_keys
 ----
 
 [NOTE]
-If an `authorized_keys` file doesn't exist, one will be automatically created.
+If `authorized_keys` does not exist, the command creates it automatically.
 
-Login using your SSH key. If prompted to _trust this connection_, type *yes* and press *Enter*.
+Log in using the SSH key. If prompted to trust the connection, type *yes* and press *Enter*.
 
 [source,shell]
 ----
 ssh 127.0.0.1
 ----
 
-After you're successfully logged in, exit the SSH session, then restart the Mac mini host.
+After successfully logging in, exit the session and restart the Mac mini host:
 
 [source,shell]
 ----
@@ -177,39 +172,36 @@ exit && sudo shutdown -r now
 
 ==== Install Automation Tools from Apple Configurator
 
-Access the Mac mini host after it restarts.
+After the restart, access the Mac mini host.
 
-Open the *App Store*, search for and install *Apple Configurator*.
+Open the *App Store*, search for *Apple Configurator*, and install it. An Apple ID is required.
 
 image:apple-configurator-mac-app-store.png[width=800,alt="Apple Configurator in the Mac App Store"]
 
-[NOTE]
-An Apple ID is required to download and install Apple Configurator.
-
-Open *Apple Configurator*. On the menu bar, select *Apple Configurator*, then *Install Automation Tools*.
+Open Apple Configurator. From the menu bar, select *Apple Configurator > Install Automation Tools*.
 
 image:apple-configurator-menu-install-automation-tools.png[width=400,alt="The Install Automation Tools option under the Apple Configurator menu bar"]
 
-A pop-up appears, select *Install* and provide the administrator password to continue.
+When prompted, select *Install* and provide the administrator password.
 
 image:apple-configurator-install-automation-tools-popup.png[width=300,alt="The Install Automation Tools confirmation pop-up"]
 
-Once the automation tools are installed, close Apple Configurator since it doesn't need to be open for network payload capture.
+After installation, close Apple Configurator. It does not need to remain open for network payload capture.
 
 ==== Add dc.ini configuration
 
-Edit the `dc.ini` file from the location `/usr/local/deviceconnect/` using any text editor (Create a backup of the `dc.ini` file prior to making updates).
+Open the `dc.ini` file from `/usr/local/deviceconnect/` using a text editor. Create a backup before making changes.
 
-Find the line starting with `IOSDeviceController.WifiCaptureProxyAutomation` in the content of the file.
+Locate the line that begins with `IOSDeviceController.WifiCaptureProxyAutomation`.
 
-* If there is no such line, add this line to the end of the file:
+* If the line does not exist, add the following to the end of the file:
 
 +
 
 [source]
 IOSDeviceController.WifiCaptureProxyAutomation=ui
 
-* If the line exists, ensure the line matches exactly `IOSDeviceController.WifiCaptureProxyAutomation=ui`. Update the line if it does not match.
+* If the line exists, confirm that it matches exactly the above. Update it if necessary.
 
 xref:device-lab-management:deviceConnect/restart-deviceconnect-services.adoc[Restart deviceConnect services,window=read-later] to apply the changes.
 
