@@ -16,7 +16,14 @@ You'll need to:
 
 * Make sure the Mac mini is connected to a network that satisfies the network requirements for Network Payload Capture before proceeding.
 
-== Mac mini with Apple Silicon: Install Rosetta
+[#decide_ios_option]
+include::partial$network-payload-capture/npc-ios-options.adoc[]
+
+== Required setup steps
+
+This section applies to both hosting Android and iOS devices.
+
+=== Mac mini with Apple Silicon: Install Rosetta
 
 [NOTE]
 This section is only required for Mac mini host with Apple Silicon.
@@ -28,7 +35,7 @@ Run the below command to install Rosetta:
 [source,shell]
 softwareupdate --install-rosetta --agree-to-license
 
-== Modify the `dc.ini` file
+=== Enable NPC in `dc.ini` file
 
 Edit the `dc.ini` file from the location `/usr/local/deviceconnect/` using any text editor (Create a backup of the `dc.ini` file prior to making updates).
 
@@ -63,7 +70,7 @@ You can retrieve the local IP address(es) of the Mac mini by either:
 
 +
 
-.example of ifconfig command
+.example of `ifconfig` command
 [source,shell]
 ----
 en0: flags=8863<UP,BROADCAST,SMART,RUNNING,SIMPLEX,MULTICAST> mtu 1500
@@ -83,14 +90,11 @@ Save the file, then xref:device-lab-management:deviceConnect/restart-deviceconne
 
 If you are only hosting Android devices, you can move on to configure your xref:devices:local-devices/network-payload-capture/configure-an-android-device.adoc[Android device]. The next sections are only required for hosting iOS devices.
 
----
+== Additional setup for hosting iOS devices
 
-[#decide_ios_option]
-include::partial$network-payload-capture/npc-ios-options.adoc[]
+Based on the decided xref:decide_ios_option[option], prepare the device using either option 1 or 2.
 
-Based on the decided option, prepare the device using either option 1 or 2.
-
-== (iOS only) Option 1: Check the supervision identity and dc.ini configuration
+=== Option 1: Check the supervision identity and dc.ini configuration
 
 Access the Mac mini host and open *Finder*.
 
@@ -108,12 +112,12 @@ Find the line `IOSDeviceController.WifiCaptureProxyAutomation=ui` in the content
 
 * If there is such a line, change it to the following: `IOSDeviceController.WifiCaptureProxyAutomation=profile`. xref:device-lab-management:deviceConnect/restart-deviceconnect-services.adoc[Restart deviceConnect services,window=read-later] to apply the changes.
 
-== (iOS only) Option 2: Establish trusted ssh connection and install Automation Tools
+=== Option 2: Establish trusted ssh connection and install Automation Tools
 
 Access the Mac mini host.
 
 [#_check_for_an_existing_ssh_key]
-=== Check for an existing SSH key
+==== Check for an existing SSH key
 
 In the terminal, open the `.ssh` directory, then list the contents of the directory.
 
@@ -125,7 +129,7 @@ cd ~/.ssh && ls -a
 If you see an `id_rsa` file, go to xref:_modify_the_ssh_key[]. Otherwise, continue to the next section.
 
 [#_generate_a_new_ssh_key]
-=== Generate a new SSH key
+==== Generate a new SSH key
 
 In the `.ssh` directory, enter the following command:
 
@@ -145,7 +149,7 @@ Leave the passphrase empty and press *Enter*.
 Now you're ready to xref:_modify_the_ssh_key[modify the SSH key].
 
 [#_modify_the_ssh_key]
-=== Modify the SSH key
+==== Modify the SSH key
 
 In the `.ssh` directory, copy the contents from your `id_rsa` public key into the `authorized_keys` file.
 
@@ -171,7 +175,7 @@ After you're successfully logged in, exit the SSH session, then restart the Mac 
 exit && sudo shutdown -r now
 ----
 
-== Install Automation Tools from Apple Configurator
+==== Install Automation Tools from Apple Configurator
 
 Access the Mac mini host after it restarts.
 
@@ -192,7 +196,7 @@ image:apple-configurator-install-automation-tools-popup.png[width=300,alt="The I
 
 Once the automation tools are installed, close Apple Configurator since it doesn't need to be open for network payload capture.
 
-=== Add dc.ini configuration
+==== Add dc.ini configuration
 
 Edit the `dc.ini` file from the location `/usr/local/deviceconnect/` using any text editor (Create a backup of the `dc.ini` file prior to making updates).
 

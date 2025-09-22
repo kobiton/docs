@@ -42,9 +42,46 @@ Check if there is already a supervision identity available on the Mac mini host.
 
 image:supervise-org-finder.png[width=400,alt="The organization.crt and organization.der file under the deviceconnect folder in Finder"]
 
-The next steps depend on whether the supervision identity already exists on the Mac mini host
+The next steps depend on whether the supervision identity already exists on the Mac mini host.
 
-=== If the supervision identity does not exist
+[tabs]
+====
+
+Existing supervision identity::
+
++
+
+--
+
+On the *Apple Configurator* menu, select *Settings*.
+
+image:apple-configurator-menu-settings.png[width=400,alt="The Settings option under the Apple Configurator menu bar"]
+
+Select the *Organizations* tab. If there already is an organization listed, move on to xref:#supervise_device[supervising the device].
+
+If there is no organization listed, locate the `.organization` file that was saved during the creation of the supervision identity and transfer it to the non-Kobiton Mac machine.
+
+Open *Apple Configurator*, then select the *3-dot icon* and choose *Import Organization*.
+
+image:apple-configurator-import-organization.png[width=500,alt="The Import Organization option after selecting the 3-dot icon"]
+
+Select the `.organization` file, then choose *Import*.
+
+image:apple-configurator-locate-organization.png[width=500,alt="The Acme.organization file that is selected for import"]
+
+Enter the password that was used to encrypt the file, then choose *Submit*.
+
+image:apple-configurator-organization-password.png[width=500,alt="The password input field to decrypt the imported organization"]
+
+The imported organization appears in the list.
+
+image:apple-configurator-imported-organization.png[width=500,alt="The imported Acme Inc. organization in the list"]
+
+--
+
+Non-existing supervision identity::
++
+--
 
 Access the non-Kobiton Mac machine and open *Apple Configurator*.
 
@@ -74,56 +111,51 @@ Your organization should now appear in the list. Next, you will need to export t
 
 * A `.organization` file. This file does not need to be transferred to the Mac mini host, but should be kept in a safe place to import later if needed.
 
+** Highlight the organization, then choose the *three-dot icon* and select *Export Organization*.
++
+image:apple-configurator-export-organization.png[width=500,alt="The Export Organization option after selecting the 3-dot icon"]
+
+** Enter a strong password to encrypt the file. Note down the password in a safe place.
++
+image:apple-configurator-export-organization-password.png[width=500,alt="The password input and confirmation prompt to encrypt the exported organization"]
+
+** Choose a name and location to save the file and choose *Save*. Keep the exported `.organization` file in a safe location for later use.
++
+image:apple-configurator-export-organization-location.png[width=500,alt="The prompt to specify the file name and location to save the file with the Save button"]
+
+
 * A pair of `.crt` and `.der` files. This pair of files need to be transferred to the Mac mini host.
 
-Highlight the organization, then choose the *three-dot icon* and select *Export Organization*.
-
-Enter a strong password to encrypt the file. Note down the password in a safe place.
-
-Choose a location to save the file and choose *Save*. Keep the exported `.organization` file in a safe location for later use.
-
-Highlight the organization again, then choose the *three-dot icon* and select *Export Supervision Identity*.
-
+** Highlight the organization again, then choose the *three-dot icon* and select *Export Supervision Identity*.
++
 image:apple-configurator-organizations-actions.png[width=500,alt="The newly created organization under the list with the menu expanded and the Export Supervision Identity option visible"]
 
-In the export supervision identity pop-up:
-
-* Select a location to save the exported files.
-
-* Select *Unencrypted DER …* for *Format*.
-
-* Select *Save*, then *Export*.
-
+** In the export supervision identity pop-up:
++
 image:apple-configurator-export-organization-options.png[width=500,alt="The Export Supervision Identity pop-up with the Unencrypted DER select for Format"]
 
-Under the selected location, there is now a pair of `.crt` and `.der` files with the same name. Rename those files to `organization.crt` and `organization.der`, in that order. Transfer these 2 files into the Mac mini host (the Mac mini with Kobiton software running).
+*** Select a location to save the exported files.
 
+*** Select *Unencrypted DER …* for *Format*.
+
+*** Select *Save*, then *Export*.
+
+** Under the selected location, there is now a pair of `.crt` and `.der` files with the same name. Rename those files to `organization.crt` and `organization.der`, in that order. Transfer these 2 files into the Mac mini host (the Mac mini with Kobiton software running).
++
 [IMPORTANT]
 For newer versions of Apple Configurator, the exported files will have the extension `.crt` and `.cer` instead. Rename the `.cer` file into `organization.der`.
 
-On the Mac mini host, open *Finder*, copy the 2 files above, then enter *Shift + Command + G* on the keyboard and input the following location: `/usr/local/deviceconnect`.
+** On the Mac mini host, open *Finder*, copy the 2 files above, then enter *Shift + Command + G* on the keyboard and input the following location: `/usr/local/deviceconnect`.
 
-Paste the 2 files into the folder. The result in Finder should look similar to the below:
-
+** Paste the 2 files into the folder. The result in Finder should look similar to the below:
++
 image:supervise-org-finder.png[width=400,alt="The organization.crt and organization.der file under the deviceconnect folder in Finder"]
 
-== If the supervision identity already exists
+--
 
-Transfer the `.organization` file to the non-Kobiton Mac machine, then open *Apple Configurator*.
+====
 
-On the *Apple Configurator* menu, select *Settings*.
-
-Select the *Organizations* tab. If there already is an organization, then move on to the next section.
-
-If there is no organization, select the *3-dot icon* and choose *Import Organization*.
-
-Select the `.organization` file, then choose *Import*.
-
-Enter the password that was used to encrypt the file, then choose *Submit*.
-
-The organization should now be imported.
-
-
+[#supervise_device]
 === Supervise the device
 
 [WARNING]
@@ -134,6 +166,8 @@ During this process:
 * The device will be unplugged from the Mac mini host to be supervised.
 
 * The device's data will be erased. Back up the device data before proceeding (if needed).
+
+* Ensure that all iOS devices in a Mac mini host are supervised by only one single supervision identity.
 
 
 ====
@@ -210,7 +244,7 @@ image:devices:ios-download-profile-allow.png[width=250, alt="The pop-up to confi
 
 [NOTE]
 ====
-You can also use https://support.apple.com/en-vn/guide/mac-help/mh35868/mac[AirDrop] to send the certificate from any MacOS machine (the Mac mini host machine, for example) to the device.
+You can also use https://support.apple.com/en-vn/guide/mac-help/mh35868/mac[AirDrop] to send the certificate from any macOS machine (the Mac mini host machine, for example) to the device.
 ====
 
 Open *Settings*, then *General*.
