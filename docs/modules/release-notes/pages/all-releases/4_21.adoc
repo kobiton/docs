@@ -1,17 +1,68 @@
-= Kobiton 4.20 Release Notes
-:navtitle: Kobiton 4.20 release notes
+= Kobiton 4.21 Release Notes
+:navtitle: Kobiton 4.21 release notes
 
 _Oct 4, 2025_
 
 == deviceConnect: Improvements to provisioning profile handling
 
+For Mac mini hosts without Internet access, provisioning profiles could become invalid before expiration because Apple requires re-validation every 7 days.
+
+Restoring functionality required several manual steps: removing old profiles, uploading new ones, uninstalling agents, and restarting services.
+
+With this release, deviceConnect automatically detects and applies newly uploaded provisioning profiles, eliminating the need for manual intervention.
+
+[NOTE]
+A manual service restart is still required after importing the new provisioning profile.
+
+
 == Kobiton Command-line Interface (CLI)
 
-== IQS: clear message for app install test steps
+Enterprise environments often need to control and operate devices in batches, and manual or web-based operations are not efficient at this scale. To address this, Kobiton now provides a Command-line Interface (CLI) that supports batch operations, scripting, and streamlined management of multiple devices simultaneously.
+
+There is also a new type of session: *CLI session*. In the Session List, filter for this session by using `type:cli` or choose _CLI_ in the search bar dropdown.
+
+[NOTE]
+
+====
+
+* Private or local devices only - Public devices not supported.
+
+* For CLI session:
+
+** No Session Explorer.
+
+** No exhausts: video, logs, screenshots, etc.
+
+** No mixed session between manual and CLI.
+
+** CLI session times out after 2 hours by default (configurable). Reset the timeout by the command `kobiton session ping`.
+
+====
+
+User guides for using the CLI is coming soon!
+
+
+== AI-Augmented Testing: clear message for app install test steps
+
+AI-augmented testing customers benefit from clearer information in Test Case Details. Certain test steps—such as installing an app from a repository, upload, or URL—do not generate screenshots, and previously these cases showed a generic _screenshot not available_ message. Because the same message also appeared when session exhausts were disabled, it often caused confusion. With this update, _app install_ steps in the Test Case Details page now display the following instead of the _screenshot not available_ message:
+
+* App source: App Repo or Upload
+
+* App name
+
+* App version
 
 == Scriptless Improvements
+
+* Bug Fix: Resolved an issue where deleting all test steps for an app in a test case caused any test suite using that test case to fail during execution.
+
+* Bug Fix: Fixed an issue where clearing the search box in the Blocker Remediation pop-up did not restore the complete view tree.
 
 
 == General improvements and fixes
 
+* deviceConnect Console: Provisioning profile deletion option restored.
 
+* Bug Fix: Resolved an issue where the bus monitor caused devices to go offline after reboot.
+
+* App Repo & App Install Menu: Now shows version code (Android) and short string (iOS) alongside the app version.
