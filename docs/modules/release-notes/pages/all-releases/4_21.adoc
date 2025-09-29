@@ -5,9 +5,9 @@ _Oct 4, 2025_
 
 == deviceConnect: Improvements to provisioning profile handling
 
-For Mac mini hosts without Internet access, provisioning profiles could become invalid before expiration because Apple requires re-validation every 7 days.
+For Mac mini hosts without Internet access, provisioning profiles could become invalid before expiration because Apple requires re-validation every 7 days. This causes hosted iOS/iPadOS devices to become offline.
 
-Restoring functionality required several manual steps: removing old profiles, uploading new ones, uninstalling agents, and restarting services.
+Previously, several manual steps are needed to force deviceConnect to apply the new valid profile: removing old profiles, uploading new ones, uninstalling mobile agents, and restarting services.
 
 With this release, deviceConnect automatically detects and applies newly uploaded provisioning profiles, eliminating the need for manual intervention.
 
