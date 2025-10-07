@@ -1,4 +1,7 @@
-At the start of a Network Payload Capture (NPC)–enabled session, the system sets a custom HTTP proxy on the device. This proxy is not cleared if the Cleanup step *Device settings will be reset* for both iOS and Android is not selected in the default organization or group Cleanup Policy.
+At the start of a Network Payload Capture (NPC)–enabled session, the system sets a custom HTTP proxy on the device. This proxy is not cleared if:
+
+* the _No Cleanup_ policy is the default organization or team Cleanup Policy,
+* or the Mac mini host has Cleanup disabled in the `dc.ini` configuration file (`HealthService.EnableCleanup=false`).
 
 If the NPC proxy is configured incorrectly or the proxy is turned off, the device will lose internet connectivity. NPC proxy configurations also block updates from Apple and Google servers and prevent provisioning profile verification from Apple servers due to certificate pinning.
 
@@ -6,7 +9,9 @@ Methods to clear custom proxy settings and restore connectivity:
 
 * Use a Cleanup Policy:
 
-** Enable a Cleanup policy that has *Device settings will be reset* selected.
+** Ensure that in the `dc.ini` file of the Mac mini host, `HealthService.EnableCleanup` is `true`. xref:device-lab-management:deviceConnect/restart-deviceconnect-services.adoc[Restart deviceConnect services] to apply changes.
+
+** Set any custom Cleanup Policy or the Thorough Cleanup Policy as the default for the organization and/or team.
 
 ** Launch an NPC-enabled session on the device.
 
