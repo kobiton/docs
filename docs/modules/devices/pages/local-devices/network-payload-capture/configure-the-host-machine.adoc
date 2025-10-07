@@ -118,10 +118,11 @@ Access the Mac mini host.
 [#_check_for_an_existing_ssh_key]
 ==== Check for an existing SSH key
 
-In the terminal, open the `.ssh` directory and list its contents.
+In the terminal, ensure the `.ssh` directory exists, then list its contents.
 
 [source,shell]
 ----
+mkdir -p ~/.ssh
 cd ~/.ssh && ls -a
 ----
 
