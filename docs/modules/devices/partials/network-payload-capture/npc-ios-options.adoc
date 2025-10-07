@@ -1,0 +1,70 @@
+== Select an option to set up iOS devices for NPC
+
+Network payload traffic from iOS devices is captured by a proxy server. For secure (SSL) traffic, the proxy server’s certificate must be trusted by the devices. On iOS devices, you can establish trust using one of the following options:
+
+=== Option 1 (default): Supervise devices to install the certificate automatically
+
+This option is recommended for organizations that want an automated solution to import and trust the proxy server certificate. To use this option, the following requirements must be met:
+
+* A single supervision identity exported into two files: `organization.crt` and `organization.der`. Copy both files to the Mac mini host at `/usr/local/deviceconnect`.
+
+* Supervise iOS devices either:
+
+** Automatically through Automated Device Enrollment (requires Apple School Manager or Apple Business Manager).
+
+** Manually using Apple Configurator.
+
+* Ensure all devices connected to one Mac mini host are supervised by the same supervision identity. If devices are supervised with an identity that doesn’t match the `organization.crt` and `organization.der` files on the Mac mini host, NPC can’t be enabled on those devices.
+
+* If you supervise devices using Apple Configurator, you must use a Mac that isn’t running Kobiton software (including deviceConnect or deviceShare).
+
+=== Option 2: Manually import and trust the certificate
+
+* This option is recommended for organizations that don’t want to supervise devices or that already supervise devices using multiple supervision identities. To use this option, the following requirements must be met:
+
+* Manually import the proxy server’s SSL certificate to the device and trust it.
+
+* Install and configure additional software on the Mac mini host:
+
+** Apple Configurator and its Automation Tools.
+
+** A trusted SSH connection to `localhost`.
+
+** Update the `dc.ini` file to use option 2.
+
+=== Comparison: Option 1 vs. Option 2
+
+[options="header", cols="1,1,1"]
+|===
+| Feature
+| Option 1: Supervised (default)
+| Option 2: Manual
+
+| Certificate deployment
+| Automatic
+| Manual, device by device
+
+| Recommended for
+| Organizations wanting automation
+| Organizations with multiple supervision identities or that don’t want supervision
+
+| Setup complexity
+| Higher (requires supervision setup)
+| Lower for small groups, but manual per device
+
+| Mac mini requirements
+| `organization.crt` and `organization.der` in `/usr/local/deviceconnect`
+| Apple Configurator, Automation Tools, SSH to localhost, `dc.ini` update
+
+| Device enrollment
+| Supervision required via either Automated Device Enrollment (automated) or Apple Configurator (manual)
+| No supervision required
+
+| NPC compatibility
+| Works only if all devices share the same supervision identity
+| Works even with multiple supervision identities
+|===
+
+
+
+
