@@ -297,21 +297,36 @@ a|`kobiton app run *[OPTIONS]* *<APP_IDENTIFIER>* [ARGS]...`
 `[OPTIONS]`: requires `-a <SESSION_TOKEN>` or `KOBITON_SESSION_TOKEN` environment variable
 a|
 [source]
-kobiton app run 
+.Command
+kobiton app run com.example.app
+
+[source]
+.Output
+PID 32124
 
 |Kill
 |Kill app on device
 a|`kobiton app kill *[OPTIONS]* *<IDENTITY>*`
 
 `[OPTIONS]`: requires `-a <SESSION_TOKEN>` or `KOBITON_SESSION_TOKEN` environment variable
-|
+a|
+[source]
+.Command
+kobiton app kill com.example.app
 
 |Install
 |Install app on device
 a|`kobiton app install *[OPTIONS]*`
 
 `[OPTIONS]`: requires `-s <SESSION_ID>`
-|
+a|
+[source]
+.Command
+kobiton app install -s 123 -n 651911
+
+[source]
+.Output
+Install app successfully
 
 |Uninstall
 |Uninstall app on device
@@ -319,7 +334,6 @@ a|`kobiton app uninstall *[OPTIONS]* *<APP_IDENTIFIER>*`
 
 `[OPTIONS]`: requires `-u <UDID>`
 
-This operation does not need a CLI session.
 |
 
 |Upload
