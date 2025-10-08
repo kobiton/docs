@@ -378,8 +378,14 @@ a|`kobiton session show *[OPTIONS]*`
 |Test
 
 |Run
-|
-|
+a|Run a native framework automation session (XCUITest, UIAutomator, Espresso). GameDriver is not supported.
+a|`kobiton test run *[OPTIONS]* --app *<APP>* --runner *<TEST_RUNNER>* *<FRAMEWORK>*`
+
+`[OPTIONS]`: different requirements based on framework:
+
+* Either `-u <UDID>` or `-d <DEVICE_NAME>` is required for any framework
+
+* Either `-t <TESTS>` or `--plan <TEST_PLAN>` is required for XCUITest
 |
 
 |===
