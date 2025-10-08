@@ -131,9 +131,80 @@ If the device list is returned without any error, then the CLI is set up and rea
 
 If there is any error, follow the troubleshooting section to resolve the issue.
 
-== (Optional) Add CLI to PATH and set permanent environment variables
+== (Optional) Add environment variables to shell initialization script
 
+[tabs]
+====
 
+macOS or Linux::
+
++
+
+--
+
+These commands can be added to the shell initialization script to set the variables each time a new shell instance is run.
+
+The location of the shell initialization script depends on the shell being used:
+
+* For Gnu Bash, the location can be `~/.bash_profile`.
+* For Zsh, the location can be `~/.zprofile` or `~/.zshrc`.
+* For TCSH, the location can be `~/.cshrc`.
+
+Check the documentation for the shell that you're using to be sure.
+
+You can also update the `PATH` environment variable to include the `kobiton` location.
+
+[source,bash]
+# Export authentication variables
+export KOBITON_PORTAL=<PORTAL_URL>
+export KOBITON_USER=<USERNAME>
+export KOBITON_API_KEY=<API_KEY>
+# Add kobiton executable path to PATH
+export PATH=$PATH:<PATH_TO_KOBITON>
+
+Exit the current shell instance, and launch a new one to apply the changes.
+
+--
+
+Windows - Command Prompt::
+
++
+--
+
+Run these commands to set the permanent environment variables for shell instances. You can also update the `PATH` environment variable to include the tool locations.
+
+[source,bash]
+# Run the below to export authentication variables
+setx KOBITON_PORTAL=<PORTAL_URL>
+setx KOBITON_USER=<USERNAME>
+setx KOBITON_API_KEY=<API_KEY>
+# Run the below to add kobiton executable path to PATH
+setx PATH "%PATH%;<PATH_TO_KOBITON>"
+
+Exit the current shell instance, and launch a new one to apply the changes.
+
+--
+
+Windows - PowerShell::
+
++
+
+--
+Run these commands to set the permanent environment variables for shell instances. You can also update the `PATH` environment variable to include the tool locations.
+
+[source]
+# Run the below to export authentication variables
+[System.Environment]::SetEnvironmentVariable("KOBITON_PORTAL","<PORTAL_URL>","User")
+[System.Environment]::SetEnvironmentVariable("KOBITON_USER","<USERNAME>","User")
+[System.Environment]::SetEnvironmentVariable("KOBITON_API_KEY","<API_KEY>","User")
+# Run the below to add kobiton executable path to PATH
+[System.Environment]::SetEnvironmentVariable("PATH",$env:PATH + ";<PATH_TO_KOBITON>","User")
+
+Exit the current shell instance, and launch a new one to apply the changes.
+
+--
+
+====
 
 == Using the CLI
 
@@ -144,7 +215,8 @@ All commands in this section assumes that:
 
 * The location of the `kobiton` executable has been added to `PATH`.
 
-* The environment variables for authentication have been set. All commands require authentication.
+* The environment variables for authentication have been set.
+
 ====
 
 === Create a session
