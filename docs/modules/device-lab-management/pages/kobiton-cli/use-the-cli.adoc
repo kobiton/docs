@@ -334,19 +334,45 @@ a|`kobiton app uninstall *[OPTIONS]* *<APP_IDENTIFIER>*`
 
 `[OPTIONS]`: requires `-u <UDID>`
 
-|
+a|
+[source]
+.Command
+kobiton app uninstall -u 3e4e7fe7 com.example.app
+
+[source]
+.Output
+The application is uninstalled successfully
 
 |Upload
 |Upload an app to the Kobiton App Repo
 a|`kobiton app upload [OPTIONS] *<PATH>* [APP_ID]`
-|
+a|
+[source]
+.Command
+kobiton app upload ./sample.apk
+
+[source]
+.Output
+Application uploaded.  Parsing status OK.
+App ID: 651911
+Version ID: 739431
 
 |Find
 |Find an app on the Kobiton App Repo using keyword
 a|`kobiton app find [OPTIONS] *<KEYWORD>*`
 
 Put <KEYWORD> between double quotes for space or special character.
-|
+a|
+[source]
+.Command
+kobiton app find "example app"
+
+[source]
+.Output
+Name: Example App
+Version: 4.1.1
+App ID: 651911
+Version ID: 739431
 
 .3+|File
 
@@ -366,7 +392,19 @@ a|`kobiton file push *[OPTIONS]* *<LOCAL_PATH>* <REMOTE_PATH>`
 `[OPTIONS]`: requires `-a <SESSION_TOKEN>` or `KOBITON_SESSION_TOKEN` environment variable
 
 If `[REMOTE_PATH]` is empty, the home location is used.
-|
+a|
+[source]
+.Push file to Android
+file push foo.dat /data/local/tmp/foo.dat
+
+[source]
+.Push file to iOS
+file push foo.dat @com.example.app:./Documents/foo.dat
+
+[source]
+.Output
+Pushed 505031 bytes to /data/local/tmp/foo.dat
+
 
 |Pull
 |Pull a file from the specified path on the device
