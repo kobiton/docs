@@ -12,7 +12,7 @@ Learn how to use the Command Line Interface (CLI) to control and operate your pr
 ** Linux - x64
 ** Windows - x64
 
-== Set up the CLI
+== Setup and authentication
 
 [tabs]
 
@@ -31,7 +31,7 @@ Extract the download package into the `kobiton` executable file.
 [source,bash]
 tar -zxvf kobiton-cli.<platform>.<version>.tgz
 
-Export the following environment variables using the command `export <VARIABLE_NAME>=<VALUE>`
+Export the following environment variables for authentication using the command `export <VARIABLE_NAME>=<VALUE>`
 
 * `KOBITON_PORTAL`: the API URL of the Kobiton Portal.
 ** Cloud/Hybrid: use `\https://api.kobiton.com`
@@ -71,7 +71,7 @@ Right-click the `kobiton-cli.win-x64.<version>.zip` package and select *Extract 
 
 Open *Powershell*, then navigate to the location of the `kobiton.exe` file.
 
-Export the following environment variables using the command `$env:<VARIABLE_NAME>="<VALUE>"` in Powershell.
+Export the following environment variables for authentication using the command `$env:<VARIABLE_NAME>="<VALUE>"` in Powershell.
 
 * `KOBITON_PORTAL`: the API URL of the Kobiton Portal.
 ** Cloud/Hybrid: use `\https://api.kobiton.com`
@@ -138,7 +138,14 @@ If there is any error, follow the troubleshooting section to resolve the issue.
 == Using the CLI
 
 [NOTE]
-All commands in this section assumes that location of the `kobiton` executable has been added to `PATH`.
+====
+
+All commands in this section assumes that:
+
+* The location of the `kobiton` executable has been added to `PATH`.
+
+* The environment variables for authentication have been set. All commands require authentication.
+====
 
 === Create a session
 
@@ -193,7 +200,7 @@ set KOBITON_SESSION_TOKEN=<TOKEN>
 --
 ====
 
-Depending on the command, either `SESSION_ID` or `KOBITON_SESSION_TOKEN` is required. Some commands do not require either of them. See the next section for the list of commands and their basic usage.
+For commands that need to be run within a CLI session, either `SESSION_ID` or `KOBITON_SESSION_TOKEN` is required. See the next section for the list of commands and their basic usage.
 
 === List of commands
 
@@ -215,15 +222,16 @@ Required parameters are marked *bold* in syntax. In the example below, `<KEYWORD
 |Run app on device
 a|`kobiton app run *[OPTIONS]* *<APP_IDENTIFIER>* [ARGS]...`
 
-`[OPTIONS]`: requires `-a <KOBITON_SESSION_TOKEN>`
-
-|
+`[OPTIONS]`: requires `-a <SESSION_TOKEN>` or `KOBITON_SESSION_TOKEN` environment variable
+a|
+[source]
+kobiton app run 
 
 |Kill
 |Kill app on device
 a|`kobiton app kill *[OPTIONS]* *<IDENTITY>*`
 
-`[OPTIONS]`: requires `-a <KOBITON_SESSION_TOKEN>`
+`[OPTIONS]`: requires `-a <SESSION_TOKEN>` or `KOBITON_SESSION_TOKEN` environment variable
 |
 
 |Install
@@ -260,7 +268,7 @@ Put <KEYWORD> between double quotes for space or special character.
 |List file on the specified path of the device
 a|`kobiton file list *[OPTIONS]* [PATH]`
 
-`[OPTIONS]`: requires `-a <KOBITON_SESSION_TOKEN>`
+`[OPTIONS]`: requires `-a <SESSION_TOKEN>` or `KOBITON_SESSION_TOKEN` environment variable
 
 If `[PATH]` is empty, the home location is used.
 |
@@ -269,7 +277,7 @@ If `[PATH]` is empty, the home location is used.
 |Push a file to the specified path on the device
 a|`kobiton file push *[OPTIONS]* *<LOCAL_PATH>* <REMOTE_PATH>`
 
-`[OPTIONS]`: requires `-a <KOBITON_SESSION_TOKEN>`
+`[OPTIONS]`: requires `-a <SESSION_TOKEN>` or `KOBITON_SESSION_TOKEN` environment variable
 
 If `[REMOTE_PATH]` is empty, the home location is used.
 |
@@ -278,7 +286,7 @@ If `[REMOTE_PATH]` is empty, the home location is used.
 |Pull a file from the specified path on the device
 a|`kobiton file pull *[OPTIONS]* *<REMOTE_PATH>* [LOCAL_PATH]`
 
-`[OPTIONS]`: requires `-a <KOBITON_SESSION_TOKEN>`
+`[OPTIONS]`: requires `-a <SESSION_TOKEN>` or `KOBITON_SESSION_TOKEN` environment variable
 
 If `[LOCAL_PATH]` is empty, the current location is used.
 |
@@ -302,7 +310,7 @@ Highly recommended to use:
 |Run ADB shell command on Android device
 a|`kobiton device adb-shell *[OPTIONS]* [ARGS]...`
 
-`[OPTIONS]`: requires `-a <KOBITON_SESSION_TOKEN>`
+`[OPTIONS]`: requires `-a <SESSION_TOKEN>` or `KOBITON_SESSION_TOKEN` environment variable
 
 If `[ARGS]...` is not provided, launch an interactive adb shell.
 
@@ -312,7 +320,7 @@ If `[ARGS]...` is not provided, launch an interactive adb shell.
 |Forward a port on the device to a port on the local machine
 a|`kobiton device forward *[OPTIONS]* *<LOCAL_ADDRESS>* *<REMOTE_ADDRESS>*`
 
-`[OPTIONS]`: requires `-a <KOBITON_SESSION_TOKEN>`
+`[OPTIONS]`: requires `-a <SESSION_TOKEN>` or `KOBITON_SESSION_TOKEN` environment variable
 
 `<LOCAL_ADDRESS>` and `REMOTE_ADDRESS` must follows `tcp:<port>` format
 |
@@ -321,7 +329,7 @@ a|`kobiton device forward *[OPTIONS]* *<LOCAL_ADDRESS>* *<REMOTE_ADDRESS>*`
 |View running processes on the device
 a|`kobiton device ps *[OPTIONS]*`
 
-`[OPTIONS]`: requires `-a <KOBITON_SESSION_TOKEN>`
+`[OPTIONS]`: requires `-a <SESSION_TOKEN>` or `KOBITON_SESSION_TOKEN` environment variable
 |
 
 .7+| Session
