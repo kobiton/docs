@@ -197,24 +197,14 @@ Depending on the command, either `SESSION_ID` or `KOBITON_SESSION_TOKEN` is requ
 
 === List of commands
 
-kobiton app run/kill/install/uninstall/upload/find
-App operations: install/uninstall, run/kill app on device, or find/upload app on App Repo.
-
-kobiton file list/push/pull
-File operations: list file on device, push/pull file to/from device.
-
-kobiton device list/adb-shell/forward/ps
-Device operations: list devices, run adb shell (Android), port forward, list process.
-
-kobiton session create/end/terminate/delete/ping/list-active/show
-Session operations: create, end, terminate, delete, ping (to keep alive), list active sessions, show details.
-
-kobiton test run
-Run test on device.
-
 [NOTE]
-Required paramaters are marked bold in syntax.
+====
 
+Required parameters are marked *bold* in syntax. In the example below, `<KEYWORD>` is required, but `[OPTIONS]` is optional:
+
+`kobiton app find [OPTIONS] *<KEYWORD>*`
+
+====
 [cols="1,1,3,4,4"]
 |===
 |Category|Operation|Description|Syntax|Example
@@ -222,38 +212,172 @@ Required paramaters are marked bold in syntax.
 .6+|App
 
 |Run
-
 |Run app on device
-
 a|`kobiton app run *[OPTIONS]* *<APP_IDENTIFIER>* [ARGS]...`
 
-`[OPTIONS]`: requires `-s <SESSION_ID>`
+`[OPTIONS]`: requires `-a <KOBITON_SESSION_TOKEN>`
 
 |
 
 |Kill
 |Kill app on device
-a|`kobiton app kill *[OPTIONS]* *<APP_IDENTIFIER>* [ARGS]...`
+a|`kobiton app kill *[OPTIONS]* *<IDENTITY>*`
+
+`[OPTIONS]`: requires `-a <KOBITON_SESSION_TOKEN>`
+|
+
+|Install
+|Install app on device
+a|`kobiton app install *[OPTIONS]*`
 
 `[OPTIONS]`: requires `-s <SESSION_ID>`
 |
 
-|Install
-|
-|
-|
-
 |Uninstall
-|
-|
+|Uninstall app on device
+a|`kobiton app uninstall *[OPTIONS]* *<APP_IDENTIFIER>*`
+
+`[OPTIONS]`: requires `-u <UDID>`
+
+This operation does not need a CLI session.
 |
 
 |Upload
-|
-|
+|Upload an app to the Kobiton App Repo
+a|`kobiton app upload [OPTIONS] *<PATH>* [APP_ID]`
 |
 
 |Find
+|Find an app on the Kobiton App Repo using keyword
+a|`kobiton app find [OPTIONS] *<KEYWORD>*`
+
+Put <KEYWORD> between double quotes for space or special character.
+|
+
+.3+|File
+
+|List
+|List file on the specified path of the device
+a|`kobiton file list *[OPTIONS]* [PATH]`
+
+`[OPTIONS]`: requires `-a <KOBITON_SESSION_TOKEN>`
+
+If `[PATH]` is empty, the home location is used.
+|
+
+|Push
+|Push a file to the specified path on the device
+a|`kobiton file push *[OPTIONS]* *<LOCAL_PATH>* <REMOTE_PATH>`
+
+`[OPTIONS]`: requires `-a <KOBITON_SESSION_TOKEN>`
+
+If `[REMOTE_PATH]` is empty, the home location is used.
+|
+
+|Pull
+|Pull a file from the specified path on the device
+a|`kobiton file pull *[OPTIONS]* *<REMOTE_PATH>* [LOCAL_PATH]`
+
+`[OPTIONS]`: requires `-a <KOBITON_SESSION_TOKEN>`
+
+If `[LOCAL_PATH]` is empty, the current location is used.
+|
+
+.4+|Device
+
+|List
+|List devices
+a|`kobiton device list [OPTIONS]`
+
+Highly recommended to use:
+
+* `--private`: filter only private devices.
+
+* `--booked false`: filter only devices not in use.
+
+* `--reserved false`: filter only devices not retained.
+|
+
+|ADB shell
+|Run ADB shell command on Android device
+a|`kobiton device adb-shell *[OPTIONS]* [ARGS]...`
+
+`[OPTIONS]`: requires `-a <KOBITON_SESSION_TOKEN>`
+
+If `[ARGS]...` is not provided, launch an interactive adb shell.
+
+|
+
+|Forward
+|Forward a port on the device to a port on the local machine
+a|`kobiton device forward *[OPTIONS]* *<LOCAL_ADDRESS>* *<REMOTE_ADDRESS>*`
+
+`[OPTIONS]`: requires `-a <KOBITON_SESSION_TOKEN>`
+
+`<LOCAL_ADDRESS>` and `REMOTE_ADDRESS` must follows `tcp:<port>` format
+|
+
+|PS
+|View running processes on the device
+a|`kobiton device ps *[OPTIONS]*`
+
+`[OPTIONS]`: requires `-a <KOBITON_SESSION_TOKEN>`
+|
+
+.7+| Session
+
+|Create
+|Create a CLI session
+a|`kobiton session create *[OPTIONS]*`
+
+`[OPTIONS]`: requires `-u <UDID>`
+
+Use `-t` to set session timeout in minutes. Default/minimum is `10` and maximum is `120`.
+|
+
+|End
+|End an active session (all types)
+a|`kobiton session end *[OPTIONS]*`
+
+`[OPTIONS]`: requires `-s <SESSION_ID>`
+|
+
+|Terminate
+|Terminate a non-responsive session (all types)
+a|`kobiton session terminate *[OPTIONS]*`
+
+`[OPTIONS]`: requires `-s <SESSION_ID>`
+|
+
+|Delete
+|Delete and remove a completed CLI session from the Session list
+a|`kobiton session delete *[OPTIONS]*`
+
+`[OPTIONS]`: requires `-s <SESSION_ID>`
+|
+
+|Ping
+|Ping an active CLI session to reset the timeout counter
+a|`kobiton session ping *[OPTIONS]*`
+
+`[OPTIONS]`: requires `-s <SESSION_ID>`
+|
+
+|List active
+|List active sessions (all types)
+a|`kobiton session list-active [OPTIONS]`
+|
+
+|Show
+|Show details of a session (all types)
+a|`kobiton session show *[OPTIONS]*`
+
+`[OPTIONS]`: requires `-s <SESSION_ID>`
+|
+
+|Test
+
+|Run
 |
 |
 |
