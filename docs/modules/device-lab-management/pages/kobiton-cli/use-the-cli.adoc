@@ -1,0 +1,735 @@
+= Use the Command Line Interface
+:navtitle: Use the CLI
+
+Learn how to use the Command Line Interface (CLI) to control and operate your private device lab.
+
+== Before the user start
+
+* Obtain the username and API key from a Kobiton Enterprise account.
+* Ensure private devices are available in the Kobiton Portal.
+* Contact Kobiton Support for the link to download the CLI package. The package is available for the below platforms:
+** macOS - ARM64 (for Macs with Apple silicon)
+** Linux - x64
+** Windows - x64
+
+== Setup and authentication
+
+[tabs]
+
+====
+
+macOS or Linux::
++
+--
+
+Open a terminal window on the machine.
+
+Navigate to the directory of the downloaded CLI package.
+
+Extract the downloaded package to create the `kobiton` executable file.
+
+[source,bash]
+tar -zxvf kobiton-cli.<platform>.<version>.tgz
+
+Export the following environment variables for authentication using the command `export <VARIABLE_NAME>=<VALUE>`
+
+* `KOBITON_PORTAL`: the API URL of the Kobiton Portal.
+** Cloud/Hybrid: use `\https://api.kobiton.com`
+** Cloud/Hybrid with custom domain: use `\https://api-<custom-domain>.com`. *Example*: `\https://api-acme-prodv2.com`
+** Standalone: user `https://<Dell-IP-or-domain>:3000`, where <Dell-IP-or-domain> is the IP address or domain of the Dell server where the Portal is accessible.
+* `KOBITON_USER`: the Kobiton username.
+* `KOBITON_API_KEY`: the Kobiton API Key.
+
+[source,bash]
+.Examples
+# Use one of the below based on the deployment type
+export KOBITON_PORTAL=https://api.kobiton.com # Cloud/Hybrid
+export KOBITON_PORTAL=https://api-acme-prodv2.kobiton.com # Cloud/Hybrid with custom domain
+export KOBITON_PORTAL=https://acme.kobiton.local:3000 # Standalone
+# Obtain the below from the Profile and Settings page of the Kobiton Portal
+export KOBITON_USER=johndoe
+export KOBITON_API_KEY=be99***0-c*df-4224-aed6-907****92d0
+
+[TIP]
+=====
+Put the export commands for the above variables in a `.env` file, then run `source <env-filename>` to export all variables.
+
+[source,bash]
+.Example
+# The below assumes that all required export variables command are in the file variables.env
+source variables.env
+=====
+--
+
+Windows::
++
+--
+
+Open the location of the downloaded CLI package in File Explorer.
+
+Right-click the `kobiton-cli.win-x64.<version>.zip` package and select *Extract All...*, then choose *Extract*. This results in a folder with the file `kobiton.exe`.
+
+Open *Powershell*, then navigate to the location of the `kobiton.exe` file.
+
+Export the following environment variables for authentication using the command `$env:<VARIABLE_NAME>="<VALUE>"` in Powershell.
+
+* `KOBITON_PORTAL`: the API URL of the Kobiton Portal.
+** Cloud/Hybrid: use `\https://api.kobiton.com`
+** Cloud/Hybrid with custom domain: use `\https://api-<custom-domain>.com`. *Example*: `\https://api-acme-prodv2.com`
+** Standalone: user `https://<Dell-IP-or-domain>:3000`, where <Dell-IP-or-domain> is the IP address or domain of the Dell server where the Portal is accessible.
+* `KOBITON_USER`: the Kobiton username.
+* `KOBITON_API_KEY`: the Kobiton API Key.
+
+[source,bash]
+.Cloud/Hybrid
+# Use one of the below based on the deployment type
+$env:KOBITON_PORTAL = "https://api.kobiton.com" # Cloud/Hybrid
+$env:KOBITON_PORTAL = "https://api-acme-prodv2.kobiton.com" # Cloud/Hybrid with custom domain
+$env:KOBITON_PORTAL = "https://acme.kobiton.local:3000" # Standalone
+# Obtain the below from the Profile and Settings page of the Kobiton Portal
+$env:KOBITON_USER = "johndoe"
+$env:KOBITON_API_KEY = "be99***0-c*df-4224-aed6-907****92d0"
+
+[NOTE]
+=====
+For *Command Prompt* (cmd.exe), use the below command instead to set environment variables:
+[source,bash]
+set KOBITON_PORTAL=https://api.kobiton.com
+set KOBITON_USER=johndoe
+set KOBITON_API_KEY=be99***0-c*df-4224-aed6-907****92d0
+=====
+
+--
+====
+
+After the CLI has been set up for the appropriate platform, run the below command from the same location as the `kobiton` file to check if the variables are valid and the CLI is working:
+
+[tabs]
+
+====
+
+macOS, Linux, Windows - Powershell::
++
+--
+
+[source]
+----
+./kobiton device list --private
+----
+
+--
+
+Windows - Command Prompt::
++
+--
+[source]
+kobiton device list --private
+--
+====
+
+If the device list is returned without any error, then the CLI is set up and ready for use.
+
+If there is any error, follow the troubleshooting section to resolve the issue.
+
+== (optional) add environment variables to shell initialization script
+
+[tabs]
+====
+
+macOS or Linux::
+
++
+
+--
+
+These commands can be added to the shell initialization script to set the variables each time a new shell instance is run.
+
+The location of the shell initialization script depends on the shell being used:
+
+* For Gnu Bash, the location can be `~/.bash_profile`.
+* For Zsh, the location can be `~/.zprofile` or `~/.zshrc`.
+* For TCSH, the location can be `~/.cshrc`.
+
+Check the documentation for the shell in use to be sure.
+
+It is possible to also update the `PATH` environment variable to include the `kobiton` location.
+
+[source,bash]
+# Export authentication variables
+export KOBITON_PORTAL=<PORTAL_URL>
+export KOBITON_USER=<USERNAME>
+export KOBITON_API_KEY=<API_KEY>
+# Add kobiton executable path to PATH
+export PATH=$PATH:<PATH_TO_KOBITON>
+
+Exit the current shell instance, and launch a new one to apply the changes.
+
+--
+
+Windows - Command Prompt::
+
++
+--
+
+Run these commands to set the permanent environment variables for shell instances. It is possible to also update the `PATH` environment variable to include the tool locations.
+
+[source,bash]
+# Run the below to export authentication variables
+setx KOBITON_PORTAL=<PORTAL_URL>
+setx KOBITON_USER=<USERNAME>
+setx KOBITON_API_KEY=<API_KEY>
+# Run the below to add kobiton executable path to PATH
+setx PATH "%PATH%;<PATH_TO_KOBITON>"
+
+Exit the current shell instance, and launch a new one to apply the changes.
+
+--
+
+Windows - PowerShell::
+
++
+
+--
+Run these commands to set the permanent environment variables for shell instances. It is possible to also update the `PATH` environment variable to include the tool locations.
+
+[source]
+# Run the below to export authentication variables
+[System.Environment]::SetEnvironmentVariable("KOBITON_PORTAL","<PORTAL_URL>","User")
+[System.Environment]::SetEnvironmentVariable("KOBITON_USER","<USERNAME>","User")
+[System.Environment]::SetEnvironmentVariable("KOBITON_API_KEY","<API_KEY>","User")
+# Run the below to add kobiton executable path to PATH
+[System.Environment]::SetEnvironmentVariable("PATH",$env:PATH + ";<PATH_TO_KOBITON>","User")
+
+Exit the current shell instance, and launch a new one to apply the changes.
+
+--
+
+====
+
+== Using the cli
+
+[NOTE]
+====
+
+All commands in this section assumes that:
+
+* The location of the `kobiton` executable has been added to `PATH`.
+
+* The environment variables for authentication have been set.
+
+====
+
+=== Create a session
+
+Most of the functionalities of the CLI requires a CLI session. To create a session:
+
+Find a private device that is available (not in use or retained by other users):
+
+[source]
+kobiton device list --booked false --reserved false --private
+
+Note down the UDID of the device to use.
+
+Create a session on the device:
+
+[source]
+.Example
+kobiton session create -u <UDID>
+
+[source]
+.Output
+Session <SESSION_ID> created for device <UDID>.
+Session token <TOKEN>
+
+Note down the `SESSION_ID` for later user.
+
+Export the `TOKEN` to the `KOBITON_SESSION_TOKEN` environment variable for later use
+
+[tabs]
+====
+
+macOS and Linux::
++
+--
+
+[source]
+export KOBITON_SESSION_TOKEN=<TOKEN>
+
+--
+
+Windows - Powershell::
++
+--
+[source]
+$env:KOBITON_SESSION_TOKEN="<TOKEN>"
+--
+
+Windows - Command Prompt::
++
+--
+[source]
+set KOBITON_SESSION_TOKEN=<TOKEN>
+--
+====
+
+For commands that need to be run within a CLI session, either `SESSION_ID` or `KOBITON_SESSION_TOKEN` is required. See the next section for the list of commands and their basic usage.
+
+=== List of commands
+
+[NOTE]
+====
+
+Required parameters are marked *bold* in syntax. In the example below, `<KEYWORD>` is required, but `[OPTIONS]` is optional:
+
+`kobiton app find [OPTIONS] *<KEYWORD>*`
+
+====
+[cols="1,1,2,4,4"]
+|===
+|Category|Operation|Description|Syntax|Example
+
+.6+|App
+
+|Run
+|Run app on device
+a|`kobiton app run *[OPTIONS]* *<APP_IDENTIFIER>* [ARGS]...`
+
+`[OPTIONS]`: requires `-a <SESSION_TOKEN>` or `KOBITON_SESSION_TOKEN` environment variable
+a|
+[source]
+.Command
+kobiton app run com.example.app
+
+[source]
+.Output
+PID 32124
+
+|Kill
+|Kill app on device
+a|`kobiton app kill *[OPTIONS]* *<IDENTITY>*`
+
+`[OPTIONS]`: requires `-a <SESSION_TOKEN>` or `KOBITON_SESSION_TOKEN` environment variable
+a|
+[source]
+.Command
+kobiton app kill com.example.app
+
+|Install
+|Install app on device
+a|`kobiton app install *[OPTIONS]*`
+
+`[OPTIONS]`: requires `-s <SESSION_ID>`
+a|
+[source]
+.Command
+kobiton app install -s 123 -n 651911
+
+[source]
+.Output
+Install app successfully
+
+|Uninstall
+|Uninstall app on device
+a|`kobiton app uninstall *[OPTIONS]* *<APP_IDENTIFIER>*`
+
+`[OPTIONS]`: requires `-u <UDID>`
+
+a|
+[source]
+.Command
+kobiton app uninstall -u 3e4e7fe7 com.example.app
+
+[source]
+.Output
+The application is uninstalled successfully
+
+|Upload
+|Upload an app to the Kobiton App Repo
+a|`kobiton app upload [OPTIONS] *<PATH>* [APP_ID]`
+a|
+[source]
+.Command
+kobiton app upload ./sample.apk
+
+[source]
+.Output
+Application uploaded.  Parsing status OK.
+App ID: 651911
+Version ID: 739431
+
+|Find
+|Find an app on the Kobiton App Repo using keyword
+a|`kobiton app find [OPTIONS] *<KEYWORD>*`
+
+Put <KEYWORD> between double quotes for space or special character.
+a|
+[source]
+.Command
+kobiton app find "example app"
+
+[source]
+.Output
+Name: Example App
+Version: 4.1.1
+App ID: 651911
+Version ID: 739431
+
+.3+|File
+
+|List
+|List file on the specified path of the device
+a|`kobiton file list *[OPTIONS]* [PATH]`
+
+`[OPTIONS]`: requires `-a <SESSION_TOKEN>` or `KOBITON_SESSION_TOKEN` environment variable
+
+If `[PATH]` is empty, the home location is used.
+a|
+[source]
+.List file on Android
+kobiton file list /data/local/tmp
+
+[source]
+.Push file to iOS
+kobiton file list @com.example.app:./Documents/
+
+[source]
+.Output
+sampleFolder
+sampleFile1.tmp
+
+|Push
+|Push a file to the specified path on the device
+a|`kobiton file push *[OPTIONS]* *<LOCAL_PATH>* <REMOTE_PATH>`
+
+`[OPTIONS]`: requires `-a <SESSION_TOKEN>` or `KOBITON_SESSION_TOKEN` environment variable
+
+If `[REMOTE_PATH]` is empty, the home location is used.
+a|
+[source]
+.Push file to Android
+kobiton file push foo.dat /data/local/tmp/foo.dat
+
+[source]
+.Push file to iOS
+kobiton file push foo.dat @com.example.app:./Documents/foo.dat
+
+[source]
+.Output
+Pushed 505031 bytes to /data/local/tmp/foo.dat
+
+
+|Pull
+|Pull a file from the specified path on the device
+a|`kobiton file pull *[OPTIONS]* *<REMOTE_PATH>* [LOCAL_PATH]`
+
+`[OPTIONS]`: requires `-a <SESSION_TOKEN>` or `KOBITON_SESSION_TOKEN` environment variable
+
+If `[LOCAL_PATH]` is empty, the current location is used.
+a|
+[source]
+.Pull file from Android
+kobiton file pull /data/local/tmp/foo.dat foo.dat
+
+[source]
+.Push file to iOS
+kobiton file pull @com.example.app:./Documents/foo.dat foo.dat
+
+[source]
+.Output
+Pulled 505031 bytes to foo.dat
+
+.4+|Device
+
+|List
+|List devices
+a|`kobiton device list [OPTIONS]`
+
+Highly recommended to use:
+
+* `--private`: filter only private devices.
+
+* `--booked false`: filter only devices not in use.
+
+* `--reserved false`: filter only devices not retained.
+
+a|
+[source]
+.Command
+kobiton device list --private --booked false --reserved false
+
+[source]
+.Output
+Display Name, UDID, Platform, List, Status, Host
+iPhone 12, 79de3c497b9f1****19040aeb44, iOS 18.1, Private, ACTIVATED, 192.168.50.86
+
+|ADB shell
+|Run ADB shell command on Android device
+a|`kobiton device adb-shell *[OPTIONS]* [ARGS]...`
+
+`[OPTIONS]`: requires `-a <SESSION_TOKEN>` or `KOBITON_SESSION_TOKEN` environment variable
+
+If `[ARGS]...` is not provided, launch an interactive adb shell.
+
+a|
+[source]
+.Command
+kobiton device adb-shell "dumpsys window displays \| grep -E 'mCurrentFocus\|mFocusedApp'"
+
+[source]
+.Output
+mCurrentFocus=Window{272f9b1 u0 com.example.app/com.example.app.MainActivity}
+mFocusedApp=ActivityRecord{3d12396 u0 com.example.app/.MainActivity t2823}
+
+
+|Forward
+|Forward a port on the device to a port on the local machine
+a|`kobiton device forward *[OPTIONS]* *<LOCAL_ADDRESS>* *<REMOTE_ADDRESS>*`
+
+`[OPTIONS]`: requires `-a <SESSION_TOKEN>` or `KOBITON_SESSION_TOKEN` environment variable
+
+`<LOCAL_ADDRESS>` and `REMOTE_ADDRESS` must follows `tcp:<port>` format
+a|
+[source]
+.Command
+kobiton device forward tcp:8080 tcp:80
+
+[source]
+.Output
+Listening on 127.0.0.1:8080.
+
+|PS
+|View running processes on the device
+a|`kobiton device ps *[OPTIONS]*`
+
+`[OPTIONS]`: requires `-a <SESSION_TOKEN>` or `KOBITON_SESSION_TOKEN` environment variable
+a|
+[source]
+.Command
+kobiton device ps
+
+[source]
+.Output
+PID NAME
+ 1 init
+ 2 [kthreadd]
+ 3 [rcu_gp]
+ 5 [kworker/0:0H]
+
+.7+| Session
+
+|Create
+|Create a CLI session
+a|`kobiton session create *[OPTIONS]*`
+
+`[OPTIONS]`: requires `-u <UDID>`
+
+Use `-t` to set session timeout in minutes. Default/minimum is `10` and maximum is `120`.
+a|
+[source]
+.Command
+kobiton session create -u 3e4e7fe7
+
+[source]
+.Output
+Session 8155111 created for device 3e4e7fe7.
+Session token eyJhbGciOiJ...
+
+|End
+|End an active session (all types)
+a|`kobiton session end *[OPTIONS]*`
+
+`[OPTIONS]`: requires `-s <SESSION_ID>`
+a|
+[source]
+.Command
+kobiton session end -s 8155111
+
+[source]
+.Output
+Session 8155111 ended.
+
+|Terminate
+|Terminate a non-responsive session (all types)
+a|`kobiton session terminate *[OPTIONS]*`
+
+`[OPTIONS]`: requires `-s <SESSION_ID>`
+a|
+[source]
+.Command
+kobiton session terminate -s 8155111
+
+[source]
+.Output
+Session 8155111 terminated.
+
+|Delete
+|Delete and remove a completed CLI session from the Session list
+a|`kobiton session delete *[OPTIONS]*`
+
+`[OPTIONS]`: requires `-s <SESSION_ID>`
+a|
+[source]
+.Command
+kobiton session delete -s 8155111
+
+[source]
+.Output
+OK
+
+|Ping
+|Ping an active CLI session to reset the timeout counter
+a|`kobiton session ping *[OPTIONS]*`
+
+`[OPTIONS]`: requires *both* of the below:
+
+* `-s <SESSION_ID>`
+* `-a <SESSION_TOKEN>` or `KOBITON_SESSION_TOKEN` environment variable
+a|
+[source]
+.Command
+export KOBITON_SESSION_TOKEN=<SESSION_TOKEN> # Skip if already imported
+kobiton session ping -s 8155111
+
+[source]
+.Output
+Session 8155111 pinged.
+
+|List active
+|List active sessions (all types)
+a|`kobiton session list-active [OPTIONS]`
+a|
+[source]
+.Command
+kobiton session list-active
+
+[source]
+Session 8155111, device 3e4e7fe7, status RUNNING, created 2025-10-09T03:38:03Z, ended active
+
+|Show
+|Show details of a session (all types)
+a|`kobiton session show *[OPTIONS]*`
+
+`[OPTIONS]`: requires `-s <SESSION_ID>`
+a|
+[source]
+.Command
+kobiton session show -s 8155111
+
+[source]
+.Output
+Session 8155111: Session created at 10/09/2025 04:13 AM
+Created: 2025-10-09T03:13:55.698Z
+Ended: 2025-10-09T03:31:26.973Z
+Device 3e4e7fe7: Android 11
+Status: COMPLETE
+
+|Test
+
+|Run
+a|Run a native framework automation session (XCUITest, UIAutomator/Espresso). GameDriver is not supported.
+a|`kobiton test run *[OPTIONS]* --app *<APP>* --runner *<TEST_RUNNER>* *<FRAMEWORK>*`
+
+`[OPTIONS]`: different requirements based on framework:
+
+* Either `-u <UDID>` or `-d <DEVICE_NAME>` is required for any framework.
+
+* Either `-t <TESTS>` or `--plan <TEST_PLAN>` is required for XCUITest.
+
+** <TEST_PLAN> must be a direct URL (`\https://example.com/download/sample.xctestplan`). Local path is not supported.
+
+`<APP>` and `<TEST_RUNNER>` must be either Kobiton App Repo ID (`kobiton-store:<APP_ID>` or `kobiton-store:v<APP_VERSION_ID>`) or direct URL (`\https://example.com/download/test.apk`). Local path is not supported.
+
+a|
+[source]
+.UIAutomator
+kobiton test run --app kobiton-store:662537 --runner kobiton-store:v762538 -u 3e4e7fe7 uiautomator
+
+[source]
+.Espresso (using UIAutomator framework)
+kobiton test run --app https://example.com/apps-test/espresso-app.apk --runner https://example.com/test-runners/esspresso-test-runner.apk -u 3e4e7fe7 uiautomator
+
+[source]
+.XCUITest
+kobiton test run --app https://example.com/apps-test/XCUITestSample.ipa --runner kobiton-store:v762548 --plan https://example.com/test-plans/sample.xctestplan -u 00008120-000E44D***28C01E xcuitest
+
+[source]
+.Output
+#UIAutomator/Espresso
+UIAUTOMATOR Session 8155157 started.
+#XCUITest
+XCUITEST Session 8155161 started.
+#XCUITest with --follow
+Session 8155172: XCUITEST test session
+Created: 2025-10-09T04:25:41.896Z
+Device 00008120-000E44D***28C01E: iOS 16.1
+Status: START
+Status: START
+Status: START
+Status: START
+Session 8155172: XCUITEST test session
+Created: 2025-10-09T04:25:43.769Z
+Ended: 2025-10-09T04:26:26.261Z
+Device 00008120-000E44D***28C01E: iOS 16.1
+Status: COMPLETE
+Test Suite:
+Tests: 2
+Failures: 0
+Errors: 0
+Skipped: 0
+Duration: 1.000
+Start Time: 2025-10-09T11:24:58
+End Time: 2025-10-09T11:24:59
+XCUITestSampleUITests#testABC [0.402] PASSED
+out: Start Test at 2025-10-09 11:24:58.275
+out: Set Up
+out: Tear Down
+XCUITestSampleUITests#testXYZ [0.324] PASSED
+out: Start Test at 2025-10-09 11:24:58.684
+out: Set Up
+out: Tear Down
+
+|===
+
+== Troubleshooting
+
+If the user ran into an error while running the CLI commands, try the below steps:
+
+* Double-check the command syntax and usage, It is possible to bring up the manual for each command by adding `-h` or `--help`. Examples:
+
+** `kobiton --help` or `kobiton -h`
+** `kobiton device --help` or `kobiton session -h`
+** `kobiton device list -h` or `kobiton session create -h`
+
+* If the error is not resolved, look up the error messages and their resolutions in the below table:
+
++
+
+|===
+|Message |Solution
+
+|`environment variable not found`
+|Export the environment variables for authentication.
+
+|`The credential the user entered was not authorized. Please double-check and try again.`
+|Double-check the Kobiton account's username and API Key.
+
+|`error sending request for url (/https://api.kobiton.com/v2/sessions): client error (Connect): dns error: failed to lookup address information: nodename nor servname provided, or not known`
+
+`504 Gateway Time-out`
+|Ensure the local machine can access the Cloud or Standalone Kobiton Portal
+
+|`This command requires a session ID (-s).`
+|Create a CLI session to get a `<SESSION_ID>`, then add `-s <SESSION_ID>` to the command.
+
+|`This command requires a --session-token or KOBITON_SESSION_TOKEN env.  See session create.`
+|Create a CLI session to get a `<SESSION_TOKEN>`, then add `-a <SESSION_TOKEN>` to the command or export the `KOBITON_SESSION_TOKEN` environment variable.
+
+|`Session not found or already ended`
+|The CLI session is not found or already completed. Create a new CLI session before running the command.
+
+|`Device --udid is required.`
+|Provide the UDID of the device using `-u <UDID>`
+
+|===
+
+
