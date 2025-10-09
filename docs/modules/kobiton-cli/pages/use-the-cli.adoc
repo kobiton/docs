@@ -9,7 +9,7 @@ Learn how to use Kobiton Command Line Interface to control and operate your priv
 
 * Ensure private devices are available in the Kobiton Portal. Public devices are not supported.
 
-== Create a session
+== Create a CLI session
 
 Open a terminal program on the computer.
 
@@ -63,6 +63,21 @@ set KOBITON_SESSION_TOKEN=<SESSION_TOKEN>
 ====
 
 Most CLI commands require either `SESSION_ID` or `KOBITON_SESSION_TOKEN`. See the next section for the list of commands and their basic usage.
+
+[NOTE]
+====
+
+* For CLI session:
+
+** No Session Explorer available.
+
+** No exhausts available: video, logs, screenshots, etc.
+
+** Mixed session between manual and CLI is not supported.
+
+** CLI session times out after 10 minutes by default (configurable to 2 hours maximum). Reset the timeout by the command `kobiton session ping`.
+
+====
 
 == List of commands
 
@@ -477,20 +492,6 @@ out: Set Up
 out: Tear Down
 
 |===
-
-== Important notes
-
-* Private or local devices only - Public devices not supported.
-
-* For CLI session:
-
-** No Session Explorer.
-
-** No exhausts: video, logs, screenshots, etc.
-
-** No mixed session between manual and CLI.
-
-** CLI session times out after 10 minutes by default (configurable to 2 hours maximum). Reset the timeout by the command `kobiton session ping`.
 
 [#_troubleshooting]
 == Troubleshooting
