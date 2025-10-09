@@ -689,3 +689,47 @@ out: Set Up
 out: Tear Down
 
 |===
+
+== Troubleshooting
+
+If you ran into an error while running the CLI commands, try the below steps:
+
+* Double-check the command syntax and usage, you can bring up the manual for each command by adding `-h` or `--help`. Examples:
+
+** `kobiton --help` or `kobiton -h`
+** `kobiton device --help` or `kobiton session -h`
+** `kobiton device list -h` or `kobiton session create -h`
+
+* If the error is not resolved, look up the error messages and their resolutions in the below table:
+
++
+
+|===
+|Message |Solution
+
+|`environment variable not found`
+|Export the environment variables for authentication.
+
+|`The credential you entered was not authorized. Please double-check and try again.`
+|Double-check the Kobiton account's username and API Key.
+
+|`error sending request for url (/https://api.kobiton.com/v2/sessions): client error (Connect): dns error: failed to lookup address information: nodename nor servname provided, or not known`
+
+`504 Gateway Time-out`
+|Ensure the local machine can access the Cloud or Standalone Kobiton Portal
+
+|`This command requires a session ID (-s).`
+|Create a CLI session to get a `<SESSION_ID>`, then add `-s <SESSION_ID>` to the command.
+
+|`This command requires a --session-token or KOBITON_SESSION_TOKEN env.  See session create.`
+|Create a CLI session to get a `<SESSION_TOKEN>`, then add `-a <SESSION_TOKEN>` to the command or export the `KOBITON_SESSION_TOKEN` environment variable.
+
+|`Session not found or already ended`
+|The CLI session is not found or already completed. Create a new CLI session before running the command.
+
+|`Device --udid is required.`
+|Provide the UDID of the device using `-u <UDID>`
+
+|===
+
+
