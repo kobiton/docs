@@ -3,11 +3,11 @@
 
 Learn how to use the Command Line Interface (CLI) to control and operate your private device lab.
 
-== Before you start
+== Before the user start
 
-* Obtain the username and API key from a Kobiton Enteprise account.
-* Have private devices available in the Kobiton Portal.
-* Contact Kobiton support for the link to download the CLI package. The package is available for the below platforms:
+* Obtain the username and API key from a Kobiton Enterprise account.
+* Ensure private devices are available in the Kobiton Portal.
+* Contact Kobiton Support for the link to download the CLI package. The package is available for the below platforms:
 ** macOS - ARM64 (for Macs with Apple silicon)
 ** Linux - x64
 ** Windows - x64
@@ -22,11 +22,11 @@ macOS or Linux::
 +
 --
 
-Open the terminal on the machine.
+Open a terminal window on the machine.
 
-Navigate to the path of the downloaded CLI package.
+Navigate to the directory of the downloaded CLI package.
 
-Extract the download package into the `kobiton` executable file.
+Extract the downloaded package to create the `kobiton` executable file.
 
 [source,bash]
 tar -zxvf kobiton-cli.<platform>.<version>.tgz
@@ -131,7 +131,7 @@ If the device list is returned without any error, then the CLI is set up and rea
 
 If there is any error, follow the troubleshooting section to resolve the issue.
 
-== (Optional) Add environment variables to shell initialization script
+== (optional) add environment variables to shell initialization script
 
 [tabs]
 ====
@@ -150,9 +150,9 @@ The location of the shell initialization script depends on the shell being used:
 * For Zsh, the location can be `~/.zprofile` or `~/.zshrc`.
 * For TCSH, the location can be `~/.cshrc`.
 
-Check the documentation for the shell that you're using to be sure.
+Check the documentation for the shell in use to be sure.
 
-You can also update the `PATH` environment variable to include the `kobiton` location.
+It is possible to also update the `PATH` environment variable to include the `kobiton` location.
 
 [source,bash]
 # Export authentication variables
@@ -171,7 +171,7 @@ Windows - Command Prompt::
 +
 --
 
-Run these commands to set the permanent environment variables for shell instances. You can also update the `PATH` environment variable to include the tool locations.
+Run these commands to set the permanent environment variables for shell instances. It is possible to also update the `PATH` environment variable to include the tool locations.
 
 [source,bash]
 # Run the below to export authentication variables
@@ -190,7 +190,7 @@ Windows - PowerShell::
 +
 
 --
-Run these commands to set the permanent environment variables for shell instances. You can also update the `PATH` environment variable to include the tool locations.
+Run these commands to set the permanent environment variables for shell instances. It is possible to also update the `PATH` environment variable to include the tool locations.
 
 [source]
 # Run the below to export authentication variables
@@ -206,7 +206,7 @@ Exit the current shell instance, and launch a new one to apply the changes.
 
 ====
 
-== Using the CLI
+== Using the cli
 
 [NOTE]
 ====
@@ -692,9 +692,9 @@ out: Tear Down
 
 == Troubleshooting
 
-If you ran into an error while running the CLI commands, try the below steps:
+If the user ran into an error while running the CLI commands, try the below steps:
 
-* Double-check the command syntax and usage, you can bring up the manual for each command by adding `-h` or `--help`. Examples:
+* Double-check the command syntax and usage, It is possible to bring up the manual for each command by adding `-h` or `--help`. Examples:
 
 ** `kobiton --help` or `kobiton -h`
 ** `kobiton device --help` or `kobiton session -h`
@@ -710,7 +710,7 @@ If you ran into an error while running the CLI commands, try the below steps:
 |`environment variable not found`
 |Export the environment variables for authentication.
 
-|`The credential you entered was not authorized. Please double-check and try again.`
+|`The credential the user entered was not authorized. Please double-check and try again.`
 |Double-check the Kobiton account's username and API Key.
 
 |`error sending request for url (/https://api.kobiton.com/v2/sessions): client error (Connect): dns error: failed to lookup address information: nodename nor servname provided, or not known`
