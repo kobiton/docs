@@ -177,11 +177,11 @@ Windows - Command Prompt::
 Run these commands to set the permanent environment variables for shell instances. You can also update the `PATH` variable to include the tool directories if needed.
 
 [source,bash]
-# Run the below to export authentication variables
+REM Run the below to export authentication variables
 setx KOBITON_PORTAL=<PORTAL_URL>
 setx KOBITON_USER=<USERNAME>
 setx KOBITON_API_KEY=<API_KEY>
-# Run the below to add kobiton executable path to PATH
+REM Run the below to add kobiton executable path to PATH
 setx PATH "%PATH%;<PATH_TO_KOBITON>"
 
 Exit the current shell instance, and launch a new one to apply the changes.
