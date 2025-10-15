@@ -1,13 +1,13 @@
 = Set up Kobiton Command Line Interface
 :navtitle: Set up Kobiton CLI
 
-Learn how to set up Kobiton Command Line Interface (CLI) to control and operate your private device lab.
+Learn how to set up Kobiton Command Line Interface (CLI).
 
 == Before you start
 
 * Obtain the xref:profile:manage-your-profile.adoc#_manage_your_profile[username,window=read-later] and xref:profile:manage-your-api-credentials.adoc#_get_an_api_key[API key,window=read-later] from a Kobiton Enterprise account.
 
-* Ensure private devices are available in the Kobiton Portal. Public devices are not supported.
+* Ensure Private or Local devices are available in the Kobiton Portal. Public devices are not supported.
 
 * Contact Kobiton Support for the link to download the CLI package. The package is available for the below platforms:
 
@@ -36,12 +36,12 @@ tar -zxvf kobiton-cli.<platform>.<version>.tgz
 
 Export the following environment variables for authentication using the command `export <VARIABLE_NAME>=<VALUE>`
 
-* `KOBITON_PORTAL`: the API URL of the Kobiton Portal.
+* `KOBITON_PORTAL`: the API URL of the Kobiton Portal
 ** Cloud/Hybrid: use `\https://api.kobiton.com`
 ** Cloud/Hybrid with custom domain: use `\https://api-<custom-domain>.kobiton.com`. *Example*: `\https://api-acme-prodv2.kobiton.com`
-** Standalone: use `https://<Dell-IP-or-domain>:3000`, where <Dell-IP-or-domain> is the IP address or domain of the Dell server where the Portal is accessible.
-* `KOBITON_USER`: the Kobiton username.
-* `KOBITON_API_KEY`: the Kobiton API Key.
+** Standalone: use `https://<Dell-IP-or-domain>:3000`, where <Dell-IP-or-domain> is the IP address or domain of the Dell server where the Portal is accessible
+* `KOBITON_USER`: the Kobiton username
+* `KOBITON_API_KEY`: the Kobiton API Key
 
 [source,bash]
 .Examples
@@ -59,7 +59,7 @@ Put the export commands for the above variables in a `.env` file, then run `sour
 
 [source,bash]
 .Example
-# The below assumes that all required export variables command are in the file variables.env
+# The below assumes that all required export variable commands are in the file variables.env
 source variables.env
 =====
 --
@@ -76,12 +76,12 @@ Open *Powershell*, then navigate to the location of the `kobiton.exe` file.
 
 Export the following environment variables for authentication using the command `$env:<VARIABLE_NAME>="<VALUE>"` in Powershell.
 
-* `KOBITON_PORTAL`: the API URL of the Kobiton Portal.
+* `KOBITON_PORTAL`: the API URL of the Kobiton Portal
 ** Cloud/Hybrid: use `\https://api.kobiton.com`
 ** Cloud/Hybrid with custom domain: use `\https://api-<custom-domain>.kobiton.com`. *Example*: `\https://api-acme-prodv2.kobiton.com`
-** Standalone: use `https://<Dell-IP-or-domain>:3000`, where <Dell-IP-or-domain> is the IP address or domain of the Dell server where the Portal is accessible.
-* `KOBITON_USER`: the Kobiton username.
-* `KOBITON_API_KEY`: the Kobiton API Key.
+** Standalone: use `https://<Dell-IP-or-domain>:3000`, where <Dell-IP-or-domain> is the IP address or domain of the Dell server where the Portal is accessible
+* `KOBITON_USER`: the Kobiton username
+* `KOBITON_API_KEY`: the Kobiton API Key
 
 [source,bash]
 .Cloud/Hybrid
@@ -174,7 +174,7 @@ Windows - Command Prompt::
 +
 --
 
-Run these commands to set the permanent environment variables for shell instances. It is possible to also update the `PATH` environment variable to include the tool locations.
+Run these commands to set the permanent environment variables for shell instances. You can also update the `PATH` variable to include the tool directories if needed.
 
 [source,bash]
 # Run the below to export authentication variables
@@ -193,7 +193,7 @@ Windows - PowerShell::
 +
 
 --
-Run these commands to set the permanent environment variables for shell instances. It is possible to also update the `PATH` environment variable to include the tool locations.
+Run these commands to set the permanent environment variables for shell instances. You can also update the `PATH` variable to include the tool directories if needed.
 
 [source]
 # Run the below to export authentication variables
