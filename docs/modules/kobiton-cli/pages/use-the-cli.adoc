@@ -90,373 +90,577 @@ Required parameters are marked *bold* in syntax. In the example below, `<KEYWORD
 
 ====
 
-|===
+=== `app run`
 
-|Category|Operation|Description|Syntax|Example
+Run app on device.
 
-.6+|App
+.Syntax
+----
+kobiton app run [OPTIONS] <APP_IDENTIFIER> [ARGS]...
+----
 
-|Run
-|Run app on device
-a|`kobiton app run *[OPTIONS]* *<APP_IDENTIFIER>* [ARGS]...`
-
+[NOTE]
+====
 `[OPTIONS]`: requires `-a <SESSION_TOKEN>` or `KOBITON_SESSION_TOKEN` environment variable
-a|
-[source]
-.Command
+====
+
+.Example
+[source,shell]
+----
 kobiton app run com.example.app
+----
 
-[source]
 .Output
+----
 PID 32124
+----
 
-|Kill
-|Kill app on device
-a|`kobiton app kill *[OPTIONS]* *<IDENTITY>*`
+=== `app kill`
 
+Kill app on device.
+
+.Syntax
+----
+kobiton app kill [OPTIONS] <IDENTITY>
+----
+
+[NOTE]
+====
 `[OPTIONS]`: requires `-a <SESSION_TOKEN>` or `KOBITON_SESSION_TOKEN` environment variable
-a|
-[source]
-.Command
+====
+
+.Example
+[source,shell]
+----
 kobiton app kill com.example.app
+----
 
-|Install
-|Install app on device
-a|`kobiton app install *[OPTIONS]*`
+=== `app install`
 
+Install app on device.
+
+.Syntax
+----
+kobiton app install [OPTIONS]
+----
+
+[NOTE]
+====
 `[OPTIONS]`: requires `-s <SESSION_ID>`
-a|
-[source]
-.Command
+====
+
+.Example
+[source,shell]
+----
 kobiton app install -s 123 -n 651911
+----
 
-[source]
 .Output
+----
 Install app successfully
+----
 
-|Uninstall
-|Uninstall app on device
-a|`kobiton app uninstall *[OPTIONS]* *<APP_IDENTIFIER>*`
+=== `app uninstall`
 
+Uninstall app on device.
+
+.Syntax
+----
+kobiton app uninstall [OPTIONS] <APP_IDENTIFIER>
+----
+
+[NOTE]
+====
 `[OPTIONS]`: requires `-u <UDID>`
+====
 
-a|
-[source]
-.Command
+.Example
+[source,shell]
+----
 kobiton app uninstall -u 3e4e7fe7 com.example.app
+----
 
-[source]
 .Output
+----
 The application is uninstalled successfully
+----
 
-|Upload
-|Upload an app to the Kobiton App Repo
-a|`kobiton app upload [OPTIONS] *<PATH>* [APP_ID]`
-a|
-[source]
-.Command
+=== `app upload`
+
+Upload an app to the Kobiton App Repo.
+
+.Syntax
+----
+kobiton app upload [OPTIONS] <PATH> [APP_ID]
+----
+
+.Example
+[source,shell]
+----
 kobiton app upload ./sample.apk
+----
 
-[source]
 .Output
+----
 Application uploaded.  Parsing status OK.
 App ID: 651911
 Version ID: 739431
+----
 
-|Find
-|Find an app on the Kobiton App Repo using keyword
-a|`kobiton app find [OPTIONS] *<KEYWORD>*`
+=== `app find`
 
+Find an app on the Kobiton App Repo using keyword.
+
+.Syntax
+----
+kobiton app find [OPTIONS] <KEYWORD>
+----
+
+[NOTE]
+====
 Put `<KEYWORD>` between double quotes for space or special character.
-a|
-[source]
-.Command
-kobiton app find "example app"
+====
 
-[source]
+.Example
+[source,shell]
+----
+kobiton app find "example app"
+----
+
 .Output
+----
 Name: Example App
 Version: 4.1.1
 App ID: 651911
 Version ID: 739431
+----
 
-.3+|File
+=== `file list`
 
-|List
-|List file on the specified path of the device
-a|`kobiton file list *[OPTIONS]* [PATH]`
+List files on the specified path of the device.
 
-`[OPTIONS]`: requires `-a <SESSION_TOKEN>` or `KOBITON_SESSION_TOKEN` environment variable
+.Syntax
+----
+kobiton file list [OPTIONS] [PATH]
+----
 
+[NOTE]
+====
+`[OPTIONS]`: requires `-a <SESSION_TOKEN>` or `KOBITON_SESSION_TOKEN` environment variable.
 If `[PATH]` is empty, the home location is used.
-a|
-[source]
-.List file on Android
+====
+
+.Example (Android)
+[source,shell]
+----
 kobiton file list /data/local/tmp
+----
 
-[source]
-.List file on iOS
+.Example (iOS)
+[source,shell]
+----
 kobiton file list @com.sample.app:./Documents/
+----
 
-[source]
 .Output
+----
 sampleFolder
 sampleFile1.tmp
+----
 
-|Push
-|Push a file to the specified path on the device
-a|`kobiton file push *[OPTIONS]* *<LOCAL_PATH>* <REMOTE_PATH>`
+=== `file push`
 
-`[OPTIONS]`: requires `-a <SESSION_TOKEN>` or `KOBITON_SESSION_TOKEN` environment variable
+Push a file to the specified path on the device.
 
-If `[REMOTE_PATH]` is empty, the home location is used.
-a|
-[source]
-.Push file to Android
+.Syntax
+----
+kobiton file push [OPTIONS] <LOCAL_PATH> <REMOTE_PATH>
+----
+
+[NOTE]
+====
+`[OPTIONS]`: requires `-a <SESSION_TOKEN>` or `KOBITON_SESSION_TOKEN` environment variable.
+If `<REMOTE_PATH>` is empty, the home location is used.
+====
+
+.Example (Android)
+[source,shell]
+----
 kobiton file push foo.dat /data/local/tmp/foo.dat
+----
 
-[source]
-.Push file to iOS
+.Example (iOS)
+[source,shell]
+----
 kobiton file push foo.dat @com.sample.app:./Documents/foo.dat
+----
 
-[source]
 .Output
+----
 Pushed 505031 bytes to /data/local/tmp/foo.dat
+----
 
+=== `file pull`
 
-|Pull
-|Pull a file from the specified path on the device
-a|`kobiton file pull *[OPTIONS]* *<REMOTE_PATH>* [LOCAL_PATH]`
+Pull a file from the specified path on the device.
 
-`[OPTIONS]`: requires `-a <SESSION_TOKEN>` or `KOBITON_SESSION_TOKEN` environment variable
+.Syntax
+----
+kobiton file pull [OPTIONS] <REMOTE_PATH> [LOCAL_PATH]
+----
 
+[NOTE]
+====
+`[OPTIONS]`: requires `-a <SESSION_TOKEN>` or `KOBITON_SESSION_TOKEN` environment variable.
 If `[LOCAL_PATH]` is empty, the current location is used.
-a|
-[source]
-.Pull file from Android
+====
+
+.Example (Android)
+[source,shell]
+----
 kobiton file pull /data/local/tmp/foo.dat foo.dat
+----
 
-[source]
-.Pull file from iOS
+.Example (iOS)
+[source,shell]
+----
 kobiton file pull @com.example.app:./Documents/foo.dat foo.dat
+----
 
-[source]
 .Output
+----
 Pulled 505031 bytes to foo.dat
+----
 
-.4+|Device
+=== `device list`
 
-|List
-|List devices
-a|`kobiton device list [OPTIONS]`
+List devices.
 
+.Syntax
+----
+kobiton device list [OPTIONS]
+----
+
+[NOTE]
+====
 Highly recommended to use:
 
 * `--private`: filter only private devices.
-
 * `--booked false`: filter only devices not in use.
-
 * `--reserved false`: filter only devices not retained.
+====
 
-a|
-[source]
-.Command
+.Example
+[source,shell]
+----
 kobiton device list --private --booked false --reserved false
+----
 
-[source]
 .Output
+----
 Display Name, UDID, Platform, List, Status, Host
 iPhone 12, 79de3c497b9f1****19040aeb44, iOS 18.1, Private, ACTIVATED, 192.168.50.86
+----
 
-|ADB shell
-|Run ADB shell command on Android device
-a|`kobiton device adb-shell *[OPTIONS]* [ARGS]...`
+=== `device adb-shell`
 
-`[OPTIONS]`: requires `-a <SESSION_TOKEN>` or `KOBITON_SESSION_TOKEN` environment variable
+Run ADB shell command on Android device.
 
+.Syntax
+----
+kobiton device adb-shell [OPTIONS] [ARGS]...
+----
+
+[NOTE]
+====
+`[OPTIONS]`: requires `-a <SESSION_TOKEN>` or `KOBITON_SESSION_TOKEN` environment variable.
 If `[ARGS]...` is not provided, launch an interactive adb shell.
+====
 
-a|
-[source]
-.Command
-kobiton device adb-shell "dumpsys window displays \| grep -E 'mCurrentFocus\|mFocusedApp'"
+.Example
+[source,shell]
+----
+kobiton device adb-shell "dumpsys window displays | grep -E 'mCurrentFocus|mFocusedApp'"
+----
 
-[source]
 .Output
+----
 mCurrentFocus=Window{272f9b1 u0 com.example.app/MainActivity}
 mFocusedApp=ActivityRecord{3d12396 u0 com.example.app/.MainActivity t2823}
+----
 
+=== `device forward`
 
-|Forward
-|Forward a port on the device to a port on the local machine
-a|`kobiton device forward *[OPTIONS]* *<LOCAL_ADDRESS>* *<REMOTE_ADDRESS>*`
+Forward a port on the device to a port on the local machine.
 
-`[OPTIONS]`: requires `-a <SESSION_TOKEN>` or `KOBITON_SESSION_TOKEN` environment variable
+.Syntax
+----
+kobiton device forward [OPTIONS] <LOCAL_ADDRESS> <REMOTE_ADDRESS>
+----
 
-`<LOCAL_ADDRESS>` and `REMOTE_ADDRESS` must follows `tcp:<port>` format
-a|
-[source]
-.Command
+[NOTE]
+====
+`[OPTIONS]`: requires `-a <SESSION_TOKEN>` or `KOBITON_SESSION_TOKEN` environment variable.
+`<LOCAL_ADDRESS>` and `<REMOTE_ADDRESS>` must follow `tcp:<port>` format.
+====
+
+.Example
+[source,shell]
+----
 kobiton device forward tcp:8080 tcp:80
+----
 
-[source]
 .Output
+----
 Listening on 127.0.0.1:8080.
+----
 
-|PS
-|View running processes on the device
-a|`kobiton device ps *[OPTIONS]*`
+=== `device ps`
 
-`[OPTIONS]`: requires `-a <SESSION_TOKEN>` or `KOBITON_SESSION_TOKEN` environment variable
-a|
-[source]
-.Command
+View running processes on the device.
+
+.Syntax
+----
+kobiton device ps [OPTIONS]
+----
+
+[NOTE]
+====
+`[OPTIONS]`: requires `-a <SESSION_TOKEN>` or `KOBITON_SESSION_TOKEN` environment variable.
+====
+
+.Example
+[source,shell]
+----
 kobiton device ps
+----
 
-[source]
 .Output
+----
 PID NAME
  1 init
  2 [kthreadd]
  3 [rcu_gp]
  5 [kworker/0:0H]
+----
 
-.7+| Session
+=== `session create`
 
-|Create
-|Create a CLI session
-a|`kobiton session create *[OPTIONS]*`
+Create a CLI session.
 
-`[OPTIONS]`: requires `-u <UDID>`
+.Syntax
+----
+kobiton session create [OPTIONS]
+----
 
+[NOTE]
+====
+`[OPTIONS]`: requires `-u <UDID>`.
 Use `-t` to set session timeout in minutes. Default/minimum is `10` and maximum is `120`.
-a|
-[source]
-.Command
-kobiton session create -u 3e4e7fe7
+====
 
-[source]
+.Example
+[source,shell]
+----
+kobiton session create -u 3e4e7fe7
+----
+
 .Output
+----
 Session 8155111 created for device 3e4e7fe7.
 Session token eyJhbGciOiJ...
+----
 
-|End
-|End an active session (all types)
-a|`kobiton session end *[OPTIONS]*`
+=== `session end`
 
+End an active session (all types).
+
+.Syntax
+----
+kobiton session end [OPTIONS]
+----
+
+[NOTE]
+====
 `[OPTIONS]`: requires `-s <SESSION_ID>`
-a|
-[source]
-.Command
+====
+
+.Example
+[source,shell]
+----
 kobiton session end -s 8155111
+----
 
-[source]
 .Output
+----
 Session 8155111 ended.
+----
 
-|Terminate
-|Terminate a non-responsive session (all types)
-a|`kobiton session terminate *[OPTIONS]*`
+=== `session terminate`
 
+Terminate a non-responsive session (all types).
+
+.Syntax
+----
+kobiton session terminate [OPTIONS]
+----
+
+[NOTE]
+====
 `[OPTIONS]`: requires `-s <SESSION_ID>`
-a|
-[source]
-.Command
+====
+
+.Example
+[source,shell]
+----
 kobiton session terminate -s 8155111
+----
 
-[source]
 .Output
+----
 Session 8155111 terminated.
+----
 
-|Delete
-|Delete and remove a completed CLI session from the Session list
-a|`kobiton session delete *[OPTIONS]*`
+=== `session delete`
 
+Delete and remove a completed CLI session from the Session list.
+
+.Syntax
+----
+kobiton session delete [OPTIONS]
+----
+
+[NOTE]
+====
 `[OPTIONS]`: requires `-s <SESSION_ID>`
-a|
-[source]
-.Command
+====
+
+.Example
+[source,shell]
+----
 kobiton session delete -s 8155111
+----
 
-[source]
 .Output
+----
 OK
+----
 
-|Ping
-|Ping an active CLI session to reset the timeout counter
-a|`kobiton session ping *[OPTIONS]*`
+=== `session ping`
 
-`[OPTIONS]`: requires *both* `-s <SESSION_ID>` and `KOBITON_SESSION_TOKEN` environment variable (or `-a <SESSION_TOKEN>`)
-a|
-[source]
-.Command
+Ping an active CLI session to reset the timeout counter.
+
+.Syntax
+----
+kobiton session ping [OPTIONS]
+----
+
+[NOTE]
+====
+`[OPTIONS]`: requires *both* `-s <SESSION_ID>` and `KOBITON_SESSION_TOKEN` environment variable (or `-a <SESSION_TOKEN>`).
+====
+
+.Example
+[source,shell]
+----
 export KOBITON_SESSION_TOKEN=<SESSION_TOKEN> # Skip if already imported
 kobiton session ping -s 8155111
+----
 
-[source]
 .Output
+----
 Session 8155111 pinged.
+----
 
-|List active
-|List active sessions (all types)
-a|`kobiton session list-active [OPTIONS]`
-a|
-[source]
-.Command
+=== `session list-active`
+
+List active sessions (all types).
+
+.Syntax
+----
+kobiton session list-active [OPTIONS]
+----
+
+.Example
+[source,shell]
+----
 kobiton session list-active
+----
 
-[source]
-Session 8155111, device 3e4e7fe7, status RUNNING, created 2025-10-09T03:38:03Z, ended active
-
-|Show
-|Show details of a session (all types)
-a|`kobiton session show *[OPTIONS]*`
-
-`[OPTIONS]`: requires `-s <SESSION_ID>`
-a|
-[source]
-.Command
-kobiton session show -s 8155111
-
-[source]
 .Output
+----
+Session 8155111, device 3e4e7fe7, status RUNNING, created 2025-10-09T03:38:03Z, ended active
+----
+
+=== `session show`
+
+Show details of a session (all types).
+
+.Syntax
+----
+kobiton session show [OPTIONS]
+----
+
+[NOTE]
+====
+`[OPTIONS]`: requires `-s <SESSION_ID>`
+====
+
+.Example
+[source,shell]
+----
+kobiton session show -s 8155111
+----
+
+.Output
+----
 Session 8155111: Session created at 10/09/2025 04:13 AM
 Created: 2025-10-09T03:13:55.698Z
 Ended: 2025-10-09T03:31:26.973Z
 Device 3e4e7fe7: Android 11
 Status: COMPLETE
+----
 
-|Test
+=== `test run`
 
-|Run
-a|Run a native framework automation session (XCUITest, UIAutomator, or Espresso). GameDriver is not supported.
-a|`kobiton test run *[OPTIONS]* --app *<APP>* --runner *<TEST_RUNNER>* *<FRAMEWORK>*`
+Run a native framework automation session (XCUITest, UIAutomator, or Espresso). GameDriver is not supported.
 
+.Syntax
+----
+kobiton test run [OPTIONS] --app <APP> --runner <TEST_RUNNER> <FRAMEWORK>
+----
+
+[NOTE]
+====
 `[OPTIONS]`: different requirements based on framework:
 
 * Either `-u <UDID>` or `-d <DEVICE_NAME>` is required for any framework.
-
 * Either `-t <TESTS>` or `--plan <TEST_PLAN>` is required for XCUITest.
-
 ** `<TEST_PLAN>` must be a direct URL. Local path is not supported.
 
 `<APP>` and `<TEST_RUNNER>` must be either Kobiton App Repo ID (`kobiton-store:<APP_ID>` or `kobiton-store:v<APP_VERSION_ID>`) or direct URL. Local path is not supported.
+====
 
-a|
-[source]
-.UIAutomator
+.Example (UIAutomator)
+[source,shell]
+----
 kobiton test run --app kobiton-store:662537 --runner kobiton-store:v762538 -u 3e4e7fe7 uiautomator
+----
 
-[source]
-.Espresso (using UIAutomator framework)
+.Example (Espresso)
+[source,shell]
+----
 kobiton test run --app https://example.com/apps-test/espresso-app.apk --runner kobiton-store:v762559 -u 3e4e7fe7 uiautomator
+----
 
-[source]
-.XCUITest
+.Example (XCUITest)
+[source,shell]
+----
 kobiton test run --app kobiton-store:662538 --runner kobiton-store:v762548 --plan https://example.com/test-plans/sample.xctestplan -u 00008120-000E44D***28C01E xcuitest
+----
 
-[source]
 .Output
+----
 #UIAutomator/Espresso
 UIAUTOMATOR Session 8155157 started.
 #XCUITest
@@ -465,9 +669,6 @@ XCUITEST Session 8155161 started.
 Session 8155172: XCUITEST test session
 Created: 2025-10-09T04:25:41.896Z
 Device 00008120-000E44D***28C01E: iOS 16.1
-Status: START
-Status: START
-Status: START
 Status: START
 Session 8155172: XCUITEST test session
 Created: 2025-10-09T04:25:43.769Z
@@ -490,8 +691,7 @@ XCUITestSampleUITests#testXYZ [0.324] PASSED
 out: Start Test at 2025-10-09 11:24:58.684
 out: Set Up
 out: Tear Down
-
-|===
+----
 
 [#_troubleshooting]
 == Troubleshooting
