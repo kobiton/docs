@@ -81,15 +81,6 @@ Most CLI commands require either `SESSION_ID` or `KOBITON_SESSION_TOKEN`. See th
 
 == List of commands
 
-[NOTE]
-====
-
-Required parameters are marked *bold* in syntax. In the example below, `<KEYWORD>` is required, but `[OPTIONS]` is optional:
-
-`kobiton app find [OPTIONS] *<KEYWORD>*`
-
-====
-
 === `app run`
 
 Run app on device.
@@ -99,10 +90,11 @@ Run app on device.
 kobiton app run [OPTIONS] <APP_IDENTIFIER> [ARGS]...
 ----
 
-[NOTE]
-====
-`[OPTIONS]`: requires `-a <SESSION_TOKEN>` or `KOBITON_SESSION_TOKEN` environment variable
-====
+*Requires:*
+
+* `[OPTIONS]`: requires `-a <SESSION_TOKEN>` or `KOBITON_SESSION_TOKEN` environment variable
+
+* `<APP_IDENTIFIER>`: package name or bundle ID of the app to run
 
 .Example
 [source,shell]
@@ -124,10 +116,11 @@ Kill app on device.
 kobiton app kill [OPTIONS] <IDENTITY>
 ----
 
-[NOTE]
-====
-`[OPTIONS]`: requires `-a <SESSION_TOKEN>` or `KOBITON_SESSION_TOKEN` environment variable
-====
+*Requires:*
+
+* `[OPTIONS]`: requires `-a <SESSION_TOKEN>` or `KOBITON_SESSION_TOKEN` environment variable
+
+* `<IDENTITY>`: package name or bundle ID of the app to kill
 
 .Example
 [source,shell]
@@ -144,10 +137,10 @@ Install app on device.
 kobiton app install [OPTIONS]
 ----
 
-[NOTE]
-====
-`[OPTIONS]`: requires `-s <SESSION_ID>`
-====
+*Requires:*
+
+* `[OPTIONS]`: requires `-s <SESSION_ID>` and `-n <NAME>`
+
 
 .Example
 [source,shell]
@@ -169,10 +162,11 @@ Uninstall app on device.
 kobiton app uninstall [OPTIONS] <APP_IDENTIFIER>
 ----
 
-[NOTE]
-====
-`[OPTIONS]`: requires `-u <UDID>`
-====
+*Requires:*
+
+* `[OPTIONS]`: requires `-u <UDID>`
+
+* `<APP_IDENTIFIER>`: package name or bundle ID of the app to uninstall
 
 .Example
 [source,shell]
@@ -193,6 +187,10 @@ Upload an app to the Kobiton App Repo.
 ----
 kobiton app upload [OPTIONS] <PATH> [APP_ID]
 ----
+
+*Requires:*
+
+* `<PATH>`: local path to an app package that belongs to a xref:apps:supported-filetypes.adoc[supported filetype and size,window=read-later].
 
 .Example
 [source,shell]
@@ -216,10 +214,10 @@ Find an app on the Kobiton App Repo using keyword.
 kobiton app find [OPTIONS] <KEYWORD>
 ----
 
-[NOTE]
-====
-Put `<KEYWORD>` between double quotes for space or special character.
-====
+*Requires:*
+
+* `<KEYWORD>`: keyword to find the app. Put `<KEYWORD>` between double quotes for space or special character.
+
 
 .Example
 [source,shell]
@@ -244,11 +242,13 @@ List files on the specified path of the device.
 kobiton file list [OPTIONS] [PATH]
 ----
 
+*Requires:*
+
+* `[OPTIONS]`: requires `-a <SESSION_TOKEN>` or `KOBITON_SESSION_TOKEN` environment variable.
+
 [NOTE]
-====
-`[OPTIONS]`: requires `-a <SESSION_TOKEN>` or `KOBITON_SESSION_TOKEN` environment variable.
 If `[PATH]` is empty, the home location is used.
-====
+
 
 .Example (Android)
 [source,shell]
@@ -277,11 +277,15 @@ Push a file to the specified path on the device.
 kobiton file push [OPTIONS] <LOCAL_PATH> <REMOTE_PATH>
 ----
 
+*Requires:*
+
+* `[OPTIONS]`: requires `-a <SESSION_TOKEN>` or `KOBITON_SESSION_TOKEN` environment variable.
+
+* `<LOCAL_PATH>`: local file path to push.
+
 [NOTE]
-====
-`[OPTIONS]`: requires `-a <SESSION_TOKEN>` or `KOBITON_SESSION_TOKEN` environment variable.
 If `<REMOTE_PATH>` is empty, the home location is used.
-====
+
 
 .Example (Android)
 [source,shell]
@@ -309,11 +313,15 @@ Pull a file from the specified path on the device.
 kobiton file pull [OPTIONS] <REMOTE_PATH> [LOCAL_PATH]
 ----
 
+*Requires:*
+
+* `[OPTIONS]`: requires `-a <SESSION_TOKEN>` or `KOBITON_SESSION_TOKEN` environment variable.
+
+* `<REMOTE_PATH>`: remote location of the file to pull from.
+
 [NOTE]
-====
-`[OPTIONS]`: requires `-a <SESSION_TOKEN>` or `KOBITON_SESSION_TOKEN` environment variable.
 If `[LOCAL_PATH]` is empty, the current location is used.
-====
+
 
 .Example (Android)
 [source,shell]
@@ -371,11 +379,13 @@ Run ADB shell command on Android device.
 kobiton device adb-shell [OPTIONS] [ARGS]...
 ----
 
+*Requires:*
+
+* `[OPTIONS]`: requires `-a <SESSION_TOKEN>` or `KOBITON_SESSION_TOKEN` environment variable.
+
 [NOTE]
-====
-`[OPTIONS]`: requires `-a <SESSION_TOKEN>` or `KOBITON_SESSION_TOKEN` environment variable.
 If `[ARGS]...` is not provided, launch an interactive adb shell.
-====
+
 
 .Example
 [source,shell]
@@ -398,11 +408,12 @@ Forward a port on the device to a port on the local machine.
 kobiton device forward [OPTIONS] <LOCAL_ADDRESS> <REMOTE_ADDRESS>
 ----
 
-[NOTE]
-====
-`[OPTIONS]`: requires `-a <SESSION_TOKEN>` or `KOBITON_SESSION_TOKEN` environment variable.
-`<LOCAL_ADDRESS>` and `<REMOTE_ADDRESS>` must follow `tcp:<port>` format.
-====
+*Requires:*
+
+* `[OPTIONS]`: requires `-a <SESSION_TOKEN>` or `KOBITON_SESSION_TOKEN` environment variable.
+
+* `<LOCAL_ADDRESS>` and `<REMOTE_ADDRESS>`: must follow `tcp:<port>` format.
+
 
 .Example
 [source,shell]
@@ -424,10 +435,9 @@ View running processes on the device.
 kobiton device ps [OPTIONS]
 ----
 
-[NOTE]
-====
-`[OPTIONS]`: requires `-a <SESSION_TOKEN>` or `KOBITON_SESSION_TOKEN` environment variable.
-====
+*Requires:*
+
+* `[OPTIONS]`: requires `-a <SESSION_TOKEN>` or `KOBITON_SESSION_TOKEN` environment variable.
 
 .Example
 [source,shell]
@@ -453,11 +463,13 @@ Create a CLI session.
 kobiton session create [OPTIONS]
 ----
 
+*Requires*
+
+* `[OPTIONS]`: requires `-u <UDID>`.
+
 [NOTE]
-====
-`[OPTIONS]`: requires `-u <UDID>`.
 Use `-t` to set session timeout in minutes. Default/minimum is `10` and maximum is `120`.
-====
+
 
 .Example
 [source,shell]
@@ -480,10 +492,9 @@ End an active session (all types).
 kobiton session end [OPTIONS]
 ----
 
-[NOTE]
-====
-`[OPTIONS]`: requires `-s <SESSION_ID>`
-====
+*Requires:*
+
+* `[OPTIONS]`: requires `-s <SESSION_ID>`
 
 .Example
 [source,shell]
@@ -505,10 +516,9 @@ Terminate a non-responsive session (all types).
 kobiton session terminate [OPTIONS]
 ----
 
-[NOTE]
-====
-`[OPTIONS]`: requires `-s <SESSION_ID>`
-====
+*Requires:*
+
+* `[OPTIONS]`: requires `-s <SESSION_ID>`
 
 .Example
 [source,shell]
@@ -530,10 +540,9 @@ Delete and remove a completed CLI session from the Session list.
 kobiton session delete [OPTIONS]
 ----
 
-[NOTE]
-====
-`[OPTIONS]`: requires `-s <SESSION_ID>`
-====
+*Requires:*
+
+* `[OPTIONS]`: requires `-s <SESSION_ID>`
 
 .Example
 [source,shell]
@@ -555,10 +564,9 @@ Ping an active CLI session to reset the timeout counter.
 kobiton session ping [OPTIONS]
 ----
 
-[NOTE]
-====
-`[OPTIONS]`: requires *both* `-s <SESSION_ID>` and `KOBITON_SESSION_TOKEN` environment variable (or `-a <SESSION_TOKEN>`).
-====
+*Requires:*
+
+* `[OPTIONS]`: requires *both* `-s <SESSION_ID>` and `KOBITON_SESSION_TOKEN` environment variable (or `-a <SESSION_TOKEN>`).
 
 .Example
 [source,shell]
@@ -601,10 +609,9 @@ Show details of a session (all types).
 kobiton session show [OPTIONS]
 ----
 
-[NOTE]
-====
-`[OPTIONS]`: requires `-s <SESSION_ID>`
-====
+*Requires:*
+
+* `[OPTIONS]`: requires `-s <SESSION_ID>`
 
 .Example
 [source,shell]
@@ -630,16 +637,21 @@ Run a native framework automation session (XCUITest, UIAutomator, or Espresso). 
 kobiton test run [OPTIONS] --app <APP> --runner <TEST_RUNNER> <FRAMEWORK>
 ----
 
-[NOTE]
-====
-`[OPTIONS]`: different requirements based on framework:
+*Requires:*
 
-* Either `-u <UDID>` or `-d <DEVICE_NAME>` is required for any framework.
-* Either `-t <TESTS>` or `--plan <TEST_PLAN>` is required for XCUITest.
-** `<TEST_PLAN>` must be a direct URL. Local path is not supported.
 
-`<APP>` and `<TEST_RUNNER>` must be either Kobiton App Repo ID (`kobiton-store:<APP_ID>` or `kobiton-store:v<APP_VERSION_ID>`) or direct URL. Local path is not supported.
-====
+* `[OPTIONS]`: different requirements based on framework:
+
+** Either `-u <UDID>` or `-d <DEVICE_NAME>` is required for any framework.
+
+** Either `-t <TESTS>` or `--plan <TEST_PLAN>` is required for XCUITest.
+
+*** `<TEST_PLAN>` must be a direct URL. Local path is not supported.
+
+* `<FRAMEWORK>`: must be either `uiautomator2` or `xcuitest`.
+
+* `<APP>` and `<TEST_RUNNER>`: must be either Kobiton App Repo ID (`kobiton-store:<APP_ID>` or `kobiton-store:v<APP_VERSION_ID>`) or direct URL. Local path is not supported.
+
 
 .Example (UIAutomator)
 [source,shell]
