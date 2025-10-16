@@ -36,19 +36,15 @@ tar -zxvf kobiton-cli.<platform>.<version>.tgz
 
 Export the following environment variables for authentication using the command `export <VARIABLE_NAME>=<VALUE>`
 
-* `KOBITON_PORTAL`: the API URL of the Kobiton Portal
-** Cloud/Hybrid: use `\https://api.kobiton.com`
-** Cloud/Hybrid with custom domain: use `\https://api-<custom-domain>.kobiton.com`. *Example*: `\https://api-acme-prodv2.kobiton.com`
-** Standalone: use `https://<Dell-IP-or-domain>:3000`, where <Dell-IP-or-domain> is the IP address or domain of the Dell server where the Portal is accessible
+* `KOBITON_PORTAL`: the xref:profile:manage-your-api-credentials.adoc#_get_server_url[Server URL,window=read-later] of the Kobiton Portal without `/wd/hub`.
+** Example: if the Server URL is `\https://api.kobiton.com/wd/hub`, then use `\https://api.kobiton.com`
 * `KOBITON_USER`: the Kobiton username
 * `KOBITON_API_KEY`: the Kobiton API Key
 
 [source,bash]
 .Examples
-# Use one of the below based on the deployment type
-export KOBITON_PORTAL=https://api.kobiton.com # Cloud/Hybrid
-export KOBITON_PORTAL=https://api-acme-prodv2.kobiton.com # Cloud/Hybrid with custom domain
-export KOBITON_PORTAL=https://acme.kobiton.local:3000 # Standalone
+# Check the actual server URL of your Kobiton Portal
+export KOBITON_PORTAL=https://api.kobiton.com
 # Obtain the below from the Profile and Settings page of the Kobiton Portal
 export KOBITON_USER=johndoe
 export KOBITON_API_KEY=be99***0-c*df-4224-aed6-907****92d0
@@ -77,18 +73,14 @@ Open *Powershell*, then navigate to the location of the `kobiton.exe` file.
 Export the following environment variables for authentication using the command `$env:<VARIABLE_NAME>="<VALUE>"` in Powershell.
 
 * `KOBITON_PORTAL`: the API URL of the Kobiton Portal
-** Cloud/Hybrid: use `\https://api.kobiton.com`
-** Cloud/Hybrid with custom domain: use `\https://api-<custom-domain>.kobiton.com`. *Example*: `\https://api-acme-prodv2.kobiton.com`
-** Standalone: use `https://<Dell-IP-or-domain>:3000`, where <Dell-IP-or-domain> is the IP address or domain of the Dell server where the Portal is accessible
+** Example: if the Server URL is `\https://api.kobiton.com/wd/hub`, then use `\https://api.kobiton.com`
 * `KOBITON_USER`: the Kobiton username
 * `KOBITON_API_KEY`: the Kobiton API Key
 
 [source,bash]
 .Cloud/Hybrid
-# Use one of the below based on the deployment type
-$env:KOBITON_PORTAL = "https://api.kobiton.com" # Cloud/Hybrid
-$env:KOBITON_PORTAL = "https://api-acme-prodv2.kobiton.com" # Cloud/Hybrid with custom domain
-$env:KOBITON_PORTAL = "https://acme.kobiton.local:3000" # Standalone
+# Check the actual server URL of your Kobiton Portal
+export KOBITON_PORTAL=https://api.kobiton.com
 # Obtain the below from the Profile and Settings page of the Kobiton Portal
 $env:KOBITON_USER = "johndoe"
 $env:KOBITON_API_KEY = "be99***0-c*df-4224-aed6-907****92d0"
