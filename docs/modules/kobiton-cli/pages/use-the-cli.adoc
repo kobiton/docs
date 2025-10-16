@@ -653,16 +653,10 @@ kobiton test run [OPTIONS] --app <APP> --runner <TEST_RUNNER> <FRAMEWORK>
 * `<APP>` and `<TEST_RUNNER>`: must be either Kobiton App Repo ID (`kobiton-store:<APP_ID>` or `kobiton-store:v<APP_VERSION_ID>`) or direct URL. Local path is not supported.
 
 
-.Example (UIAutomator)
+.Example (UIAutomator or Espresso)
 [source,shell]
 ----
 kobiton test run --app kobiton-store:662537 --runner kobiton-store:v762538 -u 3e4e7fe7 uiautomator
-----
-
-.Example (Espresso)
-[source,shell]
-----
-kobiton test run --app https://example.com/apps-test/espresso-app.apk --runner kobiton-store:v762559 -u 3e4e7fe7 uiautomator
 ----
 
 .Example (XCUITest)
