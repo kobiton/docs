@@ -218,7 +218,7 @@ kobiton file push foo.dat /data/local/tmp/foo.dat
 .Example (iOS)
 [source,shell]
 ----
-kobiton file push foo.dat @com.sample.app:./Documents/foo.dat
+kobiton file push foo.dat @com.company.app:Documents/foo.dat
 ----
 
 .Output
@@ -254,7 +254,7 @@ kobiton file pull /data/local/tmp/foo.dat foo.dat
 .Example (iOS)
 [source,shell]
 ----
-kobiton file pull @com.example.app:./Documents/foo.dat foo.dat
+kobiton file pull @com.company.app:Documents/foo.dat
 ----
 
 .Output
@@ -574,6 +574,9 @@ kobiton test run [OPTIONS] --app <APP> --runner <TEST_RUNNER> <FRAMEWORK>
 
 * `<APP>` and `<TEST_RUNNER>`: must be either Kobiton App Repo ID (`kobiton-store:<APP_ID>` or `kobiton-store:v<APP_VERSION_ID>`) or direct URL. Local path is not supported.
 
+[TIP]
+Add the `--follow` argument to continually request the status of the test until completion, then print a plain text test report.
+
 
 .Example (UIAutomator or Espresso)
 [source,shell]
@@ -584,7 +587,7 @@ kobiton test run --app kobiton-store:662537 --runner kobiton-store:v762538 -u 3e
 .Example (XCUITest)
 [source,shell]
 ----
-kobiton test run --app kobiton-store:662538 --runner kobiton-store:v762548 --plan https://example.com/test-plans/sample.xctestplan -u 00008120-000E44D***28C01E xcuitest
+kobiton test run --app kobiton-store:662538 --runner kobiton-store:v762548 --plan https://example.com/test-plans/sample.xctestplan -u 00008120-000E44D***28C01E --follow xcuitest
 ----
 
 .Output
