@@ -27,7 +27,8 @@ This action will remove all data on the device. Back up the device before procee
 
 Refer to the device model's manual for instructions to factory reset the device.
 
-== Enable USB debugging (required)
+[#enable_developer_mode]
+== Enable Developer mode and USB debugging (required)
 
 [IMPORTANT]
 ====
@@ -96,6 +97,22 @@ image:device-lab-management:device-lab-management-android-chinese-developer-opti
 
 ====
 
+== Set default USB configuration to _File transfer / Android Auto_ (required)
+[IMPORTANT]
+====
+Setting the default USB configuration (operation mode when plugged via USB) to an option other than _File transfer / Android Auto_ prevents Kobiton from controlling the device on some models.
+====
+
+xref:#enable_developer_mode[Enable Developer mode and USB debugging] before attempting.
+
+Open *Settings* and navigate to *Developer options*. On Pixel devices, this option is under *System*.
+
+Scroll down to the **Default USB configuration** option. You can use the search function to quickly locate it.
+
+Choose *File transfer / Android Auto* or *Transferring files / Android Auto* depending on the model.
+
+image:device-lab-management:device-lab-management-android-prepare-developer-options-2.png[width=240, alt="Developer options inside Settings"] -> image:device-lab-management:device-lab-management-android-prepare-default-usb-config.png[width=240, alt="The Default USB configuration menu under Developer options"] -> image:device-lab-management:device-lab-management-android-prepare-usb-file-transfer.png[width=240, alt="The option File transfer / Android Auto selected under USB configuration screen"]
+
 == Disable passcode (required)
 
 [IMPORTANT]
@@ -131,7 +148,7 @@ Download and install Google Chrome from the Google Play Store onto the device.
 [IMPORTANT]
 ====
 
-Google Play Protect will attempt to scan the Kobiton agent app and preventing it from controlling the device.
+Google Play Protect will attempt to scan the Kobiton agent app and may prevent it from controlling the device.
 
 If Play Protect cannot be disabled, then select **Don't send** for the **deviceControl** app in the Play Protect popup after plugging the device into the host machine.
 
@@ -143,7 +160,9 @@ At the top right, tap the profile icon.
 
 Tap **Play Protect** and click the **Settings** icon.
 
-Turn **Scan apps with Play Protect** on or off.
+Turn off **Scan apps with Play Protect** and **Improve harmful app detection**.
+
+image:device-lab-management-android-prepare-play-protect-settings.png[width=240, alt="The Play Protect settings screen with the options Scan apps with Play Protect and Improve harmful app detection turned off"]
 
 [NOTE]
 Refer to Google's https://support.google.com/googleplay/answer/2812853?hl=en[support article,window=_blank] about Play Protect for more information.
