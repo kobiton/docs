@@ -1,0 +1,91 @@
+= Inject audio during a manual session (Beta)
+:navtitle: Inject audio (Beta)
+
+Learn how to inject an audio file directly into a connected device during a manual session to test recording apps, voice calls, and audio handling.
+
+== Prerequisites
+
+* A private device with bluetooth audio enabled running in *Standard mode*.
+
+[IMPORTANT]
+Bluetooth audio requires an additional _bluetooth-bridge_ server to enable. Contact Kobiton support for more details.
+
+* A valid audio file that meets the required format and size.
+
+=== Supported audio format
+
+|===
+| Requirement | Value
+
+| Container | WAV (PCM 16-bit), OGG, or MP3
+| Sample Rate | 8 kHz
+| Bit Depth | 16-bit
+| Channels | mono
+| Max File Size | 30 MB
+|===
+
+== Inject audio
+
+* In the *Device List*, choose a device marked with the microphone icon and launch a *Manual Session*.
+
+image:bluetooth-audio-devices.png[width=768px,alt="Filtered device list showing Pixel 7 Pro and Pixel 7 with audio capability icons"]
+
+* In the session, open *Inject Media* and select the *Audio Injection* tab. You’ll see an empty state inviting you to *click* or *drag-and-drop* a file. The *Inject* button is disabled until a file is uploaded.
+
+image:bluetooth-audio-injection-empty.png[width=768px,alt="Audio injection screen showing no file selected before injection"]
+
+* Select the upload area to open your system file browser (e.g., *Downloads*). Highlight your WAV file (e.g., `sample.wav`) and select *Open*.
+
+image:bluetooth-audio-file-finder.png[width=768px,alt="Finder window highlighting a selected WAV file ready for injection"]
+
+* Open the target application on the device (e.g., a voice recorder app or phone app) so it’s ready to capture the injected audio.
+
+image:bluetooth-audio-injection-uploaded.png[width=768px,alt="Audio injection screen with sample.wav file ready and inject button active"]
+
+* Choose *Inject*. The panel shows the status *Injecting…* above the purple action bar. On the device screen, the waveform and recording timer confirm playback is occurring.
+
+image:bluetooth-audio-injecting.png[width=768px,alt="Manual session screen showing the audio file sample.wav being injected into a Pixel 7 Pro"]
+
+* When the injection finishes, the session shows a confirmation banner: `Audio file [file_name] has been injected successfully.`
+
+== Reviewing session artifacts
+
+After the session, open xref:session-explorer:manage-sessions.adoc[Session Overview,window=read-later]. Under *Audio tracks*, you can download:
+
+* *Input audio*: the uploaded audio tracks.
+* *Injected audio*: the audio tracks that were injected to the device.
+* *Output audio*: the output audio tracks.
+
+image:bluetooth-audio-session-overview.png[width=768px,alt="Session summary showing audio tracks injected and details about the device and session"]
+
+== Tips & best practices
+
+* *Filter devices with bluetooth audio enabled*
++
+Filter only devices with bluetooth audio enabled by selecting *Audio* -> *Supported* in the search bar.
+
+image:bluetooth-audio-device-filter.png[width=768px,alt="Device filter showing the Audio capability filter with Supported selected"]
+
+* *Verify format before upload.*
++
+Convert the audio file to *8 kHz, 16-bit, mono PCM WAV* and keep the file size under *30 MB*.
+* *Stage the device app first.*
++
+Open the recording or target app and get it ready *before* clicking *Inject*.
+
+== Troubleshooting
+
+[cols="1,2"]
+|===
+| Issue | Resolution
+
+| *Inject button is disabled* | Ensure a file is uploaded and that it meets the required format (WAV, OGG, or MP3) and size (≤30 MB).
+| *No inject button* | Make sure the device has bluetooth audio enabled. Contact Kobiton support for more details on enabling bluetooth audio.
+| *No audio recorded in the app* a|
+* Unmute the microphone.
+
+* Make sure the target app is actively recording or listening when you click Inject.
+
+* Verify device volume and any in-app input settings.
+|===
+
