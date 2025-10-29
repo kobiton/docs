@@ -17,10 +17,10 @@ Bluetooth audio requires an additional _bluetooth-bridge_ server to enable. Cont
 |===
 | Requirement | Value
 
-| Container | WAV (PCM)
+| Container | WAV (PCM 16-bit), OGG, or MP3
 | Sample Rate | 8 kHz
 | Bit Depth | 16-bit
-| Channels | Mono
+| Channels | mono
 | Max File Size | 30 MB
 |===
 
@@ -79,8 +79,13 @@ Open the recording or target app and get it ready *before* clicking *Inject*.
 |===
 | Issue | Resolution
 
-| *Inject button is disabled* | Ensure a file is uploaded and that it meets the required format (8 kHz, 16-bit, mono PCM WAV) and size (≤30 MB).
+| *Inject button is disabled* | Ensure a file is uploaded and that it meets the required format (WAV, OGG, or MP3) and size (≤30 MB).
 | *No inject button* | Make sure the device has bluetooth audio enabled. Contact Kobiton support for more details on enabling bluetooth audio.
-| *No audio recorded in the app* | Make sure the target app is actively recording or listening when you click *Inject*. Verify device volume and any in-app input settings.
+| *No audio recorded in the app* a|
+* Unmute the microphone.
+
+* Make sure the target app is actively recording or listening when you click Inject.
+
+* Verify device volume and any in-app input settings.
 |===
 
