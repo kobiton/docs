@@ -121,6 +121,22 @@ image:ios-settings-context-face-id-passcode.png[width=240,alt="The Face ID and P
 
 Enter the current passcode again to turn off passcode.
 
+[#_turn_off_bringing_devices_together_required]
+== Turn off Bringing Devices Together (required)
+
+[IMPORTANT]
+====
+
+The *Bringing Devices Together* feature, introduced in iOS 17, enables proximity-based interactions between Apple devices. When active, it can interfere with the normal operation of a manual testing session. To prevent issues, make sure to turn it off before connecting the device to Kobiton.
+
+====
+
+In the *Settings* app, select *General* -> *AirDrop*.
+
+Turn off *Bringing Devices Together*.
+
+image:device-lab-management:ios-prepare-general-airdrop.png[width=240,alt="General settings screen showing navigation to AirDrop configuration options."] -> image:device-lab-management:ios-prepare-airdrop-bring-devices-together-off.png[width=240,alt="The Bringing Devices Together feature is disabled on Airdrop settings."]
+
 == Turn on web inspector in Safari (required by specific features)
 
 [NOTE]
@@ -160,5 +176,3 @@ Tap *Auto-Lock*.
 Select *Never*.
 
 image:ios-display-brighness-context.png[width=240,alt="The Auto-Lock option under Display and Brightness settings"] -> image:ios-auto-lock-context.png[width=240,alt="The Never option selected under the Auto-Lock settings"]
-
-

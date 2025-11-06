@@ -132,6 +132,33 @@ Select **None**. Enter the device's passcode or lock pattern if required.
 
 image:device-lab-management:device-lab-management-android-prepare-disable-lockscreen.png[width=240, alt="Going to Lock screen option inside Settings"] -> image:device-lab-management:device-lab-management-android-prepare-disable-lockscreen-lockscreen-type.png[width=240, alt="Inside Lock Screen, going to Screen lock type"] -> image:device-lab-management:device-lab-management-android-prepare-disable-lockscreen-lockscreen-type-none.png[width=240, alt="In Screen lock types selecting the option None"]
 
+== Turn off _Auto Blocker_ and _Block USB connections while locked_ (Samsung devices with Android 14 and later)
+
+[IMPORTANT]
+====
+
+On Samsung devices running One UI 6.0 (Android 14) and later:
+
+* The *Block USB connections while locked* feature will disconnect the device's USB connection after the lock screen is active for more than 1 hour.
+
+* The *Auto Blocker* feature will prevent Kobiton from controlling the device.
+
+Both features can cause devices to go offline.
+
+====
+
+To turn these features off, unlock the device if it is locked.
+
+Navigate to *Settings* -> *Security and privacy*.
+
+Turn off *Auto Blocker*.
+
+image:device-lab-management:android-prepare-security-privacy-details.png[width=240, alt="The Auto Blocker security feature is disabled in the Security and Privacy settings on Android."]
+
+Select *More security settings*, then turn off *Block USB connections while locked*.
+
+image:device-lab-management:android-prepare-more-security-settings.png[width=240, alt="The Block USB connections while locked setting is turned off in the More Security Settings screen on Android."]
+
 == Download Google Chrome (required for specific feature)
 
 [NOTE]
