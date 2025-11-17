@@ -47,12 +47,23 @@ image:devices:config-section-context.png[width=500,alt=" A context of Use Config
 
 === Retain the device
 
-To prevent other users from accessing the device during a test session, select *Retain*, then choose a duration: *1 hour, 2 hours, 4 hours, 8 hours, 24 hours, or Unlimited*.
+image:devices:retain-device-closeup.png[width=500,alt="A closeup to Retain status for device"]
+
+To reserve a device for exclusive use for a set period of time, select the *Retain* drop-down and choose a duration. Available options are typically _1 hour, 2 hours, 4 hours, 8 hours, 24 hours,_ or _Unlimited_.
+
+Once a device is retained, its status changes to *Retained*, and the countdown displays the remaining time along with the email address of the user who retained it. Be sure to release the retain when you are finished using the device.
 
 [NOTE]
-Organization admins can control whether xref:organization:other-settings.adoc#_device_retention[the Unlimited option,window=read-later] is available for device retention.
+The cleanup policy (if activated) does not run in between sessions when a device is Retained.
 
-image:devices:retain-device-closeup.png[width=500,alt="A closeup to Retain status for device"]
+=== Cancel retain
+
+image:devices:device-modal-retained.png[width=500,alt="A status showing that the device is retained for 1 hour with the cancel retain button"]
+
+To release a device from being retained, select the *x* next to the retain status and confirm that you want to remove the retain.
+
+[NOTE]
+A retain can be canceled either by the user who created the retain or by any user with the role permission to xref:organization:roles/user-roles-and-permissions.adoc#_cancel_retain[cancel retains,window=read-later].
 
 [#_restart_private_device]
 === Restart private device
