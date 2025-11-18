@@ -5,6 +5,7 @@ A cleanup policy is a set of steps that are performed on a device when a session
 
 Learn about device cleanup policies management, including creating, editing, removing and assigning to teams or the organization.
 
+[#_open_the_cleanup_policies_page]
 == Open the Cleanup Policies page
 
 include::profile:partial$open-settings.adoc[]
@@ -47,7 +48,16 @@ The cleanup policy now appears in the list.
 
 Select the created cleanup policy's name to open the edit dialog.
 
-NOTE: The predefined cleanup policies (_Thorough_ and _No Cleanup_) cannot be edited.
+[NOTE]
+====
+
+The following cannot be edited:
+
+* Predefined cleanup policies (_Thorough_ and _No Cleanup_).
+
+* Any cleanup policy that is assigned as default for the organization.
+
+====
 
 Edit the cleanup policy, then choose Save to apply the changes.
 
@@ -59,7 +69,18 @@ At the Cleanup Policies page, select to highlight a cleanup policy.
 
 Select the *Remove* button, then confirm the removal in the pop-up.
 
-NOTE: The predefined cleanup policies (_Thorough_ and _No Cleanup_) cannot be removed.
+[NOTE]
+====
+
+The following cannot be removed:
+
+* Predefined cleanup policies (_Thorough_ and _No Cleanup_).
+
+* Any cleanup policy that is assigned as default for the organization.
+
+After removing a default cleanup policy of one or several teams, the default cleanup policy of the organization will be assigned as default for those teams instead.
+
+====
 
 == Assign a cleanup policy as default for the organization
 
@@ -71,7 +92,9 @@ After being assigned as the default for the organization, the cleanup policy is 
 
 * At the end of all sessions launched under the organization.
 
-* After the device restarts or reconnects to the Portal.
+* After the device restarts or reconnects to the Portal after a disconnection.
+
+* After the device is released from retain or virtualUSB.
 
 include::organization:teams/create-a-device-cleanup-policy.adoc[lines=5..]
 

@@ -1,0 +1,123 @@
+= List of cleanup configurations
+
+Learn about the available cleanup configurations that are included in a cleanup policy.
+
+== Android
+
+=== Set chrome as debug application
+
+This configuration is always active in user-created policy.
+
+=== Remove device passcode
+
+This configuration is always active in user-created policy when the organization is using passcode mode 1 or 2.
+
+=== Unlock the screen
+
+This configuration is always active in user-created policy when the organization is using passcode mode 1 or 2.
+
+=== Remove http proxy on the devices
+
+This configuration is always active in user-created policy
+
+(A) Reset to lowest screen brightness.
+
+Not working for some Chinese models.
+
+(A) Clear image injection.
+
+(A) Set orientation device to portrait.
+
+(A) Change the system language to English.
+
+(S) Remove all non-system applications (except system applications and appllications exempted from removal). With 4.20, there is an option to exempt apps with certain bundle ID from being removed.
+
+Cleanup policy option: All apps installed within a session will be removed
+
+(S) Clear data (cache) applications on devices (except system applications and appllications exempted from removal).
+
+Cleanup policy option: App’s data will be cleared
+
+This step is only executed when All apps installed within a session will be removed is turned off.
+
+(S) Turn on Wi-Fi.
+
+Cleanup policy option: Device settings will be reset.
+
+(S) Turn off pocket mode on device.
+
+Cleanup policy option: Device settings will be reset.
+
+Only applies to some models that have this option.
+
+(S) Enable stay awake while plugging in device.
+
+Cleanup policy option: Device settings will be reset.
+
+Device will not go to sleep while being plugged in.
+
+(?) Enable access to hidden APIs for testing or development purposes on Android.
+
+(S) Reset Time Zone.
+
+Cleanup policy option: Device settings will be reset.
+
+Reset the Time Zone to device’s current location.
+
+(S) Reset Geolocation.
+
+Cleanup policy option: Device settings will be reset.
+
+Reset Geolocation back to the current location of the device.
+
+(S) Reset all apps state to the default screen.
+
+Cleanup policy option: All apps in the Recent Apps list will return to their starting state
+
+The opened apps are still going to be shown in the Recent Apps menu, only their states are reset.
+
+The screenshot in the Recent Apps screen may not be reset. Launch the app to confirm that its state is reset.
+
+The state reset depends on the behavior of the app itself.
+
+(S) Clear browsing history and data on supported browsers: Chrome and Chrome Beta.
+
+Cleanup policy option: Browser apps will be removed history and browsing data - Chrome, Chrome Beta.
+
+(S) Remove all accounts from system (user's online accounts which grant applications access to online resources with "one-click" approval) first. Then remove accounts by opening “Accounts” in setting and remove account one by one.
+
+(S) Set “Navigation bar” to buttons.
+
+Cleanup policy option: Turn on the navigation bar
+
+Check if the device is using hardware or software navigation buttons. If software buttons are used:
+
+For Samsung devices, open Settings then navigate to Display → Navigation Bar, then set the navigation mode to Navigation buttons.
+
+For Google Pixel devices, open Settings then navigate to System → Gestures → System Navigation, then choose 3-button navigation.
+
+Note: this does not work for some brands (Oppo, Xiaomi, etc.).
+
+(S) Set Chrome as default browser.
+
+Cleanup policy option: Set Chrome as the default browser
+
+With Api >= 24, Open “Default app” by starting Intent. Then choose “Browser” and set “Chrome” as default browser. With Api < 24, Clear current default browser on device by go to detail page of current default browser and clear “Default browser”. Next open a website by starting web Intent. A dialog will show up tell to choose which browser to open. Choose Chrome and click “Always“ to set Chrome as default browser.
+
+(A) Turn off auto-update on Google Play Store.
+
+Perform the below steps in order:
+
+Open Google Play Store
+
+If there is no signed in account, select the 3-dot icon and choose Settings. If there is a signed-in account, open the drawer and select Settings.
+
+In Play Store Settings, select Network preferences → Auto-update apps, then choose Don’t auto-update apps and Done.
+
+(S) First will change to default (system) keyboard on the device. Then all keyboards cache on device (Only keyboards Kobiton supported e.g: GBoard, …). After changing to default keyboard, it'll clear keyboard’s clipboard (Expected result: Copy text from previous session does not paste after cleanup)
+
+(A) Set up chrome browser of the device.
+
+First it opens chrome browser on the device then it’ll skip all the welcome screen of chrome (Because when clearing chrome, the first time we open chrome usually have some welcome screens and it will block the automation so we have to close it). After skipping all welcome screen, we will go to chrome’s setting then turn off auto save password by finding “password” cell and switch the “Save passwords” to off. Then we turn off auto translate language by going to “Languages“ cell and switch “Offer to translate pages in other languages.“ to off.
+
+(?) Disable the toolbar on the Samsung keyboard, hiding shortcut icons for a cleaner interface
