@@ -1,0 +1,64 @@
+= Configure other organization settings
+:navtitle: Other settings
+
+Learn how to configure additional settings for your organization.
+
+== Access other organization settings
+
+include::profile:partial$open-settings.adoc[]
+
+Select *Other Settings*.
+
+image:other-settings.png[width=800,alt="The Other Settings page in Organization Settings"]
+
+== Available settings
+
+=== Video and screenshot recording for in-house devices after ending a session
+
+* _Capture the video in a manual session_: Enable/disable video capturing for manual sessions. The captured video can be accessed from the Session Overview.
+
+* _Capture the screenshot in a manual session_: Enable/disable screenshot capturing for manual sessions. The captured screenshots can be downloaded during the manual session or viewed and downloaded in Session Explorer.
+
+[NOTE]
+These settings take precedence over any video or screenshot-capture configuration in the `dc.ini` file on the Mac mini host.
+
+=== XML tree in Manual session
+
+* _Show only important layers in XML tree_: Enable/disable the display of layers that are marked as important for accessibility in Manual sessions on Android devices.
+
+* _Show Android's Navigation bar and Status bar layer_: Enable or disable display of the Navigation and Status bar layers in Manual sessions on Android devices.
+
+=== Kobiton Re-signing Process
+
+* _App signing using Kobiton Certificate (iOS)_: Enable/disable the use of Kobiton app re-signing for iOS/iPadOS devices in all session types.
+
+[IMPORTANT]
+====
+
+When enabled, *all* apps installed on *all* iOS/iPadOS devices in the organization will be re-signed by Kobiton.
+
+For Hybrid and Standalone/On-Prem customers, deviceShare must be xref:device-lab-management:deviceShare/install-update-deviceshare.adoc[installed,window=read-later] and valid xref:device-lab-management:ios-devices/import-ios-signing-certificates-and-provisioning-profiles.adoc#_import_developer_certificates_and_provisioning_profiles_to_deviceshare[developer certificates/provisioning profiles,window=read-later] must be imported to deviceShare to use Kobiton re-signing.
+
+====
+
+=== Default access for newly uploaded apps
+
+Choose the default access level for newly uploaded apps in the Kobiton App Repo:
+
+* _All users in the organization can access._
+
+* _Only the uploader can access._
+
+[#_device_retention]
+=== Device Retention
+
+* _Allow unlimited retention_: Controls whether the Unlimited option is available when retaining devices for the whole organization.
+
+=== Other settings
+
+* _Show "Public Devices" Tab in Device List page_: Controls whether the Public Devices tab is displayed in the Device List.
+
+[WARNING]
+Ensure that your organization is not using any public devices before disabling this setting.
+
+* _Show option to launch device with WebRTC debug panel_: Controls whether to display the option to launch a manual session with the WebRTC debug panel, which is a tool to troubleshoot issues related to Lightning mode.
