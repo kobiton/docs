@@ -146,113 +146,121 @@ First it opens chrome browser on the device then it’ll skip all the welcome sc
 
 == iOS/iPadOS
 
-(AC) Remove passcode
+=== Remove passcode
 
-Condition: the organization is using passcode mode.
+This configuration is always active in user-created policies when the organization is using passcode mode 1 or 2.
 
-(AC) Reset http proxy
+=== Reset http proxy
 
-Condition: after an NPC session ends.
+This configuration is always active in user-created polices when a NPC session ends.
 
-(A) Set orientation to portrait.
+=== Set orientation to portrait.
 
-(A) Set screen brightness to lowest.
+This configuration is always active in user-created policies.
 
-(A) Reset device language to English.
+==== Set screen brightness to lowest.
 
-(S) Remove all non-system applications (except applications from mobile lab, applications’s bundleId contain apple prefix ("com.apple") and applications client chose to ignore remove). With 4.20, there is an option to exempt apps with certain bundle ID from being removed.
+This configuration is always active in user-created policies.
 
-Cleanup policy option: All apps installed and associated data within a session will be removed
+=== Reset device language to English.
 
-(S) Reset display zoom to Standard.
+This configuration is always active in user-created policies.
 
-Cleanup policy option: Device settings will be reset.
+=== Remove all non-system applications (except exempted apps)
+
+Remove all non-system applications (except applications from mobile lab, applications’s bundleId contain apple prefix ("com.apple") and applications client chose to ignore remove). With 4.20, there is an option to exempt apps with certain bundle ID from being removed.
+
+Cleanup policy option: `All apps installed and associated data within a session will be removed`.
+
+=== Reset display zoom to Standard.
+
+Cleanup policy option: `Device settings will be reset`.
 
 Only triggers on devices that has Display Zoom available.
 
-(S) Clean Safari history and data.
+=== Clean Safari history and data.
 
-Cleanup policy option: Browser apps will be removed history and browsing data - Safari.
+Cleanup policy option: `Browser apps will be removed history and browsing data` - `Safari`.
 
 Open Settings → Apps → Safari (or Settings → Safari) → Clear History and Website Data, then select All History, turn on Close All Tabs, and select Clear History.
 
-(S) Removed signed in mail accounts except iCloud.
+==== Removed signed in mail accounts except iCloud.
 
-Cleanup policy option: Signed in accounts will be removed.
+Cleanup policy option: `Signed in accounts will be removed`.
 
 Open Settings → Apps → Mail (or Settings → Mail) → Accounts, then remove all signed in accounts for Google, Outlook, Microsoft Exchange, Yahoo, Aol, Outlook.
 
-Note: thi step will not removed signed in Apple IDs or iCloud accounts.
+Note: this step will not remove signed in Apple IDs or iCloud accounts.
 
 Known issue: for some iOS versions, Yahoo accounts are not removed.
 
-(S) Turn on Wi-Fi
+=== Turn on Wi-Fi
 
-Cleanup policy option: Device settings will be reset.
+Cleanup policy option: `Device settings will be reset`.
 
-(S) Turn on Bluetooth
+=== Turn on Bluetooth
 
-Cleanup policy option: Device settings will be reset.
+Cleanup policy option: `Device settings will be reset`.
 
-(S) Turn off airplane mode.
+=== Turn off airplane mode.
 
-Cleanup policy option: Device settings will be reset.
+Cleanup policy option: `Device settings will be reset`.
 
-(S) Turn on Web Inspector for Safari.
+=== Turn on Web Inspector for Safari.
 
-Cleanup policy option: Device settings will be reset.
+Cleanup policy option: `Device settings will be reset`.
 
 Open Settings → Apps → Safari (Or Settings → Safari) → Advanced, then turn on Web Inspector.
 
 Note: This cleanup policy does not turn on Remote Automation.
 
-(S) Turn on UI Automation.
+=== Turn on UI Automation.
 
-Cleanup policy option: Device settings will be reset.
+Cleanup policy option: `Device settings will be reset`.
 
 Open Settings → Developer, then turn on Enable UI Automation.
 
-(S) Turn off Low Power Mode and Auto-lock.
+=== Turn off Low Power Mode and Auto-lock.
 
-Cleanup policy option: Device settings will be reset.
+Cleanup policy option: `Device settings will be reset`.
 
 Open Settings → Battery, then turn off Low Power Mode. Only triggers for iOS versions with this option.
 
 Open Settings → Display & Brightness, then set the value of Auto-lock to Never. Note: this option is locked to 2 minutes if Low Power Mode is on.
 
-(S) Turn on Location Services.
+=== Turn on Location Services.
 
-Cleanup policy option: Device settings will be reset.
+Cleanup policy option: `Device settings will be reset`.
 
-(S) Turn off Assistive Touch.
+=== Turn off Assistive Touch.
 
-Cleanup policy option: Device settings will be reset.
+Cleanup policy option: `Device settings will be reset`.
 
 Open Settings → Accessibility → Touch → Assistive Touch, then turn off Assistive Touch.
 
-(S) Turn off Ringer and Alert sound.
+=== Turn off Ringer and Alert sound.
 
-Cleanup policy option: Device settings will be reset.
+Cleanup policy option: `Device settings will be reset`.
 
 Open Settings → Sound & Haptics (or Sound in iPad), then set Ringtone & Alerts volume to 0.
 
-(S) Reset Time Zone.
+=== Reset Time Zone.
 
-Cleanup policy option: Device settings will be reset.
+Cleanup policy option: `Device settings will be reset`.
 
 Open Settings → General → Date & Time, then turn off Set Automatically and set the time zone manually to the current location of the device.
 
 Note: some time zone cannot be reset.
 
-(S) Reset Geolocation.
+=== Reset Geolocation.
 
-Cleanup policy option: Device settings will be reset.
+Cleanup policy option: `Device settings will be reset`.
 
 Reset Geolocation back to the current location of the device.
 
-(S) Reset all apps state to the default screen.
+=== Reset all apps state to the default screen.
 
-Cleanup policy option: All apps in the Recent Apps list will return to their starting state
+Cleanup policy option: `All apps in the Recent Apps list will return to their starting state`
 
 The opened apps are still going to be shown in the Recent Apps menu, only their states are reset.
 
