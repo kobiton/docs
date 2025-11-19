@@ -9,6 +9,8 @@ Overview of cleanup configurations included in a cleanup policy.
 
 * Configurations marked with ^*^*^ are always active in any user-created cleanup policy and the _Thorough_ predefined policy, although they are not shown in the _Create_ or _Edit cleanup policy_ dialog.
 
+* Configurations _not_ marked with ^*^*^ can be selected/deselected in the _Create_ or _Edit cleanup policy_ dialog.
+
 ====
 
 == Android
@@ -49,13 +51,13 @@ Overview of cleanup configurations included in a cleanup policy.
 
 * Change system display language to English.
 
-=== Remove all non-system applications (except exempted apps)
+=== Remove all non-system applications except for system apps and exempted apps
 
 * Cleanup option: `All apps installed within a session will be removed`.
-* System apps, Kobiton agent app, and exempted apps are not cleared.
+* System apps, Kobiton agent apps, and exempted apps are not cleared.
 * Supports exemption of apps with specified package name.
 
-=== Clear application data (cache) except for system apps and exempted apps
+=== Clear application data (cache) except for system apps
 
 * Cleanup option: `App’s data will be cleared`.
 * Executes only when `All apps installed within a session will be removed` is turned off.
@@ -164,7 +166,7 @@ Overview of cleanup configurations included in a cleanup policy.
 
 * Reset device display language to English.
 
-=== Remove all non-system applications (except exempted apps)
+=== Remove all non-system applications except system apps and exempted apps
 
 * Cleanup option: `All apps installed and associated data within a session will be removed`.
 * Removes all non-system applications except Kobiton agent apps, apps with bundle IDs starting with `com.apple`, and exempted apps.
