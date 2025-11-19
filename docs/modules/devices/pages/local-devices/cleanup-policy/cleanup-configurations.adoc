@@ -55,7 +55,9 @@ Overview of cleanup configurations included in a cleanup policy.
 
 * Cleanup option: `All apps installed within a session will be removed`.
 * System apps, Kobiton agent apps, and exempted apps are not cleared.
-* Supports exemption of apps with specified package name.
+* Supports exemption of apps with specified package name (supports wildcard character \*). Separate entries with command or space. _Example:_ com.sample.app, com.myCompany.*
+
+image:devices:cleanup-policy-remove-apps.png[width=800,alt="The All apps installed within a session will be removed option with field to specify exempted apps"]
 
 === Clear application data (cache) except for system apps
 
@@ -170,7 +172,9 @@ Overview of cleanup configurations included in a cleanup policy.
 
 * Cleanup option: `All apps installed and associated data within a session will be removed`.
 * Removes all non-system applications except Kobiton agent apps, apps with bundle IDs starting with `com.apple`, and exempted apps.
-* Users can specify the bundle ID of apps to exempt.
+* * Supports exemption of apps with specified bundle ID (supports wildcard character \*). Separate entries with command or space. _Example:_ com.sample.app, com.myCompany.*
+
+image:devices:cleanup-policy-remove-apps.png[width=800,alt="The All apps installed within a session will be removed option with field to specify exempted apps"]
 
 === Reset display zoom to Standard
 
