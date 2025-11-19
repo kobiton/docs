@@ -1,269 +1,243 @@
-= List of cleanup configurations
+= List of Cleanup Configurations
 
-Learn about the available cleanup configurations that are included in a cleanup policy.
+Overview of cleanup configurations included in a cleanup policy.
 
 == Android
 
-=== Set chrome as debug application
+=== Set Chrome as debug application
 
-This configuration is always active in user-created policies.
+* Always active in user-created policies.
 
 === Remove device passcode
 
-This configuration is always active in user-created policies when the organization is using passcode mode 1 or 2.
+* Always active in user-created policies when the organization uses passcode mode 1 or 2.
 
 === Unlock the screen
 
-This configuration is always active in user-created polices when the organization is using passcode mode 1 or 2.
+* Always active in user-created policies when the organization uses passcode mode 1 or 2.
 
-=== Remove http proxy on the devices
+=== Remove HTTP proxy on devices
 
-This configuration is always active in user-created polices when a NPC session ends.
+* Always active in user-created policies when an NPC session ends.
 
-=== Reset to the lowest screen brightness.
+=== Reset screen brightness to the lowest level
 
-This configuration is always active in user-created polices.
+* Always active in user-created policies.
+* Not supported on some Chinese device models.
 
-Not working for some Chinese models.
+=== Clear image injection
 
-=== Clear image injection.
+* Always active in user-created policies.
 
-This configuration is always active in user-created polices.
+=== Set device orientation to portrait
 
-=== Set orientation device to portrait.
+* Always active in user-created policies.
 
-This configuration is always active in user-created polices.
+=== Change system language to English
 
-=== Change the system language to English.
-
-This configuration is always active in user-created polices.
+* Always active in user-created policies.
 
 === Remove all non-system applications (except exempted apps)
 
-Cleanup policy option: `All apps installed within a session will be removed`.
+* Cleanup option: `All apps installed within a session will be removed`.
+* Supports exemption of apps with specified bundle IDs.
 
-There is an option to exempt apps with certain bundle ID from being removed.
+=== Clear application data (cache) except for system apps and exempted apps
 
-=== Clear data (cache) applications on devices (except system applications and appllications exempted from removal).
+* Cleanup option: `App’s data will be cleared`.
+* Executes only when `All apps installed within a session will be removed` is turned off.
 
-Cleanup policy option: `App’s data will be cleared`
+=== Turn on Wi-Fi
 
-This step is only executed when `All apps installed within a session will be removed` is turned off.
+* Cleanup option: `Device settings will be reset`.
 
-=== Turn on Wi-Fi.
+=== Turn off pocket mode
 
-Cleanup policy option: `Device settings will be reset`.
+* Cleanup option: `Device settings will be reset`.
+* Applies only to supported device models.
 
-=== Turn off pocket mode on device.
+=== Enable “Stay Awake” while plugged in
 
-Cleanup policy option: `Device settings will be reset`.
+* Cleanup option: `Device settings will be reset`.
+* Keeps the device awake while connected to power.
 
-Only applies to some models that have this option.
+=== (?) Enable access to hidden APIs for testing or development
 
-=== Enable stay awake while plugging in device.
+* Behavior may vary by device model and OS version.
 
-Cleanup policy option: `Device settings will be reset`.
+=== Reset Time Zone
 
-Device will not go to sleep while being plugged in.
+* Cleanup option: `Device settings will be reset`.
+* Restores the device’s time zone to its current physical location.
 
-=== (?) Enable access to hidden APIs for testing or development purposes on Android.
+=== Reset Geolocation
 
-=== Reset Time Zone.
+* Cleanup option: `Device settings will be reset`.
+* Resets geolocation to the device’s current physical location.
 
-Cleanup policy option: `Device settings will be reset`.
+=== Reset all app states to default
 
-Reset the Time Zone to device’s current location.
+* Cleanup option: `All apps in the Recent Apps list will return to their starting state`.
+* Apps remain visible in the Recent Apps list, but their internal state is reset.
+* Screenshots in the Recent Apps list might not update until the app is opened.
+* Actual reset behavior depends on each app.
 
-=== Reset Geolocation.
+=== Clear browsing history and data on supported browsers
 
-Cleanup policy option: `Device settings will be reset`.
+* Cleanup option: `Browser apps will have history and browsing data removed`.
+* Supported browsers: `Chrome` and `Chrome Beta`.
 
-Reset Geolocation back to the current location of the device.
+=== Remove all accounts from the system
 
-=== Reset all apps state to the default screen.
+* Cleanup option: `Signed in accounts will be removed`.
+* Removes accounts that grant access to online resources with one-click approval first, then removes remaining accounts individually in the Accounts settings.
 
-Cleanup policy option: `All apps in the Recent Apps list will return to their starting state`.
+=== Set Navigation bar to buttons
 
-The opened apps are still going to be shown in the Recent Apps menu, only their states are reset.
+* Cleanup option: `Turn on the navigation bar`.
+* If software navigation buttons are used:
+** Samsung: Settings → Display → Navigation Bar → Navigation buttons.
+** Google Pixel: Settings → System → Gestures → System Navigation → 3-button navigation.
+** Not supported on some brands (for example, Oppo and Xiaomi).
 
-The screenshot in the Recent Apps screen may not be reset. Launch the app to confirm that its state is reset.
+=== Set Chrome as the default browser
 
-The state reset depends on the behavior of the app itself.
+* Cleanup option: `Set Chrome as the default browser`.
 
-Clear browsing history and data on supported browsers: Chrome and Chrome Beta.
+=== Turn off auto-update in Google Play Store
 
-Cleanup policy option: `Browser apps will be removed history and browsing data` - `Chrome`, `Chrome Beta`.
+* Always active in user-created policies.
+* Steps:
+** Open Google Play Store.
+** Open Settings from the menu or drawer, depending on account state.
+** Navigate to Network Preferences → Auto-update apps → Don’t auto-update apps → Done.
 
-=== Remove all accounts from system
+=== Clear keyboard cache
 
-Cleanup policy option: `Signed in accounts will be removed`.
+* Cleanup option: `Clear the keyboard cache`.
+* Switch to the default system keyboard, clears supported keyboard caches (for example, Gboard).
+* Clears keyboard clipboard data.
 
-Remove user's online accounts which grant applications access to online resources with "one-click" approval first, then remove accounts by opening “Accounts” in setting and remove account one by one.
+=== Set up Chrome browser
 
-=== Set “Navigation bar” to buttons.
+* Always active in user-created policies.
+* Opens Chrome and dismisses initial welcome screens.
+* Opens Chrome settings, then:
+** Disable password saving under “Passwords”.
+** Disable translation prompts under “Languages”.
 
-Cleanup policy option: `Turn on the navigation bar`.
+=== (?) Disable the toolbar on Samsung Keyboard
 
-Check if the device is using hardware or software navigation buttons. If software buttons are used:
-
-* For Samsung devices, open Settings then navigate to Display → Navigation Bar, then set the navigation mode to Navigation buttons.
-
-* For Google Pixel devices, open Settings then navigate to System → Gestures → System Navigation, then choose 3-button navigation.
-
-NOTE: This does not work for some brands (Oppo, Xiaomi, etc.)
-
-=== Set Chrome as default browser.
-
-Cleanup policy option: `Set Chrome as the default browser`.
-
-With Api >= 24, Open “Default app” by starting Intent. Then choose “Browser” and set “Chrome” as default browser. With Api < 24, Clear current default browser on device by go to detail page of current default browser and clear “Default browser”. Next open a website by starting web Intent. A dialog will show up tell to choose which browser to open. Choose Chrome and click “Always“ to set Chrome as default browser.
-
-=== Turn off auto-update on Google Play Store.
-
-This configuration is always active in user-created policies.
-
-Perform the below steps in order:
-
-* Open Google Play Store
-
-* If there is no signed in account, select the 3-dot icon and choose Settings. If there is a signed-in account, open the drawer and select Settings.
-
-* In Play Store Settings, select Network preferences → Auto-update apps, then choose Don’t auto-update apps and Done.
-
-=== Clear the keyboard cache
-
-Cleanup policy option: `Clear the keyboard cache`.
-
-First will change to default (system) keyboard on the device. Then all keyboards cache on device (Only keyboards Kobiton supported e.g: GBoard, …). After changing to default keyboard, it'll clear keyboard’s clipboard (Expected result: Copy text from previous session does not paste after cleanup)
-
-=== Set up Chrome browser of the device.
-
-This configuration is always active in user-created policies.
-
-First it opens chrome browser on the device then it’ll skip all the welcome screen of chrome (Because when clearing chrome, the first time we open chrome usually have some welcome screens and it will block the automation so we have to close it). After skipping all welcome screen, we will go to chrome’s setting then turn off auto save password by finding “password” cell and switch the “Save passwords” to off. Then we turn off auto translate language by going to “Languages“ cell and switch “Offer to translate pages in other languages.“ to off.
-
-=== (?) Disable the toolbar on the Samsung keyboard, hiding shortcut icons for a cleaner interface
+* Hides keyboard shortcut icons on supported Samsung devices.
 
 == iOS/iPadOS
 
 === Remove passcode
 
-This configuration is always active in user-created policies when the organization is using passcode mode 1 or 2.
+* Always active in user-created policies when the organization uses passcode mode 1 or 2.
 
-=== Reset http proxy
+=== Reset HTTP proxy
 
-This configuration is always active in user-created polices when a NPC session ends.
+* Always active in user-created policies when an NPC session ends.
 
-=== Set orientation to portrait.
+=== Set orientation to portrait
 
-This configuration is always active in user-created policies.
+* Always active in user-created policies.
 
-==== Set screen brightness to lowest.
+=== Set screen brightness to the lowest level
 
-This configuration is always active in user-created policies.
+* Always active in user-created policies.
 
-=== Reset device language to English.
+=== Reset device language to English
 
-This configuration is always active in user-created policies.
+* Always active in user-created policies.
 
 === Remove all non-system applications (except exempted apps)
 
-Remove all non-system applications (except applications from mobile lab, applications’s bundleId contain apple prefix ("com.apple") and applications client chose to ignore remove). With 4.20, there is an option to exempt apps with certain bundle ID from being removed.
+* Removes all non-system applications except Mobile Lab apps, apps with bundle IDs starting with `com.apple`, and apps exempted by the client.
+* Cleanup option: `All apps installed and associated data within a session will be removed`.
 
-Cleanup policy option: `All apps installed and associated data within a session will be removed`.
+=== Reset display zoom to Standard
 
-=== Reset display zoom to Standard.
+* Cleanup option: `Device settings will be reset`.
+* Applies only to device models that support Display Zoom.
 
-Cleanup policy option: `Device settings will be reset`.
+=== Clean Safari history and data
 
-Only triggers on devices that has Display Zoom available.
+* Cleanup option: `Browser apps will have history and browsing data removed` – `Safari`.
+* Steps:
+** Open Settings → Safari.
+** Select Clear History and Website Data.
+** Select All History.
+** Turn on Close All Tabs.
+** Select Clear History.
 
-=== Clean Safari history and data.
+=== Remove signed-in mail accounts except Apple ID and iCloud
 
-Cleanup policy option: `Browser apps will be removed history and browsing data` - `Safari`.
-
-Open Settings → Apps → Safari (or Settings → Safari) → Clear History and Website Data, then select All History, turn on Close All Tabs, and select Clear History.
-
-==== Removed signed in mail accounts except iCloud.
-
-Cleanup policy option: `Signed in accounts will be removed`.
-
-Open Settings → Apps → Mail (or Settings → Mail) → Accounts, then remove all signed in accounts for Google, Outlook, Microsoft Exchange, Yahoo, Aol, Outlook.
-
-Note: this step will not remove signed in Apple IDs or iCloud accounts.
-
-Known issue: for some iOS versions, Yahoo accounts are not removed.
+* Cleanup option: `Signed in accounts will be removed`.
+* Remove accounts for Google, Outlook, Microsoft Exchange, Yahoo, AOL, and similar providers.
+* *Note:* This does not remove Apple ID or iCloud accounts.
+* Some iOS versions may not remove Yahoo accounts.
 
 === Turn on Wi-Fi
 
-Cleanup policy option: `Device settings will be reset`.
+* Cleanup option: `Device settings will be reset`.
 
 === Turn on Bluetooth
 
-Cleanup policy option: `Device settings will be reset`.
+* Cleanup option: `Device settings will be reset`.
 
-=== Turn off airplane mode.
+=== Turn off Airplane Mode
 
-Cleanup policy option: `Device settings will be reset`.
+* Cleanup option: `Device settings will be reset`.
 
-=== Turn on Web Inspector for Safari.
+=== Turn on Web Inspector for Safari
 
-Cleanup policy option: `Device settings will be reset`.
+* Cleanup option: `Device settings will be reset`.
+* Open Settings → Safari → Advanced → Web Inspector.
+* Note: This does not enable Remote Automation.
 
-Open Settings → Apps → Safari (Or Settings → Safari) → Advanced, then turn on Web Inspector.
+=== Turn on UI Automation
 
-Note: This cleanup policy does not turn on Remote Automation.
+* Cleanup option: `Device settings will be reset`.
+* Open Settings → Developer → Enable UI Automation.
 
-=== Turn on UI Automation.
+=== Turn off Low Power Mode and set Auto-Lock to Never
 
-Cleanup policy option: `Device settings will be reset`.
+* Cleanup option: `Device settings will be reset`.
+* Open Settings → Battery → turn off Low Power Mode (to enable the Never option in Auto-Lock).
+* Open Settings → Display & Brightness → Auto-Lock → Never.
 
-Open Settings → Developer, then turn on Enable UI Automation.
+=== Turn on Location Services
 
-=== Turn off Low Power Mode and Auto-lock.
+* Cleanup option: `Device settings will be reset`.
 
-Cleanup policy option: `Device settings will be reset`.
+=== Turn off AssistiveTouch
 
-Open Settings → Battery, then turn off Low Power Mode. Only triggers for iOS versions with this option.
+* Cleanup option: `Device settings will be reset`.
+* Open Settings → Accessibility → Touch → AssistiveTouch → Off.
 
-Open Settings → Display & Brightness, then set the value of Auto-lock to Never. Note: this option is locked to 2 minutes if Low Power Mode is on.
+=== Turn off Ringer and Alert sound
 
-=== Turn on Location Services.
+* Cleanup option: `Device settings will be reset`.
+* Open Settings → Sound & Haptics → set Ringtone and Alerts volume to 0.
 
-Cleanup policy option: `Device settings will be reset`.
+=== Reset Time Zone
 
-=== Turn off Assistive Touch.
+* Cleanup option: `Device settings will be reset`.
+* Open Settings → General → Date & Time → disable Set Automatically.
+* Set the time zone to the device’s current location.
+* Some time zones may not reset correctly.
 
-Cleanup policy option: `Device settings will be reset`.
+=== Reset Geolocation
 
-Open Settings → Accessibility → Touch → Assistive Touch, then turn off Assistive Touch.
+* Cleanup option: `Device settings will be reset`.
+* Resets geolocation to the device’s current location.
 
-=== Turn off Ringer and Alert sound.
+=== Reset all app states to default
 
-Cleanup policy option: `Device settings will be reset`.
-
-Open Settings → Sound & Haptics (or Sound in iPad), then set Ringtone & Alerts volume to 0.
-
-=== Reset Time Zone.
-
-Cleanup policy option: `Device settings will be reset`.
-
-Open Settings → General → Date & Time, then turn off Set Automatically and set the time zone manually to the current location of the device.
-
-Note: some time zone cannot be reset.
-
-=== Reset Geolocation.
-
-Cleanup policy option: `Device settings will be reset`.
-
-Reset Geolocation back to the current location of the device.
-
-=== Reset all apps state to the default screen.
-
-Cleanup policy option: `All apps in the Recent Apps list will return to their starting state`
-
-The opened apps are still going to be shown in the Recent Apps menu, only their states are reset.
-
-The screenshot in the Recent Apps screen may not be reset. Launch the app to confirm that its state is reset.
-
-The state reset depends on the behavior of the app itself. Example: in Safari, resetting the state does not close active browser tab, unless the cleanup steps for Safari are enabled.
+* Cleanup option: `All apps in the Recent Apps list will return to their starting state`.
+* Apps remain in the Recent Apps list with reset internal state.
+* Screenshots in Recent Apps may not update until the app is opened.
+* Reset behavior varies by app.
+* Example: Safari tabs remain open unless Safari cleanup steps are enabled.
