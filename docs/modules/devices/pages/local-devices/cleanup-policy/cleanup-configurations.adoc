@@ -2,45 +2,51 @@
 
 Overview of cleanup configurations included in a cleanup policy.
 
+NOTE: Configurations that are marked with `(*)` are always active in any user-created cleanup policy or the _Thorough_ predefined policy, although they are not shown in the create or edit cleanup policy dialog.
+
 == Android
 
-=== Set Chrome as debug application
+=== Set Chrome as debug application (*)
 
-* Always active in user-created policies.
+* Set Chrome as the debug application in Developer options.
 
-=== Remove device passcode
+=== Remove device passcode (*)
 
-* Always active in user-created policies when the organization uses passcode mode 1 or 2.
+* Remove the device passcode.
+* Condition to trigger: the organization uses passcode mode 1 or 2.
 
-=== Unlock the screen
+=== Unlock the screen (*)
 
-* Always active in user-created policies when the organization uses passcode mode 1 or 2.
+* Unlock the screen.
+* Condition to trigger: the organization uses passcode mode 1 or 2.
 
-=== Remove HTTP proxy on devices
+=== Clear HTTP proxy on devices (*)
 
-* Always active in user-created policies when an NPC session ends.
+* Clear the HTTP proxy settings applied during the NPC session.
+* Condition to trigger: when an NPC session ends.
 
-=== Reset screen brightness to the lowest level
+=== Reset screen brightness to the lowest level (*)
 
-* Always active in user-created policies.
+* Reset screen brightness to reduce the risk of damaging the screen.
 * Not supported on some Chinese device models.
 
-=== Clear image injection
+=== Clear image injection (*)
 
-* Always active in user-created policies.
+* Clear any injected image.
 
-=== Set device orientation to portrait
+=== Set device orientation to portrait (*)
 
-* Always active in user-created policies.
+* Set the device orientation to portrait mode.
 
-=== Change system language to English
+=== Change system language to English (*)
 
-* Always active in user-created policies.
+* Change system display language to English.
 
 === Remove all non-system applications (except exempted apps)
 
 * Cleanup option: `All apps installed within a session will be removed`.
-* Supports exemption of apps with specified bundle IDs.
+* System apps, Kobiton agent app, and exempted apps are not cleared.
+* Supports exemption of apps with specified package name.
 
 === Clear application data (cache) except for system apps and exempted apps
 
@@ -61,7 +67,7 @@ Overview of cleanup configurations included in a cleanup policy.
 * Cleanup option: `Device settings will be reset`.
 * Keeps the device awake while connected to power.
 
-=== (?) Enable access to hidden APIs for testing or development
+=== Enable access to hidden APIs for testing or development (*)
 
 * Behavior may vary by device model and OS version.
 
@@ -104,10 +110,8 @@ Overview of cleanup configurations included in a cleanup policy.
 
 * Cleanup option: `Set Chrome as the default browser`.
 
-=== Turn off auto-update in Google Play Store
+=== Turn off auto-update in Google Play Store (*)
 
-* Always active in user-created policies.
-* Steps:
 ** Open Google Play Store.
 ** Open Settings from the menu or drawer, depending on account state.
 ** Navigate to Network Preferences → Auto-update apps → Don’t auto-update apps → Done.
@@ -118,44 +122,46 @@ Overview of cleanup configurations included in a cleanup policy.
 * Switch to the default system keyboard, clears supported keyboard caches (for example, Gboard).
 * Clears keyboard clipboard data.
 
-=== Set up Chrome browser
+=== Set up Chrome browser (*)
 
-* Always active in user-created policies.
 * Opens Chrome and dismisses initial welcome screens.
 * Opens Chrome settings, then:
 ** Disable password saving under “Passwords”.
 ** Disable translation prompts under “Languages”.
 
-=== (?) Disable the toolbar on Samsung Keyboard
+=== Disable the toolbar on Samsung Keyboard (*)
 
-* Hides keyboard shortcut icons on supported Samsung devices.
+* Hide keyboard shortcut icons on supported Samsung devices.
 
 == iOS/iPadOS
 
-=== Remove passcode
+=== Remove passcode (*)
 
-* Always active in user-created policies when the organization uses passcode mode 1 or 2.
+* Remove device passcode using the unlock token.
+* Condition to trigger: the organization uses passcode mode 1 or 2.
 
-=== Reset HTTP proxy
+=== Clear HTTP proxy (*)
 
-* Always active in user-created policies when an NPC session ends.
+* Clear the HTTP proxy settings applied during the NPC session.
+* Condition to trigger: when an NPC session ends.
 
-=== Set orientation to portrait
+=== Set orientation to portrait (*)
 
-* Always active in user-created policies.
+* Set device orientation to portrait mode.
 
-=== Set screen brightness to the lowest level
+=== Set screen brightness to the lowest level (*)
 
-* Always active in user-created policies.
+* Set screen brightness to the lowest level to avoid damaging the screen.
 
-=== Reset device language to English
+=== Reset device language to English (*)
 
-* Always active in user-created policies.
+* Reset device display language to English.
 
 === Remove all non-system applications (except exempted apps)
 
-* Removes all non-system applications except Mobile Lab apps, apps with bundle IDs starting with `com.apple`, and apps exempted by the client.
 * Cleanup option: `All apps installed and associated data within a session will be removed`.
+* Removes all non-system applications except Kobiton agent apps, apps with bundle IDs starting with `com.apple`, and exempted apps.
+* Users can specify the bundle ID of apps to exempt.
 
 === Reset display zoom to Standard
 
@@ -240,4 +246,3 @@ Overview of cleanup configurations included in a cleanup policy.
 * Apps remain in the Recent Apps list with reset internal state.
 * Screenshots in Recent Apps may not update until the app is opened.
 * Reset behavior varies by app.
-* Example: Safari tabs remain open unless Safari cleanup steps are enabled.
