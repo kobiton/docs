@@ -2,43 +2,50 @@
 
 Overview of cleanup configurations included in a cleanup policy.
 
-NOTE: Configurations that are marked with (*) are always active in any user-created cleanup policy and the _Thorough_ predefined policy, although they are not shown in the _Create_ or _Edit cleanup policy_ dialog.
+[NOTE]
+====
+
+* The configurations are listed by order of execution.
+
+* Configurations marked with ^*^*^ are always active in any user-created cleanup policy and the _Thorough_ predefined policy, although they are not shown in the _Create_ or _Edit cleanup policy_ dialog.
+
+====
 
 == Android
 
-=== Set Chrome as debug application (*)
+=== Set Chrome as debug application ^*^*^
 
 * Set Chrome as the debug application in Developer options.
 
-=== Remove device passcode (*)
+=== Remove device passcode ^*^*^
 
 * Remove the device passcode.
 * Condition to trigger: the organization uses passcode mode 1 or 2.
 
-=== Unlock the screen (*)
+=== Unlock the screen ^*^*^
 
 * Unlock the screen.
 * Condition to trigger: the organization uses passcode mode 1 or 2.
 
-=== Clear HTTP proxy on devices (*)
+=== Clear HTTP proxy on devices ^*^*^
 
 * Clear the HTTP proxy settings applied during the NPC session.
 * Condition to trigger: when an NPC session ends.
 
-=== Reset screen brightness to the lowest level (*)
+=== Reset screen brightness to the lowest level ^*^*^
 
 * Reset screen brightness to reduce the risk of damaging the screen.
 * Not supported on some Chinese device models.
 
-=== Clear image injection (*)
+=== Clear image injection ^*^*^
 
 * Clear any injected image.
 
-=== Set device orientation to portrait (*)
+=== Set device orientation to portrait ^*^*^
 
 * Set the device orientation to portrait mode.
 
-=== Change system language to English (*)
+=== Change system language to English ^*^*^
 
 * Change system display language to English.
 
@@ -67,7 +74,7 @@ NOTE: Configurations that are marked with (*) are always active in any user-crea
 * Cleanup option: `Device settings will be reset`.
 * Keeps the device awake while connected to power.
 
-=== Enable access to hidden APIs for testing or development (*)
+=== Enable access to hidden APIs for testing or development ^*^*^
 
 * Behavior may vary by device model and OS version.
 
@@ -110,7 +117,7 @@ NOTE: Configurations that are marked with (*) are always active in any user-crea
 
 * Cleanup option: `Set Chrome as the default browser`.
 
-=== Turn off auto-update in Google Play Store (*)
+=== Turn off auto-update in Google Play Store ^*^*^
 
 ** Open Google Play Store.
 ** Open Settings from the menu or drawer, depending on account state.
@@ -122,38 +129,38 @@ NOTE: Configurations that are marked with (*) are always active in any user-crea
 * Switch to the default system keyboard, clears supported keyboard caches (for example, Gboard).
 * Clears keyboard clipboard data.
 
-=== Set up Chrome browser (*)
+=== Set up Chrome browser ^*^*^
 
 * Opens Chrome and dismisses initial welcome screens.
 * Opens Chrome settings, then:
 ** Disable password saving under “Passwords”.
 ** Disable translation prompts under “Languages”.
 
-=== Disable the toolbar on Samsung Keyboard (*)
+=== Disable the toolbar on Samsung Keyboard ^*^*^
 
 * Hide keyboard shortcut icons on supported Samsung devices.
 
 == iOS/iPadOS
 
-=== Remove passcode (*)
+=== Remove passcode ^*^*^
 
 * Remove device passcode using the unlock token.
 * Condition to trigger: the organization uses passcode mode 1 or 2.
 
-=== Clear HTTP proxy (*)
+=== Clear HTTP proxy ^*^*^
 
 * Clear the HTTP proxy settings applied during the NPC session.
 * Condition to trigger: when an NPC session ends.
 
-=== Set orientation to portrait (*)
+=== Set orientation to portrait ^*^*^
 
 * Set device orientation to portrait mode.
 
-=== Set screen brightness to the lowest level (*)
+=== Set screen brightness to the lowest level ^*^*^
 
 * Set screen brightness to the lowest level to avoid damaging the screen.
 
-=== Reset device language to English (*)
+=== Reset device language to English ^*^*^
 
 * Reset device display language to English.
 
