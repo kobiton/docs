@@ -1,0 +1,74 @@
+= Kobiton 4.21.1S Release Notes
+:navtitle: Kobiton 4.21.1S release notes
+
+_Nov 3, 2025_
+
+== deviceConnect: Improvements to provisioning profile handling
+
+For Mac mini hosts without internet access, provisioning profiles could become invalid before expiration because Apple requires re-validation every 7 days. When this occurs, hosted iOS and iPadOS devices go offline.
+
+Previously, applying a new valid profile in deviceConnect required multiple manual steps: removing old profiles, uploading new ones, uninstalling mobile agents, and restarting services.
+
+With this release, deviceConnect automatically detects and applies newly uploaded provisioning profiles, eliminating the need for manual intervention.
+
+[NOTE]
+A manual service restart is still required after importing the new provisioning profile.
+
+
+== Kobiton Command Line Interface (CLI)
+
+Enterprise environments often need to control and operate devices in batches. To address this, Kobiton now provides a Command Line Interface (CLI) that supports batch operations, scripting, and streamlined management of multiple devices simultaneously.
+
+There is also a new type of session: *CLI session*. In the Session List, filter for this session by using `type:cli` or choose _CLI_ in the search bar dropdown.
+
+[NOTE]
+====
+
+* For CLI sessions:
+
+** No Session Explorer available.
+
+** Session video and logs are not available in Session Overview.
+
+** Mixed sessions between manual and CLI are not supported.
+
+** CLI sessions time out after 10 minutes by default and can be configured for up to 2 hours. You can reset the timeout using the `kobiton session ping` command.
+
+====
+
+A user guide for the Kobiton CLI is available xref:kobiton-cli:index.adoc[here,window=read-later].
+
+
+== Test Management: Updated display for app install test steps
+
+With this update, _app install_ steps in the Test Case Details page now display the following instead of the _screenshot not available_ message:
+
+* App source: App Repo or Upload
+
+* App name
+
+* App version
+
+== Scriptless Improvements
+
+* Bug Fix: Resolved an issue where deleting all test steps for an app in a test case caused any test suite using that test case to fail during execution.
+
+* Bug Fix: Fixed an issue where clearing the search box in the Blocker Remediation pop-up did not restore the complete view tree.
+
+== General improvements and fixes
+
+* deviceConnect Console: Provisioning profile deletion option restored.
+
+* App Repo & App Install Menu: Now shows version code (Android) and short string (iOS) alongside the app version.
+
+== Standalone improvements and fixes
+
+* Test Management: Preserved test management data from being purged by the scheduled cleanup script.
+
+* Removed the Register Now (register a new organization) button as it caused issues with new Standalone users where only 1 organization is needed.
+
+* Added the Register with SSO link to support first-time login for SSO new users.
+
+* Optimized GPU memory handling for AI-Service.
+
+* Removed the _Subscribe to enterprise to use SAML SSO_ banner at the SSO setup page.
