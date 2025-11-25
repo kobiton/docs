@@ -1,0 +1,34 @@
+= Kobiton 4.22 Release Notes
+:navtitle: Kobiton 4.22 release notes
+
+_Nov 22, 2025_
+
+== Appium Turbo Test Execution
+
+[NOTE]
+This feature is only available for Private and Local devices.
+
+Appium Turbo Test Execution reduces the Appium client–server communication overhead, enabling scripts to run faster with no code changes. When paired with Xium, Kobiton’s optimized Appium 2 runtime, both iOS and Android tests execute significantly more quickly, delivering meaningful reductions in overall test cycle time.
+
+Appium Turbo Test can be executed by making a request to the `/v2/sessions/native` endpoint with the `framework` value set to `APPIUM` or `XIUM`.
+
+Appium Turbo Test execution operates in 2 modes:
+
+* Immediate: system finds a matching device and executes the test script immediately. If a device is not found, test execution is terminated.
+
+* Queued: the request is put into a queue to be executed later when a matching device is available. If the test execution fails, it is retried until timed out.
+
+User guide for this feature will be available soon!
+
+== Automatically enable Developer mode for supported iOS/iPadOS versions
+
+
+
+== Scriptless Improvements
+
+*
+
+
+== General improvements and fixes
+
+*
