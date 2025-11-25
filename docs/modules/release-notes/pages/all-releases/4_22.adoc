@@ -3,10 +3,15 @@
 
 _Nov 22, 2025_
 
+== New hardware support
+
+This release added support for the following:
+
+* Cambrionix ThunderSync3-16 USB Hub
+
 == Appium Turbo Test Execution
 
-[NOTE]
-This feature is only available for Private and Local devices.
+NOTE: This feature is only available for Private and Local devices.
 
 Appium Turbo Test Execution reduces the Appium client–server communication overhead, enabling scripts to run faster with no code changes. When paired with Xium, Kobiton’s optimized Appium 2 runtime, both iOS and Android tests execute significantly more quickly, delivering meaningful reductions in overall test cycle time.
 
@@ -14,21 +19,44 @@ Appium Turbo Test can be executed by making a request to the `/v2/sessions/nativ
 
 Appium Turbo Test execution operates in 2 modes:
 
-* Immediate: system finds a matching device and executes the test script immediately. If a device is not found, test execution is terminated.
+* Immediate: system finds a matching device and executes the test script immediately. If a device is not found, test execution is cancelled and no retry will be attempted.
 
 * Queued: the request is put into a queue to be executed later when a matching device is available. If the test execution fails, it is retried until timed out.
 
-User guide for this feature will be available soon!
+The user guide for this feature will be available soon!
 
-== Automatically enable Developer mode for supported iOS/iPadOS versions
+== Automatically enable Developer mode for iOS/iPadOS 16 and above
 
+With this release, it is no longer required to enable Developer mode for iOS/iPadOS 16 and above devices before connecting them to the Mac mini host as it will be automatically enabled by deviceConnect.
 
+For iOS/iPadOS 12 to 15, devices still need to have Developer mode enabled manually before connecting to the Mac mini host.
 
 == Scriptless Improvements
 
-*
+* Improved revisit handling of aggressive swiping up on ListView in Android native apps.
 
+* Fixed incorrect bounding box and touch point for tablet devices during Test Case Remediation and Blocker Remediation.
+
+* Fixed cut off screenshot for tablet devices during Blocker Remediation.
+
+* Test management: replace the "Screenshot is not available" picture with the appropriate messages below for test steps that have no screenshot:
+
+** App Install step: shows source, name, and version of the installed app.
+
+** Home screen navigation steps during revisit: shows the message "This interaction was skipped".
+
+** For steps with screenshot capture turned off: shows the message "Screenshot Not Available".
 
 == General improvements and fixes
 
-*
+* Replace the label of the "View Xium logs" button to "View Appium logs".
+
+* Improve color contrast on the Device List and Manual Session page of the Portal to display better on IPS non color-graded monitor.
+
+* Updated Basic Appium server to `2.19.0`.
+
+* Biometric Authentication: supported React Native apps on iOS/iPadOS devices.
+
+== Known limitations
+
+* Network Payload Capture is not supported for iOS/iPadOS 26 devices when using option 2 (UI mode). Option 1 (supervision profile) is supported.
