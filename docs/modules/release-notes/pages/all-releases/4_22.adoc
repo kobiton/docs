@@ -11,17 +11,240 @@ This release added support for the following:
 
 == Appium Turbo Test Execution
 
-NOTE: This feature is only available for Private and Local devices.
+NOTE: This feature is only available for Cloud/Hybrid customers with Private and Local devices.
 
 Appium Turbo Test Execution reduces the Appium client–server communication overhead, enabling scripts to run faster with no code changes. When paired with Xium, Kobiton’s optimized Appium 2 runtime, both iOS and Android tests execute significantly more quickly, delivering meaningful reductions in overall test cycle time.
 
-Appium Turbo Test can be executed by making a request to the `/v2/sessions/native` endpoint with the `framework` value set to `APPIUM` or `XIUM`.
+To use Appium Turbo Test:
 
-Appium Turbo Test execution operates in 2 modes:
+* Prepare an Appium automation script, or convert an existing one to include the required environment variables in the following table, then map the variables to the specified Appium capabilities when you declare them.
 
-* Immediate: system finds a matching device and executes the test script immediately. If a device is not found, test execution is cancelled and no retry will be attempted.
++
 
-* Queued: the request is put into a queue to be executed later when a matching device is available. If the test execution fails, it is retried until timed out.
+WARNING: Do not hardcode the values of the required environment variables.
+
++
+
+[cols="1,2,1,1,2", options="header"]
+|===
+| Environment variable | Purpose | Mapped Appium capability | Required? | Behaviour if omitted
+
+| `KOBITON_URL`
+| Appium server URL
+| the Appium server URL when you initialize the driver
+| Yes
+| Test run fails.
+
+| `KOBITON_SESSION`
+| Internal capability used by Kobiton to attach test report.
+| `kobiton:session`
+| Yes
+| Test report is not available.
+
+| `KOBITON_UDID`
+| UDID of the device under test
+| `appium:udid`
+| Yes
+| Test run fails.
+
+| `KOBITON_USERNAME`
+| Kobiton username
+| `appium:username`
+| Yes
+| Test run fails.
+
+| `KOBITON_APIKEY`
+| Kobiton API Key
+| `appium:accessKey`
+| Yes
+| Test run fails.
+
+| `KOBITON_APP`
+| App to test
+| `appium:app`
+| No
+| Manually set `appium:app` in your capabilities, or remove it to test web apps.
+
+| `KOBITON_RUNTIME`
+| Determines whether to run a Basic Appium 2 or Xium script
+| `kobiton:runtime`
+| No
+| Manually set `kobiton:runtime` in your capabilities.
+
+| `KOBITON_SESSION_NAME`
+| Name of the test session
+| `kobiton:sessionName`
+| No
+| Manually set `kobiton:sessionName` in your capabilities.
+
+| `KOBITON_SESSION_DESCRIPTION`
+| Description for the test session
+| `kobiton:sessionDescription`
+| No
+| Manually set `kobiton:sessionDescription` in your capabilities.
+|===
+
+* In your script, create a folder named `output` at the project root folder, then direct all artifacts generated from the test run into this folder. This ensures that the artifacts can be downloaded from the test report after running.
+
+* Upload the test runner to Kobiton and obtain the test runner ID or download link.
+
+* Open a terminal program and make a request to the `/v2/sessions/native` endpoint using the following syntax. Replace placeholder values with your own.
+
++
+
+[source,bash]
+curl --location '<api_base_url>/v2/sessions/native' \
+--header 'Content-Type: application/json' \
+--header 'Authorization: Basic <credentials>' \
+--data '{
+  "test_framework": "<kobiton_runtime>",
+  "test_runner": "<test_runner>",
+  "session_name": "<kobiton_session_name>",
+  "session_description": "<kobiton_session_description>",
+  "app": "<kobiton_app>",
+  "udid": "<udid>",
+  "device_name": "<device_name>",
+  "tags": [<array_of_device_tags>],
+  "platform_version": "<device_os_version>",
+  "env": {<environment_variables>},
+  "args": [<array_of_arguments>],
+  "run_command": "<run_command>",
+  "execution_mode": "<execution_mode>",
+  "device_wait_timeout": <device_wait_timeout>,
+}'
+
+
++
+
+Refer to the following table for the required parameters in the request
+
+[cols="1,1,1,1,2", options="header"]
+|===
+| Field | Type | Required | Example | Description
+
+| `api_base_url`
+| string
+| Yes
+| `\https://api.kobiton.com`
+| API base URL
+
+| `credentials`
+| string
+| Yes
+| `a29iaXRvbmFkbWl****Rhdy0tNDMtMjQzMjQ=`
+| Base64-encoded `username_or_email:api_key`
+
+| `test_framework`
+| enum
+| Yes
+| `APPIUM`, `XIUM`
+| Use `APPIUM` to run Basic Appium 2 script or `XIUM` to run XIUM script.
+
+Requires `KOBITON_RUNTIME` environment variable.
+
+| `test_runner`
+| string
+| Yes
+| `\https://kobiton-*.s3.amazonaws.com/...`
+
+`f8b6967d-1975-4c08-92b7-037512416127`
+| Can be either of the below:
+
+• Download URL of the test runner
+
+• The unique ID of the test runner
+
+| `session_name`
+| string
+| No
+| A Turbo Test session
+| The display name of the session.
+
+Requires `KOBITON_SESSION_NAME` environment variable.
+
+| `session_description`
+| string
+| No
+| A Turbo Test session on Android
+| The description of the session.
+
+Requires `KOBITON_SESSION_DESCRIPTION` environment variable.
+
+| `app`
+| string
+| No
+| `kobiton-store:v34321`
+
+`\https://example.com/downloads/sample.ipa`
+| The app to test.
+Note: requires `KOBITON_APP` environment variable.
+
+| `udid`
+| string
+| Yes if `tags` and `device_name` are not provided
+| `8bf2c82a`
+| UDID of the Kobiton Private device
+
+| `device_name`
+| string
+| Yes if `tags` and `udid` are not provided
+| `Pixel 8`
+
+`iPad *`
+
+`**`
+| Name of the Kobiton Private device. Wildcard (*) supported.
+
+| `platform_version`
+| string
+| No
+| 12
+| OS version of the device.
+
+| `tags`
+| array of strings
+| Yes if `udid` and `device_name` are not provided
+| `[["healthy"], ["project", "dev"]]`
+| Tags to filter Private devices:
+
+• Single group: `[["healthy"]]`
+
+• OR within group: `[["project","dev"]]`
+
+• AND across groups: `[["healthy"], ["project","dev"]]`
+
+| `env`
+| object (string keys and values)
+| No
+| `{"VARIABLE_1": "value1", "VARIABLE_2": "value2"}`
+| Additional environment variables to export
+
+| `args`
+| array of strings
+| No
+| `["--arg value", "--another-arg value2"]`
+| Additional command-line arguments
+
+| `run_command`
+| string
+| Yes
+| `java -jar SimpleTurboTest.jar`
+| Command that runs the compiled `.jar` file. Includes all arguments.
+
+| `execution_mode`
+| enum
+| No
+| `IMMEDIATE` or `QUEUED`
+| Defines whether the test executes immediately or in a queue.
+
+| `device_wait_timeout`
+| integer (seconds)
+| No (only for QUEUED mode)
+| 20
+| Timeout for queued mode. If no device becomes available before timeout, test terminates.
+|===
+
+*
 
 The user guide for this feature will be available soon!
 
@@ -53,7 +276,7 @@ For iOS/iPadOS 12 to 15, devices still need to have Developer mode enabled manua
 
 * Improve color contrast on the Device List and Manual Session page of the Portal to display better on IPS non color-graded monitor.
 
-* Updated Basic Appium server to `2.19.0`.
+* Updated Basic Appium server to `2.19.0`
 
 * Biometric Authentication: supported React Native apps on iOS/iPadOS devices.
 
