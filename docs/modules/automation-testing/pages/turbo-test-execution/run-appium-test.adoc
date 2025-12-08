@@ -1,0 +1,719 @@
+= Run an Appium Turbo Test session
+:navtitle: Run an Appium test
+
+Learn how to run your Appium script with optimal execution speed and minimal latency using Appium Turbo Test Execution.
+
+== Why Use Turbo Test Execution with Appium
+
+Kobiton has analyzed thousands of Appium script executions from around the world and found that, on average, *28% of total execution time* is spent on communication between the Appium client and the Appium server.
+
+This overhead is influenced by factors such as:
+
+* *Network speed and latency* between the client and server
+* *Geographical distance* between where the test runs and where the Appium server is hosted
+* *Payload type and frequency*, including screenshots, logs, and element metadata exchanged during each command
+
+*Turbo Test Execution* minimizes this communication overhead by streamlining the client–server interaction. As a result, your Appium scripts execute *up to 28% faster* on average without requiring any code changes.
+
+When you use *Xium*, Kobiton’s optimized runtime, instead of *Basic Appium 2*:
+
+* Tests run *2.23× faster on iOS*
+* Tests run *3.34× faster on Android*
+
+The combination of Turbo Test Execution and Xium delivers a significant reduction in test cycle time – especially valuable for large suites running across multiple devices or CI pipelines.
+
+== Prepare the test project package
+
+=== Prerequisites for your automation script
+
+Turbo Test Execution for Appium supports *XIUM* and *Basic Appium 2* using Appium Java client 9.0.0 or later.
+
+=== Expose environment variables
+
+Alter your script to accept these environment variables. Do not hardcode the values of the required variables:
+
+[cols="1,1,1,1,2",options="header"]
+|===
+| Environment variable
+| Purpose
+| Mapped Appium capability
+| Required?
+| Behaviour if omitted
+
+| `KOBITON_URL`
+| Appium server URL
+| The Appium server URL when you initialize the driver
+| *Yes*
+| Test run fails.
+
+| `KOBITON_SESSION`
+| Internal capability used by Kobiton to attach test report.
+| `kobiton:session`
+| *Yes*
+| Test report is not available.
+
+| `KOBITON_UDID`
+| UDID of the device under test
+| `appium:udid`
+| *Yes*
+| Test run fails.
+
+| `KOBITON_USERNAME`
+| Kobiton username
+| `appium:username`
+| *Yes*
+| Test run fails.
+
+| `KOBITON_APIKEY`
+| Kobiton API Key
+| `appium:accessKey`
+| *Yes*
+| Test run fails.
+
+| `KOBITON_APP`
+| App to test
+| `appium:app`
+| No
+| Manually set `appium:app` in your capabilities, or remove to test web apps.
+
+| `KOBITON_RUNTIME`
+| Determines whether to run a Basic Appium 2 or Xium script
+| `kobiton:runtime`
+| No
+| Manually set `kobiton:runtime` in your capabilities.
+
+| `KOBITON_SESSION_NAME`
+| Name of the test session
+| `kobiton:sessionName`
+| No
+| Manually set `kobiton:sessionName` in your capabilities.
+
+| `KOBITON_SESSION_DESCRIPTION`
+| Description for the test session
+| `kobiton:sessionDescription`
+| No
+| Manually set `kobiton:sessionDescription` in your capabilities.
+|===
+
+=== Specify location for test artifacts
+
+Configure your test script so that artifacts generated from the test run are placed in the `output` directory of the project’s root folder. This ensures that the artifacts can be downloaded from the test report after running.
+
+NOTE: A future update of Turbo Test will create this `output` directory automatically.
+
+[source,java]
+----
+ // Create output directory
+try {
+    Files.createDirectories(Path.of("output"));
+} catch (IOException ignored) {
+}
+
+// Write logs to a test_log.txt file under output
+try (FileWriter log = new FileWriter("output/test_log.txt", true)) {
+    log.write("=== TurboTest Run Started ===\n");
+    log.write("Timestamp: " + LocalDateTime.now() + "\n");
+} ...
+----
+
+== Full example scripts
+
+=== UIAutomator2 (Android)
+
+[source,java]
+----
+public class SimpleTurboTest {
+    public static void main(String[] args) {
+
+        try {
+            Files.createDirectories(Path.of("output"));
+        } catch (IOException ignored) {
+        }
+
+        try (FileWriter log = new FileWriter("output/test_log.txt", true)) {
+            log.write("=== TurboTest Run Started ===\n");
+            log.write("Timestamp: " + LocalDateTime.now() + "\n");
+
+            // Required environment variables
+            String kobitonUrl  = System.getenv("KOBITON_URL");
+            String udid = System.getenv("KOBITON_UDID");
+            String kobitonSession = System.getenv("KOBITON_SESSION");
+            String kobitonUsername = System.getenv("KOBITON_USERNAME");
+            String kobitonApiKey = System.getenv("KOBITON_APIKEY");
+
+            // Optional environment variables
+            String app = System.getenv("KOBITON_APP");
+            String sessionName = System.getenv("KOBITON_SESSION_NAME");
+            String sessionDescription = System.getenv("KOBITON_SESSION_DESCRIPTION");
+            String kobitonRuntime = System.getenv("KOBITON_RUNTIME");
+
+            // Validate env vars
+            if (webdriverUrl == null || kobitonSession == null || udid == null ||
+                    webdriverUrl.isEmpty() || kobitonSession.isEmpty() || udid.isEmpty())  {
+                System.err.println("Missing required env vars: KOBITON_UDID, KOBITON_WEBDRIVER_URL, or KOBITON_SESSION");
+                return;
+            }
+
+            // Provide default values for optional env vars if null or empty
+            if (app == null || app.isEmpty()) {
+                app = "https://example.com/downloads/sample.apk";
+            }
+
+            if (sessionName == null || sessionName.isEmpty()) {
+                sessionName = "A Turbo Test session for Android";
+            }
+
+            if (sessionDescription == null || kobitonUsername.isEmpty()) {
+                sessionDescription = "A sample Turbo Test session for Android";
+            }
+
+            // Capabilities
+            DesiredCapabilities caps = new DesiredCapabilities();
+            caps.setCapability("kobiton:sessionName", sessionName);
+            caps.setCapability("kobiton:sessionDescription", sessionDescription);
+            caps.setCapability("appium:udid", udid);
+            caps.setCapability("appium:app", app);
+            caps.setCapability("appium:automationName", "UIAutomator2");
+            caps.setCapability("kobiton:session", kobitonSession);
+            caps.setCapability("appium:username", kobitonUsername);
+            caps.setCapability("appium:accessKey", kobitonApiKey);
+            caps.setCapability("kobiton:runtime", kobitonRuntime);
+
+            // Initialize driver
+            AndroidDriver driver = new AndroidDriver(new URI(kobitonBaseUrl).toURL(), caps);
+
+            // Save page source
+            Files.writeString(Path.of("output/page_source.xml"), driver.getPageSource());
+
+            // Screenshot
+            File shot = driver.getScreenshotAs(OutputType.FILE);
+            Files.copy(shot.toPath(), Path.of("output/screenshot.png"), StandardCopyOption.REPLACE_EXISTING);
+            log.write("Screenshot saved\n");
+
+            driver.quit();
+            log.write("Completed successfully at " + LocalDateTime.now() + "\n");
+
+            driver.quit();
+
+        } catch (Exception e) {
+            try (FileWriter err = new FileWriter("output/error.log", true)) {
+                err.write("Exception: " + e.getMessage() + "\n");
+                e.printStackTrace(new PrintWriter(err));
+            } catch (IOException ignored) {}
+            e.printStackTrace();
+        }
+    }
+}
+----
+
+=== XCUITest (iOS)
+
+[source,java]
+----
+public class SimpleTurboTest {
+    public static void main(String[] args) {
+
+        try {
+            Files.createDirectories(Path.of("output"));
+        } catch (IOException ignored) {
+        }
+
+        try (FileWriter log = new FileWriter("output/test_log.txt", true)) {
+            log.write("=== TurboTest Run Started ===\n");
+            log.write("Timestamp: " + LocalDateTime.now() + "\n");
+
+            // Required environment variables
+            String kobitonUrl  = System.getenv("KOBITON_URL");
+            String udid = System.getenv("KOBITON_UDID");
+            String kobitonSession = System.getenv("KOBITON_SESSION");
+            String kobitonUsername = System.getenv("KOBITON_USERNAME");
+            String kobitonApiKey = System.getenv("KOBITON_APIKEY");
+
+            // Optional environment variables
+            String app = System.getenv("KOBITON_APP");
+            String sessionName = System.getenv("KOBITON_SESSION_NAME");
+            String sessionDescription = System.getenv("KOBITON_SESSION_DESCRIPTION");
+            String kobitonRuntime = System.getenv("KOBITON_RUNTIME");
+
+            // Validate env vars
+            if (webdriverUrl == null || kobitonSession == null || udid == null ||
+                    webdriverUrl.isEmpty() || kobitonSession.isEmpty() || udid.isEmpty())  {
+                System.err.println("Missing required env vars: KOBITON_UDID, KOBITON_WEBDRIVER_URL, or KOBITON_SESSION");
+                return;
+            }
+
+            // Provide default values for optional env vars if null or empty
+            if (app == null || app.isEmpty()) {
+                app = "https://example.com/downloads/sample.ipa";
+            }
+
+            if (sessionName == null || sessionName.isEmpty()) {
+                sessionName = "A Turbo Test session for iOS";
+            }
+
+            if (sessionDescription == null || kobitonUsername.isEmpty()) {
+                sessionDescription = "A sample Turbo Test session for iOS";
+            }
+
+            // Capabilities
+            DesiredCapabilities caps = new DesiredCapabilities();
+            caps.setCapability("kobiton:sessionName", sessionName);
+            caps.setCapability("kobiton:sessionDescription", sessionDescription);
+            caps.setCapability("appium:udid", udid);
+            caps.setCapability("appium:app", app);
+            caps.setCapability("appium:automationName", "XCUITest");
+            caps.setCapability("kobiton:session", kobitonSession);
+            caps.setCapability("appium:username", kobitonUsername);
+            caps.setCapability("appium:accessKey", kobitonApiKey);
+            caps.setCapability("kobiton:runtime", kobitonRuntime);
+
+            // Initialize driver
+            IOSDriver driver = new IOSDriver(new URI(kobitonUrl).toURL(), caps);
+
+            // Save page source
+            Files.writeString(Path.of("output/page_source.xml"), driver.getPageSource());
+
+            // Screenshot
+            File shot = driver.getScreenshotAs(OutputType.FILE);
+            Files.copy(shot.toPath(), Path.of("output/screenshot.png"), StandardCopyOption.REPLACE_EXISTING);
+            log.write("Screenshot saved\n");
+
+            driver.quit();
+            log.write("Completed successfully at " + LocalDateTime.now() + "\n");
+
+            driver.quit();
+
+        } catch (Exception e) {
+            try (FileWriter err = new FileWriter("output/error.log", true)) {
+                err.write("Exception: " + e.getMessage() + "\n");
+                e.printStackTrace(new PrintWriter(err));
+            } catch (IOException ignored) {}
+            e.printStackTrace();
+        }
+    }
+}
+----
+
+=== Package the test project
+
+Run your tests locally to verify they work.
+
+Package the project into a `.zip` that contains the compiled `.jar` and all runtime dependencies.
+
+Name the archive, e.g., `test_runner.zip`.
+
+== Upload test runner
+
+=== Method 1: Using Kobiton Portal
+
+Log in to the Kobiton Portal using your Kobiton username/email and password.
+
+Navigate to the Device list by selecting *Devices* on the navigation pane.
+
+Select the 3-dot icon on the Android device you plan to use for testing.
+
+image::PLACEHOLDER_image_1[]
+
+Select *Automation Settings*.
+
+image::PLACEHOLDER_image_2[]
+
+In the Framework dropdown, select *UIAutomator/ Espresso* or *XCUITest*.
+
+image::PLACEHOLDER_image_3[]
+
+Scroll down until you find the Test Runner section, then select *Upload Test Runner*.
+
+image::PLACEHOLDER_image_4[]
+
+Choose the _test_runner.zip_ file and select *Open*.
+
+When the file finishes uploading, note down the value of *Test Runner Url*. This is the `<test_runner>` to be used later.
+
+image::PLACEHOLDER_image_5[]
+
+=== Method 2: Using Kobiton API
+
+Run the following API endpoints, in order, to upload the test runner to Kobiton:
+
+* https://api.kobiton.com/v2/docs#tag/NativeFrameworkAPI/operation/NativeFrameworkAPI_GetTestRunnerUploadUrl[Get test runner upload URL]
+* https://api.kobiton.com/v2/docs#tag/ApplicationAPI/operation/CustomAPIv2_ApplicationAPI_UploadFileToS3[Upload file to S3] (use the value of `upload_url` from _Get test runner upload URL_)
+* https://api.kobiton.com/v2/docs#tag/NativeFrameworkAPI/operation/NativeFrameworkAPI_GetTestRunnerUploadUrl[Get test runner download URL] (use the value of `path` from _Get test runner download URL_)
+
+Note down the value of `url` and `test_runner_id` from the response of the _Get test runner download URL_ endpoint. Either of these values can be the `<test_runner>` to be used later.
+
+NOTE: The `url` (test runner download URL) expires after about 12 hours. It is recommended to use the `test_runner_id` (test runner ID) as it does not expire.
+
+== Obtain Kobiton API credentials
+
+Log in to the Kobiton Portal using your Kobiton username/email and password.
+
+Select the *Help* icon, then choose *API*.
+
+image::PLACEHOLDER_image_6[]
+
+You will be taken to the API documentation home page. Note down the value of *Base URL (Rest)* as it is the `<api_base_url>` to be used later.
+
+image::PLACEHOLDER_image_7[]
+
+Go back to the Kobiton Portal and note down the value of one of the https://docs.kobiton.com/profile/manage-your-api-credentials#_get_an_api_key[API Keys]. This value, together with the Kobiton account’s username/email, is required to obtain the `<credentials>` to be used later. Add a new key if there aren’t any.
+
+image::PLACEHOLDER_image_8[]
+
+== Run the automation test
+
+Open a terminal and run the following command. Replace placeholder values with your own.
+
+[source,bash]
+----
+curl --location '<api_base_url>/v2/sessions/native' \
+--header 'Content-Type: application/json' \
+--header 'Authorization: Basic <credentials>' \
+--data '{
+  "test_framework": "<kobiton_runtime>",
+  "test_runner": "<test_runner>",
+  "session_name": "<kobiton_session_name>",
+  "session_description": "<kobiton_session_description>",
+  "app": "<kobiton_app>",
+  "udid": "<udid>",
+  "device_name": "<device_name>",
+  "tags": <array_of_device_tags>,
+  "platform_version": "<device_os_version>",
+  "env": {<environment_variables>},
+  "args": [<array_of_arguments>],
+  "run_command": "<run_command>",
+  "execution_mode": "<execution_mode>",
+  "device_wait_timeout": <device_wait_timeout>,
+}'
+----
+
+The system finds the first *Private device* that matches `<udid>`, then `<device_name>`, and then `<array_of_device_tags>`. It then runs the test script on the device.
+
+NOTE: Appium Turbo Test execution is not available for Public devices.
+
+If the request is successful, the response is similar to the below:
+
+* If `execution_mode` is `IMMEDIATE`:
+
+[source,json]
+----
+{
+  "session_id": <session_id>,
+  "device_udid": "<device_udid>",
+  "device_id": <device_id>,
+  "request_id": "<appium_request_id>",
+  "test_report_download_url": "<test_report_url>"
+}
+----
+
+* If `execution_mode` is `QUEUED`:
+
+[source,json]
+----
+{
+  "queue_id": "<queue_id>",
+  "requested_at": "<requested_at>",
+  "query_params": {
+    "query_param_1": "value"
+  }
+}
+----
+
+See the next sections for request and response parameter reference.
+
+=== API authentication reference
+
+* `<api_base_url>`
+** *Type:* string
+** *Required:* Yes
+** *Example:* `https://api.kobiton.com`
+** *Description:* API base URL
+
+* `<credentials>`
+** *Type:* string
+** *Required:* Yes
+** *Example:* `a29iaXRvbmFkbWluOjI4Nzk4MTI0LTItZGEtd2Rhdy0tNDMtMjQzMjQ=`
+** *Description:* Base64-encoded `username_or_email:api_key`
+
+=== Request parameter reference
+
+* `test_framework`
+** *Type:* enum
+** *Required:* Yes
+** *Example:* `APPIUM`, `XIUM`
+** *Description:* Use `APPIUM` to run Basic Appium 2 script or use `XIUM` to run XIUM script
+** *Note:* requires `KOBITON_RUNTIME` environment variable
+
+* `test_runner`
+** *Type:* string
+** *Required:* Yes
+** *Example:* either of the below:
+*** `https://kobiton-*.s3.amazonaws.com/test-runner/users/17/test_runner-xyz.zip`
+*** `f8b6967d-1975-4c08-92b7-037512416127`
+** *Description:* Can be either of the below:
+*** Download URL of the test runner
+*** The unique ID of the test runner
+
+* `session_name`
+** *Type:* string
+** *Required:* No
+** *Example:* `A Turbo Test session`
+** *Description:* The display name of the session
+** *Note:* requires `KOBITON_SESSION_NAME` environment variable.
+
+* `session_description`
+** *Type:* string
+** *Required:* No
+** *Example:* `A Turbo Test session on Android`
+** *Description:* The description of the session
+** *Note:* requires `KOBITON_SESSION_DESCRIPTION` environment variable.
+
+* `app`
+** *Type:* string
+** *Required:* No
+** *Example:* `kobiton-store:v34321`, `https://example.com/downloads/sample.ipa`
+** *Description:* The app to test.
+** *Note:* requires `KOBITON_APP` environment variable.
+
+* `udid`
+** *Type:* string
+** *Required:* Yes if `tags` and `device_name` is not provided
+** *Example:* `8bf2c82a`
+** *Description:* UDID of the Kobiton Private device
+
+* `device_name`
+** *Type:* string
+** *Required:* Yes if `tags` and `udid` is not provided
+** *Example:* `Pixel 8`, `iPad *`, `*`
+** *Description:* Name of the Kobiton Private device. Wildcard (`*`) is supported.
+
+* `platform_version`
+** *Type:* string
+** *Required:* No
+** *Example:* `12`
+** *Description:* OS version of the device
+
+* `tags`
+** *Type:* array of strings
+** *Required:* Yes if `udid` and `device_name` is not provided
+** *Example:* `[[ "healthy" ], [ "project", "dev" ]]`
+** *Description:* Tags to filter Private devices. Follow the below formats:
+*** Single group with a single tag: `[[ "healthy" ]]` (Only select devices with `healthy` tag)
+*** Single group with multiple tags (OR within group): `[[ "project", "dev" ]]` (Select devices with either `project` or `dev` tag)
+*** Multiple groups (AND across groups): `[[ "healthy" ], [ "project", "dev" ]]` (Select devices with `healthy` and either `project` or `dev` tag)
+
+* `env`
+** *Type:* object (string keys and values)
+** *Required:* No
+** *Example:* `{ "VARIABLE_1": "value1", "VARIABLE_2": "value2" }`
+** *Description:* Additional environment variables to export
+
+* `args`
+** *Type:* array of strings
+** *Required:* No
+** *Example:* `[ "--arg value", "--another-arg value2" ]`
+** *Description:* Additional command-line arguments for your test
+
+* `run_command`
+** *Type:* string
+** *Required:* Yes
+** *Example:* `java -jar SimpleTurboTest.jar`
+** *Description:* Command that runs the compiled `.jar` file of your script. Includes all command arguments here.
+
+* `execution_mode`
+** *Type:* enum
+** *Required:* No
+** *Values:* `IMMEDIATE` (default) or `QUEUED`
+** *Description:* Specify whether the test should be executed immediately or in a queue.
+*** `IMMEDIATE`: test executes immediately if the device is available. If there is no device available, the test terminates.
+*** `QUEUED`: test is put in a queue waiting for execution. If system cannot find an available device after the timeout period, the test terminates.
+
+* `device_wait_timeout`
+** *Type:* integer (in seconds)
+** *Condition:* only applies when `execution_mode` is `QUEUED`
+** *Required:* No
+** *Default value:* `900` – *Minimum:* `1` – *Maximum:* `86400`
+** *Example:* `20`
+** *Description:* The timeout period for queued execution mode. If system cannot find an available device after the timeout period, the test terminates.
+
+=== Response parameter reference
+
+==== Immediate execution mode
+
+* `session_id`
+** *Type:* integer
+** *Example:* `1135`
+** *Description:* ID of the session where the test executed. Use this ID to query the session details.
+
+* `device_udid`
+** *Type:* string
+** *Example:* `5***1FDCH730X1`
+** *Description:* UDID of the device under test. Use this to find the session.
+
+* `device_id`
+** *Type:* integer
+** *Example:* `31234`
+** *Description:* ID of the device under test. Use this ID to query the device details.
+
+* `request_id`
+** *Type:* string
+** *Example:* `d8c22b16-e863-47ed-b2b5-c1103c4a91a0`
+** *Description:* Appium request ID of the test run. *Note:* this is *not* Kobiton session ID.
+
+* `test_report_download_url`
+** *Type:* string
+** *Example:* `https://kobiton-acme.s3.amazonaws.com/organizations/6/sessions/d8c22b16-e863-47ed-b2b5-c1103c4a91a0/test-report.zip`
+** *Description:* URL to download the test report. Only downloadable after the test has finished.
+
+==== Queued execution mode
+
+* `queue_id`
+** *Type:* string
+** *Example:* `5a035e50-7032-4396-89ee-78428e8e3a9e`
+** *Description:* ID of the queue. Use this value to query the status of the test execution in the queue.
+
+* `requested_at`
+** *Type:* datetime (UTC)
+** *Example:* `2025-11-05T04:52:32.871Z`
+** *Description:* UTC date and time when the request is made.
+
+* `query_params`
+** *Type:* object
+** *Description:* The body of the request for reference.
+
+=== Check status for queued execution mode
+
+For requests made with queued execution mode, run the following command in a terminal to check the status. Replace placeholder values with your own.
+
+[source,bash]
+----
+curl --location '<api_base_url>/v2/sessions/queue/<queue_id>' \
+--header 'Content-Type: application/json' \
+--header 'Authorization: Basic <credentials>'
+----
+
+* `<queue_id>` is obtained from the response of the request.
+
+The response is similar to that of the test run request, with 2 additional parameters:
+
+* `status`
+** *Type:* enum
+** *Values:*
+*** `QUEUED`: the test is still waiting to be executed
+*** `TIMED_OUT`: the test timed out before an available device can be found
+*** `INITIATED`: the test is executed
+** *Description:* Status of the execution.
+
+* `session_id`
+** *Type:* integer
+** *Condition:* this value is only returned when `status` is `INITIATED`
+** *Example:* `1135`
+** *Description:* ID of the session where the test executed. Use this ID to query the session details.
+
+== Download test report
+
+=== Method 1: Using Kobiton Portal
+
+Log in to the Kobiton Portal using your Kobiton username/email and password.
+
+Navigate to *Sessions*, then find a session associated with the target device of the test. You can enter `<session_id>` in the session search box to quickly filter sessions.
+
+Select the session in the search results to navigate to Session Overview.
+
+Under *Test Report*, select *Download* to save the test report to your computer. *Note*: The test report can only be downloaded for sessions with the status: *Complete*.
+
+=== Method 2: Using Kobiton API
+
+For immediate execution mode, the report download URL is available in the response of the automation test run request.
+
+*Note:* the test report download URL expires after about 12 hours. To obtain a new test report download URL, follow the same steps for queued execution mode below.
+
+For queued execution mode, run the below command in the terminal to retrieve the test report download URL. Replace placeholder values with your own.
+
+[source,bash]
+----
+curl --location '<api_base_url>/v2/sessions/<session_id>' \
+--header 'Content-Type: application/json' \
+--header 'Authorization: Basic <credentials>'
+----
+
+* `<session_id>` is obtained from the response of the <<Run the automation test,check queue status>> request.
+
+The test report download URL is the value of `test_report_url` in the response. *Note:* if the `test_report_url` is not available, wait until the test has finished executing before trying again.
+
+== Sample demo script
+
+Download and extract the https://kobiton-software.s3.us-east-1.amazonaws.com/v4.21.2/TurboTest_updated.zip[sample demo script].
+
+The sample includes three main folders:
+
+* *TurboTestAndroid* – Contains scripts for Android devices.
+* *TurboTestiOS* – Contains scripts for iOS devices.
+* *artifacts* – Contains the precompiled `.jar` and `.zip` files for both Android and iOS.
+
+=== Use the precompiled test runners
+
+You can use the provided test runners to run a Turbo Test Session.
+
+* Locate the test runners at `artifacts/test_runners.zip`. This file includes `.jar` files for both Android and iOS tests.
+* Upload the test runners to Kobiton and obtain the test runner download URL or test runner ID.
+* Find a device in Kobiton and note down its UDID.
+* Find an app to test and note down its Kobiton store ID or download URL.
+* Make the following API requests in your terminal after updating the placeholders with your values. You can change `execution_mode` to `QUEUED` to queue multiple tests.
+
+**Android:**
+
+[source,bash]
+----
+curl --location '<api_base_url>/v2/sessions/native' \
+--header 'Content-Type: application/json' \
+--header 'Authorization: Basic <credentials>' \
+--data '{
+  "test_framework": "XIUM",
+  "test_runner": "<test_runner_url_or_id>",
+  "session_name": "A Turbo Test session on Android",
+  "session_description": "A session to demo the features of Turbo Test on Android",
+  "app": <app>,
+  "udid": "<udid>",
+  "run_command": "java -jar TurboTestAndroid.jar",
+  "execution_mode": "IMMEDIATE"
+}'
+----
+
+**iOS:**
+
+[source,bash]
+----
+curl --location '<api_base_url>/v2/sessions/native' \
+--header 'Content-Type: application/json' \
+--header 'Authorization: Basic <credentials>' \
+--data '{
+  "test_framework": "APPIUM",
+  "test_runner": "<test_runner_url_or_id>",
+  "session_name": "A Turbo Test session on iOS",
+  "session_description": "A session to demo the features of Turbo Test on iOS",
+  "app": <app>,
+  "udid": "<udid>",
+  "run_command": "java -jar TurboTestiOS.jar",
+  "execution_mode": "IMMEDIATE"
+}'
+----
+
+* Download the test report from the URL in the response.
+** If `execution_mode` is `QUEUED`, follow the instructions from the <<Download test report>> section to obtain the test report.
+* The test report should contain:
+** A `stdout.log` file that captures the output of the run command.
+** A `stderr.log` file that captures the error(s) when executing the run command, if any.
+** An `output` folder that contains the test log, XML page source, and screenshot of the app under test.
+
+=== Modify and recompile scripts
+
+You can modify the test scripts to fit your testing needs. After making changes:
+
+* Recompile the `.jar` files.
+* Package them as `.zip` test runners.
+* Upload the updated test runners to Kobiton.
+
+== Limitation
+
+* Mixed sessions are not supported for Appium Turbo Test.
