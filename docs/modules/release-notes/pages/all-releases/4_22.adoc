@@ -1,0 +1,134 @@
+= Kobiton 4.22 Release Notes
+:navtitle: Kobiton 4.22 release notes
+
+_Nov 22, 2025_
+
+== New hardware support
+
+This release added support for the following:
+
+* Cambrionix ThunderSync3-16 USB Hub
+
+== Appium Turbo Test Execution
+
+[NOTE]
+
+====
+
+* This feature is only available for Cloud/Hybrid customers with Private and Local devices.
+
+* Mixed sessions are not supported for Appium Turbo Test.
+
+====
+
+Appium Turbo Test Execution reduces the Appium client–server communication overhead, enabling scripts to run faster with no code changes. When paired with Xium, Kobiton’s optimized Appium runtime, both iOS and Android tests run substantially faster, delivering meaningful reductions in overall test cycle time.
+
+The full user guide for Appium Turbo Test Execution will be published soon. In the meantime, please review the sample below.
+
+=== Appium Turbo Test Sample
+
+Try out Appium Turbo Test with our https://kobiton-software.s3.us-east-1.amazonaws.com/v4.21.2/TurboTest_updated.zip[sample script].
+
+The sample includes three main folders:
+
+* *TurboTestAndroid* – Contains scripts for Android devices.
+
+* *TurboTestiOS* – Contains scripts for iOS devices.
+
+* *artifacts* – Contains the precompiled .jar and .zip files for both Android and iOS.
+
+You can use the provided test runners to run an Appium Turbo Test Session.
+
+* Locate the test runners at `artifacts/test_runners.zip`. This file includes `.jar` files for both Android and iOS tests.
+
+* Upload the test runners to Kobiton and obtain the test runner download URL or test runner ID.
+
+* Find a device in Kobiton and note down its UDID.
+
+* Find an app to test and note down its kobiton store ID or download URL.
+
+* Make the following API requests in your terminal after updating the placeholders with your values.
+
+** *Android*:
++
+[source,bash]
+curl --location '<api_base_url>/v2/sessions/native' \
+--header 'Content-Type: application/json' \
+--header 'Authorization: Basic <credentials>' \
+--data '{
+"test_framework": "XIUM",
+"test_runner": "<test_runner_url_or_id>",
+"session_name": "A Turbo Test session on Android",
+"session_description": "A session to demo the features of Turbo Test on Android",
+"app": <app>,
+"udid": "<udid>",
+"run_command": "java -jar TurboTestAndroid.jar",
+"execution_mode": "IMMEDIATE"
+}'
+
+** *iOS*:
++
+[source,bash]
+curl --location '<api_base_url>/v2/sessions/native' \
+--header 'Content-Type: application/json' \
+--header 'Authorization: Basic <credentials>' \
+--data '{
+"test_framework": "APPIUM",
+"test_runner": "<test_runner_url_or_id>",
+"session_name": "A Turbo Test session on iOS",
+"session_description": "A session to demo the features of Turbo Test on iOS",
+"app": <app>,
+"udid": "<udid>",
+"run_command": "java -jar TurboTestiOS.jar",
+"execution_mode": "IMMEDIATE"
+}'
+
+* Download the test report from the URL in the response.
+
+* The test report should contain:
+
+** A `stdout.log` file that captures the output of the run command.
+
+** A `stderr.log` file that captures the error(s) when executing the run command, if any.
+
+** An `output` folder that contains the test log, XML page source, and screenshot of the app under test.
+
+You can modify the test scripts to fit your testing needs. After making changes:
+
+* Recompile the `.jar` files.
+
+* Package them as `.zip` test runners.
+
+* Upload the updated test runners to Kobiton.
+
+== Automatically enable Developer mode for iOS/iPadOS 16 and above
+
+With this release, you no longer need to manually enable Developer Mode on iOS or iPadOS 16+ devices before connecting them to the Mac mini host. Developer Mode will now be automatically enabled by deviceConnect.
+
+For iOS/iPadOS 12 to 15, devices still need to have Developer mode enabled manually before connecting to the Mac mini host.
+
+== Scriptless Improvements
+
+* Improved revisit handling of rapid swiping up on ListView in Android native apps.
+
+* Fixed incorrect bounding box and touch point for tablet devices during Test Case Remediation and Blocker Remediation.
+
+* Fixed cut off screenshot for tablet devices during Blocker Remediation.
+
+* Test management: replace the "Screenshot is not available" picture with the appropriate messages below for test steps that have no screenshot:
+
+** App Install step: shows source, name, and version of the installed app.
+
+** Home screen navigation steps during revisit: shows the message "This interaction was skipped".
+
+** For steps with screenshot capture turned off: shows the message "Screenshot Not Available".
+
+== General improvements and fixes
+
+* Replace the label of the "View Xium logs" button with "View Appium logs".
+
+* Improved color contrast on the Device List and Manual Session pages in the Portal to ensure better visibility on IPS, non–color-graded monitors.
+
+* Updated Basic Appium server to `2.19.0`
+
+* Biometric Authentication: supported React Native apps on iOS/iPadOS devices.
