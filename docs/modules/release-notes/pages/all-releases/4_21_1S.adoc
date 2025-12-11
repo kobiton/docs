@@ -3,6 +3,167 @@
 
 _Nov 3, 2025_
 
+== New OS support
+
+include::supported-platforms:partial$xcode-compat.adoc[]
+
+* iOS/iPadOS 26 official
+
+** Passcode mode is not supported.
+** App installation may fail with the error: `POST /app/launch, The request to open "app_name" failed`. After dismissing the error, the app installs and launches normally.
+** iOS 26 only: The WEBVIEW context is not available for inspection in hybrid apps.
+** iPadOS 26 only: Elements are not available for inspection in Windowed Apps mode.
+
+* iOS/iPadOS 18.6 official
+
+
+== Audio Injection in a manual session
+
+[NOTE]
+Audio injection requires at least one additional Bluetooth bridge server. Contact Kobiton support if you are interested in enabling this feature.
+
+Audio injection, first introduced in automation sessions with the 4.19 release, is now also available in manual sessions.
+
+To inject audio in a manual session:
+
+* Start a manual session on a device with Bluetooth audio enabled.
+
+* Upload a supported audio file using the *Audio Injection* option under *Media Injection*.
+
+* Select *Inject*.
+
+Devices with Bluetooth audio enabled are marked with a microphone icon in the Device List. You can also filter for these devices by choosing *Audio → Supported* in the search bar on the Device List.
+
+[NOTE]
+====
+
+* Supported audio input: Maximum 30 MB; WAV (PCM 16-bit, mono, 8 kHz); OGG or MP3 (mono, 8 kHz). Files not in the correct format may sound like static.
+
+* Session mode: Supports Standard mode only.
+
+* Bluetooth bridge server limits: One Mac mini host can support one Bluetooth bridge server, with up to two devices.
+
+* Permissions: The app under test must have microphone permission enabled.
+
+* Device state: Ensure the device is actively using the microphone (call, meeting, or voice recording) and that it is not muted before injecting.
+
+* Android apps: Some voice recording apps require setting Bluetooth as the audio input in system settings.
+
+* Audio output:
+** Supported: HFP (calls, Google Meet, Zoom)
+** Not supported: A2DP (YouTube, music, media playback)
+
+* Availability: Not currently supported in Public Cloud.
+
+====
+
+== Cleanup Policy: Ability to specify apps to keep on device after a session
+
+For customers who require certain apps to persist across test sessions while still enforcing a cleanup policy, a new option is now available. You can exempt apps from cleanup by specifying their bundle ID or package name when creating or editing a custom cleanup policy. Both exact values and the wildcard character (`*`) are supported.
+
+Examples: `com.example.SampleApp`, `com.example.\*`, `org.*`
+
+
+
+[NOTE]
+
+====
+
+* When a device reconnects after a restart or disconnection, the organization’s default cleanup policy (not the team’s) is applied.
+
+* To ensure an app is exempted from cleanup and persists on organization devices, set a custom cleanup policy with app exemptions as the organization's default cleanup policy.
+
+====
+
+== Streamlined Kobiton Portal login flow
+
+We simplified the steps required for signing in to the Kobiton Portal, making the SSO login experience faster and more intuitive. Details are as followed:
+
+* On the login screen, enter your username or email and choose *Continue*.
+
+* Depending on your organization's authentication settings:
+
+** For organizations without SSO enabled, fill in the password and log in.
+** For organizations that only allow SSO login, the user is redirected to the SSO login page. On first login, the user will need to enter the company identifier specified during SSO setup in the Kobiton Portal.
+** For organizations that allow both SSO and Kobiton credentials login, the password field is displayed along with the *Login with SSO* option.
+
+We also removed the *Register Now* link from the login page for Standalone deployments. This link creates a new organization in our Cloud environment and is not applicable for Standalone deployments that operate with a single organization.
+
+== Scriptless Automation: Improvements to test case remediation flow
+
+For customers using AI-Augmented Testing (Scriptless), we introduced several enhancements to the Test Case Details page to streamline test case verification and maintenance:
+
+* Removed the trash icon and checkbox under each test case.
+
+* Added a new 3-dot menu under each test step with options to:
+** Delete test step
+** Remediate test step (available for any touch action, even if our AI did not flag the step for remediation)
+** Edit remediation (for previously remediated steps)
+
+* Test steps can now be remediated an unlimited number of times.
+
+[NOTE]
+
+====
+
+* Only touch actions can be remediated.
+
+* Only elements under the touch point can be selected for remediation. If an element falls outside this area, it cannot be selected.
+
+* Only remediations performed on the latest version of the test case can be saved. The remediate test step option still appears in older versions of the test case, but edits cannot be saved.
+
+====
+
+== Appium Self-Healing (flexCorrect): Use automation session as baseline
+
+You can now enable Appium Self-Healing using your existing Appium scripts with an automation session as the baseline. This extends the feature beyond Kobiton-generated scripts, allowing customers to gain self-healing benefits without rewriting or migrating their current scripts.
+
+How to use this feature:
+
+* Run an Appium automation script on a device and note the session ID.
+** (Optional) Set the capability `kobiton:scriptlessEnable` to true to enable Synchronous Inventory Capturing during the run.
+
+* Before your next run, add the following capabilities to your script:
+** `kobiton:flexCorrect`: set to true to enable Appium Self-Healing.
+** `kobiton:baselineSessionId`: set this value to the ID of the baseline session you recorded earlier.
+
+* Execute the updated script. You may select different device models and OS versions within the same platform (Android or iOS).
+
+* During the session, if an element cannot be found due to locator changes, the AI automatically selects the best match element and notifies the tester via Session Explorer
+
+* View any Appium Self-Healing changes in Session Explorer and easily copy them to update your script as needed.
+
+[NOTE]
+Appium Self-Healing is only available in XIUM sessions; it is not supported in Basic Appium 2 sessions.
+
+
+== Native framework automation improvements
+
+We introduced several enhancements and addressed a few bugs for Native Framework automation (XCUITest, UIAutomator, and Espresso). Primary changes include:
+
+* JUnit test reports:
+** Added JUnit test report support for XCUITest, UIAutomator, and Espresso
+** Reports can be downloaded from the Test Report section in Session Overview
+
+* Expanded `reset` options before test execution
+** `FULL`: Fully clears the application and its data.
+** `DATA`: Clears only the data. The app is not reinstalled if already present. This option speeds up repeat tests where the app has not changed.
+** `NONE`: Leaves both the app and its data intact. Fastest option for retesting against existing data.
+
+== Network Payload Capture (NPC): Alternative proxy setup option for iOS/iPadOS
+
+Earlier this year, we simplified the NPC proxy setup flow for iOS/iPadOS, which required all devices on a Mac mini to use a single supervision profile.
+
+To support customers utilizing multiple supervision profiles, we have reintroduced the manual proxy setup method, providing greater flexibility.
+
+[NOTE]
+
+====
+
+A Mac mini host can use either the automatic proxy setup (via supervision) or the manual method, but not both.
+
+====
+
 == deviceConnect: Improvements to provisioning profile handling
 
 For Mac mini hosts without internet access, provisioning profiles could become invalid before expiration because Apple requires re-validation every 7 days. When this occurs, hosted iOS and iPadOS devices go offline.
@@ -51,11 +212,37 @@ With this update, _app install_ steps in the Test Case Details page now display 
 
 == Scriptless Improvements
 
+We continue to improve our Scriptless Automation. A few changes to note:
+
+* Addressed `Init_session_failed` session errors that occurred when Scriptless attempted to launch an app already installed on iOS devices.
+
+* Fixed an error `Revisit has been panic` during revisit execution.
+
 * Bug Fix: Resolved an issue where deleting all test steps for an app in a test case caused any test suite using that test case to fail during execution.
 
 * Bug Fix: Fixed an issue where clearing the search box in the Blocker Remediation pop-up did not restore the complete view tree.
 
 == General improvements and fixes
+
+Fixed apps stuck in processing after uploading to Cloud App Repo.
+
+* Reduced the chance of temporary disconnection at the start of a session on some device models.
+
+* Fixed iOS devices becoming offline after service restart in passcode-enabled org.
+
+* Fixed passcode not generated for new Android devices in passcode-enabled org.
+
+* Addressed session timeout when app re-signing failed during the session.
+
+* Fixed blurriness in manual session with Lightning mode.
+
+* Fixed Class Chain Locator in XIUM for iOS devices.
+
+* Fixed DTH-500 error when launching devices due to too many repeated failed requests.
+
+* Manual sessions now support more responsive swiping from any screen edge, including swipes that begin outside the device screen.
+
+* Fixed an issue with manually upgrading deviceConnect via the Device Management page.
 
 * deviceConnect Console: Provisioning profile deletion option restored.
 
@@ -63,12 +250,8 @@ With this update, _app install_ steps in the Test Case Details page now display 
 
 == Standalone improvements and fixes
 
-* Test Management: Preserved test management data from being purged by the scheduled cleanup script.
+* Test Management: Improved data handling to ensure test cases are not affected during data cleanup processes.
 
-* Removed the Register Now (register a new organization) button as it caused issues with new Standalone users where only 1 organization is needed.
-
-* Added the Register with SSO link to support first-time login for SSO new users.
-
-* Optimized GPU memory handling for AI-Service.
+* Optimized GPU memory handling for AI-augmented testing features.
 
 * Removed the _Subscribe to enterprise to use SAML SSO_ banner at the SSO setup page.
