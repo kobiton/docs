@@ -9,7 +9,7 @@ include::supported-platforms:partial$xcode-compat.adoc[]
 
 * iOS/iPadOS 26 official
 
-** Passcode mode is not supported.
+** Kobiton automated passcode management is not available for iOS 26 devices. Contact your account manager or support to discuss passcode options.
 ** App installation may fail with the error: `POST /app/launch, The request to open "app_name" failed`. After dismissing the error, the app installs and launches normally.
 ** iOS 26 only: The WEBVIEW context is not available for inspection in hybrid apps.
 ** iPadOS 26 only: Elements are not available for inspection in Windowed Apps mode.
@@ -91,7 +91,7 @@ We also removed the *Register Now* link from the login page for Standalone deplo
 
 == Scriptless Automation: Improvements to test case remediation flow
 
-For customers using AI-Augmented Testing (Scriptless), we introduced several enhancements to the Test Case Details page to streamline test case verification and maintenance:
+For customers using our AI-augmented Scriptless automation, we introduced several enhancements to the Test Case Details page to streamline test case verification and maintenance:
 
 * Removed the trash icon and checkbox under each test case.
 
@@ -113,6 +113,18 @@ For customers using AI-Augmented Testing (Scriptless), we introduced several enh
 * Only remediations performed on the latest version of the test case can be saved. The remediate test step option still appears in older versions of the test case, but edits cannot be saved.
 
 ====
+
+== Scriptless Automation: Additional improvements
+
+We continue to improve our Scriptless Automation. A few changes to note:
+
+* Addressed `Init_session_failed` session errors that occurred when Scriptless attempted to launch an app already installed on iOS devices.
+
+* Fixed an error `Revisit has been panic` during revisit execution.
+
+* Bug Fix: Resolved an issue where deleting all test steps for an app in a test case caused any test suite using that test case to fail during execution.
+
+* Bug Fix: Fixed an issue where clearing the search box in the Blocker Remediation pop-up did not restore the complete view tree.
 
 == Appium Self-Healing (flexCorrect): Use automation session as baseline
 
@@ -209,18 +221,6 @@ With this update, _app install_ steps in the Test Case Details page now display 
 * App name
 
 * App version
-
-== Scriptless Improvements
-
-We continue to improve our Scriptless Automation. A few changes to note:
-
-* Addressed `Init_session_failed` session errors that occurred when Scriptless attempted to launch an app already installed on iOS devices.
-
-* Fixed an error `Revisit has been panic` during revisit execution.
-
-* Bug Fix: Resolved an issue where deleting all test steps for an app in a test case caused any test suite using that test case to fail during execution.
-
-* Bug Fix: Fixed an issue where clearing the search box in the Blocker Remediation pop-up did not restore the complete view tree.
 
 == General improvements and fixes
 
