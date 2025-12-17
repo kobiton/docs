@@ -1,7 +1,22 @@
-= Run an Appium Turbo Test session
+= Run an Appium Turbo test
 :navtitle: Run an Appium test
 
+[NOTE]
+====
+This feature is currently in Beta and is limited to Private devices.
+====
+
 Learn how to run your Appium script with optimal execution speed and minimal latency using Appium Turbo Test Execution.
+
+After reading this document, you will be able to:
+
+* Modify your existing Appium automation script to make it compatible with Appium Turbo Test.
+
+* Package your script into a test runner and upload it to Kobiton.
+
+* Make a request to the Kobiton API v2 to execute the Appium Turbo test with the uploaded test runner.
+
+* Retrieve the test result and other test artifacts.
 
 == Why Use Turbo Test Execution with Appium
 
@@ -13,7 +28,7 @@ This overhead is influenced by factors such as:
 * *Geographical distance* between where the test runs and where the Appium server is hosted
 * *Payload type and frequency*, including screenshots, logs, and element metadata exchanged during each command
 
-*Turbo Test Execution* minimizes this communication overhead by streamlining the client–server interaction. As a result, your Appium scripts execute *up to 28% faster* on average without requiring any code changes.
+*Turbo Test Execution* minimizes this communication overhead by streamlining the client–server interaction.As a result, your Appium scripts execute *up to 28% faster* on average without requiring any code changes.
 
 When you use *Xium*, Kobiton’s optimized runtime, instead of *Basic Appium 2*:
 
@@ -22,11 +37,34 @@ When you use *Xium*, Kobiton’s optimized runtime, instead of *Basic Appium 2*:
 
 The combination of Turbo Test Execution and Xium delivers a significant reduction in test cycle time – especially valuable for large suites running across multiple devices or CI pipelines.
 
+[#_prerequisites]
+== Prerequisites
+
+* A Kobiton account.Note down the below information:
+
+** xref:profile:manage-your-profile.adoc#_view_your_username_and_email[Username or email,window=read-later]
+
+** xref:profile:manage-your-api-credentials.adoc#_obtain_the_api_base_url[API base URL,window=read-later]
+
+** xref:profile:manage-your-api-credentials.adoc#_get_an_api_key[API Key,window=read-later]
+
+* Private devices available in the Kobiton account.
+
+* An Appium automation script that satisfies the below prerequisites.
+
++
+
+[cols="1,1"]
+|===
+|Language |Additional requirements
+|Java | Compatible with `java-client` 9.0.0 or newer.
+|===
+
++
+
+NOTE: Contact Kobiton support if you want additional languages or frameworks supported.
+
 == Prepare the test project package
-
-=== Prerequisites for your automation script
-
-Turbo Test Execution for Appium supports *XIUM* and *Basic Appium 2* using Appium Java client 9.0.0 or later.
 
 === Expose environment variables
 
@@ -312,25 +350,27 @@ Navigate to the Device list by selecting *Devices* on the navigation pane.
 
 Select the 3-dot icon on the Android device you plan to use for testing.
 
-image::PLACEHOLDER_image_1[]
+image:automation-testing:open-device-overview-context.png[width="1000",alt="Navigate to Devices and select the 3-dot icon on an Android device"]
 
 Select *Automation Settings*.
 
-image::PLACEHOLDER_image_2[]
+image:automation-testing:device-overview-closeup.png[width="1000",alt="Note down the device UDID, then select Automation Settings"]
 
 In the Framework dropdown, select *UIAutomator/ Espresso* or *XCUITest*.
 
-image::PLACEHOLDER_image_3[]
+image:automation-testing:automation-framework-uiautomator-espresso.png[width="1000",alt="Select UIAutomator or Espresso"]
 
 Scroll down until you find the Test Runner section, then select *Upload Test Runner*.
 
-image::PLACEHOLDER_image_4[]
+image:automation-testing:upload-test-runner.png[width="1000",alt="Select Upload Test Runner under the Test Runner section"]
 
 Choose the _test_runner.zip_ file and select *Open*.
 
 When the file finishes uploading, note down the value of *Test Runner Url*. This is the `<test_runner>` to be used later.
 
-image::PLACEHOLDER_image_5[]
+image:automation-testing:test-runner-url.png[width="500",alt="Note down the value of Test Runner URL"]
+
+NOTE: The Test Runner URL expires after about 12 hours.
 
 === Method 2: Using Kobiton API
 
@@ -343,22 +383,6 @@ Run the following API endpoints, in order, to upload the test runner to Kobiton:
 Note down the value of `url` and `test_runner_id` from the response of the _Get test runner download URL_ endpoint. Either of these values can be the `<test_runner>` to be used later.
 
 NOTE: The `url` (test runner download URL) expires after about 12 hours. It is recommended to use the `test_runner_id` (test runner ID) as it does not expire.
-
-== Obtain Kobiton API credentials
-
-Log in to the Kobiton Portal using your Kobiton username/email and password.
-
-Select the *Help* icon, then choose *API*.
-
-image::PLACEHOLDER_image_6[]
-
-You will be taken to the API documentation home page. Note down the value of *Base URL (Rest)* as it is the `<api_base_url>` to be used later.
-
-image::PLACEHOLDER_image_7[]
-
-Go back to the Kobiton Portal and note down the value of one of the https://docs.kobiton.com/profile/manage-your-api-credentials#_get_an_api_key[API Keys]. This value, together with the Kobiton account’s username/email, is required to obtain the `<credentials>` to be used later. Add a new key if there aren’t any.
-
-image::PLACEHOLDER_image_8[]
 
 == Run the automation test
 
@@ -398,9 +422,9 @@ If the request is successful, the response is similar to the below:
 [source,json]
 ----
 {
-  "session_id": <session_id>,
+  "session_id": "<session_id>",
   "device_udid": "<device_udid>",
-  "device_id": <device_id>,
+  "device_id": "<device_id>",
   "request_id": "<appium_request_id>",
   "test_report_download_url": "<test_report_url>"
 }
@@ -427,13 +451,13 @@ See the next sections for request and response parameter reference.
 ** *Type:* string
 ** *Required:* Yes
 ** *Example:* `https://api.kobiton.com`
-** *Description:* API base URL
+** *Description:* The API base URL.
 
 * `<credentials>`
 ** *Type:* string
 ** *Required:* Yes
 ** *Example:* `a29iaXRvbmFkbWluOjI4Nzk4MTI0LTItZGEtd2Rhdy0tNDMtMjQzMjQ=`
-** *Description:* Base64-encoded `username_or_email:api_key`
+** *Description:* Base64-encoded `username_or_email:api_key`.
 
 === Request parameter reference
 
