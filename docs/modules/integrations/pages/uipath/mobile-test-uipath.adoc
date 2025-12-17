@@ -10,225 +10,220 @@ recorded automation steps, and executed a full test flow.
 
 Kobiton currently supports mobile automation in UiPath Studio for:
 
-* iOS devices (Portal 4.19.6S and above). +
-* Android devices (Portal 4.21.1S and above). +
+* iOS devices (Kobiton 4.19.6 and above).
+* Android devices (Kobiton 4.21.1 and newer, including 4.21.1S).
 
-=== *Contents*
-
-* https://kobiton.atlassian.net/wiki/spaces/KOBITON/pages/4606885897/Mobile+Automation+with+UiPath+and+Kobiton#Prerequisites[Prerequisites] +
-* https://kobiton.atlassian.net/wiki/spaces/KOBITON/pages/4606885897/Mobile+Automation+with+UiPath+and+Kobiton#Open-and-configure-a-project[Open
-and configure a project] +
-* https://kobiton.atlassian.net/wiki/spaces/KOBITON/pages/4606885897/Mobile+Automation+with+UiPath+and+Kobiton#Add-a-mobile-device-in-UiPath[Add
-a mobile device in UiPath] +
-* https://kobiton.atlassian.net/wiki/spaces/KOBITON/pages/4606885897/Mobile+Automation+with+UiPath+and+Kobiton#Add-a-mobile-application-in-UiPath[Add
-a mobile application in UiPath] +
-* https://kobiton.atlassian.net/wiki/spaces/KOBITON/pages/4606885897/Mobile+Automation+with+UiPath+and+Kobiton#Connect-to-the-device-and-record-test-steps[Connect
-to the device and record test steps] +
-* https://kobiton.atlassian.net/wiki/spaces/KOBITON/pages/4606885897/Mobile+Automation+with+UiPath+and+Kobiton#Create-and-execute-test-with-recorded-steps[Create
-and execute test with recorded steps]
-
-=== *Prerequisites*
+== Prerequisites
 
 * An active Kobiton account. You will need the following information
 from your account in the Kobiton Portal:
-** https://docs.kobiton.com/profile/manage-your-profile#_open_your_profile[Username] +
-** https://docs.kobiton.com/profile/manage-your-api-credentials#_get_an_api_key[API
-key] +
-** https://docs.kobiton.com/profile/manage-your-api-credentials#_get_server_url[Appium
-Server URL] +
-* Ensure UiPath Studio is installed and activated. +
+** xref:profile:manage-your-profile.adoc#_open_your_profile[Username]
+** xref:profile:manage-your-api-credentials.adoc#_get_an_api_key[API
+key]
+** xref:profile:manage-your-api-credentials.adoc#_get_server_url[Appium
+Server URL]
+* Ensure UiPath Studio is installed and activated.
 * If you are working with Android devices, verify that your Kobiton
 version is 4.21.1, 4.21.1S, or newer.
 
-=== *Open and configure a project*
+== Open and configure a project
 
-Launch *UiPath Studio*.
+Launch UiPath Studio
 
-Open an existing project or create a new blank project. If you need help
+Open an existing project or create a new blank project. For help
 creating a new project, follow UiPath’s official instructions in
 https://docs.uipath.com/studio/standalone/latest/user-guide/creating-basic-process[this
 guide].
 
 Select *Manage Packages* from the ribbon.
 
-image:uipath-img01.png[width=600, alt="UiPath open tab showing Manage Packages ribbon item."]
+image:uipath-manage-packages.png[width=600, alt="UiPath open tab showing Manage Packages ribbon item."]
 
 In the search bar, enter *UiPath.MobileAutomation.Activities*. Select
 the package and choose *Install*. Ensure the selected version to install
 is 24.10.0 or later.
 
-image:uipath-img02.png[width=600, alt="UiPath manage packages menu open to official tab which shows version number and gives option to install."]
+image:uipath-mobile-automation-activities-v24.png[width=600, alt="UiPath manage packages menu open to official tab which shows version number and gives option to install."]
 
 Select *Save* to start the installation.
 
 After the installation finishes, the *Mobile Automation* option appears
 in the ribbon.
 
-=== *Add a mobile device in UiPath*
+== Add a mobile device in UiPath
 
 Select *Mobile Automation → Mobile Device Manager* in the ribbon. This
 launches a new Mobile Device Manager window.
 
-image:uipath-img03.png[width=600, alt="UiPath mobile automation ribbon tab open with options menu."]
+image:uipath-mobile-automation-menu.png[width=600, alt="UiPath mobile automation ribbon tab open with options menu."]
 
 In the Mobile Device Manager window, select *Open Devices*, then the
-*plus ({plus}) icon* to create a new device connection.
+*plus ({+}) icon* to create a new device connection.
 
-image:uipath-img04.png[width=600, alt="UiPath mobile device manager window open to devices screen."]
+image:uipath-mobile-device-manager-welcome.png[width=600, alt="UiPath mobile device manager window open to devices screen."]
 
 In the *Add a device* window, fill in the following information:
 
-* *Name* (required): enter a display name for the device. +
+* *Name* (required): enter a display name for the device.
 * *Appium URL* (required): enter the Appium Server URL obtained from the
-Kobiton Portal. +
-* *Platform:* choose either *Android* or *iOS*. +
+Kobiton Portal.
+* *Platform:* choose either *Android* or *iOS*.
 * *Device Name:* input the device name displayed in the Kobiton
-Portal. +
+Portal.
 * *Platform Version:* input the operating system version of the
-device. +
+device.
 * Under *Additional Desired Capabilities*, add the following:
 ** udid: input the UDID of the device. If omitted, the Device Name,
-Platform, and Platform Version will be used to find the device. +
+Platform, and Platform Version will be used to find the device.
 ** kobiton:username (required, case-sensitive): input the Kobiton
-username. +
+username.
 ** kobiton:accessKey (required, case-sensitive): input the Kobiton API
-key. +
+key.
 ** kobiton:runtime (required): input appium.
 
 See the screenshot below for an example of adding a device:
 
-image:uipath-img05.png[width=600, alt="UiPath add device window open showing configuration options."]
+image:uipath-add-a-device.png[width=600, alt="UiPath add device window open showing configuration options."]
 
-If you want to enable logging, switch to the *Logging* tab, select
+To create logs of your sessions, switch to the *Logging* tab, select
 *Logging Enabled*, and specify a path to save the log. This can help
 with troubleshooting.
 
-image:uipath-img06.png[width=600, alt="Logging tab open showing logging enables and folder path."]
+image:uipath-logging-enabled.png[width=600, alt="Logging tab open showing logging enables and folder path."]
 
 Select *Save & Close* to save the changes.
 
-=== *Add a mobile application in UiPath*
+== Add a mobile application in UiPath
 
 In Mobile Device Manager, select *Open Application* and the *plus
-({plus}) icon* to create a new application.
+({+}) icon* to create a new application.
 
-image:uipath-img07.png[width=600, alt="UiPath mobile device manager window open to applications tab."]
+image:uipath-mobile-device-manager-applications-window.png[width=600, alt="UiPath mobile device manager window open to applications tab."]
 
 In the *Add an application* window, fill in the following required
 information:
 
-* *Name*: enter a name for the application. +
-* Choose either *App* or *Web*. +
+* *Name*: enter a name for the application.
+* Choose either *App* or *Web*.
 * Select the application platform (*Android* or *iOS*).
 
 If *App* is chosen:
 
 * *App:* input the app path. This can be either of the following:
 ** Kobiton App Repo ID (e.g. kobiton-store:123 for the latest version of
-the app or kobiton-store:v124 for a specific version of the app) +
+the app or kobiton-store:v124 for a specific version of the app)
 ** Direct download URL (must not be a local app path, redirect to
-another link, or require login) +
+another link, or require login)
 * For an Android app, input the *App package* and *App activity*. For an
-iOS app, input the *Bundle Id*. +
+iOS app, input the *Bundle Id*.
 * See below for an example:
 
-image:uipath-img08.png[width=600, alt="UiPath app application window open showing configurable settings for the user uploaded app."]
+image:uipath-add-application-app.png[width=600, alt="UiPath app application window open showing configurable settings for the user uploaded app."]
 
 If *Web* is chosen:
 
-* Select *Browser name*. +
-* Enter *Start Page* URL. +
+* Select *Browser name*.
+* Enter *Start Page* URL.
 * See below for an example:
 
 image:uipath-img09.png[width=600, alt="UiPath app application window open showing configurable settings if user chose to test through browser."]
 
 Select *Save & Close*.
 
-=== *Connect to the device and record test steps*
+== Connect to the device and record test steps
 
 In Mobile Device Manager, select *Start an application*.
 
-image:uipath-img10.png[width=600, alt="UiPath mobile device manager welcome window open."]
+image:uipath-mobile-device-manager-welcome.png[width=600, alt="UiPath mobile device manager welcome window open."]
 
 In the *Create connection* screen, select the device and app you created
 earlier.
 
-image:uipath-img11.png[width=600, alt="Create connection tab open showing the chosen device, app, and logging enabled option selected."]
+image:uipath-create-connection.png[width=600, alt="Create connection tab open showing the chosen device, app, and logging enabled option selected."]
 
 Select *Connect*.
 
-After the connection is established, a live view of the device appears.
-You can interact with the device, and UiPath captures your actions
-automatically.
+After the connection is established, a live view of the device appears. Here you can interact with the device; UiPath automatically captures your actions.
 
-image:uipath-img12.png[width=600, alt="UiPath mobile device manager window open to device tab displaying an image of device with uikitcatalog open."]
+image:uipath-mobile-device-manager-live.png[width=600, alt="UiPath mobile device manager window open to device tab displaying an image of device with uikitcatalog open."]
 
-You can view the recorded steps in the *Recorded Actions* tab:
+View your recorded steps in the *Recorded Actions* tab:
 
-image:uipath-img13.png[width=600, alt="UIKitCatalog tab open with alert views highlighted in green on the device screen."]
+image:uipath-mobile-device-recorded-sessions.png[width=600, alt="UIKitCatalog tab open with alert views highlighted in green on the device screen."]
 
 To import these steps into your project:
 
-* While keeping the device connection open in the Mobile Device Manager
-window, switch back to the Studio project window.
+* Keep the device connection open in the Mobile Device Manager window.
 
-image:uipath-img14.png[width=600, alt="Studio project window open."]
+* Switch back to the Studio project window, then open a sequence file (Main.xaml in the screenshot below).
+
+image:uipath-mobile-test-properties.png[width=600, alt="Studio project window open."]
 
 * Select *Mobile Automation → Import Recorded Actions*.
 
-image:uipath-img15.png[width=600, alt="UiPath menu ribbon with mobile automation menu item open displaying options."]
+image:uipath-mobile-test-mobile-automation.png[width=600, alt="UiPath menu ribbon with mobile automation menu item open displaying options."]
 
 A *sequence* is created with the recorded steps:
 
-image:uipath-img16.png[width=600, alt="Project tab open displaying main sequence recorded actions."]
+image:uipath-main-activity-indicators.png[width=600, alt="Project tab open displaying main sequence recorded actions."]
 
 When done, switch to the Mobile Device Manager window and close the
-connection by selecting *X*.
+connection by clicking *X*.
 
-Ensure the connection is properly closed. Otherwise, the device will
-remain in use in the Kobiton Portal and inaccessible to other users.
+[Important]
+====
+This ensures the connection is closed properly. Otherwise, the device will
+remain in use in the Kobiton Portal and be inaccessible to other users.
+====
 
-image:uipath-img17.png[width=600, alt="Mobile device manager showing device selection with highlighted x to close window."]
+image:uipath-live-device-with-x.png[width=600, alt="Mobile device manager showing device selection with highlighted x to close window."]
 
-=== *Create and execute test with recorded steps*
+== Create and execute test with recorded steps
 
-In the project view, add a new activity before the sequence with the
-recorded actions. Search for the *Mobile Device Connection* activity and
-select it.
+In the project view, open the previously edited sequence file.
 
-Choose *Select Connection Details*.
+Select the *Plus (+) icon* before the sequence with the recorded actions to add a new activity.
 
-image:uipath-img18.png[width=600, alt="Menu showing where to select connection details."]
+image:uipath-add-new-activity[width=600, alt="Shows where to click to add a new activity."]
+
+Search for the Mobile Device Connection activity and select it.
+
+image:uipath-mobile-device-search[width=600, alt="Displays search bar where mobile device connection is entered for search."]
+
+Under the newly added activity, choose *Select Connection Details*.
+
+image:uipath-mobile-device-connection-window.png[width=600, alt="Menu showing where to select connection details."]
 
 Select the device and app you created and *Save*.
 
-image:uipath-img19.png[width=600, alt="Connection details displaying names of sample device and sample app."]
+image:uipath-connection-details.png[width=600, alt="Connection details displaying names of sample device and sample app."]
 
 Drag the sequence with the recorded steps into the *Do* sequence of the
-_Mobile Device Connection_ activity. The result should look like the
-example below:
+Mobile Device Connection activity.
 
-image:uipath-img20.png[width=600, alt="Select connection details window of sample device and app with activity indicators."]
+image:uipath-main-activity-indicators.png[width=600, alt="Select connection details window of sample device and app with activity indicators."]
+
+Now you have a complete sequence to run the test.
 
 To run the test, select *Debug File* or other UiPath
 https://docs.uipath.com/studio/standalone/latest/user-guide/about-debugging#start-debugging[debugging
-options].
+options,window=read-later].
 
-image:uipath-img21.png[width=600, alt="UiPath menu ribbon items with debug file option highlighted."]
+image:uipath-design-debug-ribbon-item.png[width=600, alt="UiPath menu ribbon items with debug file option highlighted."]
 
-If *Debug File* is selected, the Debug window appears while Mobile
-Device Manager opens a new connection to the device and execute the
-test.
+If *Debug File* is selected, the Debug window appears. At the same time, Mobile Device Manager opens a new connection to the device and executes the test.
 
-image:uipath-img22.png[width=600, alt="UiPath debug window."]
+image:uipath-debug-activity-indicator.png[width=600, alt="UiPath debug window."]
 
-Follow UiPath’s
+Follow UiPaths
 https://docs.uipath.com/studio/standalone/latest/user-guide/about-debugging[debugging
-guide] and
+guide,window=read-later] and
 https://docs.uipath.com/activities/other/latest/ui-automation/ui-automation-about[mobile
-automation guides] for more information.
+automation guides,window=read-later] for more information.
 
 When the test is done, close the connection in Mobile Device Manager.
 
-Ensure the connection is properly closed; otherwise, the device will
-remain in use in the Kobiton Portal and inaccessible to other users.
+[Important]
+====
+This ensures the connection is closed properly. Otherwise, the device will remain in use in the Kobiton Portal and be inaccessible to other users.
+====
