@@ -1,0 +1,65 @@
+= Use Google Pay on Android devices
+:navtitle: Use Google Pay
+
+Learn how to use Google Pay to test payment flows in a Manual session on Android devices.
+
+NOTE: Google Pay testing is supported on Private and Local Android devices *only*.
+
+== Prerequisites
+
+* Kobiton account with access to Android Private and Local devices
+
+* Google account
+
+* Valid payment card
+
+** Sample cards can also be added to a Google account, as described in the official https://developers.google.com/pay/api/android/guides/resources/test-card-suite[Google documentation,window=read-later].
+
+== Add a Google account to Android device
+
+Launch a manual session on an Android device in the Kobiton Portal.
+
+Follow https://support.google.com/android/answer/7664951?hl=en[this guide,window=read-later] to add a Google account to the device.
+(A signed-in Google account is required to enable *Google Pay*.)
+
+== Test payment using Google Pay
+
+In the same manual session, open the target website or app and trigger the payment flow that uses *Google Pay*.
+
+Select *Buy with Google Pay*.
+
+Choose or add a payment method, then select *Continue* to complete the payment.
+
+== Google Pay test flow complete
+
+*Google Pay* integration has been validated on an Android device using Kobiton and testing is complete.
+
+== Troubleshooting
+
+The following sections describe common issues that may occur during *Google Pay* testing.
+
+=== Black screen when adding a Google account
+
+On Android 12 and newer, a black screen may appear during Google account sign-in if a device passcode is set. This blocks the login flow and prevents the account from being added.
+
+image:android-black-screen.png[width=240,alt="A black device screen on Android device."]
+
+*Resolution*:
+
+Follow xref:faqs:android-faqs.adoc#_how_can_i_bypass_the_black_screen_when_logging_into_google_play_store_device_with_passcode[this guide,window=read-later] to bypass the black screen and complete Google account sign-in.
+
+=== “Google account required” pop-up
+
+This message appears when Google Pay is selected but no Google account is signed in on the device.
+
+image:android-google-pay-required.png[width=240,alt="A Google Pay is required pop-up"]
+
+*Common causes*:
+
+* No Google account is present on the device
+
+* The account was removed during device cleanup or reset
+
+*Resolution*:
+
+Add a Google account to the device, then retry the payment flow.
