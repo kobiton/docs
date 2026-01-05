@@ -5,7 +5,19 @@ Learn how to enable and configure the maximum number of parallel tests for a hos
 
 == When to apply
 
-Not all host machines need to have the maximum number of parallel tests set. Below are the recommended conditions
+Not all host machines need to have the maximum number of parallel tests set. Below are the recommended conditions:
+
+|===
+|Mode |Type of sessions |Connected devices | Max parallel tests
+
+|Lightning Mode |Manual only |More than 30 connected devices |30
+
+|Lightning Mode |Both Manual and Automation |More than 30 connected devices |30
+
+|Lightning Mode |Automation only |More than 30 connected devices |30
+
+|===
+
 
 == Configure the maximum number of parallel tests
 
@@ -23,3 +35,55 @@ In the pop-up, choose either of the below options:
 
 Select *Save*.
 
+== Observe the parallel tests limit in action
+
+Once the limit has been set for a Mac mini host machine, the total number of parallel tests will be limited to the number set in the settings.
+
+The following session types count towards the total number:
+
+* Scriptless (Revisit)
+
+* Manual
+
+* Appium Automation
+
+* Native Espresso/UiAutomator Automation
+
+* Native XCUITest Automation
+
+* Gaming (Turbo Test GameDriver)
+
+* Turbo Test Appium
+
+* Mixed
+
+* CLI
+
+* API
+
+* Clean-up
+
+* Retained
+
+For a host machine, when the maximum has been reached, no additional session of the above types can be initiated on this host. Additionally:
+
+* All devices that are available on the host machine will be hidden from the Devices list. To show these devices, de-select the *Hide unavailable devices*
+
+* If available devices are not hidden in the Device list, both the *Launch* button is disabled.
+
+* In the Device Details, both the *Launch* and *Retain* buttons are disabled.
+
+* If an available device is launched using the URL, this error is returned: _Host has reached its configured capacity. Please try again later. Incident ID: HOST-400 - 12970311-1767603575646._
+
+* Automation sessions that are launched will return an error
+
+
+Recommended actions when the limit has been reached for a host:
+
+* Wait for existing sessions to be finished on the host before launching a new one.
+
+* Use similar devices on another host machine that is not a capacity.
+
+* If there are retained devices, cancel retaining if possible to allow for more sessions.
+
+NOTE: The limit only applies for new sessions initiated. If the limit is updated in the settings to a number that is lower than the number of existing parallel sessions, no session are terminated.
