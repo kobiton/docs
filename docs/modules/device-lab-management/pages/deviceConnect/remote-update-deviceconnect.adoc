@@ -6,20 +6,16 @@ Cloud and Hybrid customers who host dedicated devices can remotely update *devic
 This guide describes how remote updates work, how to perform a manual update, and how to change the update behavior for an organization.
 
 == How remote updates work
-By default, *deviceConnect* updates run automatically.
 
+By default, *deviceConnect* updates run automatically.
 
 The system software periodically checks for a new *deviceConnect* release. When an update is available, it is downloaded and installed automatically *only* when none of the devices hosted by the Mac mini are in use.
 
-
 If any device has an active session, the update is skipped and retried during the next check, which occurs approximately every 30 minutes.
-
 
 [NOTE]
 Automatic updates apply only to *deviceConnect* on Mac mini hosts. They do not apply to GigaCap on Dell servers.
 Environments that include a Dell server require a manual upgrade coordinated with Kobiton Support.
-
-
 
 == Prerequisites
 
@@ -35,6 +31,7 @@ When a notification banner appears in the Kobiton Portal, at least one Mac mini 
 image:new-version-available.png[width=1000,alt="The banner about new version of deviceConnect"]
 
 === To perform a manual update
+
 . Sign in to the Kobiton Portal using an administrator account.
 . Select the profile name or picture, then select *Settings*.
 . Select the *Device Management* tab.
@@ -46,6 +43,7 @@ image:new-version-available.png[width=1000,alt="The banner about new version of 
 image:dc-remote-upgrade.png[width=1000,alt="The Upgrade button next to the hosting machine name in Device Management"]
 
 === During the update:
+
 * Any active sessions on devices hosted by the Mac mini are terminated.
 * No actions can be performed on the Mac mini or its connected devices.
 * All controls in *Device Management* are temporarily disabled.
@@ -59,6 +57,7 @@ Automatic updates are enabled by default to maintain compatibility with the Kobi
 Some organizations prefer to manage updates manually. Before disabling automatic updates, review this change with the Kobiton account team to confirm that it aligns with operational requirements.
 
 === To enable manual updates
+
 . Sign in to the Kobiton Portal using an administrator account.
 . Select the profile name or picture, then select *Settings*.
 . Select the *Device Management* tab.
@@ -69,6 +68,7 @@ Some organizations prefer to manage updates manually. Before disabling automatic
 image:device-management-new-version-upgrade-manual.png[width=800,alt="The New version upgrade option in Device Management"]
 
 == deviceConnect version policy
+
 * Mac mini hosts are expected to run *deviceConnect* within one major version of the current release.
 ** For example, if the current release is *4.22*, supported versions include *4.21 and later*.
 * Versions outside this range may not be fully tested or supported, and compatibility with newer Portal features is not guaranteed.
