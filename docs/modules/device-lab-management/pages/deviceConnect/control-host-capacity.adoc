@@ -1,0 +1,116 @@
+= Control the capacity limit of a host machine
+:navtitle: Control host machine capacity limit
+
+== Overview
+
+This guide explains how to configure and manage the maximum number of parallel test sessions that can run on a host machine.
+
+It covers:
+
+* What a host machine capacity limit is and when it should be set
+
+* How to configure the capacity limit
+
+* How device availability changes when the limit is reached
+
+* Recommended actions when capacity is exceeded
+
+== What a host machine capacity limit is
+
+Each host machine has a finite capacity for running parallel test sessions. Capacity is determined by hardware resources and runtime conditions, and may be lower than the total number of devices connected to the host.
+
+If a host machine meets Kobiton’s hardware requirements, it can typically support up to 26 parallel sessions.
+
+For this reason, capacity limits are generally required only when more than 26 devices are connected to a single host.
+
+== Set the capacity limit
+
+To configure a capacity limit for a host machine:
+
+. Sign in to the Kobiton Portal using an account with the *ADMIN* predefined role.
+
+. Select your profile picture, then choose *Settings*.
+
+. Open *Device Management*.
+
+. Select *Settings* for the target host machine.
++
+image:host-machine-capacity-settings.png[width=1000,alt="The Settings option of a host machine in Device Management"]
+
+. In the pop-up, choose one of the following options:
+
+* *Unlimited* (default): no limit for the host machine.
+
+* *Set custom limit*: set a limit between 1 and 999.
++
+The recommended value is *26*.
++
+image:host-machine-set-capacity.png[width=500,alt="The available options for setting capacity limit of a host machine"]
+
+. Select *Save*.
+
+== How the capacity limit affects sessions
+
+Once a capacity limit is set, the total number of parallel sessions on the host is restricted to the configured value.
+
+The following session types count toward the capacity limit:
+
+* Scriptless (Revisit)
+
+* Manual
+
+* Appium Automation
+
+* Native Espresso/UiAutomator Automation
+
+* Native XCUITest Automation
+
+* Gaming (Turbo Test GameDriver)
+
+* Turbo Test Appium
+
+* Mixed
+
+* CLI
+
+* API
+
+* Clean-up
+
+* Retained
+
+When the capacity limit is reached:
+
+* Devices hosted on the machine remain *online* but are not immediately available for launch.
+
+* By default, these devices are hidden in the *Devices* list.
+
+** To view them, clear the *Hide unavailable devices* filter.
++
+image:device-filter-hide-unavailable-devices.png[width=300,alt="The Hide unavailable devices option in the Devices list filter"]
+
+* When visible, the *Launch* button is disabled.
++
+image:available-device-launch-disabled.png[width=900,alt="An available device with the Launch button disabled"]
+
+* In the Device Details, both the *Launch* and *Retain* buttons are disabled.
++
+image:device-details-disabled-lauch-retain.png[width=600,alt="The disabled Launch and Retain button in Device Details"]
+
+* If a session is initiated through the Portal, API, or automation while the host is at capacity, the following error is returned:
++
+_Host has reached its configured capacity. Please try again later._
+
+Capacity limits apply only to *new sessions*.
+
+Existing sessions are not interrupted if a lower limit is set after they have started.
+
+== Recommended actions when capacity is reached
+
+* If a host machine reaches its capacity limit:
+
+** Wait for active sessions to complete before launching new ones.
+
+** Launch a similar device hosted on a different machine with available capacity.
+
+** Release retained devices when possible to free capacity for additional sessions.
