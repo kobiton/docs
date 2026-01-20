@@ -1,0 +1,172 @@
+= Kobiton 4.23 Release Notes
+:navtitle: Kobiton 4.23 release notes
+
+_Jan 17, 2026_
+
+== New OS support
+
+NOTE: Before upgrading Mac mini hosts to a new OS version, ensure that the connected iOS/iPadOS devices are running a supported OS version and has a compatible version of Xcode installed. For details on which macOS and Xcode versions are required, see Apple’s https://developer.apple.com/support/xcode/[compatibility information,window=read-later].
+
+This release added support for the following:
+
+* macOS 26 Tahoe
+
+== Set maximum parallel tests per host
+
+NOTE: Setting the maximum number of parallel tests requires the ADMIN predefined role.
+
+You can now limit the number of parallel test sessions that run simultaneously on a single host (Mac mini or GEM). This helps manage capacity and performance when running many devices on one machine.
+
+This feature is designed for Cloud and Standalone customers operating a high density of devices on their hosts. Hosts typically support up to *26 parallel sessions*, depending on hardware resources and runtime conditions.
+
+All sessions running on devices connected to the same host count toward the parallel test limit. This includes both user-visible sessions and hidden system-managed sessions, such as sessions in cleanup, API-triggered sessions, and retained sessions. Retained sessions are counted to ensure continued access to retained devices.
+
+When the limit is reached, no new sessions can start on the host until one or more active sessions end, and the session count drops below the limit. The limit applies only to new sessions. If the limit is lowered below the current number of active sessions, existing sessions continue running and are not terminated.
+
+You can configure the parallel test limit per host in *Settings > Device Lab Management*. Bulk updates can be applied by updating the database (Cloud customers must contact Customer Support).
+
+== Accessibility: iOS VoiceOver support in manual sessions
+
+iOS VoiceOver is now supported in manual sessions, enabling testers to remotely navigate iOS devices using screen reader controls.
+
+This feature helps teams validate accessibility requirements and test VoiceOver behavior during manual testing. By interacting with apps through VoiceOver, testers can uncover accessibility issues that may not be apparent through visual testing alone.
+
+=== Requirements
+
+To use VoiceOver in a manual session, you need:
+
+* A Raspberry Pi host configured as a Bluetooth keyboard
+* An iOS device paired with the Raspberry Pi host
+* VoiceOver support enabled for manual sessions
+
+=== How it works
+
+When an iOS device is paired with the Raspberry Pi host, a *Screen Reader* option becomes available in manual sessions. From this option, you can turn VoiceOver on or off, navigate the screen using VoiceOver controls, and adjust VoiceOver rotor settings.
+
+A user guide for iOS VoiceOver support will be available soon.
+
+== Bluetooth passcode unlock on iOS
+
+Remote passcode unlock using a Bluetooth keyboard is now available for iOS devices during testing sessions.
+
+While this feature supports other iOS versions, it is primarily designed for device labs managing iOS 26 devices that require a passcode. iOS 26 introduced stricter security controls that prevent traditional remote unlock methods when devices are offline. Remote passcode unlock enables secure passcode entry, so these devices remain accessible for testing, including passcode-protected devices that cannot use Kobiton’s managed passcode functionality.
+
+=== Requirements
+
+To use remote passcode unlock, you must have:
+
+* A Raspberry Pi host configured to support remote device unlock
+* An iOS device paired with the host
+
+The same host hardware used for other Bluetooth-based features can be reused, and no physical access to the device is required during testing sessions.
+
+Contact Kobiton support for setup instructions.
+
+=== Important notes & limitations
+
+Remote device unlock using a Bluetooth keyboard applies only to the following scenarios:
+
+* iOS 26 devices in organizations with Kobiton’s managed passcode enabled (mode 1 or mode 2)
+* iOS devices in organizations without passcode mode enabled (mode 0), where the passcode is set manually and updated manually in the Portal database
+
+Remote device unlock using a Bluetooth keyboard is not supported after a device restart. In this case, the device must be unlocked physically.
+
+== deviceConnect Console: new menu for Bluetooth pairing
+
+[NOTE]
+====
+
+This section applies to the following Bluetooth-based features:
+
+* Audio injection
+* iOS VoiceOver
+* Bluetooth passcode unlock on iOS
+
+====
+
+A new Bluetooth pairing menu is now available in the *deviceConnect Console*, simplifying how devices are paired with a Raspberry Pi host.
+
+The Bluetooth pairing menu appears under *Settings > Bluetooth Modules* when `BluetoothBridgeService.Enabled` is set to `true` in the `dc.ini` configuration file. With this update, device pairing through the Raspberry Pi command-line interface is no longer supported.
+
+=== Additional notes
+
+Existing audio injection users must flash the latest Bluetooth Bridge audio system image to use the new menu.
+
+For Bluetooth keyboard–based features, note the following during initial pairing:
+
+* After approximately 10 seconds, the device disconnects from the host.
+* Reconnect the device to the host to establish a stable connection.
+
+== Bluetooth-related features: important notes & known limitations
+
+[NOTE]
+====
+
+This section applies to the following Bluetooth-based features:
+
+* Audio injection
+* iOS VoiceOver
+* Bluetooth passcode unlock on iOS
+
+====
+
+A Raspberry Pi host supports only one Bluetooth-based function at a time:
+
+* Keyboard mode for VoiceOver and remote passcode unlock for iOS devices
+* Audio mode for audio injection for automated or manual testing
+
+Only one mode can be active at a time. If you switch between modes, you must re-flash the Raspberry Pi with the appropriate system image and re-pair the device.
+
+Additional constraints:
+
+* A Raspberry Pi host currently supports one device at a time.
+* A single Mac mini host can connect to multiple Raspberry Pi hosts.
+
+== Scriptless improvements
+
+=== Test Case Management and Session Explorer
+
+* *Session Explorer* now opens in a new tab from *Test Run Details* when viewing session details, making it easier to return to the *Test Run Details* page.
+* Fixed missing crash indicator on test steps in *Session Explorer*.
+* Fixed issue where screenshots were cut off on tablets during blocker remediation in *Session Explorer*.
+
+=== UI and usability updates
+
+* In *Test Case Details*, remediated test steps are now correctly matched for older test case versions.
+* Fixed an issue where test case tags were missing in Test Case and Test Run details when installing certain apps.
+* The *Test Run Setup* page now displays only devices that match the test case OS platform.
+* Improved scroll-to-find element behavior when scrolling is combined with tab switching.
+
+=== Validations
+
+* Ensured Response Time Validations are displayed for Network Payload Capture (NPC) sessions.
+* Fixed incorrect Response Time Validation for automation sessions using NPC.
+
+== Automation improvements & fixes
+
+* *Improved error handling:* Display correct error message when invalid kobiton store ID (format: `kobiton-store:v<app_id>`) is used in either API call or automation scripts.
+* *Enhanced device selection*:
+** Added capabilities to select devices with specific tags in automation: `kobiton:deviceTags` and `kobiton:deviceTagType`
+** Deprecated `kobiton:tagName`. This capability provided similar functionality but supported only a single tag.
+* *Basic Appium 2 enhancement:* Added support for device log streaming in Basic Appium 2 sessions.
+* *Automation protocol update:* The *W3C* protocol (instead of the *JSON Wire* protocol) is now used when specifying Appium capabilities with *capabilities.firstMatch*.
+
+== Kobiton CLI improvements & fixes
+
+* *CLI download from Portal:* Users can now download the Kobiton CLI directly from the Portal.
+* Fixed an issue with the *auto-dismiss* alert functionality.
+* Resolved an issue where *environment variables* were ignored when launching an app using the kobiton app run command.
+* Added a clear error message when a user *cancels a CLI app installation* and then attempts to reinstall it while the previous installation is still in progress.
+
+== General improvements & fixes
+
+* *Upgrade behavior:* Preserved GigaCap user configuration during `dpkg` installs instead of overwriting existing settings.
+* *Logging improvements:* Updated the Portal logging console to display logs in a single-line format (normal console) instead of object format.
+* *Org Management:* Added new permission that allows non-account owners to modify subscriptions in self-serve plans. This permission is not included in the Admin role by default and must be explicitly assigned by the Org Owner or an Admin.
+* *Device tags:* Added support for special characters in device tags: `@`, `.`, `_`, `-`, and `+`.
+* *OS support:* Resolved issue with iOS 14 devices that were failing to initialize `deviceControl`.
+* *App Repo – delete confirmation:* Improved the delete confirmation message to clearly indicate that app deletions are permanent.
+* *API v2 – device tag limits:* Removed the 50-device limit for device tag assignments.
+* *App Repo / API v2 – app search:* Added support for searching apps using the `kobiton-store:v<app_id>` format.
+* Added support for *UiPath Mobile Device Manager* using either Xium or Basic Appium 2
+* *Android app state preservation:* Introduced a `dc.ini` configuration to prevent Android apps from resetting their state when reopened from the background during manual sessions. When set, this setting applies to all devices on the host. To enable this behavior, set `AndroidDeviceController.UseLauncherStyleLaunch=true` (default: `false`).
