@@ -45,32 +45,6 @@ When an iOS device is paired with the Raspberry Pi host, a *Screen Reader* optio
 
 A user guide for iOS VoiceOver support will be available soon.
 
-== Bluetooth passcode unlock on iOS
-
-Remote passcode unlock using a Bluetooth keyboard is now available for iOS devices during testing sessions.
-
-While this feature supports other iOS versions, it is primarily designed for device labs managing iOS 26 devices that require a passcode. iOS 26 introduced stricter security controls that prevent traditional remote unlock methods when devices are offline. Remote passcode unlock enables secure passcode entry, so these devices remain accessible for testing, including passcode-protected devices that cannot use Kobiton’s managed passcode functionality.
-
-=== Requirements
-
-To use remote passcode unlock, you must have:
-
-* A Raspberry Pi host configured to support remote device unlock
-* An iOS device paired with the host
-
-The same host hardware used for other Bluetooth-based features can be reused, and no physical access to the device is required during testing sessions.
-
-Contact Kobiton support for setup instructions.
-
-=== Important notes & limitations
-
-Remote device unlock using a Bluetooth keyboard applies only to the following scenarios:
-
-* iOS 26 devices in organizations with Kobiton’s managed passcode enabled (mode 1 or mode 2)
-* iOS devices in organizations without passcode mode enabled (mode 0), where the passcode is set manually and updated manually in the Portal database
-
-Remote device unlock using a Bluetooth keyboard is not supported after a device restart. In this case, the device must be unlocked physically.
-
 == deviceConnect Console: new menu for Bluetooth pairing
 
 [NOTE]
@@ -80,7 +54,6 @@ This section applies to the following Bluetooth-based features:
 
 * Audio injection
 * iOS VoiceOver
-* Bluetooth passcode unlock on iOS
 
 ====
 
@@ -106,13 +79,12 @@ This section applies to the following Bluetooth-based features:
 
 * Audio injection
 * iOS VoiceOver
-* Bluetooth passcode unlock on iOS
 
 ====
 
 A Raspberry Pi host supports only one Bluetooth-based function at a time:
 
-* Keyboard mode for VoiceOver and remote passcode unlock for iOS devices
+* Keyboard mode for VoiceOver on iOS devices
 * Audio mode for audio injection for automated or manual testing
 
 Only one mode can be active at a time. If you switch between modes, you must re-flash the Raspberry Pi with the appropriate system image and re-pair the device.
