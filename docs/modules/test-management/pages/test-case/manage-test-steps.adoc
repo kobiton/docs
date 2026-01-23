@@ -1,0 +1,116 @@
+= Manage test case
+:page-aliases: test-management:manage-test-steps.adoc
+
+:navtitle: Manage test case
+
+Learn how to maintain a test case created by you or your team.
+
+== Before you start
+
+* Create a baseline session for Scriptless Automation.
+* Convert a session into a test case.
+
+== Navigate to Test Case Details
+
+Find a test case and view its details using one of the following methods.
+
+In *Session Explorer*, select *View Test Case* if the session has been converted to a test case.
+
+image:session-explorer-view-test-case.png[width=1000,alt="The View Test Case button in the Session Explorer page"]
+
+In *Sessions*, xref:session-explorer:search-for-a-session.adoc[search for a session], then select the Test Case ID from that row. If a session does not have a Test Case ID, then it does not have an associated test case.
+
+image:manage-test-case-session-search.png[width=1000,alt="Search for a session and select test case link"]
+
+In *Test Management*, select *Test Cases* where you will see a list of test cases and can select an ID to navigate to the *Test Case Details*.
+
+image:test-case-list.png[width=1000,alt="View list of test cases"]
+
+You can perform the following actions and review the following information on the *Test Cases* page:
+
+* *Search Test Cases*: Search for test cases via app name and Test Case Name.
+* *New Test Case*: Create new test case via this button.
+* *Source*: icon indicating the session type of the baseline session (manual or automation).
+* *ID*: the unique identifier assigned to the test case. Select to navigate to the test case details.
+* *Name*: includes tags for the applications included in the test case and the name of the test case.
+* *Last Updated*: indicates when the test case steps were last updated.
+* *Last Run*: displays date timestamp and navigates to the most recent test run for the test case.
+* *Test Runs*: Navigate to a list of test runs for the test case.
+* *Test Suites*: Navigate to a list of test suites that include the test case.
+* *Actions*:
+** Run the test case.
+** Clone (or copy) the test case.
+** Delete the test case.
+
+== View test case details
+
+After selecting a test case using any of the methods above, the *Test Case Details* page will appear.
+
+image:test-case-details-general.png[width=1000,alt="View and maintain general test case details"]
+
+You can review the following information:
+
+* *Tags*: the name of the applications being tested.
+* *Test Case ID*: the unique identifier assigned to the test case.
+* *Source*: link to the baseline session from which the test case was converted.
+* *Source Type*: the session type of the baseline session (manual or automation).
+* *Creator*: the user who created the test case.
+* *Created on*: the date and time the test case was created.
+
+You can update the following details:
+
+* *Name*: the name of the test case. This name is useful for searching for a test case and is displayed in test run details.
+* *Test Suite*: assign or remove the test case to or from an existing test suite(s). If there are no test suites, * xref:test-suite/create-and-manage-test-suite.adoc[create a test suite] first.
+* *Test Case Version*: choose the version of the test case from the version history. As changes to test steps are made and saved, new test case versions are created.
+* *Description*: description of the test case.
+
+You can perform the following actions via the icons in the top right of the page:
+
+* *Generate Appium Script* allows you to create an Appium script in a selected programming language.
+* *Run Test Case* takes you to the Test Run Details page to configure and initiate a test run for the test case.
+* *Clone Test Case* creates a copy of the current test case. This is useful if you want to modify test steps to create a new test case. Only the currently selected test case version can be cloned.
+* *Delete Test Case* when you no longer want to keep a test case. After a test case is deleted, it is removed from all currently assigned test suites. All test runs created from a deleted test case are still accessible, but they can no longer be rerun.
+
+== Manage test steps
+
+The *Test Steps* section displays descriptions and screenshots of the steps in the test case.
+
+The following details are included in each test steps:
+
+* The sequence number of the action
+* The action performed
+* The screenshot
+* The touch point or the swipe action on the screen
+* The bounding box of the element
+
+=== Delete test steps
+
+In a manual sessions, there may be unwanted or redundant steps performed by mistake. To remove a step, select the *check box* for that step. You can select multiple test steps at the same time.
+
+image:delete-test-steps-context.png[width=1000,alt="Delete test steps"]
+
+Select the *Trash* icon to remove the selected steps, then select *Save*.
+
+[IMPORTANT]
+
+* Deleting a test step cannot be undone.
+* Changes will not take effect if you do not select *Save*.
+
+The changes are saved to a new version of the test case. You can always go back to previous versions of the test case by selecting it in the Test Case Version dropdown.
+
+=== Remediate test steps
+
+For Touch actions, there are cases where the AI returns low confidence in selecting the element, and user input is needed to select the correct element. This process is referred to as remediation.
+
+Follow this guide when remediating test steps xref:remediation/annotate-a-test-step.adoc[here].
+
+The remediation changes are saved to a new version of the test case. You can always go back to previous versions of the test case by selecting it in the Test Case Version dropdown.
+
+== Planned enhancements for managing test cases
+
+We have a number of enhancements planned for test cases. The following features are in progress:
+
+* *Assertions*: the ability to add checks to test steps.
+* *Conditional logic*: the ability to alter behavior based on test run results.
+* *Data-driven testing*: the ability to provide multiple datasets for a test run.
+* *Edit text*: Ability to update the text entries in test steps.
