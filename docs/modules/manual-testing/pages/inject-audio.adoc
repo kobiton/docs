@@ -1,0 +1,121 @@
+= Inject audio during a manual session
+:navtitle: Use audio injection
+
+== Overview
+
+Audio injection allows audio files to be delivered to devices during manual testing sessions, enabling testing scenarios that involve recorded or real-time audio input.
+
+== Prerequisites
+
+Before using audio injection in a manual session, ensure the following requirements are met:
+
+* A *private device* that supports Bluetooth audio
+
+* The device is running in *Standard mode*
++
+NOTE: Lightning mode-enabled devices are currently not supported
+
+* A valid audio file that meets the supported format and size requirements
+
+Audio injection is available only on devices with Bluetooth audio support.
+
+=== Supported audio format
+
+Audio files must meet the following requirements:
+
+|===
+| Requirement | Value
+
+| Container | WAV (PCM 16-bit), OGG, or MP3
+| Sample Rate | 8 kHz
+| Channels | mono
+| Max File Size | 30 MB
+|===
+
+Files that do not meet these requirements cannot be injected, or only inject static noise.
+
+== Using audio injection during a manual session
+
+. From the *Device List*, select a device marked with the microphone icon and start a manual session.
++
+image:bluetooth-audio-devices.png[width=768px,alt="Two devices with microphone icons"]
+
+. In the session toolbar, open *Inject Media* and select the *Audio Injection* tab.
++
+The panel displays an empty state prompting you to upload a file. The *Inject* button remains disabled until a file is uploaded.
++
+image:bluetooth-audio-injection-empty.png[width=768px,alt="Inject media menu opens to allow image and audio injection"]
+
+. Upload an audio file by clicking the upload area or dragging and dropping the file into the panel.
+
+. On the device, open the target application (for example, a voice recorder or phone app) and ensure it is ready to capture audio input.
+
+. Select *Inject*.
++
+The panel displays an _Injecting…_ status. On the device screen, the waveform and recording timer confirm that playback is in progress.
++
+image:bluetooth-audio-injecting.png[width=768px,alt="Waveform and timer show in-progress status"]
+
+. When injection completes, a confirmation banner indicates that the audio file was injected successfully.
+
+== Reviewing session artifacts
+
+To view session artifacts, after ending the session, open xref:session-explorer:manage-sessions.adoc[Session Overview,window=read-later]. Under *Audio tracks*, you can download:
+
+* *Input audio* – the uploaded audio file
+
+* *Injected audio* – the audio delivered to the device
+
+* *Output audio* – the audio captured from the device
+
+These artifacts help verify injection behavior and analyze results.
+
+image:bluetooth-audio-session-overview.png[width=768px,alt="Session summary showing audio tracks injected and details about the device and session"]
+
+== Tips & best practices
+
+* *Filter supported devices*
++
+Use the search filter *Audio → Supported* to display only devices with Bluetooth audio enabled.
++
+image:bluetooth-audio-device-filter.png[width=768px,alt="Device filter showing the Audio capability filter with Supported selected"]
+
+* *Verify audio format before upload*
++
+Ensure the file meets the supported format and size requirements.
+* *Prepare the app before injecting audio*
++
+Open the recording or target app and start recording before selecting *Inject*.
+
+== Troubleshooting
+
+* *Inject button is disabled*
++
+Confirm a file has been uploaded and meets format and size requirements.
+
+* *Inject option is not available*
++
+Verify that Bluetooth audio is enabled for the device.
++
+Bluetooth audio is not available by default in all environments.
+Contact Kobiton Support to enable Bluetooth audio if it is not available on your private or local device.
+
+* *No audio is recorded*
++
+Ensure the microphone is not muted.
++
+Confirm the target app is actively recording or listening.
++
+Check device volume and in-app input settings.
++
+On Android, some apps require Bluetooth to be selected as the audio input in system settings.
+
+== Notes
+
+* *Bluetooth host limits*
+** One Mac mini host supports multiple Bluetooth hosts
+** One Bluetooth host supports one device
+
+* *Audio output support*
+** Supported: HFP (calls, Google Meet, Zoom)
+** Not supported: A2DP (YouTube, music, media playback)
