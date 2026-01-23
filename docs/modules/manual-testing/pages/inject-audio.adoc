@@ -1,18 +1,27 @@
 = Inject audio during a manual session (Beta)
-:navtitle: Inject audio (Beta)
+:navtitle: Use audio injection (Beta)
 
-Learn how to inject an audio file directly into a connected device during a manual session to test recording apps, voice calls, and audio handling.
+== Overview
+
+Audio injection allows audio files to be delivered to devices during manual testing sessions, enabling testing scenarios that involve recorded or real-time audio input.
 
 == Prerequisites
 
-* A private device with bluetooth audio enabled running in *Standard mode*.
+Before using audio injection in a manual session, ensure the following requirements are met:
 
-[IMPORTANT]
-Bluetooth audio requires an additional _bluetooth-bridge_ server to enable. Contact Kobiton support for more details.
+* A *Private device* that supports Bluetooth audio
 
-* A valid audio file that meets the required format and size.
+* The device is running in *Standard mode*
++
+NOTE: Lightning mode-enabled devices are currently not supported
+
+* A valid audio file that meets the supported format and size requirements
+
+Audio injection is available only on devices with Bluetooth audio support.
 
 === Supported audio format
+
+Audio files must meet the following requirements:
 
 |===
 | Requirement | Value
@@ -23,79 +32,90 @@ Bluetooth audio requires an additional _bluetooth-bridge_ server to enable. Cont
 | Max File Size | 30 MB
 |===
 
-== Inject audio
+Files that do not meet these requirements cannot be injected, or only inject static noise.
 
-* In the *Device List*, choose a device marked with the microphone icon and launch a *Manual Session*.
+== Using audio injection during a manual session
 
-image:bluetooth-audio-devices.png[width=768px,alt="Filtered device list showing Pixel 7 Pro and Pixel 7 with audio capability icons"]
+. From the *Device List*, select a device marked with the microphone icon and start a manual session.
++
+image:bluetooth-audio-devices.png[width=768px,alt="Two devices with microphone icons"]
 
-* In the session, open *Inject Media* and select the *Audio Injection* tab. You’ll see an empty state inviting you to *click* or *drag-and-drop* a file. The *Inject* button is disabled until a file is uploaded.
+. In the session toolbar, open *Inject Media* and select the *Audio Injection* tab.
++
+The panel displays an empty state prompting you to upload a file. The *Inject* button remains disabled until a file is uploaded.
++
+image:bluetooth-audio-injection-empty.png[width=768px,alt="Inject media menu opens to allow image and audio injection"]
 
-image:bluetooth-audio-injection-empty.png[width=768px,alt="Audio injection screen showing no file selected before injection"]
+. Upload an audio file by clicking the upload area or dragging and dropping the file into the panel.
 
-* Select the upload area to open your system file browser (e.g., *Downloads*). Highlight your audio file (e.g., `sample.wav`) and select *Open*.
+. On the device, open the target application (for example, a voice recorder or phone app) and ensure it is ready to capture audio input.
 
-image:bluetooth-audio-file-finder.png[width=768px,alt="Finder window highlighting a selected WAV file ready for injection"]
+. Select *Inject*.
++
+The panel displays an _Injecting…_ status. On the device screen, the waveform and recording timer confirm that playback is in progress.
++
+image:bluetooth-audio-injecting.png[width=768px,alt="Waveform and timer show in-progress status"]
 
-* Open the target application on the device (e.g., a voice recorder app or phone app) so it’s ready to capture the injected audio.
-
-image:bluetooth-audio-injection-uploaded.png[width=768px,alt="Audio injection screen with sample.wav file ready and inject button active"]
-
-* Choose *Inject*. The panel shows the status *Injecting…* above the purple action bar. On the device screen, the waveform and recording timer confirm playback is occurring.
-
-image:bluetooth-audio-injecting.png[width=768px,alt="Manual session screen showing the audio file sample.wav being injected into a Pixel 7 Pro"]
-
-* When the injection finishes, the session shows a confirmation banner: `Audio file [file_name] has been injected successfully.`
+. When injection completes, a confirmation banner indicates that the audio file was injected successfully.
 
 == Reviewing session artifacts
 
-After the session, open xref:session-explorer:manage-sessions.adoc[Session Overview,window=read-later]. Under *Audio tracks*, you can download:
+To view session artifacts, after ending the session, open xref:session-explorer:manage-sessions.adoc[Session Overview,window=read-later]. Under *Audio tracks*, you can download:
 
-* *Input audio*: the uploaded audio tracks.
-* *Injected audio*: the audio tracks that were injected to the device.
-* *Output audio*: the output audio tracks.
+* *Input audio* – the uploaded audio file
+
+* *Injected audio* – the audio delivered to the device
+
+* *Output audio* – the audio captured from the device
+
+These artifacts help verify injection behavior and analyze results.
 
 image:bluetooth-audio-session-overview.png[width=768px,alt="Session summary showing audio tracks injected and details about the device and session"]
 
 == Tips & best practices
 
-* *Filter devices with bluetooth audio enabled*
+* *Filter supported devices*
 +
-Filter only devices with bluetooth audio enabled by selecting *Audio* -> *Supported* in the search bar.
-
+Use the search filter *Audio → Supported* to display only devices with Bluetooth audio enabled.
++
 image:bluetooth-audio-device-filter.png[width=768px,alt="Device filter showing the Audio capability filter with Supported selected"]
 
-* *Verify format before upload.*
+* *Verify audio format before upload*
 +
-Convert the audio file to *WAV (PCM 16-bit), OGG, or MP3* and keep the file size under *30 MB*.
-* *Stage the device app first.*
+Ensure the file meets the supported format and size requirements.
+* *Prepare the app before injecting audio*
 +
-Open the recording or target app and get it ready *before* clicking *Inject*.
+Open the recording or target app and start recording before selecting *Inject*.
 
 == Troubleshooting
 
-[cols="1,2"]
-|===
-| Issue | Resolution
+* *Inject button is disabled*
++
+Confirm a file has been uploaded and meets format and size requirements.
 
-| *Inject button is disabled* | Ensure a file is uploaded and that it meets the required format (WAV, OGG, or MP3) and size (≤30 MB).
-| *No inject button* | Make sure the device has bluetooth audio enabled. Contact Kobiton support for more details on enabling bluetooth audio.
-| *No audio recorded in the app* a|
-* Unmute the microphone.
+* *Inject option is not available*
++
+Verify that Bluetooth audio is enabled for the device.
++
+Bluetooth audio is not available by default in all environments.
+Contact Kobiton Support to enable Bluetooth audio if it is not available on your Private or local device.
 
-* Make sure the target app is actively recording or listening when you click Inject.
+* *No audio is recorded*
++
+Ensure the microphone is not muted.
++
+Confirm the target app is actively recording or listening.
++
+Check device volume and in-app input settings.
++
+On Android, some apps require Bluetooth to be selected as the audio input in system settings.
 
-* Verify device volume and any in-app input settings.
+== Notes
 
-* For Android apps: Some voice recording apps require setting Bluetooth as the audio input in system settings.
-|===
+* *Bluetooth host limits*
+** One Mac mini host supports multiple Bluetooth hosts
+** One Bluetooth host supports one device
 
-== Important notes
-
-* Bluetooth bridge server limits: One Mac mini host can support one Bluetooth bridge server, with up to two devices.
-
-* Audio output:
-
+* *Audio output support*
 ** Supported: HFP (calls, Google Meet, Zoom)
-
 ** Not supported: A2DP (YouTube, music, media playback)
