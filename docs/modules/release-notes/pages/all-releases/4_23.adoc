@@ -126,7 +126,7 @@ Enhanced Response Time Validations for Network Payload Capture (NPC), ensuring c
 * *Improved error handling:* Display correct error message when invalid kobiton store ID (format: `kobiton-store:v<app_id>`) is used in either API calls or automation scripts.
 * *Enhanced device selection*:
 ** Added capabilities to select devices with specific tags in automation: `kobiton:deviceTags` and `kobiton:deviceTagType`
-** Deprecated `kobiton:tagName`. This capability provided similar functionality but supported only a single tag.
+** *Existing capability:* `kobiton:tagName` remains supported but is limited to a single tag; the new capabilities are recommended for broader tag selection.
 * *Basic Appium 2 enhancement:* Added support for device log streaming in Basic Appium 2 sessions.
 * *Automation protocol update:* The *W3C* protocol (instead of the *JSON Wire* protocol) is now used when specifying Appium capabilities with *capabilities.firstMatch*.
 
