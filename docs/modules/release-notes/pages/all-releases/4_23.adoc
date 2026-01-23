@@ -5,11 +5,11 @@ _Jan 17, 2026_
 
 == New OS support
 
-NOTE: Before upgrading Mac mini hosts to a new OS version, ensure that the connected iOS/iPadOS devices are running a supported OS version and has a compatible version of Xcode installed. For details on which macOS and Xcode versions are required, see Apple’s https://developer.apple.com/support/xcode/[compatibility information,window=read-later].
+NOTE: Before upgrading Mac mini hosts to a new OS version, ensure that all connected iOS and iPadOS devices are running supported OS versions and that a compatible version of Xcode is installed. For details on which macOS and Xcode versions are required, see Apple’s https://developer.apple.com/support/xcode/[compatibility information,window=read-later].
 
 This release added support for the following:
 
-* macOS 26 Tahoe
+* macOS 26 Tahoe for deviceConnect host
 
 == Set maximum parallel tests per host
 
@@ -21,11 +21,13 @@ This feature is designed for Cloud and Standalone customers operating a high den
 
 All sessions running on devices connected to the same host count toward the parallel test limit. This includes both user-visible sessions and hidden system-managed sessions, such as sessions in cleanup, API-triggered sessions, and retained sessions. Retained sessions are counted to ensure continued access to retained devices.
 
-When the limit is reached, no new sessions can start on the host until one or more active sessions end, and the session count drops below the limit. The limit applies only to new sessions. If the limit is lowered below the current number of active sessions, existing sessions continue running and are not terminated.
+When the limit is reached, no new sessions can start on the host until one or more active sessions end, and the session count drops below the limit. The limit applies only to new sessions. If an admin lowers the limit below the current number of active sessions, those existing sessions continue running and are not terminated.
 
 You can configure the parallel test limit per host in *Settings > Device Lab Management*. Bulk updates can be applied by updating the database (Cloud customers must contact Customer Support).
 
 == Accessibility: iOS VoiceOver support in manual sessions
+
+NOTE: This feature is currently only available for private and local devices. Public devices are not supported.
 
 iOS VoiceOver is now supported in manual sessions, enabling testers to remotely navigate iOS devices using screen reader controls.
 
@@ -94,6 +96,12 @@ Additional constraints:
 * A Raspberry Pi host currently supports one device at a time.
 * A single Mac mini host can connect to multiple Raspberry Pi hosts.
 
+== New Subscription Management Permission
+
+A new permission, `subscription.modify_subscription`, allows Admins to manage subscriptions on self-serve plans.
+
+Previously, this capability was limited to Org Owners. This permission is not included in the Admin role by default. To enable it, create a custom role, add the permission, and assign the role to an Admin.
+
 == Scriptless improvements
 
 === Test Case Management and Session Explorer
@@ -111,12 +119,11 @@ Additional constraints:
 
 === Validations
 
-* Ensured Response Time Validations are displayed for Network Payload Capture (NPC) sessions.
-* Fixed incorrect Response Time Validation for automation sessions using NPC.
+Enhanced Response Time Validations for Network Payload Capture (NPC), ensuring correct behavior in both manual and automation sessions.
 
 == Automation improvements & fixes
 
-* *Improved error handling:* Display correct error message when invalid kobiton store ID (format: `kobiton-store:v<app_id>`) is used in either API call or automation scripts.
+* *Improved error handling:* Display correct error message when invalid kobiton store ID (format: `kobiton-store:v<app_id>`) is used in either API calls or automation scripts.
 * *Enhanced device selection*:
 ** Added capabilities to select devices with specific tags in automation: `kobiton:deviceTags` and `kobiton:deviceTagType`
 ** Deprecated `kobiton:tagName`. This capability provided similar functionality but supported only a single tag.
@@ -125,7 +132,7 @@ Additional constraints:
 
 == Kobiton CLI improvements & fixes
 
-* *CLI download from Portal:* Users can now download the Kobiton CLI directly from the Portal.
+* *CLI download from Portal:* Users can now download the Kobiton CLI directly from the Portal. Kobiton CLI can be used with private and local devices.
 * Fixed an issue with the *auto-dismiss* alert functionality.
 * Resolved an issue where *environment variables* were ignored when launching an app using the kobiton app run command.
 * Added a clear error message when a user *cancels a CLI app installation* and then attempts to reinstall it while the previous installation is still in progress.
@@ -133,8 +140,6 @@ Additional constraints:
 == General improvements & fixes
 
 * *Upgrade behavior:* Preserved GigaCap user configuration during `dpkg` installs instead of overwriting existing settings.
-* *Logging improvements:* Updated the Portal logging console to display logs in a single-line format (normal console) instead of object format.
-* *Org Management:* Added new permission that allows non-account owners to modify subscriptions in self-serve plans. This permission is not included in the Admin role by default and must be explicitly assigned by the Org Owner or an Admin.
 * *Device tags:* Added support for special characters in device tags: `@`, `.`, `_`, `-`, and `+`.
 * *OS support:* Resolved issue with iOS 14 devices that were failing to initialize `deviceControl`.
 * *App Repo – delete confirmation:* Improved the delete confirmation message to clearly indicate that app deletions are permanent.
