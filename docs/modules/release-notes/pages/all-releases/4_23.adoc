@@ -127,6 +127,8 @@ Enhanced Response Time Validations for Network Payload Capture (NPC), ensuring c
 * *Enhanced device selection*:
 ** Added capabilities to select devices with specific tags in automation: `kobiton:deviceTags` and `kobiton:deviceTagType`
 ** *Recommendation:* While `kobiton:tagName` remains supported, we recommend using the new capabilities for greater flexibility, including support for multiple tags.
+** *Important*: The request parameters `tags` and `tag_type` for the https://api.kobiton.com/v2/docs#tag/NativeFrameworkAPI/operation/NativeFrameworkAPI_InitiateNativeSession[Initiate an Appium Turbo Test session,window=read-later] endpoint are deprecated and replaced with `device_tags` and `device_tag_type` accordingly.
+** *Recommendation*: The capability `kobiton:tags` can still be used in Xium sessions to assign session tag(s). However, it is recommended to use `kobiton:sessionTags` instead to avoid confusion with device tags.
 * *Basic Appium 2 enhancement:* Added support for device log streaming in Basic Appium 2 sessions.
 * *Automation protocol update:* The *W3C* protocol (instead of the *JSON Wire* protocol) is now used when specifying Appium capabilities with *capabilities.firstMatch*.
 
