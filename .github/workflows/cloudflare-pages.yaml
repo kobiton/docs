@@ -25,12 +25,16 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '20'
+          cache: 'yarn'
 
       - name: Install dependencies
-        run: yarn install
+        run: yarn install --frozen-lockfile
 
       - name: Build docs
         run: yarn build-docs:ci
+
+      - name: Typecheck functions
+        run: yarn typecheck
 
       - name: Deploy to Cloudflare Pages
         uses: cloudflare/wrangler-action@v3
