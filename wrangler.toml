@@ -1,0 +1,13 @@
+name = "admin-docs"
+pages_build_output_dir = "build/docs"
+fail_open = false
+
+[vars]
+COGNITO_DOMAIN = "us-east-1vpo9m10ko.auth.us-east-1.amazoncognito.com"
+COGNITO_CLIENT_ID = "7ileid37iqu389msn6rvrsu437"
+COGNITO_REGION = "us-east-1"
+COGNITO_USER_POOL_ID = "us-east-1_vPO9m10ko"
+
+# Secrets (set in Cloudflare dashboard or via wrangler):
+# - COGNITO_CLIENT_SECRET
+# - SESSION_SECRET (generate with: openssl rand -hex 32)
