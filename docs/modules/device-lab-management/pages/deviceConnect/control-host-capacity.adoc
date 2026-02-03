@@ -1,9 +1,9 @@
-= Control the capacity limit of a host machine
-:navtitle: Control host machine capacity limit
+= Control the capacity of a host machine
+:navtitle: Control host machine capacity
 
 == Overview
 
-This guide explains how to configure and manage the maximum number of parallel test sessions that can run on a host machine.
+This guide explains how to configure and manage the maximum number of parallel test sessions that can run on a host machine. This setting acts as a governor to control overall test execution capacity.
 
 It covers:
 
@@ -15,7 +15,7 @@ It covers:
 
 * Recommended actions when capacity is exceeded
 
-== What a host machine capacity limit is
+== Host machine capacity limits
 
 Each host machine has a finite capacity for running parallel test sessions. Capacity is determined by hardware resources and runtime conditions, and may be lower than the total number of devices connected to the host.
 
@@ -23,7 +23,7 @@ If a host machine meets Kobiton’s hardware requirements, it can typically supp
 
 For this reason, capacity limits are generally required only when more than 26 devices are connected to a single host.
 
-== Set the capacity limit
+== Set the Max Parallel Tests
 
 To configure a capacity limit for a host machine:
 
