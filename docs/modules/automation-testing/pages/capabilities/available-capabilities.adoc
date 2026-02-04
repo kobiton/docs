@@ -104,6 +104,61 @@ capabilities.setCapability("deviceName", "*Pro"); // Use any device name ending 
 capabilities.setCapability("deviceName", "iPhone 11*"); // Use any device name starting with 'iPhone 11'.
 ----
 
+=== `kobiton:deviceTags`
+
+Filter devices by device tags. Follow 2-dimensional string array formats:
+
+* Single group with a single tag: `[["healthy"]]`
+* Single group with multiple tags (OR within group): `[["project","dev"]]`
+* Multiple groups (AND across groups): `[["project","dev"],["healthy"]]`
+
+[NOTE]
+====
+
+* Multiple nested layers such as `[["project", ["dev", "test"]],["healthy"]]` are not supported.
+* By default, returns matching device(s) with both _Org_ and _Me_ tags. Set `kobiton:deviceTagType` to filter by a single tag type.
+
+====
+
+[IMPORTANT]
+See below examples of how to use 2-dimensional string array formats for different programming languages.
+
+* *Type:* `string`
+* *Required capabilities:* None
+* *Optional capabilities:* `kobiton:deviceTagType`
+
+.Java and .NET(C#) Example
+[source,java]
+----
+// Single group with a single tag
+capabilities.setCapability("kobiton:deviceTags", new String[][] { new String[] { "healthy" } });
+// Single group with multiple tags (OR within group)
+capabilities.setCapability("kobiton:deviceTags", new String[][] { new String[] { "project", "dev" } });
+// Multiple groups (AND across groups)
+capabilities.setCapability("kobiton:deviceTags", new String[][] { new String[] { "project", "dev" }, new String[] { "healthy" } });
+----
+
+.NodeJS Example
+[source]
+----
+var desiredCaps = {
+    'kobiton:deviceTags': [["project", "dev"], ["healthy"]],
+}
+----
+
+=== `kobiton:deviceTagType`
+
+If `kobiton:deviceTags` is provided, set to either `private` (_Me_ tag) or `public` (_Org_ tag) to filter devices by a single tag type. If not set, returns matching device(s) with both tag types.
+
+* *Type:* `string`
+* *Required capabilities:* `kobiton:deviceTags`
+* *Optional capabilities:* None
+
+[source,java]
+----
+capabilities.setCapability("kobiton:deviceTagType", "public");
+----
+
 [#_ensureWebviewsHavePages]
 === `ensureWebviewsHavePages`
 
@@ -179,7 +234,7 @@ The name of the test session.
 capabilities.setCapability("sessionName", "Automation test session"); // Specify the test session name.
 ----
 
-=== `kobiton:tags`
+=== `kobtion:sessionTags`
 
 Categorize and organize sessions by assigning a custom tag at the time of session creation.
 
@@ -190,8 +245,17 @@ Categorize and organize sessions by assigning a custom tag at the time of sessio
 .Example
 [source,java]
 ----
-capabilities.setCapability("kobiton:tags", ["nightly-run", "login-flow", "regression"]);
+capabilities.setCapability("kobiton:sessionTags", ["nightly-run", "login-flow", "regression"]);
 ----
+
+[NOTE]
+====
+
+This capability was previously `kobiton:tags`.
+
+Although `kobiton:tags` can still be used, we recommend using the new capability name to avoid confusion with `kobiton:deviceTags`.
+
+====
 
 === `useConfiguration`
 
