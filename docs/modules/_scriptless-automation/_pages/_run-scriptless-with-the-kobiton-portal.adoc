@@ -1,0 +1,82 @@
+= Run scriptless with the Kobiton portal
+:navtitle: Run scriptless with the Kobiton portal
+
+Learn how to run Scriptless Automation using the Kobiton portal.
+
+== Before you start
+
+You'll need to complete the following:
+
+* xref:create-a-baseline-session.adoc[Create a baseline session].
+* xref:_test-management:create-a-test-case.adoc[] using your baseline session.
+
+== Open Scriptless Automation
+
+In *Sessions*, search for your baseline session, then select the session.
+
+image:session-explorer:search-session-id-closeup.png[width=1000,alt="Session search screen"]
+
+[NOTE]
+For more information, see xref:session-explorer:session-metadata.adoc[].
+
+Select *Automated Test Case*.
+
+image:_scriptless-automation:scriptless-automated-test-case-button.png[width=1000,alt="The session overview page with the Automated Test Case button"]
+
+Select *Rerun*.
+
+image:_scriptless-automation:scriptless-rerun-button.png[width=1000,alt="Select Rerun in the Automated Test Case screen"]
+
+[TIP]
+For best results, select Rerun when the message _Congratulations! Your test case is good to go now_ appears on screen. If a different message is showing, you may need to xref:_test-management:remediation/annotate-a-test-step.adoc[annotate the test steps].
+
+== Configure your scriptless session
+
+=== Device Bundles
+
+In the *Rerun Configurations* window, select *Device Bundles*.
+
+image:_scriptless-automation:scriptless-rerun-configurations-device-bundles-context.png[width=600,alt="The select device bundles dropdown list"]
+
+Select the dropdown and choose a bundle.
+
+image:_scriptless-automation:scriptless-select-device-bundles.png[width=600,alt="The select device bundles dropdown list"]
+
+If you'd like to remove any devices for this session, de-select the checkbox next to each device.
+
+image:_scriptless-automation:scriptless-deselect-device-from-bundles.png[width=1000,alt="A device is de-selected from the device bundles"]
+
+[NOTE]
+If you'd like to make more changes to this bundle, select *Configure Bundle*. For more information, see xref:organization:device-bundles/manage-device-bundles.adoc[].
+
+=== Data driven testing
+
+Data-driven testing allows you to define custom data sets and replace values from your baseline session. In the *Rerun Configurations* window, select *Data Driven Testing*.
+
+image:_scriptless-automation:rerun-configurations-data-driven-testing-context.png[width=1000,alt="The Data Driven Testing section under Rerun Configurations"]
+
+Select the *+* button to add new test data.
+
+image:_scriptless-automation:data-driven-new-dataset.png[width=1000,alt="Select the plus icon to add new test data"]
+
+The new test data is only applied to a specific device in the bundle. Choose the device to apply by selecting it from the *Assign Device* dropdown.
+
+image:_scriptless-automation:data-driven-assign-device.png[width=500,alt="The Assign Device dropdown"]
+
+To replace a value used for a specific test step, select the test step with a value input action, then enter a new value.
+
+image:_scriptless-automation:data-driven-replace-value.png[width=500,alt="Replacing a value in a test step"]
+
+Once a value has been modified, it will be marked as *Edited*.
+
+image:_scriptless-automation:data-driven-test-step-edited.png[width=500,alt="The value is marked as edited"]
+
+== Run Scriptless Automation
+
+When you're finished configuring your scriptless session, select *Rerun*.
+
+image:_scriptless-automation:rerun-configurations-data-driven-testing-context.png[width=1000,alt="Select Rerun after finishing the configurations"]
+
+You'll be redirected to your test run where you can view live updates for your run.
+
+image:_scriptless-automation:test-run-view.png[width=1000,alt="The test run view"]
