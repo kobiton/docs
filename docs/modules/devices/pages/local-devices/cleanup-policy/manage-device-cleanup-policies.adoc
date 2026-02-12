@@ -1,0 +1,113 @@
+= Manage device cleanup policies
+:navtitle: Manage device cleanup policies
+
+A cleanup policy is a set of steps that are performed on a device when a session ends to remove test data and changes in device settings in the session.
+
+Learn about device cleanup policies management, including creating, editing, removing and assigning to teams or the organization.
+
+[#_open_the_cleanup_policies_page]
+== Open the Cleanup Policies page
+
+include::profile:partial$open-settings.adoc[]
+
+Select *Cleanup Policy* to access the Cleanup Policies page.
+
+image:devices:cleanup-policies-list.png[width=1000,alt="The Cleanup Policies list page"]
+
+== About the predefined cleanup policies
+
+At the Cleanup Policies page, there are 2 predefined cleanup policies:
+
+image:devices:cleanup-policies-list.png[width=1000,alt="The Cleanup Policies list page with the 2 predefined cleanup policies"]
+
+* *Thorough*: This cleanup policy is equivalent to a user-created policy that has xref:local-devices/cleanup-policy/cleanup-configurations.adoc[all configurations,window=read-later] checked, and performs the most thorough cleanup on a device.
+
+* *No Cleanup*: This cleanup policy does not perform any cleanup on a device. It is *not* equivalent to a user-created policy without any checked item, as there are still some cleanup configurations enabled for the latter.
+
+These predefined policies are created by the system and are not editable or removable.
+
+== Create or edit a cleanup policy
+
+At the Cleanup Policies page, choose the *Create* button.
+
+image:devices:cleanup-policies-list.png[width=1000,alt="The Cleanup Policies list page with the Create button"]
+
+Enter a name and description.
+
+image:organization:configure-cleanup-policy-closeup.png[width=500,alt="A closeup to cleanup policy configuration modal"]
+
+Check the configurations you want to add for *both* the Android and iOS tabs. Refer to xref:local-devices/cleanup-policy/cleanup-configurations.adoc[this page,window=read-later] for a list of all configurations.
+
+NOTE: There are additional configurations not shown here that are always enabled for user-created cleanup policies. Refer to the xref:local-devices/cleanup-policy/cleanup-configurations.adoc[list of configurations,window=read-later] to learn more.
+
+image:organization:check-policies-closeup.png[width=500,alt="Check the policies you want to add"]
+
+When you're finished, select *Save*.
+
+image:organization:cleanup-confirm-popup-closeup.png[width=500,alt="Confirm create new cleanup policies"]
+
+The new cleanup policy appears in the list.
+
+image:devices:new-cleanup-policy-created.png[width=1000,alt="The new cleanup policy appears in the list"]
+
+Select the created cleanup policy's name to open the edit dialog.
+
+[NOTE]
+====
+
+The following cannot be edited:
+
+* Predefined cleanup policies (_Thorough_ and _No Cleanup_).
+
+* Any cleanup policy that is assigned as default for the organization.
+
+====
+
+Edit the cleanup policy, then choose *Save* to apply the changes.
+
+IMPORTANT: The created cleanup policy is not active until it is assigned as default for the xref:#_assign_a_cleanup_policy_as_default_for_the_organization[organization] or xref:#_create_and_assign_a_cleanup_policy_as_default_for_the_team[team].
+
+== Remove a cleanup policy
+
+At the Cleanup Policies page, select to highlight a cleanup policy.
+
+Select the *Remove* button, then confirm the removal in the pop-up.
+
+image:devices:cleanup-policy-selected.png[width=500,alt="The selected cleanup policy with the Remove button"]
+
+[NOTE]
+====
+
+The following cannot be removed:
+
+* Predefined cleanup policies (_Thorough_ and _No Cleanup_).
+
+* Any cleanup policy that is assigned as default for the organization.
+
+After removing a default cleanup policy of one or several teams, the default cleanup policy of the organization will be assigned as default for those teams instead.
+
+====
+
+[#_assign_a_cleanup_policy_as_default_for_the_organization]
+== Assign a cleanup policy as default for the organization
+
+At the Cleanup Policies page, select to highlight a cleanup policy.
+
+Select the *Mark as default* button, then confirm the selection in the pop-up.
+
+image:devices:cleanup-policy-selected.png[width=500,alt="The selected cleanup policy with the Mark as default button"]
+
+After being assigned as the default for the organization, the cleanup policy is applied:
+
+* At the end of all sessions launched under the organization.
+
+* After the device restarts or reconnects to the Portal after a disconnection.
+
+* After the device is released from retain or virtualUSB.
+
+
+[#_create_and_assign_a_cleanup_policy_as_default_for_the_team]
+== Create and assign a cleanup policy as default for the team
+
+include::organization:teams/create-a-device-cleanup-policy.adoc[tag=team_cleanup_policy]
+
