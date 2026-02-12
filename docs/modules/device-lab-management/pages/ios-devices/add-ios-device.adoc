@@ -28,12 +28,12 @@ See below for an example of the SuperSync15 with the Host port visible.
 image::device-lab-management:device-lab-management-add-android-supersync15.PNG[width=600, alt="SuperSync15 with the Host port visible"]
 
 [#network-requirements-wifi-pairing]
-== Connect the Mac mini host and the iOS 17.0 to 17.3.1 devices to a network that supports mDNS and Wi-Fi pairing
+== Connect the Mac mini host and devices to a network that supports mDNS and Wi-Fi pairing
 
 [IMPORTANT]
 This section is only required for *iOS/iPadOS 17.0 to 17.3.1* devices with *Lightning mode* configuration.
 
-Prepare a network that satisfy the following requirements:
+Prepare a network that satisfies the following requirements:
 
 * _mDNS UDP Messages_: The devices will broadcast mDNS UDP messages that the Mac mini must be capable of receiving. This communication is facilitated via the UDP port 5353.
 
@@ -80,17 +80,22 @@ The steps to establish trust pairing vary between iOS 16 and below and iOS 17 an
 [NOTE]
 The steps in this section apply to both Standard and Lightning mode.
 
-Check the device screen. Tap **Trust** on the Trust this computer popup:
+The device needs to be trusted by the system it is plugged into:
+
+* For Lightning mode, that is the GEM (Dell server).
+* For Standard mode, that is the Mac mini host.
+
+After plugging the device to the appropriate system, check the device screen. Tap *Trust* on the *Trust this computer* popup:
 
 image::device-lab-management:device-lab-management-ios-add-ios-trust-this-computer-trust.PNG[width=300,alt="Trust this computer popup, clicking Trust"]
 
-Open **Finder** in the Mac mini host, select the connected device name, and choose **Trust**.
+Open *Finder* in the Mac mini host, select the connected device name, and choose *Trust*. If the device appears in Finder but there is no _Trust_ button, skip this step.
 
 image::device-lab-management:device-lab-management-ios-add-ios-trust-iphone-trust.PNG[width=600,alt="Trust this iphone window, clicking Trust"]
 
-Unplug the device, then plug it in again. Wait until the device screen changes to the below before continuing (NOTE: there will also be an *automation running* overlay above the device screen):
+Unplug the device, then plug it in again. Wait until the device screen changes as shown below before continuing. There will also be an *automation running* overlay above the device screen.
 
-image::device-lab-management:device-lab-management-add-android-screen-changes-to-blue.PNG[width=300, alt="device screen changes and shows Kobiton name and logo"]
+image::device-lab-management:device-lab-management-add-ios-screen-changes-to-blue.PNG[width=300, alt="device screen changes and shows Kobiton name and logo"]
 
 === iOS 17 and above
 
@@ -114,41 +119,58 @@ Standard Mode::
 +
 --
 
-Open Xcode on the Mac mini host, then navigate to **Window → Devices and Simulators**. Do this before continuing to the next step.
+The device needs to be trusted by the Mac mini host it is plugged into.
 
-The Trust *this computer* prompt on the device screen appears, tap **Trust**.
+After plugging the device into the Mac mini host, open *Xcode* then navigate to *Window → Devices and Simulators*. Do this before continuing to the next step.
+
+When the *Trust this computer* prompt on the device screen appears, tap *Trust*. If the prompt reappears, tap *Trust* again until there is no more prompt.
 
 image::device-lab-management:device-lab-management-ios-add-ios-standard-lightning-trust.PNG[width=300,alt="Standard Mode. Trust This Computer popup, clicking Trust"]
 
-The Trust *this computer* prompts will reappear, tap **Trust** again. This time there should be no more **Trust** prompts.
-
 --
 
-Lightning mode::
+Lightning mode - iOS 17.0 to 17.3.1::
 +
 --
 
-*For iOS 17.0 to 17.3.1 only*: connect the devices and the Mac mini host to a network that xref:#network-requirements-wifi-pairing[satisfies the requirements].
+The device needs to be trusted by both of the following:
 
-Open Xcode on the Mac mini host, then navigate to **Window → Devices and Simulators**. Do this before continuing to the next step.
+* The Mac mini host that is paired with the GEM (Dell server)
+* The GEM it is plugged into.
 
-Make sure you connect the device **to the Mac mini host** first.
+Connect the devices and the Mac mini host to a network that xref:#network-requirements-wifi-pairing[satisfies the requirements].
 
-The Trust *this computer* prompt on the device screen appears, tap **Trust**.
+Make sure you connect the device *to the Mac mini host* first.
+
+Open Xcode on the Mac mini host, then navigate to *Window → Devices and Simulators*. Do this before continuing to the next step.
+
+When the *Trust this computer* prompt on the device screen appears, tap *Trust*. If the prompt reappears, tap *Trust* until there is no more prompt.
 
 image::device-lab-management:device-lab-management-ios-add-ios-standard-lightning-trust.PNG[width=300,alt="Lightning Mode. Trust This Computer popup, clicking Trust"]
 
-In the Mac mini host’s screen, under the **Devices** tab of the **Devices and Simulators** screen, the iOS 17 devices should show up with a yellow warning message like the one below:
+In the Mac mini host’s screen, under the *Devices* tab of the *Devices and Simulators* screen, the iOS 17 devices should show up with a yellow warning message like the one below:
 
 image::device-lab-management:device-lab-management-ios-add-ios-device-and-simulator.PNG[width=600,alt="iOS 17 in Devices and Simulators"]
 
-Unplug the device from the Mac mini host and plug it into the Cambrionix hub connected to the GEM.
+Wait for the debug symbol transfer to finish, then unplug the device from the Mac mini host and plug it into the Cambrionix hub connected to the GEM.
 
-The *Trust this computer* prompts will reappear, tap **Trust** again. This time there should be no more **Trust** prompts.
+The *Trust this computer* prompt will appear again to establish trust pairing with the GEM. Tap *Trust*.
 
-In Xcode’s Devices and Simulators, the iOS 17 devices will now have a globe icon next to it like below:
+In Xcode’s _Devices and Simulators_, the iOS 17 devices will now have a globe icon next to it like below:
 
 image::device-lab-management:device-lab-management-ios-add-ios-xcode-device-and-simulator.PNG[width=300,alt="Devices, iphone is connected notification"]
+
+--
+
+Lightning mode - iOS 17.4 and above::
++
+--
+
+The device needs to be trusted by the GEM (Dell server) it is plugged into.
+
+After plugging the device into the Cambrionix hub connected to the GEM, the *Trust This Computer* prompt appears. Tap *Trust*.
+
+image::device-lab-management:device-lab-management-ios-add-ios-standard-lightning-trust.PNG[width=300,alt="Lightning Mode. Trust This Computer popup, tapping Trust"]
 
 --
 
@@ -156,7 +178,7 @@ image::device-lab-management:device-lab-management-ios-add-ios-xcode-device-and-
 
 Wait until the device screen changes to the below before continuing. There will also be an *automation running* overlay above the device screen (not shown in screenshot).
 
-image::device-lab-management:device-lab-management-add-android-screen-changes-to-blue.PNG[width=300, alt="device screen changes and shows Kobiton name and logo"]
+image::device-lab-management:device-lab-management-add-ios-screen-changes-to-blue.PNG[width=300, alt="device screen changes and shows Kobiton name and logo"]
 
 [#preload-ddi-air-gapped]
 === Preload DDI for air-gapped Mac mini hosts
@@ -169,18 +191,18 @@ Access any macOS machine with Internet access. This will be referred to as the I
 [NOTE]
 Kobiton software, such as deviceConnect and deviceShare, does not need to be installed on the Internet Mac.
 
-Ensure *Xcode* is installed on the Internet Mac. Make sure the Xcode version is compatible with the iOS 17 device.
+Ensure *Xcode* is installed on the Internet Mac. Make sure the Xcode version is compatible with the iOS device.
 
 [IMPORTANT]
 Make sure the Xcode version on the Internet Mac *is the same or greater* than the version on the Mac mini host to transfer the DDI to.
 
-Unplug the iOS 17 device from the air-gapped Mac (Standard mode) or the GEM (Lightning mode) and connect it to the Internet Mac.
+Unplug the iOS device from the air-gapped Mac (Standard mode) or the GEM (Lightning mode) and connect it to the Internet Mac.
 
 Open Xcode.
 
-Tap Trust in the **Trust this computer** popup on the iOS 17 device. The **Trust this computer** prompts will reappear, tap **Trust** again. After this, there should be no more **Trust** prompts.
+Tap Trust in the *Trust this computer* popup on the iOS device. The *Trust this computer* prompts will reappear, tap *Trust* again. After this, there should be no more *Trust* prompts.
 
-In the Xcode menu bar, select **Window → Devices and Simulators**. Select the iOS 17 device under the **Devices** tab.
+In the Xcode menu bar, select *Window → Devices and Simulators*. Select the iOS device under the *Devices* tab.
 
 The `Copying shared cache symbols...` message appears. Wait for this process to complete and the message to clear.
 
@@ -188,7 +210,7 @@ image::device-lab-management:device-lab-management-ios-add-ios-copying-shared-ca
 
 Unplug the device from the Internet Mac.
 
-Repeat the above processes for all iOS/iPadOS 17 and later devices to be hosted on the air-gapped Mac mini.
+Repeat the above processes for all iOS/iPadOS 17 and above devices to be hosted on the air-gapped Mac mini.
 
 Open *Finder* on the Internet Mac. Press *Shift + Command + G* on the keyboard, then input the following path depending on the version of Xcode:
 
@@ -196,25 +218,25 @@ Open *Finder* on the Internet Mac. Press *Shift + Command + G* on the keyboard, 
 
 * `~/Library/Developer/DeveloperDiskImages` (Xcode below 16)
 
-Copy the 2 files `iOS_DDI-version.plist` and `iOS_DDI.dmg` to the *air-gapped Mac mini* that will host the iOS/iPadOS 17 and later devices. Put the copied file into the following folder on the air-gapped Mac mini:
+Copy the 2 files `iOS_DDI-version.plist` and `iOS_DDI.dmg` to the *air-gapped Mac mini* that will host the iOS devices. Put the copied file into the following folder on the air-gapped Mac mini:
 
 * `/Library/Developer/DeveloperDiskImages` if the current Xcode version is 16 or above.
 
 * ``~/Library/Developer/DeveloperDiskImages ``if the current Xcode version is below 16.
 
-Repeat the above process for all air-gapped Mac mini hosts with iOS/iPadOS 17 and later devices.
+Repeat the above process for all air-gapped Mac mini hosts with iOS/iPadOS 17 and above devices.
 
-Continue with connecting iOS 17 and above devices to the air-gapped Mac mini hosts or the GEM.
+Continue with connecting iOS devices to the air-gapped Mac mini hosts or the GEM.
 
 [IMPORTANT]
-Apple has not published whether the personalized DDI will expire or how long it will last in an air-gapped environment.If connection errors occur and other troubleshooting steps do not resolve the issue, the personalized DDI may be expired, and you will need to repeat this process.
+Apple has not published whether the personalized DDI will expire or how long it will last in an air-gapped environment. If connection errors occur and other troubleshooting steps do not resolve the issue, the personalized DDI may be expired, and you will need to repeat this process.
 
 [#_verify_device_is_available_in_kobiton]
 == Verify device is available in Kobiton
 
 Open Chrome on the Mac mini, then open *localhost* and log in.
 
-Navigate to **Devices**.The connected device displays as **Available**.
+Navigate to *Devices*. The connected device displays as *Available*.
 
 image::device-lab-management:device-lab-management-ios-add-ios-localhost-system-ios-device-available.PNG[width=600,alt="Verifying device is avaiable on Kobiton"]
 
@@ -232,7 +254,7 @@ If you see the *deviceControl* warning or the error under the device's name with
 
 Still in Chrome, open the Kobiton web portal and log in using an account with *ADMIN* role.
 
-Select the profile picture and choose **Settings**, then choose **Device Management**.
+Select the profile picture and choose *Settings*, then choose *Device Management*.
 
 In the search bar, enter the device’s UDID and select Enter to filter.
 
