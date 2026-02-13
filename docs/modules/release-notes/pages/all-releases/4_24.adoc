@@ -1,0 +1,118 @@
+= Kobiton 4.24 Release Notes
+:navtitle: Kobiton 4.24 release notes
+
+_Feb 6, 2026_
+
+== Accessibility: Android TalkBack support in manual sessions
+
+Accessibility testing just got easier.
+
+You can now use Android TalkBack during manual sessions, making it simple to navigate devices remotely with screen reader controls.
+
+That means your team can validate accessibility requirements in real time and experience your app the way TalkBack users do - uncovering issues that visual testing alone might miss.
+
+=== What you need
+
+* Android 12+ device
+* Lightning mode enabled (look for the green lightning bolt in a manual session)
+
+=== How it works
+
+A new *Screen Reader* option is available in the manual session toolbar. From there, you can:
+
+* Turn TalkBack on or off
+* Navigate using TalkBack gestures and controls
+
+A full user guide is coming soon.
+
+=== Good to know
+
+* The focus border may not appear immediately after enabling TalkBack. Tap an interactive element to activate it.
+* The focus border may linger briefly after disabling TalkBack. Tap an interactive element to clear it.
+* For permission pop-ups, only clickable elements (buttons, text fields, etc.) can be read aloud and selected using TalkBack.
+
+== Android audio in manual sessions
+
+You can now hear device audio for Android devices during manual sessions.
+
+=== What you need
+
+* Android 11+ device
+* Lightning mode enabled (look for the green lightning bolt in a manual session)
+
+=== How it works
+
+Audio automatically streams when Lightning mode is active.
+
+If you don’t hear sound:
+
+* Increase the device volume
+* Allow *Sound* permission in Chrome https://support.google.com/chrome/answer/114662?hl=en&co=GENIE.Platform%3DDesktop[site settings,window=read-later] (allowed by default)
+
++
+
+image:audio-permission-chrome.png[width=500,alt="The Sound permission in Chrome site settings"]
+
+== Bluetooth-related features improvements
+
+This section applies to the following Bluetooth-based features:
+
+* Audio injection
+* iOS VoiceOver
+
+Bluetooth host protocol and port is no longer required in the `dc.ini` configuration. If these values are not provided, the host defaults protocol to `https` and port to `50051`.
+
+Audio-mode Bluetooth hosts now support *two devices simultaneously*. Keyboard-mode hosts continue to support one device.
+
+Bluetooth host logs are now included in deviceConnect logs.
+
+You may see a `Pairing Incomplete` message during first-time pairing. That’s expected. Simply retry, and after the second attempt, you won’t need to reconnect again.
+
+== Scriptless automation improvements
+
+* *Test Run:* Fixed an issue where revisit sessions ended due to an authorization error
+* *UI update:* Fixed filtering behavior in the Test Run detail page dropdown
+
+== Scripted automation updates & fixes
+
+* *Localization improvements:*
+
+** Enabled setting device language using capability values (for example, `language="es"` and `locale="ES"`)
+** Extended Android agent to support non-English locales
+** Standardized `SetLocale` behavior across iOS and Android
+** iPad orientation now persists after language changes
+
+* *Appium TurboTest:* Clear error returned for invalid device selectors in queued requests
+* *Basic Appium:* Fixed app installation failures when using app URLs
+
+* *UI updates:*
+
+** Additional apps installed after automation session start are now displayed in Session Overview
+** Improved error message when no devices matched a wildcard
+
+== Kobiton CLI updates
+
+* Users can now download the Kobiton CLI directly from the Portal.
+* Fixed an issue with the auto-dismiss alert functionality.
+* Resolved an issue where environment variables were ignored when launching an app using the Kobiton app run command.
+* Added a clearer error message when retrying an app installation already in progress.
+* Added support for recursive file pull
+
+== General improvements & fixes
+
+* *Device List:*
+
+** Filters are no longer shared across Public and Private/Local tabs
+
+** Smarter default tab display:
+
+*** Defaults to *Private* when both Public and Private devices exist
+*** Defaults to *Public* when only Public devices exist
+*** Your last selected Device List tab is now preserved when you navigate away and return.
+
+* *App Repo:* Added ability to clean up app upload errors from the UI.
+* *Session Overview:* Fixed broken app icon display when uploading apps without icons in a manual session.
+* *Parallel Sessions:* Improved cleanup so sessions are released more quickly from parallel limits
+* *Host parallel test capacity:* Added logging and reporting when max parallel test limits are reached for a host.
+* *Audio Injection:* Audio injection can be used on Lightning mode devices, in addition to Standard mode.
+* Modernized the DeviceControl app SDK for improved compatibility
