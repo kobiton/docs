@@ -1,0 +1,43 @@
+= Test VoiceOver in manual iOS sessions
+:navtitle: Test VoiceOver (iOS)
+
+== Overview
+
+Test accessibility on iOS devices during a manual session using VoiceOver.
+
+== Prerequisites
+
+Before using VoiceOver in a manual session, ensure the following requirements are met:
+
+* A private iOS device that supports a Bluetooth keyboard
+* The iOS device must operate in Lightning mode to support audio output during manual testing sessions.
+
+NOTE: Audio output during VoiceOver testing is supported only on devices configured with Bluetooth keyboard access.
+
+== Using VoiceOver During a Manual Session
+
+When a manual session is active:
+
+* The Screen Reader icon is selectable in the left toolbar
+* Selecting the icon opens a floating Screen Reader modal
+
+image:voiceover-manual-session.png[width=750, alt="Screenshot of the Screen Reader modal"]
+
+From the Screen Reader modal, users can:
+
+* Turn VoiceOver mode on or off using the toggle
+* Select a gesture or command to perform the corresponding action on the device screen
+* Listen to VoiceOver output while navigating and interacting with the device
+
+For a complete list of supported gestures, see xref:screen-reader/screen-reader-gestures.adoc[VoiceOver gestures and commands,window=read-later].
+
+Each gesture or command includes:
+
+* A supporting description explaining its behavior
+* A keyboard shortcut displayed in the modal
+
+While VoiceOver mode is enabled:
+
+* Other toolbar tools remain available
+* The device screen can still be interacted with normally
+* VoiceOver gestures supplement, rather than replace, standard interaction
