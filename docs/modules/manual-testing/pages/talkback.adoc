@@ -1,0 +1,77 @@
+= Use TalkBack in a Manual Session (Android)
+
+== Overview
+:figure-caption!:
+Android TalkBack is supported in manual testing sessions.
+
+TalkBack provides audio feedback and keyboard-based navigation. It helps teams identify accessibility issues that may not be detected through visual testing alone.
+
+== Requirements
+
+To use TalkBack, you need:
+
+* Android 12 or later
+* A device with Lightning mode enabled
+
+No additional configuration is required.
+
+== Verify Lightning Mode Support
+
+TalkBack is available only on devices that support Lightning mode.
+
+To verify whether a device supports Lightning mode:
+
+. Switch to *List view* in the Device List.
+. Open the column selector.
+. Enable the *Lightning mode* column.
+
+The Device List allows up to 10 visible columns. If you can’t select the Lightning mode option, disable an existing column and then enable Lightning mode.
+
+Devices that support Lightning mode display a green lightning bolt icon.
+
+.Lighting mode column enabled in Device List
+image::show-lightningmode.png[width=750, Lightning mode column enabled in the Device List]
+
+[NOTE]
+====
+You can also filter for Lightning mode devices using the *Search devices* field.
+====
+
+== Enable TalkBack
+
+. Start a manual session on a supported Android device.
+. In the left navigation panel, select *Screen Reader*.
+. Toggle *Enable*.
+
+When TalkBack is enabled:
+
+* Audio feedback starts automatically.
+* Keyboard shortcuts become active.
+* Screen reader activity is logged in Session Explorer.
+
+.Screen Reader panel with TalkBack enabled
+image::enable-screenreader.png[width=750, Screen Reader panel showing TalkBack enabled]
+
+== Navigate Using Keyboard Shortcuts
+
+When TalkBack is enabled, you can use keyboard shortcuts to navigate the device.
+
+The Screen Reader modal displays available shortcuts for Android devices.
+
+Shortcuts are active only while TalkBack is enabled.
+
+== Review TalkBack Activity
+
+TalkBack actions are recorded in Session Explorer.
+
+Accessibility events are labeled as `TALKBACK` in the session timeline. This allows you to review navigation behavior alongside screenshots and other test actions.
+
+.Session timeline with recorded TalkBack activity
+image::talkback-timeline.png[width=750, Session timeline showing recorded TalkBack gestures and accessibility events]
+
+== Behavior Notes
+
+* Audio streaming starts automatically when TalkBack is enabled.
+* The focus border might not appear immediately after enabling TalkBack. Select an interactive element to display it.
+* The focus border might not disappear immediately after disabling TalkBack. Select an interactive element to hide it.
+* For permission pop-ups, only interactive elements (such as buttons and text fields) are read aloud and selectable.
