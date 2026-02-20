@@ -48,7 +48,7 @@ jobs:
           script: |
             const isPR = context.eventName === 'pull_request';
             const sha = isPR ? context.payload.pull_request.head.sha : context.sha;
-            const environment = isPR ? 'preview' : 'production';
+            const environment = isPR ? `preview-pr-${context.payload.pull_request.number}` : 'production';
             const deploymentUrl = '${{ steps.deploy.outputs.deployment-url }}';
 
             // GitHub deployment (shows in PR UI)
@@ -58,7 +58,8 @@ jobs:
               ref: sha,
               environment,
               auto_merge: false,
-              required_contexts: []
+              required_contexts: [],
+              transient_environment: isPR
             });
             await github.rest.repos.createDeploymentStatus({
               owner: context.repo.owner,
