@@ -1,0 +1,61 @@
+= Remediations
+
+== Overview
+
+Remediation addresses situations where automated execution cannot proceed as recorded.
+
+During execution, the platform attempts to match recorded interactions to the current application state on the device. When a step cannot be completed with sufficient confidence, execution pauses and user input is required before the test can continue.
+
+Remediation allows the test definition to be corrected without recreating the original baseline session.
+
+== When remediation is required
+
+When a test run encounters a blocker, its status indicates that user action is required.
+
+Remediation is triggered when an automated execution cannot reliably complete a recorded step. This typically occurs when a UI element cannot be identified due to layout changes, screen size differences, or other variations across devices.
+
+When this happens, execution is paused until the blocker is resolved.
+
+Remediation is an expected part of maintaining reliable automated execution, particularly when tests are run across multiple devices or application versions.
+
+== Remediate a test run
+
+When a test run encounters a blocker, its status reflects that action is required.
+
+From the test run results, users can review where execution stopped and access the associated session. Remediation updates the test case definition so that future executions can proceed past the blocked step.
+
+After remediation is submitted, the test can be rerun using the same configuration.
+
+// Screenshot suggestion:
+// Test Run results view showing a blocked step and remediation entry point
+
+== Remediate in Session Explorer
+
+Session Explorer provides a detailed view of execution behavior.
+
+From Session Explorer, users can review the recorded baseline step alongside the execution attempt and select the correct UI element when a mismatch occurs.
+
+Remediation submitted through Session Explorer is applied to the test case and used in subsequent executions across devices.
+
+// Screenshot suggestion:
+// Session Explorer view showing baseline step vs execution attempt
+
+== Live remediation
+
+Live remediation is available in limited scenarios during active execution.
+
+Live remediation allows users to intervene while a test is running, correct a blocked step, and continue execution without terminating the session. This approach is useful when immediate validation is required.
+
+Availability and behavior may vary depending on execution context.
+
+== After remediation
+
+Remediation updates the test case definition.
+
+Once remediation is complete, rerunning the test validates that execution can proceed using the updated definition. Previous test runs remain unchanged and available for reference.
+
+== Related pages
+
+* xref:test-management:test-runs.adoc[Test runs]
+* xref:test-management:test-reruns.adoc[Test reruns]
+* xref:scriptless-automation:best-practices.adoc[Best practices]

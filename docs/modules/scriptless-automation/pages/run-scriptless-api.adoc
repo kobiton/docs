@@ -1,0 +1,45 @@
+= Run a Scriptless test using the API
+
+== Overview
+
+Tests created from recorded manual sessions can also be executed programmatically using the Kobiton API.
+
+API-based execution is typically used for advanced workflows, such as integrating test runs into automated pipelines or triggering tests as part of a larger system. The API provides an alternative to running tests through the platform UI.
+
+== When to use the API
+
+Using the API is appropriate when test execution needs to be:
+
+* Triggered automatically as part of a CI/CD pipeline
+* Integrated with external systems or custom tooling
+* Managed without manual interaction in the platform
+
+The API does not replace the platform UI. Test cases and test suites must still be created and managed through Test Management.
+
+== How API-based execution works
+
+API-based execution uses the same underlying test definitions as platform-based execution.
+
+Tests are created from baseline sessions and stored in Test Management. When triggered through the API, these existing test definitions are executed on the selected devices using the same execution logic as platform-initiated runs.
+
+Execution results are recorded in Test Management and can be reviewed in the platform UI.
+
+== Requirements
+
+To run tests using the API, the following are required:
+
+* An active Kobiton account with API access
+* Existing test cases or test suites
+* Familiarity with API-based workflows
+
+== API documentation
+
+Detailed information about available endpoints, request formats, and authentication is provided in the API documentation.
+
+For implementation details, see the API documentation.
+
+== Related pages
+
+* xref:scriptless-automation:run-scriptless.adoc[Run a Scriptless test in the platform]
+* xref:test-management:index.adoc[Test management]
+* xref:scriptless-automation:baseline-session.adoc[Create a baseline session]

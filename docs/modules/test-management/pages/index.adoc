@@ -1,15 +1,52 @@
-= Test management
-:navtitle: Test management
-:page-aliases: test-management:validation:index.adoc, test-management:validation:color-text-validation.adoc, test-management:validation:performance-validation.adoc, test-management:validation:text-validation.adoc
+= Test Management
 
-NOTE: Text color validation, performance validation, and text validation are no longer supported.
+== Overview
 
-Manage test cases for you or your team.
+Test Management provides the structure used to organize, execute, and review automated tests created from manual sessions.
 
-image:test-management:test-case-management-context.png[width=1000, alt="The test management context"]
+Within the Kobiton platform, Test Management is where test cases are stored, grouped, and reused. It also provides visibility into test execution and results across devices and application versions.
 
-== In this section
+== How Test Management fits into testing
 
-include::../nav.adoc[lines=2..]
+Test Management separates test definition from test execution.
 
+Test cases represent recorded test flows derived from baseline sessions. These test cases can be executed repeatedly without recreating the original session.
 
+Each execution produces a test run, which records the outcome of running a test case or test suite on one or more devices. Test runs and their results are tracked independently of the test definitions they use.
+
+== Core objects
+
+Test Management is built around a small set of core objects.
+
+=== Test cases
+
+Reusable definitions created from baseline sessions. Test cases describe what should be tested.
+
+=== Test runs
+
+Individual executions of a test case or test suite. Test runs capture results and execution details.
+
+=== Test suites
+
+Collections of related test cases grouped for execution and organization.
+
+=== Test reruns
+
+Repeat executions of a previous test run using the same configuration, typically used for validation.
+
+== What’s next
+
+From Test Management, users can:
+
+* Create and manage test cases
+* Run tests across devices
+* Review execution results
+* Rerun tests after remediation
+* Generate Appium scripts for automation testing
+
+== Related pages
+
+* xref:test-management:test-cases.adoc[Test cases]
+* xref:test-management:test-runs.adoc[Test runs]
+* xref:test-management:test-suites.adoc[Test suites]
+* xref:test-management:test-reruns.adoc[Test reruns]

@@ -1,0 +1,61 @@
+= Run a Scriptless test
+
+== Overview
+
+Running a Scriptless test applies an existing test definition to one or more devices. Tests are executed automatically based on interactions previously recorded during a manual session.
+
+In the Kobiton platform, Scriptless tests are run through Test Management. Execution results are captured for review and can be rerun as needed.
+
+== Before you begin
+
+Before running a test, ensure the following:
+
+* A test case has been created from a baseline session
+* The application under test is available in a supported application context (native app, web application, or preinstalled app)
+* At least one compatible device is available
+
+== Run a test in the platform
+
+Tests are run from Test Management in the Kobiton platform.
+
+From Test Management, users can create a test run using a single test case or a test suite. During setup, the test definition, application version, and target devices are selected.
+
+Once a test run starts, the platform executes the recorded interactions automatically on the selected devices. Test execution does not require user interaction while the run is in progress.
+
+== What happens during execution
+
+During execution, the platform replays the recorded interactions step by step on each device.
+
+For each step, the system attempts to match the recorded interaction to the current application state. Execution continues until all steps are completed or until user action is required.
+
+Execution progress and status are visible while the test is running.
+
+== Review test results
+
+After execution completes, results are available in Test Management.
+
+Each test run includes:
+
+* Overall execution status
+* Device-level execution details
+* Validation results, such as Crash, Accessibility, and Response Time findings
+
+If execution cannot proceed for a particular step, the test run is marked as requiring action and must be remediated before execution can continue.
+
+== Rerun a test
+
+Test runs can be rerun using the same configuration.
+
+Reruns repeat the original execution using the same test definition and device selection. This is commonly used after issues are addressed or when validating execution behavior.
+
+== Advanced usage
+
+Tests can also be triggered programmatically using the Kobiton API. This approach is typically used for automated pipelines or advanced workflows.
+
+For details, see the link:https://api.kobiton.com/docs[API documentation].
+
+== Related pages
+
+* xref:scriptless-automation:baseline-session.adoc[Create a baseline session]
+* xref:test-management:index.adoc[Test management]
+* xref:test-management:remediations.adoc[Remediations]
