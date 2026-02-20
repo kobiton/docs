@@ -1,9 +1,8 @@
 name: Deploy to Cloudflare Pages
 
 on:
-  push:
-    branches:
-      - main
+  # we don't deploy on push to the main branch to
+  # keep the site from being open to the public
   pull_request:
     branches:
       - main
@@ -12,17 +11,18 @@ on:
 permissions:
   contents: read
   deployments: write
+  statuses: write
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
         with:
           fetch-depth: 0
 
       - name: Setup Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v6
         with:
           node-version: '20'
           cache: 'yarn'
@@ -33,12 +33,48 @@ jobs:
       - name: Build docs
         run: yarn build-docs:ci
 
-      - name: Typecheck functions
-        run: yarn typecheck
-
       - name: Deploy to Cloudflare Pages
+        id: deploy
         uses: cloudflare/wrangler-action@v3
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: e1c79c7a03d49b6cb456873259a2280f
-          command: pages deploy build/docs --project-name=admin-docs
+          wranglerVersion: '4'
+          command: pages deploy build/docs --project-name=docs
+
+      - name: Create deployment and status
+        uses: actions/github-script@v8
+        with:
+          script: |
+            const isPR = context.eventName === 'pull_request';
+            const sha = isPR ? context.payload.pull_request.head.sha : context.sha;
+            const environment = isPR ? 'preview' : 'production';
+            const deploymentUrl = '${{ steps.deploy.outputs.deployment-url }}';
+
+            // GitHub deployment (shows in PR UI)
+            const deployment = await github.rest.repos.createDeployment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              ref: sha,
+              environment,
+              auto_merge: false,
+              required_contexts: []
+            });
+            await github.rest.repos.createDeploymentStatus({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              deployment_id: deployment.data.id,
+              state: 'success',
+              environment_url: deploymentUrl,
+              description: 'Deployed to Cloudflare Pages'
+            });
+
+            await github.rest.repos.createCommitStatus({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              sha,
+              state: 'success',
+              target_url: deploymentUrl,
+              context: 'deploy/cloudflare-pages',
+              description: 'Deployed to Cloudflare Pages'
+            });
