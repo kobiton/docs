@@ -1,7 +1,8 @@
-= Use TalkBack in a Manual Session (Android)
+= Test TalkBack in a manual Android sessions
+:navtitle: Test TalkBack (Android)
 
 == Overview
-:figure-caption!:
+
 Android TalkBack is supported in manual testing sessions.
 
 TalkBack provides audio feedback and keyboard-based navigation. It helps teams identify accessibility issues that may not be detected through visual testing alone.
@@ -29,8 +30,7 @@ The Device List allows up to 10 visible columns. If you can’t select the Light
 
 Devices that support Lightning mode display a green lightning bolt icon.
 
-.Lighting mode column enabled in Device List
-image::show-lightningmode.png[width=750, Lightning mode column enabled in the Device List]
+image:show-lightningmode.png[width=750,alt="Lightning mode column enabled in the Device List"]
 
 [NOTE]
 ====
@@ -49,8 +49,7 @@ When TalkBack is enabled:
 * Keyboard shortcuts become active.
 * Screen reader activity is logged in Session Explorer.
 
-.Screen Reader panel with TalkBack enabled
-image::enable-screenreader.png[width=750, Screen Reader panel showing TalkBack enabled]
+image:enable-screenreader.png[width=750,alt="Screen Reader panel showing TalkBack enabled"]
 
 == Navigate Using Keyboard Shortcuts
 
@@ -66,8 +65,7 @@ TalkBack actions are recorded in Session Explorer.
 
 Accessibility events are labeled as `TALKBACK` in the session timeline. This allows you to review navigation behavior alongside screenshots and other test actions.
 
-.Session timeline with recorded TalkBack activity
-image::talkback-timeline.png[width=750, Session timeline showing recorded TalkBack gestures and accessibility events]
+image:talkback-timeline.png[width=750,alt="Session timeline showing recorded TalkBack gestures and accessibility events"]
 
 == Behavior Notes
 
