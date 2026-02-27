@@ -1,7 +1,14 @@
 = Kobiton Command Line Interface commands
 :navtitle: Kobiton CLI commands
 
-These are the commands you can use with the Kobiton Command Line Interface (CLI) tool.
+Commands that operate on an active CLI session require session context.
+
+Provide session context using one of the following:
+
+* Pass the session token with the command: `--session-token <SESSION_TOKEN>` (or `-a <SESSION_TOKEN>`)
+* Set the `KOBITON_SESSION_TOKEN` environment variable
+
+The `<SESSION_TOKEN>` value is returned when you create a CLI session. For details, see xref:use-the-cli.adoc[Start using Kobiton CLI].
 
 == `app run`
 
