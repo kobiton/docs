@@ -29,7 +29,7 @@ From the Screen Reader modal, users can:
 * Select a gesture or command to perform the corresponding action on the device screen
 * Listen to VoiceOver output while navigating and interacting with the device
 
-For a complete list of supported gestures, see xref:screen-reader/screen-reader-gestures.adoc[VoiceOver gestures and commands,window=read-later].
+For a complete list of supported gestures, see xref:screen-reader/screen-reader-gestures.adoc[VoiceOver gestures and shortcuts,window=read-later].
 
 Each gesture or command includes:
 
@@ -41,3 +41,11 @@ While VoiceOver mode is enabled:
 * Other toolbar tools remain available
 * The device screen can still be interacted with normally
 * VoiceOver gestures supplement, rather than replace, standard interaction
+
+== Review VoiceOver Activity
+
+VoiceOver actions are recorded in Session Explorer.
+
+Screen reader accessibility events are labeled as `VOICEOVER` in the session timeline. This allows you to review navigation behavior alongside screenshots and other test actions.
+
+image:voiceover-timeline.png[width=1000,alt="Session timeline showing recorded VoiceOver gestures and screen reader accessibility events"]
