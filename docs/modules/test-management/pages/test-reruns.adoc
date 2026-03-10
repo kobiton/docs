@@ -1,0 +1,44 @@
+= Test reruns
+
+== Overview
+
+A test rerun is a repeat execution of a previous test run using the same configuration.
+
+Reruns are used to validate results without redefining the test or changing execution settings. Each rerun is recorded as a separate execution and does not replace the original test run.
+
+== When test reruns are used
+
+Test reruns are typically used after an issue has been addressed or when execution needs to be validated again.
+
+Common scenarios include:
+
+* Verifying execution after remediation
+* Confirming behavior following an application update
+* Repeating a test run to validate consistency
+
+Reruns ensure that results can be compared directly across executions.
+
+// Screenshot suggestion:
+// Test Run list showing a rerun entry with its name
+
+== How reruns differ from new test runs
+
+A rerun repeats a previous test run using the same test definition, devices, and configuration.
+
+Creating a new test run allows changes to be made to the test setup, such as selecting different devices or modifying execution parameters.
+
+Both approaches create independent execution records, but reruns preserve the original execution context.
+
+== Where reruns appear
+
+Reruns are managed through Test Management and appear as separate test runs.
+
+Each rerun is listed with its own name and execution details. The rerun name includes a reference to the original test run ID, which can be used to identify the source of the rerun.
+
+Reruns can be reviewed individually to evaluate execution results after remediation or validation.
+
+== Related pages
+
+* xref:test-management:test-runs.adoc[Test runs]
+* xref:test-management:remediations.adoc[Remediations when execution requires user input]
+* xref:test-management:test-cases.adoc[Test cases]

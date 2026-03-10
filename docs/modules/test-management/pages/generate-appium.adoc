@@ -1,0 +1,54 @@
+= Generate an Appium script
+
+== Overview
+
+An Appium script can be generated from an existing test case created from a baseline session.
+
+The generated script reflects the recorded interactions captured during the manual session and can be used in external, script-based automation workflows.
+
+Generating an Appium script is optional. Running tests in the platform does not require exporting or maintaining scripts.
+
+== Before you begin
+
+Before generating an Appium script:
+
+* A baseline session must be completed
+* The baseline session must be converted into a test case
+* Any required remediation must be resolved
+
+== Export an Appium script
+
+Appium scripts are generated from the test case view in the platform.
+
+From the test case:
+
+* Open the test case associated with the baseline session
+* Select the option to export an Appium script
+* Choose a supported language and test framework
+* Download the generated script
+
+The exported script includes the recorded actions and element interactions captured during the baseline session.
+
+// Screenshots:
+// One or two images showing the export option and language/framework selection
+
+== Supported languages and frameworks
+
+Appium scripts can be generated using the following language and framework combinations:
+
+* Java (TestNG)
+* Java (JUnit)
+* Node.js (Mocha)
+* C# (NUnit)
+
+== Using the generated script
+
+The generated Appium script can be extended, modified, or integrated into existing automation frameworks.
+
+Changes made to the script outside the platform do not affect the original test case or future test runs executed in the platform.
+
+== Related pages
+
+* xref:test-management:test-cases.adoc[Test cases]
+* xref:scriptless-automation:baseline-session.adoc[Create a baseline session]
+* xref:test-management:index.adoc[Test management]
