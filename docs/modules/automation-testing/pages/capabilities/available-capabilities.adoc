@@ -2,24 +2,19 @@
 :page-aliases: automation-testing:capabilities:add-visualvalidation.adoc
 :navtitle: Available capabilities
 
-These are the capabilities you can use during an automation session.
+These are the capabilities you can use during an automation session. You can also xref:automation-testing:capabilities/auto-generate-capabilities.adoc[auto-generate your capabilities].
 
-[NOTE]
-You can also xref:automation-testing:capabilities/auto-generate-capabilities.adoc[auto-generate your capabilities].
+*Deprecation notice*:
 
-[NOTE]
-The `kobiton:visualValidation` capability is deprecated.
+* The `kobiton:visualValidation` capability is deprecated.
 
 == Kobiton Capabilities
 
 These capabilities are unique to Kobiton.
 
-[NOTE]
-====
-* To use Kobiton capabilities in Basic Appium 2 script, use the `'kobiton:'` vendor prefix, i.e. `'kobiton:sessionName'`.
+* To use Kobiton capabilities in Basic Appium 2 script, use the `'kobiton:'` vendor prefix, i.e. `'kobiton:sessionName'`
 
-* Capabilities with `'kobiton:'` in the name cannot be used without the prefix.
-====
+* Capabilities with `'kobiton:'` in the name cannot be used without the prefix
 
 [IMPORTANT]
 Not all Kobiton capabilities can be used in Basic Appium 2 scripts.
@@ -42,6 +37,9 @@ capabilities.setCapability("app", "https://kobiton.docsapp.net/apps/app_id"); //
 [#_baselineSessionId]
 === `kobiton:baselineSessionId`
 
+[NOTE]
+This capability cannot be used in Basic Appium 2 sessions.
+
 Select a baseline session to use for xref:_flexCorrect[] or xref:_visualValidation[].
 
 * *Type:* `string`
@@ -54,10 +52,10 @@ Select a baseline session to use for xref:_flexCorrect[] or xref:_visualValidati
 capabilities.setCapability("kobiton:baselineSessionId", 0000011); // Select baseline session for flexCorrect or visualValidation by assigning a kobitonSessionId.
 ----
 
-[NOTE]
-This capability cannot be used in Basic Appium 2 sessions.
-
 === `captureScreenshots`
+
+[NOTE]
+This is not available for native and hybrid apps, as well as devices on Android 6.0 and earlier.
 
 Screenshots will be captured after each test step automatically. They'll be available in the xref:session-explorer:manage-sessions.adoc[session overview] after the test session.
 
@@ -70,9 +68,6 @@ Screenshots will be captured after each test step automatically. They'll be avai
 ----
 capabilities.setCapability("captureScreenshots", true); // Take a screenshot after each test step.
 ----
-
-[NOTE]
-This is not available for native and hybrid apps, as well as devices on Android 6.0 and earlier.
 
 === `deviceGroup`
 
@@ -104,6 +99,56 @@ capabilities.setCapability("deviceName", "*Pro"); // Use any device name ending 
 capabilities.setCapability("deviceName", "iPhone 11*"); // Use any device name starting with 'iPhone 11'.
 ----
 
+=== `kobiton:deviceTags`
+
+Filter devices by device tags. Tags can be _Org_ or _Me_.
+
+* *Type:* `string`
+* *Required capabilities:* None
+* *Optional capabilities:* `kobiton:deviceTagType`
+* *Behavior*: By default, returns matching device(s) with both _Org_ and _Me_ tags. Set `kobiton:deviceTagType` to filter by a single tag type.
+
+Follow 2-dimensional string array formats when specifying tags:
+
+* Single group with a single tag: `[["healthy"]]`
+* Single group with multiple tags (OR within group): `[["project","dev"]]`
+* Multiple groups (AND across groups): `[["project","dev"],["healthy"]]`
+* Multiple nested layers such as `[["project", ["dev", "test"]],["healthy"]]` are not supported.
+
+See the below examples of how to use 2-dimensional string array formats for different programming languages.
+
+.Java and .NET(C#) Example
+[source,java]
+----
+// Single group with a single tag
+capabilities.setCapability("kobiton:deviceTags", new String[][] { new String[] { "healthy" } });
+// Single group with multiple tags (OR within group)
+capabilities.setCapability("kobiton:deviceTags", new String[][] { new String[] { "project", "dev" } });
+// Multiple groups (AND across groups)
+capabilities.setCapability("kobiton:deviceTags", new String[][] { new String[] { "project", "dev" }, new String[] { "healthy" } });
+----
+
+.NodeJS Example
+[source]
+----
+var desiredCaps = {
+    'kobiton:deviceTags': [["project", "dev"], ["healthy"]],
+}
+----
+
+=== `kobiton:deviceTagType`
+
+If `kobiton:deviceTags` is provided, set to either `private` (_Me_ tag) or `public` (_Org_ tag) to filter devices by a single tag type. If not set, returns matching device(s) with both tag types.
+
+* *Type:* `string`
+* *Required capabilities:* `kobiton:deviceTags`
+* *Optional capabilities:* None
+
+[source,java]
+----
+capabilities.setCapability("kobiton:deviceTagType", "public");
+----
+
 [#_ensureWebviewsHavePages]
 === `ensureWebviewsHavePages`
 
@@ -122,6 +167,9 @@ capabilities.setCapability("ensureWebviewsHavePages", true); // Set to true.
 [#_flexCorrect]
 === `kobiton:flexCorrect`
 
+[NOTE]
+This capability cannot be used in Basic Appium 2 sessions.
+
 When a script is run on different devices, element selection is autocorrected. For more information, see xref:automation-testing:capabilities/add-flexcorrect.adoc[]
 
 * *Type:* `boolean`
@@ -133,9 +181,6 @@ When a script is run on different devices, element selection is autocorrected. F
 ----
 capabilities.setCapability("kobiton:flexCorrect", true);  // Enable flexCorrect by setting capability to true.
 ----
-
-[NOTE]
-This capability cannot be used in Basic Appium 2 sessions.
 
 === `groupId`
 
@@ -179,7 +224,16 @@ The name of the test session.
 capabilities.setCapability("sessionName", "Automation test session"); // Specify the test session name.
 ----
 
-=== `kobiton:tags`
+=== `kobtion:sessionTags`
+
+[NOTE]
+====
+
+This capability was previously `kobiton:tags`.
+
+Although `kobiton:tags` can still be used, we recommend using the new capability name to avoid confusion with `kobiton:deviceTags`.
+
+====
 
 Categorize and organize sessions by assigning a custom tag at the time of session creation.
 
@@ -190,7 +244,7 @@ Categorize and organize sessions by assigning a custom tag at the time of sessio
 .Example
 [source,java]
 ----
-capabilities.setCapability("kobiton:tags", ["nightly-run", "login-flow", "regression"]);
+capabilities.setCapability("kobiton:sessionTags", ["nightly-run", "login-flow", "regression"]);
 ----
 
 === `useConfiguration`
@@ -210,7 +264,6 @@ capabilities.setCapability("useConfiguration", "kobiton"); // Use this pre-defin
 [#_work_app]
 === `kobiton:workApp`
 
-[IMPORTANT]
 Before using this capability, you must xref:scripting/launch-work-profile-app-android.adoc#_install_and_prepare_the_work_profile_app[install and prepare the Work Profile app,window=read-later].
 
 include::partial$work-profile-capability.adoc[]
@@ -219,7 +272,6 @@ include::partial$work-profile-capability.adoc[]
 
 Kobiton supports most Appium capabilities. The capabilities listed below are typically required or have specific use cases unique to Kobiton.
 
-[NOTE]
 For Basic Appium 2 sessions, follow the https://appium.io/docs/en/2.0/guides/migrating-1-to-2/#capabilities[Appium 2 guidelines] for vendor prefix.
 
 [#_accessKey]
@@ -283,6 +335,9 @@ capabilities.setCapability("appium:deviceOrientation", "landscape"); // Set the 
 
 === `fullReset`
 
+[NOTE]
+This is only available for private devices.
+
 Remove all apps installed during the test session. To keep the apps and only remove their app data, use xref:_noreset[] instead.
 
 * *Type:* `boolean`
@@ -295,10 +350,10 @@ Remove all apps installed during the test session. To keep the apps and only rem
 capabilities.setCapability("appium:fullReset", true); // Delete the app and the related data.
 ----
 
-[NOTE]
-This is only available for private and local devices.
-
 === `noReset`
+
+[NOTE]
+This is only available for private devices.
 
 Remove all app data from apps installed during the test session. To remove the full app, use xref:_fullreset[] instead.
 
@@ -311,9 +366,6 @@ Remove all app data from apps installed during the test session. To remove the f
 ----
 capabilities.setCapability("appium:noReset", false); // Delete just the app data.
 ----
-
-[NOTE]
-This is only available for private and local devices.
 
 === 'platformName'
 
