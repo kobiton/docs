@@ -2,190 +2,107 @@
 :page-aliases: automation-testing:capabilities:add-visualvalidation.adoc
 :navtitle: Available capabilities
 
-These are the capabilities you can use during an automation session.
+This page lists the capabilities that can be used when creating an automation session in Kobiton.
+
+Capabilities control how a session starts, including device selection, application configuration, and session metadata.
+
+Kobiton supports both standard Appium capabilities and additional Kobiton-specific capabilities.
+
+* *Kobiton capabilities* extend Appium functionality and must include the `kobiton:` vendor prefix when used with Appium 2.
+* *Appium capabilities* follow standard Appium conventions but may have additional behavior when used with Kobiton devices.
+
+Examples in this reference use the Appium Java client syntax.
 
 [NOTE]
-You can also xref:automation-testing:capabilities/auto-generate-capabilities.adoc[auto-generate your capabilities].
-
-[NOTE]
+====
 The `kobiton:visualValidation` capability is deprecated.
+====
 
 == Kobiton Capabilities
 
-These capabilities are unique to Kobiton.
+Kobiton provides additional capabilities that extend standard Appium functionality.
+These capabilities must include the `kobiton:` vendor prefix when used with Appium 2.
 
-[NOTE]
-====
-* To use Kobiton capabilities in Basic Appium 2 script, use the `'kobiton:'` vendor prefix, i.e. `'kobiton:sessionName'`.
+Example:
 
-* Capabilities with `'kobiton:'` in the name cannot be used without the prefix.
-====
+[source,java]
+----
+capabilities.setCapability("kobiton:sessionName", "Login test");
+----
 
-[IMPORTANT]
-Not all Kobiton capabilities can be used in Basic Appium 2 scripts.
+Capabilities with the `kobiton:` prefix cannot be used without the prefix.
 
-=== `app`
+.Kobiton capability index
+* <<kobiton-baselinesessionid,kobiton:baselineSessionId>>
+* <<kobiton-devicetags,kobiton:deviceTags>>
+* <<kobiton-flexcorrect,kobiton:flexCorrect>>
+* <<kobiton-tags,kobiton:tags>>
+* <<kobiton-workapp,kobiton:workApp>>
 
-The app to use during the test session. If the app is not already installed on the device, the value of the second parameter will be used to download and install the app. *Only available for app testing*.
+[#kobiton-baselinesessionid]
+=== kobiton:baselineSessionId
 
-* *Type:* `string`
-* *Required capabilities:* None
-* *Optional capabilities:* None
+Select a baseline session to use for `kobiton:flexCorrect` or visual validation.
+
+*Type:* string +
+*Required capabilities:* `kobiton:flexCorrect` or `kobiton:visualValidation` +
+*Optional capabilities:* None
 
 .Example
 [source,java]
 ----
-capabilities.setCapability("app", "kobiton-store:000111"); // Install the app using the Kobiton app repository.
-capabilities.setCapability("app", "https://kobiton.docsapp.net/apps/app_id"); // Install the app using a direct download link.
+capabilities.setCapability("kobiton:baselineSessionId", 0000011);
 ----
 
-[#_baselineSessionId]
-=== `kobiton:baselineSessionId`
+NOTE: This capability cannot be used in Basic Appium 2 sessions.
 
-Select a baseline session to use for xref:_flexCorrect[] or xref:_visualValidation[].
+[#kobiton-devicetags]
+=== kobiton:deviceTags
 
-* *Type:* `string`
-* *Required capabilities:* xref:_flexCorrect[] _or_ xref:_visualValidation[]
-* *Optional capabilities:* None
+Select devices for the automation session using device tags.
+
+When this capability is used, Kobiton searches for devices that have the specified tag or tags assigned. The session runs on a device that matches the provided tags and any additional capability filters.
+
+*Type:* array of strings +
+*Required capabilities:* None +
+*Optional capabilities:* `deviceName`, `udid`, `platformName`
 
 .Example
 [source,java]
 ----
-capabilities.setCapability("kobiton:baselineSessionId", 0000011); // Select baseline session for flexCorrect or visualValidation by assigning a kobitonSessionId.
+capabilities.setCapability("kobiton:deviceTags", ["android-regression"]);
+capabilities.setCapability("kobiton:deviceTags", ["smoke-tests", "pixel-devices"]);
 ----
 
-[NOTE]
-This capability cannot be used in Basic Appium 2 sessions.
+WARNING: Do not provide an empty value for `kobiton:deviceTags`. An empty value may cause session creation to fail.
 
-=== `captureScreenshots`
+NOTE: If no device selection capability is provided (such as `deviceName`, `udid`, or `kobiton:deviceTags`), Kobiton may not be able to determine a target device for the session.
 
-Screenshots will be captured after each test step automatically. They'll be available in the xref:session-explorer:manage-sessions.adoc[session overview] after the test session.
+[#kobiton-flexcorrect]
+=== kobiton:flexCorrect
 
-* *Type:* `boolean`
-* *Required capabilities:* None
-* *Optional capabilities:* None
+Automatically correct element selection when running a script on different devices.
+
+*Type:* boolean +
+*Required capabilities:* `kobiton:baselineSessionId` +
+*Optional capabilities:* None
 
 .Example
 [source,java]
 ----
-capabilities.setCapability("captureScreenshots", true); // Take a screenshot after each test step.
+capabilities.setCapability("kobiton:flexCorrect", true);
 ----
 
-[NOTE]
-This is not available for native and hybrid apps, as well as devices on Android 6.0 and earlier.
+NOTE: This capability cannot be used in Basic Appium 2 sessions.
 
-=== `deviceGroup`
+[#kobiton-tags]
+=== kobiton:tags
 
-The device group within the test session metadata.
+Categorize and organize sessions by assigning custom tags at the time of session creation.
 
-* *Type:* `string`
-* *Required capabilities:* None
-* *Optional capabilities:* None
-
-.Example
-[source,java]
-----
-capabilities.setCapability("deviceGroup", "ORGANIZATION"); // Assign to the device team.
-----
-
-=== `deviceName`
-
-The device name. Assign multiple platform versions using wildcards (`*`).
-
-* *Type:* `string`
-* *Required capabilities:* None
-* *Optional capabilities:* None
-
-.Example
-[source,java]
-----
-capabilities.setCapability("deviceName", "iPhone 11 Pro"); // Use iPhone 11 Pro as the device name.
-capabilities.setCapability("deviceName", "*Pro"); // Use any device name ending with 'Pro'.
-capabilities.setCapability("deviceName", "iPhone 11*"); // Use any device name starting with 'iPhone 11'.
-----
-
-[#_ensureWebviewsHavePages]
-=== `ensureWebviewsHavePages`
-
-Ensures that all WebView elements in the application have loaded their content.
-
-* *Type:* `boolean`
-* *Required capabilities:* None
-* *Optional capabilities:* xref:_visualValidation[]
-
-.Example
-[source,java]
-----
-capabilities.setCapability("ensureWebviewsHavePages", true); // Set to true.
-----
-
-[#_flexCorrect]
-=== `kobiton:flexCorrect`
-
-When a script is run on different devices, element selection is autocorrected. For more information, see xref:automation-testing:capabilities/add-flexcorrect.adoc[]
-
-* *Type:* `boolean`
-* *Required capabilities:* xref:_baselineSessionId[]
-* *Optional capabilities:* None
-
-.Example
-[source,java]
-----
-capabilities.setCapability("kobiton:flexCorrect", true);  // Enable flexCorrect by setting capability to true.
-----
-
-[NOTE]
-This capability cannot be used in Basic Appium 2 sessions.
-
-=== `groupId`
-
-The group ID within the test session metadata.
-
-* *Type:* `string`
-* *Required capabilities:* None
-* *Optional capabilities:* None
-
-.Example
-[source,java]
-----
-capabilities.setCapability("groupId", "0011"); // Assign to the Docs Team.
-----
-
-=== `sessionDescription`
-
-The description of the test session, typically between 50-72 characters, but can be set to any length.
-
-* *Type:* `string`
-* *Required capabilities:* None
-* *Optional capabilities:* None
-
-.Example
-[source,java]
-----
-capabilities.setCapability("sessionDescription", "This tests the login feature with biometric authentication."); // Provide the test session description.
-----
-
-=== `sessionName`
-
-The name of the test session.
-
-* *Type:* `string`
-* *Required capabilities:* None
-* *Optional capabilities:* None
-
-.Example
-[source,java]
-----
-capabilities.setCapability("sessionName", "Automation test session"); // Specify the test session name.
-----
-
-=== `kobiton:tags`
-
-Categorize and organize sessions by assigning a custom tag at the time of session creation.
-
-* *Type:* `string`
-* *Required capabilities:* None
-* *Optional capabilities:* None
+*Type:* array of strings +
+*Required capabilities:* None +
+*Optional capabilities:* None
 
 .Example
 [source,java]
@@ -193,160 +110,243 @@ Categorize and organize sessions by assigning a custom tag at the time of sessio
 capabilities.setCapability("kobiton:tags", ["nightly-run", "login-flow", "regression"]);
 ----
 
-=== `useConfiguration`
+[#kobiton-workapp]
+=== kobiton:workApp
 
-The device configuration to use during the test session. *Only available for web testing*.
+Launch a Work Profile app using the name shown in the app drawer (case-sensitive).
 
-* *Type:* `string`
-* *Required capabilities:* None
-* *Optional capabilities:* None
+Before using this capability, the Work Profile app must be installed and configured.
+
+*Type:* string +
+*Required capabilities:* None +
+*Optional capabilities:* None
 
 .Example
 [source,java]
 ----
-capabilities.setCapability("useConfiguration", "kobiton"); // Use this pre-defined configuration for the test session.
+capabilities.setCapability("kobiton:workApp", "Firefox");
 ----
 
-[#_work_app]
-=== `kobiton:workApp`
+NOTE: This capability cannot be used in Basic Appium 2 sessions.
 
-[IMPORTANT]
-Before using this capability, you must xref:scripting/launch-work-profile-app-android.adoc#_install_and_prepare_the_work_profile_app[install and prepare the Work Profile app,window=read-later].
+When `kobiton:workApp` is used, the following capabilities are ignored:
 
-include::partial$work-profile-capability.adoc[]
+* `app`
+* `appium:appPackage`
+* `appium:appActivity`
 
 == Appium Capabilities
 
-Kobiton supports most Appium capabilities. The capabilities listed below are typically required or have specific use cases unique to Kobiton.
+Kobiton supports most standard Appium capabilities. The capabilities listed below are commonly used when running automation sessions on Kobiton devices.
 
-[NOTE]
-For Basic Appium 2 sessions, follow the https://appium.io/docs/en/2.0/guides/migrating-1-to-2/#capabilities[Appium 2 guidelines] for vendor prefix.
+.Appium capability index
+* <<accesskey,accessKey>>
+* <<app,app>>
+* <<autowebview,autoWebview>>
+* <<browsername,browserName>>
+* <<deviceorientation,deviceOrientation>>
+* <<devicename,deviceName>>
+* <<ensurewebviewshavepages,ensureWebviewsHavePages>>
+* <<fullreset,fullReset>>
+* <<noreset,noReset>>
+* <<platformname,platformName>>
+* <<udid,udid>>
+* <<username,username>>
 
-[#_accessKey]
-=== `accessKey`
+[#accesskey]
+=== accessKey
 
-The Kobiton xref:profile:manage-your-api-credentials.adoc#_get_an_api_key[API key,window=read-later] for authentication. Only required for Appium `java-client` 9.2.2 or above.
+The Kobiton API key used to authenticate the automation session.
 
-* *Type:* `string`
-* *Required capabilities:* `'appium:username'`
-* *Optional capabilities:* None
-
-.Example
-[source,java]
-----
-capabilities.setCapability("appium:accessKey", "ac9****8b-5*fc-4485-82eb-c5b****baed"); // The API key to authenticate with.
-----
-
-=== `autoWebview`
-
-The webview context to use during the test session. *Only available for web testing*.
-
-* *Type:* `boolean`
-* *Required capabilities:* None
-* *Optional capabilities:* None
+*Type:* string +
+*Required capabilities:* `appium:username` +
+*Optional capabilities:* None
 
 .Example
 [source,java]
 ----
-capabilities.setCapability("appium:autoWebview", true); // Automatically select the webview context.
+capabilities.setCapability("appium:accessKey", "ac9****8b-5*fc-4485-82eb-c5b****baed");
 ----
 
-=== `browserName`
+[#app]
+=== app
 
-The web browser to use during the test session. *Only available for web testing*.
+The application used during the test session. If the app is not already installed on the device, Kobiton downloads and installs it using the provided value.
 
-* *Type:* `string`
-* *Required capabilities:* None
-* *Optional capabilities:* None
+*Type:* string +
+*Required capabilities:* None +
+*Optional capabilities:* None
 
 .Example
 [source,java]
 ----
-capabilities.setCapability("browserName", "safari"); // Use Safari for web testing on iOS.
-capabilities.setCapability("browserName", "chrome"); // Use Chrome for web testing on Android.
+capabilities.setCapability("app", "kobiton-store:000111");
+capabilities.setCapability("app", "https://kobiton.docsapp.net/apps/app_id");
 ----
 
-=== `deviceOrientation`
+[#autowebview]
+=== autoWebview
 
-The starting orientation for the device screen.
+Automatically switch to the WebView context when it becomes available.
 
-* *Type:* `integer`
-* *Required capabilities:* None
-* *Optional capabilities:* None
+*Type:* boolean +
+*Required capabilities:* None +
+*Optional capabilities:* None
 
 .Example
 [source,java]
 ----
-capabilities.setCapability("appium:deviceOrientation", "portrait"); // Set the device's starting orientation to portrait.
-capabilities.setCapability("appium:deviceOrientation", "landscape"); // Set the device's starting orientation to landscape.
+capabilities.setCapability("appium:autoWebview", true);
 ----
 
-=== `fullReset`
+[#browsername]
+=== browserName
 
-Remove all apps installed during the test session. To keep the apps and only remove their app data, use xref:_noreset[] instead.
+The browser used during the test session.
 
-* *Type:* `boolean`
-* *Required capabilities:* None
-* *Optional capabilities:* None
+This capability is only used for web testing.
+
+*Type:* string +
+*Required capabilities:* None +
+*Optional capabilities:* None
 
 .Example
 [source,java]
 ----
-capabilities.setCapability("appium:fullReset", true); // Delete the app and the related data.
+capabilities.setCapability("browserName", "safari");
+capabilities.setCapability("browserName", "chrome");
 ----
 
-[NOTE]
-This is only available for private and local devices.
+[#deviceorientation]
+=== deviceOrientation
 
-=== `noReset`
+The starting orientation of the device screen.
 
-Remove all app data from apps installed during the test session. To remove the full app, use xref:_fullreset[] instead.
-
-* *Type:* `string`
-* *Required capabilities:* None
-* *Optional capabilities:* None
+*Type:* string +
+*Required capabilities:* None +
+*Optional capabilities:* None
 
 .Example
 [source,java]
 ----
-capabilities.setCapability("appium:noReset", false); // Delete just the app data.
+capabilities.setCapability("appium:deviceOrientation", "portrait");
+capabilities.setCapability("appium:deviceOrientation", "landscape");
 ----
 
-[NOTE]
-This is only available for private and local devices.
+[#devicename]
+=== deviceName
 
-=== 'platformName'
+The device name used when selecting a device for the session.
 
-The type of platform, i.e Android or iOS.
+Wildcards (`*`) can be used to match multiple devices.
 
-* *Type:* `boolean`
-* *Required capabilities:* None
-* *Optional capabilities:* None
-
-=== `udid`
-
-The device Unique Device Identifier (UDID).
-
-* *Type:* `string`
-* *Required capabilities:* None
+*Type:* string +
+*Required capabilities:* None +
+*Optional capabilities:* None
 
 .Example
 [source,java]
 ----
-capabilities.setCapability("appium:udid", "01234567-89ab-cdef-0123-456789abcdef"); // Use the device with this UDID.
+capabilities.setCapability("deviceName", "iPhone 11 Pro");
+capabilities.setCapability("deviceName", "*Pro");
+capabilities.setCapability("deviceName", "iPhone 11*");
 ----
 
-[#_username]
-=== `username`
+[#ensurewebviewshavepages]
+=== ensureWebviewsHavePages
 
-The Kobiton xref:profile:manage-your-profile.adoc[username,window=read-later] for authentication. Only required for Appium `java-client` 9.2.2 or above.
+Ensures that all WebView elements in the application have loaded content before interaction.
 
-* *Type:* `string`
-* *Required capabilities:* `'appium:username'`
-* *Optional capabilities:* None
+*Type:* boolean +
+*Required capabilities:* None +
+*Optional capabilities:* `kobiton:visualValidation`
 
 .Example
 [source,java]
 ----
-capabilities.setCapability("appium:username", "johndoe"); // The username to authenticate with.
+capabilities.setCapability("ensureWebviewsHavePages", true);
+----
+
+[#fullreset]
+=== fullReset
+
+Remove all apps installed during the test session.
+
+To keep the apps and only remove their data, use `noReset`.
+
+*Type:* boolean +
+*Required capabilities:* None +
+*Optional capabilities:* None
+
+.Example
+[source,java]
+----
+capabilities.setCapability("appium:fullReset", true);
+----
+
+NOTE: This capability is only available for private and local devices.
+
+[#noreset]
+=== noReset
+
+Remove application data but keep the installed app.
+
+To completely remove the app, use `fullReset`.
+
+*Type:* boolean +
+*Required capabilities:* None +
+*Optional capabilities:* None
+
+.Example
+[source,java]
+----
+capabilities.setCapability("appium:noReset", false);
+----
+
+NOTE: This capability is only available for private and local devices.
+
+[#platformname]
+=== platformName
+
+The platform used for the automation session.
+
+*Type:* string +
+*Required capabilities:* None +
+*Optional capabilities:* None
+
+.Example
+[source,java]
+----
+capabilities.setCapability("platformName", "Android");
+capabilities.setCapability("platformName", "iOS");
+----
+
+[#udid]
+=== udid
+
+The unique device identifier (UDID) of the device used for the session.
+
+*Type:* string +
+*Required capabilities:* None +
+*Optional capabilities:* None
+
+.Example
+[source,java]
+----
+capabilities.setCapability("appium:udid", "01234567-89ab-cdef-0123-456789abcdef");
+----
+
+[#username]
+=== username
+
+The Kobiton username used for authentication.
+
+*Type:* string +
+*Required capabilities:* `appium:accessKey` +
+*Optional capabilities:* None
+
+.Example
+[source,java]
+----
+capabilities.setCapability("appium:username", "johndoe");
 ----
