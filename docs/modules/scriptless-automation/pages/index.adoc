@@ -1,10 +1,62 @@
-= Scriptless Automation
-:navtitle: Scriptless Automation
+= Scriptless automation
 
-Automate your tests without writing scripts.
+== Overview
 
-image:automation-testing:automation-testing-index-context.png[width=1000,alt="A context to Scriptless Automation"]
+Scriptless automation enables automated test execution based on interactions recorded during manual sessions. Tests are created from real device usage and can be executed repeatedly without requiring users to write or maintain automation scripts.
 
-== In this section
+Within the Kobiton platform, this capability builds on manual testing by capturing user interactions in a structured form and reusing them for repeatable execution across devices.
 
-include::../nav.adoc[lines=2..]
+Scriptless automation is used to reduce the effort required to run repetitive tests while preserving visibility into how tests are executed on real devices.
+
+== How it works
+
+Scriptless automation is based on recording test behavior once and reusing it for execution.
+
+=== Manual sessions as the source
+
+Testing begins with a manual session performed on a real device through the Kobiton platform. During the session, user interactions with the application are recorded.
+
+=== Tests created from recorded interactions
+
+Recorded interactions are converted into test definitions that represent a complete test flow. These definitions are stored and managed independently of execution.
+
+=== Tests executed without user-written scripts
+
+When a test is run, the platform executes the recorded interactions automatically. Automation scripts are generated and managed by the platform; users do not need to author or maintain code to run tests.
+
+== Requirements
+
+Scriptless automation requires the following:
+
+* An active Kobiton account with access to Test Management
+* A supported mobile platform (Android or iOS)
+* A supported application context, as described below
+
+=== Application under test
+
+The application under test must be accessible in a form supported for Scriptless automation.
+
+Depending on the application type:
+
+* *Native or hybrid mobile apps* must be uploaded to the Kobiton App Repository before creating or running tests. Direct app upload during test execution is not supported.
+* *Web applications* can be tested through supported mobile browsers without uploading an app.
+* *Preinstalled system applications* already available on the device (such as Clock or Calculator) can be tested without additional setup.
+
+== Limitations
+
+Scriptless automation tests are platform-specific. Separate tests are required for Android and iOS.
+
+Some application types and flows are not supported or are a poor fit for Scriptless automation, including:
+
+* Game engine–based applications, such as Unity-based apps
+* Canvas-based applications, where UI elements are not represented as standard view hierarchies
+* Highly dynamic interfaces that change structure frequently at runtime
+* Authentication flows that rely on one-time credentials, such as OTP or multi-factor authentication
+
+In these scenarios, script-based automation or alternative testing approaches may be more appropriate.
+
+== Related pages
+
+* xref:scriptless-automation:baseline-session.adoc[Create a baseline session]
+* xref:scriptless-automation:run-scriptless.adoc[Run a Scriptless test]
+* xref:test-management:index.adoc[Test management]

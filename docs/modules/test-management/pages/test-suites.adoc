@@ -1,0 +1,50 @@
+= Test suites
+
+== Overview
+
+A test suite is a collection of related test cases grouped for organization and execution.
+
+Test suites allow multiple test cases to be run together using a single configuration. They are commonly used to manage related test coverage and to scale execution across devices.
+
+== Create a test suite
+
+Test suites are created in Test Management.
+
+To create a test suite, users define the operating system, provide a name and optional description, and select the test cases to include. Test cases can be added to or removed from the suite as coverage evolves.
+
+Creating a test suite groups related test cases for execution but does not change the behavior of the individual test cases. Each test case retains its own definition and execution logic.
+
+After a test suite is created, it appears in the Test Suite list, where it can be run or managed.
+
+== Manage test suites
+
+Test suites are managed from the Test Suite list in Test Management.
+
+From the list, users can:
+
+* Run the test suite to create a test run
+* Edit the suite name or description
+* Update the set of test cases included
+* Delete the test suite when it is no longer needed
+
+These actions are available from the suite’s action menu in the list view.
+
+// Screenshot suggestion:
+// Show the Test Suite list with the action menu visible
+
+== Run a test suite
+
+When a test suite is run, a configuration window is displayed before execution begins.
+
+In this step, users review and define execution settings such as the application version, devices or device bundles, and allocation strategy. These settings control how the test cases in the suite are distributed and executed.
+
+After the configuration is confirmed, the test suite is executed and a test run is created.
+
+// Screenshot suggestion:
+// Configuration window shown before execution
+
+== Related pages
+
+* xref:test-management:test-cases.adoc[Test cases]
+* xref:test-management:test-runs.adoc[Test runs]
+* xref:test-management:test-reruns.adoc[Test reruns]

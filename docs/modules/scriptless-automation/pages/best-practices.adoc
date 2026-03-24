@@ -1,0 +1,69 @@
+= Best practices
+
+== Overview
+
+Best practices help improve the reliability and consistency of automated test execution created from manual sessions.
+
+These guidelines are not required to run tests, but following them can reduce execution issues and minimize the need for remediation as test coverage expands.
+
+== Baseline session best practices
+
+Baseline sessions are most effective when they reflect a clear and stable test flow.
+
+When creating a baseline session:
+
+* Enable session capture by selecting the *Play* button before interacting with the application to ensure accurate element detection
+* Follow a single, intentional path through the application
+* Avoid exploratory actions or unnecessary navigation
+* Use supported interactions only
+
+Baseline sessions that are focused and repeatable are easier to reuse and more reliable during execution.
+
+== Test design considerations
+
+Keeping tests concise improves maintainability.
+
+Shorter test flows are easier to understand, execute, and troubleshoot. Instead of extending a single test to cover many variations, related tests can be grouped and executed together.
+
+If a test requires frequent adjustments to continue running, recreating the baseline session may be more effective than repeatedly refining an unstable definition.
+
+== Execution consistency
+
+Consistency across devices and environments improves execution reliability.
+
+When possible:
+
+* Use similar device types and operating system versions
+* Avoid mixing display modes within the same test run
+
+Greater variation across devices may increase the likelihood of execution differences that require review.
+
+== Scaling test execution
+
+Tests can be executed across many devices once a baseline has proven reliable.
+
+Expanding execution incrementally allows issues to surface early and keeps results easier to interpret. Grouping related tests helps maintain clarity as execution scales.
+
+== Reducing remediation effort
+
+Remediation is an expected part of automated execution, but its frequency can often be reduced.
+
+Clear baseline sessions, consistent navigation paths, and stable application states all contribute to smoother execution. Repeated remediation across many steps may indicate that the underlying test flow no longer reflects current application behavior.
+
+== Known limitations
+
+Some workflows are not well suited for this testing approach.
+
+Examples include:
+
+* Authentication flows that rely on one-time credentials
+* Highly dynamic interfaces that change on each launch
+* Complex gesture-based interactions
+
+In these cases, script-based automation may provide greater control.
+
+== Related pages
+
+* xref:scriptless-automation:baseline-session.adoc[Create a baseline session]
+* xref:scriptless-automation:run-scriptless.adoc[Run a Scriptless test]
+* xref:test-management:remediations.adoc[Remediations]
