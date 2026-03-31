@@ -142,6 +142,70 @@ Get details for session 12345
 Download logs from last failed session
 ....
 
+
+== Tool Reference
+
+The following tables describe the tools available in Kobiton for Claude Code.
+
+=== Devices
+
+[width="100%",cols="21%,43%,36%",options="header",]
+|===
+|Tool |Description |Read-only
+|`listDevices` |List available devices filtered by platform,
+availability, device group, name, or UDID |Yes
+
+|`getDeviceStatus` |Get real-time status of a specific device
+(availability, battery, connection state) |Yes
+
+|`reserveDevice` |Reserve a device for exclusive use during testing |No
+
+|`terminateReservation` |Release a reserved device |No (destructive)
+|===
+
+=== Sessions
+
+[width="100%",cols="21%,43%,36%",options="header",]
+|===
+|Tool |Description |Read-only
+|`listSessions` |List test sessions filtered by status, device, or
+platform |Yes
+
+|`getSession` |Get session details: commands executed, capabilities,
+metadata, test results |Yes
+
+|`getSessionArtifacts` |Get download URLs for video recording, device
+logs, screenshots, test reports |Yes
+
+|`terminateSession` |Stop a running test session |No (destructive)
+|===
+
+=== Apps
+
+[width="100%",cols="21%,43%,36%",options="header",]
+|===
+|Tool |Description |Read-only
+|`listApps` |List uploaded app builds in your organization |Yes
+
+|`uploadAppToStore` |Upload an app to Kobiton Store (returns pre-signed
+URL for upload) |No
+
+|`confirmAppUpload` |Confirm an uploaded app so Kobiton creates the app
+record |No
+
+|`getApp` |Get app details and version history |Yes
+|===
+
+=== Skills
+
+[width="100%",cols="35%,65%",options="header",]
+|===
+|Skill |Description
+|`run-automation-suite` |Guided workflow: app upload → device selection
+→ script parsing → execution → results
+|===
+
+
 == Troubleshooting
 
 [cols="38%,36%,26%",options="header"]
