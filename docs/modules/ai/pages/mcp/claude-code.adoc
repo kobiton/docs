@@ -1,418 +1,161 @@
 = Kobiton for Claude Code
 :navtitle: Claude Code
 
-*AI-powered mobile testing from your terminal.* Kobiton Automate is a
-Claude Code plugin that connects your AI coding assistant to the Kobiton
-mobile testing platform. Manage real devices, upload apps, run Appium
-test scripts, and review results — all through natural conversation.
+Kobiton for Claude Code plugin that connects Claude to the Kobiton mobile testing platform. You can manage devices, upload apps, run automation tests, and review results using natural language commands.
 
 https://discord.gg/uHvBFDZVP[image:discord-badge.svg[Join our Discord]]
 https://kobiton.com[image:kobiton-cloud.svg[Kobiton Cloud]]
 
-=== How It Works
+== Overview
 
-Kobiton Automate adds 12 tools and a guided automation skill to Claude
-Code. Instead of switching between your terminal, the Kobiton portal,
-and your test scripts, you describe what you want in plain English and
-Claude handles the rest.
+Kobiton Automate adds tools and a guided automation workflow to Claude Code. You can perform common mobile testing tasks without switching between the terminal, the Kobiton portal, and local test scripts.
+
+Example:
 
 ....
-You:    "Upload my-app.apk and run my login test on an available Pixel device"
-
-Claude: ✓ Uploaded my-app.apk to Kobiton Store
-        ✓ Found Pixel 6 (available, Android 14)
-        ✓ Parsed capabilities from tests/login_test.js
-        ✓ Executed test — PASSED in 47s
-        ✓ Video: https://portal.kobiton.com/sessions/50213/video
+Upload my-app.apk and run my login test on an available Pixel device
 ....
 
-No new syntax to learn. No config files to maintain. Just ask.
+Claude will:
 
+- Upload the app
+- Select an available device
+- Parse capabilities from your script
+- Run the test
+- Return results and artifacts
 
-=== Quick Start
+== Get started
 
-==== 1. Install the plugin
+=== Install the plugin
 
-Open Claude Code and run:
+In Claude Code, run:
 
 [source,bash]
 ----
-# Add the Kobiton marketplace
 /plugin marketplace add kobiton/automate
-
-# Install the plugin
 /plugin install automate@kobiton
 ----
 
-==== 2. Authenticate
+=== Authenticate
 
-*Option A — Browser login (recommended)*
+You can authenticate using OAuth or an API key.
 
-Start Claude Code. On first use, a browser window opens for Kobiton
-login. Sign in with your Kobiton credentials. Tokens are managed
-automatically via OAuth 2.1 and stored securely in your system keychain.
+*OAuth (recommended)*
 
-*Option B — API key (for CI/CD or headless environments)*
+When you first use the plugin, a browser window opens. Sign in with your Kobiton credentials. Claude stores tokens automatically.
 
-Generate an API key at *Kobiton Portal → Settings → API Keys*, then set
-the environment variable:
+*API key*
+
+Generate an API key in *Kobiton Portal > Settings > API Keys*. Then set:
 
 [source,bash]
 ----
-# Add to ~/.zshrc, ~/.bashrc, or ~/.bash_profile
-export KOBITON_AUTH="Basic $(echo -n 'your-username:your-api-key' | base64)"
+export KOBITON_AUTH="Basic $(echo -n 'username:api-key' | base64)"
 ----
 
-Then replace `.mcp.json` with the API key variant:
+Update `.mcp.json` to include the `Authorization` header.
 
-[source,json]
-----
-{
-  "mcpServers": {
-    "kobiton": {
-      "type": "http",
-      "url": "https://api.kobiton.com/mcp",
-      "headers": {
-        "Authorization": "${KOBITON_AUTH}"
-      }
-    }
-  }
-}
-----
+[NOTE]
+====
+OAuth and API key authentication cannot be used together. Use one method at a time.
+====
 
-Reload your shell and restart Claude Code.
+=== Run a command
 
-____
-*Note:* OAuth and API key auth cannot coexist in a single `.mcp.json`.
-The default config (no `headers` block) uses OAuth. The API key config
-uses a `headers` block. To switch, replace `.mcp.json` with the
-appropriate format.
-____
-
-==== 3. Start using it
-
-Just ask Claude what you need:
+Use natural language to interact with Kobiton:
 
 ....
-"Show me my available Android devices"
-"Upload app.apk and run tests/smoke_test.js on a Pixel"
-"What happened in session 12345? Show me the video."
+Show available Android devices
+Upload app.apk and run tests/smoke_test.js
+Show results for session 12345
 ....
 
+== Key capabilities
 
-=== What You Can Do
+=== Devices
 
-==== Manage Devices
+- View available devices
+- Check device status
+- Reserve and release devices
 
-Browse available real devices, check their status in real-time, and
-reserve them for exclusive use during testing.
+=== Apps
 
-____
-"`List available iPhones in the cloud device group`"
+- Upload Android and iOS apps
+- View uploaded apps
+- Get app details
 
-"`Is the Galaxy S23 available right now?`"
+=== Test execution
 
-"`Reserve the Pixel 6 for 60 minutes`"
-____
+The `run-automation-suite` skill manages the full test lifecycle:
 
-==== Upload Apps
+- Upload or select an app
+- Select a device
+- Parse capabilities from your script
+- Run the test
+- Return results and artifacts
 
-Upload `.apk` and `.ipa` files to the Kobiton app store. Uploads use
-secure pre-signed S3 URLs — your app binary goes directly to Kobiton
-storage, not through Claude Code.
+Supported languages:
 
-____
-"`Upload resources/apps/GS.apk to the Kobiton store as an Android app`"
-
-"`Show me all my uploaded iOS apps`"
-____
-
-==== Run Automation Tests
-
-The *run-automation-suite* skill is a guided workflow that handles the
-full test lifecycle: upload your app, select a device, parse
-capabilities from your local Appium script, execute it, and collect
-results.
-
-Supports four languages:
-
-[cols=",,",options="header",]
+[cols=",,",options="header"]
 |===
-|Language |Extension |Runtime command
-|Node.js |`.js` |`node ++<++script++>++ ++<++udid++>++`
-|Python |`.py` |`python ++<++script++>++ ++<++udid++>++`
+|Language |Extension |Command
+|Node.js |`.js` |`node <script> <udid>`
+|Python |`.py` |`python <script> <udid>`
 |.NET |`.cs` / `.csproj` |`dotnet test`
 |Java |`.java` |`mvn test` or `java -cp ...`
 |===
 
-____
-"`Test this app resources/apps/GS.apk by my script
-resources/auto/Android++_++app++_++test.js on Kobiton Android device`"
+=== Sessions
 
-"`Test this app resources/apps/LeaderboardApp.ipa by my script
-tests/ios++_++test.py on Kobiton iOS device iPhone 15`"
+- View active and past sessions
+- Get logs, screenshots, and videos
+- Stop running sessions
 
-"`Run my smoke tests on any available Android device`"
-____
+== Example commands
 
-Claude reads your script source code, extracts capabilities
-(`platformName`, `udid`, `app`, `automationName`, `kobiton:++*++`
-extensions), and presents a summary before executing:
+=== Devices
 
 ....
-Language:     Node.js
-Script:       tests/login_test.js
-Platform:     Android
-Device:       Pixel 6 (9B211FFAZ0017F)
-App:          kobiton-store:v72107
-Session Name: Verify Appium session
-Command:      node tests/login_test.js 9B211FFAZ0017F
+Show available Android devices
+Check if Galaxy S23 is available
+Reserve Pixel 6 for 60 minutes
 ....
 
-After the test completes, Claude retrieves video recordings, device
-logs, screenshots, and test reports — and summarizes pass/fail status
-with links to the Kobiton portal.
+=== Apps
 
-==== Review Sessions & Results
+....
+Show uploaded Android apps
+Upload resources/apps/GS.apk
+....
 
-Browse past test sessions, dig into details, and download artifacts.
+=== Tests
 
-____
-"`Show me all running sessions`"
+....
+Run tests/smoke_test.js on a Pixel device
+....
 
-"`Get the details and video for session 502`"
+=== Sessions
 
-"`Download the logs from my last failed session`"
+....
+Show running sessions
+Get details for session 12345
+Download logs from last failed session
+....
 
-"`Stop session 12345, it’s been running too long`"
-____
+== Troubleshooting
 
-
-
-=== Tool Reference
-
-All 12 tools available through the plugin, organized by domain.
-
-==== Devices
-
-[width="100%",cols="21%,43%,36%",options="header",]
+[cols="38%,36%,26%",options="header"]
 |===
-|Tool |Description |Read-only
-|`listDevices` |List available devices filtered by platform,
-availability, device group, name, or UDID |Yes
-
-|`getDeviceStatus` |Get real-time status of a specific device
-(availability, battery, connection state) |Yes
-
-|`reserveDevice` |Reserve a device for exclusive use during testing |No
-
-|`terminateReservation` |Release a reserved device |No (destructive)
+|Issue |Cause |Resolution
+|Browser does not open for login |OAuth redirect blocked |Ensure a default browser is set and you are not in a restricted environment
+|Device not found |Device unavailable |Filter for available devices
+|Upload timeout |Large file or slow connection |Retry the upload; URLs expire after 30 minutes
+|Session stuck |Script or device issue |Terminate the session and retry
+|Authentication not recognized |Environment not loaded |Reload your shell and restart Claude Code
 |===
 
-==== Sessions
+== Additional resources
 
-[width="100%",cols="21%,43%,36%",options="header",]
-|===
-|Tool |Description |Read-only
-|`listSessions` |List test sessions filtered by status, device, or
-platform |Yes
-
-|`getSession` |Get session details: commands executed, capabilities,
-metadata, test results |Yes
-
-|`getSessionArtifacts` |Get download URLs for video recording, device
-logs, screenshots, test reports |Yes
-
-|`terminateSession` |Stop a running test session |No (destructive)
-|===
-
-==== Apps
-
-[width="100%",cols="21%,43%,36%",options="header",]
-|===
-|Tool |Description |Read-only
-|`listApps` |List uploaded app builds in your organization |Yes
-
-|`uploadAppToStore` |Upload an app to Kobiton Store (returns pre-signed
-URL for upload) |No
-
-|`confirmAppUpload` |Confirm an uploaded app so Kobiton creates the app
-record |No
-
-|`getApp` |Get app details and version history |Yes
-|===
-
-==== Skills
-
-[width="100%",cols="35%,65%",options="header",]
-|===
-|Skill |Description
-|`run-automation-suite` |Guided workflow: app upload → device selection
-→ script parsing → execution → results
-|===
-
-
-
-=== Prompt Examples
-
-Here are practical prompts for every tool, organized by what you’re
-trying to accomplish.
-
-==== Finding and reserving devices
-
-....
-"Show me all available Android devices"
-"List available iPhones in the cloud device group"
-"Find any Pixel devices in my private group"
-"Check if the device with UDID R58M20D1ELE is available"
-"What is the status of device 1234?"
-"Reserve the Galaxy S20 with UDID R58M20D1ELE for 60 minutes"
-"I'm done with my reserved device, terminate reservation 4521"
-....
-
-==== Managing apps
-
-....
-"Show me all uploaded Android apps"
-"List my iOS apps in the Kobiton store"
-"Get details for app 42"
-"Upload resources/apps/GS.apk to the Kobiton app store as an Android app"
-"Upload resources/apps/LeaderboardApp.ipa to the store for iOS"
-....
-
-==== Running tests
-
-....
-"Test this app resources/apps/GS.apk by my script resources/auto/Android_app_test.js on Kobiton Android device"
-"Test this app resources/apps/LeaderboardApp.ipa by my script tests/ios_test.py on Kobiton iOS device iPhone 15"
-"Test this app resources/apps/TurboTest.apk by my script tests/smoke_test.js on Kobiton Android device Pixel 6"
-....
-
-==== Reviewing sessions and results
-
-....
-"Show me all running sessions"
-"List my last 5 failed iOS sessions"
-"Get details for session 12345"
-"Download the video and logs from session 12345"
-"Stop session 12345, it's been running too long"
-....
-
-
-
-=== App Upload Flow
-
-Uploading an app is a three-step process handled automatically by the
-plugin:
-
-....
-┌──────────────────────┐     ┌──────────────────────┐     ┌──────────────────────┐
-│  1. uploadAppToStore │────▶│  2. PUT to S3 URL    │────▶│  3. confirmAppUpload │
-│                      │     │                      │     │                      │
-│  Returns pre-signed  │     │  Upload binary using  │     │  Kobiton parses the  │
-│  URL + headers       │     │  exact headers from   │     │  file and creates    │
-│                      │     │  step 1               │     │  the app record      │
-└──────────────────────┘     └──────────────────────┘     └──────────────────────┘
-....
-
-Your app binary goes directly to Kobiton’s S3 storage via the pre-signed
-URL. It does not pass through Claude Code.
-
-
-
-=== Automation Workflow
-
-The `run-automation-suite` skill follows this flow:
-
-....
-┌─────────────┐     ┌─────────────┐     ┌─────────────────┐     ┌─────────────┐     ┌───────────┐
-│ 1. Identify │────▶│ 2. Select   │────▶│ 3. Parse script │────▶│ 4. Execute  │────▶│ 5. Report │
-│    app      │     │    device   │     │    & confirm    │     │    test     │     │  results  │
-│             │     │             │     │                 │     │             │     │           │
-│ Upload or   │     │ listDevices │     │ Read source,    │     │ Run via     │     │ Session   │
-│ find in     │     │ reserve if  │     │ extract caps,   │     │ bash tool   │     │ artifacts │
-│ store       │     │ needed      │     │ show summary    │     │ locally     │     │ & summary │
-└─────────────┘     └─────────────┘     └─────────────────┘     └─────────────┘     └───────────┘
-....
-
-Claude reads your test script source code to extract Appium capabilities
-automatically. You confirm the device, app, and settings before anything
-runs.
-
-
-
-=== Troubleshooting
-
-==== Common issues
-
-[width="100%",cols="38%,36%,26%",options="header",]
-|===
-|Issue |Cause |Fix
-|Browser doesn’t open for login |OAuth redirect blocked |Make sure your
-default browser is set. Try running Claude Code outside of a remote/SSH
-session.
-
-|`Device not found` |Device offline or reserved by another user |Use
-`listDevices` with `available: true` to find online devices.
-
-|`Upload timeout` |Large app file or slow connection |Retry the upload.
-Pre-signed URLs expire after 30 minutes — if expired, the upload tool
-will generate a fresh URL.
-
-|Session stuck in RUNNING |Test script hanging or device unresponsive
-|Ask Claude to check with `getSession`. If stuck, use `terminateSession`
-and retry.
-
-|`KOBITON++_++AUTH` not recognized |Environment variable not loaded |Run
-`source ~/.zshrc` (or equivalent) and restart Claude Code.
-|===
-
-==== Getting help
-
-Open an issue at
-https://github.com/kobiton/automate/issues/new?template=bug_report.md[github.com/kobiton/automate/issues]
-or ask in
-https://discord.com/channels/1486036652685267055/1488189710248710327[++#++general-discussion]
-on Discord. We also welcome
-https://github.com/kobiton/automate/issues/new?template=feature_request.md[feature
-requests].
-
-For security vulnerabilities, email security@kobiton.com. See
-https://github.com/kobiton/automate/blob/main/SECURITY.md[SECURITY.md]
-for details.
-
-
-
-=== Privacy & Data
-
-This plugin connects to the Kobiton cloud API (`api.kobiton.com`) over
-HTTPS (TLS 1.2{plus}).
-
-*Authentication:* OAuth 2.1 tokens are stored securely in the system
-keychain by Claude Code. API keys (when used) are stored only in your
-shell profile and sent via the `Authorization` header — they are never
-committed to the repo.
-
-*Data handling:* The plugin does not store any data locally beyond what
-Claude Code retains in its conversation context. Tool responses (device
-lists, session details, test results) pass through Claude Code’s context
-window and are subject to https://www.anthropic.com/privacy[Anthropic’s
-Privacy Policy]. App binaries uploaded via `uploadAppToStore` go
-directly to Kobiton’s pre-signed S3 URLs, not through Claude Code.
-
-For details on how Kobiton handles your data:
-https://kobiton.com/privacy-policy[Kobiton Privacy Policy] ++|++
-https://kobiton.com/trust-center/[Trust Center]
-
-
-
-=== Contributing
-
-We welcome contributions. See
-https://github.com/kobiton/automate/blob/main/CONTRIBUTING.md[CONTRIBUTING.md]
-for setup instructions, coding conventions, and the pull request
-process.
-
-=== License
-
-https://opensource.org/license/mit[MIT] — Copyright (c) 2026 Kobiton
+- https://github.com/kobiton/automate/issues/new?template=bug_report.md[Report an issue]
+- https://discord.com/channels/1486036652685267055/1488189710248710327[Community support]
+- https://kobiton.com/privacy-policy[Privacy policy]
