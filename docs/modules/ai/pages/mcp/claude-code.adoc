@@ -1,0 +1,225 @@
+= Kobiton for Claude Code
+:navtitle: Claude Code
+
+Kobiton for Claude Code plugin that connects Claude to the Kobiton mobile testing platform. You can manage devices, upload apps, run automation tests, and review results using natural language commands.
+
+https://discord.gg/uHvBFDZVP[image:discord-badge.svg[Join our Discord]]
+https://kobiton.com[image:kobiton-cloud.svg[Kobiton Cloud]]
+
+== Overview
+
+Kobiton for Claude Code adds tools and a guided automation workflow to Claude Code. You can perform common mobile testing tasks without switching between the terminal, the Kobiton portal, and local test scripts.
+
+Example:
+
+....
+Upload my-app.apk and run my login test on an available Pixel device
+....
+
+Claude will:
+
+- Upload the app
+- Select an available device
+- Parse capabilities from your script
+- Run the test
+- Return results and artifacts
+
+== Get started
+
+=== Install the plugin
+
+In Claude Code, run:
+
+[source,bash]
+----
+/plugin marketplace add kobiton/automate
+/plugin install automate@kobiton
+----
+
+=== Authenticate
+
+You can authenticate using OAuth or an API key.
+
+*OAuth (recommended)*
+
+When you first use the plugin, a browser window opens. Sign in with your Kobiton credentials. Claude stores tokens automatically.
+
+*API key*
+
+Generate an API key in *Kobiton Portal > Settings > API Keys*. Then set:
+
+[source,bash]
+----
+export KOBITON_AUTH="Basic $(echo -n 'username:api-key' | base64)"
+----
+
+Update `.mcp.json` to include the `Authorization` header.
+
+[NOTE]
+====
+OAuth and API key authentication cannot be used together. Use one method at a time.
+====
+
+=== Run a command
+
+Use natural language to interact with Kobiton:
+
+....
+Show available Android devices
+Upload app.apk and run tests/smoke_test.js
+Show results for session 12345
+....
+
+== Key capabilities
+
+=== Devices
+
+- View available devices
+- Check device status
+- Reserve and release devices
+
+=== Apps
+
+- Upload Android and iOS apps
+- View uploaded apps
+- Get app details
+
+=== Test execution
+
+The `run-automation-suite` skill manages the full test lifecycle:
+
+- Upload or select an app
+- Select a device
+- Parse capabilities from your script
+- Run the test
+- Return results and artifacts
+
+Supported languages:
+
+[cols=",,",options="header"]
+|===
+|Language |Extension |Command
+|Node.js |`.js` |`node <script> <udid>`
+|Python |`.py` |`python <script> <udid>`
+|.NET |`.cs` / `.csproj` |`dotnet test`
+|Java |`.java` |`mvn test` or `java -cp ...`
+|===
+
+=== Sessions
+
+- View active and past sessions
+- Get logs, screenshots, and videos
+- Stop running sessions
+
+== Example commands
+
+=== Devices
+
+....
+Show available Android devices
+Check if Galaxy S23 is available
+Reserve Pixel 6 for 60 minutes
+....
+
+=== Apps
+
+....
+Show uploaded Android apps
+Upload resources/apps/GS.apk
+....
+
+=== Tests
+
+....
+Run tests/smoke_test.js on a Pixel device
+....
+
+=== Sessions
+
+....
+Show running sessions
+Get details for session 12345
+Download logs from last failed session
+....
+
+
+== Tool Reference
+
+Use this section as a reference for available tools and their behavior.
+
+=== Devices
+
+[width="100%",cols="21%,43%,36%",options="header",]
+|===
+|Tool |Description |Read-only
+|`listDevices` |List available devices filtered by platform,
+availability, device group, name, or UDID |Yes
+
+|`getDeviceStatus` |Get real-time status of a specific device
+(availability, battery, connection state) |Yes
+
+|`reserveDevice` |Reserve a device for exclusive use during testing |No
+
+|`terminateReservation` |Release a reserved device |No (destructive)
+|===
+
+=== Sessions
+
+[width="100%",cols="21%,43%,36%",options="header",]
+|===
+|Tool |Description |Read-only
+|`listSessions` |List test sessions filtered by status, device, or
+platform |Yes
+
+|`getSession` |Get session details: commands executed, capabilities,
+metadata, test results |Yes
+
+|`getSessionArtifacts` |Get download URLs for video recording, device
+logs, screenshots, test reports |Yes
+
+|`terminateSession` |Stop a running test session |No (destructive)
+|===
+
+=== Apps
+
+[width="100%",cols="21%,43%,36%",options="header",]
+|===
+|Tool |Description |Read-only
+|`listApps` |List uploaded app builds in your organization |Yes
+
+|`uploadAppToStore` |Upload an app to Kobiton Store (returns pre-signed
+URL for upload) |No
+
+|`confirmAppUpload` |Confirm an uploaded app so Kobiton creates the app
+record |No
+
+|`getApp` |Get app details and version history |Yes
+|===
+
+=== Skills
+
+[width="100%",cols="35%,65%",options="header",]
+|===
+|Skill |Description
+|`run-automation-suite` |Guided workflow: app upload → device selection
+→ script parsing → execution → results
+|===
+
+
+== Troubleshooting
+
+[cols="38%,36%,26%",options="header"]
+|===
+|Issue |Cause |Resolution
+|Browser does not open for login |OAuth redirect blocked |Ensure a default browser is set and you are not in a restricted environment
+|Device not found |Device unavailable |Filter for available devices
+|Upload timeout |Large file or slow connection |Retry the upload; URLs expire after 30 minutes
+|Session stuck |Script or device issue |Terminate the session and retry
+|Authentication not recognized |Environment not loaded |Reload your shell and restart Claude Code
+|===
+
+== Additional resources
+
+- https://github.com/kobiton/automate/issues/new?template=bug_report.md[Report an issue]
+- https://discord.com/channels/1486036652685267055/1488189710248710327[Community support]
+- https://kobiton.com/privacy-policy[Privacy policy]
