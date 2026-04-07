@@ -1,0 +1,125 @@
+= Kobiton 4.25 Release Notes
+:navtitle: Kobiton 4.25 release notes
+
+_Feb 6, 2026_
+
+== Kobiton for Claude Plugin
+
+Kobiton for Claude Code plugin connects Claude to the Kobiton mobile testing platform. You can manage devices, upload apps, run automation tests, and review results using natural language commands without switching between the terminal, the Kobiton portal, and local test scripts.
+
+xref:ai:mcp/claude-code.adoc[Get started with Kobiton’s Claude Code plugin,window=read-later]
+
+== Appium AI: Natural Language Locators
+
+You can now locate UI elements in Appium tests using natural language instead of traditional selectors.
+
+By allowing *driver.findElement(...)* to accept descriptive (natural) text, this feature improves test resilience in scenarios where selectors are brittle, unavailable, or frequently changing.
+
+=== Highlights:
+
+* Natural language element location within existing Appium workflows
+* Reduced dependency on XPath and accessibility-based selectors
+* Support for native and web applications
+
+=== Scope:
+
+This release introduces natural language-based element location. Additional capabilities such as fallback mechanisms and expanded UI support are planned for future updates.
+
+=== Availability:
+
+This feature is available in Beta for Private and Local (Hybrid) devices. Access is limited. Please contact your Account Manager to request enablement.
+
+== Scriptless Automation: Pop-up Handler
+
+You can now handle dynamic or inconsistent pop-ups during automated test runs—without writing any scripts.
+
+By introducing the *Pop-up Handler* into the Blocker Remediation flow, this feature allows you to manage optional or unexpected screens that may appear in either baseline or revisit sessions, improving test stability and execution success.
+
+=== Highlights:
+
+* Handle unexpected or optional pop-ups directly within Blocker Remediation
+* Mark pop-ups as *Optional* and define the UI element to dismiss them
+* Select new elements when a screen is expected
+* Specify whether the pop-up appears in *Baseline* or *Revisit* sessions
+* Search for UI elements quickly using the built-in search box
+
+=== Scope:
+
+This release introduces scriptless handling for dynamic pop-ups during test runs. It supports scenarios where pop-ups appear inconsistently between baseline and revisit sessions. Further enhancements to automation intelligence and handling capabilities are planned.
+
+=== Availability:
+
+This feature is available for users with an *IQS subscription*. Pop-up handling configurations will apply to all subsequent runs of the same test case on the same device model and OS.
+
+Build more resilient tests and reduce flaky failures—now with smarter, scriptless pop-up handling.
+
+== deviceConnect Updates
+
+*Improved cleanup policy configuration*
+
+Cleanup behavior is now enabled by default in deviceConnect. The *HealthService.EnableCleanup=true* setting is no longer required in dc.ini.
+
+If needed, cleanup behavior can be disabled by explicitly setting:
+
+----
+HealthService.EnableCleanup=false
+----
+
+This change simplifies configuration and reduces the need for manual setup.
+
+*Improved system reliability*
+
+* deviceConnect remains accessible if the GEM connection is unavailable
+
+*Console improvements*
+
+* Improved visibility of device slot information based on user-configured views
+* Minor usability improvements for better clarity and navigation
+
+== Bug fixes and improvements:
+
+=== API enhancements
+
+* Added support for retrieving signed application URLs for device-specific workflows
+* Fixed an issue where removed device tags could still appear in API responses
+
+=== Accessibility Screen Reader improvements
+
+* Fixed issue where Android TalkBack did not properly navigate or read certain UI elements
+* Fixed issue where Android TalkBack focus borders did not appear or clear correctly
+* Improved iOS VoiceOver keyboard behavior, preventing unintended keyboard dismissal during navigation
+
+=== Bluetooth management improvements
+
+* Introduced a centralized Bluetooth Modules admin page for managing pairing across features (Audio, VoiceOver, passcode unlock)
+* Improved pairing workflows by enabling Bluetooth pairing through deviceConnect, reducing reliance on manual host configuration
+* Fixed an issue where offline Bluetooth modules could incorrectly display a “Healthy” status
+
+=== Improved validation messaging for session creation
+
+* Improved error messaging when session requests do not include device-identifying capabilities
+* The system now provides clearer guidance when required device selection criteria (such as device name, UDID, or device tags) are missing
+
+=== Kobiton CLI improvements
+
+Enhanced CLI capabilities and reliability for managing device interactions and automation workflows
+
+* Resolved issues where environment variables were not applied during app launch
+* Improved automatic permission handling on iOS and Android devices
+* Improved CLI download experience in the Portal, including fixes for incorrect versions and OS mismatches
+* Fixed issues with file push and retrieval behavior on devices
+* Resolved intermittent CLI session errors related to session state handling
+
+=== Test Session UX Improvements
+
+* Improved usability and stability across test session workflows
+* Fixed UI inconsistencies and responsiveness issues in device management modals
+* Resolved an issue where native elements could fail to load in the inspector under certain device orientations (e.g., landscape)
+
+=== General platform improvements
+
+* Fixed an issue where manual sessions were not properly terminated when device connection errors occurred
+* Improved performance for app installation on iOS devices
+* Fixed an issue where the home button did not correctly display recent apps during manual sessions on iOS
+* Fixed an issue where iOS app installation could fail under certain proxy configurations
+* Improved audit logging accuracy for user role assignments and team updates
