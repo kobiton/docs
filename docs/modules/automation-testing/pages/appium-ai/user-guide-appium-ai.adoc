@@ -1,0 +1,85 @@
+= Use natural language locators in Appium AI
+
+== Before you begin
+
+Ensure the following:
+
+* You are using an Appium-compatible environment that supports natural language locators
+* Your test runs in a supported context (view hierarchy available)
+* You are familiar with basic Appium commands such as `findElement(...)`
+* You are using a private device deployment (natural language locators are not supported in public cloud environments)
+
+== Use a natural language locator
+
+To locate an element using natural language, pass a descriptive string into `findElement(...)` using the "natural" locator strategy.
+
+----
+python
+element = driver.find_element("natural", "The login button at the bottom")
+element.click()
+----
+
+----
+java
+driver.find_element("natural", "The login button at the bottom").click()
+----
+
+== Write effective descriptions
+
+Use clear, specific descriptions to help identify the correct element.
+
+Good examples:
+
+----
+java
+driver.findElement("Tap the login button").click()
+driver.findElement("Enter email in the username field").click()
+driver.findElement("Select Calgary from the city dropdown").click()
+----
+
+Less effective examples:
+
+----
+driver.findElement("Click button").click()
+driver.findElement("Select item").click()
+----
+
+When multiple similar elements are present, include additional context such as position, label, or surrounding UI to improve accuracy.
+
+== Expected behavior
+
+Appium AI evaluates the description and returns the most relevant matching element based on available UI metadata.
+
+Results are not guaranteed to be deterministic. If multiple elements match the description, you may need to refine the description to improve accuracy.
+
+Natural language locators work alongside traditional selector strategies and are best used in combination with them, rather than as a complete replacement.
+
+== Troubleshooting
+
+If an element is not found or the wrong element is returned:
+
+* Use more specific language in the description
+
+* Include additional context such as position, labels, or surrounding elements
+
+* Verify that the UI element is visible and accessible in the view hierarchy
+
+* Confirm that the application exposes sufficient UI metadata for element identification
+
+If the feature is not working as expected:
+
+* Ensure your environment supports natural language locators
+
+* Confirm that your OpenAI or Azure OpenAI API credentials are configured correctly
+
+* Verify that the feature is enabled in your deviceConnect configuration (dc.ini)
+
+* Confirm that you are using a private device deployment (not supported in public cloud environments)
+
+If issues persist, contact Kobiton Support for assistance.
+
+== Next steps
+
+For an overview of how natural language locators work and their limitations, see the
+xref:appium-ai/overview-appium-ai.adoc
+[Appium AI] concept guide.

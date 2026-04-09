@@ -1,0 +1,117 @@
+= Appium AI: Natural language locators (Beta)
+
+== Overview
+
+Appium AI enables automation scripts to locate UI elements using natural language instead of traditional selectors such as XPath or accessibility IDs.
+
+This allows test authors to describe elements in plain language while maintaining compatibility with existing Appium workflows.
+
+This approach improves test resilience in environments where selectors are brittle, unavailable, or frequently changing.
+
+== Availability
+
+Appium AI (Natural Language Locators) is currently available in Beta.
+
+This feature requires access to an OpenAI API or Azure OpenAI API. You must provide your own API credentials.
+
+NOTE: Access to the OpenAI API is required and is separate from a ChatGPT subscription. ChatGPT access alone does not enable this feature.
+
+This feature is available for private device deployments *only*. It is not supported in public cloud environments.
+
+Additional configuration may be required in deviceConnect. For setup assistance, contact Kobiton Support.
+
+== How element location works in Appium
+
+UI automation typically depends on selectors such as XPath, accessibility IDs, or view hierarchies to locate elements.
+
+These selectors are often brittle and tightly coupled to the structure of the UI:
+
+* Small UI changes can break existing tests
+* Dynamic interfaces may not expose stable identifiers
+* Some applications (such as canvas-based UIs) provide little or no metadata for automation
+
+This increases maintenance effort and reduces the reliability of automated tests over time.
+
+== Natural language locators
+
+Appium AI extends existing Appium workflows by allowing `findElement(...)` to accept natural language descriptions instead of traditional selectors.
+
+Instead of referencing elements by XPath or accessibility ID, you can describe the target element using plain language, such as:
+
+----
+python
+element = driver.find_element("natural", "The login button at the bottom")
+element.click()
+----
+
+or
+
+----
+java
+driver.find_element("natural", "The login button at the bottom").click()
+----
+
+Appium AI interprets the description, identifies the most relevant UI element, and returns an interactable element for use in the test.
+
+Natural language locators identify elements only. Actions such as `click()`, `send++_++keys()`, or assertions must still be performed explicitly in the test script.
+
+This approach works within existing Appium scripts and does not require changes to client libraries or test structure.
+
+NOTE: In Java, additional configuration may be required to enable the "natural" locator strategy in the Appium client.
+
+== What this feature supports
+
+Appium AI enables natural language-based element location within existing Appium workflows.
+
+This includes:
+
+* Using natural language descriptions with `findElement(...)` to locate UI elements
+* Native and web application contexts where a view hierarchy is available
+* Integration with existing Appium scripts without requiring structural changes
+
+== Use cases
+
+Use natural language locators in scenarios where traditional selectors are difficult to maintain or unreliable.
+
+This approach is especially useful when:
+
+* UI elements change frequently, causing selectors to break
+
+* Applications use dynamic layouts or rendering patterns
+
+* Readability and maintainability of test scripts are a priority
+
+* Element identification is possible through visible labels or context
+
+Natural language locators can help reduce maintenance overhead and improve test clarity in these situations.
+
+== Limitations and considerations
+
+Natural language locators are not intended to replace all selector strategies. Use them where they provide value, and rely on traditional selectors when precision is required.
+
+This approach may not be suitable when:
+
+* Stable and reliable selectors already exist
+
+* Exact element matching is required (for example, when multiple similar elements are present)
+
+* The application does not expose sufficient UI metadata
+
+* The environment does not support natural language locators (such as Basic Appium or unsupported configurations)
+
+Current limitations:
+
+* Natural language locators identify elements only. They do not perform actions such as clicking or typing
+
+* Script generation and full AI-driven test creation are not supported
+
+* Canvas-based or fully visual UI element detection is not supported
+
+* Automatic fallback from traditional locators to natural language is not supported
+
+Natural language locators rely on available UI metadata (such as view hierarchy and accessibility attributes) to resolve elements. If this information is limited or unavailable, results may be less reliable.
+
+== Next steps
+
+To start using natural language locators in your tests, see the
+xref:appium-ai/user-guide-appium-ai.adoc[Appium AI user guide] for setup instructions and examples.
