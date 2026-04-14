@@ -1,10 +1,15 @@
 = Kobiton for Claude Code
 :navtitle: Claude Code
 
-Kobiton for Claude Code plugin that connects Claude to the Kobiton mobile testing platform. You can manage devices, upload apps, run automation tests, and review results using natural language commands.
+Kobiton for Claude Code is a plugin that connects Claude Code to the Kobiton mobile testing platform. You can manage devices, upload apps, run automation tests, and review results using natural language commands.
 
 https://discord.gg/uHvBFDZVP[image:discord-badge.svg[Join our Discord]]
 https://kobiton.com[image:kobiton-cloud.svg[Kobiton Cloud]]
+
+[NOTE]
+====
+For the best experience, use Claude Code instead of Claude.ai. MCP integration in Claude.ai may be unreliable.
+====
 
 == Overview
 
@@ -24,19 +29,87 @@ Claude will:
 - Run the test
 - Return results and artifacts
 
+== Quickstart
+
+1. Open Claude Code and create or select a folder when prompted
+2. Run:
+[source,bash]
+----
+/plugin marketplace add kobiton/automate
+----
+3. Run:
+[source,bash]
+----
+/plugin install automate@kobiton
+----
+4. Run:
+[source,bash]
+----
+Show available Android devices
+----
+5. Complete authentication in your browser
+
+If the command runs successfully, Claude Code will prompt you to sign in and begin interacting with Kobiton.
+
 == Get started
+
+=== Open a workspace folder
+
+Before using Claude Code, open a command-line tool on your machine:
+
+- macOS: Terminal
+- Windows: PowerShell or Command Prompt
+
+Create a folder:
+
+[source,bash]
+----
+mkdir kobiton-project
+----
+
+You can create this folder anywhere, for example in your Documents directory.
+
+Next, start Claude Code from that location:
+
+[source,bash]
+----
+cd kobiton-project
+claude
+----
+
+Claude Code uses this folder as its workspace.
+
+[NOTE]
+If no folder is defined, Claude Code cannot install or use plugins and will prompt you to select one.
 
 === Install the plugin
 
-In Claude Code, run:
+Once Claude Code starts in your Terminal, run the following commands one at a time in that window:
 
 [source,bash]
 ----
 /plugin marketplace add kobiton/automate
+----
+then
+
+[source,bash]
+----
 /plugin install automate@kobiton
 ----
 
-=== Authenticate
+Both steps are required and must be run separately.
+
+=== Authentication
+
+Authentication occurs the first time you use the plugin.
+
+Run a command such as:
+
+----
+Show available Android devices
+----
+
+Claude Code will then prompt you to sign in through your browser.
 
 You can authenticate using OAuth or an API key.
 
@@ -62,15 +135,16 @@ OAuth and API key authentication cannot be used together. Use one method at a ti
 
 === Run a command
 
-Use natural language to interact with Kobiton:
+After authentication, enter commands in Claude Code using natural language.
 
-....
+[source,bash]
+----
 Show available Android devices
-Upload app.apk and run tests/smoke_test.js
 Show results for session 12345
-....
+Upload app.apk and run tests/smoke_test.js
+----
 
-== Key capabilities
+== Capabilities
 
 === Devices
 
@@ -86,7 +160,7 @@ Show results for session 12345
 
 === Test execution
 
-The `run-automation-suite` skill manages the full test lifecycle:
+The `run-automation-suite` skill guides you through the full test lifecycle:
 
 - Upload or select an app
 - Select a device
@@ -208,15 +282,29 @@ record |No
 
 == Troubleshooting
 
-[cols="38%,36%,26%",options="header"]
-|===
-|Issue |Cause |Resolution
-|Browser does not open for login |OAuth redirect blocked |Ensure a default browser is set and you are not in a restricted environment
-|Device not found |Device unavailable |Filter for available devices
-|Upload timeout |Large file or slow connection |Retry the upload; URLs expire after 30 minutes
-|Session stuck |Script or device issue |Terminate the session and retry
-|Authentication not recognized |Environment not loaded |Reload your shell and restart Claude Code
-|===
+=== Claude keeps asking to open a folder
+
+Open or create a folder in Claude Code before running plugin commands.
+
+=== Browser does not open for login
+
+Ensure a default browser is set and you are not in a restricted environment.
+
+=== Device not found
+
+The device may be unavailable. Filter for available devices.
+
+=== Upload timeout
+
+Large files or slow connections can cause timeouts. Retry the upload.
+
+=== Session stuck
+
+Terminate the session and run it again.
+
+=== Authentication not recognized
+
+Reload your shell and restart Claude Code.
 
 == Additional resources
 
