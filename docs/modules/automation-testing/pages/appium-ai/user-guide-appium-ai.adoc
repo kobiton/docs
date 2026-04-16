@@ -21,7 +21,8 @@ element.click()
 
 ----
 java
-driver.find_element("natural", "The login button at the bottom").click()
+WebElement el = driver.findElement(ByNatural.natural("the Accessibility button with an apostrophe"));
+el.click();
 ----
 
 == Write effective descriptions
@@ -32,16 +33,16 @@ Good examples:
 
 ----
 java
-driver.findElement("Tap the login button").click()
-driver.findElement("Enter email in the username field").click()
-driver.findElement("Select Calgary from the city dropdown").click()
+driver.findElement(ByNatural.natural("the Accessibility button with an apostrophe"));
+driver.findElement(ByNatural.natural("Enter email in the username field"));
+driver.findElement(ByNatural.natural("Select Calgary from the city dropdown"));
 ----
 
 Less effective examples:
 
 ----
-driver.findElement("Click button").click()
-driver.findElement("Select item").click()
+driver.findElement(ByNatural.natural("Click button")
+driver.findElement("Select item")
 ----
 
 When multiple similar elements are present, include additional context such as position, label, or surrounding UI to improve accuracy.
