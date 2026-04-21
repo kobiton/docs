@@ -10,7 +10,9 @@ Provide session context using one of the following:
 
 The `<SESSION_TOKEN>` value is returned when you create a CLI session. For details, see xref:use-the-cli.adoc[Start using Kobiton CLI].
 
-NOTE: The CLI automatically saves the session token to a local file for reuse in subsequent commands. This approach is convenient for single-user workflows but is not recommended for environments with concurrent or parallel executions.
+The CLI automatically saves the session token to a local file for reuse in subsequent commands. This approach is convenient for single-user workflows but is not recommended for environments with concurrent or parallel executions.
+
+The locally stored session token will be overwritten when a new CLI session is created.
 
 == `app run`
 
