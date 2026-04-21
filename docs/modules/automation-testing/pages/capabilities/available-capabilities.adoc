@@ -291,7 +291,7 @@ capabilities.setCapability("appium:accessKey", "ac9****8b-5*fc-4485-82eb-c5b****
 
 === `app`
 
-The application used during the test session. If the app is not already installed on the device, Kobiton downloads and installs it using the provided value.
+The application used during the test session. If the app is not already installed on the device, Kobiton downloads and installs it using the provided value. *Only available for app testing.*
 
 * *Type:* `string`
 * *Required capabilities:* None
@@ -374,10 +374,7 @@ capabilities.setCapability("appium:deviceOrientation", "landscape");
 
 === `fullReset`
 
-[NOTE]
-This is only available for private devices.
-
-Remove all apps installed during the test session. To keep the apps and only remove their data, use xref:_noreset[].
+Remove all apps installed during the test session. To keep the apps and only remove their data, use xref:_noreset[]. *Only available for private devices.*
 
 * *Type:* `boolean`
 * *Required capabilities:* None
@@ -391,10 +388,7 @@ capabilities.setCapability("appium:fullReset", true);
 
 === `noReset`
 
-[NOTE]
-This is only available for private devices.
-
-Remove application data but keep the installed app. To completely remove the app, use xref:_fullreset[].
+Remove application data but keep the installed app. To completely remove the app, use xref:_fullreset[]. *Only available for private devices.*
 
 * *Type:* `string`
 * *Required capabilities:* None
