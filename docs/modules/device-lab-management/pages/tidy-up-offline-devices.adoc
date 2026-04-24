@@ -1,0 +1,85 @@
+= Tidy up offline devices
+:navtitle: Tidy up offline devices
+
+Keep the Device Management page focused on active devices by removing offline ones in a single action. Tidy Up lets an administrator review every offline device and hide them from the Portal at once, without calling the API.
+
+Hidden devices are removed from the Portal view and from offline counts. They are not deleted and can be restored later.
+
+== When to use Tidy Up
+
+Use Tidy Up to:
+
+* Clear long-term offline devices from the Device Management page after hardware is retired, replaced, or moved.
+* Reduce noise in offline counts and dashboards.
+* Prepare the page before an audit or handover so only active devices are visible.
+
+== Before you start
+
+* You need administrator access to the Kobiton Portal.
+* Tidy Up operates on devices currently in an offline state. Devices come back into view automatically if they reconnect before you Tidy Up.
+
+== Tidy up offline devices
+
+. In the Portal, go to *Settings → Device Management*.
+. Open the view control on the Device Management page and select *Tidy up*.
+. In the *Remove unused devices* modal, review the list of offline devices. All devices are selected by default.
++
+// image::device-lab-management:tidy-up-modal.png[width=900,alt="Remove unused devices modal with the device list"]
+
+. Narrow the list if needed:
++
+--
+* Use the search bar to filter by device name, UDID, or host machine name or IP.
+* Sort by any column. The default sort is *Days offline* ascending, so the most recently offline devices appear first.
+--
+
+. Clear the checkbox next to any device you want to keep visible in Device Management.
+. Select *Confirm* to hide the selected devices, or *Cancel* to close the modal without changes.
+
+On success, the modal closes and a confirmation message appears. The hidden devices no longer appear in Device Management or in offline counts. If the action fails, an error message appears and no devices are hidden.
+
+== Device list reference
+
+The *Remove unused devices* modal shows one row per offline device with the following columns.
+
+[cols="1,3"]
+|===
+| Column | Description
+
+| *Device name*
+| The configured name of the device.
+
+| *Version*
+| The operating system and version, with an Android or iOS icon.
+
+| *UDID*
+| The device UDID. Hover to see the full value.
+
+| *Host machine IP*
+| The IP of the host machine the device is connected to.
+
+| *State*
+| The current device state.
+
+| *Days offline*
+| How long the device has been offline. See the display rules below.
+|===
+
+=== Days offline display
+
+The *Days offline* column uses these rules:
+
+* A number shows the exact number of full days the device has been offline.
+* `<1` indicates the device has been offline for less than one day.
+* A warning icon next to the value indicates the device has been offline for fewer than 5 days. Review these devices carefully before removing them, in case the device is only briefly disconnected.
+* A dash (`-`) indicates that offline duration is not available. This happens when the device was already offline before the Tidy Up feature was released, so Kobiton did not record when it went offline. These devices are safe to Tidy Up.
+
+== What happens after you Tidy Up
+
+* Each selected device is marked as hidden. It disappears from the Device Management page and from offline counts.
+* If a host machine no longer has any visible devices after Tidy Up, the host machine is also hidden from view.
+* Hidden devices still exist in Kobiton. To restore a hidden device to the Portal view, use the hide-device API to set the device back to visible.
+
+== Related
+
+* xref:devices:manage-devices.adoc[]
