@@ -1,0 +1,42 @@
+= Pop-up handler remediation
+:navtitle: Pop-up handler remediation
+
+Pop-up handler remediation allows you to handle dynamic or inconsistent pop-ups that appear during Scriptless Automation test runs. Instead of failing when an unexpected screen appears, you can mark the pop-up as optional and define how to dismiss it without writing any scripts.
+
+This is useful when:
+
+- A pop-up appears during a revisit but was not present in the baseline session
+- A screen present in the baseline does not appear during a revisit
+- Transient screens such as onboarding prompts, survey modals, or OS alerts interrupt test execution
+
+Pop-up handling is defined during the session in which the pop-up is encountered. Once saved, the configuration applies to all subsequent runs of the same test case
+   on the same device model and OS. It does not retroactively apply to past sessions.
+
+== Before you begin
+
+- An AI subscription is required.
+- A baseline session must already exist for the test case.
+- The revisit must have encountered a blocker caused by a pop-up or unexpected screen.
+
+== Handle a pop-up
+
+After a test run completes with a blocker caused by a pop-up, open the Blocker Remediation window. A detection message indicates which session contains the pop-up.
+
+image::test-management:popup-handler-blocker-remediation.png[width=700,alt="The Popup Handler tab in the Blocker Remediation window"]
+
+. Select the **Popup Handler** tab. It appears to the right of the **Element Selection** tab.
+. Under **Choose the screen with the pop-up**, select **Baseline** or **Revisit**.
+. Enter hint text from the pop-up in the text field. This text must appear on the pop-up screen.
+. Click **Highlight Text Area** to verify the hint text against the screenshot.
+ +
+Matched text is highlighted on the screenshot. If no match is found, an error is displayed. Adjust the hint text and try again.
+. Under **Choose the element to dismiss this pop-up**, search the view tree by path, label, or other attributes to locate the dismiss element.
+. Select the element.
+. Click **Save as Optional**.
+
+The pop-up is marked as optional. Future revisits for the same test case on the same device model and OS dismiss this screen using the defined element.
+
+[NOTE]
+====
+If the blocker is not caused by a pop-up, use the **Element Selection** tab for standard remediation. For more information see xref:test-management:remediation/element-selection-remediation.adoc[].
+====
