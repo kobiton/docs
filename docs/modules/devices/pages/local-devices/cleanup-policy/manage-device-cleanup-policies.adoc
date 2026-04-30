@@ -1,0 +1,96 @@
+= Manage device cleanup policies
+:navtitle: Manage device cleanup policies
+
+A cleanup policy defines the steps performed on a device at the end of a session to remove test data and restore device settings. Policies can be assigned at the organization level or the team level. If both are set, the team-level policy takes precedence.
+
+For details on each configuration option, see
+xref:local-devices/cleanup-policy/cleanup-configurations.adoc[Cleanup configurations].
+
+== Open the Cleanup Policies page
+
+Select your profile name and select *Settings*.
+
+Select *Cleanup Policy*.
+
+image::cleanup-policies-list.png[Cleanup Policies window in the Account > Settings, width=1000]
+
+== Predefined cleanup policies
+
+The Cleanup Policies page includes two system-created policies that cannot be edited or
+removed:
+
+* *Thorough* — Runs all cleanup configurations, including all configurable options and always-active configurations. Performs the most comprehensive cleanup.
+
+* *No Cleanup* — Skips all cleanup. This is not the same as a user-created policy with no options selected, which still runs the xref:local-devices/cleanup-policy/cleanup-configurations.adoc[always-active
+  configurations].
+
+NOTE: When you create or edit a cleanup policy, a confirmation popup warns that custom
+policies may conflict when devices are assigned to multiple teams. This applies when a
+device belongs to more than one team with different cleanup policies.
+
+== Create a cleanup policy
+
+. On the Cleanup Policies page, select *Create*.
+. Enter a name and an optional description.
+. Select the *Android* tab and check the configurations to apply. Then select the *iOS*
+tab and do the same.
++
+For details on each option, see xref:local-devices/cleanup-policy/cleanup-configurations.adoc[Cleanup configurations].
+. Select *Save*.
+. In the confirmation popup, select *Create*.
+
+The new policy appears in the list but is not active until assigned as the default for the xref:#_assign_as_organization_default[organization] or a xref:#_assign_to_a_team[team].
+
+== Edit a cleanup policy
+
+. On the Cleanup Policies page, select the policy name to open the configuration dialog.
+. Select the *Android* or *iOS* tab and check or uncheck configurations.
+. Select *Save*.
+. In the confirmation popup, select *Save*.
+
+[NOTE]
+====
+The following cannot be edited:
+
+* Predefined policies (_Thorough_ and _No Cleanup_).
+* The policy currently assigned as the organization default.
+====
+
+== Remove a cleanup policy
+
+. On the Cleanup Policies page, select a policy to highlight it.
+. Select *Remove*, then confirm in the popup.
+
+If the removed policy was assigned as the default for one or more teams, those teams revert to the organization default policy.
+
+[NOTE]
+====
+The following cannot be removed:
+
+* Predefined policies (_Thorough_ and _No Cleanup_).
+* The policy currently assigned as the organization default.
+====
+
+== Assign as organization default
+
+. On the Cleanup Policies page, select a policy to highlight it.
+. Select *Mark as default*, then confirm in the popup.
+
+The organization default policy runs:
+
+* At the end of all sessions launched under the organization.
+* After a device restarts or reconnects to the Portal.
+* After a device is released from retain or virtualUSB.
+
+If a team has its own assigned policy, the team policy overrides the organization default for that team's sessions.
+
+== Assign to a team
+
+You can assign a cleanup policy to a specific team from the team's settings page. When a team has its own policy, it overrides the organization default for sessions launched under that team.
+
+For instructions, see
+xref:organization:teams/create-a-device-cleanup-policy.adoc[Create a device cleanup
+policy for a team].
+
+To view which teams are assigned to a specific policy, select the policy on the Cleanup
+Policies page, then select *View teams*.

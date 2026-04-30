@@ -1,0 +1,233 @@
+= Cleanup configurations
+:navtitle: Cleanup configurations
+
+Cleanup policies include configurable options that you select when creating or editing a
+policy, and always-active configurations that run automatically on all user-created
+policies and the _Thorough_ predefined policy.
+
+Configurations are listed in execution order within each section.
+
+== Android
+
+=== Configurable options
+
+Select or deselect these options in the cleanup policy dialog when creating or editing a
+policy.
+
+[cols="2,3,2a", options="header"]
+|===
+| Option | What it does | Notes
+
+| All apps installed within a session will be removed
+| Removes all non-system applications. System apps, Kobiton agent apps, and exempted apps
+are not removed
+| To exempt specific apps, enter their package names in the exemption field. Wildcard
+(`*`) is supported. Separate multiple entries with commas or spaces
+
+Example: `com.sample.app`, `com.myCompany.*`
+
+// [placeholder: screenshot of app exemption field]
+
+| App's data will be cleared
+| Clears application data and cache for non-system apps.
+| Only runs when _All apps installed within a session will be removed_ is turned off
+
+| Browser apps will have history and browsing data removed
+| Clears browsing history and data for supported browsers
+| Supported browsers: Chrome, Chrome Beta
+
+| Signed in accounts will be removed
+| Removes all accounts from the device. Removes accounts with one-click approval access
+first, then removes remaining accounts individually from Accounts settings
+|
+
+| Device settings will be reset
+a| Resets multiple device settings:
+
+* Turns on Wi-Fi
+* Turns off pocket mode (supported models only)
+* Enables "Stay Awake" while plugged in
+* Resets timezone to the device's physical location
+* Resets geolocation to the device's physical location
+|
+
+| All apps in the Recent Apps list will return to their starting state
+| Resets internal app state while keeping apps visible in the Recent Apps list.
+| Screenshots in the Recent Apps list may not update until the app is reopened. Actual
+reset behavior depends on each app
+
+| Turn on the navigation bar
+| Sets the navigation bar to use buttons
+|
+* Samsung: Settings > Display > Navigation Bar > Navigation buttons
+* Google Pixel: Settings > System > Gestures > System Navigation > 3-button navigation
+* Not supported on some brands (for example, Oppo and Xiaomi)
+
+| Set Chrome as the default browser
+| Sets Chrome as the device's default browser
+|
+
+| Clear the keyboard cache
+| Switches to the default system keyboard, clears supported keyboard caches (for example,
+Gboard), and clears keyboard clipboard data
+|
+
+// INFO PENDING: Confirm description with product team
+| Use Kobiton Chrome version
+| Keeps a version of Chrome on the device that is compatible with the Kobiton platform
+| Recommended
+
+|===
+
+=== Always-active configurations
+
+These configurations run automatically on all user-created cleanup policies and the
+_Thorough_ predefined policy. They do not appear in the cleanup policy dialog and cannot
+be disabled.
+
+[cols="2,3,2a", options="header"]
+|===
+| Configuration | What it does | Conditions
+
+| Set Chrome as debug application
+| Sets Chrome as the debug application in Developer options
+|
+
+| Remove device passcode
+| Removes the device passcode
+| Runs when the organization uses passcode mode 1 or 2
+
+| Unlock the screen
+| Unlocks the device screen
+| Runs when the organization uses passcode mode 1 or 2
+
+| Clear HTTP proxy
+| Clears HTTP proxy settings applied during an NPC session
+| Runs when an NPC session ends
+
+| Reset screen brightness
+| Resets screen brightness to the lowest level to reduce the risk of screen damage
+| Not supported on some Chinese device models
+
+| Clear image injection
+| Clears any injected image
+|
+
+| Set device orientation to portrait
+| Sets the device orientation to portrait mode
+|
+
+| Change system language to English
+| Changes the system display language to English
+|
+
+| Enable access to hidden APIs
+| Enables access to hidden APIs for testing or development
+| Behavior may vary by device model and OS version
+
+| Turn off auto-update in Google Play Store
+| Disables automatic app updates in Google Play Store
+|
+
+| Set up Chrome browser
+| Dismisses Chrome welcome screens, disables password saving, and disables translation
+prompts
+|
+
+| Disable the toolbar on Samsung Keyboard
+| Hides keyboard shortcut icons on the Samsung Keyboard
+| Supported Samsung devices only
+
+|===
+
+== iOS/iPadOS
+
+=== Configurable options
+
+Select or deselect these options in the cleanup policy dialog when creating or editing a
+policy.
+
+[cols="2,3,2a", options="header"]
+|===
+| Option | What it does | Notes
+| All apps installed and associated data within a session will be removed
+| Removes all non-system applications and their data. Kobiton agent apps, apps with bundle
+IDs starting with `com.apple`, and exempted apps are not removed
+| To exempt specific apps, enter their bundle IDs in the exemption field. Wildcard (`*`)
+is supported. Separate multiple entries with commas or spaces
+
+Example: `com.sample.app`, `com.myCompany.*`
+
+| App's data will be cleared
+| Clears application data and cache for non-system apps
+| Only runs when _All apps installed and associated data within a session will be removed_
+is turned off
+
+| Browser apps will have history and browsing data removed
+| Clears Safari browsing history, website data, and closes all tabs
+| Safari only
+
+| Signed in accounts will be removed
+| Removes signed-in mail accounts for Google, Outlook, Microsoft Exchange, Yahoo, AOL, and
+similar providers
+| Does not remove Apple ID or iCloud accounts. Some iOS versions may not remove Yahoo
+accounts
+
+| Device settings will be reset
+a|
+Resets multiple device settings:
+
+* Turns on Wi-Fi
+* Turns on Bluetooth
+* Turns off Airplane Mode
+* Turns on Web Inspector for Safari (does not enable Remote Automation)
+* Turns on UI Automation
+* Turns off Low Power Mode and sets Auto-Lock to Never
+* Turns on Location Services
+* Turns off AssistiveTouch
+* Turns off Ringer and Alert sound (sets volume to 0)
+* Resets timezone to the device's physical location
+* Resets geolocation to the device's physical location
+* Resets display zoom to Standard (supported models only)
+
+| Timezone may not reset correctly if the device's current timezone differs from the one
+set during initial device setup
+
+| All apps in the Recent Apps list will return to their starting state
+| Resets internal app state while keeping apps in the Recent Apps list
+| Screenshots in Recent Apps may not update until the app is reopened. Reset behavior
+varies by app
+
+|===
+
+=== Always-active configurations
+
+These configurations run automatically on all user-created cleanup policies and the
+_Thorough_ predefined policy. They do not appear in the cleanup policy dialog and cannot
+be disabled.
+
+[cols="2,3,2a", options="header"]
+|===
+| Configuration | What it does | Conditions
+
+| Remove passcode
+| Removes the device passcode using the unlock token
+| Runs when the organization uses passcode mode 1 or 2
+
+| Clear HTTP proxy
+| Clears HTTP proxy settings applied during an NPC session
+| Runs when an NPC session ends
+
+| Set orientation to portrait
+| Sets the device orientation to portrait mode
+|
+
+| Set screen brightness to lowest
+| Sets screen brightness to the lowest level to avoid screen damage
+|
+
+| Reset device language to English
+| Resets the device display language to English
+|
+
+|===
