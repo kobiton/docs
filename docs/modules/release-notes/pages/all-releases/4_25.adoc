@@ -1,0 +1,138 @@
+= Kobiton 4.25 Release Notes
+:navtitle: Kobiton 4.25 release notes
+
+== Kobiton plugin for Claude Code
+
+Kobiton now integrates directly with Claude Code, enabling AI-driven mobile test automation on real devices without leaving the AI workspace.
+
+With the Kobiton plugin, developers and testers can use natural language to upload apps, manage devices, execute Appium tests, and review results - all within Claude. This keeps test creation, execution, and validation in a single continuous workflow.
+
+*Key capabilities*
+
+* Upload and install mobile apps directly from Claude
+* Run Appium-based automation tests on real iOS and Android devices
+* Manage devices and sessions without switching tools
+* View logs, screenshots, and execution results in real time
+* Use natural language to trigger and control testing workflows
+
+By bringing real-device testing into Claude, teams can reduce context switching, accelerate validation, and enable AI agents to act on real-time test outcomes.
+
+*Availability*
+
+Kobiton for Claude Code is available to users with active Kobiton subscription and Claude Code subscriptions.
+
+https://docs.kobiton.com/ai/mcp/claude-code[Get started with Kobiton’s Claude Code plugin]
+
+=== Appium AI: Natural language locators (Beta)
+
+You can now locate UI elements in Appium tests using natural language instead of traditional selectors.
+
+By allowing `driver.findElement(...)` to accept descriptive (natural) text, this feature improves test resilience in scenarios where selectors are brittle, unavailable, or frequently changing.
+
+*Highlights*
+
+* Natural language element location within existing Appium workflows
+* Reduced dependency on XPath and accessibility-based selectors
+* Support for native and web applications [.inline-comment-marker]#with traditional locators#
+
+*Availability*
+
+This feature is available in Beta for Private and Local (or Hybrid) devices. Access is limited. Please get in touch with your Account Manager to request enablement.
+
+== Scriptless Automation: Pop-up Handler
+
+You can now handle dynamic or inconsistent pop-ups during Scriptless Automation test runs without writing any scripts.
+
+By introducing the *Pop-up Handler* into the Blocker Remediation flow, this feature allows you to manage optional or unexpected screens that may appear in either baseline or revisit sessions, improving test stability and execution success.
+
+*Highlights*
+
+* Handle unexpected or optional pop-ups directly within Blocker Remediation
+* Specify whether the pop-up appears in *Baseline* or *Revisit* sessions
+* Mark pop-ups as *Optional* and define the UI element to dismiss them
+* Applies to future test runs with the same app
+
+*Availability*
+
+This feature is available for users with an *AI subscription*.
+
+Build and run more resilient Scriptless tests with smarter, pop-up handling.
+
+== Remove unplugged devices from Kobiton Portal
+
+Unplugged or decommissioned devices remain visible as offline in the Device List and Device Management page until they are removed. This allows admins to confirm whether a device was intentionally taken offline or disconnected due to an issue.
+
+Previously, admins could remove these devices using the https://api.kobiton.com/v2/docs#tag/DeviceAPI/operation/DeviceAPI_HideDeviceByUdid[Hide Devices by UDID API]. Kobiton now provides a *Tidy Up* option directly in the Device Management page to simplify this process.
+
+The *Tidy Up* feature allows admins to review and remove unplugged devices from view, helping keep device lists accurate and easier to manage.
+
+*Key capabilities*
+
+* Review and selectively hide devices based on how long they have been offline
+* Search and sort devices to quickly identify stale or unused devices
+* Identify recently offline devices using visual indicators to avoid accidental removal
+
+NOTE: If a device is plugged back in, it will automatically reappear in the Kobiton Portal.
+
+== deviceConnect Console updates
+
+For those who host devices, we’ve made a few updates to the deviceConnect Console on the Mac mini.
+
+*Authentication update for new deviceConnect installations*
+
+For first-time login to a new deviceConnect installation, API key authentication is now required instead of a password. After the initial login, users can authenticate using either an API key or a password.
+
+*Cleanup policy configuration simplified in deviceConnect*
+
+Cleanup is now enabled by default in deviceConnect. The *HealthService.EnableCleanup=true* setting is no longer required in dc.ini, reducing the need for manual configuration.
+
+This setting controls whether devices follow the Cleanup policy definitions assigned at the organization and team levels in the Kobiton Portal.
+
+If necessary, cleanup can be disabled for all devices on a machine by setting:
+
+----
+HealthService.EnableCleanup=false
+----
+
+*Device slot information visibility improvements*
+
+Device slot information for a device is now more visible in the deviceConnect Console based on user-configured views.
+
+* Slot details are automatically displayed in the *USB Location* field.
+* A *Slot #* column is also available, but values must be entered manually.
+
+To display USB Location by default, clear the deviceConnect Console site data in your browser.
+
+
+== More bug fixes and improvements:
+
+=== API enhancements
+
+* Added support for retrieving signed application URLs for device-specific workflows
+* Fixed an issue where removed device tags could still appear in API responses
+
+=== Accessibility Screen Reader improvements
+
+* Fixed issue where Android TalkBack did not properly navigate or read certain UI elements
+* Fixed issue where Android TalkBack focus borders did not appear or clear correctly
+* Improved iOS VoiceOver keyboard behavior, preventing unintended keyboard dismissal during navigation
+
+=== Kobiton CLI improvements
+
+Enhanced CLI capabilities and reliability for managing device interactions and automation workflows:
+
+* Resolved issues where environment variables were not applied during app launch
+* Improved automatic permission handling on iOS and Android devices
+* Fixed issues with file push and retrieval behavior on devices
+
+=== General platform improvements
+
+* Fixed an issue where manual sessions were not properly terminated when device connection errors occurred
+* Improved performance for app installation on iOS devices
+* Fixed an issue where the home button did not correctly display recent apps during manual sessions on iOS
+* Fixed an issue where iOS app installation could fail under certain proxy configurations
+* Resolved an issue where native elements could fail to load in Inspector under certain device orientations (e.g., landscape)
+* Improved error messaging when session requests do not include device-identifying capabilities; the system now provides clearer guidance when required device selection criteria (such as device name, UDID, or device tags) are missing
+
+* Improved audit logging for user role assignments and team updates
+* Fixed an issue where offline Bluetooth modules could incorrectly display a “Healthy” status
