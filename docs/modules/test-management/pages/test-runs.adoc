@@ -1,0 +1,49 @@
+= Test runs
+
+== Overview
+
+A test run represents a single execution of a test case or test suite on one or more devices.
+
+Test runs apply an existing test definition to selected devices and record the outcome of that execution. Each test run is tracked independently and retains its own results and execution data.
+
+== Create a test run
+
+Test runs are created from Test Management.
+
+A test run can be created using either a single test case or a test suite. During setup, users select the test definition, application version, and target devices.
+
+Once started, the platform executes the recorded interactions automatically on the selected devices. No user interaction is required while the test run is in progress.
+
+== Manage test runs
+
+Test runs are managed through Test Management in the platform.
+
+=== Test Run list
+
+The Test Run list displays all test runs associated with the account. From this view, users can review execution status, identify completed or in-progress runs, and access detailed results.
+
+=== Test Run details
+
+The Test Run details view provides information about a specific execution, including the test definition used, target devices, and overall status.
+
+From this view, users can review execution outcomes and navigate to related execution sessions.
+
+== Execution status
+
+Each test run reflects the outcome of execution across devices.
+
+Common statuses indicate whether execution completed successfully, failed due to an application issue, or requires user action before it can continue.
+
+== Rerun a test run
+
+Test runs can be rerun using the same configuration.
+
+Reruns repeat the original execution with the same test definition, devices, and settings. This is commonly used after remediation or when validating execution behavior.
+
+Reruns do not replace the original test run. Each execution is recorded separately.
+
+== Related pages
+
+* xref:test-management:test-cases.adoc[Test cases]
+* xref:test-management:test-suites.adoc[Test suites]
+* xref:test-management:remediations.adoc[Remediations]
