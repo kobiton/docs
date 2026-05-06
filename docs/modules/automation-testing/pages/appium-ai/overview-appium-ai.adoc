@@ -16,7 +16,7 @@ This feature requires access to an OpenAI API or Azure OpenAI API. You must prov
 
 NOTE: Access to the OpenAI API is required and is separate from a ChatGPT subscription. ChatGPT access alone does not enable this feature.
 
-This feature is available for private device deployments *only*. It is not supported in public cloud environments.
+This feature is available for private device deployments *only*. Appium AI is not available for Public Cloud devices.
 
 Additional configuration may be required in deviceConnect. For setup assistance, contact Kobiton Support.
 
@@ -61,9 +61,7 @@ NOTE: In Java, additional configuration may be required to enable the "natural" 
 
 == What this feature supports
 
-Appium AI enables natural language-based element location within existing Appium workflows.
-
-This includes:
+Appium AI enables natural language-based element location for the following conditions:
 
 * Using natural language descriptions with `findElement(...)` to locate UI elements
 * Native and web application contexts where a view hierarchy is available
@@ -105,7 +103,7 @@ Current limitations:
 
 * Script generation and full AI-driven test creation are not supported
 
-* Canvas-based or fully visual UI element detection is not supported
+* Canvas-based or fully visual UI element detection is not currently supported. Support for visual and canvas-based UI detection is planned for a future release.
 
 * Automatic fallback from traditional locators to natural language is not supported
 

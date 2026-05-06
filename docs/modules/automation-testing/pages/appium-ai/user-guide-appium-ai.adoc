@@ -4,10 +4,10 @@
 
 Ensure the following:
 
-* You are using an Appium-compatible environment that supports natural language locators
+* Your environment is configured to support natural language locators. If you are unsure, contact your lab administrator or Kobiton Support.
 * Your test runs in a supported context (view hierarchy available)
 * You are familiar with basic Appium commands such as `findElement(...)`
-* You are using a private device deployment (natural language locators are not supported in public cloud environments)
+* You are using a private device deployment (natural language locators are not available for Public Cloud devices)
 
 == Use a natural language locator
 
@@ -67,15 +67,13 @@ If an element is not found or the wrong element is returned:
 
 * Confirm that the application exposes sufficient UI metadata for element identification
 
-If the feature is not working as expected:
+If natural language locators are not working as expected, contact your lab administrator to verify the following:
 
-* Ensure your environment supports natural language locators
+* OpenAI or Azure OpenAI API credentials are configured correctly
 
-* Confirm that your OpenAI or Azure OpenAI API credentials are configured correctly
+* Natural language locators are properly configured in your environment
 
-* Verify that the feature is enabled in your deviceConnect configuration (dc.ini)
-
-* Confirm that you are using a private device deployment (not supported in public cloud environments)
+* The deployment uses private devices (natural language locators are not available on Public Cloud devices)
 
 If issues persist, contact Kobiton Support for assistance.
 
