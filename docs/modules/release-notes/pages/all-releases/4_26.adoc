@@ -1,0 +1,235 @@
+= Kobiton 4.26 Release Notes
+:navtitle: Kobiton 4.26 release notes
+
+== New features and big changes
+
+=== Appium AI: Natural language locators for canvas apps and virtual element support
+
+Appium AI now supports canvas applications and custom-rendered UIs through natural language locators and a new virtual element API. When standard locators cannot resolve an element, the system automatically falls back to AI-powered detection.
+
+Users can also override LLM provider configurations on a per-session basis using desired capabilities, giving teams control over AI behavior without changing org-level settings.
+
+*Highlights*
+
+- Natural language locators now work with canvas and non-native UI elements
+- Automatic fallback to AI-based element detection when standard locators fail
+- New virtual element API for interacting with elements in custom-rendered apps
+- Per-session LLM configuration overrides via desired capabilities
+
+*Availability*
+
+Needs confirmation — confirm entitlement requirements and whether this is GA or beta.
+
+=== Login with email or username
+
+Users can now log in to both the main portal and the standalone portal using either their email address or username. Previously, login required a specific credential format depending on the portal.
+
+*Highlights*
+
+- Email and username are both accepted on the login page
+- Applies to both portal experiences
+
+*Availability*
+Needs confirmation — confirm whether this applies to all authentication methods or only username/password login.
+
+=== Configurable browser STUN server setting
+
+Organizations can now configure a custom STUN server for Lightning Mode browser sessions at the org level. This allows teams with strict network compliance requirements to route WebRTC traffic through approved infrastructure.
+
+*Highlights*
+
+- New org-level admin setting for STUN server configuration
+- Supports compliance and network policy requirements for browser-based sessions
+
+*Availability*
+
+Needs confirmation — confirm which admin role can access this setting and whether it requires a specific plan tier.
+
+=== Kobiton MCP server OAuth authentication
+
+The Kobiton MCP server now supports OAuth authentication, allowing users to authenticate using their existing Kobiton credentials instead of managing separate API tokens.
+
+*Highlights*
+
+- OAuth login flow for MCP server connections
+- Uses existing Kobiton credentials
+
+*Availability*
+
+Needs confirmation — confirm supported OAuth providers and whether API key auth remains available.
+
+=== deviceConnect service management migration to launchd
+
+deviceConnect service management has migrated from sv/runit to launchd. All service management commands have changed. Administrators managing deviceConnect hosts must update their procedures, including restart and halt
+operations.
+
+This is a breaking change for existing deviceConnect administration workflows.
+
+*Highlights*
+
+- sv/runit replaced by launchd for all deviceConnect services
+- New restart and halt procedures
+- All existing service management commands must be replaced with launchd equivalents
+
+*Availability*
+
+Available in deviceConnect 4.26.0. All deviceConnect administrators are affected.
+
+=== virtualUSB for Linux
+
+virtualUSB is now available on Linux. Users can install the vUSB CLI via deb and rpm packages and connect to remote devices from Linux workstations.
+
+*Highlights*
+
+- Full virtualUSB support on Linux
+- CLI installation via deb and rpm packages
+- Remote device connectivity from Linux environments
+
+*Availability*
+
+Needs confirmation — confirm supported Linux distributions and any known limitations compared to macOS.
+
+=== virtualUSB and vUSB CLI multi-organization login
+
+Users who belong to multiple organizations can now authenticate to virtualUSB and the vUSB CLI using API key-based login. This replaces the previous authentication flow and supports switching between organizations.
+
+*Highlights*
+
+- API key-based authentication for virtualUSB app and CLI
+- Support for users with access to multiple organizations
+
+*Availability*
+
+Needs confirmation — confirm whether existing session-based login is deprecated or remains available alongside API key login.
+
+=== Kobiton CLI exit code correction
+
+The Kobiton CLI now returns a non-zero exit code when an app installation fails. Previously, the CLI returned exit code 0 on failure, which could cause CI/CD pipelines to incorrectly report success.
+
+This is a behavior change that affects automation workflows relying on CLI exit codes.
+
+*Highlights*
+
+- CLI correctly returns a non-zero exit code when app installation fails
+- CI/CD pipelines that check exit codes will now detect installation failures
+
+*Availability*
+
+Available to all CLI users.
+
+== Bug fixes and improvements
+
+=== Accessibility
+
+- Fixed an issue where the TalkBack focus border did not clear correctly when disabling TalkBack on WebView.
+
+=== App installation
+
+- Fixed an issue where concurrent app installations could fail. A connection pool has been added to manage simultaneous installs.
+- Fixed iOS app installation failures caused by ZipConduit errors.
+
+=== Appium and automation
+
+- Fixed an issue where interacting with elements in Android WebView contexts failed.
+- Fixed an issue where Android Appium sessions failed to start due to a port connection error.
+- Fixed an issue where interacting with iOS elements failed during Appium sessions.
+
+=== Device cleanup
+
+- Fixed an issue where browser history was not cleared during device cleanup on iOS 26.x, causing automation failures.
+- Fixed an issue where elements at the bottom edge of the screen failed to receive taps during device cleanup.
+
+=== Device connectivity
+
+- Fixed an issue where USB 3.0 devices were not correctly mapped on Cambrionix hubs.
+- Fixed a race condition during device registration that could leak controllers on reconnection.
+- Fixed file descriptor starvation in deviceConnect that could cause all devices to go offline.
+- Fixed a crash in Gigacap when a USB hub was disconnected during an active session.
+
+=== Device management
+
+- Fixed an issue where devices appeared grayed out in the portal while they were online and launchable.
+- Fixed an issue where hub information was missing for some devices on the Device Management page.
+- Fixed a freeze on the Device Management page caused by remaining RPC calls.
+- Fixed a freeze on the Device Gateway management page.
+- Added the ability to export a device list for Apple Developer provisioning files.
+
+=== Device performance
+
+- Reduced CPU usage on idle Android devices by optimizing screen capture and device control processes.
+
+=== iOS and deviceConnect
+
+- Added support for Xcode 26 DDI changes to prevent DDI failures on newer iOS devices.
+- Fixed an issue where iOS 18.5 and 18.6 devices with passcode enabled lost connection after switching language.
+- Fixed high CPU usage on the Device Admin page in Chrome.
+
+=== Gigacap and infrastructure
+
+- Added a targeted logging flag for Gigacap diagnostics.
+- Fixed a crash in Gigacap when the encoding profile failed to initialize.
+
+=== MCP server
+
+- Added Appium capabilities fetching and session correlation to the MCP server.
+- Added interactive session support for running natural-language Appium commands on devices.
+
+=== Script generation
+
+- Added Python support for Appium script generation. Python (pytest) is now available as a language option in the portal.
+
+=== Test management
+
+- Improved the Test Case Details UI layout to fit smaller screens.
+
+=== Turbo Test Execution
+
+- Reduced test execution latency by eliminating repeated artifact downloads through local caching.
+
+=== virtualUSB
+
+- Added support for running simultaneous manual and virtualUSB sessions on Core Devices.
+- Added the ability to unpair remote devices to reclaim pairing slots.
+- Added Linux CLI installation via deb and rpm packages.
+
+== Needs confirmation
+
+- KOB-52344 — Daisy-chained Thundersync support for Gigacap: no description provided. Confirm scope and user impact.
+- KOB-52343 — Thundersync support for Gigacap: potentially significant for K5 hardware users, but no details available. Confirm scope.
+- KOB-52493 — MCP browser use skill for Mixed Session automation: description is empty. Confirm whether this shipped and what it does.
+- KOB-52470 — MCP simplify Appium script skill: description is empty. Confirm scope.
+- KOB-52413 — Kobiton MCP server Phase 1: epic with empty description. Confirm what shipped under this epic.
+- KOB-52368 — MCP publish Kobiton skills: description references an external PRD only. Confirm user-facing changes.
+- KOB-52405 — MCP Scriptless Test Management and Appium WebDriver sessions: description is empty. Confirm scope.
+- KOB-52450 — ADB upgrade from 36.0.0 to 36.0.2: partially complete and depends on a deviceConnect follow-on. Confirm whether this shipped in this release.
+- KOB-50376 — Cambrionix connectivity loss: customer-escalated issue with unclear fix status. Confirm whether a fix is included.
+- KOB-52524 — Allow comments in Gigacap-options config file: unclear whether Gigacap-options is customer-facing or internal only. Confirm audience.
+- KOB-52090 — OPPO Android 15/16 (ColorOS 15/16) manual session not responding: customer-escalated compatibility issue. Needs SME confirmation on fix status and scope.
+- KOB-52626 — Turbo Test Execution diagnostic data table: unclear whether any admin UI or API exposes this data. Confirm visibility.
+- KOB-52694 — Kafka consumer timeout tuning for Turbo Test Execution: new env vars introduced but unclear if customer-configurable. Confirm exposure.
+- KOB-50345 — virtualUSB finishing: vague scope of polish items. Confirm what shipped and whether any items are user-visible.
+
+== Review notes
+
+- Availability gaps: Multiple major features (AI locators, STUN server, OAuth, multi-org login, Linux vUSB) lack confirmed availability, entitlement, or beta status. These need SME or PM input before publication.
+- Breaking change: The launchd migration (deviceConnect service management) is a breaking change for all deviceConnect administrators. Confirm whether a migration guide will be published alongside these notes or as a separate
+doc.
+- CLI exit code change: The CLI exit code correction is a behavior change that could surface previously hidden failures in CI pipelines. Consider calling this out explicitly as a breaking change or behavioral note.
+- MCP cluster: Seven MCP-related tickets are in Needs confirmation with empty or PRD-only descriptions. Consider whether any of these should be consolidated into a single MCP feature announcement once details are confirmed.
+- Thundersync items: KOB-52344 and KOB-52343 may overlap. Confirm whether these are separate features or the same work.
+- Python script generation: Three tickets (KOB-52290, KOB-52291, KOB-52412) cover the same feature. Consolidated into one entry — confirm this is correct.
+- Possible confidential details: Customer-specific escalations were referenced in several tickets. All customer names and escalation context have been removed from the draft. Verify no residual internal context remains.
+- KOB-52281 (TalkBack action list update): Release notes column was empty in the CSV. Excluded from this draft — confirm whether it should be included.
+
+== Open questions or verification needed
+
+1. Confirm entitlement and GA/beta status for Appium AI natural language locators and virtual element support.
+2. Confirm whether email-or-username login applies to all auth methods or only username/password.
+3. Confirm which admin roles and plan tiers can access the STUN server setting.
+4. Confirm whether API key auth remains available alongside OAuth for MCP.
+5. Confirm supported Linux distributions and known limitations for virtualUSB.
+6. Confirm whether session-based vUSB login is deprecated or coexists with API key login.
+7. Confirm whether the launchd migration guide ships with release notes or separately.
+8. Confirm whether the CLI exit code change should be flagged as a breaking behavioral change.
+9. Confirm disposition of the 7 MCP tickets in Needs confirmation.
+10. Confirm whether KOB-52281 (TalkBack action list) belongs in this release's notes.
