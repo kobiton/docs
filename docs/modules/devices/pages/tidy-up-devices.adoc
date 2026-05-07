@@ -1,0 +1,36 @@
+= Tidy up devices
+:navtitle: Tidy up devices
+:figure-caption!:
+
+Tidy up hides offline or unplugged devices from the device list in Device Management. Devices are hidden from view. If a hidden device is reconnected, it automatically reappears in the device list.
+
+Tidy up is available for both private and public devices.
+
+== Hide offline devices
+
+. Open Kobiton Portal and select **Devices**.
+
+. Select **Tidy up**. The button appears next to **View** on the Device Management page.
+
++
+The **Remove unused devices** window opens with a list of offline devices. All devices are selected by default.
+
++
+.In the device selection window, the true UDIDs and IP addresses of host machines will be displayed.
+image::devices:tidy-up-remove-unused-devices.png[width=700,alt="The Remove unused devices window in Device Management"]
+
++
+Each device displays the device name, OS version, UDID, hosted machine IP address, state, and days offline.
+
++
+Devices offline less than one day display `<1` in the days offline column.
+
++
+A `-` indicates the device status is unknown. Review devices with low offline counts
+before removing them.
+
+. Click the checkbox next to **Name** to deselect all devices, then select individual devices. Use the search bar to find specific devices.
+
+. Click **Confirm** when desired devices have been selected.
+
+Selected devices are hidden and no longer appear in the device list.
