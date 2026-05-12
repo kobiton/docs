@@ -5,32 +5,20 @@
 
 === Appium AI: Natural language locators for canvas apps and virtual element support
 
-Appium AI now supports canvas applications and custom-rendered UIs through natural language locators and a new virtual element API. When standard locators cannot resolve an element, the system automatically falls back to AI-powered detection.
+Appium AI now supports canvas applications and custom-rendered UIs through natural language locators and a new virtual element API.
 
-Users can also override LLM provider configurations on a per-session basis using desired capabilities, giving teams control over AI behavior without changing org-level settings.
+Users can also override LLM provider configurations on a per-session basis using selected capabilities. This allows teams to customize AI behavior for individual sessions without modifying the default configuration on the deviceConnect host machine. giving teams control over AI behavior without changing host machine settings.
 
 *Highlights*
 
 - Natural language locators now work with canvas and non-native UI elements
-- Automatic fallback to AI-based element detection when standard locators fail
 - New virtual element API for interacting with elements in custom-rendered apps
 - Per-session LLM configuration overrides via desired capabilities
+- Appium AI must be enabled on each deviceConnect host machine before per-session overrides can be used
 
 *Availability*
 
 Needs confirmation — confirm entitlement requirements and whether this is GA or beta.
-
-=== Login with email or username
-
-Users can now log in to both the main portal and the standalone portal using either their email address or username. Previously, login required a specific credential format depending on the portal.
-
-*Highlights*
-
-- Email and username are both accepted on the login page
-- Applies to both portal experiences
-
-*Availability*
-Needs confirmation — confirm whether this applies to all authentication methods or only username/password login.
 
 === Configurable browser STUN server setting
 
@@ -43,64 +31,23 @@ Organizations can now configure a custom STUN server for Lightning Mode browser 
 
 *Availability*
 
-Needs confirmation — confirm which admin role can access this setting and whether it requires a specific plan tier.
-
-=== Kobiton MCP server OAuth authentication
-
-The Kobiton MCP server now supports OAuth authentication, allowing users to authenticate using their existing Kobiton credentials instead of managing separate API tokens.
-
-*Highlights*
-
-- OAuth login flow for MCP server connections
-- Uses existing Kobiton credentials
-
-*Availability*
-
-Needs confirmation — confirm supported OAuth providers and whether API key auth remains available.
+Available to users with the `org_setting.modify` permission.
 
 === deviceConnect service management migration to launchd
 
-deviceConnect service management has migrated from sv/runit to launchd. All service management commands have changed. Administrators managing deviceConnect hosts must update their procedures, including restart and halt
-operations.
+deviceConnect service management has migrated from `sv`/`runit` to `launchd`. All service management commands have changed. Administrators managing deviceConnect hosts must update their procedures, including restart and halt operations.
 
 This is a breaking change for existing deviceConnect administration workflows.
 
 *Highlights*
 
-- sv/runit replaced by launchd for all deviceConnect services
+- `sv`/`runit` replaced by launchd for all deviceConnect services
 - New restart and halt procedures
-- All existing service management commands must be replaced with launchd equivalents
+- All existing service management commands must be replaced with `launchd` equivalents
 
 *Availability*
 
-Available in deviceConnect 4.26.0. All deviceConnect administrators are affected.
-
-=== virtualUSB for Linux
-
-virtualUSB is now available on Linux. Users can install the vUSB CLI via deb and rpm packages and connect to remote devices from Linux workstations.
-
-*Highlights*
-
-- Full virtualUSB support on Linux
-- CLI installation via deb and rpm packages
-- Remote device connectivity from Linux environments
-
-*Availability*
-
-Needs confirmation — confirm supported Linux distributions and any known limitations compared to macOS.
-
-=== virtualUSB and vUSB CLI multi-organization login
-
-Users who belong to multiple organizations can now authenticate to virtualUSB and the vUSB CLI using API key-based login. This replaces the previous authentication flow and supports switching between organizations.
-
-*Highlights*
-
-- API key-based authentication for virtualUSB app and CLI
-- Support for users with access to multiple organizations
-
-*Availability*
-
-Needs confirmation — confirm whether existing session-based login is deprecated or remains available alongside API key login.
+Available in deviceConnect 4.26.0.
 
 === Kobiton CLI exit code correction
 
@@ -117,11 +64,70 @@ This is a behavior change that affects automation workflows relying on CLI exit 
 
 Available to all CLI users.
 
+=== Expanded Android image injection support
+Kobiton now supports Android image injection through Camera v1 and Intent APIs without requiring the Kobiton SDK. Applications that use android.hardware.camera2 APIs (API level 21+) can receive injected images through automatic binary instrumentation. This removes the need for development involvement when testing image capture workflows on Android devices.
+
+*Highlights*
+
+- Automatic instrumentation replaces camera library references with Kobiton equivalents
+- Android binaries are re-signed after instrumentation
+- No SDK integration required in the application under test
+
+*Limitations*
+
+- Applications using Google Play Services tied to a specific signing certificate require the customer's own certificate for re-signing
+- Obfuscated or tamper-protected binaries may not be instrumentable
+- Coverage depends on which camera libraries the application uses
+
+== Enhancements and platform improvements
+
+=== Authentication and registration improvements
+Kobiton now supports registering new organizations using GitHub or Google accounts, simplifying onboarding for new users.
+
+Additionally, usernames are now generated automatically from email addresses during account registration, removing the need for users to manually create a username.
+
+*Highlights*
+
+- Register new organizations using GitHub or Google authentication
+- Automatically generate usernames from email addresses during registration
+- Simplify account onboarding and reduce registration friction
+
+*Availability*
+
+- Available for new account and organization registration workflows.
+
+=== Kobiton MCP server OAuth authentication
+The Kobiton MCP server now supports OAuth authentication, allowing users to authenticate using their existing Kobiton credentials instead of managing separate API tokens.
+
+*Highlights*
+
+OAuth login flow for MCP server connections
+Uses existing Kobiton credentials
+
+=== virtualUSB API key authentication
+virtualUSB and the vUSB CLI now use API key-based authentication for login.
+
+*Highlights*
+
+- API key authentication for virtualUSB and the vUSB CLI
+- Simplified authentication workflow for virtualUSB access
+
+*Availability*
+
+- Available in virtualUSB 4.26.
+
 == Bug fixes and improvements
 
 === Accessibility
 
 - Fixed an issue where the TalkBack focus border did not clear correctly when disabling TalkBack on WebView.
+
+=== API and session stability
+
+- Fixed an issue where Portal API requests failed during long application installs (approximately 5+ minutes) due to a connection timeout.
+- Fixed a crash in Gigacap caused by repeated AnswerMediaOffer calls.
+- Fixed intermittent HTTP 503 errors on GET /v1/devices during cluster scale-down events.
+- Reduced wait time for log, crash log, and network capture data on the Session Details page.
 
 === App installation
 
@@ -174,9 +180,11 @@ Available to all CLI users.
 - Added Appium capabilities fetching and session correlation to the MCP server.
 - Added interactive session support for running natural-language Appium commands on devices.
 
-=== Script generation
+=== Session and integration
 
-- Added Python support for Appium script generation. Python (pytest) is now available as a language option in the portal.
+- Fixed an issue where downloaded device logs from a manual session had no line endings, making the file difficult to read.
+- Fixed an issue where Jira tickets created from Session Explorer were not linked back to the session. The Jira button badge and linked ticket list now update correctly after ticket creation.
+- Fixed an issue where the Jira Cloud integration intermittently appeared disconnected after approximately 15 minutes, preventing Jira ticket creation from Session Explorer. The integration state now remains synchronized with the backend connection state.
 
 === Test management
 
@@ -188,48 +196,4 @@ Available to all CLI users.
 
 === virtualUSB
 
-- Added support for running simultaneous manual and virtualUSB sessions on Core Devices.
 - Added the ability to unpair remote devices to reclaim pairing slots.
-- Added Linux CLI installation via deb and rpm packages.
-
-== Needs confirmation
-
-- KOB-52344 — Daisy-chained Thundersync support for Gigacap: no description provided. Confirm scope and user impact.
-- KOB-52343 — Thundersync support for Gigacap: potentially significant for K5 hardware users, but no details available. Confirm scope.
-- KOB-52493 — MCP browser use skill for Mixed Session automation: description is empty. Confirm whether this shipped and what it does.
-- KOB-52470 — MCP simplify Appium script skill: description is empty. Confirm scope.
-- KOB-52413 — Kobiton MCP server Phase 1: epic with empty description. Confirm what shipped under this epic.
-- KOB-52368 — MCP publish Kobiton skills: description references an external PRD only. Confirm user-facing changes.
-- KOB-52405 — MCP Scriptless Test Management and Appium WebDriver sessions: description is empty. Confirm scope.
-- KOB-52450 — ADB upgrade from 36.0.0 to 36.0.2: partially complete and depends on a deviceConnect follow-on. Confirm whether this shipped in this release.
-- KOB-50376 — Cambrionix connectivity loss: customer-escalated issue with unclear fix status. Confirm whether a fix is included.
-- KOB-52524 — Allow comments in Gigacap-options config file: unclear whether Gigacap-options is customer-facing or internal only. Confirm audience.
-- KOB-52090 — OPPO Android 15/16 (ColorOS 15/16) manual session not responding: customer-escalated compatibility issue. Needs SME confirmation on fix status and scope.
-- KOB-52626 — Turbo Test Execution diagnostic data table: unclear whether any admin UI or API exposes this data. Confirm visibility.
-- KOB-52694 — Kafka consumer timeout tuning for Turbo Test Execution: new env vars introduced but unclear if customer-configurable. Confirm exposure.
-- KOB-50345 — virtualUSB finishing: vague scope of polish items. Confirm what shipped and whether any items are user-visible.
-
-== Review notes
-
-- Availability gaps: Multiple major features (AI locators, STUN server, OAuth, multi-org login, Linux vUSB) lack confirmed availability, entitlement, or beta status. These need SME or PM input before publication.
-- Breaking change: The launchd migration (deviceConnect service management) is a breaking change for all deviceConnect administrators. Confirm whether a migration guide will be published alongside these notes or as a separate
-doc.
-- CLI exit code change: The CLI exit code correction is a behavior change that could surface previously hidden failures in CI pipelines. Consider calling this out explicitly as a breaking change or behavioral note.
-- MCP cluster: Seven MCP-related tickets are in Needs confirmation with empty or PRD-only descriptions. Consider whether any of these should be consolidated into a single MCP feature announcement once details are confirmed.
-- Thundersync items: KOB-52344 and KOB-52343 may overlap. Confirm whether these are separate features or the same work.
-- Python script generation: Three tickets (KOB-52290, KOB-52291, KOB-52412) cover the same feature. Consolidated into one entry — confirm this is correct.
-- Possible confidential details: Customer-specific escalations were referenced in several tickets. All customer names and escalation context have been removed from the draft. Verify no residual internal context remains.
-- KOB-52281 (TalkBack action list update): Release notes column was empty in the CSV. Excluded from this draft — confirm whether it should be included.
-
-== Open questions or verification needed
-
-1. Confirm entitlement and GA/beta status for Appium AI natural language locators and virtual element support.
-2. Confirm whether email-or-username login applies to all auth methods or only username/password.
-3. Confirm which admin roles and plan tiers can access the STUN server setting.
-4. Confirm whether API key auth remains available alongside OAuth for MCP.
-5. Confirm supported Linux distributions and known limitations for virtualUSB.
-6. Confirm whether session-based vUSB login is deprecated or coexists with API key login.
-7. Confirm whether the launchd migration guide ships with release notes or separately.
-8. Confirm whether the CLI exit code change should be flagged as a breaking behavioral change.
-9. Confirm disposition of the 7 MCP tickets in Needs confirmation.
-10. Confirm whether KOB-52281 (TalkBack action list) belongs in this release's notes.
