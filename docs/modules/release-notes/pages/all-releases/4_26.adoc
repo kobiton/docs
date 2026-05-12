@@ -1,13 +1,15 @@
 = Kobiton 4.26 Release Notes
 :navtitle: Kobiton 4.26 release notes
 
-== New features and big changes
+== New features and major changes
 
-=== Appium AI: Natural language locators for canvas apps and virtual element support
+=== Appium AI: Natural language locators for canvas apps and virtual element support (Beta)
 
 Appium AI now supports canvas applications and custom-rendered UIs through natural language locators and a new virtual element API.
 
-Users can also override LLM provider configurations on a per-session basis using selected capabilities. This allows teams to customize AI behavior for individual sessions without modifying the default configuration on the deviceConnect host machine. giving teams control over AI behavior without changing host machine settings.
+Virtual elements allow Appium scripts to interact with canvas and custom-rendered UI regions that do not expose standard element hierarchies.
+
+Users can also override LLM provider configurations on a per-session basis using selected capabilities. This allows teams to customize AI behavior for individual sessions without modifying the default configuration on the deviceConnect host machine, giving teams control over AI behavior without changing host machine settings.
 
 *Highlights*
 
@@ -18,11 +20,13 @@ Users can also override LLM provider configurations on a per-session basis using
 
 *Availability*
 
-Needs confirmation — confirm entitlement requirements and whether this is GA or beta.
+This feature is available for Private and Local (or Hybrid) devices. Access is limited. Contact your Account Manager to request enablement.
 
 === Configurable browser STUN server setting
 
 Organizations can now configure a custom STUN server for Lightning Mode browser sessions at the org level. This allows teams with strict network compliance requirements to route WebRTC traffic through approved infrastructure.
+
+The STUN server setting is available under Account > Settings > Other Settings > Lightning Mode Settings.
 
 *Highlights*
 
@@ -35,9 +39,11 @@ Available to users with the `org_setting.modify` permission.
 
 === deviceConnect service management migration to launchd
 
-deviceConnect service management has migrated from `sv`/`runit` to `launchd`. All service management commands have changed. Administrators managing deviceConnect hosts must update their procedures, including restart and halt operations.
+deviceConnect service management has migrated from sv/ runit to launchd. Administrators who manage deviceConnect services through terminal commands must update their operational procedures, including restart and halt workflows.
 
-This is a breaking change for existing deviceConnect administration workflows.
+See the deviceConnect administration documentation for updated launchd commands and migration guidance. [document forthcoming]
+
+Portal and deviceConnect Console UI restart actions continue to function normally.
 
 *Highlights*
 
@@ -47,7 +53,7 @@ This is a breaking change for existing deviceConnect administration workflows.
 
 *Availability*
 
-Available in deviceConnect 4.26.0.
+This change applies to deviceConnect 4.26.0 and later.
 
 === Kobiton CLI exit code correction
 
@@ -67,6 +73,8 @@ Available to all CLI users.
 === Expanded Android image injection support
 Kobiton now supports Android image injection through Camera v1 and Intent APIs without requiring the Kobiton SDK. Applications that use android.hardware.camera2 APIs (API level 21+) can receive injected images through automatic binary instrumentation. This removes the need for development involvement when testing image capture workflows on Android devices.
 
+See the image injection documentation for setup instructions and supported configuration details. Documentation will be published separately.
+
 *Highlights*
 
 - Automatic instrumentation replaces camera library references with Kobiton equivalents
@@ -79,7 +87,7 @@ Kobiton now supports Android image injection through Camera v1 and Intent APIs w
 - Obfuscated or tamper-protected binaries may not be instrumentable
 - Coverage depends on which camera libraries the application uses
 
-== Enhancements and platform improvements
+== Enhancements
 
 === Authentication and registration improvements
 Kobiton now supports registering new organizations using GitHub or Google accounts, simplifying onboarding for new users.
@@ -94,27 +102,24 @@ Additionally, usernames are now generated automatically from email addresses dur
 
 *Availability*
 
-- Available for new account and organization registration workflows.
+- Available for new accounts, existing users, and organization registration workflows.
 
 === Kobiton MCP server OAuth authentication
-The Kobiton MCP server now supports OAuth authentication, allowing users to authenticate using their existing Kobiton credentials instead of managing separate API tokens.
+The Kobiton MCP server now supports OAuth 2.1 authentication using existing Kobiton credentials.
 
 *Highlights*
 
-OAuth login flow for MCP server connections
-Uses existing Kobiton credentials
+- OAuth login flow for MCP server connections
+- Automatic browser-based authentication flow in Claude Code
+- Uses existing Kobiton credentials
 
 === virtualUSB API key authentication
-virtualUSB and the vUSB CLI now use API key-based authentication for login.
+virtualUSB and the virtualUSB CLI now use API key-based authentication for login. Attempting to login using the username and password will not succeed.
 
 *Highlights*
 
 - API key authentication for virtualUSB and the vUSB CLI
 - Simplified authentication workflow for virtualUSB access
-
-*Availability*
-
-- Available in virtualUSB 4.26.
 
 == Bug fixes and improvements
 
@@ -143,21 +148,20 @@ virtualUSB and the vUSB CLI now use API key-based authentication for login.
 === Device cleanup
 
 - Fixed an issue where browser history was not cleared during device cleanup on iOS 26.x, causing automation failures.
-- Fixed an issue where elements at the bottom edge of the screen failed to receive taps during device cleanup.
+- Fixed an issue impacting device cleanup performance.
 
 === Device connectivity
 
 - Fixed an issue where USB 3.0 devices were not correctly mapped on Cambrionix hubs.
-- Fixed a race condition during device registration that could leak controllers on reconnection.
-- Fixed file descriptor starvation in deviceConnect that could cause all devices to go offline.
-- Fixed a crash in Gigacap when a USB hub was disconnected during an active session.
+- Improved device connection reliability during registration and reconnection.
+- Improved device connectivity stability to help prevent unexpected disconnects.
+- Improved session stability when USB hubs are disconnected during active sessions.
 
 === Device management
 
 - Fixed an issue where devices appeared grayed out in the portal while they were online and launchable.
 - Fixed an issue where hub information was missing for some devices on the Device Management page.
-- Fixed a freeze on the Device Management page caused by remaining RPC calls.
-- Fixed a freeze on the Device Gateway management page.
+- Fixed an issue where Device Management in Portal and Device Gateways pages in the deviceConnect Console could freeze.
 - Added the ability to export a device list for Apple Developer provisioning files.
 
 === Device performance
@@ -168,23 +172,18 @@ virtualUSB and the vUSB CLI now use API key-based authentication for login.
 
 - Added support for Xcode 26 DDI changes to prevent DDI failures on newer iOS devices.
 - Fixed an issue where iOS 18.5 and 18.6 devices with passcode enabled lost connection after switching language.
-- Fixed high CPU usage on the Device Admin page in Chrome.
-
-=== Gigacap and infrastructure
-
-- Added a targeted logging flag for Gigacap diagnostics.
-- Fixed a crash in Gigacap when the encoding profile failed to initialize.
 
 === MCP server
 
 - Added Appium capabilities fetching and session correlation to the MCP server.
 - Added interactive session support for running natural-language Appium commands on devices.
+- Kobiton MCP skills are now available for AI-assisted mobile testing workflows, including device interaction, session management, and Appium-based automation. See the Kobiton MCP server documentation for available skills and setup guidance.
 
 === Session and integration
 
 - Fixed an issue where downloaded device logs from a manual session had no line endings, making the file difficult to read.
 - Fixed an issue where Jira tickets created from Session Explorer were not linked back to the session. The Jira button badge and linked ticket list now update correctly after ticket creation.
-- Fixed an issue where the Jira Cloud integration intermittently appeared disconnected after approximately 15 minutes, preventing Jira ticket creation from Session Explorer. The integration state now remains synchronized with the backend connection state.
+- Fixed an issue where the Jira Cloud integration intermittently appeared disconnected after approximately 15 minutes, preventing Jira ticket creation from Session Explorer.
 
 === Test management
 
