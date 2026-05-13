@@ -1,0 +1,200 @@
+= Claude Code plugin reference
+:navtitle: Claude Code plugin reference
+
+The following reference lists available Claude Code plugins and their associated capabilities.
+
+For setup and usage instructions, see xref:mcp/claude-code.adoc[Kobiton for Claude Code].
+
+== dev-workflow
+Full-lifecycle development pipeline for Kobiton: import tickets, plan multi-repo changes, implement, test, review, submit PRs, and monitor CI.
+
+=== Commands
+[cols="1,3", options="header"]
+|===
+| Command | Description
+| run
+| Run the full development pipeline end-to-end for a feature
+| continue
+| Auto-detect feature state and resume from the next pending step
+| init
+| Verify dev-workflow prerequisites (RepoSphere, gh, kubectl)
+| import-issue
+| Create a feature plan from a GitHub issue, JIRA ticket, or Confluence PRD
+| proposal
+| Create a multi-repo implementation plan
+| proposal-wizard
+| Interactive wizard for creating proposals step by step
+| apply
+| Implement change proposal tasks, tracking progress
+| generate-tests
+| Generate 4 test case sets for a feature (auto/manual, new/existing)
+| select-tests
+| Map code diffs to auto-test tags (3 execution modes)
+| run-tests
+| Trigger auto-test runs in a sandbox environment via GitHub Actions
+| code-review
+| Automated code review with confidence scoring via parallel agents
+| pr-submit
+| Open or refresh a single PR for one repo (idempotent)
+| monitor-ci
+| Watch one repo's PR CI; auto-fix retry loop on failure
+| diagnose
+| Diagnose test failures from test results, service logs, and k8s pods
+| replan
+| Revise implementation plan after failures or new information
+| migrate
+| Convert old .dev/ plan files to centralized features/ format
+| list
+| List all features (in-progress, completed)
+| show
+| Show detailed info about a specific feature
+| status
+| Show current dev-workflow state and health
+|===
+
+=== Agents
+
+[cols="1,3", options="header"]
+|===
+| Agent | Description
+| bug-detector
+| Scan changes for logic errors, null handling, race conditions, and security vulnerabilities
+| claude-md-auditor
+| Audit changes for CLAUDE.md and project convention compliance
+| code-architect
+| Design multi-repo implementation blueprints using RepoSphere
+| code-explorer
+| Analyze codebase patterns, architecture, and dependencies
+| code-simplifier
+| Suggest clarity improvements without changing behavior
+| comment-analyzer
+| Analyze comments for accuracy, completeness, and maintainability
+| history-analyzer
+| Analyze git history for context on why code was written
+| log-analyzer
+| Read test and k8s pod logs to diagnose failures and identify root causes
+| spec-validator
+| Validate OpenSpec format and delta correctness
+| test-analyzer
+| Analyze test coverage quality and identify gaps
+| test-case-generator
+| Generate 4 test case sets per SDLC testing workflow (dev and TE modes)
+|===
+
+=== Skills
+
+[cols="1,3", options="header"]
+|===
+| Skill | Description
+| context-engineering
+| Efficient token usage via progressive disclosure and BM25 search
+| feature-category-templates
+| Test generation templates used by generate-tests
+| openspec-workflow
+| Full-lifecycle workflow guidance for proposals, specs, and delta notation
+|===
+
+== code-master
+
+Language-specific coding agents for code review, implementation, and architecture guidance.
+
+=== Agents
+
+[cols="1,3", options="header"]
+|===
+| Agent | Description
+| code-master
+| Cross-language architecture and design patterns expert
+| golang
+| Go language expert
+| python
+| Python language expert
+| rust
+| Rust language expert
+| typescript
+| TypeScript/JavaScript expert
+|===
+
+== mcp-servers
+
+MCP server configurations providing external integrations for code knowledge, issue tracking, browser automation, and more.
+
+=== MCP Servers
+
+[cols="1,3", options="header"]
+|===
+| Server | Description
+| reposphere
+| Code knowledge base for Kobiton repositories
+| atlassian
+| Jira, Confluence, and Compass via OAuth 2.1
+| fetch
+| Web page fetching
+| git
+| Local git operations
+| playwright
+| Browser automation via Playwright
+| sequential-thinking
+| Basic sequential thinking
+| mcp-sequentialthinking-tools
+| Sequential thinking with tool coordination
+|===
+
+== frontend-pro
+
+UI/UX design intelligence for production-grade interfaces, landing pages, dashboards, and SaaS products.
+
+=== Skills
+
+[cols="1,3", options="header"]
+|===
+| Skill | Description
+| design-philosophy
+| Creative direction and UI design philosophy guidance
+| ui-ux-pro-max
+| Searchable UI style database with 50 styles, 21 color palettes, 50 font pairings, and 8 framework guidelines
+|===
+
+== rich-statusline
+
+Utility plugin for configuring Claude Code's status line with cost and session tracking.
+
+=== Commands
+
+[cols="1,3", options="header"]
+|===
+| Command | Description
+| setup
+| Configure Claude Code to use the rich status line
+|===
+
+=== Agents
+
+[cols="1,3", options="header"]
+|===
+| Agent | Description
+| statusline-setup
+| Configure the rich status line settings
+|===
+
+=== Skills
+
+[cols="1,3", options="header"]
+|===
+| Skill | Description
+| statusline
+| Rich status line display
+|===
+
+== Standalone Commands
+
+Commands not associated with any plugin.
+
+=== Commands
+
+[cols="1,3", options="header"]
+|===
+| Command | Description
+| kobi-execute-tf-plan
+| Analyze a provided Terraform plan and execute it with strategy confirmation
+|===
