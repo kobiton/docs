@@ -41,7 +41,9 @@ Available to users with the `org_setting.modify` permission.
 
 deviceConnect service management has migrated from sv/ runit to launchd. Administrators who manage deviceConnect services through terminal commands must update their operational procedures, including restart and halt workflows.
 
-See the deviceConnect administration documentation for updated launchd commands and migration guidance. [document forthcoming]
+// See the deviceConnect administration documentation for updated launchd commands and migration guidance. [ADD LINK]
+
+Documentation updates for this feature are in progress.
 
 Portal and deviceConnect Console UI restart actions continue to function normally.
 
@@ -68,12 +70,12 @@ This is a behavior change that affects automation workflows relying on CLI exit 
 
 *Availability*
 
-Available to all CLI users.
+Available to all CLI users. Download the latest CLI version from the Downloads page in the Kobiton Portal.
 
 === Expanded Android image injection support
 Kobiton now supports Android image injection through Camera v1 and Intent APIs without requiring the Kobiton SDK. Applications that use android.hardware.camera2 APIs (API level 21+) can receive injected images through automatic binary instrumentation. This removes the need for development involvement when testing image capture workflows on Android devices.
 
-See the image injection documentation for setup instructions and supported configuration details. Documentation will be published separately.
+See the image injection documentation for setup instructions and usage guide. [xref:modules:manual-testing/test-your-app-camera.adoc]
 
 *Highlights*
 
@@ -86,8 +88,6 @@ See the image injection documentation for setup instructions and supported confi
 - Applications using Google Play Services tied to a specific signing certificate require the customer's own certificate for re-signing
 - Obfuscated or tamper-protected binaries may not be instrumentable
 - Coverage depends on which camera libraries the application uses
-
-== Enhancements
 
 === Authentication and registration improvements
 Kobiton now supports registering new organizations using GitHub or Google accounts, simplifying onboarding for new users.
@@ -113,6 +113,8 @@ The Kobiton MCP server now supports OAuth 2.1 authentication using existing Kobi
 - Automatic browser-based authentication flow in Claude Code
 - Uses existing Kobiton credentials
 
+Additional OAuth authentication details are documented in the MCP server README.
+
 === virtualUSB API key authentication
 virtualUSB and the virtualUSB CLI now use API key-based authentication for login. Attempting to login using the username and password will not succeed.
 
@@ -130,20 +132,18 @@ virtualUSB and the virtualUSB CLI now use API key-based authentication for login
 === API and session stability
 
 - Fixed an issue where Portal API requests failed during long application installs (approximately 5+ minutes) due to a connection timeout.
-- Fixed a crash in Gigacap caused by repeated AnswerMediaOffer calls.
-- Fixed intermittent HTTP 503 errors on GET /v1/devices during cluster scale-down events.
+- Fixed intermittent HTTP 503 errors on GET /v1/devices.
 - Reduced wait time for log, crash log, and network capture data on the Session Details page.
 
 === App installation
 
-- Fixed an issue where concurrent app installations could fail. A connection pool has been added to manage simultaneous installs.
+- Fixed an issue where concurrent app installations could fail.
 - Fixed iOS app installation failures caused by ZipConduit errors.
 
 === Appium and automation
 
 - Fixed an issue where interacting with elements in Android WebView contexts failed.
 - Fixed an issue where Android Appium sessions failed to start due to a port connection error.
-- Fixed an issue where interacting with iOS elements failed during Appium sessions.
 
 === Device cleanup
 
@@ -162,11 +162,11 @@ virtualUSB and the virtualUSB CLI now use API key-based authentication for login
 - Fixed an issue where devices appeared grayed out in the portal while they were online and launchable.
 - Fixed an issue where hub information was missing for some devices on the Device Management page.
 - Fixed an issue where Device Management in Portal and Device Gateways pages in the deviceConnect Console could freeze.
-- Added the ability to export a device list for Apple Developer provisioning files.
+- Added the ability to export a device list for Apple Developer provisioning files from deviceConnect Console.
 
 === Device performance
 
-- Reduced CPU usage on idle Android devices by optimizing screen capture and device control processes.
+- Improved resource efficiency for idle Android devices.
 
 === iOS and deviceConnect
 
@@ -177,7 +177,9 @@ virtualUSB and the virtualUSB CLI now use API key-based authentication for login
 
 - Added Appium capabilities fetching and session correlation to the MCP server.
 - Added interactive session support for running natural-language Appium commands on devices.
-- Kobiton MCP skills are now available for AI-assisted mobile testing workflows, including device interaction, session management, and Appium-based automation. See the Kobiton MCP server documentation for available skills and setup guidance.
+- New Kobiton MCP skills are now available for AI-assisted mobile testing workflows, including device interaction, session management, and Appium-based automation.
+
+See the Kobiton MCP server documentation for available skills and setup guidance. [xref:modules:ai/pages/mcp]
 
 === Session and integration
 
@@ -192,7 +194,3 @@ virtualUSB and the virtualUSB CLI now use API key-based authentication for login
 === Turbo Test Execution
 
 - Reduced test execution latency by eliminating repeated artifact downloads through local caching.
-
-=== virtualUSB
-
-- Added the ability to unpair remote devices to reclaim pairing slots.
