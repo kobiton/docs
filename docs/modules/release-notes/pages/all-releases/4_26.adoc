@@ -3,18 +3,12 @@
 
 == New features and major changes
 
-=== Appium AI: Natural language locators for canvas apps and virtual element support (Beta)
+=== Appium AI: Override LLM provider configurations
 
-Appium AI now supports canvas applications and custom-rendered UIs through natural language locators and a new virtual element API.
-
-Virtual elements allow Appium scripts to interact with canvas and custom-rendered UI regions that do not expose standard element hierarchies.
-
-Users can also override LLM provider configurations on a per-session basis using selected capabilities. This allows teams to customize AI behavior for individual sessions without modifying the default configuration on the deviceConnect host machine, giving teams control over AI behavior without changing host machine settings.
+Users can override LLM provider configurations on a per-session basis using selected capabilities. This allows teams to customize AI behavior for individual sessions without modifying the default configuration on the deviceConnect host machine, giving teams control over AI behavior without changing host machine settings.
 
 *Highlights*
 
-- Natural language locators now work with canvas and non-native UI elements
-- New virtual element API for interacting with elements in custom-rendered apps
 - Per-session LLM configuration overrides via desired capabilities
 - Appium AI must be enabled on each deviceConnect host machine before per-session overrides can be used
 
