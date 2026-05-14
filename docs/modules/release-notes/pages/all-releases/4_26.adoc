@@ -1,0 +1,192 @@
+= Kobiton 4.26 Release Notes
+:navtitle: Kobiton 4.26 release notes
+
+== New features and major changes
+
+=== Appium AI: Override LLM provider configurations
+
+Users can override LLM provider configurations on a per-session basis using selected capabilities. This allows teams to customize AI behavior for individual sessions without modifying the default configuration on the deviceConnect host machine, giving teams control over AI behavior without changing host machine settings.
+
+*Highlights*
+
+- Per-session LLM configuration overrides via desired capabilities
+- Appium AI must be enabled on each deviceConnect host machine before per-session overrides can be used
+
+*Availability*
+
+This feature is available for Private and Local (or Hybrid) devices. Access is limited. Contact your Account Manager to request enablement.
+
+=== Configurable browser STUN server setting
+
+Organizations can now configure a custom STUN server for Lightning Mode browser sessions at the org level. This allows teams with strict network compliance requirements to route WebRTC traffic through approved infrastructure.
+
+The STUN server setting is available under Account > Settings > Other Settings > Lightning Mode Settings.
+
+*Highlights*
+
+- New org-level admin setting for STUN server configuration
+- Supports compliance and network policy requirements for browser-based sessions
+
+*Availability*
+
+Available to users with the `org_setting.modify` permission.
+
+=== deviceConnect service management migration to launchd
+
+deviceConnect service management has migrated from sv/ runit to launchd. Administrators who manage deviceConnect services through terminal commands must update their operational procedures, including restart and halt workflows.
+
+// See the deviceConnect administration documentation for updated launchd commands and migration guidance. [ADD LINK]
+
+Documentation updates for this feature are in progress.
+
+Portal and deviceConnect Console UI restart actions continue to function normally.
+
+*Highlights*
+
+- `sv`/`runit` replaced by launchd for all deviceConnect services
+- New restart and halt procedures
+- All existing service management commands must be replaced with `launchd` equivalents
+
+*Availability*
+
+This change applies to deviceConnect 4.26.0 and later.
+
+=== Kobiton CLI exit code correction
+
+The Kobiton CLI now returns a non-zero exit code when an app installation fails. Previously, the CLI returned exit code 0 on failure, which could cause CI/CD pipelines to incorrectly report success.
+
+This is a behavior change that affects automation workflows relying on CLI exit codes.
+
+*Highlights*
+
+- CLI correctly returns a non-zero exit code when app installation fails
+- CI/CD pipelines that check exit codes will now detect installation failures
+
+*Availability*
+
+Available to all CLI users. Download the latest CLI version from the Downloads page in the Kobiton Portal.
+
+=== Expanded Android image injection support
+Kobiton now supports Android image injection through Camera v1 and Intent APIs without requiring the Kobiton SDK. Applications that use android.hardware.camera2 APIs (API level 21+) can receive injected images through automatic binary instrumentation. This removes the need for development involvement when testing image capture workflows on Android devices.
+
+See the xref:modules:manual-testing:test-your-app-camera.adoc[image injection documentation] for setup instructions and usage guide.
+
+*Highlights*
+
+- Automatic instrumentation replaces camera library references with Kobiton equivalents
+- Android binaries are re-signed after instrumentation
+- No SDK integration required in the application under test
+
+*Limitations*
+
+- Applications using Google Play Services tied to a specific signing certificate require the customer's own certificate for re-signing
+- Obfuscated or tamper-protected binaries may not be instrumentable
+- Coverage depends on which camera libraries the application uses
+
+=== Authentication and registration improvements
+
+Kobiton now supports GitHub and Google authentication for organization registration and account access workflows.
+
+Existing users can link GitHub or Google accounts to their Kobiton accounts. For new users, usernames are now generated automatically from email addresses during registration, removing the need to manually create a username.
+
+*Highlights*
+
+- Register new organizations using GitHub or Google authentication
+- Link GitHub and Google accounts to existing Kobiton accounts
+- Automatically generate usernames from email addresses during registration
+- Simplify onboarding and reduce registration friction
+
+*Availability*
+
+Available for new accounts, existing users, and organization registration workflows.
+
+=== Kobiton MCP server OAuth authentication
+The Kobiton MCP server now supports OAuth 2.1 authentication using existing Kobiton credentials.
+
+*Highlights*
+
+- OAuth login flow for MCP server connections
+- Automatic browser-based authentication flow in Claude Code
+- Uses existing Kobiton credentials
+
+Additional OAuth authentication details are documented in the MCP server README.
+
+=== virtualUSB API key authentication
+virtualUSB and the virtualUSB CLI now use API key-based authentication for login. Attempting to login using the username and password will not succeed.
+
+*Highlights*
+
+- API key authentication for virtualUSB and the vUSB CLI
+- Simplified authentication workflow for virtualUSB access
+
+== Bug fixes and improvements
+
+=== Accessibility
+
+- Fixed an issue where the TalkBack focus border did not clear correctly when disabling TalkBack on WebView.
+
+=== API and session stability
+
+- Fixed an issue where Portal API requests failed during long application installs (approximately 5+ minutes) due to a connection timeout.
+- Fixed intermittent HTTP 503 errors on GET /v1/devices.
+- Reduced wait time for log, crash log, and network capture data on the Session Details page.
+
+=== App installation
+
+- Fixed an issue where concurrent app installations could fail.
+- Fixed iOS app installation failures caused by ZipConduit errors.
+
+=== Appium and automation
+
+- Fixed an issue where interacting with elements in Android WebView contexts failed.
+- Fixed an issue where Android Appium sessions failed to start due to a port connection error.
+
+=== Device cleanup
+
+- Fixed an issue where browser history was not cleared during device cleanup on iOS 26.x, causing automation failures.
+- Fixed an issue impacting device cleanup performance.
+
+=== Device connectivity
+
+- Fixed an issue where USB 3.0 devices were not correctly mapped on Cambrionix hubs.
+- Improved device connection reliability during registration and reconnection.
+- Improved device connectivity stability to help prevent unexpected disconnects.
+- Improved session stability when USB hubs are disconnected during active sessions.
+
+=== Device management
+
+- Fixed an issue where devices appeared grayed out in the portal while they were online and launchable.
+- Fixed an issue where hub information was missing for some devices on the Device Management page.
+- Fixed an issue where Device Management in Portal and Device Gateways pages in the deviceConnect Console could freeze.
+- Added the ability to export a device list for Apple Developer provisioning files from deviceConnect Console.
+
+=== Device performance
+
+- Improved resource efficiency for idle Android devices.
+
+=== iOS and deviceConnect
+
+- Added support for Xcode 26 DDI changes to prevent DDI failures on newer iOS devices.
+- Fixed an issue where iOS 18.5 and 18.6 devices with passcode enabled lost connection after switching language.
+
+=== MCP server
+
+- Added Appium capabilities fetching and session correlation to the MCP server.
+- Added interactive session support for running natural-language Appium commands on devices.
+- New Kobiton MCP skills are now available for AI-assisted mobile testing workflows, including device interaction, session management, and Appium-based automation.
+
+See the xref:modules:ai/pages/mcp[Kobiton MCP server documentation] for available skills and setup guidance.
+
+=== Session and integration
+
+- Fixed an issue where downloaded device logs from a manual session had no line endings, making the file difficult to read.
+- Fixed an issue where Jira tickets created from Session Explorer were not linked back to the session. The Jira button badge and linked ticket list now update correctly after ticket creation.
+- Fixed an issue where the Jira Cloud integration intermittently appeared disconnected after approximately 15 minutes, preventing Jira ticket creation from Session Explorer.
+
+=== Test management
+
+- Improved the Test Case Details UI layout to fit smaller screens.
+
+=== Turbo Test Execution
+
+- Reduced test execution latency by eliminating repeated artifact downloads through local caching.
