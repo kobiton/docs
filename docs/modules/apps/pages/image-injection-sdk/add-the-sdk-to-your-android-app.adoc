@@ -1,22 +1,78 @@
-= Add image injection SDK to your Android app
-:navtitle: Add the image injection SDK to your Android app
+= Configure Android image injection
+:navtitle: Configure Android image injection
 
-Learn how to implement Kobiton’s custom SDK in your Android application to enable Image Injection.
+Enable image injection for Android apps using automated instrumentation or the Kobiton image injection SDK.
 
-== Prerequisites
+== Choose an image injection method
+
+Kobiton supports two methods for Android image injection:
+
+- *automated instrumentation*
+- *SDK integration*
+
+Use *automated instrumentation* when you want to enable image injection without modifying your app code.
+
+Use the *Kobiton SDK* when your app requires compatibility with Google Play Services, push notifications, tamper detection, or other signing-sensitive functionality.
+
+[cols="1,1,1",options="header"]
+|===
+|API or library |Automated instrumentation |Kobiton SDK
+
+|Camera2
+|Yes
+|Yes
+
+|Camera1
+|Yes
+|No
+
+|ACTION_IMAGE_CAPTURE intent
+|Yes
+|No
+
+|CameraX
+|Not officially supported
+|Not officially supported
+|===
+
+== Use automated instrumentation
+
+When installing an Android app on a Kobiton device, enable *Instrument application for camera injection* to use automated image injection instrumentation.
+
+image:apps:auto-instrumentation.png[width=500,alt="Toggle for auto-instrumentation in the Install app window"]
+
+Automated instrumentation is the simpler setup option because it does not require app code changes. However, instrumentation modifies the application binary, which may affect apps that rely on signing validation or tamper detection.
+
+[IMPORTANT]
+====
+Automated instrumentation may not be compatible with apps that use Google Play Services, push notifications, tamper detection, or signing-sensitive functionality.
+====
+
+== Use the Kobiton SDK
+
+Use the Kobiton SDK to integrate image injection directly into your Android app without automated instrumentation.
+
+The Kobiton SDK requires additional integration work, but provides greater compatibility for apps that rely on signing-sensitive functionality.
+
+=== Prerequisites
 
 * Android 9 or newer.
 * An Android project with https://gradle.org/[Gradle] build tool.
 * The application uses `camera2` library. See the xref:apps:image-injection-sdk/supported-methods.adoc#_android_methods[full list] of supported methods in `camera2`.
-* Download the Image Injection SDK file https://kobiton.s3.amazonaws.com/downloads/camera2.aar[here]. The downloaded file name should be: `camera2.arr`.
+* Download the Image Injection SDK file (`camera2.aar`) https://kobiton.s3.amazonaws.com/downloads/camera2.aar[here].
 
-== Integrate the SDK
+[Note]
+====
+Camera1, Camera2, and CameraX refer to Android camera APIs and libraries, not physical device cameras.
+====
 
-Create a new folder named *libs* under `<project_folder>/app`, where `<project_folder>` is the root folder of the Android project to be altered. Copy the downloaded `camera2.arr` file into the newly created folder.
+=== Integrate the Kobiton SDK
+
+Create a new folder named *libs* under `<project_folder>/app`, where `<project_folder>` is the root folder of the Android project to be altered. Copy the downloaded `camera2.aar` file into the newly created folder.
 
 image:apps:camera2-under-libs.png[width=500,alt="The camera2 file under the libs folder"]
 
-Under `<project_folder>/app`, edit the *build.gradle* file and add the following line under *dependencies*  to allow your application to use the `.arr` file:
+Under `<project_folder>/app`, edit the *build.gradle* file and add the following line under *dependencies*  to allow your application to use the `.aar` file:
 
 [source]
 ----
