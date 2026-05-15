@@ -122,15 +122,17 @@ Show results for session 12345
 Upload app.apk and run tests/smoke_test.js
 ----
 
-== Capabilities
+== Common workflows
 
-=== Devices
+The Claude Code plugin supports common mobile testing workflows, including device management, app uploads, test execution, and session review.
+
+=== Device management
 
 - View available devices
 - Check device status
 - Reserve and release devices
 
-=== Apps
+=== App management
 
 - Upload Android and iOS apps
 - View uploaded apps
@@ -138,7 +140,7 @@ Upload app.apk and run tests/smoke_test.js
 
 === Test execution
 
-The `run-automation-suite` skill guides you through the full test lifecycle:
+The `run-automation-suite` workflow guides you through the full test lifecycle:
 
 - Upload or select an app
 - Select a device
@@ -151,21 +153,33 @@ Supported languages:
 [cols=",,",options="header"]
 |===
 |Language |Extension |Command
-|Node.js |`.js` |`node <script> <udid>`
-|Python |`.py` |`python <script> <udid>`
-|.NET |`.cs` / `.csproj` |`dotnet test`
-|Java |`.java` |`mvn test` or `java -cp ...`
+
+|Node.js
+|`.js`
+|`node <script> <udid>`
+
+|Python
+|`.py`
+|`python <script> <udid>`
+
+|.NET
+|`.cs` / `.csproj`
+|`dotnet test`
+
+|Java
+|`.java`
+|`mvn test` or `java -cp ...`
 |===
 
-=== Sessions
+=== Session management
 
 - View active and past sessions
 - Get logs, screenshots, and videos
 - Stop running sessions
 
-== Example commands
+== Example prompts
 
-=== Devices
+=== Device management
 
 ....
 Show available Android devices
@@ -173,20 +187,20 @@ Check if Galaxy S23 is available
 Reserve Pixel 6 for 60 minutes
 ....
 
-=== Apps
+=== App management
 
 ....
 Show uploaded Android apps
 Upload resources/apps/GS.apk
 ....
 
-=== Tests
+=== Test execution
 
 ....
 Run tests/smoke_test.js on a Pixel device
 ....
 
-=== Sessions
+=== Session management
 
 ....
 Show running sessions
@@ -194,69 +208,7 @@ Get details for session 12345
 Download logs from last failed session
 ....
 
-
-== Tool Reference
-
-Use this section as a reference for available tools and their behavior.
-
-=== Devices
-
-[width="100%",cols="21%,43%,36%",options="header",]
-|===
-|Tool |Description |Read-only
-|`listDevices` |List available devices filtered by platform,
-availability, device group, name, or UDID |Yes
-
-|`getDeviceStatus` |Get real-time status of a specific device
-(availability, battery, connection state) |Yes
-
-|`reserveDevice` |Reserve a device for exclusive use during testing |No
-
-|`terminateReservation` |Release a reserved device |No (destructive)
-|===
-
-=== Sessions
-
-[width="100%",cols="21%,43%,36%",options="header",]
-|===
-|Tool |Description |Read-only
-|`listSessions` |List test sessions filtered by status, device, or
-platform |Yes
-
-|`getSession` |Get session details: commands executed, capabilities,
-metadata, test results |Yes
-
-|`getSessionArtifacts` |Get download URLs for video recording, device
-logs, screenshots, test reports |Yes
-
-|`terminateSession` |Stop a running test session |No (destructive)
-|===
-
-=== Apps
-
-[width="100%",cols="21%,43%,36%",options="header",]
-|===
-|Tool |Description |Read-only
-|`listApps` |List uploaded app builds in your organization |Yes
-
-|`uploadAppToStore` |Upload an app to Kobiton Store (returns pre-signed
-URL for upload) |No
-
-|`confirmAppUpload` |Confirm an uploaded app so Kobiton creates the app
-record |No
-
-|`getApp` |Get app details and version history |Yes
-|===
-
-=== Skills
-
-[width="100%",cols="35%,65%",options="header",]
-|===
-|Skill |Description
-|`run-automation-suite` |Guided workflow: app upload → device selection
-→ script parsing → execution → results
-|===
-
+For a complete reference of available Claude Code plugins, commands, agents, and skills, see the xref:mcp/claude-plugin-ref.adoc[Claude Code plugin reference].
 
 == Troubleshooting
 
