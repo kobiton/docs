@@ -1,20 +1,36 @@
 = Use image injection
 :navtitle: Use image injection
 
-Learn how to test your app camera using image injection, so you can ensure end-users can take photos or scan QR codes with your app.
+Test your app camera using image injection to ensure end-users can take photos or scan QR codes with your app.
 
 == Before you begin
 
+Enable image injection for your app using one of the following methods:
 
-Enable image injection for your app with one of these options:
+* Enable *Instrument application for camera injection* when installing your app on a Kobiton device (Android only).
 
-* Enable *Instrument application for camera injection* when xref:manual-testing:install-an-app.adoc[installing your app] before you test your in-app camera (Android only).
-* Add Kobiton image injection SDK into your Android or iOS apps. Follow xref:apps:image-injection-sdk/add-the-sdk-to-your-android-app.adoc[this guide] for android, and xref:apps:image-injection-sdk/add-the-sdk-to-your-ios-app.adoc[this guide] for iOS.
+image:apps:auto-instrumentation.png[width=500,alt="Toggle for auto-instrumentation in the Install app window"]
+
++
+This method enables image injection through automated instrumentation and does not require SDK integration.
+
+[Note]
+====
+Automated instrumentation may not be compatible with apps that use Google Play Services, push notifications, tamper detection, or other signing-sensitive functionality.
+====
+
+* Add the Kobiton image injection SDK to your Android or iOS app.
+
++
+Use the Kobiton SDK when your app requires greater compatibility with signing-sensitive functionality.
+
++
+For setup instructions, see xref:apps:image-injection-sdk/add-the-sdk-to-your-android-app.adoc[Configure Android image injection] or xref:apps:image-injection-sdk/add-the-sdk-to-your-ios-app.adoc[Add the image injection SDK to your iOS app].
 
 +
 [IMPORTANT]
 ====
-Do not enable *Instrument application for camera injection* when installing an app that already has image injection SDK added.
+Do not enable *Instrument application for camera injection* for apps that already include the Kobiton image injection SDK.
 ====
 
 == Add an image to the library
