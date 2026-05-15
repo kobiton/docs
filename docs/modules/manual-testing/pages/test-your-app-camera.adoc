@@ -1,18 +1,29 @@
 = Use image injection
 :navtitle: Use image injection
 
-Learn how to test your app camera using image injection, so you can ensure end-users can take photos or scan QR codes with your app.
+Test your app camera using image injection to ensure end-users can take photos or scan QR codes with your app.
 
 == Before you begin
 
-Enable image injection for your app with one of these options:
+Enable image injection for your app using one of the following methods:
 
-* Enable *Instrument application for camera injection* when installing your app before testing image injection workflows (Android only).
+* Enable *Instrument application for camera injection* when installing your app on a Kobiton device (Android only).
 
 +
-Android image injection can now be enabled through automatic instrumentation without requiring the Kobiton SDK for supported applications.
+This method enables image injection through automated instrumentation and does not require SDK integration.
 
-* Add the Kobiton image injection SDK to your Android or iOS app. Follow xref:apps:image-injection-sdk/add-the-sdk-to-your-android-app.adoc[this guide] for Android, and xref:apps:image-injection-sdk/add-the-sdk-to-your-ios-app.adoc[this guide] for iOS.
+[Note]
+====
+Automated instrumentation may not be compatible with apps that use Google Play Services, push notifications, tamper detection, or other signing-sensitive functionality.
+====
+
+* Add the Kobiton image injection SDK to your Android or iOS app.
+
++
+Use the Kobiton SDK when your app requires greater compatibility with signing-sensitive functionality.
+
++
+For setup instructions, see xref:apps:image-injection-sdk/add-the-sdk-to-your-android-app.adoc[Configure Android image injection] or xref:apps:image-injection-sdk/add-the-sdk-to-your-ios-app.adoc[Add the image injection SDK to your iOS app].
 
 +
 [IMPORTANT]
