@@ -35,8 +35,6 @@ Available to users with the `org_setting.modify` permission.
 
 deviceConnect service management has migrated from sv/ runit to launchd. Administrators who manage deviceConnect services through terminal commands must update their operational procedures, including restart and halt workflows.
 
-// See the deviceConnect administration documentation for updated launchd commands and migration guidance. [ADD LINK]
-
 Documentation updates for this feature are in progress.
 
 Portal and deviceConnect Console UI restart actions continue to function normally.
@@ -66,10 +64,15 @@ This is a behavior change that affects automation workflows relying on CLI exit 
 
 Available to all CLI users. Download the latest CLI version from the Downloads page in the Kobiton Portal.
 
-=== Expanded Android image injection support
-Kobiton now supports Android image injection through Camera v1 and Intent APIs without requiring the Kobiton SDK. Applications that use android.hardware.camera2 APIs (API level 21+) can receive injected images through automatic binary instrumentation. This removes the need for development involvement when testing image capture workflows on Android devices.
+=== Expanded Android image injection support via app instrumentation
 
-See the xref:modules:manual-testing:test-your-app-camera.adoc[image injection documentation] for setup instructions and usage guide.
+Kobiton now supports Android image injection through Camera v1 (API level 1-20) and Camera Intent API via app instrumentation, in addition to the existing camera2 and CameraX APIs (API level 21 and above).
+
+To use app instrumentation, enable *Instrument application for camera injection* before you install the app.
+
+image:manual-testing:install-apps-closeup.png[width=750, alt="A close-up of the different app installation options during a manual session."]
+
+See the xref:manual-testing:test-your-app-camera.adoc[image injection documentation,window=read-later] for setup instructions and usage guide.
 
 *Highlights*
 
@@ -82,6 +85,8 @@ See the xref:modules:manual-testing:test-your-app-camera.adoc[image injection do
 - Applications using Google Play Services tied to a specific signing certificate require the customer's own certificate for re-signing
 - Obfuscated or tamper-protected binaries may not be instrumentable
 - Coverage depends on which camera libraries the application uses
+- Camera v1 and Camera Intent API is not supported in the xref:apps:image-injection-sdk/add-the-sdk-to-your-android-app.adoc[Kobiton image injection SDK,window=read-later].
+
 
 === Authentication and registration improvements
 
@@ -116,7 +121,7 @@ virtualUSB and the virtualUSB CLI now use API key-based authentication for login
 
 *Highlights*
 
-- API key authentication for virtualUSB and the vUSB CLI
+- API key authentication for virtualUSB and the virtualUSB CLI
 - Simplified authentication workflow for virtualUSB access
 
 == Bug fixes and improvements
@@ -175,7 +180,7 @@ virtualUSB and the virtualUSB CLI now use API key-based authentication for login
 - Added interactive session support for running natural-language Appium commands on devices.
 - New Kobiton MCP skills are now available for AI-assisted mobile testing workflows, including device interaction, session management, and Appium-based automation.
 
-See the xref:modules:ai/pages/mcp[Kobiton MCP server documentation] for available skills and setup guidance.
+See the xref:ai:mcp/index.adoc[Kobiton MCP server documentation,window=read-later] for available skills and setup guidance.
 
 === Session and integration
 
