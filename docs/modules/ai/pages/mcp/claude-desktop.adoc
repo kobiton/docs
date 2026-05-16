@@ -1,0 +1,50 @@
+= Kobiton for Claude Desktop
+:navtitle: Claude Desktop
+
+Kobiton for Claude Desktop connects Claude Desktop to the Kobiton mobile testing platform through a native connector. Organization administrators configure the connector once, then users in the organization can connect and start working with Kobiton directly in Claude Desktop.
+
+== Overview
+
+After the connector is configured, you can manage devices, run automation tests, and review session results using natural language in Claude Desktop.
+
+For a full list of available tools and capabilities, see xref:mcp/claude-code.adoc[Kobiton for Claude Code].
+
+== Before you begin
+
+To use Kobiton for Claude Desktop, you need:
+
+- A Kobiton account
+- A paid Claude organization account
+- Organization administrator access (for initial setup only)
+
+== Set up the connector (organization administrator)
+
+An organization administrator must add the Kobiton connector before users in the organization can connect.
+
+. Log in to Claude Desktop as an organization administrator.
+. Open **Settings**.
+. Select **Connectors**.
+. Click **Add custom connector**.
+. Enter `Kobiton` for the connector name.
+. Enter `https://api.kobiton.com/mcp` for the Remote MCP server URL.
+. Log in to Kobiton Portal with your credentials to authenticate.
+
+After this step, the Kobiton connector is available to all users in the organization.
+
+== Connect as a user
+
+After an administrator adds the Kobiton connector, individual users can connect from Claude Desktop.
+
+. Restart Claude Desktop.
+. Open **Settings**.
+. Select **Connectors**.
+. Click **Connect** next to **Kobiton**.
+. A browser window opens. Sign in with your Kobiton credentials.
+
+After authentication, Kobiton tools are available in Claude Desktop.
+
+== Limitations
+
+The `uploadAppToStore` tool cannot complete in Claude Desktop. Claude Desktop uses a sandboxed environment that restricts network access to specific external domains. AWS S3, which Kobiton App Store requires for uploads, is not on the allowed domain list.
+
+To upload apps, use Kobiton Portal or the Kobiton API directly.
