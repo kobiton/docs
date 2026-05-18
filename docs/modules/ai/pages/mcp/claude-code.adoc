@@ -112,7 +112,9 @@ Update `.mcp.json` to include the `Authorization` header.
 
 [NOTE]
 ====
-OAuth and API key authentication cannot be used together. Use one method at a time.
+OAuth and API key authentication cannot be used together in the same `.mcp.json` configuration.
+
+OAuth uses browser-based authentication and token management, while API key authentication uses explicit authorization headers. Configure only one authentication method at a time.
 ====
 
 === Run a command
