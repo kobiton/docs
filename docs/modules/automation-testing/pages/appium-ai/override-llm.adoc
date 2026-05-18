@@ -1,0 +1,118 @@
+= Override LLM provider settings per session
+:description: Use Appium desired capabilities to override the default LLM provider for an Appium AI session.
+
+Appium AI uses an LLM provider configured by your Kobiton administrator by default. You can override those settings for a single Appium session by passing `kobiton:*` desired capabilities.
+
+Use this to:
+
+- Route AI requests through your own OpenAI, Azure OpenAI, or local LLM endpoint to meet compliance or data residency requirements.
+- Use a different model without requiring an administrator to update the default configuration.
+- Run AI features against a local LLM for air-gapped or cost-sensitive environments.
+
+== Prerequisites
+
+- A Kobiton administrator has enabled the LLM client.
+
+- You have an API key or reachable local endpoint for the LLM provider you want to use.
+
+== Available capabilities
+
+Capability names are case-insensitive.
+
+If a capability is omitted, the session uses the default value configured by your Kobiton admin.
+
+[cols="2,4,2,2", options="header"]
+|===
+| Capability | Purpose | Overrides | Default
+
+| `kobiton:llmBaseUrl`
+| LLM provider base URL.
+| `LlmClient.BaseUrl`
+| `https://api.openai.com/v1`
+
+| `kobiton:llmApiKey`
+| LLM provider API key. Required in either `dc.ini` or capabilities.
+| `LlmClient.ApiKey`
+| (none)
+
+| `kobiton:llmApiFormat`
+| API protocol format.
+| `LlmClient.ApiFormat`
+| `OpenAiResponses`
+
+| `kobiton:llmAzureApiVersion`
+| Required only when using Azure OpenAI formats.
+| `LlmClient.AzureApiVersion`
+| `2024-02-01`
+
+| `kobiton:llmTextModel`
+| Model used for UI tree-based operations (XPath/CSS generation). For Azure, pass the deployment name.
+| `LlmClient.TextModel`
+| `gpt-5.2`
+
+| `kobiton:llmVisionModel`
+| Model used for vision-based operations (screenshot analysis). Must support image input. For Azure, pass the deployment name.
+| `LlmClient.VisionModel`
+| `gpt-5.2`
+|===
+
+`kobiton:llmApiFormat` supports the following values:
+
+- `OpenAiResponses`
+
+- `OpenAiChatCompletions`
+
+- `AzureOpenAiV1ChatCompletions`
+
+- `AzureOpenAiChatCompletions`
+
+== Examples
+
+=== OpenAI (default endpoint, customer API key)
+
+```
+desired_capabilities = {
+  'kobiton:llmApiKey': '<your-openai-key>',
+  'kobiton:llmTextModel': 'gpt-4o',
+  'kobiton:llmVisionModel': 'gpt-4o',
+}
+```
+
+=== Azure OpenAI
+```
+desired_capabilities = {
+  'kobiton:llmBaseUrl': 'https://my-resource.openai.azure.com',
+  'kobiton:llmApiKey': '<your-azure-key>',
+  'kobiton:llmApiFormat': 'AzureOpenAiV1ChatCompletions',
+  'kobiton:llmAzureApiVersion': '2024-02-01',
+  'kobiton:llmTextModel': 'my-gpt4o-deployment',
+  'kobiton:llmVisionModel': 'my-gpt4o-deployment',
+}
+```
+
+For Azure, `llmTextModel` and `llmVisionModel` use the Azure deployment name, not the underlying model name.
+
+=== Local LLM endpoint (Ollama)
+
+```
+desired_capabilities = {
+  'kobiton:llmBaseUrl': 'http://localhost:11434',
+  'kobiton:llmApiKey': '<token-or-placeholder>',
+  'kobiton:llmApiFormat': 'OpenAiChatCompletions',
+  'kobiton:llmTextModel': '<local-model-name>',
+  'kobiton:llmVisionModel': '<vision-capable-local-model>',
+}
+```
+
+[Note]
+====
+Ollama exposes an OpenAI-compatible chat completions API, so `kobiton:llmApiFormat` must be set to `OpenAiChatCompletions`.
+====
+
+Local endpoints are resolved from the host running the Appium session. For example, `localhost` refers to the Mac mini running the session.
+
+== Notes
+
+- Capabilities apply only to the session that passed them; other sessions continue to use the defaults.
+- `kobiton:llmApiFormat` must match the provider used by `kobiton:llmBaseUrl`.
+- Vision-based features require a model that accepts image input such as screenshots.
