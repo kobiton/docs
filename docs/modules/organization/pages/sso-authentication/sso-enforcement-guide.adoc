@@ -1,0 +1,177 @@
+= SSO enforcement and role assignment
+:description: Configure SSO login enforcement at the user and organization level, and manage role and team assignments through your identity provider
+
+SSO enforcement in Kobiton controls how users authenticate and how roles and teams are assigned. Three switches govern this behavior:
+
+- *SSO Only* — Restricts a single user to SSO login.
+- *Enforce users to login to Kobiton only through SSO* — Restricts all active users in the organization to SSO login.
+- *Pass role / team assignments to users in the SAML validations* — Delegates role and team assignment to the identity provider (IdP).
+
+These switches have dependencies:
+
+- The organization-level enforce switch overrides individual *SSO Only* settings.
+- The role/team passthrough switch requires organization-wide SSO enforcement to be enabled first.
+
+== Prerequisites
+
+Before configuring SSO enforcement:
+
+- A valid SSO configuration must be added, verified, and saved in *Settings* > *SSO Settings*.
+- Your account must have the required permissions for the settings being configured.
+
+SSO enforcement and role/team passthrough settings remain unavailable until SSO configuration is verified successfully.
+
+== Enforce SSO login for an individual user
+
+The *SSO Only* switch restricts a single user to SSO-only authentication.
+
+*Location:* *Org Management* > *Users* > select a user
+
+*Required permission:* `org_management.modify`
+
+=== Behavior when individual SSO enforcement is enabled
+
+When *SSO Only* is enabled for a user:
+
+- The user must log in through SSO.
+- Username and password login is disabled.
+- The user cannot reset their password through *Forgot Password*.
+
+=== Behavior when individual SSO enforcement is disabled
+
+When *SSO Only* is disabled for a user:
+
+- The user can log in through SSO, if the organization's SSO configuration is valid.
+- The user can log in with a username and password.
+- The user can use *Forgot Password* to create or reset a password.
+
+== Enforce SSO login for the organization
+
+The *Enforce users to login to Kobiton only through SSO* switch restricts all active users in the organization to SSO-only authentication.
+
+*Location:* *Settings* > *SSO Settings*
+
+*Required permission:* `org_setting.modify_sso_setting`
+
+=== Behavior when organization-wide SSO enforcement is enabled
+
+When *Enforce SSO* is enabled:
+
+- All active users must log in through SSO unless they are on the exemption list.
+- *SSO Only* is automatically enabled for all active users except exempted users.
+- Users who are not exempted cannot use username/password login or *Forgot Password*.
+- Individual *SSO Only* settings cannot be edited.
+
+=== Exemption list
+
+When *Enforce SSO* is enabled, the *Choose users who are allowed to login without SSO* field appears. Add users to this list to exempt them from organization-wide SSO enforcement.
+
+[Important]
+====
+Keep at least one administrator on the exemption list. If SSO becomes unavailable, exempted users are the only accounts that can still access Kobiton Portal.
+====
+
+=== Behavior when organization-wide SSO enforcement is disabled
+
+When *Enforce SSO* is disabled:
+
+- Users can log in through SSO if the organization's SSO configuration is valid.
+- Users can log in with a username and password.
+- Users can use *Forgot Password* to create or reset a password.
+- Individual *SSO Only* settings can be edited again.
+
+== Pass role and team assignments through SAML
+
+The *Pass role / team assignments to users in the SAML validations* switch delegates role and team assignment to the identity provider (IdP).
+
+When enabled, Kobiton synchronizes user roles and team assignments from IdP group memberships during SSO login.
+
+In the UI, this setting appears as *Pass role / team assignments to users in the SAML validations*. The feature maps IdP-provided SAML attribute values to Kobiton roles and teams.
+
+*Location:* *Settings* > *SSO Settings*
+
+*Required permission:* `org_setting.modify_sso_setting`
+
+=== Before enabling role and team passthrough
+
+Ensure all of the following conditions are met:
+
+- *Enforce SSO* is enabled in *Settings* > *SSO Settings*.
+- A valid value has been entered in the *Org Admin Team* field.
+- The IdP contains a group with the same name as the *Org Admin Team* value.
+- Your account belongs to that IdP group.
+- The SSO configuration has been verified successfully.
+
+=== Behavior when role and team passthrough is enabled
+
+When role and team passthrough is enabled:
+
+- Kobiton synchronizes user roles and team assignments from IdP group memberships during SSO login.
+- Users who exist in Kobiton but not in the IdP retain their current roles and teams.
+- The *Invite* button in *Org Management* > *Users* is disabled. New users can only be created through the IdP.
+- Manual role assignment in *Org Management* > *Users* and *Org Management* > *Roles* is disabled.
+
+=== Behavior when role and team passthrough is disabled
+
+When role and team passthrough is disabled:
+
+- Kobiton stops synchronizing roles and teams from the IdP during SSO login.
+- Manual role assignment in *Org Management* > *Users* and *Org Management* > *Roles* is enabled for users with the appropriate permissions.
+- The *Invite* button in *Org Management* > *Users* is enabled for users with the appropriate permissions.
+
+== Configure SSO Attribute Values
+
+The *SSO Attribute Value* field contains the IdP group or attribute value that Kobiton maps to a role or team.
+
+Example: if your IdP sends the group value `Engineering-QA`, enter `Engineering-QA` as the *SSO Attribute Value* for the corresponding Kobiton team.
+
+=== Configure Attribute values for a team
+
+1. Open *Org Management* > *Teams*.
+2. Select an existing team or create a new team.
+3. In the *SSO Attribute Value* field, enter the IdP group values that map to this team.
+4. To add multiple values, separate them with `;` or press *Enter* after each value.
+5. Save the team.
+
+=== Configure Attribute values for a role
+
+1. Open *Org Management* > *Roles*.
+2. Select an existing role or create a new role.
+3. In the *SSO Attribute Value* field, enter the IdP group values that map to this role.
+4. To add multiple values, separate them with `;` or press *Enter* after each value.
+5. Save the role.
+
+When role and team passthrough is disabled, the *SSO Attribute Value* field is hidden.
+
+== Role and team synchronization rules
+
+When role and team passthrough is enabled, Kobiton synchronizes roles and team assignments from IdP group memberships during SSO login.
+
+=== Team assignment
+
+==== Users in the Org Admin Team group
+
+- Users in the IdP group configured as *Org Admin Team* receive the predefined *ADMIN* role.
+- Users with the *ADMIN* role are not assigned to additional Kobiton teams through SSO group mapping.
+- Existing manual team assignments remain unchanged.
+
+==== All other users
+
+- Users are assigned to Kobiton teams when their IdP group matches a team's *SSO Attribute Value*.
+- Users are removed from Kobiton teams when no current IdP group matches the team's *SSO Attribute Value*.
+- All users remain assigned to *Default Team* regardless of IdP group membership.
+
+=== Role assignment
+
+- Users are assigned Kobiton roles when their IdP group matches a role's *SSO Attribute Value*.
+- Users are removed from Kobiton roles when no current IdP group matches the role's *SSO Attribute Value*.
+- Users who are not in the *Org Admin Team* group receive the predefined *MEMBER* role.
+
+=== ADMIN role and Org Admin Team synchronization
+
+The predefined *ADMIN* role and the *Org Admin Team* field remain synchronized:
+
+- The *SSO Attribute Value* for the *ADMIN* role always matches the values configured in *Org Admin Team*.
+- Updating either field automatically updates the other.
+
+Users in an IdP group listed in *Org Admin Team* receive the *ADMIN* role at their next SSO login.
