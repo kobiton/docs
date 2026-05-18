@@ -1,7 +1,7 @@
 = Kobiton for Claude Code
 :navtitle: Claude Code
 
-Kobiton for Claude Code is a plugin that connects Claude Code to the Kobiton mobile testing platform. You can manage devices, upload apps, run automation tests, and review results using natural language commands.
+Kobiton for Claude Code connects Claude Code to the Kobiton mobile testing platform. You can manage devices, upload apps, run automation tests, and review results using natural language commands without switching between the terminal, the Kobiton portal, and local test scripts.
 
 https://discord.gg/uHvBFDZVP[image:discord-badge.svg[Join our Discord]]
 https://kobiton.com[image:kobiton-cloud.svg[Kobiton Cloud]]
@@ -10,24 +10,6 @@ https://kobiton.com[image:kobiton-cloud.svg[Kobiton Cloud]]
 ====
 For the best experience, use Claude Code instead of Claude.ai. MCP integration in Claude.ai may be unreliable.
 ====
-
-== Overview
-
-Kobiton for Claude Code adds tools and a guided automation workflow to Claude Code. You can perform common mobile testing tasks without switching between the terminal, the Kobiton portal, and local test scripts.
-
-Example:
-
-....
-Upload my-app.apk and run my login test on an available Pixel device
-....
-
-Claude will:
-
-- Upload the app
-- Select an available device
-- Parse capabilities from your script
-- Run the test
-- Return results and artifacts
 
 == Get started
 
@@ -77,25 +59,47 @@ then
 
 Both steps are required and must be run separately.
 
-=== Authentication
+== Authentication
 
-Authentication occurs the first time you use the plugin.
+Kobiton MCP supports:
 
-Run a command such as:
+* OAuth authentication (recommended)
+* API key authentication
 
-----
-Show available Android devices
-----
+OAuth authentication is the default authentication method for Claude Code.
 
-Claude Code will then prompt you to sign in through your browser.
+=== OAuth authentication (recommended)
 
-You can authenticate using OAuth or an API key.
+Add the Kobiton MCP server to .mcp.json:
 
-*OAuth (recommended)*
+```bash
+{
+  "mcpServers": {
+    "kobiton": {
+      "type": "http",
+      "url": "https://api.kobiton.com/mcp"
+    }
+  }
+}
+```
 
-When you first use the plugin, a browser window opens. Sign in with your Kobiton credentials. Claude stores tokens automatically.
+The first time you use the plugin, Claude Code opens a browser window for authentication.
 
-*API key*
+Sign in using:
+
+* Kobiton credentials
+* Google
+* GitHub
+
+Claude Code stores OAuth tokens automatically for future sessions.
+
+=== API key authentication
+
+Use API key authentication for:
+
+* CI/CD pipelines
+* headless environments
+* systems without browser access
 
 Generate an API key in *Kobiton Portal > Settings > API Keys*. Then set:
 
