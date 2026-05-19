@@ -1,0 +1,92 @@
+= Sign in to Kobiton
+:navtitle: Sign in to Kobiton
+
+Sign in to Kobiton Portal with your email address, your username, or a linked Google or GitHub account. Available sign-in methods depend on which portal you use.
+
+== Sign-in methods
+
+Kobiton offers two portals, and they accept different sign-in methods.
+
+Cloud Portal accepts:
+
+* Email or username, with your Kobiton password
+* Google account
+* GitHub account
+
+Standalone Portal accepts:
+
+* Email or username, with your Kobiton password
+
+Standalone Portal does not offer Google or GitHub sign-in. Standalone deployments often run in restricted or air-gapped environments without access to third-party identity providers.
+
+[NOTE]
+====
+If your organization uses Single Sign-On (SSO), refer to
+xref:organization:sso-authentication/about-sso-authentication.adoc[]
+for the sign-in path that applies to your account.
+====
+
+== Sign in with email or username
+
+. Open the sign-in page for your portal.
+. In the *Email or Username* field, enter either your email address or
+your Kobiton username. Your username is set in
+xref:profile:manage-your-profile.adoc#_change_your_name[your profile].
+. Enter your password.
+. Select *Continue*.
+
+[NOTE]
+Both Cloud Portal and Standalone Portal accept email or username in the same field. Email format is no longer required.
+
+== Sign in with Google or GitHub
+
+Google and GitHub sign-in are available on Cloud Portal only.
+
+. Open the Cloud Portal sign-in page.
+. Select *Log in with Google* or *Log in with GitHub*.
+. Complete the provider's consent screen and authorize Kobiton.
+
+What happens next depends on whether your provider email is already
+associated with a Kobiton account:
+
+[cols="1,3"]
+|===
+| Account state | Result
+
+| No Kobiton account exists for the provider email
+| A new Kobiton account and organization are created, then you are redirected to the Device List.
+
+| Provider email matches an existing Kobiton account, no provider linked
+| An account-linking prompt appears. Confirm to link your provider account to the existing Kobiton account.
+
+| Provider account is already linked, and you belong to one organization
+| You are signed in and redirected to the Device List.
+
+| Provider account is already linked, and you belong to multiple organizations
+| You are prompted to choose an organization before continuing.
+|===
+
+The first time you link a Google or GitHub account, your first name, last name, and profile picture are populated from the provider. You can update these values later from xref:profile:manage-your-profile.adoc[your profile].
+
+[NOTE]
+Linking a Google or GitHub account to an Enterprise SSO account is not supported.
+
+== Reset your password
+
+Password reset by email is available on Cloud Portal. Standalone Portal does not support email-based password reset.
+
+On Cloud Portal:
+
+. On the sign-in page, select *Forgot Password?*.
+. Enter your email address or username.
+. Open the reset link in the email sent to the address associated with your account.
+. Choose a new password.
+
+[NOTE]
+If you sign in to Standalone Portal and do not remember your password, contact your organization administrator.
+
+== Related guides
+
+* xref:profile:manage-your-profile.adoc[]
+* xref:organization:sso-authentication/about-sso-authentication.adoc[]
+* xref:organization:change-the-login-message.adoc[]
