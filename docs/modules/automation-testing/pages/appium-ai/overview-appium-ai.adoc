@@ -36,20 +36,16 @@ This increases maintenance effort and reduces the reliability of automated tests
 
 Appium AI extends existing Appium workflows by allowing `findElement(...)` to accept natural language descriptions instead of traditional selectors.
 
-Instead of referencing elements by XPath or accessibility ID, you can describe the target element using plain language, such as:
+Instead of referencing elements by XPath or accessibility ID, you can describe the target element using plain language.
 
+[source,python]
+.python
 ----
-python
 element = driver.find_element("natural", "The login button at the bottom")
 element.click()
 ----
 
-or
-
-----
-java
-driver.findElement(ByNatural.natural("the Accessibility button with an apostrophe"));
-----
+IMPORTANT: For Appium java-client 10.x and above, the custom locator strategy needs to be extended to use Appium AI. See xref:automation-testing:appium-ai/extend-custom-locator-strategy-for-nll.adoc[this guide,window=read-later] for instructions.
 
 Appium AI interprets the description, identifies the most relevant UI element, and returns an interactable element for use in the test.
 
@@ -57,7 +53,7 @@ Natural language locators identify elements only. Actions such as `click()`, `se
 
 This approach works within existing Appium scripts and does not require changes to client libraries or test structure.
 
-NOTE: In Java, additional configuration may be required to enable the "natural" locator strategy in the Appium client.
+
 
 == What this feature supports
 
