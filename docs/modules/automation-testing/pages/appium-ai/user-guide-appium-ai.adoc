@@ -13,17 +13,21 @@ Ensure the following:
 
 To locate an element using natural language, pass a descriptive string into `findElement(...)` using the "natural" locator strategy.
 
+[source,python]
+.python
 ----
-python
 element = driver.find_element("natural", "The login button at the bottom")
 element.click()
 ----
 
+[source,java]
+.java
 ----
-java
-WebElement el = driver.findElement(ByNatural.natural("the Accessibility button with an apostrophe"));
+WebElement el = driver.findElement(ByNatural.natural("the Accessibility button"));
 el.click();
 ----
+
+NOTE: The above Java example used the custom `ByNatural` class to extend the default custom locator strategy value. See xref:automation-testing:appium-ai/extend-custom-locator-strategy-for-nll.adoc[this guide,window=read-later] for instructions.
 
 == Write effective descriptions
 
@@ -33,9 +37,9 @@ Good examples:
 
 ----
 java
-driver.findElement(ByNatural.natural("the Accessibility button with an apostrophe"));
-driver.findElement(ByNatural.natural("Enter email in the username field"));
-driver.findElement(ByNatural.natural("Select Calgary from the city dropdown"));
+driver.findElement(ByNatural.natural("the Accessibility button"));
+driver.findElement(ByNatural.natural("the Username field"));
+driver.findElement(ByNatural.natural("the City dropdown list"));
 ----
 
 Less effective examples:
@@ -79,6 +83,4 @@ If issues persist, contact Kobiton Support for assistance.
 
 == Next steps
 
-For an overview of how natural language locators work and their limitations, see the
-xref:appium-ai/overview-appium-ai.adoc
-[Appium AI] concept guide.
+For an overview of how natural language locators work and their limitations, see the xref:appium-ai/overview-appium-ai.adoc[Appium AI] guide.
