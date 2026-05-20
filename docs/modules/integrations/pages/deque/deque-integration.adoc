@@ -1,0 +1,53 @@
+= Deque axe DevTools Mobile integration
+:navtitle: Deque
+
+Use Kobiton iOS devices as the target for link:https://www.deque.com/axe/devtools-mobile/[axe DevTools Mobile] accessibility scans.
+
+For setup and usage of axe DevTools Mobile itself, see Deque's link:https://docs.deque.com/devtools-mobile/2024.9.18/en/ios-kobiton[iOS testing on Kobiton guide,window=read-later].
+
+== Before you start
+
+* A Kobiton Enterprise subscription is required.
+* An link:https://www.deque.com/axe/devtools-mobile/[axe DevTools Mobile] subscription is required.
+* Install xref:debugging:set-up-virtualusb.adoc[virtualUSB] `4.16.0` or later on the macOS workstation that will run axe DevTools Mobile.
+* Install Xcode on the same workstation. The first time you connect an iOS device, Xcode downloads device symbols, which can take several minutes.
+* This integration supports iOS devices only. Android is not supported.
+
+== Prepare the Kobiton device
+
+Open *virtualUSB* and select *Connect* next to the iOS device you want to test.
+
+In Kobiton Portal, locate the same device and select *Launch* to start a session.
+
+The device is now available to local iOS tooling on the workstation, including Xcode and axe DevTools Mobile Analyzer.
+
+[NOTE]
+====
+The first time an iOS device connects through virtualUSB, Xcode may download device symbols automatically. This can take several minutes.
+====
+
+== Install the application
+
+Install the app under test from Kobiton Portal.
+
+== Run accessibility scans
+
+In axe DevTools Mobile Analyzer, select the connected Kobiton device and run the accessibility scan.
+
+For detailed analyzer setup and scan workflows, see Deque's https://docs.deque.com/devtools-mobile/2024.9.18/en/mobile-analyzer-setup[axe DevTools Mobile
+  Analyzer setup guide,window=read-later]
+
+== Review results
+
+Accessibility results are available in the axe DevTools Mobile Dashboard.
+Session details, video, logs, and other Kobiton artifacts are available in xref:docs/modules/session-explorer/pages/index.adoc[Session Explorer].
+
+== Notes
+* Release the device in *virtualUSB* when you finish testing.
+* Kobiton sessions may clear app and analyzer artifacts when they end. Reinstall the app from Kobiton Portal if you start a new session.
+
+== Support
+
+* For Kobiton issues, contact link:mailto:support@kobiton.com[support@kobiton.com].
+* For axe DevTools Mobile issues, visit
+link:https://support.deque.com[support at Deque,window=read-later].
