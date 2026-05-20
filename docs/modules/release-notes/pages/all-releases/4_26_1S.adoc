@@ -1,5 +1,5 @@
-= Kobiton 4.26S Release Notes
-:navtitle: Kobiton 4.26S release notes
+= Kobiton 4.26.1S Release Notes
+:navtitle: Kobiton 4.26.1S release notes
 
 __<RELEASE_DATE_TBD>__
 
@@ -224,7 +224,7 @@ With the Kobiton plugin, developers and testers can use natural language to uplo
 
 Kobiton for Claude Code is available to users with active Kobiton and Claude Code subscriptions.
 
-https://docs.kobiton.com/ai/mcp/claude-code[Get started with Kobiton's Claude Code plugin,window=read-later]
+Instructions to use Claude Code plugin with Standalone is coming soon.
 
 == Kobiton MCP server updates
 
@@ -238,7 +238,7 @@ The Kobiton MCP server now supports OAuth 2.1 authentication using existing Kobi
 - Automatic browser-based authentication flow in Claude Code
 - Uses existing Kobiton credentials
 
-Additional OAuth authentication details are documented in the MCP server README.
+Instructions to connect to Standalone MCP server is coming soon.
 
 === MCP server improvements
 
@@ -246,7 +246,7 @@ Additional OAuth authentication details are documented in the MCP server README.
 * Added interactive session support for running natural-language Appium commands on devices.
 * New Kobiton MCP skills are now available for AI-assisted mobile testing workflows, including device interaction, session management, and Appium-based automation.
 
-See the xref:ai:mcp/index.adoc[Kobiton MCP server documentation,window=read-later] for available skills and setup guidance.
+Instructions to connect to Standalone MCP server is coming soon.
 
 == Scriptless improvements
 
@@ -260,9 +260,7 @@ See the xref:ai:mcp/index.adoc[Kobiton MCP server documentation,window=read-late
 ** Extended Android agent to support non-English locales
 ** Standardized `SetLocale` behavior across iOS and Android
 ** iPad orientation now persists after language changes
-* *Appium TurboTest:* Clear error returned for invalid device selectors in queued requests.
 * *Basic Appium:* Fixed app installation failures when using app URLs.
-* *Turbo Test Execution:* Reduced test execution latency by eliminating repeated artifact downloads through local caching.
 * *UI updates:*
 ** Additional apps installed after automation session start are now displayed in Session Overview
 ** Improved error message when no devices matched a wildcard
@@ -345,16 +343,9 @@ See the xref:ai:mcp/index.adoc[Kobiton MCP server documentation,window=read-late
 
 === Other
 
-* *Device List:*
-** Filters are no longer shared across Public and Private/Local tabs.
-** Smarter default tab display:
-*** Defaults to *Private* when both Public and Private devices exist
-*** Defaults to *Public* when only Public devices exist
-*** Your last selected Device List tab is preserved when you navigate away and return.
 * *App Repo:* Added the ability to clean up app upload errors from the UI.
 * *Session Overview:* Fixed broken app icon display when uploading apps without icons in a manual session.
 * *Parallel Sessions:* Improved cleanup so sessions are released more quickly from parallel limits.
-* *Host parallel test capacity:* Added logging and reporting when max parallel test limits are reached for a host.
 * *Audio Injection:* Audio injection can be used on Lightning mode devices, in addition to Standard mode.
 * Modernized the DeviceControl app SDK for improved compatibility.
 * Improved audit logging for user role assignments and team updates.
