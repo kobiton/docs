@@ -7,36 +7,46 @@ Kobiton for Claude Desktop connects Claude Desktop to the Kobiton mobile testing
 
 After the connector is configured, you can manage devices, run automation tests, and review session results using natural language in Claude Desktop.
 
-For a full list of available tools and capabilities, see xref:mcp/claude-code.adoc[Kobiton for Claude Code].
+//For a full list of available tools and capabilities, see xref:mcp/claude-code.adoc[Kobiton for Claude Code].
 
 == Before you begin
 
 To use Kobiton for Claude Desktop, you need:
 
 - A Kobiton account
-- A paid Claude organization account
-- Organization administrator access (for initial setup only)
+- A Claude account
+- Organization administrator access if using Claude organization/enterprise account (for initial setup only)
 
-== Set up the connector (organization administrator)
+== Set up the connector
 
-An organization administrator must add the Kobiton connector before users in the organization can connect.
+[NOTE]
 
-. Log in to Claude Desktop as an organization administrator.
-. Open **Settings**.
+====
+
+* For organization/enterprise account, an organization administrator must add the Kobiton connector before users in the organization can connect.
+
+* The instructions below do not apply to Standalone customer. Standalone-specific instructions are coming soon.
+
+====
+
+
+. Log in to Claude Desktop.
+. Select **Customize** in the _Chat_, _Cowork_, or _Code_ tab.
 . Select **Connectors**.
 . Click **Add custom connector**.
 . Enter `Kobiton` for the connector name.
 . Enter `https://api.kobiton.com/mcp` for the Remote MCP server URL.
 . Log in to Kobiton Portal with your credentials to authenticate.
 
-After this step, the Kobiton connector is available to all users in the organization.
+After this step, the Kobiton connector is available to either the current user (personal account) or to all users in the organization.
 
 == Connect as a user
 
-After an administrator adds the Kobiton connector, individual users can connect from Claude Desktop.
+After the Kobiton connector is added, individual users can connect from Claude Desktop.
 
 . Restart Claude Desktop.
 . Open **Settings**.
+. Select **Customize** in the _Chat_, _Cowork_, or _Code_ tab.
 . Select **Connectors**.
 . Click **Connect** next to **Kobiton**.
 . A browser window opens. Sign in with your Kobiton credentials.
