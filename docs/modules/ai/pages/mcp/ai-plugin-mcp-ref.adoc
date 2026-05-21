@@ -1,19 +1,118 @@
 = Kobiton AI plugin and tools reference
 :navtitle: Kobiton AI plugin and tools reference
 
-The Kobiton automate plugin and tools supports common mobile testing workflows, including device management, app uploads, test execution, and session review.
+The Kobiton `automate` plugin connects AI coding assistants - Claude Code, Claude Desktop, the GitHub Copilot CLI, the Gemini CLI, and the Codex CLI - to the Kobiton mobile testing platform. The plugin ships a set of MCP tools, skills, and commands that cover device management, app uploads, test execution, and session review.
 
-== Device management
+== MCP tools
 
-- View available devices
-- Check device status
-- Reserve and release devices
+The plugin exposes 13 MCP tools across 4 domains.
 
-== App management
+=== Devices
 
-- Upload Android and iOS apps
-- View uploaded apps
-- Get app details
+[cols="1,3",options="header"]
+|===
+|Tool |Description
+
+|`listDevices`
+|List available devices filtered by platform, availability, device group, name, UDID, or group ID. Returns device name, UDID, platform, OS version, and availability.
+
+|`getDeviceStatus`
+|Get the real-time status of a specific device including availability, current session info, battery level, and connection state.
+
+|`reserveDevice`
+|Reserve a device for exclusive use during testing. Returns a reservation ID needed by `terminateReservation`.
+
+|`terminateReservation`
+|Release a reserved device by terminating its reservation.
+|===
+
+=== Sessions
+
+[cols="1,3",options="header"]
+|===
+|Tool |Description
+
+|`listSessions`
+|List test sessions with filters for status, device, platform, and date range. Returns session ID, status, device info, duration, and timestamps.
+
+|`getSession`
+|Get session details including commands, capabilities, and metadata.
+
+|`getSessionArtifacts`
+|Get download URLs for the session's video, logs, screenshots, and reports.
+
+|`terminateSession`
+|Stop a running test session.
+|===
+
+=== Apps
+
+[cols="1,3",options="header"]
+|===
+|Tool |Description
+
+|`listApps`
+|List uploaded app builds in your organization.
+
+|`getApp`
+|Get app details and version history.
+
+|`uploadAppToStore`
+|Upload an app to the Kobiton Store. Uploaded apps are permanent and visible in the Kobiton Portal.
+
+|`confirmAppUpload`
+|Confirm an uploaded app to create a tracking record.
+|===
+
+=== Account
+
+[cols="1,3",options="header"]
+|===
+|Tool |Description
+
+|`getCredential`
+|Return the OAuth-authenticated user's username, API key (existing or newly generated), and portal URL. Backs the `/automate:setup` command - no manual file editing required.
+|===
+
+== Skills
+
+The plugin ships two guided skills.
+
+[cols="1,3",options="header"]
+|===
+|Skill |Description
+
+|`run-automation-suite`
+|Guided workflow for running local Appium test scripts against Kobiton devices. Walks through app upload, device selection, capability parsing, local execution, and result collection. Supports Node.js, Python, .NET, and Java.
+
+|`run-interactive-test`
+|Guided workflow for interactive testing using natural language. Translates user intent into CLI commands - WebDriver actions (find elements, type, click, swipe), device operations (`adb shell`, screen capture, port forwarding), file management (push/pull), app management, and test execution.
+|===
+
+[NOTE]
+====
+All MCP tools and the `run-automation-suite` skill work on every platform the host CLI supports. The `run-interactive-test` skill ships a CLI binary for *macOS Apple Silicon* only. On other platforms, use `run-automation-suite` or the MCP tools directly.
+====
+
+== Commands
+
+[cols="1,3",options="header"]
+|===
+|Command |Description
+
+|`/automate:setup`
+|Fetch credentials from the authenticated MCP server and write them to `~/.kobiton/.credentials`. Also installs the `~/.kobiton/bin/kobiton` CLI wrapper used by `run-interactive-test`.
+
+|`/automate:doctor`
+|Read-only diagnostic for the CLI installation, credentials file, active profile, and required fields. Prints actionable remediation hints for any failures.
+|===
+
+[NOTE]
+====
+*Claude Code* and the *Codex CLI* recreate the `~/.kobiton/bin/kobiton` CLI wrapper automatically via a bundled SessionStart hook on every session start. On the Codex CLI, the first session prompts you to trust the hook once via `/hooks`.
+
+The *GitHub Copilot CLI* and the *Gemini CLI* do not run SessionStart hooks. Run `/automate:setup` once after install to create the wrapper, and re-run it if the symlink ever goes missing.
+====
 
 == Test execution
 
@@ -22,8 +121,8 @@ The `run-automation-suite` workflow guides you through the full test lifecycle:
 - Upload or select an app
 - Select a device
 - Parse capabilities from your script
-- Run the test
-- Return results and artifacts
+- Run the test in the background
+- Surface the live session URL and collect artifacts (video, logs, screenshots, reports)
 
 Supported languages:
 
@@ -48,12 +147,6 @@ Supported languages:
 |`mvn test` or `java -cp ...`
 |===
 
-== Session management
-
-- View active and past sessions
-- Get logs, screenshots, and videos
-- Stop running sessions
-
 == Example prompts
 
 === Device management
@@ -62,6 +155,7 @@ Supported languages:
 Show available Android devices
 Check if Galaxy S23 is available
 Reserve Pixel 6 for 60 minutes
+Release my reserved Pixel 6
 ....
 
 === App management
@@ -69,12 +163,24 @@ Reserve Pixel 6 for 60 minutes
 ....
 Show uploaded Android apps
 Upload resources/apps/GS.apk
+Get details for app version 12345
 ....
 
 === Test execution
 
 ....
 Run tests/smoke_test.js on a Pixel device
+Run my Appium suite under tests/ on an iPhone 15
+....
+
+=== Interactive testing
+
+....
+Tap the Login button on the current session
+Type "hello" in the search field
+Swipe down to refresh
+Pull /sdcard/Download/report.txt from the device
+Run adb shell pm list packages on the current device
 ....
 
 === Session management
@@ -82,5 +188,6 @@ Run tests/smoke_test.js on a Pixel device
 ....
 Show running sessions
 Get details for session 12345
-Download logs from last failed session
+Download logs from the last failed session
+Stop session 12345
 ....
