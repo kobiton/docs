@@ -273,6 +273,7 @@ Instructions to connect to Standalone MCP server is coming soon.
 * Improved automatic permission handling on iOS and Android devices.
 * Fixed issues with file push and retrieval behavior on devices.
 * Added support for recursive file pull.
+* Improved deviceConnect session cleanup when the CLI connects directly. Sessions now send close messages on completion so they are released cleanly.
 
 == General improvements and fixes
 
@@ -297,6 +298,7 @@ Instructions to connect to Standalone MCP server is coming soon.
 * Fixed iOS app installation failures caused by ZipConduit errors.
 * Improved performance for app installation on iOS devices.
 * Fixed an issue where iOS app installation could fail under certain proxy configurations.
+* Improved installation reliability for very large applications, including apps with uncompressed sizes over 4 GB.
 
 === Device cleanup
 
@@ -310,6 +312,8 @@ Instructions to connect to Standalone MCP server is coming soon.
 * Improved device connectivity stability to help prevent unexpected disconnects.
 * Improved session stability when USB hubs are disconnected during active sessions.
 * Fixed an issue where offline Bluetooth modules could incorrectly display a "Healthy" status.
+* Fixed an issue where previously unpaired iOS devices did not come online after pairing completed.
+* Fixed an issue where macOS could block `adb` after deviceConnect installation, preventing Android device discovery.
 
 === Device management
 
@@ -336,6 +340,7 @@ Instructions to connect to Standalone MCP server is coming soon.
 * Fixed an issue where downloaded device logs from a manual session had no line endings, making the file difficult to read.
 * Fixed an issue where Jira tickets created from Session Explorer were not linked back to the session. The Jira button badge and linked ticket list now update correctly after ticket creation.
 * Fixed an issue where the Jira Cloud integration intermittently appeared disconnected after approximately 15 minutes, preventing Jira ticket creation from Session Explorer.
+* Fixed an issue where releasing a device from the Portal did not terminate all active sessions when multi-session was in use.
 
 === Test management
 
