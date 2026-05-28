@@ -11,8 +11,6 @@ https://kobiton.com[image:kobiton-cloud.svg[Kobiton Cloud]]
 
 * For the best experience, use Claude Code instead of Claude.ai. MCP integration in Claude.ai may be unreliable.
 
-* The instructions in this document applies to Cloud only. Standalone and Cloud with custom domain instructions are coming soon.
-
 ====
 
 == Get started
@@ -43,6 +41,8 @@ claude
 
 Claude Code uses this folder as its workspace.
 
+NOTE: This folder is optional. It is highly recommended for Standalone or Cloud with custom domain customers to store environment-specific information.
+
 === Install the plugin
 
 Once Claude Code starts in your Terminal, run the following commands one at a time in that window:
@@ -69,20 +69,81 @@ Kobiton MCP supports:
 
 OAuth authentication is the default authentication method for Claude Code.
 
-=== OAuth authentication (recommended)
+=== Choose your environment
 
-Add the Kobiton MCP server to .mcp.json:
+The Kobiton MCP server URL determines whether you need a custom `.mcp.json` file in your project folder:
 
-```bash
+[cols="1,2,2",options="header"]
+|===
+|Environment |MCP server URL |`.mcp.json` required?
+
+|Kobiton Cloud (default)
+|`\https://api.kobiton.com/mcp`
+|No. The plugin uses this URL automatically.
+
+|Custom environment (Standalone, Cloud with custom domain, or any other deployment)
+|Your custom URL, for example `\https://api-custom-domain.kobiton.com/mcp`
+|Yes. You must create a `.mcp.json` file in your project folder with the custom URL.
+|===
+
+If you are using the default Kobiton Cloud URL (`\https://api.kobiton.com/mcp`), you can skip the `.mcp.json` setup and proceed to <<oauth-authentication,OAuth authentication>> or <<api-key-authentication,API key authentication>>.
+
+If you are using a custom environment, follow the steps in <<custom-environment-configuration,Custom environment configuration>> before authenticating.
+
+[[custom-environment-configuration]]
+=== Custom environment configuration
+
+If your Kobiton MCP server is hosted at a URL other than `\https://api.kobiton.com/mcp`, you first need to retrieve your custom MCP server URL. See <<retrieve-mcp-url,Retrieve your MCP server URL>> for details.
+
+Once you have your custom URL, create a `.mcp.json` file in your project folder:
+
+[source,json]
+----
 {
   "mcpServers": {
     "kobiton": {
       "type": "http",
-      "url": "https://api.kobiton.com/mcp"
+      "url": "https://api-custom-domain.kobiton.com/mcp"
     }
   }
 }
-```
+----
+
+Replace `\https://api-custom-domain.kobiton.com/mcp` with the actual URL of your Kobiton MCP server.
+
+After creating the file, continue with either OAuth or API key authentication.
+
+[[retrieve-mcp-url]]
+=== Retrieve your MCP server URL
+
+// TODO: Add instructions for retrieving the MCP server URL. Link to related doc here.
+
+Add `/mcp` at the end of the retrieved API base URL. This will be the MCP server URL. See below for an example:
+
+[cols="1,2,2",options="header"]
+|===
+|Environment |API base URL |MCP server URL
+
+|Kobiton Cloud (default)
+|`\https://api.kobiton.com`
+|`\https://api.kobiton.com/mcp`
+
+|Cloud with custom domain
+|`\https://api-custom-domain.kobiton.com`
+|`\https://api-custom-domain.kobiton.com/mcp`
+
+|Standalone
+|`\https://custom-domain.kobiton.local:3000`
+|`\https://custom-domain.kobiton.local:3000/mcp`
+
+|===
+
+[[oauth-authentication]]
+=== OAuth authentication (recommended)
+
+If you are using the default Kobiton Cloud URL (`https://api.kobiton.com/mcp`), no `.mcp.json` file is required. The plugin connects automatically.
+
+If you are using a custom environment, make sure you have created the `.mcp.json` file as described in <<custom-environment-configuration,Custom environment configuration>>.
 
 The first time you use the plugin, Claude Code opens a browser window for authentication.
 
@@ -94,6 +155,7 @@ Sign in using:
 
 Claude Code stores OAuth tokens automatically for future sessions.
 
+[[api-key-authentication]]
 === API key authentication
 
 Use API key authentication for:
@@ -109,7 +171,24 @@ Generate an API key in *Kobiton Portal > Settings > API Keys*. Then set:
 export KOBITON_AUTH="Basic $(echo -n 'username:api-key' | base64)"
 ----
 
-Update `.mcp.json` to include the `Authorization` header.
+Update `.mcp.json` to include the `Authorization` header. For API key authentication, the `.mcp.json` file is required regardless of which environment you use. For the default Kobiton Cloud URL, use:
+
+[source,json]
+----
+{
+  "mcpServers": {
+    "kobiton": {
+      "type": "http",
+      "url": "https://api.kobiton.com/mcp",
+      "headers": {
+        "Authorization": "${KOBITON_AUTH}"
+      }
+    }
+  }
+}
+----
+
+For a custom environment, replace the `url` value with your custom MCP server URL.
 
 [NOTE]
 ====
@@ -242,6 +321,16 @@ Terminate the session and run it again.
 === Authentication not recognized
 
 Reload your shell and restart Claude Code.
+
+=== Cannot connect to custom MCP server
+
+If you are using a custom environment, verify that:
+
+* A `.mcp.json` file exists in your project folder.
+* The `url` value in `.mcp.json` matches your Kobiton MCP server URL exactly.
+* The MCP server is reachable from your machine.
+
+If you are using the default Kobiton Cloud URL, remove any `.mcp.json` file from your project folder and restart Claude Code.
 
 == Additional resources
 
