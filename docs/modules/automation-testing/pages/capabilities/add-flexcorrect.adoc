@@ -17,8 +17,8 @@ During execution, if an element's layout changes, `flexCorrect` uses AI to locat
 
 This step applies only to custom (non-generated) scripts.
 
-. Run the script once on a Kobiton device without `kobiton:flexCorrect` enabled. Kobiton creates an automation session from this run.
-. Note the session ID. Use it as the value for `kobiton:baselineSessionId` when you configure capabilities.
+. Run a manual session on a Kobiton device without `kobiton:flexCorrect` enabled. Note the manual session ID.
+. Use the manual session ID as the value for `kobiton:baselineSessionId` when you configure capabilities.
 
 == Configure the capability
 
@@ -36,9 +36,11 @@ Example (Java):
 
 [source,java]
 ----
-capabilities.setCapability("kobiton:flexCorrect", true);  // Enable flexCorrect.
-capabilities.setCapability("kobiton:baselineSessionId", 0000011); // Required for custom scripts. Assign the baseline session ID.
+capabilities.setCapability("kobiton:flexCorrect", true);
+capabilities.setCapability("kobiton:baselineSessionId", "0000011");
 ----
+
+> Replace `0000011` with the manual session ID for the baseline session.
 
 Save your changes and run the script.
 
@@ -58,8 +60,6 @@ Save your changes and run the script.
 [#_review_correction_results]
 == Review correction results
 
-// VERIFY: Where in the Kobiton Portal does the user see how many elements flexCorrect corrected in a session? The previous version of this page linked to session-explorer/manage-sessions.adoc, but that page does not cover this. Confirm the exact UI surface (Session Explorer tab, panel, session-metadata field, or other) so this section can describe the actual path. Do not draft step content until confirmed.
+After a session runs, review the Appium self-healing validation results in the session details. The results show which elements were corrected by `flexCorrect`.
 
-After a session runs, you can review how many elements `flexCorrect` corrected.
-
-// VERIFY: Insert procedure and screenshot reference once the UI location is confirmed.
+// VERIFY: Add the final UI path and screenshot from Sushma
