@@ -17,16 +17,12 @@ When `kobiton:web-find` is set to `all`, Kobiton cycles through every available 
 * On success, the session switches to the context containing the element. Use the returned element ID directly without another context switch.
 * On failure, the session reverts to the context it was in when the find call started.
 
-// VERIFY: When the search returns multiple matches, the source draft says "you can query that match's current context after a find call" but does not name a specific API. Confirm with engineering which Appium client call surfaces the matched context (for example, `driver.getContext()` immediately after the find), and add a one-line note here.
-
 == Before you start
 
 `kobiton:web-find` only applies when the session is already in a web context. It does not search native contexts. To enter a web context, do one of the following:
 
 * Set `appium:autoWebview` to `true` to auto-switch to the WebView at session start. See xref:automation-testing:capabilities/available-capabilities.adoc#_autowebview[autoWebview].
 * Switch contexts manually using your Appium client's context API before the find call.
-
-// VERIFY: Confirm the exact anchor format for autoWebview on available-capabilities.adoc. The heading has no explicit anchor block; the existing in-page reference uses `<<autowebview,...>>` (no underscore), while the rest of the page's anchors follow `_camelCase` convention. The xref above uses `#_autowebview`. Test in preview and adjust if needed.
 
 == Configure the capability
 
@@ -92,6 +88,6 @@ If you know which web context contains the target element, omit `kobiton:web-fin
 * xref:automation-testing:capabilities/add-flexcorrect.adoc[flexCorrect (Appium Self-Healing)] — corrects element selection when layouts change between runs. `flexCorrect` addresses element-layout drift; `kobiton:web-find` addresses web-context discovery.
 * xref:automation-testing:capabilities/available-capabilities.adoc#_autowebview[autoWebview] — auto-switches the session to a WebView context at start, satisfying the `kobiton:web-find` precondition.
 
-// VERIFY: Is `kobiton:web-find` supported in Basic Appium 2 sessions? The `flexCorrect` page documents Basic Appium 2 unavailability for AI features. Confirm whether `kobiton:web-find` has the same restriction. If yes, add a NOTE under "How it works" and a bullet to a Limitations section matching the flexCorrect page pattern.
+// VERIFY: Is `kobiton:web-find` supported in Basic Appium 2 sessions?
 
-// VERIFY: Does `kobiton:web-find` accept values other than `'all'`? The source draft documents only `'all'`. Confirm there is no other supported value (or list the others).
+// VERIFY: Does `kobiton:web-find` accept values other than `'all'`?
