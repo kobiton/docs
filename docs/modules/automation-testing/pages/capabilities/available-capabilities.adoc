@@ -31,18 +31,41 @@ capabilities.setCapability("kobiton:sessionName", "Login test");
 Capabilities with the `kobiton:` prefix cannot be used without the prefix.
 
 .Kobiton capability index
+* <<_appInstall,kobiton:appInstall>>
 * <<_baselineSessionId,kobiton:baselineSessionId>>
+* <<_flexCorrect,kobiton:flexCorrect>>
+* <<_includeSystemWindows,kobiton:includeSystemWindows>>
+* <<_includeVisible,kobiton:includeVisible>>
 * <<_kobitoncapturescreenshots,kobiton:captureScreenshot>>
 * <<_kobitondevicegroup,kobiton:deviceGroup>>
 * <<_kobitondevicetags,kobiton:deviceTags>>
 * <<_kobitondevicetagtype,kobiton:deviceTagType>>
-* <<_flexCorrect,kobiton:flexCorrect>>
 * <<_kobitongroupid,kobiton:groupId>>
 * <<_kobitonsessiondescription,kobiton:sessionDescription>>
 * <<_kobitonsessionname,kobiton:sessionName>>
 * <<_kobitonuseconfiguration,kobiton:useConfiguration>>
 * <<_kobtionsessiontags,kobiton:sessionTags>>
+* <<_passcodeKey,kobiton:passcodeKey>>
+* <<_passcodeType,kobiton:passcodeType>>
+* <<_runtime,kobiton:runtime>>
+* <<_waitForIdle,kobiton:waitForIdle>>
 * <<_work_app,kobiton:workApp>>
+* <<_xpath2,kobiton:xpath2>>
+
+[#_appInstall]
+=== `kobiton:appInstall`
+
+Configure application installation when the session is created. Values are `always` or `never`. Default is `always`.
+
+* *Type:* `string`
+* *Required capabilities:* None
+* *Optional capabilities:* None
+
+.Example
+[source,java]
+----
+capabilities.setCapability("kobiton:appInstall", "never");
+----
 
 [#_baselineSessionId]
 === `kobiton:baselineSessionId`
@@ -60,6 +83,39 @@ Select a baseline session to use for xref:_flexCorrect[].
 [source,java]
 ----
 capabilities.setCapability("kobiton:baselineSessionId", 0000011);
+----
+
+[#_includeSystemWindows]
+=== `kobiton:includeSystemWindows`
+
+Include system windows in page source and element searches. Default is `false`.
+
+* *Type:* `boolean`
+* *Required capabilities:* None
+* *Optional capabilities:* None
+
+.Example
+[source,java]
+----
+capabilities.setCapability("kobiton:includeSystemWindows", true);
+----
+
+[#_includeVisible]
+=== `kobiton:includeVisible`
+
+Include the `visible` attribute in the XML tree. Default is `false`.
+
+[NOTE]
+Enabling this capability significantly slows session performance.
+
+* *Type:* `boolean`
+* *Required capabilities:* None
+* *Optional capabilities:* None
+
+.Example
+[source,java]
+----
+capabilities.setCapability("kobiton:includeVisible", true);
 ----
 
 === `kobiton:captureScreenshots`
@@ -234,6 +290,51 @@ Categorize and organize sessions by assigning a custom tag at the time of sessio
 capabilities.setCapability("kobiton:sessionTags", ["nightly-run", "login-flow", "regression"]);
 ----
 
+[#_passcodeKey]
+=== `kobiton:passcodeKey`
+
+The passcode value used to unlock the device, paired with xref:_passcodeType[].
+
+* *Type:* `string`
+* *Required capabilities:* None
+* *Optional capabilities:* None
+
+.Example
+[source,java]
+----
+capabilities.setCapability("kobiton:passcodeKey", "1234");
+----
+
+[#_passcodeType]
+=== `kobiton:passcodeType`
+
+The passcode type. Use `PIN` or `PASSWORD`.
+
+* *Type:* `string`
+* *Required capabilities:* None
+* *Optional capabilities:* None
+
+.Example
+[source,java]
+----
+capabilities.setCapability("kobiton:passcodeType", "PIN");
+----
+
+[#_runtime]
+=== `kobiton:runtime`
+
+Configure the automation runtime that executes the test. Values are `xium` or `appium`. Default is `xium`.
+
+* *Type:* `string`
+* *Required capabilities:* None
+* *Optional capabilities:* None
+
+.Example
+[source,java]
+----
+capabilities.setCapability("kobiton:runtime", "appium");
+----
+
 === `kobiton:useConfiguration`
 
 The network payload capture configuration to use during the test session. See xref:automation-testing:local-devices/capture-network-payload-data.adoc[this article,window=read-later] to learn more.
@@ -246,6 +347,21 @@ The network payload capture configuration to use during the test session. See xr
 [source,java]
 ----
 capabilities.setCapability("useConfiguration", "kobiton");
+----
+
+[#_waitForIdle]
+=== `kobiton:waitForIdle`
+
+Waits for the UI to become idle before continuing, equivalent to `appium:waitForQuiescence`. Default is `true` for iOS and `false` for Android.
+
+* *Type:* `boolean`
+* *Required capabilities:* None
+* *Optional capabilities:* None
+
+.Example
+[source,java]
+----
+capabilities.setCapability("kobiton:waitForIdle", true);
 ----
 
 [#_kobitonwebfind]
@@ -270,6 +386,22 @@ capabilities.setCapability("kobiton:web-find", "all");
 Before using this capability, xref:scripting/launch-work-profile-app-android.adoc#_install_and_prepare_the_work_profile_app[the Work Profile app,window=read-later] must be installed and configured.
 
 include::partial$work-profile-capability.adoc[]
+
+[#_xpath2]
+=== `kobiton:xpath2`
+
+Enable xpath2 searches on all supported device platforms. Default is `false`.
+
+* *Type:* `boolean`
+* *Required capabilities:* None
+* *Optional capabilities:* None
+
+.Example
+[source,java]
+
+----
+capabilities.setCapability("kobiton:xpath2", true);
+----
 
 == Appium Capabilities
 
