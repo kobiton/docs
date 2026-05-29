@@ -33,21 +33,21 @@ Capabilities with the `kobiton:` prefix cannot be used without the prefix.
 .Kobiton capability index
 * <<_appInstall,kobiton:appInstall>>
 * <<_baselineSessionId,kobiton:baselineSessionId>>
-* <<_flexCorrect,kobiton:flexCorrect>>
-* <<_includeSystemWindows,kobiton:includeSystemWindows>>
-* <<_includeVisible,kobiton:includeVisible>>
 * <<_kobitoncapturescreenshots,kobiton:captureScreenshot>>
 * <<_kobitondevicegroup,kobiton:deviceGroup>>
 * <<_kobitondevicetags,kobiton:deviceTags>>
 * <<_kobitondevicetagtype,kobiton:deviceTagType>>
+* <<_flexCorrect,kobiton:flexCorrect>>
 * <<_kobitongroupid,kobiton:groupId>>
-* <<_kobitonsessiondescription,kobiton:sessionDescription>>
-* <<_kobitonsessionname,kobiton:sessionName>>
-* <<_kobitonuseconfiguration,kobiton:useConfiguration>>
-* <<_kobtionsessiontags,kobiton:sessionTags>>
+* <<_includeSystemWindows,kobiton:includeSystemWindows>>
+* <<_includeVisible,kobiton:includeVisible>>
 * <<_passcodeKey,kobiton:passcodeKey>>
 * <<_passcodeType,kobiton:passcodeType>>
 * <<_runtime,kobiton:runtime>>
+* <<_kobitonsessiondescription,kobiton:sessionDescription>>
+* <<_kobitonsessionname,kobiton:sessionName>>
+* <<_kobtionsessiontags,kobiton:sessionTags>>
+* <<_kobitonuseconfiguration,kobiton:useConfiguration>>
 * <<_waitForIdle,kobiton:waitForIdle>>
 * <<_work_app,kobiton:workApp>>
 * <<_xpath2,kobiton:xpath2>>
@@ -83,39 +83,6 @@ Select a baseline session to use for xref:_flexCorrect[].
 [source,java]
 ----
 capabilities.setCapability("kobiton:baselineSessionId", 0000011);
-----
-
-[#_includeSystemWindows]
-=== `kobiton:includeSystemWindows`
-
-Include system windows in page source and element searches. Default is `false`.
-
-* *Type:* `boolean`
-* *Required capabilities:* None
-* *Optional capabilities:* None
-
-.Example
-[source,java]
-----
-capabilities.setCapability("kobiton:includeSystemWindows", true);
-----
-
-[#_includeVisible]
-=== `kobiton:includeVisible`
-
-Include the `visible` attribute in the XML tree. Default is `false`.
-
-[NOTE]
-Enabling this capability significantly slows session performance.
-
-* *Type:* `boolean`
-* *Required capabilities:* None
-* *Optional capabilities:* None
-
-.Example
-[source,java]
-----
-capabilities.setCapability("kobiton:includeVisible", true);
 ----
 
 === `kobiton:captureScreenshots`
@@ -239,6 +206,84 @@ The group ID within the test session metadata. This affects the cleanup behaviou
 capabilities.setCapability("groupId", "0011");
 ----
 
+[#_includeSystemWindows]
+=== `kobiton:includeSystemWindows`
+
+Include system windows in page source and element searches. Default is `false`.
+
+* *Type:* `boolean`
+* *Required capabilities:* None
+* *Optional capabilities:* None
+
+.Example
+[source,java]
+----
+capabilities.setCapability("kobiton:includeSystemWindows", true);
+----
+
+[#_includeVisible]
+=== `kobiton:includeVisible`
+
+Include the `visible` attribute in the XML tree. Default is `false`.
+
+[NOTE]
+Enabling this capability significantly slows session performance.
+
+* *Type:* `boolean`
+* *Required capabilities:* None
+* *Optional capabilities:* None
+
+.Example
+[source,java]
+----
+capabilities.setCapability("kobiton:includeVisible", true);
+----
+
+[#_passcodeKey]
+=== `kobiton:passcodeKey`
+
+The passcode value used to unlock the device, paired with xref:_passcodeType[].
+
+* *Type:* `string`
+* *Required capabilities:* None
+* *Optional capabilities:* None
+
+.Example
+[source,java]
+----
+capabilities.setCapability("kobiton:passcodeKey", "1234");
+----
+
+[#_passcodeType]
+=== `kobiton:passcodeType`
+
+The passcode type. Use `PIN` or `PASSWORD`.
+
+* *Type:* `string`
+* *Required capabilities:* None
+* *Optional capabilities:* None
+
+.Example
+[source,java]
+----
+capabilities.setCapability("kobiton:passcodeType", "PIN");
+----
+
+[#_runtime]
+=== `kobiton:runtime`
+
+Configure the automation runtime that executes the test. Values are `xium` or `appium`. Default is `xium`.
+
+* *Type:* `string`
+* *Required capabilities:* None
+* *Optional capabilities:* None
+
+.Example
+[source,java]
+----
+capabilities.setCapability("kobiton:runtime", "appium");
+----
+
 === `kobiton:sessionDescription`
 
 The description of the test session, typically between 50-72 characters, but can be set to any length.
@@ -288,51 +333,6 @@ Categorize and organize sessions by assigning a custom tag at the time of sessio
 [source,java]
 ----
 capabilities.setCapability("kobiton:sessionTags", ["nightly-run", "login-flow", "regression"]);
-----
-
-[#_passcodeKey]
-=== `kobiton:passcodeKey`
-
-The passcode value used to unlock the device, paired with xref:_passcodeType[].
-
-* *Type:* `string`
-* *Required capabilities:* None
-* *Optional capabilities:* None
-
-.Example
-[source,java]
-----
-capabilities.setCapability("kobiton:passcodeKey", "1234");
-----
-
-[#_passcodeType]
-=== `kobiton:passcodeType`
-
-The passcode type. Use `PIN` or `PASSWORD`.
-
-* *Type:* `string`
-* *Required capabilities:* None
-* *Optional capabilities:* None
-
-.Example
-[source,java]
-----
-capabilities.setCapability("kobiton:passcodeType", "PIN");
-----
-
-[#_runtime]
-=== `kobiton:runtime`
-
-Configure the automation runtime that executes the test. Values are `xium` or `appium`. Default is `xium`.
-
-* *Type:* `string`
-* *Required capabilities:* None
-* *Optional capabilities:* None
-
-.Example
-[source,java]
-----
-capabilities.setCapability("kobiton:runtime", "appium");
 ----
 
 === `kobiton:useConfiguration`
