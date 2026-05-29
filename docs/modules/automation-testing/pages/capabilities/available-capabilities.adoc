@@ -248,6 +248,22 @@ The network payload capture configuration to use during the test session. See xr
 capabilities.setCapability("useConfiguration", "kobiton");
 ----
 
+[#_kobitonwebfind]
+=== `kobiton:web-find`
+
+Search every available web context during an Appium find call. For more information, see xref:automation-testing:capabilities/add-web-find.adoc[].
+
+* *Type:* `string`
+* *Required capabilities:* None
+* *Optional capabilities:* `appium:autoWebview`
+* *Behavior:* The session must already be in a web context before the find call. Set `appium:autoWebview` to `true` or switch contexts manually beforehand.
+
+.Example
+[source,java]
+----
+capabilities.setCapability("kobiton:web-find", "all");
+----
+
 [#_work_app]
 === `kobiton:workApp`
 

@@ -1,254 +1,97 @@
-= Search all web contexts (`kobiton:web-find`)
-  :navtitle: Search all web contexts
+= Search all web contexts with `kobiton:web-find`
+:navtitle: kobiton:web-find
 
-  `kobiton:web-find` extends the Appium find call to search across every available web context in the session. When the target element is found, the session automatically switches to the context containing it, removing the need to manually switch
-  contexts before each find call.
+`kobiton:web-find` extends the Appium find call to search across every available web context in the session.
 
-  == How `kobiton:web-find` works
+When the target element is found, the session automatically switches to the context containing it.
 
-  A mobile app can expose multiple web contexts — for example, a native shell hosting several WebView regions. Without `kobiton:web-find`, a find call only searches the single web context the session is currently switched to. If the target element
-  lives in a different web context, the call returns `Element not found`.
+== How `kobiton:web-find` works
 
-  When `kobiton:web-find` is set to `all`, Kobiton cycles through every available web context until the element is found or the timeout elapses:
+A mobile app can expose multiple web contexts, such as multiple WebViews inside a native app.
 
-* On success, the session switches to the context containing the element. The returned element ID can be used directly without another context switch.
+Without `kobiton:web-find`, a find call only searches the single web context the session is currently switched to. If the target element
+lives in a different web context, the call returns `Element not found`.
+
+When `kobiton:web-find` is set to `all`, Kobiton cycles through every available web context until the element is found or the timeout elapses:
+
+* On success, the session switches to the context containing the element. Use the returned element ID directly without another context switch.
 * On failure, the session reverts to the context it was in when the find call started.
 
-  // VERIFY: When the search returns multiple matches, the source draft says "you can query that match's current context after a find call" but does not name a specific API. Confirm with engineering which Appium client call surfaces the matched
-  context (for example, `driver.getContext()` immediately after the find), and add a one-line note here.
+// VERIFY: When the search returns multiple matches, the source draft says "you can query that match's current context after a find call" but does not name a specific API. Confirm with engineering which Appium client call surfaces the matched context (for example, `driver.getContext()` immediately after the find), and add a one-line note here.
 
-  == Before you start
+== Before you start
 
-  `kobiton:web-find` only applies when the session is already in a web context — it does not search native contexts. To enter a web context, do one of the following:
+`kobiton:web-find` only applies when the session is already in a web context. It does not search native contexts. To enter a web context, do one of the following:
 
 * Set `appium:autoWebview` to `true` to auto-switch to the WebView at session start. See xref:automation-testing:capabilities/available-capabilities.adoc#_autowebview[autoWebview].
 * Switch contexts manually using your Appium client's context API before the find call.
 
-  // VERIFY: Confirm the exact anchor format for autoWebview on available-capabilities.adoc. The heading has no explicit anchor block; the existing in-page reference uses `<<autowebview,...>>` (no underscore), while the rest of the page's anchors
-  follow `_camelCase` convention. The xref above uses `#_autowebview` — test in preview and adjust if needed.
+// VERIFY: Confirm the exact anchor format for autoWebview on available-capabilities.adoc. The heading has no explicit anchor block; the existing in-page reference uses `<<autowebview,...>>` (no underscore), while the rest of the page's anchors follow `_camelCase` convention. The xref above uses `#_autowebview`. Test in preview and adjust if needed.
 
-  == Configure the capability
+== Configure the capability
 
-  Add the following capability to your desired capabilities:
+Add this capability to your desired capabilities:
 
-  [cols="1,1"]
-  |===
-  | Capability | Value
+[cols="1,1"]
+|===
+| Capability | Value
 
-  | `kobiton:web-find`
-  | `all`
-  |===
+| `kobiton:web-find`
+| `all`
+|===
 
-  Example (Node.js):
+Example (Node.js):
 
-  [source,js]
-  ----
-  const desiredCaps = {
-    sessionName: 'Automation test session',
-    sessionDescription: 'This is an example',
-    deviceOrientation: 'portrait',
-    captureScreenshots: true,
-    browserName: 'safari',
-    autoWebview: true,
-    udid: 'xxxx',
-    platformName: 'iOS',
-    'kobiton:web-find': 'all',
-  };
-  ----
+[source,js]
+----
+const desiredCaps = {
+sessionName: 'Automation test session',
+sessionDescription: 'This is an example',
+deviceOrientation: 'portrait',
+captureScreenshots: true,
+browserName: 'safari',
+autoWebview: true,
+udid: 'xxxx',
+platformName: 'iOS',
+'kobiton:web-find': 'all',
+};
+----
 
-  The `kobiton:web-find` key must be quoted in JavaScript object literals because it contains a colon.
+[NOTE]
+====
+In JavaScript object literals, quote the `kobiton:web-find` key. Unquoted, the colon in the key name is invalid syntax.
+====
 
-  === Example script
+=== Example script
 
-  A minimal Node.js test that uses `kobiton:web-find` to locate an element nested in a different web context:
+A minimal Node.js test that uses `kobiton:web-find` to locate an element nested in a different web context:
 
-  [source,js]
-  ----
-  it('Context test', async () => {
-    await driver.setImplicitWaitTimeout(5000);
-    await driver.get('https://the-internet.herokuapp.com/nested_frames');
-    await driver.sleep(3000);
+[source,js]
+----
+it('Context test', async () => {
+await driver.setImplicitWaitTimeout(5000);
+await driver.get('https://the-internet.herokuapp.com/nested_frames');
+await driver.sleep(3000);
 
-    try {
-      const elem = await driver.element('xpath', "//div[contains(., 'MIDDLE')]");
-      console.log('Found element');
-    } catch (err) {
-      console.log('Cannot get element');
-      console.log(err);
-    }
-  });
-  ----
+try {
+const elem = await driver.element('xpath', "//div[contains(., 'MIDDLE')]");
+console.log('Found element');
+} catch (err) {
+console.log('Cannot get element');
+console.log(err);
+}
+});
+----
 
-  == When to omit the capability
+== When to omit the capability
 
-  If you already know which web context contains the target element, omit `kobiton:web-find` and switch to that context directly before the find call. The single-context search is faster than cycling through every context.
+If you know which web context contains the target element, omit `kobiton:web-find` and switch to that context directly before the find call. The single-context search is faster than cycling through every context.
 
-  == Related capabilities
+== Related capabilities
 
-* xref:automation-testing:capabilities/add-flexcorrect.adoc[flexCorrect (Appium Self-Healing)] — corrects element selection when layouts change between runs. `flexCorrect` addresses element-layout drift; `kobiton:web-find` addresses web-context
-discovery.
+* xref:automation-testing:capabilities/add-flexcorrect.adoc[flexCorrect (Appium Self-Healing)] — corrects element selection when layouts change between runs. `flexCorrect` addresses element-layout drift; `kobiton:web-find` addresses web-context discovery.
 * xref:automation-testing:capabilities/available-capabilities.adoc#_autowebview[autoWebview] — auto-switches the session to a WebView context at start, satisfying the `kobiton:web-find` precondition.
 
-  // VERIFY: Is `kobiton:web-find` supported in Basic Appium 2 sessions? The `flexCorrect` page documents Basic Appium 2 unavailability for AI features. Confirm whether `kobiton:web-find` has the same restriction. If yes, add a NOTE under "How it
-  works" and a bullet to a Limitations section matching the flexCorrect page pattern.
+// VERIFY: Is `kobiton:web-find` supported in Basic Appium 2 sessions? The `flexCorrect` page documents Basic Appium 2 unavailability for AI features. Confirm whether `kobiton:web-find` has the same restriction. If yes, add a NOTE under "How it works" and a bullet to a Limitations section matching the flexCorrect page pattern.
 
-  // VERIFY: Does `kobiton:web-find` accept values other than `'all'`? The source draft documents only `'all'`. Confirm there is no other supported value (or list the others).
-
-  Insertion snippet — available-capabilities.adoc
-
-1. Add to the capability bullet list at lines 34-45
-
-  Insert between line 43 (* <<_kobitonuseconfiguration,kobiton:useConfiguration>>) and line 44 (* <<_kobtionsessiontags,kobiton:sessionTags>>):
-
-* <<_kobitonwebfind,kobiton:web-find>>
-
-  ▎ Note: alphabetical ordering of the list is already broken (sessionTags is misplaced after useConfiguration). I'm respecting the as-is order. Reordering is out of scope for this ticket.
-
-2. Add full capability entry
-
-  Insert near the other kobiton:* entries (positioning by file convention; if alphabetical, after the existing kobiton:useConfiguration section and before kobiton:sessionTags):
-
-  [#_kobitonwebfind]
-  === `kobiton:web-find`
-
-  Extend the Appium find call to search across every available web context. For more information, see xref:automation-testing:capabilities/add-web-find.adoc[].
-
-* *Type:* `string`
-* *Required capabilities:* None
-* *Optional capabilities:* `appium:autoWebview`
-* *Behavior:* The session must already be in a web context before the find call. Set `appium:autoWebview` to `true` or switch contexts manually beforehand.
-
-  .Example
-  [source,java]
-  ----
-  capabilities.setCapability("kobiton:web-find", "all");
-  ----
-
-  ▎ No NOTE block about Basic Appium 2 unavailability — that's gated by the VERIFY question above. If the SME confirms unavailability, add the same [NOTE] pattern used in the kobiton:flexCorrect block.
-
-  Insertion snippet — automation-testing/nav.adoc
-
-  Insert between line 7 and line 8:
-
-** xref:automation-testing:capabilities/add-web-find.adoc[]
-
-  Resulting capabilities block:
-
-* Capabilities
-** xref:automation-testing:capabilities/available-capabilities.adoc[]
-** xref:automation-testing:capabilities/auto-generate-capabilities.adoc[]
-** xref:automation-testing:capabilities/add-flexcorrect.adoc[]
-** xref:automation-testing:capabilities/add-web-find.adoc[]
-** xref:automation-testing:capabilities/add-testrail.adoc[Add TestRail]
-
-  The empty-label form will display the page's navtitle (Search all web contexts).
-
-  Verification blocks summary
-
-  ┌─────┬──────────────────────────────────────┬───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐
-  │  #  │               Section                │                                                                                          Question to resolve                                                                                          │
-  ├─────┼──────────────────────────────────────┼───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤
-  │ 1   │ How it works (multiple matches)      │ Which Appium client API surfaces the matched context after a kobiton:web-find call? Source draft was vague.                                                                                           │
-  ├─────┼──────────────────────────────────────┼───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤
-  │ 2   │ Before you start (xref anchor)       │ Confirm the anchor format for autoWebview on available-capabilities.adoc. Heading has no explicit anchor; existing in-page reference uses <<autowebview,...>> (no underscore). Preview before         │
-  │     │                                      │ publishing.                                                                                                                                                                                           │
-  ├─────┼──────────────────────────────────────┼───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤
-  │ 3   │ Related capabilities (Basic Appium   │ Is kobiton:web-find supported in Basic Appium 2 sessions? If not, add a NOTE + Limitations bullet matching the flexCorrect page.                                                                      │
-  │     │ 2)                                   │                                                                                                                                                                                                       │
-  ├─────┼──────────────────────────────────────┼───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤
-  │ 4   │ Configure the capability (values)    │ Does kobiton:web-find accept values other than 'all'? Source documents only 'all'.                                                                                                                    │
-  └─────┴──────────────────────────────────────┴───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘
-
-  Open questions or verification needed
-
-1. Multiple-match API — blocks the "How it works" detail bullet.
-2. autoWebview anchor format — preview to confirm before merge.
-3. Basic Appium 2 support — may add a NOTE/Limitations section.
-4. Other accepted values — Type description could expand if 'all' is one of several.
-5. Reciprocal xref from add-flexcorrect.adoc — the new page links to flexCorrect under Related capabilities. Should add-flexcorrect.adoc get a reciprocal "Related capabilities" entry pointing to add-web-find.adoc? (Out of scope for this draft, but
-consistent with the pattern we established on KOB-37563.)
-6. Reciprocal mentions on autoWebview entry — the autoWebview entry in available-capabilities.adoc could cross-reference kobiton:web-find as a companion. Minor.
-
-Style Sheriff review
-
-  Status: Pass with optional polish
-
-  The draft is clean against required style rules. No "Learn how to…", no hedging, no marketing, no filler, no legacy public-doc tone, no should/would, terminology is consistent. Five optional improvements below — none blocking, take or leave.
-
-  Verification blocks (// VERIFY:) preserved as you requested. The four open questions for SME tomorrow remain intact at the end of the Ledger draft.
-
-  Required fixes
-
-  None.
-
-  Optional improvements
-
-1. Let's rein it back in, partner — lead-in second clause repeats the first
-
-  Text
-
-  ▎ When the target element is found, the session automatically switches to the context containing it, removing the need to manually switch contexts before each find call.
-
-  Suggestion
-  The trailing "removing the need to manually switch contexts before each find call" restates the implication of "automatically switches" without adding information. Trim it:
-
-  ▎ When the target element is found, the session automatically switches to the context containing it.
-
-  The "removes the manual context-switch burden" idea is then made explicit by the bullets in How kobiton:web-find works, which is the better place for it.
-
-2. Let's rein it back in, partner — passive voice in the success bullet
-
-  Text
-
-  ▎ The returned element ID can be used directly without another context switch.
-
-  Suggestion
-  Active:
-
-  ▎ Use the returned element ID directly without another context switch.
-
-3. Let's rein it back in, partner — "already" is mild filler
-
-  Text
-
-  ▎ If you already know which web context contains the target element, omit kobiton:web-find and switch to that context directly before the find call.
-
-  Suggestion
-  Drop "already":
-
-  ▎ If you know which web context contains the target element, omit kobiton:web-find and switch to that context directly before the find call.
-
-4. Let's rein it back in, partner — "the following" + "your desired capabilities" doubles up
-
-  Text
-
-  ▎ Add the following capability to your desired capabilities:
-
-  Suggestion
-  Tighten:
-
-  ▎ Add this capability to your desired capabilities:
-
-5. Let's rein it back in, partner — quoting-rule sentence reads as a hidden warning
-
-  Text
-
-  ▎ The kobiton:web-find key must be quoted in JavaScript object literals because it contains a colon.
-
-  Suggestion
-  Either move it into a [NOTE] admonition so it stands out as the trap it is, or attach it directly to the code block as a caption. Body prose makes it easy to skim past — which is exactly when readers paste in broken JS (the original bug in the
-  Confluence source).
-
-  [NOTE]
-  ====
-  In JavaScript object literals, quote the `kobiton:web-find` key. Unquoted, the colon in the key name is invalid syntax.
-  ====
-
-  Summary
-
-- Required fixes: 0
-- Optional improvements: 5
-- Main pattern detected: Mild verbosity in connective clauses; one passive voice; one technical-trap warning that deserves more visibility than body prose.
-- Verification blocks: intact (4 total), preserved per user direction. Open questions from Ledger also intact.
-
-  Draft is publish-ready from a style standpoint once you apply whichever optional polishes you like. Bass is hitching up. Gatekeeper rides next — after you apply your edits + SME verification tomorrow.
+// VERIFY: Does `kobiton:web-find` accept values other than `'all'`? The source draft documents only `'all'`. Confirm there is no other supported value (or list the others).
