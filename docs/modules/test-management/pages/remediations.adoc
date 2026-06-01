@@ -2,9 +2,9 @@
 
 == Overview
 
-Remediation addresses situations where automated execution cannot proceed as recorded.
+Remediation addresses situations where automated execution cannot proceed as defined in the test case.
 
-During execution, the platform attempts to match recorded interactions to the current application state on the device. When a step cannot be completed with sufficient confidence, execution pauses and user input is required before the test can continue.
+During execution, the platform attempts to match captured interactions to the current application state on the device. When a step cannot be completed with sufficient confidence, execution pauses and user input is required before the test can continue.
 
 Remediation allows the test definition to be corrected without recreating the original baseline session.
 
@@ -12,7 +12,7 @@ Remediation allows the test definition to be corrected without recreating the or
 
 When a test run encounters a blocker, its status indicates that user action is required.
 
-Remediation is triggered when an automated execution cannot reliably complete a recorded step. This typically occurs when a UI element cannot be identified due to layout changes, screen size differences, or other variations across devices.
+Remediation is triggered when an automated execution cannot reliably complete a step. This typically occurs when a UI element cannot be identified due to layout changes, screen size differences, or other variations across devices.
 
 When this happens, execution is paused until the blocker is resolved.
 
@@ -33,7 +33,7 @@ After remediation is submitted, the test can be rerun using the same configurati
 
 Session Explorer provides a detailed view of execution behavior.
 
-From Session Explorer, users can review the recorded baseline step alongside the execution attempt and select the correct UI element when a mismatch occurs.
+From Session Explorer, users can review the captured baseline step alongside the execution attempt and select the correct UI element when a mismatch occurs.
 
 Remediation submitted through Session Explorer is applied to the test case and used in subsequent executions across devices.
 
