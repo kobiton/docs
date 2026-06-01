@@ -6,18 +6,21 @@ A test case represents a reusable test flow created from a baseline session.
 
 Test cases store the recorded interactions captured during a manual session and serve as the definition used for automated execution. Once created, a test case can be run repeatedly without recreating the original session.
 
-== Create a test case
+[#_convert_to_test_case]
+== Convert a session to a Test Case
 
-Test cases are created from completed baseline sessions.
+Test Cases are created by converting completed manual sessions.
 
-A test case can be created in either of the following ways:
+After you run a manual session with capture enabled, Kobiton can convert the captured interactions into a reusable Test Case.
 
-* By converting a completed manual session from Session Explorer
-* From the Test Case list in Test Management, where completed manual sessions are available for conversion
+You can convert a session to a Test Case from either of the following locations:
+
+* Session Explorer, after a completed manual session
+* Test Management, where completed manual sessions are available for conversion
 
 In both cases, the test case is created from a recorded manual session. The recorded interactions from the baseline session define the test flow.
 
-Converting a session to a test case unlocks additional capabilities, including running the test across devices and generating an Appium script.
+Converting a manual session to Test Case unlocks generating an Appium script and running across other devices.
 
 After conversion, the option to view the test case becomes available. Selecting this opens the Test Case details view, where the recorded steps and interactions can be reviewed and managed.
 
