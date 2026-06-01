@@ -12,7 +12,7 @@ A baseline session is a manual session performed on a real device through the pl
 
 During the session, a user interacts with the application as they would during normal testing. These interactions are captured by the platform and later reused to define a test flow.
 
-Once converted into a test case, the baseline session becomes the reference for future test execution.
+Once converted into a test case, the baseline session becomes the reference for future test execution. Test cases can also be used to generate Appium scripts.
 
 == Create a baseline session
 
@@ -23,6 +23,8 @@ Baseline sessions are created by running a manual test session with capture enab
 From the Devices view in the Kobiton platform, select a device and launch a manual session.
 
 Before interacting with the application, select the *Play* button to enable session capturing mode.
+
+image::capture-session-icon.png
 
 Session capturing mode improves the accuracy of element detection by capturing precise element bounding boxes. Actions performed while capturing is enabled provide the most reliable results for scriptless execution.
 
