@@ -2,7 +2,7 @@
 
 == Overview
 
-Running a Scriptless test applies an existing test definition to one or more devices. Tests are executed automatically based on interactions previously recorded during a manual session.
+Running a Scriptless test applies an existing test definition to one or more devices. Tests are executed automatically based on interactions previously captured during a manual session and converted to a test case.
 
 In the Kobiton platform, Scriptless tests are run through Test Management. Execution results are captured for review and can be rerun as needed.
 
@@ -20,19 +20,19 @@ Tests are run from Test Management in the Kobiton platform.
 
 From Test Management, users can create a test run using a single test case or a test suite. During setup, the test definition, application version, and target devices are selected.
 
-Once a test run starts, the platform executes the recorded interactions automatically on the selected devices. Test execution does not require user interaction while the run is in progress.
+Once a test run starts, the platform executes the captured interactions automatically on the selected devices. Test execution does not require user interaction while the run is in progress.
 
 == What happens during execution
 
-During execution, the platform replays the recorded interactions step by step on each device.
+During execution, the platform performs the test case steps on each device.
 
-For each step, the system attempts to match the recorded interaction to the current application state. Execution continues until all steps are completed or until user action is required.
+For each step, the system attempts to match the captured interaction to the current application state. Execution continues until all steps are completed or until user action is required.
 
 Execution progress and status are visible while the test is running.
 
 == Review test results
 
-After execution completes, results are available in Test Management.
+After execution completes, results are available in xref:test-management:test-runs.adoc[Test Runs] under Test Management.
 
 Each test run includes:
 
@@ -52,10 +52,11 @@ Reruns repeat the original execution using the same test definition and device s
 
 Tests can also be triggered programmatically using the Kobiton API. This approach is typically used for automated pipelines or advanced workflows.
 
-For details, see the link:https://api.kobiton.com/docs[API documentation].
+For details, see xref:scriptless-automation:run-scriptless-api.adoc[Run a Scriptless test using the API].
 
 == Related pages
 
 * xref:scriptless-automation:baseline-session.adoc[Create a baseline session]
+* xref:scriptless-automation:run-scriptless-api.adoc[Run a Scriptless test using the API]
 * xref:test-management:index.adoc[Test management]
 * xref:test-management:remediations.adoc[Remediations]

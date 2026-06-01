@@ -6,11 +6,11 @@ A baseline session is a manual test session that serves as the source for automa
 
 Baseline sessions are created through manual interaction in the Kobiton platform and are required before a test can be run automatically.
 
-== What a baseline session is
+== What is a baseline session?
 
 A baseline session is a manual session performed on a real device through the platform.
 
-During the session, a user interacts with the application as they would during normal testing. These interactions are recorded by the platform and later reused to define a test flow.
+During the session, a user interacts with the application as they would during normal testing. These interactions are captured by the platform and later reused to define a test flow.
 
 Once converted into a test case, the baseline session becomes the reference for future test execution.
 
@@ -28,13 +28,13 @@ Session capturing mode improves the accuracy of element detection by capturing p
 
 If your test requires an application, install or select the app at the start of the session.
 
-NOTE: Actions performed before capture is enabled are still recorded, but may result in reduced element accuracy during automated execution.
+NOTE: Actions performed before capture is enabled are still saved with the session, but may result in reduced element accuracy during automated execution.
 
 === 2. Perform the test flow
 
 Interact with the application as you would during normal testing.
 
-While capture is enabled, the platform records supported interactions and associates them with the current application state. These recorded interactions form the basis of the baseline session.
+While capture is enabled, the platform captures supported interactions and associates them with the current application state. These captured interactions form the basis of the baseline session.
 
 Focus on completing a single, intentional test flow from start to finish.
 
@@ -42,9 +42,9 @@ Focus on completing a single, intentional test flow from start to finish.
 
 When the test flow is complete, exit the manual session by selecting the *X* icon.
 
-After the session ends, it appears in Session Explorer. From Session Explorer, the session can be converted into a test case. Once converted, the test case is managed through Test Management, where it can be reviewed, edited, and used to create test runs.
+The session then opens in Session Explorer, where it can be converted into a test case. Once converted, the test case is managed through Test Management, where it can be reviewed, edited, and used to create test runs.
 
-For details, see xref:test-management:test-cases.adoc[Test cases].
+To convert a session into a test case or learn more about Test Management, see xref:test-management:test-cases.adoc[Test cases].
 
 // Screenshots:
 // Launching a manual session from Devices
@@ -70,7 +70,7 @@ Separate baseline sessions are required for Android and iOS, even when the appli
 
 Baseline sessions must target a supported application context: a web application (Safari or Chrome), an app installed from the App Repository, or an existing app already available on the device.
 
-Manual sessions can be converted into test cases even if unsupported actions were recorded. Test cases that contain unsupported actions cannot be executed in a test run until those steps are removed and the test case is saved as a new version.
+Manual sessions can be converted into test cases even if unsupported actions were captured. Test cases that contain unsupported actions cannot be executed in a test run until those steps are removed and the test case is saved as a new version.
 
 == Related pages
 

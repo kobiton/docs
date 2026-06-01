@@ -2,7 +2,7 @@
 
 == Overview
 
-Scriptless automation enables automated test execution based on interactions recorded during manual sessions. Tests are created from real device usage and can be executed repeatedly without requiring users to write or maintain automation scripts.
+Scriptless automation enables automated test execution based on interactions captured during manual sessions. Tests are generated from real device usage and can be executed repeatedly without requiring users to write or maintain automation scripts.
 
 Within the Kobiton platform, this capability builds on manual testing by capturing user interactions in a structured form and reusing them for repeatable execution across devices.
 
@@ -10,19 +10,19 @@ Scriptless automation is used to reduce the effort required to run repetitive te
 
 == How it works
 
-Scriptless automation is based on recording test behavior once and reusing it for execution.
+Scriptless automation is based on capturing test behavior once and reusing it for execution.
 
 === Manual sessions as the source
 
-Testing begins with a manual session performed on a real device through the Kobiton platform. During the session, user interactions with the application are recorded.
+Testing begins with a manual session performed on a real device through the Kobiton platform. During the session, user interactions with the application are captured.
 
-=== Tests created from recorded interactions
+=== Tests created from captured interactions
 
-Recorded interactions are converted into test definitions that represent a complete test flow. These definitions are stored and managed independently of execution.
+Captured interactions are converted into test definitions that represent a complete test flow. These definitions are stored and managed independently of execution.
 
 === Tests executed without user-written scripts
 
-When a test is run, the platform executes the recorded interactions automatically. Automation scripts are generated and managed by the platform; users do not need to author or maintain code to run tests.
+When a test is run, the platform executes the captured interactions automatically. Automation scripts are generated and managed by the platform; users do not need to author or maintain code to run tests.
 
 == Requirements
 
@@ -59,4 +59,5 @@ In these scenarios, script-based automation or alternative testing approaches ma
 
 * xref:scriptless-automation:baseline-session.adoc[Create a baseline session]
 * xref:scriptless-automation:run-scriptless.adoc[Run a Scriptless test]
+* xref:scriptless-automation:best-practices.adoc[Best practices]
 * xref:test-management:index.adoc[Test management]
