@@ -31,7 +31,7 @@ capabilities.setCapability("kobiton:sessionName", "Login test");
 Capabilities with the `kobiton:` prefix cannot be used without the prefix.
 
 .Kobiton capability index
-* <<_appInstall,kobiton:appInstall>>
+* <<_app_install,kobiton:app-install>>
 * <<_baselineSessionId,kobiton:baselineSessionId>>
 * <<_kobitoncapturescreenshots,kobiton:captureScreenshot>>
 * <<_kobitondevicegroup,kobiton:deviceGroup>>
@@ -52,19 +52,21 @@ Capabilities with the `kobiton:` prefix cannot be used without the prefix.
 * <<_work_app,kobiton:workApp>>
 * <<_xpath2,kobiton:xpath2>>
 
-[#_appInstall]
-=== `kobiton:appInstall`
+[#_app_install]
+=== `kobiton:app-install`
 
-Configure application installation when the session is created. Values are `always` or `never`. Default is `always`.
+Specifies whether to install the app when creating a session. Valid values are `always` and `never`. Default value is `always`.
+
+If set to `never`, skips app installation and tries to launch the app using identifier.
 
 * *Type:* `string`
-* *Required capabilities:* None
+* *Required capabilities:* if set to `never`, requires `bundleId` or `appPackage` as app identifier.
 * *Optional capabilities:* None
 
 .Example
 [source,java]
 ----
-capabilities.setCapability("kobiton:appInstall", "never");
+capabilities.setCapability("kobiton:app-install", "never");
 ----
 
 [#_baselineSessionId]
