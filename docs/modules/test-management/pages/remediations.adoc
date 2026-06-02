@@ -41,12 +41,77 @@ Remediation submitted through Session Explorer is applied to the test case and u
 // Session Explorer view showing baseline step vs execution attempt
 
 == Live remediation
+Live remediation allows users to resolve a blocker during an active Test Run without ending execution. It is available for Scriptless Test Runs. Contact your account manager or Kobiton Support to enable it for your organization.
 
-Live remediation is available in limited scenarios during active execution.
+=== When live remediation is available
 
-Live remediation allows users to intervene while a test is running, correct a blocked step, and continue execution without terminating the session. This approach is useful when immediate validation is required.
+Live remediation becomes available when a device in a Test Run encounters a blocker. At that moment, the device status changes from *Running* to *Live 5:00*, displayed with a stopwatch icon. The 5-minute countdown indicates how long live remediation remains available for that device.
 
-Availability and behavior may vary depending on execution context.
+The timer runs independently per device. Execution pauses only for the affected device, and other devices in the same Test Run continue running. If the countdown expires before entry, the run follows standard blocker handling.
+
+image::live-remediation-countdown.png[Test Run Results showing a device in the Live 5:00 state]
+
+=== Entering a live remediation session
+
+Select the *Live 5:00* indicator on the affected device to open a manual session view. A banner appears above the device screen indicating that execution is paused, with an *Open KobiAI* option.
+
+Selecting *Open KobiAI* activates the Live Remediation tab in the right-side panel. This panel displays context about the blocked step and is where you interact with KobiAI to resolve the issue.
+
+=== Resolving the blocker with KobiAI
+
+Live remediation is driven entirely through the KobiAI chat panel. You cannot interact directly with the device screen during a live remediation session. Instead, you describe the resolution in natural language and KobiAI performs the interactions on the device.
+
+KobiAI describes what it detected, outlines the attempted action, and prompts you for confirmation or additional guidance. Respond directly in the panel to direct the next action.
+
+While KobiAI processes a submitted resolution, interaction with the device and chat panel is temporarily disabled. This is expected and indicates that the platform is completing the action.
+
+=== After the resolution
+
+When the resolution is applied, a confirmation banner appears and execution resumes from the paused step. The Test Run does not restart, and previously completed steps are not repeated.
+
+Actions submitted during live remediation update the Test Case definition. The update is saved as a new version and is reflected in Session Explorer. The updated definition applies to future Test Runs; previous runs remain unchanged.
+
+If a subsequent blocker is encountered later in the run, a new live remediation window begins with its own 5-minute countdown.
+
+=== If no resolution is submitted
+
+If you exit the session manually or allow the countdown to expire, the Test Run follows standard blocker handling and does not resume automatically. Remediation can still be completed afterward in Session Explorer.
+
+== Pop-up Handler remediation
+
+Pop-up Handler remediation helps handle dynamic or inconsistent pop-ups that appear during Scriptless test runs. Instead of failing when an unexpected screen appears, you can mark the pop-up as optional and define how to dismiss it without writing scripts.
+
+Use Pop-up Handler remediation when:
+
+* A pop-up appears during a revisit but was not present in the baseline session.
+* A screen present in the baseline session does not appear during a revisit.
+* Transient screens, such as onboarding prompts, survey modals, or OS alerts, interrupt test execution.
+
+Pop-up handling is defined during the session where the pop-up is encountered. After it is saved, the configuration applies to subsequent runs of the same Test Case on the same device model and OS. It does not apply retroactively to past sessions.
+
+=== Before you begin
+
+Before you use Pop-up Handler remediation:
+
+* An AI subscription is required.
+* A baseline session must exist for the Test Case.
+* The revisit must have encountered a blocker caused by a pop-up or unexpected screen.
+
+image::popup-handler.png[width=700,alt="Popup Handler tab in the Blocker Remediation window"]
+
+=== Handle a pop-up
+
+After a test run completes with a blocker caused by a pop-up, open the Blocker Remediation window. A detection message identifies which session contains the pop-up.
+
+. Select the *Popup Handler* tab.
+. Under *Choose the screen with the pop-up*, select *Baseline* or *Revisit*.
+. Enter hint text from the pop-up. The text must appear on the pop-up screen.
+. Select *Highlight Text Area* to verify the hint text against the screenshot.
+
+Matched text is highlighted on the screenshot. If no match is found, adjust the hint text and try again.
+. Under *Choose the element to dismiss this pop-up*, search the view tree by path, label, or another attribute.
+. Select the dismiss element.
+. Select *Save as Optional*.
 
 == After remediation
 
