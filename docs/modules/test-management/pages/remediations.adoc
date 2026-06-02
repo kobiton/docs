@@ -31,14 +31,51 @@ After remediation is submitted, the test can be rerun using the same configurati
 
 == Remediate in Session Explorer
 
-Session Explorer provides a detailed view of execution behavior.
+Session Explorer provides a detailed view of execution behavior. Use it to review where a Test Run stopped, compare the baseline to what the device showed during execution, and submit a correction to the Test Case.
 
-From Session Explorer, users can review the captured baseline step alongside the execution attempt and select the correct UI element when a mismatch occurs.
+=== Open the Blocker Remediation modal
 
-Remediation submitted through Session Explorer is applied to the test case and used in subsequent executions across devices.
+From the Test Run Results page, select the *Needs Actions* status on the affected run to open Session Explorer. In the Session Timeline, the blocked step is marked with a red icon. Select the icon, then choose *Resolve Blocker* to open the Blocker Remediation modal.
 
-// Screenshot suggestion:
-// Session Explorer view showing baseline step vs execution attempt
+You can also open the modal for any individual touch step, even when it is not flagged. Select the *⋮* menu next to the step and choose *Remediate Test Step*. Steps that were previously remediated open the same modal under *Edit Remediation*.
+
+// SCREENSHOT 1 — test-run-results-needs-actions.png
+// Test Run Results page with a row showing "Needs Actions" status.
+// Source: https://kobiton.atlassian.net/wiki/spaces/~712020a45a4c9777b24ef4a7587eaf667c0fcd/pages/4764566315
+// (page "Resolve a blocker [Ready for Review]", first inline image)
+// Alt: Test Run Results row with Needs Actions status
+
+// SCREENSHOT 2 — session-timeline-resolve-blocker.png
+// Session Timeline with the red blocker icon on a step and the "Resolve Blocker" option visible.
+// Source: same page as Screenshot 1, second inline image
+// Alt: Session Timeline with a red blocker icon and Resolve Blocker option
+
+// SCREENSHOT 3 — step-menu-remediate-test-step.png
+// Per-step ⋮ menu showing "Remediate Test Step".
+// Source: https://kobiton.atlassian.net/wiki/spaces/KOBITON/pages/4296704002
+// (page "IQS Allow Remediation at any test step", the "After" image)
+// Alt: Step-level menu open with Remediate Test Step highlighted
+
+=== Review the blocked step
+
+The Blocker Remediation modal displays the baseline screenshot alongside the screenshot from the revisit. The element captured during the baseline is highlighted in the *Baseline* panel. Hovering over the *Revisit* panel highlights the element closest to the cursor.
+
+Navigation buttons at the top of the modal move between test steps. Use these when a blocker appears on one step but the underlying issue started earlier in the flow. Only steps that use a touch action are reachable through navigation.
+
+// SCREENSHOT 4 — blocker-remediation-modal.png
+// Full Blocker Remediation modal with Baseline and Revisit panels and the navigation buttons at the top.
+// Source: https://kobiton.atlassian.net/wiki/spaces/~712020a45a4c9777b24ef4a7587eaf667c0fcd/pages/4764566315
+// (page "Resolve a blocker [Ready for Review]", third inline image — the full modal)
+// Alt: Blocker Remediation modal with Baseline and Revisit panels and navigation buttons
+
+=== Submit a remediation
+
+. Open Blocker Remediation from the flagged step, or from the *⋮* menu on the relevant step.
+. If the issue originated on an earlier step, use the navigation buttons to move to that step.
+. Select the correct element from the *Revisit* screenshot.
+. Select *Submit*.
+
+After submission, a new version of the Test Case is created. The updated definition applies to subsequent Test Runs on devices with the same model and OS version. Only one step per device model can be remediated in a single Test Run; additional fixes require a rerun. Once a remediation is submitted, the step cannot be re-resolved in the same session.
 
 == Live remediation
 Live remediation allows users to resolve a blocker during an active Test Run without ending execution. It is available for Scriptless Test Runs. Contact your account manager or Kobiton Support to enable it for your organization.
