@@ -64,6 +64,48 @@ From this view, users can:
 
 Test case details reflect the current version of the test case.
 
+==== Delete test steps
+
+Test steps can be removed when they are unwanted or were performed by mistake during the baseline session.
+
+. In the *Test Steps* section, select the check box next to each step to remove. Multiple steps can be selected at once.
+. Select the *Trash* icon to remove the selected steps.
+. Select *Save*.
+
+Changes only apply after selecting *Save*. Saved changes are written to a new version of the test case. Previous versions remain accessible from the *Test Case Version* dropdown.
+
+// SCREENSHOT 1 — delete-test-steps-checkbox.png
+// Test Steps section with check boxes selected next to one or more steps, and the Trash icon visible.
+// Source: https://kobiton.atlassian.net/wiki/spaces/~712020a45a4c9777b24ef4a7587eaf667c0fcd/pages/4764565813
+// (page "Manage a Test Case [Review]", checkbox-and-trash screenshot in the Delete test steps subsection)
+// Alt: Test Steps section with a step selected by check box and the Trash icon visible
+
+==== Edit text in test steps
+
+Test steps that use the *Enter text* action support inline text editing. This is typically used to substitute different input values, such as for data-driven testing.
+
+. In the *Test Steps* section, hover over an *Enter text* step until a context box appears.
+. Hover over the text inside the context box until the cursor changes to an edit icon, then select the text.
+. Edit the input text.
+. Move the cursor outside the context box. A confirmation message appears.
+. Select *Save*.
+
+Changes only apply after selecting *Save*. Saved changes are written to a new version of the test case.
+
+// SCREENSHOT 2 — edit-test-step-text.png
+// Enter text step with the context box open and the text in edit mode.
+// Source: https://kobiton.atlassian.net/wiki/spaces/~712020a45a4c9777b24ef4a7587eaf667c0fcd/pages/4764565813
+// (page "Manage a Test Case [Review]", edit-mode close-up screenshot in the Data-driven testing subsection)
+// Alt: Enter text test step in edit mode with the context box open
+
+==== Remediate test steps
+
+Test steps that use the *Touch* action can require remediation when the platform cannot reliably select the target element. Remediation is performed from Session Explorer and updates the Test Case definition.
+
+For the full procedure, see xref:test-management:remediations.adoc[Remediations].
+
+Submitting a remediation creates a new version of the test case.
+
 == Editing and versioning
 
 Changes to a test case create new versions.
