@@ -49,6 +49,7 @@ Capabilities with the `kobiton:` prefix cannot be used without the prefix.
 * <<_kobtionsessiontags,kobiton:sessionTags>>
 * <<_kobitonuseconfiguration,kobiton:useConfiguration>>
 * <<_waitForIdle,kobiton:waitForIdle>>
+* <<_web_find,kobiton:web-find>>
 * <<_work_app,kobiton:workApp>>
 * <<_xpath2,kobiton:xpath2>>
 
@@ -229,7 +230,7 @@ capabilities.setCapability("kobiton:includeSystemWindows", true);
 Include the `visible` attribute in the XML tree. Default is `false`.
 
 [NOTE]
-Enabling this capability significantly slows session performance.
+Enabling this capability significantly reduces session performance.
 
 * *Type:* `boolean`
 * *Required capabilities:* None
@@ -247,7 +248,7 @@ capabilities.setCapability("kobiton:includeVisible", true);
 The passcode value used to unlock the device, paired with xref:_passcodeType[].
 
 * *Type:* `string`
-* *Required capabilities:* None
+* *Required capabilities:* `kobiton:passcodeType`
 * *Optional capabilities:* None
 
 .Example
@@ -259,10 +260,10 @@ capabilities.setCapability("kobiton:passcodeKey", "1234");
 [#_passcodeType]
 === `kobiton:passcodeType`
 
-The passcode type. Use `PIN` or `PASSWORD`.
+The device passcode type, paired with xref:_passcodeKey[]. Use `PIN` or `PASSWORD`.
 
 * *Type:* `string`
-* *Required capabilities:* None
+* *Required capabilities:* `kobiton:passcodeKey`
 * *Optional capabilities:* None
 
 .Example
@@ -274,7 +275,7 @@ capabilities.setCapability("kobiton:passcodeType", "PIN");
 [#_runtime]
 === `kobiton:runtime`
 
-Configure the automation runtime that executes the test. Values are `xium` or `appium`. Default is `xium`.
+Configure the automation runtime that executes the test. Values are `xium` (Xium) or `appium` (Basic Appium 2). Default is `xium`.
 
 * *Type:* `string`
 * *Required capabilities:* None
@@ -366,10 +367,10 @@ Waits for the UI to become idle before continuing, equivalent to `appium:waitFor
 capabilities.setCapability("kobiton:waitForIdle", true);
 ----
 
-[#_kobitonwebfind]
+[#_web_find]
 === `kobiton:web-find`
 
-Search every available web context during an Appium find call. For more information, see xref:automation-testing:capabilities/add-web-find.adoc[].
+Search every available web context during an Appium find call. For more information, see xref:automation-testing:capabilities/add-web-find.adoc[window=read-later].
 
 * *Type:* `string`
 * *Required capabilities:* None
@@ -392,7 +393,7 @@ include::partial$work-profile-capability.adoc[]
 [#_xpath2]
 === `kobiton:xpath2`
 
-Enable xpath2 searches on all supported device platforms. Default is `false`.
+Enable XPath 2.0 searches on all supported device platforms. Default is `false`.
 
 * *Type:* `boolean`
 * *Required capabilities:* None
