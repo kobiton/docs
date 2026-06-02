@@ -85,9 +85,59 @@ For each test run, select the *⋮* menu to access these actions:
 
 === Test Run details
 
-The Test Run details view provides information about a specific execution, including the test definition used, target devices, and overall status.
+The Test Run Results page provides full information about a single test run, including configuration, execution progress, validation results, and access to individual sessions.
 
-From this view, users can review execution outcomes and navigate to related execution sessions.
+The top of the page summarizes:
+
+* Application version, test run name, ID, and creator
+* OS and number of devices in the run
+* Created date and elapsed time
+* Counts for *Crash* and *Accessibility* findings, which can be selected to filter the revisit executions grid
+
+Below the summary, a grid displays the status of each test case on each device. Statuses refresh automatically as execution progresses. See *Execution status* below for a list of statuses.
+
+Below each device's photo and model in the grid, a device-level status indicator displays the device's overall progress: *Action Completed*, *Action Needed*, or *Success*.
+
+The run is complete when every cell in the grid shows a non-*Running* status.
+// VERIFY: confirm how run completion is signaled, including the relationship between per-cell statuses, device-level indicators, and Camera Roll labels.
+
+To open the session for a specific cell, select its status. This navigates to the corresponding revisit session in Session Explorer, where execution details, screenshots, and step-by-step playback are available.
+
+Each test case row in the grid also displays a set of icons:
+
+* A lock icon, if the test case contains sensitive data.
+* *View Test Case Details* — opens the Test Case Details page for the test case.
+* *View Camera Roll* — opens the Camera Roll view for the test case.
+
+==== Automatic validations
+
+During execution, Kobiton automatically checks for *Crash* and *Accessibility* findings. The number of instances for each appears at the top of the Test Run Results page and can be selected to filter the grid to executions that contain those findings.
+// VERIFY: confirm whether Response Time findings are also surfaced on the Test Run Results page, and if so, how (count, icon, filter).
+
+==== Camera Roll
+
+Camera Roll is a visual comparison view that places the test case steps side-by-side with the steps actually executed during each test run session. It is used to review issues, confirm execution behavior, and access remediation when a blocker is encountered.
+
+To open Camera Roll, select the *View Camera Roll* icon on a test case row in the Test Run Results grid.
+
+Each device in Camera Roll is labeled with a status indicator: *Action Needed*, *Success*, or *Baseline*.
+
+In Camera Roll:
+
+* Expand an individual session to view the executed test steps. Only completed sessions can be expanded.
+* If a blocker is encountered, select *Resolve Blocker* to remediate the affected step in Session Explorer. For the full remediation procedure, see xref:test-management:remediations.adoc[Remediations].
+
+// SCREENSHOT 3 — test-run-results-summary.png
+// Test Run Results page header showing app version, test name, ID, creator, OS/device count, created date, elapsed, Crash count, Accessibility count.
+// Source: https://kobiton.atlassian.net/wiki/spaces/~712020a45a4c9777b24ef4a7587eaf667c0fcd/pages/4764566143
+// (page "Review test run results [Review]", General information close-up screenshot)
+// Alt: Test Run Results header with general information fields
+
+// SCREENSHOT 4 — camera-roll-view.png
+// Camera Roll view with side-by-side comparison of test case steps and executed steps.
+// Source: https://kobiton.atlassian.net/wiki/spaces/~712020a45a4c9777b24ef4a7587eaf667c0fcd/pages/4764566143
+// (page "Review test run results [Review]", Camera Roll full-page screenshot)
+// Alt: Camera Roll view showing test case steps alongside executed steps
 
 == Execution status
 
