@@ -14,13 +14,74 @@ A test run can be created using either a single test case or a test suite. Durin
 
 Once started, the platform executes the test cases automatically on the selected devices.
 
+The following fields are available on the Test Run Setup screen:
+
+[cols="1,3"]
+|===
+| Field | Description
+
+| *Name*
+| Required. A label for the test run.
+
+| *Description*
+| Optional. Free-text context for the test run.
+
+| *Test Case* or *Test Suite*
+| Required. Select one test case or one test suite to execute. Select *Customize* to choose a specific test case version, or to select and version the individual test cases within a suite. The latest version is selected by default.
+
+| *Application Versions*
+| Appears after the test case or test suite is selected. If multiple application versions exist, a dropdown is shown.
+
+| *Device Bundle* or *Individual Devices*
+| Required. See the device selection guidance below.
+
+| *Device Allocation Strategy*
+| Applies only when running a test suite. Controls how test cases are distributed across the selected devices. Options are *All Permutations* (run each test case on each device) and *Random Allocation* (run each test case once on a randomly chosen device from the selection).
+|===
+
+Two options exist for selecting target devices, and they are mutually exclusive.
+
+*Device Bundle* runs the test on a pre-built group of devices. The *NOVA Recommended Devices* bundle is created by the system and is available by default. Custom bundles can be created from the device bundles area. Select *Customize* on a bundle to choose which devices in the bundle the test should target.
+
+*Individual Devices* allows selecting specific devices from a dropdown. Only online public and private devices assigned to the current Team appear in the list. Offline devices are not selectable.
+
+Test runs can also be started directly from a test case or test suite:
+
+* From *Test Cases*, select the *Play* icon on a Test Case details page, or open the *⋮* menu on a test case in the list and choose *Run Test Case*.
+* From *Test Suites*, open the *⋮* menu on a test suite in the list and choose *Run Test Suite*.
+
+In each case, the Test Run Setup screen opens with the test case or test suite already selected.
+
+// SCREENSHOT 1 — test-run-setup.png
+// Full Test Run Setup screen showing the Name, Description, Test Case/Suite, Application Versions, Device Bundle/Individual Devices, and Device Allocation Strategy fields.
+// Source: https://kobiton.atlassian.net/wiki/spaces/~712020a45a4c9777b24ef4a7587eaf667c0fcd/pages/4764566004
+// (page "Create and manage a test run [Review]", second inline image — the full Test Run Setup screen)
+// Alt: Test Run Setup screen with all configuration fields visible
+
 == Manage test runs
 
 Test runs are managed through Test Management in the platform.
 
 === Test Run list
 
-The Test Run list displays all test runs associated with the account. From this view, users can review execution status, identify completed or in-progress runs, and access detailed results.
+The Test Run list displays all test runs available to the selected Team. From this view, users can review execution status, identify completed or in-progress runs, and access detailed results.
+// VERIFY: confirm Test Run list is Team-scoped (not account-scoped). Update wording if scoping differs.
+
+Use the search field at the top of the list to find test runs by name, tags, OS, creator, or creation date.
+
+Select the test run *ID* to open the Test Run Results page.
+
+For each test run, select the *⋮* menu to access these actions:
+
+* *Rerun Test Run* — create a new test run with the same configuration.
+* *Terminate Test Run* — stop all running revisit sessions for the run.
+* *Delete Test Run* — remove the test run.
+
+// SCREENSHOT 2 — test-run-list-actions.png
+// Test Run list page with the 3-dot menu open on a row, showing Rerun, Terminate, and Delete actions.
+// Source: https://kobiton.atlassian.net/wiki/spaces/~712020a45a4c9777b24ef4a7587eaf667c0fcd/pages/4764566004
+// (page "Create and manage a test run [Review]", the per-row action menu screenshot in the Manage a test run section)
+// Alt: Test Run list with the per-row action menu open showing Rerun, Terminate, and Delete
 
 === Test Run details
 
@@ -30,9 +91,29 @@ From this view, users can review execution outcomes and navigate to related exec
 
 == Execution status
 
-Each test run reflects the outcome of execution across devices.
+Each device executing a test case in a test run reports its own status. The Test Run Results page displays these statuses in a grid that updates as execution progresses.
 
-Common statuses indicate whether execution completed successfully, failed due to an application issue, or requires user action before it can continue.
+[cols="1,3"]
+|===
+| Status | Meaning
+
+| *Running*
+| The revisit execution has not started yet, or is in progress.
+
+| *Success*
+| The revisit execution completed without error.
+
+| *Failed*
+| The revisit execution failed because the app under test crashed.
+
+| *Need Action*
+| The AI encountered a blocker and Blocker Remediation is required.
+
+| *Error*
+| The revisit execution failed due to a Kobiton system issue.
+|===
+
+When a status appears with a fractional indicator, such as `4/4` or `2/3`, the fraction reflects the number of devices currently in that status out of the total number of devices in the run.
 
 == Rerun a test run
 
