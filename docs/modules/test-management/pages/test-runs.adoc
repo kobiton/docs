@@ -1,18 +1,18 @@
-= Test runs
+= Test Runs
 
 == Overview
 
-A test run represents a single execution of a test case or test suite on one or more devices.
+A Test Run represents a single execution of a Test Case or Test Suite on one or more devices.
 
-Test runs apply an existing test definition to selected devices and record the outcome of that execution. Each test run is tracked independently and retains its own results and execution data.
+Test Runs apply an existing test definition to selected devices and record the outcome of that execution. Each Test Run is tracked independently and retains its own results and execution data.
 
-== Create a test run
+== Create a Test Run
 
-Test runs are created from Test Management.
+Test Runs are created from Test Management.
 
-A test run can be created using either a single test case or a test suite. During setup, users select the test definition, application version, and target devices.
+A Test Run can be created using either a single Test Case or a Test Suite. During setup, users select the test definition, application version, and target devices.
 
-Once started, the platform executes the test cases automatically on the selected devices.
+Once started, the platform executes the Test Cases automatically on the selected devices.
 
 The following fields are available on the Test Run Setup screen:
 
@@ -21,22 +21,22 @@ The following fields are available on the Test Run Setup screen:
 | Field | Description
 
 | *Name*
-| Required. A label for the test run.
+| Required. A label for the Test Run.
 
 | *Description*
-| Optional. Free-text context for the test run.
+| Optional. Free-text context for the Test Run.
 
 | *Test Case* or *Test Suite*
-| Required. Select one test case or one test suite to execute. Select *Customize* to choose a specific test case version, or to select and version the individual test cases within a suite. The latest version is selected by default.
+| Required. Select one Test Case or one Test Suite to execute. Select *Customize* to choose a specific Test Case version, or to select and version the individual Test Cases within a suite. The latest version is selected by default.
 
 | *Application Versions*
-| Appears after the test case or test suite is selected. If multiple application versions exist, a dropdown is shown.
+| Appears after the Test Case or Test Suite is selected. If multiple application versions exist, a dropdown is shown.
 
 | *Device Bundle* or *Individual Devices*
 | Required. See the device selection guidance below.
 
 | *Device Allocation Strategy*
-| Applies only when running a test suite. Controls how test cases are distributed across the selected devices. Options are *All Permutations* (run each test case on each device) and *Random Allocation* (run each test case once on a randomly chosen device from the selection).
+| Applies only when running a Test Suite. Controls how Test Cases are distributed across the selected devices. Options are *All Permutations* (run each Test Case on each device) and *Random Allocation* (run each Test Case once on a randomly chosen device from the selection).
 |===
 
 Two options exist for selecting target devices, and they are mutually exclusive.
@@ -45,56 +45,56 @@ Two options exist for selecting target devices, and they are mutually exclusive.
 
 *Individual Devices* allows selecting specific devices from a dropdown. Only online public and private devices assigned to the current Team appear in the list. Offline devices are not selectable.
 
-Test runs can also be started directly from a test case or test suite:
+Test Runs can also be started directly from a Test Case or Test Suite:
 
-* From *Test Cases*, select the *Play* icon on a Test Case details page, or open the *⋮* menu on a test case in the list and choose *Run Test Case*.
-* From *Test Suites*, open the *⋮* menu on a test suite in the list and choose *Run Test Suite*.
+* From *Test Cases*, select the *Play* icon on a Test Case details page, or open the *⋮* menu on a Test Case in the list and choose *Run Test Case*.
+* From *Test Suites*, open the *⋮* menu on a Test Suite in the list and choose *Run Test Suite*.
 
-In each case, the Test Run Setup screen opens with the test case or test suite already selected.
+In each case, the Test Run Setup screen opens with the Test Case or Test Suite already selected.
 
 // SCREENSHOT 1 — test-run-setup.png
 // Full Test Run Setup screen showing the Name, Description, Test Case/Suite, Application Versions, Device Bundle/Individual Devices, and Device Allocation Strategy fields.
 // Source: https://kobiton.atlassian.net/wiki/spaces/~712020a45a4c9777b24ef4a7587eaf667c0fcd/pages/4764566004
-// (page "Create and manage a test run [Review]", second inline image — the full Test Run Setup screen)
+// (page "Create and manage a Test Run [Review]", second inline image — the full Test Run Setup screen)
 // Alt: Test Run Setup screen with all configuration fields visible
 
-== Manage test runs
+== Manage Test Runs
 
-Test runs are managed through Test Management in the platform.
+Test Runs are managed through Test Management in the platform.
 
 === Test Run list
 
-The Test Run list displays all test runs available to the selected Team. From this view, users can review execution status, identify completed or in-progress runs, and access detailed results.
+The Test Run list displays all Test Runs available to the selected Team. From this view, users can review execution status, identify completed or in-progress runs, and access detailed results.
 // VERIFY: confirm Test Run list is Team-scoped (not account-scoped). Update wording if scoping differs.
 
-Use the search field at the top of the list to find test runs by name, tags, OS, creator, or creation date.
+Use the search field at the top of the list to find Test Runs by name, tags, OS, creator, or creation date.
 
-Select the test run *ID* to open the Test Run Results page.
+Select the Test Run *ID* to open the Test Run Results page.
 
-For each test run, select the *⋮* menu to access these actions:
+For each Test Run, select the *⋮* menu to access these actions:
 
-* *Rerun Test Run* — create a new test run with the same configuration.
+* *Rerun Test Run* — create a new Test Run with the same configuration.
 * *Terminate Test Run* — stop all running revisit sessions for the run.
-* *Delete Test Run* — remove the test run.
+* *Delete Test Run* — remove the Test Run.
 
 // SCREENSHOT 2 — test-run-list-actions.png
 // Test Run list page with the 3-dot menu open on a row, showing Rerun, Terminate, and Delete actions.
 // Source: https://kobiton.atlassian.net/wiki/spaces/~712020a45a4c9777b24ef4a7587eaf667c0fcd/pages/4764566004
-// (page "Create and manage a test run [Review]", the per-row action menu screenshot in the Manage a test run section)
+// (page "Create and manage a Test Run [Review]", the per-row action menu screenshot in the Manage a Test Run section)
 // Alt: Test Run list with the per-row action menu open showing Rerun, Terminate, and Delete
 
 === Test Run details
 
-The Test Run Results page provides full information about a single test run, including configuration, execution progress, validation results, and access to individual sessions.
+The Test Run Results page provides full information about a single Test Run, including configuration, execution progress, validation results, and access to individual sessions.
 
 The top of the page summarizes:
 
-* Application version, test run name, ID, and creator
+* Application version, Test Run name, ID, and creator
 * OS and number of devices in the run
 * Created date and elapsed time
 * Counts for *Crash* and *Accessibility* findings, which can be selected to filter the revisit executions grid
 
-Below the summary, a grid displays the status of each test case on each device. Statuses refresh automatically as execution progresses. See *Execution status* below for a list of statuses.
+Below the summary, a grid displays the status of each Test Case on each device. Statuses refresh automatically as execution progresses. See *Execution status* below for a list of statuses.
 
 Below each device's photo and model in the grid, a device-level status indicator displays the device's overall progress: *Action Completed*, *Action Needed*, or *Success*.
 
@@ -103,11 +103,11 @@ The run is complete when every cell in the grid shows a non-*Running* status.
 
 To open the session for a specific cell, select its status. This navigates to the corresponding revisit session in Session Explorer, where execution details, screenshots, and step-by-step playback are available.
 
-Each test case row in the grid also displays a set of icons:
+Each Test Case row in the grid also displays a set of icons:
 
-* A lock icon, if the test case contains sensitive data.
-* *View Test Case Details* — opens the Test Case Details page for the test case.
-* *View Camera Roll* — opens the Camera Roll view for the test case.
+* A lock icon, if the Test Case contains sensitive data.
+* *View Test Case Details* — opens the Test Case Details page for the Test Case.
+* *View Camera Roll* — opens the Camera Roll view for the Test Case.
 
 ==== Automatic validations
 
@@ -116,9 +116,9 @@ During execution, Kobiton automatically checks for *Crash* and *Accessibility* f
 
 ==== Camera Roll
 
-Camera Roll is a visual comparison view that places the test case steps side-by-side with the steps actually executed during each test run session. It is used to review issues, confirm execution behavior, and access remediation when a blocker is encountered.
+Camera Roll is a visual comparison view that places the Test Case steps side-by-side with the steps actually executed during each Test Run session. It is used to review issues, confirm execution behavior, and access remediation when a blocker is encountered.
 
-To open Camera Roll, select the *View Camera Roll* icon on a test case row in the Test Run Results grid.
+To open Camera Roll, select the *View Camera Roll* icon on a Test Case row in the Test Run Results grid.
 
 Each device in Camera Roll is labeled with a status indicator: *Action Needed*, *Success*, or *Baseline*.
 
@@ -130,18 +130,18 @@ In Camera Roll:
 // SCREENSHOT 3 — test-run-results-summary.png
 // Test Run Results page header showing app version, test name, ID, creator, OS/device count, created date, elapsed, Crash count, Accessibility count.
 // Source: https://kobiton.atlassian.net/wiki/spaces/~712020a45a4c9777b24ef4a7587eaf667c0fcd/pages/4764566143
-// (page "Review test run results [Review]", General information close-up screenshot)
+// (page "Review Test Run results [Review]", General information close-up screenshot)
 // Alt: Test Run Results header with general information fields
 
 // SCREENSHOT 4 — camera-roll-view.png
-// Camera Roll view with side-by-side comparison of test case steps and executed steps.
+// Camera Roll view with side-by-side comparison of Test Case steps and executed steps.
 // Source: https://kobiton.atlassian.net/wiki/spaces/~712020a45a4c9777b24ef4a7587eaf667c0fcd/pages/4764566143
-// (page "Review test run results [Review]", Camera Roll full-page screenshot)
-// Alt: Camera Roll view showing test case steps alongside executed steps
+// (page "Review Test Run results [Review]", Camera Roll full-page screenshot)
+// Alt: Camera Roll view showing Test Case steps alongside executed steps
 
 == Execution status
 
-Each device executing a test case in a test run reports its own status. The Test Run Results page displays these statuses in a grid that updates as execution progresses.
+Each device executing a Test Case in a Test Run reports its own status. The Test Run Results page displays these statuses in a grid that updates as execution progresses.
 
 [cols="1,3"]
 |===
@@ -165,16 +165,16 @@ Each device executing a test case in a test run reports its own status. The Test
 
 When a status appears with a fractional indicator, such as `4/4` or `2/3`, the fraction reflects the number of devices currently in that status out of the total number of devices in the run.
 
-== Rerun a test run
+== Rerun a Test Run
 
-Test runs can be rerun using the same configuration.
+Test Runs can be rerun using the same configuration.
 
 Reruns repeat the original execution with the same test definition, devices, and settings. This is commonly used after remediation or when validating execution behavior.
 
-Reruns do not replace the original test run. Each execution is a separate session and details can be found in Session Explorer.
+Reruns do not replace the original Test Run. Each execution is a separate session and details can be found in Session Explorer.
 
 == Related pages
 
-* xref:test-management:test-cases.adoc[Test cases]
-* xref:test-management:test-suites.adoc[Test suites]
+* xref:test-management:test-cases.adoc[Test Cases]
+* xref:test-management:test-suites.adoc[Test Suites]
 * xref:test-management:remediations.adoc[Remediations]

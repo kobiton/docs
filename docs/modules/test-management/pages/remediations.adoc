@@ -10,7 +10,7 @@ Remediation allows the test definition to be corrected without recreating the or
 
 == When remediation is required
 
-When a test run encounters a blocker, its status indicates that user action is required.
+When a Test Run encounters a blocker, its status indicates that user action is required.
 
 Remediation is triggered when an automated execution cannot reliably complete a step. This typically occurs when a UI element cannot be identified due to layout changes, screen size differences, or other variations across devices.
 
@@ -18,11 +18,11 @@ When this happens, execution is paused until the blocker is resolved.
 
 Remediation is an expected part of maintaining reliable automated execution, particularly when tests are run across multiple devices or application versions.
 
-== Remediate a test run
+== Remediate a Test Run
 
-When a test run encounters a blocker, its status reflects that action is required.
+When a Test Run encounters a blocker, its status reflects that action is required.
 
-From the test run results, users can review where execution stopped and access the associated session. Remediation updates the test case definition so that future executions can proceed past the blocked step.
+From the Test Run results, users can review where execution stopped and access the associated session. Remediation updates the test case definition so that future executions can proceed past the blocked step.
 
 After remediation is submitted, the test can be rerun using the same configuration.
 
@@ -116,7 +116,7 @@ If you exit the session manually or allow the countdown to expire, the Test Run 
 
 == Pop-up Handler remediation
 
-Pop-up Handler remediation helps handle dynamic or inconsistent pop-ups that appear during Scriptless test runs. Instead of failing when an unexpected screen appears, you can mark the pop-up as optional and define how to dismiss it without writing scripts.
+Pop-up Handler remediation helps handle dynamic or inconsistent pop-ups that appear during Scriptless Test Runs. Instead of failing when an unexpected screen appears, you can mark the pop-up as optional and define how to dismiss it without writing scripts.
 
 Use Pop-up Handler remediation when:
 
@@ -138,7 +138,7 @@ image::popup-handler.png[width=700,alt="Popup Handler tab in the Blocker Remedia
 
 === Handle a pop-up
 
-After a test run completes with a blocker caused by a pop-up, open the Blocker Remediation window. A detection message identifies which session contains the pop-up.
+After a Test Run completes with a blocker caused by a pop-up, open the Blocker Remediation window. A detection message identifies which session contains the pop-up.
 
 . Select the *Popup Handler* tab.
 . Under *Choose the screen with the pop-up*, select *Baseline* or *Revisit*.
@@ -155,10 +155,10 @@ Matched text is highlighted on the screenshot. If no match is found, adjust the 
 
 Remediation updates the test case definition.
 
-Once remediation is complete, rerunning the test validates that execution can proceed using the updated definition. Previous test runs remain unchanged and available for reference.
+Once remediation is complete, rerunning the test validates that execution can proceed using the updated definition. Previous Test Runs remain unchanged and available for reference.
 
 == Related pages
 
-* xref:test-management:test-runs.adoc[Test runs]
-* xref:test-management:test-reruns.adoc[Test reruns]
+* xref:test-management:test-runs.adoc[Test Runs]
+* xref:test-management:test-reruns.adoc[Test Reruns]
 * xref:scriptless-automation:best-practices.adoc[Best practices]
