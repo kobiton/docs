@@ -26,8 +26,7 @@ Converting a manual session to a Test Case unlocks additional capabilities, incl
 
 After conversion, the option to view the Test Case becomes available. Selecting this opens the Test Case details view, where the captured steps and interactions can be reviewed and managed.
 
-// Screenshot suggestion:
-// Show the button text change from "Convert to Test Case" to "View Test Case"
+image::tm-newtcscreen.png[width=700,alt="Create a New Test Case in Test Management]
 
 == Manage Test Cases
 
@@ -77,12 +76,6 @@ Test steps can be deleted when they are no longer needed.
 
 Changes apply only after you select *Save*. Saved changes create a new version of the Test Case. Previous versions remain available from the *Test Case Version* dropdown.
 
-// SCREENSHOT 1 — delete-test-steps-checkbox.png
-// Test Steps section with check boxes selected next to one or more steps, and the Trash icon visible.
-// Source: https://kobiton.atlassian.net/wiki/spaces/~712020a45a4c9777b24ef4a7587eaf667c0fcd/pages/4764565813
-// (page "Manage a Test Case [Review]", checkbox-and-trash screenshot in the Delete test steps subsection)
-// Alt: Test Steps section with a step selected by check box and the Trash icon visible
-
 ==== Edit text in test steps
 
 Test steps that use the *Enter Text* action support inline text editing. Use this option to update the text value entered during the step.
@@ -95,11 +88,7 @@ Test steps that use the *Enter Text* action support inline text editing. Use thi
 
 Changes apply only after you select *Save*. Saved changes create a new version of the Test Case.
 
-// SCREENSHOT 2 — edit-test-step-text.png
-// Enter text step with the context box open and the text in edit mode.
-// Source: https://kobiton.atlassian.net/wiki/spaces/~712020a45a4c9777b24ef4a7587eaf667c0fcd/pages/4764565813
-// (page "Manage a Test Case [Review]", edit-mode close-up screenshot in the Data-driven testing subsection)
-// Alt: Enter text test step in edit mode with the context box open
+image::tm-edit-text.png[width=700,alt="Enter text test step in edit mode with the context box open"]
 
 [#_remediate_test_steps]
 ==== Remediate test steps
@@ -142,9 +131,6 @@ Using Scriptless automation does not require generating or maintaining Appium sc
 If a Test Case is modified after an Appium script has been generated, the script must be regenerated to reflect the updated changes.
 
 For supported languages and frameworks, see xref:test-management:generate-appium.adoc[Generate an Appium script].
-
-// Screenshot:
-// Appium UI is documented on the linked page, not here
 
 == Related pages
 

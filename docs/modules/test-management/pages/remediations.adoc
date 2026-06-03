@@ -26,9 +26,6 @@ From the Test Run results, users can review where execution stopped and access t
 
 After remediation is submitted, the test can be rerun using the same configuration.
 
-// Screenshot suggestion:
-// Test Run results view showing a blocked step and remediation entry point
-
 == Remediate in Session Explorer
 
 Session Explorer provides a detailed view of execution behavior. Use it to review where a Test Run stopped, compare the baseline to what the device showed during execution, and submit a correction to the Test Case.
@@ -37,20 +34,11 @@ Session Explorer provides a detailed view of execution behavior. Use it to revie
 
 From the Test Run Results page, select the *Action Needed* status on the affected run to open Session Explorer. In the Session Timeline located at the bottom of the screen, the blocked step is outlined in red and labeled *BLOCKED*. Select the blue checkmark icon for the blocked step to open the Blocker Remediation window. The window opens to the *Element Selection* tab by default.
 
+image::camera-roll-resolve.png[width=600,alt="Session Timeline with a red blocker icon and Resolve Blocker option"]
+
 You can also start remediation from an individual touch step in a Test Case. For more information, see xref:test-management:test-cases.adoc#_remediate_test_steps[Remediate test steps].
 
 image::test-run-result-needs-action.png[width=600,alt="Test Run Results row with Actions Needed status"]
-
-// SCREENSHOT 2 — session-timeline-resolve-blocker.png
-// Session Timeline with the red blocker icon on a step and the "Resolve Blocker" option visible.
-// Source: same page as Screenshot 1, second inline image
-// Alt: Session Timeline with a red blocker icon and Resolve Blocker option
-
-// SCREENSHOT 3 — step-menu-remediate-test-step.png
-// Per-step ⋮ menu showing "Remediate Test Step".
-// Source: https://kobiton.atlassian.net/wiki/spaces/KOBITON/pages/4296704002
-// (page "IQS Allow Remediation at any test step", the "After" image)
-// Alt: Step-level menu open with Remediate Test Step highlighted
 
 === Review the blocked step
 
