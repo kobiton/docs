@@ -16,13 +16,15 @@ After you run a manual session with capture enabled, Kobiton can convert the cap
 You can convert a session to a Test Case from either of the following locations:
 
 * Session Explorer, after a completed manual session
-* Test Management, where completed manual sessions are available for conversion
+* Test Management, by selecting *New Test Case* and choosing from the list of completed manual sessions
 
-In both cases, the test case is created from a captured manual session. The captured interactions from the baseline session define the test flow.
+In Test Management, completed manual sessions are listed from newest to oldest. Select the session you want to convert, then select *Convert*.
 
-Converting a manual session to Test Case unlocks generating an Appium script and running across other devices.
+In both cases, the Test Case is created from a captured manual session. The captured interactions from the baseline session define the test flow.
 
-After conversion, the option to view the test case becomes available. Selecting this opens the Test Case details view, where the captured steps and interactions can be reviewed and managed.
+Converting a manual session to a Test Case unlocks additional capabilities, including generating an Appium script and running the test across other devices.
+
+After conversion, the option to view the Test Case becomes available. Selecting this opens the Test Case details view, where the captured steps and interactions can be reviewed and managed.
 
 // Screenshot suggestion:
 // Show the button text change from "Convert to Test Case" to "View Test Case"
@@ -66,13 +68,14 @@ Test case details reflect the current version of the test case.
 
 ==== Delete test steps
 
-Test steps can be removed when they are unwanted or were performed by mistake during the baseline session.
+Test steps can be deleted when they are no longer needed.
 
-. In the *Test Steps* section, select the check box next to each step to remove. Multiple steps can be selected at once.
-. Select the *Trash* icon to remove the selected steps.
+. In the *Test Steps* section, select the *⋮* menu for the step you want to delete.
+. Select *Delete Test Step*
+. Repeat these steps for each step you want to delete.
 . Select *Save*.
 
-Changes only apply after selecting *Save*. Saved changes are written to a new version of the test case. Previous versions remain accessible from the *Test Case Version* dropdown.
+Changes apply only after you select *Save*. Saved changes create a new version of the Test Case. Previous versions remain available from the *Test Case Version* dropdown.
 
 // SCREENSHOT 1 — delete-test-steps-checkbox.png
 // Test Steps section with check boxes selected next to one or more steps, and the Trash icon visible.
@@ -82,15 +85,15 @@ Changes only apply after selecting *Save*. Saved changes are written to a new ve
 
 ==== Edit text in test steps
 
-Test steps that use the *Enter text* action support inline text editing. This is typically used to substitute different input values, such as for data-driven testing.
+Test steps that use the *Enter Text* action support inline text editing. Use this option to update the text value entered during the step.
 
-. In the *Test Steps* section, hover over an *Enter text* step until a context box appears.
-. Hover over the text inside the context box until the cursor changes to an edit icon, then select the text.
-. Edit the input text.
-. Move the cursor outside the context box. A confirmation message appears.
+. In the *Test Steps* section, hover over the *Enter Text* label for the step you want to update.
+. In the preview window, select the edit icon.
+. Update the text value.
+. Select the checkmark icon to confirm the change. The edit icon changes to a checkmark while the text value is being edited.
 . Select *Save*.
 
-Changes only apply after selecting *Save*. Saved changes are written to a new version of the test case.
+Changes apply only after you select *Save*. Saved changes create a new version of the Test Case.
 
 // SCREENSHOT 2 — edit-test-step-text.png
 // Enter text step with the context box open and the text in edit mode.
