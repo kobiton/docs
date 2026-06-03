@@ -78,7 +78,7 @@ This capability cannot be used in Basic Appium 2 sessions.
 
 Select a baseline session to use for xref:_flexCorrect[].
 
-* *Type:* `string`
+* *Type:* `interger`
 * *Required capabilities:* xref:_flexCorrect[]
 * *Optional capabilities:* None
 
@@ -370,6 +370,9 @@ capabilities.setCapability("kobiton:waitForIdle", true);
 [#_web_find]
 === `kobiton:web-find`
 
+[NOTE]
+This capability cannot be used in Basic Appium 2 sessions.
+
 Search every available web context during an Appium find call. For more information, see xref:automation-testing:capabilities/add-web-find.adoc[window=read-later].
 
 * *Type:* `string`
@@ -511,7 +514,7 @@ capabilities.setCapability("deviceName", "iPhone 11*");
 
 The starting orientation of the device screen.
 
-* *Type:* `integer`
+* *Type:* `string`
 * *Required capabilities:* None
 * *Optional capabilities:* None
 
