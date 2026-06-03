@@ -39,11 +39,7 @@ From the Test Run Results page, select the *Action Needed* status on the affecte
 
 You can also start remediation from an individual touch step in a Test Case. For more information, see xref:test-management:test-cases.adoc#_remediate_test_steps[Remediate test steps].
 
-// SCREENSHOT 1 — test-run-results-needs-actions.png
-// Test Run Results page with a row showing "Needs Actions" status.
-// Source: https://kobiton.atlassian.net/wiki/spaces/~712020a45a4c9777b24ef4a7587eaf667c0fcd/pages/4764566315
-// (page "Resolve a blocker [Ready for Review]", first inline image)
-// Alt: Test Run Results row with Needs Actions status
+image::test-run-result-needs-action.png[width=600,alt="Test Run Results row with Actions Needed status"]
 
 // SCREENSHOT 2 — session-timeline-resolve-blocker.png
 // Session Timeline with the red blocker icon on a step and the "Resolve Blocker" option visible.
@@ -62,11 +58,7 @@ The Blocker Remediation modal displays the baseline screenshot alongside the scr
 
 Navigation buttons at the top of the modal move between test steps. Use these when a blocker appears on one step but the underlying issue started earlier in the flow. Only steps that use a touch action are reachable through navigation.
 
-// SCREENSHOT 4 — blocker-remediation-modal.png
-// Full Blocker Remediation modal with Baseline and Revisit panels and the navigation buttons at the top.
-// Source: https://kobiton.atlassian.net/wiki/spaces/~712020a45a4c9777b24ef4a7587eaf667c0fcd/pages/4764566315
-// (page "Resolve a blocker [Ready for Review]", third inline image — the full modal)
-// Alt: Blocker Remediation modal with Baseline and Revisit panels and navigation buttons
+image::blocker-remediation-modal.png[width=600,alt="Blocker Remediation modal with Baseline and Revisit panels and navigation buttons"]
 
 === Submit a remediation
 
@@ -86,7 +78,7 @@ Live remediation becomes available when a device in a Test Run encounters a bloc
 
 The timer runs independently per device. Execution pauses only for the affected device, and other devices in the same Test Run continue running. If the countdown expires before entry, the run follows standard blocker handling.
 
-image::live-remediation-countdown.png[Test Run Results showing a device in the Live 5:00 state]
+image::live-remediation-countdown.png[width=600,alt="Test Run Results showing a device in the Live 5:00 state"]
 
 === Entering a live remediation session
 
