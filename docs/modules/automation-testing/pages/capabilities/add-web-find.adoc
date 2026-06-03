@@ -1,0 +1,91 @@
+= Search all web contexts with `kobiton:web-find`
+:navtitle: Use `kobiton:web-find`
+
+`kobiton:web-find` extends the Appium find call to search across every available web context in the session.
+
+When the target element is found, the session automatically switches to the context containing it.
+
+== How `kobiton:web-find` works
+
+NOTE: This capability is only available for Xium sessions.
+
+A mobile app can expose multiple web contexts, such as multiple WebViews inside a native app.
+
+Without `kobiton:web-find`, a find call only searches the single web context the session is currently switched to. If the target element
+lives in a different web context, the call returns `Element not found`.
+
+When `kobiton:web-find` is set to `all`, Kobiton cycles through every available web context until the element is found or the timeout elapses:
+
+* On success, the session switches to the context containing the element. Use the returned element ID directly without another context switch.
+* On failure, the session reverts to the context it was in when the find call started.
+
+== Before you start
+
+`kobiton:web-find` only applies when the session is already in a web context. It does not search native contexts. To enter a web context, do one of the following:
+
+* Set `appium:autoWebview` to `true` to auto-switch to the WebView at session start. See xref:automation-testing:capabilities/available-capabilities.adoc#_autowebview[autoWebview].
+* Switch contexts manually using your Appium client's context API before the find call.
+
+== Configure the capability
+
+Add this capability to your desired capabilities:
+
+[cols="1,1"]
+|===
+| Capability | Value
+
+| `kobiton:web-find`
+| `all`
+|===
+
+Example (Node.js):
+
+[source,js]
+----
+const desiredCaps = {
+sessionName: 'Automation test session',
+sessionDescription: 'This is an example',
+deviceOrientation: 'portrait',
+captureScreenshots: true,
+browserName: 'safari',
+autoWebview: true,
+udid: 'xxxx',
+platformName: 'iOS',
+'kobiton:web-find': 'all',
+};
+----
+
+[NOTE]
+====
+In JavaScript object literals, quote the `kobiton:web-find` key. Unquoted, the colon in the key name is invalid syntax.
+====
+
+=== Example script
+
+A minimal Node.js test that uses `kobiton:web-find` to locate an element nested in a different web context:
+
+[source,js]
+----
+it('Context test', async () => {
+await driver.setImplicitWaitTimeout(5000);
+await driver.get('https://the-internet.herokuapp.com/nested_frames');
+await driver.sleep(3000);
+
+try {
+const elem = await driver.element('xpath', "//div[contains(., 'MIDDLE')]");
+console.log('Found element');
+} catch (err) {
+console.log('Cannot get element');
+console.log(err);
+}
+});
+----
+
+== When to omit the capability
+
+If you know which web context contains the target element, omit `kobiton:web-find` and switch to that context directly before the find call. The single-context search is faster than cycling through every context.
+
+== Related capabilities
+
+* xref:automation-testing:capabilities/add-flexcorrect.adoc[flexCorrect (Appium Self-Healing)] — corrects element selection when layouts change between runs. `flexCorrect` addresses element-layout drift; `kobiton:web-find` addresses web-context discovery.
+* xref:automation-testing:capabilities/available-capabilities.adoc#_autowebview[autoWebview] — auto-switches the session to a WebView context at start, satisfying the `kobiton:web-find` precondition.
