@@ -11,7 +11,7 @@ NOTE: This capability is only available for Xium sessions.
 
 A mobile app can expose multiple web contexts, such as multiple WebViews inside a native app.
 
-Without `kobiton:web-find`, a find call only searches the single web context the session is currently switched to. If the target element
+Without `kobiton:web-find` (default value `null`), a find call only searches the single web context the session is currently switched to. If the target element
 lives in a different web context, the call returns `Element not found`.
 
 When `kobiton:web-find` is set to `all`, Kobiton cycles through every available web context until the element is found or the timeout elapses:
