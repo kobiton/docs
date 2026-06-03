@@ -7,6 +7,8 @@ When the target element is found, the session automatically switches to the cont
 
 == How `kobiton:web-find` works
 
+NOTE: This capability is only available for Xium sessions.
+
 A mobile app can expose multiple web contexts, such as multiple WebViews inside a native app.
 
 Without `kobiton:web-find`, a find call only searches the single web context the session is currently switched to. If the target element
@@ -87,7 +89,3 @@ If you know which web context contains the target element, omit `kobiton:web-fin
 
 * xref:automation-testing:capabilities/add-flexcorrect.adoc[flexCorrect (Appium Self-Healing)] — corrects element selection when layouts change between runs. `flexCorrect` addresses element-layout drift; `kobiton:web-find` addresses web-context discovery.
 * xref:automation-testing:capabilities/available-capabilities.adoc#_autowebview[autoWebview] — auto-switches the session to a WebView context at start, satisfying the `kobiton:web-find` precondition.
-
-// VERIFY: Is `kobiton:web-find` supported in Basic Appium 2 sessions?
-
-// VERIFY: Does `kobiton:web-find` accept values other than `'all'`?

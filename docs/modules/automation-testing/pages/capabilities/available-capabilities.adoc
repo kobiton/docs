@@ -74,7 +74,7 @@ capabilities.setCapability("kobiton:app-install", "never");
 === `kobiton:baselineSessionId`
 
 [NOTE]
-This capability cannot be used in Basic Appium 2 sessions.
+This capability is only available in Xium sessions.
 
 Select a baseline session to use for xref:_flexCorrect[].
 
@@ -91,7 +91,7 @@ capabilities.setCapability("kobiton:baselineSessionId", 0000011);
 === `kobiton:captureScreenshots`
 
 [NOTE]
-This is not available for native and hybrid apps, as well as devices on Android 6.0 and earlier.
+This capability is not available for native and hybrid apps, as well as devices on Android 6.0 and earlier.
 
 Screenshots will be captured after each test step automatically. They'll be available in the xref:session-explorer:manage-sessions.adoc[session overview] after the test session.
 
@@ -181,7 +181,7 @@ capabilities.setCapability("kobiton:deviceTagType", "public");
 === `kobiton:flexCorrect`
 
 [NOTE]
-This capability cannot be used in Basic Appium 2 sessions.
+This capability is only available in Xium sessions.
 
 Automatically correct element selection when running a script on different devices. For more information, see xref:automation-testing:capabilities/add-flexcorrect.adoc[]
 
@@ -371,7 +371,7 @@ capabilities.setCapability("kobiton:waitForIdle", true);
 === `kobiton:web-find`
 
 [NOTE]
-This capability cannot be used in Basic Appium 2 sessions.
+This capability is only available in Xium sessions.
 
 Search every available web context during an Appium find call. For more information, see xref:automation-testing:capabilities/add-web-find.adoc[window=read-later].
 
