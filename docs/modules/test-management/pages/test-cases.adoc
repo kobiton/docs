@@ -1,10 +1,10 @@
-= Test cases
+= Test Cases
 
 == Overview
 
-A test case represents a reusable test flow created from a baseline session.
+A Test Case represents a reusable test flow created from a baseline session.
 
-Test cases store the interactions captured during a manual session and serve as the definition used for automated execution. Once created, a test case can be run repeatedly without recreating the original session.
+Test Cases store the interactions captured during a manual session and serve as the definition used for automated execution. Once created, a Test Case can be run repeatedly without recreating the original session.
 
 [#_convert_to_test_case]
 == Convert a session to a Test Case
@@ -29,26 +29,26 @@ After conversion, the option to view the Test Case becomes available. Selecting 
 // Screenshot suggestion:
 // Show the button text change from "Convert to Test Case" to "View Test Case"
 
-== Manage test cases
+== Manage Test Cases
 
-Test cases are managed through Test Management in the Kobiton platform.
+Test Cases are managed through Test Management in the Kobiton platform.
 
 === Test Case list
 
-The Test Case list provides an overview of the test cases available to the selected Team. To view test cases for another Team, switch Teams.
+The Test Case list provides an overview of the Test Cases available to the selected Team. To view Test Cases for another Team, switch Teams.
 
-From this view, users can locate test cases, review basic information, and open individual test cases for detailed review and management.
+From this view, users can locate Test Cases, review basic information, and open individual Test Cases for detailed review and management.
 
-Use the search bar at the top of the list to find a specific test case by name or ID.
+Use the search bar at the top of the list to find a specific Test Case by name or ID.
 
-The following actions are available for each test case in the list:
+The following actions are available for each Test Case in the list:
 
-* Select the test case ID to open the Test Case details view. Additional actions, such as generating an Appium script, are available there.
+* Select the Test Case ID to open the Test Case details view. Additional actions, such as generating an Appium script, are available there.
 * *Run Test Case* — create a new Test Run from the existing definition.
 * *Clone Test Case* — create a duplicate that can be modified independently.
-* *Delete Test Case* — remove the test case from the list and from any test suites it was assigned to.
+* *Delete Test Case* — remove the Test Case from the list and from any test suites it was assigned to.
 
-To create a new test case from a past session, select *New Test Case* in the Test Cases view. Completed manual sessions that have not yet been converted are available for selection.
+To create a new Test Case from a past session, select *New Test Case* in the Test Cases view. Completed manual sessions that have not yet been converted are available for selection.
 
 === Test Case details
 
@@ -58,13 +58,13 @@ From this view, users can:
 
 * Review captured test steps
 * Remediate test steps when element selection requires correction
-* Update test case metadata
-* Assign the test case to one or more test suites
-* Clone the test case
-* Delete the test case
+* Update Test Case metadata
+* Assign the Test Case to one or more test suites
+* Clone the Test Case
+* Delete the Test Case
 * Generate an Appium script
 
-Test case details reflect the current version of the test case.
+Test Case details reflect the current version of the Test Case.
 
 ==== Delete test steps
 
@@ -129,11 +129,9 @@ Changes to Test Case steps apply only after you select *Save*. Saving changes cr
 
 == Generate an Appium script
 
-=== What it is
+An Appium script can be generated from a Test Case.
 
-An Appium script can be generated from a test case.
-
-From the Test Case details view, users can generate an Appium script based on the captured interactions in the test case. This script represents the same test flow and can be used as a starting point for script-based automation.
+From the Test Case details view, users can generate an Appium script based on the captured interactions in the Test Case. This script represents the same test flow and can be used as a starting point for script-based automation.
 
 === When it’s used
 
@@ -141,7 +139,7 @@ Generated Appium scripts are typically used when test definitions need to be ext
 
 Using Scriptless automation does not require generating or maintaining Appium scripts.
 
-If a test case is modified after an Appium script has been generated, the script must be regenerated to reflect the updated changes.
+If a Test Case is modified after an Appium script has been generated, the script must be regenerated to reflect the updated changes.
 
 For supported languages and frameworks, see xref:test-management:generate-appium.adoc[Generate an Appium script].
 
