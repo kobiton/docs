@@ -1,7 +1,7 @@
-= Kobiton 4.26.1S Release Notes
-:navtitle: Kobiton 4.26.1S release notes
+= Kobiton 4.26.4S Release Notes
+:navtitle: Kobiton 4.26.4S release notes
 
-_May 15, 2026_
+_June 1, 2026_
 
 == deviceConnect service management migration to launchd
 
@@ -261,6 +261,7 @@ Instructions to connect to Standalone MCP server is coming soon.
 ** Standardized `SetLocale` behavior across iOS and Android
 ** iPad orientation now persists after language changes
 * *Basic Appium:* Fixed app installation failures when using app URLs.
+* *Native testing:* Fixed an issue where xcodebuild-based native iOS tests could intermittently fail to locate the target device.
 * *UI updates:*
 ** Additional apps installed after automation session start are now displayed in Session Overview
 ** Improved error message when no devices matched a wildcard
@@ -274,6 +275,7 @@ Instructions to connect to Standalone MCP server is coming soon.
 * Fixed issues with file push and retrieval behavior on devices.
 * Added support for recursive file pull.
 * Improved deviceConnect session cleanup when the CLI connects directly. Sessions now send close messages on completion so they are released cleanly.
+* The CLI `test run --stream` command now retrieves a device-signed app through the Portal signed-app API, preserving app entitlements (such as APNs) during streamed test runs.
 
 == General improvements and fixes
 
@@ -295,8 +297,7 @@ Instructions to connect to Standalone MCP server is coming soon.
 === App installation
 
 * Fixed an issue where concurrent app installations could fail.
-* Fixed iOS app installation failures caused by ZipConduit errors.
-* Improved performance for app installation on iOS devices.
+* Improved performance for app installation on iOS devices via `afc` file transfer method.
 * Fixed an issue where iOS app installation could fail under certain proxy configurations.
 * Improved installation reliability for very large applications, including apps with uncompressed sizes over 4 GB.
 
@@ -314,6 +315,7 @@ Instructions to connect to Standalone MCP server is coming soon.
 * Fixed an issue where offline Bluetooth modules could incorrectly display a "Healthy" status.
 * Fixed an issue where previously unpaired iOS devices did not come online after pairing completed.
 * Fixed an issue where macOS could block `adb` after deviceConnect installation, preventing Android device discovery.
+* Fixed an issue where `find devices on local networks` prompt appears that blocks `adb` in the Mac mini host.
 
 === Device management
 
@@ -330,6 +332,7 @@ Instructions to connect to Standalone MCP server is coming soon.
 
 * Added support for Xcode 26 DDI changes to prevent DDI failures on newer iOS devices.
 * Fixed an issue where iOS 18.5 and 18.6 devices with passcode enabled lost connection after switching language.
+* Improved iOS CoreDevice connection stability, resolving several cases where devices could remain offline after a lockdown error or a transient connection timeout under heavy host load.
 
 === Session and integration
 
