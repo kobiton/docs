@@ -33,7 +33,9 @@ You can create this folder anywhere, for example in your Documents directory.
 
 === Install the extension
 
-The Gemini CLI distributes the Kobiton plugin as an extension. From your project directory, install the extension directly from GitHub:
+include::partial$local-plugin.adoc[]
+
+For standard Cloud environment, the Gemini CLI distributes the Kobiton plugin as an extension. From your project directory, install the extension directly from GitHub:
 
 [source,bash]
 ----
@@ -48,7 +50,7 @@ Then launch the Gemini CLI:
 gemini
 ----
 
-The `kobiton` MCP server and bundled skills are auto-discovered. Confirm the extension is active:
+The `kobiton` MCP server and bundled skills are auto-discovered.Confirm the extension is active:
 
 [source,bash]
 ----
@@ -56,6 +58,7 @@ The `kobiton` MCP server and bundled skills are auto-discovered. Confirm the ext
 /mcp
 ----
 
+[#_authentication]
 == Authentication
 
 Kobiton MCP supports:

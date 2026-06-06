@@ -31,17 +31,17 @@ mkdir kobiton-project
 
 You can create this folder anywhere, for example in your Documents directory.
 
-Next, start the Copilot CLI from that location:
+=== Install the plugin
+
+include::partial$local-plugin.adoc[]
+
+For standard Cloud environment, start the Copilot CLI from the created workspace:
 
 [source,bash]
 ----
 cd kobiton-project
 copilot
 ----
-
-The Copilot CLI uses this folder as its workspace.
-
-=== Install the plugin
 
 Once the Copilot CLI starts in your Terminal, run the following commands one at a time in that window:
 
@@ -58,6 +58,7 @@ then
 
 Both steps are required and must be run separately.
 
+[#_authentication]
 == Authentication
 
 Kobiton MCP supports:
