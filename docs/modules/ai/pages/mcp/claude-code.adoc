@@ -130,13 +130,25 @@ If you are using the default Kobiton Cloud URL (`https://api.kobiton.com/mcp`), 
 
 If you are using a custom environment, make sure you have created the `.mcp.json` file as described in <<custom-environment-configuration,Custom environment configuration>>.
 
-The first time you use the plugin, Claude Code opens a browser window for authentication.
+Start Claude Code, then run `/mcp` to list the MCP servers:
+
+[source,bash]
+----
+
+claude
+/mcp
+
+----
+
+For *Standalone and Cloud with custom domain* environment, select `kobiton` under *Project MCPs* and authenticate.
+
+For default Cloud environment, select `plugin:automate:kobiton` under *Built-in MCPs* and authenticate.
 
 Sign in using:
 
 * Kobiton credentials
-* Google
-* GitHub
+* Google (not available for Standalone)
+* GitHub (not available for Standalone)
 
 Claude Code stores OAuth tokens automatically for future sessions.
 
