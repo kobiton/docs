@@ -6,13 +6,6 @@ Kobiton for the Gemini CLI connects the Gemini CLI to the Kobiton mobile testing
 https://discord.gg/uHvBFDZVP[image:discord-badge.svg[Join our Discord]]
 https://kobiton.com[image:kobiton-cloud.svg[Kobiton Cloud]]
 
-[NOTE]
-====
-
-The instructions in this document apply to Cloud only. Standalone and Cloud with custom domain instructions are coming soon.
-
-====
-
 == Get started
 
 === Open a workspace folder
@@ -33,7 +26,9 @@ You can create this folder anywhere, for example in your Documents directory.
 
 === Install the extension
 
-The Gemini CLI distributes the Kobiton plugin as an extension. From your project directory, install the extension directly from GitHub:
+include::partial$local-plugin.adoc[]
+
+For standard Cloud environment, the Gemini CLI distributes the Kobiton plugin as an extension. From your project directory, install the extension directly from GitHub:
 
 [source,bash]
 ----
@@ -56,6 +51,7 @@ The `kobiton` MCP server and bundled skills are auto-discovered. Confirm the ext
 /mcp
 ----
 
+[#_authentication]
 == Authentication
 
 Kobiton MCP supports:
