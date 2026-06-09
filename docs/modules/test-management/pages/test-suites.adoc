@@ -1,0 +1,46 @@
+= Test Suites
+
+== Overview
+
+A Test Suite is a collection of related Test Cases grouped for organization and execution.
+
+Test Suites allow multiple Test Cases to be run together using a single configuration. They are commonly used to manage related test coverage and to scale execution across devices.
+
+== Create a Test Suite
+
+Test Suites are created in Test Management.
+
+To create a Test Suite, users define the operating system, provide a name and optional description, and select the Test Cases to include. Test Cases can be added to or removed from the suite as coverage evolves.
+
+Creating a Test Suite groups related Test Cases for execution but does not change the behavior of the individual Test Cases. Each Test Case retains its own definition and execution logic.
+
+After a Test Suite is created, it appears in the Test Suite list, where it can be run or managed.
+
+image::test-suite-list.png[width=700,alt="Create Test Suite"]
+
+== Manage Test Suites
+
+Test Suites are managed from the Test Suite list in Test Management.
+
+From the list, users can:
+
+* Run the Test Suite to create a Test Run
+* Edit the suite name or description
+* Update the set of Test Cases included
+* Delete the Test Suite when it is no longer needed
+
+These actions are available from the suite’s action menu in the list view.
+
+== Run a Test Suite
+
+When a Test Suite is run, a configuration window is displayed before execution begins.
+
+In this step, users review and define execution settings such as the application version, devices or device bundles, and allocation strategy. These settings control how the Test Cases in the suite are distributed and executed.
+
+After the configuration is confirmed, the Test Suite is executed and a Test Run is created.
+
+== Related pages
+
+* xref:test-management:test-cases.adoc[Test Cases]
+* xref:test-management:test-runs.adoc[Test Runs]
+* xref:test-management:test-reruns.adoc[Test Reruns]

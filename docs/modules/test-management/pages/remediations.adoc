@@ -1,0 +1,144 @@
+= Remediations
+
+== Overview
+
+Remediation addresses situations where automated execution cannot proceed as defined in the test case.
+
+During execution, the platform attempts to match captured interactions to the current application state on the device. When a step cannot be completed with sufficient confidence, execution pauses and user input is required before the test can continue.
+
+Remediation allows the test definition to be corrected without recreating the original baseline session.
+
+== When remediation is required
+
+When a Test Run encounters a blocker, its status indicates that user action is required.
+
+Remediation is triggered when an automated execution cannot reliably complete a step. This typically occurs when a UI element cannot be identified due to layout changes, screen size differences, or other variations across devices.
+
+When this happens, execution is paused until the blocker is resolved.
+
+Remediation is an expected part of maintaining reliable automated execution, particularly when tests are run across multiple devices or application versions.
+
+== Remediate a Test Run
+
+When a Test Run encounters a blocker, its status reflects that action is required.
+
+From the Test Run results, users can review where execution stopped and access the associated session. Remediation updates the test case definition so that future executions can proceed past the blocked step.
+
+After remediation is submitted, the test can be rerun using the same configuration.
+
+== Remediate in Session Explorer
+
+Session Explorer provides a detailed view of execution behavior. Use it to review where a Test Run stopped, compare the baseline to what the device showed during execution, and submit a correction to the Test Case.
+
+=== Remediate a blocked step
+
+From the Test Run Results page, select the *Action Needed* status on the affected run to open Session Explorer. In the Session Timeline located at the bottom of the screen, the blocked step is outlined in red and labeled *BLOCKED*. Select the blue checkmark icon for the blocked step to open the Blocker Remediation window. The window opens to the *Element Selection* tab by default.
+
+image::camera-roll-resolve.png[width=600,alt="Session Timeline with a red blocker icon and Resolve Blocker option"]
+
+You can also start remediation from an individual touch step in a Test Case. For more information, see xref:test-management:test-cases.adoc#_remediate_test_steps[Remediate test steps].
+
+image::test-run-result-needs-action.png[width=600,alt="Test Run Results row with Actions Needed status"]
+
+=== Review the blocked step
+
+The Blocker Remediation modal displays the baseline screenshot alongside the screenshot from the revisit. The element captured during the baseline is highlighted in the *Baseline* panel. Hovering over the *Revisit* panel highlights the element closest to the cursor.
+
+Navigation buttons at the top of the modal move between test steps. Use these when a blocker appears on one step but the underlying issue started earlier in the flow. Only steps that use a touch action are reachable through navigation.
+
+image::blocker-remediation-modal.png[width=600,alt="Blocker Remediation modal with Baseline and Revisit panels and navigation buttons"]
+
+=== Submit a remediation
+
+. Open Blocker Remediation from the flagged step, or from the *⋮* menu on the relevant step.
+. If the issue originated on an earlier step, use the navigation buttons to move to that step.
+. Select the correct element from the *Revisit* screenshot.
+. Select *Submit*.
+
+After submission, a new version of the Test Case is created. The updated definition applies to subsequent Test Runs on devices with the same model and OS version. Only one step per device model can be remediated in a single Test Run; additional fixes require a rerun. Once a remediation is submitted, the step cannot be re-resolved in the same session.
+
+== Live remediation
+Live remediation allows users to resolve a blocker during an active Test Run without ending execution. It is available for Scriptless Test Runs. Contact your account manager or Kobiton Support to enable it for your organization.
+
+=== When live remediation is available
+
+Live remediation becomes available when a device in a Test Run encounters a blocker. At that moment, the device status changes from *Running* to *Live 5:00*, displayed with a stopwatch icon. The 5-minute countdown indicates how long live remediation remains available for that device.
+
+The timer runs independently per device. Execution pauses only for the affected device, and other devices in the same Test Run continue running. If the countdown expires before entry, the run follows standard blocker handling.
+
+image::live-remediation-countdown.png[width=600,alt="Test Run Results showing a device in the Live 5:00 state"]
+
+=== Entering a live remediation session
+
+Select the *Live 5:00* indicator on the affected device to open a manual session view. A banner appears above the device screen indicating that execution is paused, with an *Open KobiAI* option.
+
+Selecting *Open KobiAI* activates the Live Remediation tab in the right-side panel. This panel displays context about the blocked step and is where you interact with KobiAI to resolve the issue.
+
+=== Resolving the blocker with KobiAI
+
+Live remediation is driven entirely through the KobiAI chat panel. You cannot interact directly with the device screen during a live remediation session. Instead, you describe the resolution in natural language and KobiAI performs the interactions on the device.
+
+KobiAI describes what it detected, outlines the attempted action, and prompts you for confirmation or additional guidance. Respond directly in the panel to direct the next action.
+
+While KobiAI processes a submitted resolution, interaction with the device and chat panel is temporarily disabled. This is expected and indicates that the platform is completing the action.
+
+=== After the resolution
+
+When the resolution is applied, a confirmation banner appears and execution resumes from the paused step. The Test Run does not restart, and previously completed steps are not repeated.
+
+Actions submitted during live remediation update the Test Case definition. The update is saved as a new version and is reflected in Session Explorer. The updated definition applies to future Test Runs; previous runs remain unchanged.
+
+If a subsequent blocker is encountered later in the run, a new live remediation window begins with its own 5-minute countdown.
+
+=== If no resolution is submitted
+
+If you exit the session manually or allow the countdown to expire, the Test Run follows standard blocker handling and does not resume automatically. Remediation can still be completed afterward in Session Explorer.
+
+== Pop-up Handler remediation
+
+Pop-up Handler remediation helps handle dynamic or inconsistent pop-ups that appear during Scriptless Test Runs. Instead of failing when an unexpected screen appears, you can mark the pop-up as optional and define how to dismiss it without writing scripts.
+
+Use Pop-up Handler remediation when:
+
+* A pop-up appears during a revisit but was not present in the baseline session.
+* A screen present in the baseline session does not appear during a revisit.
+* Transient screens, such as onboarding prompts, survey modals, or OS alerts, interrupt test execution.
+
+Pop-up handling is defined during the session where the pop-up is encountered. After it is saved, the configuration applies to subsequent runs of the same Test Case on the same device model and OS. It does not apply retroactively to past sessions.
+
+=== Before you begin
+
+Before you use Pop-up Handler remediation:
+
+* An AI subscription is required.
+* A baseline session must exist for the Test Case.
+* The revisit must have encountered a blocker caused by a pop-up or unexpected screen.
+
+image::popup-handler.png[width=700,alt="Popup Handler tab in the Blocker Remediation window"]
+
+=== Handle a pop-up
+
+After a Test Run completes with a blocker caused by a pop-up, open the Blocker Remediation window. A detection message identifies which session contains the pop-up.
+
+. Select the *Popup Handler* tab.
+. Under *Choose the screen with the pop-up*, select *Baseline* or *Revisit*.
+. Enter hint text from the pop-up. The text must appear on the pop-up screen.
+. Select *Highlight Text Area* to verify the hint text against the screenshot.
++
+Matched text is highlighted on the screenshot. If no match is found, adjust the hint text and try again.
+
+. Under *Choose the element to dismiss this pop-up*, search the view tree by path, label, or another attribute.
+. Select the dismiss element.
+. Select *Save as Optional*.
+
+== After remediation
+
+Remediation updates the test case definition.
+
+Once remediation is complete, rerunning the test validates that execution can proceed using the updated definition. Previous Test Runs remain unchanged and available for reference.
+
+== Related pages
+
+* xref:test-management:test-runs.adoc[Test Runs]
+* xref:test-management:test-reruns.adoc[Test Reruns]
+* xref:scriptless-automation:best-practices.adoc[Best practices]
