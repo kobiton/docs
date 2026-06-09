@@ -1,0 +1,50 @@
+= Kobiton 4.19.6 Release Notes
+:navtitle: Kobiton 4.19.6 release notes
+
+_July 16, 2025_
+
+== New OS support
+
+* Xcode 26 Beta
+
+* iOS/iPadOS 26 Beta
+
+* iOS/iPadOS 18.4 official
+
+* iOS/iPadOS 18.5 official
+
+* Android 16 official
+
+== Changes to App Signing support for iOS Devices
+
+=== The situation
+
+* Apple no longer allows creating new App IDs with full wildcards like `\*` or `*.*`
+* Existing profiles using legacy wildcards still work - for now.
+* These profiles will eventually expire, and cannot be renewed or recreated.
+
+=== Why this matters
+
+If you haven’t already, you’ll need to transition to profiles using partial wildcards, e.g.: `com.\*`, `org.*`, `co.\*`, `uk.*`
+
+Note that Kobiton requires at least one profile configured for and loaded into `deviceConnect` that has `com.*`
+
+=== What you need to do
+
+* Generate provisioning profiles that cover all the bundle ID formats you use.
+* Import the profiles to `deviceConnect` and `deviceShare`, or contact *Kobiton Support* with the bundle ID of your apps to request profiles for Public devices.
+* A xref:device-lab-management:ios-devices/generate-an-ios-signing-certificate-and-provisioning-profile.adoc#_bundle_id[step-by-step guide,window=read-later] for specifying a correct identifier for the different bundle ID formats is available.
+
+== Hybrid Lightning: update adb version
+
+This release upgraded adb to version `36.0.0` on the Mac mini and GEM.
+
+For the Mac mini, the adb service is automatically updated when you upgrade to deviceConnect `4.19.6`
+
+For our Hybrid customers, please contact Kobiton Support to update the Kobiton software and `adb` on your GEM.
+
+== Session Resilience and Performance Improvements
+
+Improved system stability and performance in several areas, including device booking, Lightning Mode sessions, and deviceConnect services to enhance reliability and reduce errors.
+
+

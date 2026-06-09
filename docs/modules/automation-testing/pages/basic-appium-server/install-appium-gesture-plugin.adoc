@@ -1,19 +1,32 @@
 = Install Appium Gesture Plugin
 :navtitle: Install Appium Gesture Plugin
 
-Learn how to install and use the https://github.com/AppiumTestDistribution/appium-gestures-plugin[Appium Gesture Plugin] with Kobiton’s basic Appium 2 server.
+Learn how to install Appium Gesture Plugin with Kobiton’s basic Appium 2 server.
 
 == Prerequisites
 
 * deviceConnect 4.9 or later
 * The Mac mini host must have Internet access to download the plugin.
+* You will need console or terminal access to the Mac mini to install an Appium plugin.
+* You will need to be able to download or transfer the plugin to the Mac mini.
+* Some familiarity with the command line is required. 
+* Note this process will involve system downtime of a few minutes.
+
+== Intended Users
+
+* This document is intended to be used by Hybrid and On-Prem/Standalone customers hosting their own Mac mini and devices. If you are using Kobiton to host your devices, please contact Kobiton support for further assistance.
+
+* When contacting Kobiton support, please include the name of the plugin, a link to the public Git repository, and the installation request URL to help expedite the process.
+
+* Note that some plugins may not be fully compatible with Appium 2. Plugin support is managed by your administrators, but we’re happy to install or remove plugins upon request.
+
 * The plugin is not available for Public Cloud devices.
 
-== Install Appium Gesture Plugin
+* The Appium Plugin must be installed on all the Mac minis in your environment that host the devices you will be testing with the Appium Plugin. Repeat the steps below for each Mac mini.
 
-The Appium Gesture Plugin must be installed on all the Mac minis in your environment that host the devices you will be testing with the Appium Gesture Plugin. Repeat the steps below for each Mac mini.
+== Steps to install a plugin
 
-Access the Mac mini host. You can use Screen Sharing or SSH.
+In this section, the example plugin to install is the https://github.com/AppiumTestDistribution/appium-gestures-plugin[Appium Gesture Plugin].
 
 In the Terminal, run the below command to install the plugin:
 

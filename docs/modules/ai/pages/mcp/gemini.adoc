@@ -1,0 +1,319 @@
+= Kobiton for Gemini CLI
+:navtitle: Gemini CLI
+
+Kobiton for the Gemini CLI connects the Gemini CLI to the Kobiton mobile testing platform. You can manage devices, upload apps, run automation tests, and review results using natural language commands without switching between the terminal, the Kobiton portal, and local test scripts.
+
+https://discord.gg/uHvBFDZVP[image:discord-badge.svg[Join our Discord]]
+https://kobiton.com[image:kobiton-cloud.svg[Kobiton Cloud]]
+
+[NOTE]
+====
+
+The instructions in this document apply to Cloud only. Standalone and Cloud with custom domain instructions are coming soon.
+
+====
+
+== Get started
+
+=== Open a workspace folder
+
+Before using the Gemini CLI, open a command-line tool on your machine:
+
+- macOS: Terminal
+- Windows: PowerShell or Command Prompt
+
+Create a folder:
+
+[source,bash]
+----
+mkdir kobiton-project
+----
+
+You can create this folder anywhere, for example in your Documents directory.
+
+=== Install the extension
+
+The Gemini CLI distributes the Kobiton plugin as an extension. From your project directory, install the extension directly from GitHub:
+
+[source,bash]
+----
+cd kobiton-project
+gemini extensions install https://github.com/kobiton/automate
+----
+
+Then launch the Gemini CLI:
+
+[source,bash]
+----
+gemini
+----
+
+The `kobiton` MCP server and bundled skills are auto-discovered. Confirm the extension is active:
+
+[source,bash]
+----
+/extensions list
+/mcp
+----
+
+== Authentication
+
+Kobiton MCP supports:
+
+* OAuth authentication (recommended)
+* API key authentication
+
+OAuth authentication is the default authentication method for the Gemini CLI.
+
+=== OAuth authentication (recommended)
+
+The Gemini CLI extension uses dynamic OAuth discovery by default. The Kobiton MCP server advertises OAuth metadata at a standard well-known endpoint, so the browser flow opens automatically the first time a tool needs authentication.
+
+To trigger it explicitly:
+
+[source,bash]
+----
+/mcp auth kobiton
+----
+
+A browser window opens for authentication.
+
+Sign in using:
+
+* Kobiton credentials
+* Google
+* GitHub
+
+The Gemini CLI stores OAuth tokens automatically for future sessions. Run `/mcp` again to confirm the status changes to *Connected*.
+
+[NOTE]
+====
+`kobiton` is the *MCP server name* (declared inside the extension), not the extension name `kobiton-automate`. `/mcp` commands always take the server name.
+====
+
+=== API key authentication
+
+Use API key authentication for:
+
+* CI/CD pipelines
+* headless environments
+* systems without browser access
+
+Generate an API key in *Kobiton Portal > Settings > API Keys*. Then set:
+
+[source,bash]
+----
+export KOBITON_AUTH="Basic $(echo -n 'username:api-key' | base64)"
+----
+
+For the Gemini CLI, API key authentication is configured in `gemini-extension.json` (not `.mcp.json`). Add a `headers` block under `mcpServers.kobiton`:
+
+[source,json]
+----
+{
+  "mcpServers": {
+    "kobiton": {
+      "httpUrl": "https://api.kobiton.com/mcp",
+      "headers": {
+        "Authorization": "${KOBITON_AUTH}"
+      }
+    }
+  }
+}
+----
+
+[NOTE]
+====
+OAuth and API key authentication cannot be used together in the same extension configuration. Configure only one authentication method at a time.
+====
+
+=== Bootstrap credentials and CLI wrapper
+
+After installation and OAuth login, run setup once to fetch your credentials and install the CLI wrapper used by the `run-interactive-test` skill:
+
+[source,bash]
+----
+/automate:setup
+----
+
+The Gemini CLI has no SessionStart hook, so the wrapper is not re-installed automatically. Re-run `/automate:setup` if `~/.kobiton/bin/kobiton` ever goes missing.
+
+To verify everything is wired correctly:
+
+[source,bash]
+----
+/automate:doctor
+----
+
+=== Run a command
+
+After authentication, enter commands in the Gemini CLI using natural language.
+
+[source,bash]
+----
+Show available Android devices
+Show results for session 12345
+Upload app.apk and run tests/smoke_test.js
+----
+
+== Common workflows
+
+The Gemini CLI extension supports common mobile testing workflows, including device management, app uploads, test execution, and session review.
+
+=== Device management
+
+- View available devices
+- Check device status
+- Reserve and release devices
+
+=== App management
+
+- Upload Android and iOS apps
+- View uploaded apps
+- Get app details
+
+=== Test execution
+
+The `run-automation-suite` workflow guides you through the full test lifecycle:
+
+- Upload or select an app
+- Select a device
+- Parse capabilities from your script
+- Run the test
+- Return results and artifacts
+
+Supported languages:
+
+[cols=",,",options="header"]
+|===
+|Language |Extension |Command
+
+|Node.js
+|`.js`
+|`node <script> <udid>`
+
+|Python
+|`.py`
+|`python <script> <udid>`
+
+|.NET
+|`.cs` / `.csproj`
+|`dotnet test`
+
+|Java
+|`.java`
+|`mvn test` or `java -cp ...`
+|===
+
+=== Session management
+
+- View active and past sessions
+- Get logs, screenshots, and videos
+- Stop running sessions
+
+== Example prompts
+
+=== Device management
+
+....
+Show available Android devices
+Check if Galaxy S23 is available
+Reserve Pixel 6 for 60 minutes
+....
+
+=== App management
+
+....
+Show uploaded Android apps
+Upload resources/apps/GS.apk
+....
+
+=== Test execution
+
+....
+Run tests/smoke_test.js on a Pixel device
+....
+
+=== Session management
+
+....
+Show running sessions
+Get details for session 12345
+Download logs from last failed session
+....
+
+For a complete reference of available Kobiton tools, skills, and commands, see the xref:mcp/ai-plugin-mcp-ref.adoc[Kobiton AI plugin and tools reference].
+
+== Updating the extension
+
+To pull the latest version of the Kobiton extension:
+
+[source,bash]
+----
+gemini extensions update kobiton-automate
+----
+
+To pick up changes with no stale cache, exit and relaunch the Gemini CLI. Confirm with `gemini extensions list`.
+
+== Troubleshooting
+
+=== Extension installed but tools or skills don't appear
+
+Verify the extension is registered and enabled:
+
+[source,bash]
+----
+exit
+gemini extensions list
+gemini
+/mcp
+----
+
+If `kobiton-automate` is missing, reinstall:
+
+[source,bash]
+----
+gemini extensions install https://github.com/kobiton/automate
+----
+
+If listed but disabled, enable it:
+
+[source,bash]
+----
+gemini extensions enable kobiton-automate
+----
+
+Then relaunch `gemini` and check `/mcp` for the `kobiton` server.
+
+=== `/mcp` shows `kobiton` as Disconnected (OAuth not authenticated)
+
+The extension is installed but OAuth has not completed yet. Trigger the flow manually:
+
+[source,bash]
+----
+/mcp auth kobiton
+----
+
+A browser window opens for Kobiton login. After signing in, run `/mcp` again - the status should change to *Connected*.
+
+=== OAuth does not open a browser on first tool call
+
+The Gemini CLI extension uses dynamic OAuth discovery by default. If nothing happens, try `/mcp auth kobiton` to trigger it explicitly. Check that your terminal can launch a browser. For headless environments, switch to API key authentication.
+
+=== Device not found
+
+The device may be unavailable. Filter for available devices.
+
+=== Upload timeout
+
+Large files or slow connections can cause timeouts. Retry the upload.
+
+=== Session stuck
+
+Terminate the session and run it again.
+
+== Additional resources
+
+- https://github.com/kobiton/automate/issues/new?template=bug_report.md[Report an issue]
+- https://discord.com/channels/1486036652685267055/1488189710248710327[Community support]
+- https://kobiton.com/privacy-policy[Privacy policy]

@@ -1,0 +1,359 @@
+= Kobiton 4.26.5S Release Notes
+:navtitle: Kobiton 4.26.5S release notes
+
+_June 1, 2026_
+
+== deviceConnect service management migration to launchd
+
+deviceConnect service management has migrated from `sv`/`runit` to `launchd`. Administrators who manage deviceConnect services through terminal commands must update their operational procedures, including restart and halt workflows.
+
+Portal and deviceConnect Console UI restart actions continue to function normally.
+
+*Highlights*
+
+- `sv`/`runit` replaced by `launchd` for all deviceConnect services
+- New restart and halt procedures
+- All existing service management commands must be replaced with `launchd` equivalents
+
+*Availability*
+
+This change applies to deviceConnect 4.26.0 and later.
+
+== Accessibility: Android TalkBack support in manual sessions
+
+You can now use Android TalkBack during manual sessions, making it simple to navigate devices remotely with screen reader controls. Teams can validate accessibility requirements in real time and experience apps the way TalkBack users do, uncovering issues that visual testing alone might miss.
+
+=== What you need
+
+* Android 12+ device
+* Lightning mode enabled (look for the green lightning bolt in a manual session)
+
+=== How it works
+
+A new *Screen Reader* option is available in the manual session toolbar. From there, you can:
+
+* Turn TalkBack on or off
+* Navigate using TalkBack gestures and controls
+
+Refer to this xref:manual-testing:screen-reader/talkback-manual-session.adoc[user guide,window=read-later] for Android TalkBack support.
+
+=== Good to know
+
+* The focus border may not appear immediately after enabling TalkBack. Tap an interactive element to activate it.
+* The focus border may linger briefly after disabling TalkBack. Tap an interactive element to clear it.
+* For permission pop-ups, only clickable elements (buttons, text fields, etc.) can be read aloud and selected using TalkBack.
+
+== Android audio in manual sessions
+
+You can now hear device audio for Android devices during manual sessions.
+
+=== What you need
+
+* Android 12+ device
+* Lightning mode enabled (look for the green lightning bolt in a manual session)
+
+=== How it works
+
+Audio automatically streams when Lightning mode is active.
+
+If you don't hear sound:
+
+* Increase the device volume
+* Allow *Sound* permission in Chrome https://support.google.com/chrome/answer/114662?hl=en&co=GENIE.Platform%3DDesktop[site settings,window=read-later] (allowed by default)
+
+== Bluetooth-related features improvements
+
+[NOTE]
+====
+This section applies to the following Bluetooth-based features:
+
+* Audio injection
+* iOS VoiceOver
+====
+
+Bluetooth host protocol and port are no longer required in the `dc.ini` configuration. If these values are not provided, the host defaults protocol to `https` and port to `50051`.
+
+Audio-mode Bluetooth hosts now support *two devices simultaneously*. Keyboard-mode hosts continue to support one device.
+
+Bluetooth host logs are now included in deviceConnect logs.
+
+You may see a `Pairing Incomplete` message during first-time pairing. That's expected. Simply retry, and after the second attempt, you won't need to reconnect again.
+
+== deviceConnect Console updates
+
+=== Authentication update for new deviceConnect installations
+
+For first-time login to a new deviceConnect installation, API key authentication is now required instead of a password. After the initial login, users can authenticate using either an API key or a password.
+
+=== Cleanup policy configuration simplified in deviceConnect
+
+Cleanup is now enabled by default in deviceConnect. The `HealthService.EnableCleanup=true` setting is no longer required in `dc.ini`, reducing the need for manual configuration.
+
+This setting controls whether devices follow the Cleanup policy definitions assigned at the organization and team levels in the Portal.
+
+If necessary, cleanup can be disabled for all devices on a machine by setting:
+
+----
+HealthService.EnableCleanup=false
+----
+
+=== Device slot information visibility improvements
+
+Device slot information for a device is now more visible in the deviceConnect Console based on user-configured views.
+
+* Slot details are automatically displayed in the *USB Location* field.
+* A *Slot #* column is also available, but values must be entered manually.
+
+To display USB Location by default, clear the deviceConnect Console site data in your browser.
+
+== Expanded Android image injection support via app instrumentation
+
+Kobiton now supports Android image injection through Camera v1 (API level 1-20) and Camera Intent API via app instrumentation, in addition to the existing camera2 and CameraX APIs (API level 21 and above).
+
+To use app instrumentation, enable *Instrument application for camera injection* before you install the app.
+
+image:manual-testing:install-apps-closeup.png[width=750, alt="A close-up of the different app installation options during a manual session."]
+
+See the xref:manual-testing:test-your-app-camera.adoc[image injection documentation,window=read-later] for setup instructions and usage guide.
+
+*Highlights*
+
+- Automatic instrumentation replaces camera library references with Kobiton equivalents
+- Android binaries are re-signed after instrumentation
+- No SDK integration required in the application under test
+
+*Limitations*
+
+- Applications using Google Play Services tied to a specific signing certificate require the customer's own certificate for re-signing
+- Obfuscated or tamper-protected binaries may not be instrumentable
+- Coverage depends on which camera libraries the application uses
+- Camera v1 and Camera Intent API are not supported in the xref:apps:image-injection-sdk/add-the-sdk-to-your-android-app.adoc[Kobiton image injection SDK,window=read-later]
+
+== Configurable browser STUN server setting
+
+Organizations can now configure a custom STUN server for Lightning Mode browser sessions at the org level. This allows teams with strict network compliance requirements to route WebRTC traffic through approved infrastructure.
+
+The STUN server setting is available under *Account > Settings > Other Settings > Lightning Mode Settings*.
+
+*Highlights*
+
+- New org-level admin setting for STUN server configuration
+- Supports compliance and network policy requirements for browser-based sessions
+
+*Availability*
+
+Available to users with the `org_setting.modify` permission.
+
+== Remove unplugged devices from the Portal
+
+Unplugged or decommissioned Private and Local devices remain visible as offline in the Device List and Device Management page until they are removed. This allows admins to confirm whether a device was intentionally taken offline or disconnected due to an issue.
+
+Previously, admins could remove these devices using the https://api.kobiton.com/v2/docs#tag/DeviceAPI/operation/DeviceAPI_HideDeviceByUdid[Hide Devices by UDID API,window=read-later]. Kobiton now provides a *Tidy Up* option directly in the Device Management page to simplify this process.
+
+The *Tidy Up* feature applies to Private and Local devices and allows admins to review and remove unplugged devices from view, helping keep device lists accurate and easier to manage.
+
+*Key capabilities*
+
+* Review and selectively hide devices based on how long they have been offline
+* Search and sort devices to quickly identify stale or unused devices
+* Identify recently offline devices using visual indicators to avoid accidental removal
+
+NOTE: If a device is plugged back in, it will automatically reappear in the Portal.
+
+== Appium AI: Natural language locators (Beta)
+
+You can now locate UI elements in Appium tests using natural language instead of traditional selectors.
+
+By allowing `driver.findElement(...)` to accept descriptive (natural) text, this feature improves test resilience in scenarios where selectors are brittle, unavailable, or frequently changing.
+
+*Highlights*
+
+* Natural language element location within existing Appium workflows
+* Reduced dependency on XPath and accessibility-based selectors
+* Support for native and web applications with traditional locators
+
+*Availability*
+
+This feature is available in Beta for Private and Local (or Hybrid) devices. Access is limited. Please get in touch with your Account Manager to request enablement.
+
+== Appium AI: Override LLM provider configurations
+
+Users can override LLM provider configurations on a per-session basis using selected capabilities. This allows teams to customize AI behavior for individual sessions without modifying the default configuration on the deviceConnect host machine.
+
+*Highlights*
+
+- Per-session LLM configuration overrides via desired capabilities
+- Appium AI must be enabled on each deviceConnect host machine before per-session overrides can be used
+
+*Availability*
+
+This feature is available for Private and Local (or Hybrid) devices. Access is limited. Contact your Account Manager to request enablement.
+
+== Scriptless Automation: Pop-up Handler
+
+You can now handle dynamic or inconsistent pop-ups during Scriptless Automation test runs without writing any scripts.
+
+By introducing the *Pop-up Handler* into the Blocker Remediation flow, this feature allows you to manage optional or unexpected screens that may appear in either baseline or revisit sessions, improving test stability and execution success.
+
+*Highlights*
+
+* Handle unexpected or optional pop-ups directly within Blocker Remediation
+* Specify whether the pop-up appears in *Baseline* or *Revisit* sessions
+* Mark pop-ups as *Optional* and define the UI element to dismiss them
+* Applies to future test runs with the same app
+
+*Availability*
+
+This feature is available for users with an *AI subscription*.
+
+== Kobiton plugin for Claude Code
+
+Kobiton now integrates directly with Claude Code, enabling AI-driven mobile test automation on real devices without leaving the AI workspace.
+
+With the Kobiton plugin, developers and testers can use natural language to upload apps, manage devices, execute Appium tests, and review results — all within Claude. This keeps test creation, execution, and validation in a single continuous workflow.
+
+*Key capabilities*
+
+* Upload and install mobile apps directly from Claude
+* Run Appium-based automation tests on real iOS and Android devices
+* Manage devices and sessions without switching tools
+* View logs, screenshots, and execution results in real time
+* Use natural language to trigger and control testing workflows
+
+*Availability*
+
+Kobiton for Claude Code is available to users with active Kobiton and Claude Code subscriptions.
+
+Instructions to use Claude Code plugin with Standalone is coming soon.
+
+== Kobiton MCP server updates
+
+=== OAuth authentication
+
+The Kobiton MCP server now supports OAuth 2.1 authentication using existing Kobiton credentials.
+
+*Highlights*
+
+- OAuth login flow for MCP server connections
+- Automatic browser-based authentication flow in Claude Code
+- Uses existing Kobiton credentials
+
+Instructions to connect to Standalone MCP server is coming soon.
+
+=== MCP server improvements
+
+* Added Appium capabilities fetching and session correlation to the MCP server.
+* Added interactive session support for running natural-language Appium commands on devices.
+* New Kobiton MCP skills are now available for AI-assisted mobile testing workflows, including device interaction, session management, and Appium-based automation.
+
+Instructions to connect to Standalone MCP server is coming soon.
+
+== Scriptless improvements
+
+* *Test Run:* Fixed an issue where revisit sessions ended due to an authorization error.
+* *UI update:* Fixed filtering behavior in the Test Run detail page dropdown.
+
+== Automation improvements & fixes
+
+* *Localization improvements:*
+** Enabled setting device language using capability values (for example, `language="es"` and `locale="ES"`)
+** Extended Android agent to support non-English locales
+** Standardized `SetLocale` behavior across iOS and Android
+** iPad orientation now persists after language changes
+* *Basic Appium:* Fixed app installation failures when using app URLs.
+* *Native testing:* Fixed an issue where xcodebuild-based native iOS tests could intermittently fail to locate the target device.
+* *UI updates:*
+** Additional apps installed after automation session start are now displayed in Session Overview
+** Improved error message when no devices matched a wildcard
+* Fixed an issue where interacting with elements in Android WebView contexts failed.
+* Fixed an issue where Android Appium sessions failed to start due to a port connection error.
+
+== Kobiton CLI improvements & fixes
+
+* *Exit code correction:* The Kobiton CLI now returns a non-zero exit code when an app installation fails. Previously, the CLI returned exit code `0` on failure, which could cause CI/CD pipelines to incorrectly report success.
+* Improved automatic permission handling on iOS and Android devices.
+* Fixed issues with file push and retrieval behavior on devices.
+* Added support for recursive file pull.
+* Improved deviceConnect session cleanup when the CLI connects directly. Sessions now send close messages on completion so they are released cleanly.
+* The CLI `test run --stream` command now retrieves a device-signed app through the Portal signed-app API, preserving app entitlements (such as APNs) during streamed test runs.
+
+== General improvements and fixes
+
+=== Accessibility
+
+* Fixed an issue where Android TalkBack did not properly navigate or read certain UI elements.
+* Fixed an issue where Android TalkBack focus borders did not appear or clear correctly.
+* Improved iOS VoiceOver keyboard behavior, preventing unintended keyboard dismissal during navigation.
+* Fixed an issue where the TalkBack focus border did not clear correctly when disabling TalkBack on WebView.
+
+=== API and session stability
+
+* Added support for retrieving signed application URLs for device-specific workflows.
+* Fixed an issue where removed device tags could still appear in API responses.
+* Fixed an issue where Portal API requests failed during long application installs (approximately 5+ minutes) due to a connection timeout.
+* Fixed intermittent HTTP 503 errors on `GET /v1/devices`.
+* Reduced wait time for log, crash log, and network capture data on the Session Details page.
+
+=== App installation
+
+* Fixed an issue where concurrent app installations could fail.
+* Improved performance for app installation on iOS devices via `afc` file transfer method.
+* Fixed an issue where iOS app installation could fail under certain proxy configurations.
+* Improved installation reliability for very large applications, including apps with uncompressed sizes over 4 GB.
+
+=== Device cleanup
+
+* Fixed an issue where browser history was not cleared during device cleanup on iOS 26.x, causing automation failures.
+* Fixed an issue impacting device cleanup performance.
+
+=== Device connectivity
+
+* Fixed an issue where USB 3.0 devices were not correctly mapped on Cambrionix hubs.
+* Improved device connection reliability during registration and reconnection.
+* Improved device connectivity stability to help prevent unexpected disconnects.
+* Improved session stability when USB hubs are disconnected during active sessions.
+* Fixed an issue where offline Bluetooth modules could incorrectly display a "Healthy" status.
+* Fixed an issue where previously unpaired iOS devices did not come online after pairing completed.
+* Fixed an issue where macOS could block `adb` after deviceConnect installation, preventing Android device discovery.
+* Fixed an issue where `find devices on local networks` prompt appears that blocks `adb` in the Mac mini host.
+
+=== Device management
+
+* Fixed an issue where devices appeared grayed out in the Portal while they were online and launchable.
+* Fixed an issue where hub information was missing for some devices on the Device Management page.
+* Fixed an issue where Device Management in Portal and Device Gateways pages in the deviceConnect Console could freeze.
+* Added the ability to export a device list for Apple Developer provisioning files from deviceConnect Console.
+
+=== Device performance
+
+* Improved resource efficiency for idle Android devices.
+
+=== iOS and deviceConnect
+
+* Added support for Xcode 26 DDI changes to prevent DDI failures on newer iOS devices.
+* Fixed an issue where iOS 18.5 and 18.6 devices with passcode enabled lost connection after switching language.
+* Improved iOS CoreDevice connection stability, resolving several cases where devices could remain offline after a lockdown error or a transient connection timeout under heavy host load.
+
+=== Session and integration
+
+* Fixed an issue where manual sessions were not properly terminated when device connection errors occurred.
+* Fixed an issue where the home button did not correctly display recent apps during manual sessions on iOS.
+* Resolved an issue where native elements could fail to load in Inspector under certain device orientations (e.g., landscape).
+* Improved error messaging when session requests do not include device-identifying capabilities; the system now provides clearer guidance when required device selection criteria (such as device name, UDID, or device tags) are missing.
+* Fixed an issue where downloaded device logs from a manual session had no line endings, making the file difficult to read.
+* Fixed an issue where Jira tickets created from Session Explorer were not linked back to the session. The Jira button badge and linked ticket list now update correctly after ticket creation.
+* Fixed an issue where the Jira Cloud integration intermittently appeared disconnected after approximately 15 minutes, preventing Jira ticket creation from Session Explorer.
+* Fixed an issue where releasing a device from the Portal did not terminate all active sessions when multi-session was in use.
+
+=== Test management
+
+* Improved the Test Case Details UI layout to fit smaller screens.
+
+=== Other
+
+* *App Repo:* Added the ability to clean up app upload errors from the UI.
+* *Session Overview:* Fixed broken app icon display when uploading apps without icons in a manual session.
+* *Parallel Sessions:* Improved cleanup so sessions are released more quickly from parallel limits.
+* *Audio Injection:* Audio injection can be used on Lightning mode devices, in addition to Standard mode.
+* Modernized the DeviceControl app SDK for improved compatibility.
+* Improved audit logging for user role assignments and team updates.

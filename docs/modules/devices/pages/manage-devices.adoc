@@ -12,7 +12,7 @@ image:devices:select-devices-context.png[width=1000,alt="Select Devices tab on K
 
 After you xref:devices:search-for-a-device.adoc[search for a device], select the *vertical ellipses* to open the device overview.
 
-image:devices:manage-device-context.png[width=,alt=""]
+image:devices:manage-device-context.png[width=800,alt="A device with the vertical ellipses selected in the Device list"]
 
 == Manage the device
 
@@ -20,8 +20,9 @@ image:devices:manage-device-context.png[width=,alt=""]
 
 To rename the device, enter a new name and select *Save*. Optionally, check the box to apply this name to all similar devices.
 
-image:devices:edit-device-name-closeup.png[width=400,alt="A closeup to rename the device"]
+image:devices:edit-device-name-closeup.png[width=500,alt="A closeup to rename the device"]
 
+[#_favorite_the_device]
 === Favorite the device
 
 To add the device to your xref:devices:search-for-a-device.adoc#_favorite[list of favorites], select the *star* icon.
@@ -33,11 +34,19 @@ To remove the device from your favorites, select the *star* icon again.
 [#_add_or_remove_tags]
 === Add or remove tags
 
+[NOTE]
+Device tags are only available for Private devices. Adding or removing device tags on Public devices is not supported.
+
 To add a device tag, create a new tag or choose an existing one.
 
 image:devices:tags-section-context.png[width=500,alt="A context of tag section- Manage Device modal"]
 
 To remove a tag, select the *x* icon.
+
+Device tags can be up to 32 characters long, contain no spaces, and may include alphanumeric characters and the following special characters:
+`@`, `.`, `_`, `-`, and `+`.
+
+This allows tags such as `android-machine` or `qa.team@east`.
 
 === Enable network payload capture
 
@@ -47,9 +56,44 @@ image:devices:config-section-context.png[width=500,alt=" A context of Use Config
 
 === Retain the device
 
-To prevent others from using the device in a test session, select *Retain*, then choose either *1 hour*, *2 hours*, *4 hours*, *8 hours*, *24 hours*, or *Unlimited*.
+image:devices:retain-device-closeup.png[width=500,alt="A closeup to Retain status for device"]
 
-image:devices:retain-device-closeup.png[width=400,alt="A closeup to Retain status for device"]
+To reserve a device for exclusive use for a set period of time, select the *Retain* drop-down and choose a duration. Available options are typically _1 hour, 2 hours, 4 hours, 8 hours, 24 hours,_ or _Unlimited_.
+
+Once a device is retained, its status changes to *Retained*, and the countdown displays the remaining time along with the email address of the user who retained it. Be sure to release the retain when you are finished using the device.
+
+[NOTE]
+The cleanup policy (if activated) does not run in between sessions when a device is Retained.
+
+=== Cancel retain
+
+image:devices:device-modal-retained.png[width=500,alt="A status showing that the device is retained for 1 hour with the cancel retain button"]
+
+To release a device from being retained, select the *x* next to the retain status and confirm that you want to remove the retain.
+
+[NOTE]
+A retain can be canceled either by the user who created the retain or by any user with the role permission to xref:organization:roles/user-roles-and-permissions.adoc#_cancel_retain[cancel retains,window=read-later].
+
+[#_restart_private_device]
+=== Restart Private device
+
+To restart a Private device, select *Restart*.
+
+[NOTE]
+
+====
+
+* Only users with the xref:organization:roles/user-roles-and-permissions.adoc#_org_setting_reboot_private_device[reboot Private device,window=read-later] permission can see this option.
+
+* This option is only available for Private devices. To restart a Public device, submit a support ticket to Kobiton with the device UDID.
+
+====
+
+[IMPORTANT]
+Confirm that no one is using the device as restart begins immediately after you select the button.
+
+
+image:devices:device-modal-restart.png[width=500,alt="The Restart button in the manage device screen"]
 
 === Automation settings
 
