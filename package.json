@@ -17,7 +17,9 @@
     "server-docs": "http-server build/docs -c-1",
     "server-widget": "http-server build/widget -c-1",
     "start-docs": "open ./build/docs",
-    "start-widget": "open ./build/widget"
+    "start-widget": "open ./build/widget",
+    "typecheck": "tsc --project tsconfig.functions.json",
+    "dev": "yarn build-docs:ci && wrangler pages dev build/docs"
   },
   "repository": {
     "type": "git",
@@ -46,6 +48,7 @@
     "postcss-clean": "^1.2.2",
     "postcss-cli": "^10.1.0",
     "postcss-import": "^15.1.0",
-    "python-shell": "^5.0.0"
+    "python-shell": "^5.0.0",
+    "wrangler": "^3.91.0"
   }
 }

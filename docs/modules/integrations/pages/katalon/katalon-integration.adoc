@@ -1,0 +1,354 @@
+= Katalon Studio Integration
+:navtitle: Katalon
+
+This guide explains how to create and execute a mobile test with Kobiton devices from Katalon Studio.
+
+== Before you start
+
+Make sure you have the following:
+
+* A *Kobiton account*. Get the following information from your Kobiton account in the Portal:
+** xref:profile:manage-your-profile.adoc#_open_your_profile[Username].
+** xref:profile:manage-your-api-credentials.adoc#_get_an_api_key[API key].
+* A *Katalon account*. There are 2 options:
+** *Enterprise account*: Supports the Kobiton plugin for performing Spy and Record actions, as well as running test cases on Kobiton devices through the Katalon UI.
+** *Free account*: Does not support the Kobiton plugin, but you can still run tests on Kobiton devices by manually adding Appium capabilities to your test scripts to point to Kobiton devices.
+* Access to *Katalon Studio*.
+** For Cloud/Hybrid deployments, use Katalon Studio 9.7.5 or above.
+** For Standalone/On-Prem deployments, use Katalon Studio 10.2.0 or above.
+
+== Set up the Kobiton Integration plugin
+
+[NOTE]
+====
+These features are only available for Katalon Enterprise accounts.
+====
+
+Open *Katalon Studio* and log in to your Katalon Enterprise account.
+
+Open an existing project or create a new one from the *Mobile* sample projects (see the sample project below).
+
+image:katalon-settings-create-new-project.png[width=661px,alt="Creating a new mobile test project in Katalon with Kobiton sample project template."]
+
+Open the https://store.katalon.com/product/137/Kobiton-Integration[Kobiton Integration,window=read-later] web page in the Katalon Store. Make sure you are logged into the store using the same account in Katalon Studio.
+
+Select *Install*.
+
+Go back to Katalon Studio, select the account profile, then select *Reload Plugins*.
+
+image:katalon-plugin-reload-from-user-profile.png[width=600,alt="User menu in Katalon Studio with the Reload Plugins option selected."]
+
+If the plugin is loaded successfully, the *Kobiton Integration* plugin displays with the *Success* status.
+
+image:katalon-plugin-installed-kobiton-integration.png[width=600,alt="Katalon plugin manager showing Kobiton Integration plugin installed successfully."]
+
+Close the pop-up, then open *Kobiton Integration* settings:
+
+* Windows:
+** From the menu bar, select *Window → Katalon Studio Preferences*.
++
+image:katalon-preferences-access-windows.png[width=450,alt="Accessing Katalon Studio Preferences from the Window menu in Windows environment."]
+
+* macOS:
+** From the Katalon menu bar, select *Katalon Studio Enterprise* or *Katalon Studio → Settings*.
++
+image:katalon-menu-mac-open-settings.png[width=350,alt="Katalon Studio Enterprise menu on macOS with the Settings option highlighted."]
+
+* Linux (Ubuntu):
+** From the menu bar, select *Window → Katalon Studio Preferences*.
++
+image:katalon-preferences-access-linux-ubuntu.png[width=600,alt="Katalon Studio Window menu on Ubuntu Linux highlighting the Katalon Studio Preferences option."]
+
+The next steps are the same for all operating systems:
+
+* Expand *Katalon*, then select *Kobiton*.
+* In the _Kobiton Integration_ options, check the *Enable Kobiton Integration* checkbox.
+
+image:katalon-preferences-enable-kobiton-integration.png[width=600,alt="Katalon Studio Preferences screen showing Kobiton integration settings with API key and server configured."]
+
+Enter the following information:
+
+* Kobiton Server.
+include::integrations:partial$appium-server-url.adoc[]
+* Username
+* API Key
+
+Select *Test Connection* to test the configuration. If successful, a message `Connection to Kobiton successful` will appear.
+Select *Apply and Close*.
+
+== Perform actions or tests with Kobiton Integration
+
+[NOTE]
+====
+These features are only available for Katalon Enterprise accounts.
+====
+
+=== Mark devices as favorites in the Kobiton Portal
+
+Log in to your Kobiton Portal.
+
+Follow xref:devices:manage-devices.adoc#_favorite_the_device[this guide,window=read-later] to mark any Public or Private and Local devices as favorites.
+
+image:kobiton-device-list-favorites.png[width=746px,alt="Device list in Kobiton platform showing favorite Android and iOS devices available for testing."]
+
+[NOTE]
+====
+Only devices that are marked as favorites can be selected in the Spy and Record actions.
+====
+
+=== Upload application to the Kobiton App Repo (optional)
+
+If you want to test an app not already installed on the device, follow xref:apps:upload-an-app/using-the-kobiton-portal.adoc[this guide,window=read-later] to upload the app to the App Repo.
+
+image:kobiton-apps-dashboard.png[width=800px,alt="Kobiton Apps dashboard showing uploaded Android and iOS applications."]
+
+=== Perform Spy or Record actions
+
+Make sure you have marked device(s) as favorites and uploaded application(s) to the App Repo.
+
+Select the *Spy* or *Record* icon.
+
+image:katalon-toolbar-start-recording.png[width=400px,alt="Toolbar controls to start or stop recording mobile test steps."]
+
+Select *Kobiton Devices*.
+
+image:katalon-device-selection-kobiton.png[width=350,alt="Device source options in Katalon Studio showing Kobiton Devices selected among Android, iOS, and Remote Devices."]
+
+Wait for the device and application list to load.
+
+Under *Configurations*, select a *Device Name*.
+
+To install an app from the App Repo, select *Application File* under *Start With*, then choose an app from the dropdown.
+
+image:katalon-mobile-config-start-application-file.png[width=350,alt="Mobile configuration panel in Katalon with an application file selected for a Google Pixel 8 Pro."]
+
+To test an app already installed on the device, select *Application ID* under *Start With*, then input the package name or bundle ID.
+
+image:katalon-mobile-config-start-application-id.png[width=350,alt="Katalon Studio configuration using Application ID to launch an app on Google Pixel 5."]
+
+Select *Refresh* to update the app list if needed.
+
+Select *Start* to begin the Spy or Record action.
+
+[NOTE]
+====
+* Local apps cannot be installed to Kobiton devices in Spy and Record actions. Upload the apps to the Kobiton App Repo or use a direct download URL.
+* The _Kobiton Devices_ option only appears when the Kobiton Integration plugin is enabled.
+* Learn more about the https://docs.katalon.com/katalon-studio/record-and-spy/mobile-record-and-spy-utilities/spy-mobile-utility[Spy,window=read-later] and https://docs.katalon.com/katalon-studio/record-and-spy/mobile-record-and-spy-utilities/mobile-recorder-utility[Record,window=read-later] mobile utilities in Katalon documentation.
+====
+
+=== Run a test
+
+Follow the Katalon official guide to https://docs.katalon.com/katalon-studio/create-test-cases/create-a-new-test-case-in-katalon-studio[create a test case,window=read-later]. You can use the sample https://docs.katalon.com/katalon-studio/get-started/sample-projects/mobile/mobile-create-and-run-android-test-case-in-katalon-studio[Android,window=read-later] or https://docs.katalon.com/katalon-studio/get-started/sample-projects/mobile/mobile-create-and-run-ios-test-case-in-katalon-studio[iOS,window=read-later] project.
+
+Open the test case to test.
+
+Make the following changes:
+
+* Double-click the *input* column of the *Start Application* row.
++
+image:katalon-test-case-start-application-default-value.png[width=658px,alt="The default value of the Start Application step in the test case before editing."]
+
+* Double-click the *Value* column of the *appFile* row.
++
+image:katalon-start-application-params-local-app-variable.png[width=691px,alt="Configuring local app path using variable input for appFile in test input."]
+
+* Replace it with `"<app-version-id>"` or `"<direct-download-url>. Example: `"kobiton-store:v1"` or `"https://drive.example.com/sample.apk"`
++
+image:katalon-start-application-params-kobiton-app-id.png[width=692px,alt="Setting appFile parameter with Kobiton App ID in test input configuration."]
+
+* Select *OK* to save the changes.
+
+Select the *Run* or *Debug* dropdown icon.
+
+image:katalon-toolbar-run-or-debug-test.png[width=400px,alt="Toolbar buttons to run or debug a test case in Katalon Studio."]
+
+Select *Kobiton Device*.
+
+image:katalon-device-selection-dropdown-kobiton-device.png[width=350,alt="Device selection dropdown in Katalon Studio with Kobiton Device highlighted."]
+
+Wait for the device list to load and choose a device.
+
+Select *OK* to start the test.
+
+Wait for test execution and view the result.
+
+[NOTE]
+The _Kobiton Device_ option only appears when the Kobiton Integration plugin is enabled.
+
+== Add Appium capabilities to run a Katalon script on Kobiton devices
+
+[NOTE]
+====
+This process is available for both Free and Enterprise Katalon accounts.
+====
+
+=== Create a test case in Katalon
+
+* Follow the Katalon official guide to https://docs.katalon.com/katalon-studio/create-test-cases/create-a-new-test-case-in-katalon-studio[create a test case,window=read-later].
+* You may also use the sample https://docs.katalon.com/katalon-studio/get-started/sample-projects/mobile/mobile-create-and-run-android-test-case-in-katalon-studio[Android,window=read-later] or https://docs.katalon.com/katalon-studio/get-started/sample-projects/mobile/mobile-create-and-run-ios-test-case-in-katalon-studio[iOS,window=read-later] project.
+
+=== Retrieve Appium capabilities for Kobiton devices
+
+* Log in to the Kobiton Portal.
+* Follow xref:automation-testing:capabilities/auto-generate-capabilities.adoc[this guide] to retrieve the Appium capabilities.
+* Select *Java* as the language.
+* To test an app that has been uploaded to the App Repo, select *Hybrid/Native* under *App Type*, then the app.
+* Copy the capabilities.
+
+=== Modify the Katalon script to add Appium capabilities
+
+Open *Katalon Studio* and the test case.
+
+image:katalon-test-case-default-view.png[width=665px,alt="Default view of a test case in Katalon."]
+
+Switch to the *Script view*.
+
+image:katalon-test-case-script-view.png[width=800px,alt="Script view of a test case in Katalon."]
+
+Add the following lines *before the import directives*:
+
+* *Android*:
++
+[source]
+----
+import org.openqa.selenium.remote.DesiredCapabilities
+import com.kms.katalon.core.appium.driver.AppiumDriverManager
+import com.kms.katalon.core.mobile.driver.MobileDriverType
+import io.appium.java_client.android.AndroidDriver
+----
+
+* *iOS*:
++
+[source]
+----
+import org.openqa.selenium.remote.DesiredCapabilities
+import com.kms.katalon.core.appium.driver.AppiumDriverManager
+import com.kms.katalon.core.mobile.driver.MobileDriverType
+import io.appium.java_client.ios.IOSDriver
+----
+
+[NOTE]
+====
+Skip adding imports that are already in the test case.
+====
+
+Replace `Mobile.startApplication(...)` with the copied capabilities.
+Add the following line after:
+
+* *Android*:
++
+[source]
+----
+AppiumDriverManager.createMobileDriver(MobileDriverType.ANDROID_DRIVER, capabilities, new URL(kobitonServerUrl))
+----
+
+* *iOS*:
++
+[source]
+----
+AppiumDriverManager.createMobileDriver(MobileDriverType.IOS_DRIVER, capabilities, new URL(kobitonServerUrl))
+----
+
+Example added capabilities:
+
+[source]
+----
+String kobitonServerUrl = "https://username:apiKey@api.kobiton.com/wd/hub";
+DesiredCapabilities capabilities = new DesiredCapabilities();
+capabilities.setCapability("kobiton:sessionName", "Automation test session");
+capabilities.setCapability("appium:app", "kobiton-store:v722859");
+capabilities.setCapability("kobiton:groupId", 13622);
+capabilities.setCapability("kobiton:deviceGroup", "KOBITON");
+capabilities.setCapability("appium:deviceName", "Galaxy Tab S7");
+capabilities.setCapability("platformVersion", "12");
+capabilities.setCapability("platformName", "Android");
+capabilities.setCapability("kobiton:retainDurationInSeconds", 0);
+----
+
+=== Complete example
+
+The below sample code was taken from the test case _Verify Correct Alarm Message_ in Katalon’s Sample Android Project, then modified to include the Kobiton capabilities:
+
+[source]
+----
+
+// Start of added import directives.
+import org.openqa.selenium.remote.DesiredCapabilities
+import com.kms.katalon.core.appium.driver.AppiumDriverManager
+import com.kms.katalon.core.mobile.driver.MobileDriverType
+import io.appium.java_client.android.AndroidDriver
+
+// End of added import directives.
+
+import static com.kms.katalon.core.testobject.ObjectRepository.findTestObject
+
+import com.kms.katalon.core.configuration.RunConfiguration
+import com.kms.katalon.core.mobile.keyword.MobileBuiltInKeywords as Mobile
+import com.kms.katalon.core.util.internal.PathUtil
+
+import internal.GlobalVariable
+
+Mobile.comment('Story: Verify correct alarm message')
+
+Mobile.comment('Given that user has started an application')
+
+'Get full directory\'s path of android application'
+def appPath = PathUtil.relativeToAbsolutePath(GlobalVariable.G_AppPath, RunConfiguration.getProjectDir())
+
+// The below line need to be removed, or commented out from the original script.
+// Mobile.startApplication(appPath, false)
+
+// Start of Appium capabilities copied from Kobiton'
+
+String kobitonServerUrl = "https://johndoe:928c807c-6283-459a-9e45-0c13b0f972bf@api.kobiton.com/wd/hub";
+
+DesiredCapabilities capabilities = new DesiredCapabilities();
+capabilities.setCapability("kobiton:sessionName", "Automation test session");
+capabilities.setCapability("kobiton:sessionDescription", "");
+capabilities.setCapability("kobiton:deviceOrientation", "portrait");
+capabilities.setCapability("kobiton:captureScreenshots", true);
+capabilities.setCapability("appium:app", "kobiton-store:v722859");
+capabilities.setCapability("kobiton:groupId", 13622); // Group: Test
+capabilities.setCapability("kobiton:deviceGroup", "KOBITON");
+capabilities.setCapability("appium:deviceName", "Galaxy Tab S7");
+capabilities.setCapability("platformVersion", "12");
+capabilities.setCapability("platformName", "Android");
+capabilities.setCapability("kobiton:retainDurationInSeconds", 0);
+
+AppiumDriverManager.createMobileDriver(MobileDriverType.ANDROID_DRIVER, capabilities, new URL(kobitonServerUrl))
+
+// End of Appium capabilities copied from Kobiton'
+
+Mobile.comment('And he navigates the application to Activity form')
+
+Mobile.tap(findTestObject('Application/android.widget.TextView - App'), 10)
+
+Mobile.tap(findTestObject('Application/App/android.widget.TextView - Activity'), 10)
+
+Mobile.comment('When he taps on the Custom Dialog button')
+
+Mobile.tap(findTestObject('Application/App/Activity/android.widget.TextView - Custom Dialog'), 10)
+
+'Get displayed message on the dialog'
+def message = Mobile.getText(findTestObject('Application/App/Activity/Custom Dialog/android.widget.TextView - Message'),
+    10)
+
+Mobile.comment('Then the correct dialog message should be displayed')
+
+Mobile.verifyEqual(message, 'Example of how you can use a custom Theme.Dialog theme to make an activity that looks like a customized dialog, here with an ugly frame.')
+
+Mobile.closeApplication()
+
+----
+
+
+=== Run the test
+
+Select either the *Run* or *Debug* icon.
+
+image:katalon-toolbar-run-or-debug-test.png[width=400px,alt="Toolbar buttons to run or debug a test case in Katalon Studio."]
+
+Do _not_ select Kobiton Device from the dropdown as it is already handled by the Appium capabilities.
+
+Wait for test execution and view the result.

@@ -27,7 +27,8 @@ This action will remove all data on the device. Back up the device before procee
 
 Refer to the device model's manual for instructions to factory reset the device.
 
-== Enable USB debugging (required)
+[#enable_developer_mode]
+== Enable Developer mode and USB debugging (required)
 
 [IMPORTANT]
 ====
@@ -96,6 +97,22 @@ image:device-lab-management:device-lab-management-android-chinese-developer-opti
 
 ====
 
+== Set default USB configuration to _File transfer / Android Auto_ (required)
+[IMPORTANT]
+====
+Setting the default USB configuration (operation mode when plugged via USB) to an option other than _File transfer / Android Auto_ prevents Kobiton from controlling the device on some models.
+====
+
+xref:#enable_developer_mode[Enable Developer mode and USB debugging] before attempting.
+
+Open *Settings* and navigate to *Developer options*. On Pixel devices, this option is under *System*.
+
+Scroll down to the **Default USB configuration** option. You can use the search function to quickly locate it.
+
+Choose *File transfer / Android Auto* or *Transferring files / Android Auto* depending on the model.
+
+image:device-lab-management:device-lab-management-android-prepare-developer-options-2.png[width=240, alt="Developer options inside Settings"] -> image:device-lab-management:device-lab-management-android-prepare-default-usb-config.png[width=240, alt="The Default USB configuration menu under Developer options"] -> image:device-lab-management:device-lab-management-android-prepare-usb-file-transfer.png[width=240, alt="The option File transfer / Android Auto selected under USB configuration screen"]
+
 == Disable passcode (required)
 
 [IMPORTANT]
@@ -115,6 +132,33 @@ Select **None**. Enter the device's passcode or lock pattern if required.
 
 image:device-lab-management:device-lab-management-android-prepare-disable-lockscreen.png[width=240, alt="Going to Lock screen option inside Settings"] -> image:device-lab-management:device-lab-management-android-prepare-disable-lockscreen-lockscreen-type.png[width=240, alt="Inside Lock Screen, going to Screen lock type"] -> image:device-lab-management:device-lab-management-android-prepare-disable-lockscreen-lockscreen-type-none.png[width=240, alt="In Screen lock types selecting the option None"]
 
+== Turn off _Auto Blocker_ and _Block USB connections while locked_ (Samsung devices with Android 14 and later)
+
+[IMPORTANT]
+====
+
+On Samsung devices running One UI 6.0 (Android 14) and later:
+
+* The *Block USB connections while locked* feature will disconnect the device's USB connection after the lock screen is active for more than 1 hour.
+
+* The *Auto Blocker* feature will prevent Kobiton from controlling the device.
+
+Both features can cause devices to go offline.
+
+====
+
+To turn these features off, unlock the device if it is locked.
+
+Navigate to *Settings* -> *Security and privacy*.
+
+Turn off *Auto Blocker*.
+
+image:device-lab-management:android-prepare-security-privacy-details.png[width=240, alt="The Auto Blocker security feature is disabled in the Security and Privacy settings on Android."]
+
+Select *More security settings*, then turn off *Block USB connections while locked*.
+
+image:device-lab-management:android-prepare-more-security-settings.png[width=240, alt="The Block USB connections while locked setting is turned off in the More Security Settings screen on Android."]
+
 == Download Google Chrome (required for specific feature)
 
 [NOTE]
@@ -131,7 +175,7 @@ Download and install Google Chrome from the Google Play Store onto the device.
 [IMPORTANT]
 ====
 
-Google Play Protect will attempt to scan the Kobiton agent app and preventing it from controlling the device.
+Google Play Protect will attempt to scan the Kobiton agent app and may prevent it from controlling the device.
 
 If Play Protect cannot be disabled, then select **Don't send** for the **deviceControl** app in the Play Protect popup after plugging the device into the host machine.
 
@@ -143,7 +187,9 @@ At the top right, tap the profile icon.
 
 Tap **Play Protect** and click the **Settings** icon.
 
-Turn **Scan apps with Play Protect** on or off.
+Turn off **Scan apps with Play Protect** and **Improve harmful app detection**.
+
+image:device-lab-management-android-prepare-play-protect-settings.png[width=240, alt="The Play Protect settings screen with the options Scan apps with Play Protect and Improve harmful app detection turned off"]
 
 [NOTE]
 Refer to Google's https://support.google.com/googleplay/answer/2812853?hl=en[support article,window=_blank] about Play Protect for more information.
