@@ -6,13 +6,6 @@ Kobiton for the Codex CLI connects the Codex CLI to the Kobiton mobile testing p
 https://discord.gg/uHvBFDZVP[image:discord-badge.svg[Join our Discord]]
 https://kobiton.com[image:kobiton-cloud.svg[Kobiton Cloud]]
 
-[NOTE]
-====
-
-The instructions in this document apply to Cloud only. Standalone and Cloud with custom domain instructions are coming soon.
-
-====
-
 == Get started
 
 === Open a workspace folder
@@ -33,7 +26,9 @@ You can create this folder anywhere, for example in your Documents directory.
 
 === Install the plugin
 
-Add the Kobiton marketplace, then install the plugin from the in-session plugin browser:
+include::partial$local-plugin.adoc[]
+
+For standard Cloud environment, add the Kobiton marketplace, then install the plugin from the in-session plugin browser:
 
 [source,bash]
 ----
@@ -80,6 +75,7 @@ curl -sLO https://raw.githubusercontent.com/kobiton/automate/main/AGENTS.md
 
 Launch `codex` and run `/mcp` to confirm. The OAuth flow still applies on the first tool call.
 
+[#_authentication]
 == Authentication
 
 Kobiton MCP supports:
