@@ -1,0 +1,39 @@
+// DRAFT release note — KOB-52866 — pending release-version assignment by the docs team.
+// Mode: release-note. Source evidence: Jira KOB-52866 (Story) + approved .ai spec (feature.md, blueprint.md).
+// Not for publication as-is: fold the item below into the target release's
+// all-releases/<version>.adoc under "Bug fixes and improvements", then add the nav entry.
+// No release version or date is confirmed (no deployment PR supplied). See open questions at the end.
+= Value Props panel scoped to the Registration page (draft)
+:navtitle: Value Props panel registration-only (draft)
+
+== Bug fixes and improvements
+
+=== Sign-in and registration
+
+- The promotional panel shown beside the sign-in forms now appears only on the *Registration* page. The *Login*, *Forgot password*, *Reset password*, invitation registration, and *SSO login* pages now display the panel area without promotional content. The Registration page and the overall page layout are unchanged.
+
+This change applies to Cloud and Dedicated Cloud. Standalone is unaffected.
+
+////
+Open questions / verification needed — for the docs team; remove before publishing:
+
+- Release assignment: no deployment PR or version/date was supplied. Assign this item to the
+  correct release file (all-releases/<version>.adoc) and add the matching nav entry. This draft
+  is intentionally not wired into nav.adoc to avoid inventing a version.
+
+- User-facing significance: the visible change is that the panel area is blank on non-Registration
+  sign-in pages. Confirm this is worth a public note, or drop it as too minor for release notes.
+
+- Product naming: "Value Props panel" is the internal component name and is not used in the public
+  wording above. Confirm the customer-facing term for this panel, if any, or keep the descriptive
+  phrasing ("promotional panel shown beside the sign-in forms").
+
+- Page names: "Login", "Forgot password", "Reset password", invitation registration, and "SSO login"
+  are derived from the auth routes (/login, /forgot, /reset, /join, /login/sso). Confirm the exact
+  UI page titles before publishing.
+
+- Legacy route removal: the ticket also removes the legacy /register-form route (standalone and
+  cloud). This is an internal routing change with no documented user-facing surface, so it is
+  excluded from the public note per sanitization rules. No public doc references /register-form
+  (verified: no matches in this docs repo). Confirm no other public surface links to it.
+////
