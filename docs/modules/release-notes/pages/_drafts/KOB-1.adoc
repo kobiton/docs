@@ -1,0 +1,54 @@
+= KOB-1 release-note draft (DRAFT — not for publication)
+:navtitle: KOB-1 release-note draft
+
+[IMPORTANT]
+====
+This is an automated *Ledger (docs-writer)* draft generated in a CI context. It is
+*blocked pending source evidence* and is *not* a finished release note. It is intentionally
+not wired into `nav.adoc`. Do not publish until the open questions below are resolved by the
+docs team and a human editor completes review.
+====
+
+== Mode
+
+`release-note`
+
+== Source evidence used
+
+None available.
+
+* No spec folder matching `features/KOB-1*` exists on the `.ai` branch `main`.
+* No Jira/Atlassian integration is available in this CI session, so the KOB-1 ticket could not be fetched or normalized by Dish (`/docs-workflow:jira-draft`).
+* No PR summary, code-diff summary, deployment PR, or release context was supplied.
+* No existing documentation text was provided for KOB-1.
+
+== Draft output
+
+No release-note content can be drafted. Per the docs-writer core rules, Ledger does not proceed
+without source evidence and does not invent product details, UI labels, or user-facing claims.
+
+What KOB-1 changes — the feature or fix, the affected product surface, the user-visible behavior,
+and the release it ships in — is entirely unknown from the inputs provided. Drafting any prose here
+would be fabrication, so the draft is withheld until evidence is supplied.
+
+== User-facing impact summary
+
+Cannot be determined. The user-facing change for KOB-1 is unknown without source evidence.
+
+== Open questions or verification needed
+
+* *Ticket evidence:* Provide the KOB-1 Jira ticket (summary, description, status, acceptance
+  criteria, labels/components) or a PR summary / code-diff summary describing the change.
+* *Change type:* Is KOB-1 a new feature, an enhancement, or a bug fix? This determines the
+  release-note shape (feature entry with highlights/availability vs. a grouped bug-fix item).
+* *Product surface:* Which surface does this affect (Portal, deviceConnect, Console, API, CLI,
+  MCP server, automation)? This confirms public vs. admin classification.
+* *User-visible behavior:* What concretely changes for the user? Release notes must reflect
+  actual implemented behavior, not engineering intent.
+* *Release / availability:* Which release version and date does KOB-1 ship in, and are there
+  availability conditions (subscription, deployment type, permission, contact-to-enable)? This
+  determines the target `all-releases/<version>.adoc` page and whether an *Availability* block
+  is needed.
+* *Mode confirmation:* `release-note` was supplied as the mode. If KOB-1 also needs conceptual
+  or procedural documentation, a separate `new-doc` / `update-doc` pass is required beyond this
+  release note.
