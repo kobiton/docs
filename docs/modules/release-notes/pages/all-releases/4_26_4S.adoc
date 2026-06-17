@@ -1,0 +1,78 @@
+= Kobiton 4.26.4S Release Notes
+:navtitle: Kobiton 4.26.4S release notes
+
+// TODO: Confirm the release date before publishing. Deployments spanned May 20–June 10, 2026.
+_Release date to be confirmed_
+
+== New features and major changes
+
+=== Device-only view for live sessions
+
+View just the device screen during a live session, without the surrounding Kobiton interface. Device-only view hides the sidebars, headers, and panels and sizes the viewport to the device screen. It works for phones and tablets, on Android and iOS, in portrait and landscape.
+
+Device-only view is useful for demos, screen sharing, and observing automation runs.
+
+*Highlights*
+
+- Activate device-only view by adding `?view=device-only` to a live session URL.
+- The device canvas is display-only. Touches, swipes, and keyboard input are not sent to the device under test.
+- A floating exit button ends the session and releases the device. When an Appium session is running, the button instead closes the live view and keeps the automation running.
+- For AI-assisted workflows, the `getSession` and `getSessionArtifacts` MCP tools now return `liveViewUrl` and `deviceOnlyViewUrl`.
+
+*Availability*
+
+Available for in-progress live sessions.
+
+=== Guide AI-driven sessions from the device canvas
+
+During an AI-driven session in device-only view, tap or swipe on the device canvas to guide the agent. The agent observes your touch and swipe input between its scripted commands and reacts to it, such as shifting focus to a screen you just opened.
+
+Canvas input is observational only. It is not sent to the device under test, and the agent continues to drive the device through its own commands.
+
+*Highlights*
+
+- Tap or swipe on the device canvas in device-only view to signal intent to the AI agent.
+- A new `getUserInputEvents` MCP tool lets the agent read these canvas events.
+- Only canvas touch and swipe are captured. Keyboard input and other interactions remain disabled in device-only view.
+
+*Availability*
+
+Requires device-only view.
+
+== Bug fixes and improvements
+
+=== Appium and automation
+
+- Fixed an issue where recorded text-entry steps were omitted from generated Python (pytest) scripts, causing form submissions to run against empty fields.
+- Fixed an issue where generated Python (pytest) scripts could fail at the first screen transition after a form submission.
+
+=== ADB shell
+
+- Fixed an issue where the `am start` command was rejected as an unsupported command when launching protected system apps such as Chrome and Settings.
+
+=== App management
+
+- Fixed an issue where installing an app version whose file had been removed from storage returned an unclear error. Affected versions now return a clear, actionable message.
+
+=== Device management
+
+- Added the OS build number to the device details modal for Android and iOS devices.
+- Added an OS build number filter to *Device List* search.
+
+=== Manual sessions
+
+- Fixed an issue where command latency was missing or calculated incorrectly for sessions that reconnected multiple times.
+
+=== MCP server
+
+- Added a `getAppParsingStatus` tool so AI agents can confirm an uploaded app has finished processing before they use it.
+- Fixed the `listSessions` tool ignoring the `limit` and `offset` parameters. Agents can now control how many sessions are returned.
+- Removed misleading app expiry fields (`expiry_date` and `is_expired`) from `listApps` and `getApp` responses. Uploaded apps remain usable and do not expire.
+
+=== API and CLI
+
+- Improved the error message returned when app signing cannot proceed, replacing a generic server error with a descriptive message.
+
+=== SSO sign-in
+
+- Added a clear error message on the SSO sign-in page when an organization's SSO name is invalid.
