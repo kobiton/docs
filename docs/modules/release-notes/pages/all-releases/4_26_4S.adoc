@@ -14,10 +14,10 @@ Device-only view is useful for demos, screen sharing, and observing automation r
 
 *Highlights*
 
-- Activate device-only view by adding `?view=device-only` to a live session URL.
-- The device canvas is display-only. Touches, swipes, and keyboard input are not sent to the device under test.
+- Activate device-only view by adding `&view=device-only` to a live session URL.
+- In device-only view, only touches and swipes are sent to the device. Keyboard input is not sent to the device under test.
 - A floating exit button ends the session and releases the device. When an Appium session is running, the button instead closes the live view and keeps the automation running.
-- For AI-assisted workflows, the `getSession` and `getSessionArtifacts` MCP tools now return `liveViewUrl` and `deviceOnlyViewUrl`.
+- For AI-assisted workflows, you can retrieve the live view and the device-only view from the agent during a live session.
 
 *Availability*
 
@@ -25,15 +25,13 @@ Available for in-progress live sessions.
 
 === Guide AI-driven sessions from the device canvas
 
-During an AI-driven session in device-only view, tap or swipe on the device canvas to guide the agent. The agent observes your touch and swipe input between its scripted commands and reacts to it, such as shifting focus to a screen you just opened.
-
-Canvas input is observational only. It is not sent to the device under test, and the agent continues to drive the device through its own commands.
+During an AI-driven session in device-only view, tap or swipe on the device canvas to steer the device. The agent observes your touch and swipe input between its scripted commands and acknowledges it.
 
 *Highlights*
 
 - Tap or swipe on the device canvas in device-only view to signal intent to the AI agent.
 - A new `getUserInputEvents` MCP tool lets the agent read these canvas events.
-- Only canvas touch and swipe are captured. Keyboard input and other interactions remain disabled in device-only view.
+- Only canvas touch and swipe are sent to the device. Keyboard input and other interactions remain disabled in device-only view.
 
 *Availability*
 
