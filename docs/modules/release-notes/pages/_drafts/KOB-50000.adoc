@@ -1,0 +1,64 @@
+= KOB-50000 release-note draft (BLOCKED — no source evidence)
+:navtitle: KOB-50000 release-note draft
+
+[NOTE]
+====
+This is an automated docs-workflow (Robot Ranch) draft artifact for ticket
+*KOB-50000*. It is *not* a publishable release note and is intentionally
+*not linked in `nav.adoc`*. It exists only as the review surface for the docs
+team, because this run was executed in CI with no human on the keyboard.
+
+The drafting ranch hand (Ledger) *did not* generate release-note content,
+because no source evidence was available. Per the docs-writer core rule
+"Do not proceed without source evidence," nothing was invented.
+====
+
+== Mode
+
+`release-note` (supplied explicitly by the workflow trigger).
+
+== Source evidence used
+
+None. No source evidence could be obtained for KOB-50000 in this run:
+
+* *Spec folder* — empty. No `features/KOB-50000*` folder exists on the `.ai`
+  `main` branch (the ref this run used).
+* *Jira (Dish / jira-draft)* — unavailable. The Atlassian MCP server uses
+  interactive OAuth 2.1 and is not connected in this headless CI session, so
+  the ticket could not be fetched or normalized. There is no human present to
+  paste ticket content manually.
+* *Deployment PR* — none supplied to the trigger, so no PR summary or code-diff
+  summary was available as a fallback source.
+
+== Draft output
+
+No draft produced. With zero source evidence, drafting a release note would
+require inventing the feature or fix, its user-facing behavior, the affected
+surface, and the release/version — all of which the docs-writer skill prohibits.
+
+To unblock, supply one of the following and re-run:
+
+* a populated `features/KOB-50000*` spec folder on the chosen `.ai` ref, or
+* a connected Jira integration (or pasted KOB-50000 ticket text), or
+* a deployment PR whose summary/diff describes the user-visible change.
+
+== User-facing impact summary
+
+Unknown — cannot be determined without source evidence. Do not assume any
+user-facing change has shipped, is active, or is current for KOB-50000.
+
+== Open questions or verification needed
+
+. *What is KOB-50000?* Confirm the ticket summary, description, and acceptance
+  criteria. The classification as `release-note` was supplied to the trigger,
+  not derived from ticket content.
+. *Is there a user-visible change at all?* Confirm whether KOB-50000 is a
+  user-facing feature, enhancement, or fix versus an internal-only change that
+  needs no release note.
+. *Which release/version?* No target version is known, so this draft is not
+  attached to any `all-releases/*.adoc` page.
+. *New page or update?* Scout (git-scout) could not resolve new-vs-update
+  without knowing what changed. Confirm whether this belongs in an existing
+  release-notes page or a new version entry.
+. *Affected surfaces / drift?* Bloodhound was not run — with no described change
+  there is nothing to trace. Re-evaluate once evidence exists.
