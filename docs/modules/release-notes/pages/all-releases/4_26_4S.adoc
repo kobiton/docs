@@ -1,8 +1,7 @@
 = Kobiton 4.26.4S Release Notes
 :navtitle: Kobiton 4.26.4S release notes
 
-// TODO: Confirm the release date before publishing. Deployments spanned May 20–June 10, 2026.
-_Release date to be confirmed_
+_Monday, June 15_
 
 == New features and major changes
 
@@ -23,26 +22,31 @@ Device-only view is useful for demos, screen sharing, and observing automation r
 
 Available for in-progress live sessions.
 
-=== Guide AI-driven sessions from the device canvas
+=== Guide AI-driven sessions from device-only view
 
-During an AI-driven session in device-only view, tap or swipe on the device canvas to steer the device. The agent observes your touch and swipe input between its scripted commands and acknowledges it.
+During an AI-driven session in device-only view, tap or swipe on the device screen to steer the device. The agent observes your touch and swipe input between its scripted commands and acknowledges it.
 
 *Highlights*
 
-- Tap or swipe on the device canvas in device-only view to signal intent to the AI agent.
-- A new `getUserInputEvents` MCP tool lets the agent read these canvas events.
-- Only canvas touch and swipe are sent to the device. Keyboard input and other interactions remain disabled in device-only view.
+- Tap or swipe on the device screen in device-only view to signal intent to the AI agent.
+- A new `getUserInputEvents` MCP tool lets the agent read these events.
+- Only screen touch and swipe are sent to the device. Keyboard input and other interactions remain disabled in device-only view.
 
 *Availability*
 
 Requires device-only view.
+
+== Python support for Appium Script Generation
+
+Appium script generation now supports Python with the `pytest` framework. To generate a Python script, convert a completed Manual Session to a test case from Session Explorer. Then open the test case, select Generate Script, and choose Python from the language dropdown.
+
+NOTE: This feature requires IQS. Contact your Account Manager for more information.
 
 == Bug fixes and improvements
 
 === Appium and automation
 
 - Fixed an issue where recorded text-entry steps were omitted from generated Python (pytest) scripts, causing form submissions to run against empty fields.
-- Fixed an issue where generated Python (pytest) scripts could fail at the first screen transition after a form submission.
 
 === ADB shell
 
@@ -54,12 +58,8 @@ Requires device-only view.
 
 === Device management
 
-- Added the OS build number to the device details modal for Android and iOS devices.
+- Added the OS build number to the device details modal for Android and iOS devices. OS build numbers can be used to differentiate between beta versions of the same operating system release.
 - Added an OS build number filter to *Device List* search.
-
-=== Manual sessions
-
-- Fixed an issue where command latency was missing or calculated incorrectly for sessions that reconnected multiple times.
 
 === MCP server
 
@@ -78,11 +78,13 @@ Requires device-only view.
 [NOTE]
 ====
 
-These release notes pertain to:
+Starting with this release, the overall Standalone release number matches the Portal version number. Other platform components may be versioned independently.
 
-* portal 4.26.4S
+This release corresponds to the following component versions:
+
+* Portal 4.26.4S
 * deviceConnect 4.26.5
 * deviceShare 4.26.0
-* gigacap 4.26.5 with ADB (android debug bridge) 36.0.2
+* Gigacap 4.26.5 with ADB (android debug bridge) 36.0.2
 
 ====
