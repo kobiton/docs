@@ -2,7 +2,7 @@
 :navtitle: Configure personal computer for Standalone Portal
 :tabs-sync-option:
 
-Learn how to configure your personal computer for Standalone Portal with SSL, so you can debug local or private devices using virtualUSB.
+Configure your personal computer to trust a Standalone/On-Prem Portal that uses a self-signed SSL certificate. Trusting the certificate is required to access the Portal Web and to use virtualUSB, Kobiton CLI, and any AI coding assistant connected through the Kobiton MCP server.
 
 [#_before_you_start]
 == Before you start
@@ -14,7 +14,7 @@ You'll need to complete the following:
 == Trust self-signed SSL certificate (Standalone/On-Prem only)
 
 [NOTE]
-These steps are only necessary if the Standalone/On-Prem portal uses a self-signed SSL certificate.
+These steps are only necessary if the Standalone/On-Prem Portal uses a self-signed SSL certificate. Import the certificate on each end-user computer that accesses the Portal Web, runs virtualUSB, runs Kobiton CLI commands, or connects through the Kobiton MCP server.
 
 [tabs]
 ====
@@ -23,11 +23,11 @@ macOS::
 +
 --
 
-Request the IT administrator of your organization for the SSL end-entity certificate. It should be a file named `ssl.crt`. Transfer the certificate file to the computer.
+Request the IT administrator of your organization for the root CA certificate that issued the SSL end-entity certificate. It is typically named `root.crt` or `ca.crt`. Transfer the certificate file to the computer.
 
 Open the *Keychain Access* application.
 
-Open *Finder*, go to the location of the `ssl.crt` file, then drag and drop the file into the *Keychain Access* application.
+Open *Finder*, go to the location of the root CA certificate file, then drag and drop the file into the *Keychain Access* application.
 
 Double-click on the newly added certificate file. In the dialog, choose the Always Trust option from the dropdown list for the two fields:
 
@@ -45,7 +45,7 @@ Windows::
 +
 --
 
-Request the IT administrator of your organization for the root CA certificate that issued the SSL end-entity certificate. It should be a file named `root.crt` or `ca.crt`. Transfer the certificate file to the computer.
+Request the IT administrator of your organization for the root CA certificate that issued the SSL end-entity certificate. It is typically named `root.crt` or `ca.crt`. Transfer the certificate file to the computer.
 
 On the Windows machine, double-click the file, then select *Install Certificate* on the *Certificate* window.
 
@@ -67,4 +67,19 @@ Select *Next*, then *Finish*. The root CA certificate is now imported to the end
 
 --
 
+Linux::
++
+--
+
+Request the IT administrator of your organization for the root CA certificate that issued the SSL end-entity certificate. It is typically named `root.crt` or `ca.crt`. Transfer the certificate file to the computer, then trust it using the steps for your distribution:
+
+* Debian-based: copy the certificate to `/usr/local/share/ca-certificates` (create the directory if it does not exist), then run `update-ca-certificates` as root.
+
+* Arch or Fedora: copy the certificate to `/etc/ca-certificates/trust-source/anchors`, then run `update-ca-trust` as root.
+
+--
+
 ====
+
+[NOTE]
+After importing the certificate, restart the Chrome browser, Kobiton CLI, the virtualUSB application, or any AI coding assistant connected through the Kobiton MCP server before connecting to the Portal.
