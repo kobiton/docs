@@ -1,0 +1,65 @@
+// Steps to trust self-signed ssl cert for Standalone Portal
+
+Request the IT administrator of your organization for the root CA certificate that issued the SSL end-entity certificate. It is typically named `root.crt` or `ca.crt`. Transfer the certificate file to the computer, then follow the appropriate steps for your operating system.
+
+.&nbsp;
+[tabs]
+====
+
+macOS::
++
+--
+
+Open the *Keychain Access* application.
+
+Open *Finder*, go to the location of the root CA certificate file, then drag and drop the file into the *Keychain Access* application.
+
+Double-click on the newly added certificate file. In the dialog, choose the Always Trust option from the dropdown list for the two fields:
+
+* *Secure Sockets Layer (SSL)*
+
+* *X.509 Basic Policy*
+
+image:debugging:macos-ssl-cert-trust.png[width=800,alt="The trust option for the imported certificate in keychain access with the 2 options set as Always Trust"]
+
+Close the dialog and enter the admin password of the user workstation to save the changes.
+
+--
+
+Windows::
++
+--
+
+On the Windows machine, double-click the file, then select *Install Certificate* on the *Certificate* window.
+
+image:debugging:windows-certificate-install.png[width=400,alt="The certificate information screen with an option to Install Cerficicate"]
+
+On the next screen, choose *Local Machine*. This requires administrators privileges.
+
+image:debugging:windows-certificate-install-store.png[width=400,alt="The Certificate Import Wizard with the Store Location set to Local Machine"]
+
+On the next screen, choose *Place all certificates in the following store*, then select *Browse*.
+
+image:debugging:windows-certificate-browse-store.png[width=400,alt="The Certificate Store selector with the option Place all certificates in the following store selected"]
+
+Choose *Trusted Root Certification Authorities*, then select *OK*.
+
+image:debugging:windows-certificate-trusted-root.png[width=400,alt="The Select Certificate Store screen with Trusted Root Certification Authorities selected"]
+
+Select *Next*, then *Finish*. The root CA certificate is now imported to the end-user workstation trust store.
+
+--
+
+Linux::
++
+--
+
+Trust the certificate using the steps for your distribution:
+
+* Debian-based: copy the certificate to `/usr/local/share/ca-certificates` (create the directory if it does not exist), then run `update-ca-certificates` as root.
+
+* Arch or Fedora: copy the certificate to `/etc/ca-certificates/trust-source/anchors`, then run `update-ca-trust` as root.
+
+--
+
+====
