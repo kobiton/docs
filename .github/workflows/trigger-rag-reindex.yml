@@ -9,7 +9,7 @@ on:
 
 jobs:
   trigger:
-    name: Dispatch re-index to kobiton/.ai
+    name: Dispatch re-index to kobiton/rag-search
     runs-on: ubuntu-latest
 
     steps:
@@ -17,6 +17,6 @@ jobs:
         uses: peter-evans/repository-dispatch@v3
         with:
           token: ${{ secrets.PAT }}
-          repository: kobiton/.ai
+          repository: kobiton/rag-search
           event-type: docs-updated
           client-payload: '{"ref": "${{ github.sha }}"}'
