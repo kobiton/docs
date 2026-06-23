@@ -11,22 +11,13 @@ COGNITO_USER_POOL_ID=us-east-1_xxxxxxxxx
 SESSION_SECRET=your-64-char-hex-string
 
 # ── RAG search ────────────────────────────────────────────────────────────────
+# RAG is always deployed to EKS. The CF Worker proxies /api/query to FastAPI.
 #
-# LOCAL DEV: The Cloudflare AI binding (used for query embedding in production)
-# requires a Cloudflare account connection.  For local dev you have two options:
+# Local dev: set RAG_API_URL to the local FastAPI running in Docker.
+#   1. cd kobiton/.ai/rag-search && docker-compose up -d
+#   2. Set RAG_API_URL below
 #
-# Option A (recommended for local) — proxy to the local FastAPI from kobiton/.ai:
-#   1. cd ../source-code/.ai/rag-search && docker-compose up -d
-#   2. Set RAG_API_URL below (uncommented)
-#   The Worker will forward all /api/query calls to FastAPI — no CF auth needed.
-#
-# Option B — authenticate with Cloudflare once, then the AI binding works locally:
-#   Run: node_modules/.bin/wrangler login
-#   Then comment out RAG_API_URL below.
+# Production: set RAG_API_URL to the EKS ALB hostname in the CF dashboard.
+#   Cloudflare dashboard → Pages → Settings → Environment variables
 
-# Proxy to local FastAPI (Option A — active by default for local dev)
 RAG_API_URL=http://localhost:8000
-
-# Anthropic API key for Claude answer generation (used in production Worker).
-# Also works in Option B local dev when RAG_API_URL is commented out.
-# ANTHROPIC_API_KEY=sk-ant-...

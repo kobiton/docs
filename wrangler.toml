@@ -9,12 +9,19 @@ compatibility_date = "2025-07-18"
 # or Cloudflare dashboard → Pages → Settings → Environment variables.
 
 [vars]
-# URL to the raw embeddings.json from kobiton/.ai main branch.
-EMBEDDINGS_URL = "https://raw.githubusercontent.com/kobiton/.ai/main/rag-search/data/embeddings.json"
+# RAG backend URL — always points to the EKS-hosted FastAPI.
+# The CF Worker proxies all /api/query requests here; EMBEDDINGS_URL is not needed.
+# Set the production value in: Cloudflare dashboard → Pages → Settings → Environment variables.
+# RAG_API_URL = "https://rag-api.your-domain.com"
 
 # Claude model for answer generation.
 # Options: claude-haiku-4-5 (fast/cheap) | claude-sonnet-4-5 (higher quality)
-LLM_MODEL = "claude-haiku-4-5"
+# Only used in CF-native mode (no RAG_API_URL). Kept for reference.
+# LLM_MODEL = "claude-haiku-4-5"
+
+# EMBEDDINGS_URL is intentionally omitted.
+# RAG is always deployed to EKS; the CF Worker proxies to FastAPI via RAG_API_URL.
+# FastAPI loads embeddings.json from disk — EMBEDDINGS_URL is never read.
 
 # ── Cloudflare AI binding ─────────────────────────────────────────────────────
 # The AI binding (for query embedding via bge-small-en-v1.5) is configured in
