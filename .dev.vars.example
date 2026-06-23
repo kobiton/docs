@@ -21,3 +21,7 @@ SESSION_SECRET=your-64-char-hex-string
 #   Cloudflare dashboard → Pages → Settings → Environment variables
 
 RAG_API_URL=http://localhost:8000
+
+# Shared secret for FastAPI auth. Only needed when FastAPI is deployed with
+# RAG_AUTH_ENABLED=true (EKS/cloud). Leave empty for local dev (auth is off by default).
+# RAG_API_KEY=

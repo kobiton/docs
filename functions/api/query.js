@@ -4,11 +4,11 @@
  * Cloudflare Pages Function — RAG search + AI answer endpoint.
  *
  * Environment bindings (set in wrangler.toml + Cloudflare dashboard secrets):
- *   env.EMBEDDINGS_URL      URL to fetch embeddings.json (e.g. raw GitHub content)
- *   env.ANTHROPIC_API_KEY   Anthropic API key (secret)
+ *   env.RAG_API_URL         FastAPI on EKS — all /api/query calls are proxied here
+ *   env.RAG_API_KEY         Shared secret sent as X-RAG-Api-Key header (optional;
+ *                           only needed when FastAPI has RAG_AUTH_ENABLED=true)
+ *   env.ANTHROPIC_API_KEY   Anthropic API key (secret; only for CF-native mode)
  *   env.LLM_MODEL           Claude model name (default: claude-haiku-4-5)
- *   env.RAG_API_URL         Optional: forward to external FastAPI instead of
- *                           running the pipeline here (useful for local dev)
  *
  * The function runs the full RAG pipeline:
  *   1. Fetch + cache embeddings index from EMBEDDINGS_URL
@@ -45,11 +45,13 @@ export async function onRequestPost({ request, env }) {
       return json({ message: 'Enter a question or search term.', results: [], fallback: true })
     }
 
-    // ── Optional: proxy to external FastAPI (local dev / migration period) ────
+    // ── Proxy to FastAPI on EKS ───────────────────────────────────────────────
     if (env.RAG_API_URL) {
+      const headers = { 'Content-Type': 'application/json' }
+      if (env.RAG_API_KEY) headers['X-RAG-Api-Key'] = env.RAG_API_KEY
       const upstream = await fetch(`${env.RAG_API_URL}/assistant`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers,
         body: JSON.stringify({ query: q }),
       })
       const data = await upstream.json()
