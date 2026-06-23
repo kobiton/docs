@@ -1,0 +1,22 @@
+name: Trigger RAG re-index
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "docs/**"                       # any content page change
+      - "antora-playbook-docs.yml"      # site structure changes
+
+jobs:
+  trigger:
+    name: Dispatch re-index to kobiton/.ai
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Fire repository_dispatch
+        uses: peter-evans/repository-dispatch@v3
+        with:
+          token: ${{ secrets.PAT }}
+          repository: kobiton/.ai
+          event-type: docs-updated
+          client-payload: '{"ref": "${{ github.sha }}"}'
