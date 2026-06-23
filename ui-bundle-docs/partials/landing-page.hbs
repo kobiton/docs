@@ -6,6 +6,14 @@
         <div class="search">
           <div class="search-field">
             <input id="search-input" type="text" placeholder="Type your question here...">
+            <div id="search-ai-hint" class="search-result-dropdown-menu" hidden>
+              <div class="search-result-dataset">
+                <div id="search-hint-results"></div>
+                <button class="search-ai-hint__ask-btn" id="search-hint-ask-btn">
+                  <span aria-hidden="true">✦</span> Ask AI instead
+                </button>
+              </div>
+            </div>
           </div>
         </div>
         {{/if}}

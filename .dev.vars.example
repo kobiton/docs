@@ -9,3 +9,12 @@ COGNITO_USER_POOL_ID=us-east-1_xxxxxxxxx
 
 # Session secret (generate with: openssl rand -hex 32)
 SESSION_SECRET=your-64-char-hex-string
+
+# ── RAG search ────────────────────────────────────────────────────────────────
+# Anthropic API key for Claude answer generation.
+# Get one at https://console.anthropic.com
+ANTHROPIC_API_KEY=sk-ant-...
+
+# Optional: proxy POST /api/query to a local FastAPI instance instead of
+# running the full pipeline in the Worker (useful while developing Phase 1/2).
+# RAG_API_URL=http://localhost:8000
