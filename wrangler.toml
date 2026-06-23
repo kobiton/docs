@@ -1,5 +1,6 @@
 name = "docs"
 pages_build_output_dir = "build/docs"
+compatibility_date = "2025-07-18"
 
 # ── RAG search configuration ──────────────────────────────────────────────────
 # Public (non-secret) vars — safe to commit.
@@ -15,6 +16,15 @@ EMBEDDINGS_URL = "https://raw.githubusercontent.com/kobiton/.ai/main/rag-search/
 # Options: claude-haiku-4-5 (fast/cheap) | claude-sonnet-4-5 (higher quality)
 LLM_MODEL = "claude-haiku-4-5"
 
-# ── Cloudflare AI binding (query embedding via bge-small-en-v1.5) ─────────────
-[ai]
-binding = "AI"
+# ── Cloudflare AI binding ─────────────────────────────────────────────────────
+# The AI binding (for query embedding via bge-small-en-v1.5) is configured in
+# the Cloudflare dashboard for production:
+#   Pages → <project> → Settings → Functions → AI Bindings → Add binding
+#   Variable name: AI
+#
+# It is intentionally omitted here because declaring it in wrangler.toml forces
+# wrangler to open a remote Cloudflare connection even during local dev, which
+# requires CF authentication.
+#
+# For local dev, set RAG_API_URL=http://localhost:8000 in .dev.vars to proxy
+# /api/query to the local FastAPI — no AI binding or CF login needed.
