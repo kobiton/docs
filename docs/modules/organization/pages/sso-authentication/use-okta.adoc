@@ -18,17 +18,13 @@ Okta may ask you to sign in again.
 
 In the **Admin Console**, select **Applications**, then select **Applications** from the submenu.
 
-image:organization:okta-applications.png[width=1000,alt="The Applications page with the Create App Integration option"]
-
 Select **Create App Integration**.
+
+image:organization:okta-applications.png[width=1000,alt="The Applications page with the Create App Integration option"]
 
 In the **Create a new app integration** window, select **SAML 2.0**, then select **Next**.
 
-image:organization:okta-create-app-sign-in-method.png[width=1000,alt="Choose SAML 2.0 in the select sign-in method step"]
-
 In **General Settings**, enter an **App name**. Optionally, add a logo to customize your sign-in portal. Then select **Next**.
-
-image:organization:okta-general-settings.png[width=1000,alt="General Settings window"]
 
 == Map parameters and download certificate
 
@@ -58,9 +54,9 @@ For **Default RelayState**, enter the value from the Kobiton SSO basic configura
 {"domainName": "Kobiton"}
 ----
 
-image:organization:okta-fill-out-fields-context.png[width=1000,alt="Fields to fill in for Kobiton SSO"]
-
 Expand **Show legacy configuration** to display the attribute statement settings.
+
+image:organization:okta-expand-legacy-config.png[width=1000,alt="Expanded view of the legacy configurations panel"]
 
 In **Profile attribute statements**, add the following attributes. For each row, enter the name into **Name**, select **Basic** from the **Name format** drop-down list, and select the corresponding value from the **Value** drop-down list.
 
@@ -96,10 +92,10 @@ In **Group attribute statements**, add the following attribute. For **Filter**, 
 | Matches regex `.*`
 |===
 
-// TODO: Replace okta-groups-attributes-context.png with a new screenshot showing all five attribute entries (Profile: email, firstName, lastName, phoneNumber; Group: memberOf).
-image:organization:okta-groups-attributes-context.png[width=1000,alt="Attribute statements showing email, firstName, lastName, phoneNumber, and memberOf mapped to Okta user and device values"]
-
 Each name and value must match the corresponding attribute in your Kobiton portal SSO settings tab exactly. Select **Copy** next to each attribute in the Kobiton portal to copy the value to your clipboard.
+
+// TODO: Replace okta-groups-attributes-context.png with a new screenshot showing all five attribute entries (Profile: email, firstName, lastName, phoneNumber; Group: memberOf).
+image:organization:okta-groups-attributes-context.png[width=1000,alt="All required attribute values mapped"]
 
 Select **Save**.
 
