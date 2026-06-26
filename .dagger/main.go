@@ -32,7 +32,7 @@ func New(
 		WithFile("yarn.lock", source.File("yarn.lock"))
 
 	m := dag.
-		Node("22").
+		Node(dagger.NodeOpts{Version: "22"}).
 		WithYarn().
 		WithSource(dependencyFiles).
 		Install().
