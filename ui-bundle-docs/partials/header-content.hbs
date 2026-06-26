@@ -7,6 +7,13 @@
         <div class="navbar-item search hide-for-print">
           <div id="search-field" class="field">
             <input id="search-input" type="text" placeholder="Search the docs"{{#if page.home}} autofocus{{/if}}>
+            <div id="search-ai-hint" class="search-ai-hint" hidden>
+              <div class="search-ai-hint__results" id="search-hint-results"></div>
+              <button class="search-ai-hint__ask-btn" id="search-hint-ask-btn">
+                <span class="search-ai-hint__ask-icon" aria-hidden="true">✦</span>
+                Ask AI instead
+              </button>
+            </div>
           </div>
         </div>
       {{/if}}

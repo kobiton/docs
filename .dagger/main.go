@@ -28,10 +28,11 @@ func New(
 ) *Ci {
 	dependencyFiles := dag.
 		Directory().
-		WithFile("package.json", source.File("package.json"))
+		WithFile("package.json", source.File("package.json")).
+		WithFile("yarn.lock", source.File("yarn.lock"))
 
 	m := dag.
-		Node().
+		Node(dagger.NodeOpts{Version: "22"}).
 		WithYarn().
 		WithSource(dependencyFiles).
 		Install().
