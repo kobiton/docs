@@ -3,10 +3,9 @@ pages_build_output_dir = "build/docs"
 compatibility_date = "2025-07-18"
 
 # ── RAG search configuration ──────────────────────────────────────────────────
-# Public (non-secret) vars — safe to commit.
-# Secrets (ANTHROPIC_API_KEY) are set via:
-#   wrangler secret put ANTHROPIC_API_KEY
-# or Cloudflare dashboard → Pages → Settings → Environment variables.
+# RAG_API_URL and RAG_API_KEY are set as secrets in the Cloudflare dashboard:
+#   Pages → Settings → Environment variables (both Production and Preview tabs)
+# ANTHROPIC_API_KEY is NOT needed here — the LLM call is handled by rag-api on EKS.
 
 [vars]
 # RAG backend URL — always points to the EKS-hosted FastAPI.
