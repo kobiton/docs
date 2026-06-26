@@ -32,7 +32,7 @@ func New(
 		WithFile("yarn.lock", source.File("yarn.lock"))
 
 	m := dag.
-		Node().
+		Node("22").
 		WithYarn().
 		WithSource(dependencyFiles).
 		Install().
