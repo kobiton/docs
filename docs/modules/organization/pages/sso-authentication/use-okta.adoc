@@ -1,7 +1,7 @@
 = Use Okta for SSO authentication
 :navtitle: Use Okta
 
-Use link:https://www.okta.com/[Okta] for Single Sign-On (SSO) authentication with SAML 2.0 so members of your organization can sign in to Kobiton with their Okta credentials.
+Use link:https://www.okta.com/[Okta] for single sign-on (SSO) authentication with SAML 2.0 so members of your organization can sign in to Kobiton with their Okta credentials.
 
 [#_get_kobiton_parameters]
 == Get Kobiton parameters
@@ -30,9 +30,9 @@ In **General Settings**, enter an **App name**. Optionally, add a logo to custom
 
 image:organization:okta-general-settings.png[width=1000,alt="General Settings window"]
 
-== Configure SAML settings and download the certificate
+== Map parameters and download certificate
 
-In the **Configure SAML Integration** window, use your xref:_get_kobiton_parameters[Kobiton SSO parameters] to configure Okta.
+In the **Configure SAML Integration** window, use your xref:_get_kobiton_parameters[Kobiton SSO parameters] to fill the following fields.
 
 In **Single sign-on URL**, enter the Kobiton reply URL.
 
@@ -60,6 +60,49 @@ For **Default RelayState**, enter the value from the Kobiton SSO basic configura
 
 image:organization:okta-fill-out-fields-context.png[width=1000,alt="Fields to fill in for Kobiton SSO"]
 
+Expand **Show legacy configuration** to display the attribute statement settings.
+
+In **Profile attribute statements**, add the following attributes. For each row, enter the name into **Name**, select **Basic** from the **Name format** drop-down list, and select the corresponding value from the **Value** drop-down list.
+
+[cols="1,1,1"]
+|===
+| Name | Name format | Value
+
+| `email`
+| Basic
+| `user.email`
+
+| `firstName`
+| Basic
+| `user.firstName`
+
+| `lastName`
+| Basic
+| `user.lastName`
+
+| `phoneNumber`
+| Basic
+| `device.trusted`
+|===
+
+In **Group attribute statements**, add the following attribute. For **Filter**, select **Matches regex** from the drop-down list and enter `.*` in the adjoining field.
+
+[cols="1,1,1"]
+|===
+| Name | Name format | Filter
+
+| `memberOf`
+| Basic
+| Matches regex `.*`
+|===
+
+// TODO: Replace okta-groups-attributes-context.png with a new screenshot showing all five attribute entries (Profile: email, firstName, lastName, phoneNumber; Group: memberOf).
+image:organization:okta-groups-attributes-context.png[width=1000,alt="Attribute statements showing email, firstName, lastName, phoneNumber, and memberOf mapped to Okta user and device values"]
+
+Each name and value must match the corresponding attribute in your Kobiton portal SSO settings tab exactly. Select **Copy** next to each attribute in the Kobiton portal to copy the value to your clipboard.
+
+Select **Save**.
+
 Optionally, select **Preview the SAML assertion** to review it before continuing.
 
 Select **Next**.
@@ -72,14 +115,29 @@ Answer any optional feedback questions, then select **Finish**.
 
 Okta opens the app configuration page.
 
-[NOTE]
-====
-Profile and group attribute statements are in the *Attribute statements* section. To enter them, expand *Show legacy configuration*. These settings aren't required for the basic SAML setup flow unless your organization needs custom SAML attributes.
-====
-
 To download the certificate, go to the **SAML Signing Certificates** section. Under **Actions**, select **Download certificate**.
 
 image:organization:okta-download-certificate.png[width=1000,alt="Select Download certificate for the Okta SAML signing certificate"]
+
+== Assign users
+
+Assign users in Okta so they can sign in to Kobiton through SSO. Each user's **Username** in Okta must match the email address on their Kobiton account exactly.
+
+On the Okta app configuration page, select the **Assignments** tab.
+
+Select **Assign**, then select **Assign to People**.
+
+In the people list, select **Assign** next to the user's Okta account.
+
+In the assignment window, confirm the **Username** field contains the user's Kobiton account email address. If it doesn't, enter the email exactly as it appears in Kobiton.
+
+Select **Save and Go Back**, then select **Done**.
+
+The assigned user appears in the **Assignments** panel.
+
+To assign additional users, select **Assign** again and repeat these steps.
+
+To confirm a user's Kobiton account email, check the Kobiton portal.
 
 == Get IdP parameters
 
