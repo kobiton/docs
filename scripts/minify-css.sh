@@ -11,22 +11,17 @@ TEMP_FILE_WIDGET="$PROJECT_ROOT/ui-bundle-widget/css/temp.css"
 find $PROJECT_ROOT/ui-bundle-docs/css/ -type f -not -name 'site.css' -name '*.css' -exec cat {} \; | npx postcss --use postcss-import postcss-clean --no-map > "$TEMP_FILE_DOCS"
 find $PROJECT_ROOT/ui-bundle-widget/css/ -type f -not -name 'site.css' -name '*.css' -exec cat {} \; | npx postcss --use postcss-import postcss-clean --no-map > "$TEMP_FILE_WIDGET"
 
-
-# postcss-clean already minifies CSS and removes comments as appropriate.
-# Do not run an additional sed-based comment removal here. After minification,
-# CSS may be on a single line, and a greedy regex such as /\*.*\*/ can remove
-# large sections of valid CSS. The below is kept only for troubleshooting.
 # Remove all comments from the merged files (anything between /* and */).
-#if [[ "$KOBITON_ENVIRONMENT" == "standalone" ]]; then
+if [[ "$KOBITON_ENVIRONMENT" == "standalone" ]]; then
   # Somehow the sed command with '' doesn't work on images in the standalone environment.
-#  sed -i 's/\/\*.*\*\///g' "$TEMP_FILE_DOCS"
-#  sed -i 's/\/\*.*\*\///g' "$TEMP_FILE_WIDGET"
-#else
-#  # Local build & S3 build (production) needs a ''.
-#  # Note that, the S3 and standalone arch is "Linux", local arch is "Darwin" (MacOS).
-#  sed -i '' 's/\/\*.*\*\///g' "$TEMP_FILE_DOCS"
-#  sed -i '' 's/\/\*.*\*\///g' "$TEMP_FILE_WIDGET"
-#fi
+  sed -i 's/\/\*.*\*\///g' "$TEMP_FILE_DOCS"
+  sed -i 's/\/\*.*\*\///g' "$TEMP_FILE_WIDGET"
+else
+  # Local build & S3 build (production) needs a ''.
+  # Note that, the S3 and standalone arch is "Linux", local arch is "Darwin" (MacOS).
+  sed -i '' 's/\/\*.*\*\///g' "$TEMP_FILE_DOCS"
+  sed -i '' 's/\/\*.*\*\///g' "$TEMP_FILE_WIDGET"
+fi
 
 # Append the header comment.
 echo -e "/* DO NOT EDIT: 'site.css' is auto-generated from the minified output of 'default-styles.css' and 'custom-styles.css'. */\n$(cat $TEMP_FILE_DOCS)" > "$TEMP_FILE_DOCS"
