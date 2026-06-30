@@ -9,9 +9,9 @@ When *Enforce users to login to Kobiton only through SSO* is enabled:
 
 * Every user signs in through SSO unless they are on the non-SSO users list.
 * Kobiton removes each user's stored password. Users on the non-SSO users list keep their email-and-password sign-in.
-* The *+Invite* button on *Org Management > Users* is disabled while enforcement is on. To add a new user, use the Kobiton API.
+* Kobiton turns off the *+Invite* button on *Org Management > Users* while enforcement is on. To add a new user, use the Kobiton API.
 
-If you disable SSO enforcement later, users whose passwords were removed must reset their password through *Forgot password* before signing in with email and password.
+If you turn off SSO enforcement later, users whose passwords were removed must reset their password through *Forgot password* before signing in with email and password.
 
 // IMAGE PLACEHOLDER 1 — enforce-users-overview.png
 
@@ -26,11 +26,9 @@ The user can now sign in with email and password instead of SSO.
 
 == Create a new non-SSO user
 
-When SSO enforcement is on, the *+Invite* button is disabled, so you cannot invite new users from Kobiton Portal. To add a new non-SSO user, create the account through the Kobiton API and then add it to the non-SSO users list.
+To add a new non-SSO user, create the account through the Kobiton API and then add it to the non-SSO users list.
 
-=== Before you begin
-
-You need:
+=== Prerequisites
 
 * An existing admin account in your organization.
 * That admin's username.
