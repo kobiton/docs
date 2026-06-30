@@ -1,159 +1,101 @@
 = Add a non-SSO user to an SSO-only org
 :navtitle: Add a non-SSO user to an SSO-only org
 
-When your organization enforces SSO, every user must sign in through your identity provider. To preserve a non-SSO sign-in path for a trusted admin — also called a *service account* or "backdoor user" — add that account to the non-SSO users list in your SSO settings.
-
-This page covers two situations:
-
-* The user already exists in your organization. Add them to the non-SSO users list.
-* The user does not yet exist. Create them through the Kobiton API, then add them to the non-SSO users list.
-
-// IMAGE PLACEHOLDER 1 — enforce-users-overview.png — see "Suggested images" at the bottom of this draft.
+When your organization enforces SSO, every user signs in through your identity provider. To keep one or more trusted accounts on email-and-password sign-in (sometimes called a service account), add them to the non-SSO users list in your SSO settings.
 
 == How SSO enforcement affects user access
 
-When *Enforce users to login to Kobiton only through SSO* is enabled on the SSO settings page:
+When *Enforce users to login to Kobiton only through SSO* is enabled:
 
-* Every user in the organization must sign in through SSO, unless they are added to the non-SSO users list.
-* Kobiton removes the stored password from every user required to sign in through SSO.
-* Kobiton deactivates the *+Invite* button on *Org Management > Users*, so you cannot create new users from the portal while enforcement is on.
+* Every user signs in through SSO unless they are on the non-SSO users list.
+* Kobiton removes each user's stored password. Users on the non-SSO users list keep their email-and-password sign-in.
+* The *+Invite* button on *Org Management > Users* is disabled while enforcement is on. To add a new user, use the Kobiton API.
 
-[IMPORTANT]
-====
-A user whose password was removed during enforcement cannot sign in with that password later, even if enforcement is disabled. To restore email-and-password access, the user must reset their password through *Forgot password*.
-====
+If you disable SSO enforcement later, users whose passwords were removed must reset their password through *Forgot password* before signing in with email and password.
 
-// IMAGE PLACEHOLDER 2 — invite-deactivated.png
+// IMAGE PLACEHOLDER 1 — enforce-users-overview.png
 
-== Scenario 1: Designate an existing user as a non-SSO user
-
-Use this scenario when the user already exists in your organization.
+== Add an existing user to the non-SSO users list
 
 . Sign in to Kobiton Portal as an org admin.
 . Go to *Account > Settings > SSO settings* and scroll to *Verify Configuration* (panel 4).
 . Under *Choose users who are allowed to login without SSO*, add the user in the *Add Users..* field.
 . Save your changes.
 
-The user can now sign in to Kobiton with their email and password instead of SSO.
+The user can now sign in with email and password instead of SSO.
 
-== Scenario 2: Create a new non-SSO user (service account)
+== Create a new non-SSO user
 
-Use this scenario when the user does not yet exist and *+Invite* is unavailable because SSO enforcement is on. Create the account through the Kobiton API, then add it to the non-SSO users list.
+When SSO enforcement is on, the *+Invite* button is disabled, so you cannot invite new users from Kobiton Portal. To add a new non-SSO user, create the account through the Kobiton API and then add it to the non-SSO users list.
 
-The process has three parts:
+=== Before you begin
 
-. Create the user with the *Create a member* API call.
-. (Optional) Assign the Admin role if the service account needs admin permissions.
-. Add the new user to the non-SSO users list in your SSO settings.
+You need:
 
-=== Requirements
+* An existing admin account in your organization.
+* That admin's username.
+* That admin's API key. Sign in as the admin, then go to *Account > Settings*. Your API keys appear at the top of the page.
 
-* An existing admin account in your organization
-* That admin's *username*
-* That admin's *API key*, found at *Account > Settings*. Your API keys are shown at the top of the Settings page.
+=== Create the user
 
-Use the admin's username and API key together as Basic Auth credentials for each API call below.
-
-=== Step 1: Create the user
-
-Send a `POST` request to `/v2/organizations/members`. The new user receives the *Member* role by default.
-
-==== Use the API documentation
-
-. In the Kobiton API documentation, locate *Create a member* and click *Try*.
-. Enter your admin *username* and *API key* as Basic Auth credentials.
-. In the *Body Parameters* section, replace the example with the values for your new user:
+. In Postman, create a *POST* request to `https://api.kobiton.com/v2/organizations/members`.
+. On the *Authorization* tab, set the type to *Basic Auth*:
+.. In the *Username* field, enter your admin username.
+.. In the *Password* field, enter your admin API key.
+. On the *Body* tab, select *raw* and paste the following JSON. Replace each placeholder value with a value for the new user:
 +
 [source,json]
 ----
 {
-  "email": "serviceaccount@yourcompany.com",
+  "email": "<email>",
   "enable_sso": false,
   "password": "<strong-password>",
-  "username": "serviceaccount",
-  "first_name": "Service",
-  "last_name": "Account"
+  "username": "<username>",
+  "first_name": "<first-name>",
+  "last_name": "<last-name>"
 }
 ----
-. Confirm `enable_sso` is set to `false`. This is the default and must not be changed.
-. Click *SUBMIT API REQUEST*.
-
-// IMAGE PLACEHOLDER 3 — api-doc-create-member.png
-
-==== Use cURL
-
-. Generate a Base64-encoded credential string from your admin username and API key:
-+
-[source,bash]
-----
-echo -n '<admin-username>:<api-key>' | base64
-----
-. Run the *Create a member* request. Replace `<base64-string>` with the value from the previous command, and replace the body parameters with the values for your new user:
-+
-[source,bash]
-----
-curl -X POST \
-  -H 'Authorization: Basic <base64-string>' \
-  -H 'Content-Type: application/json' \
-  'https://api.kobiton.com/v2/organizations/members' \
-  -d '{
-    "email": "serviceaccount@yourcompany.com",
-    "enable_sso": false,
-    "password": "<strong-password>",
-    "username": "serviceaccount",
-    "first_name": "Service",
-    "last_name": "Account"
-  }'
-----
-. Confirm `enable_sso` is set to `false`.
+. Keep `enable_sso` set to `false`.
+. Click *Send*.
 
 When the request succeeds, the new user can sign in immediately with the password you set. No email verification or further SSO configuration is required.
 
-=== Step 2 (optional): Assign the Admin role
+// IMAGE PLACEHOLDER 2 — postman-create-member.png
 
-Skip this step if the new user only needs the default *Member* role.
+=== Assign the Admin role, if needed
 
-If the service account needs admin permissions — for example, to manage org settings — assign the Admin role with a `PUT` request to `/v2/organizations/members/<memberId>/assign-role`. The `memberId` is the new user's username — the value you set as `username` in Step 1.
+The new user receives the *Member* role by default. If they need admin permissions, assign the Admin role.
 
-==== Use the API documentation
-
-. In the Kobiton API documentation, locate *Assign a role to a member* and click *Try*.
-. Enter your admin *username* and *API key* as Basic Auth credentials.
-. Enter the new user's username as the `memberId`.
-. In the *Body Parameters* section, set the role to `ADMIN`.
-. Click *SUBMIT API REQUEST*.
-
-// IMAGE PLACEHOLDER 4 — api-doc-assign-role.png
-
-==== Use cURL
-
-Replace `<base64-string>` with the Base64-encoded credential string and replace `<memberId>` with the new user's username. If you did not generate the Base64 string in Step 1, run the Base64 command from Step 1's cURL section first.
-
-[source,bash]
+. In Postman, create a *PUT* request to `https://api.kobiton.com/v2/organizations/members/<memberId>/assign-role`. Replace `<memberId>` with the new user's username.
+. On the *Authorization* tab, set the type to *Basic Auth*:
+.. In the *Username* field, enter your admin username.
+.. In the *Password* field, enter your admin API key.
+. On the *Body* tab, select *raw* and paste the following JSON:
++
+[source,json]
 ----
-curl -X PUT \
-  -H 'Authorization: Basic <base64-string>' \
-  -H 'Content-Type: application/json' \
-  'https://api.kobiton.com/v2/organizations/members/<memberId>/assign-role' \
-  -d '{ "role": "ADMIN" }'
+{ "role": "ADMIN" }
 ----
+. Click *Send*.
 
-=== Step 3: Add the new user to the non-SSO users list
+// IMAGE PLACEHOLDER 3 — postman-assign-role.png
+
+=== Add the user to the non-SSO users list
 
 . Sign in to Kobiton Portal as an org admin.
 . Go to *Account > Settings > SSO settings* and scroll to *Verify Configuration* (panel 4).
 . Under *Choose users who are allowed to login without SSO*, add the new user in the *Add Users..* field.
 . Save your changes.
 
-// IMAGE PLACEHOLDER 5 — enforce-users-add-new.png
+// IMAGE PLACEHOLDER 4 — non-sso-users-list.png
 
-== Verify
+=== Verify the user can sign in
 
 . Sign out of Kobiton Portal.
 . Sign in as the new user with the email and password you set.
 . If you assigned the Admin role, confirm the *Org Management* icon appears in Kobiton Portal.
 
-// IMAGE PLACEHOLDER 6 — org-management-icon.png
+// IMAGE PLACEHOLDER 5 — org-management-icon.png
 
 == Related guides
 
