@@ -86,7 +86,7 @@ Send a `POST` request to `/v2/organizations/members`. The new user receives the 
 +
 [source,bash]
 ----
-echo -n 'username:APIKey' | base64
+echo -n '<admin-username>:<api-key>' | base64
 ----
 . Run the *Create a member* request. Replace `<base64-string>` with the value from the previous command, and replace the body parameters with the values for your new user:
 +
@@ -113,7 +113,7 @@ When the request succeeds, the new user can sign in immediately with the passwor
 
 Skip this step if the new user only needs the default *Member* role.
 
-If the service account needs admin permissions — for example, to manage org settings — assign the Admin role with a `PUT` request to `/v2/organizations/members/{memberId}/assign-role`. The `memberId` is the new user's username — the value you set as `username` in Step 1.
+If the service account needs admin permissions — for example, to manage org settings — assign the Admin role with a `PUT` request to `/v2/organizations/members/<memberId>/assign-role`. The `memberId` is the new user's username — the value you set as `username` in Step 1.
 
 ==== Use the API documentation
 
@@ -127,14 +127,14 @@ If the service account needs admin permissions — for example, to manage org se
 
 ==== Use cURL
 
-Replace `<base64-string>` with the value generated in Step 1, and replace `{memberId}` with the new user's username:
+Replace `<base64-string>` with the Base64-encoded credential string and replace `<memberId>` with the new user's username. If you did not generate the Base64 string in Step 1, run the Base64 command from Step 1's cURL section first.
 
 [source,bash]
 ----
 curl -X PUT \
   -H 'Authorization: Basic <base64-string>' \
   -H 'Content-Type: application/json' \
-  'https://api.kobiton.com/v2/organizations/members/{memberId}/assign-role' \
+  'https://api.kobiton.com/v2/organizations/members/<memberId>/assign-role' \
   -d '{ "role": "ADMIN" }'
 ----
 
