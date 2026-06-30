@@ -3,7 +3,7 @@
 
 When your organization enforces SSO, every user must sign in through your identity provider. To preserve a non-SSO sign-in path for a trusted admin — also called a *service account* or "backdoor user" — add that account to the non-SSO users list in your SSO settings.
 
-This page covers both situations:
+This page covers two situations:
 
 * The user already exists in your organization. Add them to the non-SSO users list.
 * The user does not yet exist. Create them through the Kobiton API, then add them to the non-SSO users list.
@@ -15,8 +15,8 @@ This page covers both situations:
 When *Enforce users to login to Kobiton only through SSO* is enabled on the SSO settings page:
 
 * Every user in the organization must sign in through SSO, unless they are added to the non-SSO users list.
-* Designated SSO users have their stored password removed from their account.
-* The *+Invite* button on *Org Management > Users* is deactivated. New users cannot be created from the portal while enforcement is on.
+* Kobiton removes the stored password from every user required to sign in through SSO.
+* Kobiton deactivates the *+Invite* button on *Org Management > Users*, so you cannot create new users from the portal while enforcement is on.
 
 [IMPORTANT]
 ====
@@ -30,7 +30,7 @@ A user whose password was removed during enforcement cannot sign in with that pa
 Use this scenario when the user already exists in your organization.
 
 . Sign in to Kobiton Portal as an org admin.
-. Go to *Account > Settings > SSO settings* and scroll to *Verify Configuration* (panel 4). The *Enforce users to login to Kobiton only through SSO* toggle is shown to the right and green when enforcement is active.
+. Go to *Account > Settings > SSO settings* and scroll to *Verify Configuration* (panel 4).
 . Under *Choose users who are allowed to login without SSO*, add the user in the *Add Users..* field.
 . Save your changes.
 
@@ -56,11 +56,9 @@ Use the admin's username and API key together as Basic Auth credentials for each
 
 === Step 1: Create the user
 
-Send a `POST` request to `/v2/organizations/members`. The default role assigned to the new user is *Member*.
+Send a `POST` request to `/v2/organizations/members`. The new user receives the *Member* role by default.
 
-Choose whichever method is more convenient: the *Try* interface in the Kobiton API documentation, or a `curl` command in your terminal.
-
-==== Use the API documentation (Postman-style)
+==== Use the API documentation
 
 . In the Kobiton API documentation, locate *Create a member* and click *Try*.
 . Enter your admin *username* and *API key* as Basic Auth credentials.
@@ -109,7 +107,7 @@ curl -X POST \
 ----
 . Confirm `enable_sso` is set to `false`.
 
-When the request succeeds, the new user can sign in immediately with the password you set. They do not need to confirm an email or complete SSO.
+When the request succeeds, the new user can sign in immediately with the password you set. No email verification or further SSO configuration is required.
 
 === Step 2 (optional): Assign the Admin role
 
@@ -117,7 +115,7 @@ Skip this step if the new user only needs the default *Member* role.
 
 If the service account needs admin permissions — for example, to manage org settings — assign the Admin role with a `PUT` request to `/v2/organizations/members/{memberId}/assign-role`. The `memberId` is the new user's username — the value you set as `username` in Step 1.
 
-==== Use the API documentation (Postman-style)
+==== Use the API documentation
 
 . In the Kobiton API documentation, locate *Assign a role to a member* and click *Try*.
 . Enter your admin *username* and *API key* as Basic Auth credentials.
@@ -140,11 +138,6 @@ curl -X PUT \
   -d '{ "role": "ADMIN" }'
 ----
 
-[TIP]
-====
-A user can look up their own username in Kobiton Portal at *Account > Profile*. The username appears as the first value.
-====
-
 === Step 3: Add the new user to the non-SSO users list
 
 . Sign in to Kobiton Portal as an org admin.
@@ -158,7 +151,7 @@ A user can look up their own username in Kobiton Portal at *Account > Profile*. 
 
 . Sign out of Kobiton Portal.
 . Sign in as the new user with the email and password you set.
-. If you assigned the Admin role, confirm the *Org Management* icon appears in the portal.
+. If you assigned the Admin role, confirm the *Org Management* icon appears in Kobiton Portal.
 
 // IMAGE PLACEHOLDER 6 — org-management-icon.png
 
