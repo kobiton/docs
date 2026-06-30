@@ -1,0 +1,100 @@
+= Add a non-SSO user to an SSO-only org
+:navtitle: Add a non-SSO user to an SSO-only org
+
+When your organization enforces SSO, every user signs in through your identity provider. To keep one or more trusted accounts on email-and-password sign-in (sometimes called a service account), add them to the non-SSO users list in your SSO settings.
+
+== How SSO enforcement affects user access
+
+When *Enforce users to login to Kobiton only through SSO* is enabled:
+
+* Every user signs in through SSO unless they are on the non-SSO users list.
+* Kobiton removes each user's stored password. Users on the non-SSO users list keep their email-and-password sign-in.
+* Kobiton turns off the *+Invite* button on *Org Management > Users* while enforcement is on. To add a new user, use the Kobiton API.
+
+If you turn off SSO enforcement later, users whose passwords were removed must reset their password through *Forgot password* before signing in with email and password.
+
+// IMAGE PLACEHOLDER 1 — enforce-users-overview.png
+
+== Add an existing user to the non-SSO users list
+
+. Sign in to Kobiton Portal as an org admin.
+. Go to *Account > Settings > SSO settings* and scroll to *Verify Configuration* (panel 4).
+. Under *Choose users who are allowed to login without SSO*, add the user in the *Add Users..* field.
+. Save your changes.
+
+The user can now sign in with email and password instead of SSO.
+
+== Create a new non-SSO user
+
+To add a new non-SSO user, create the account through the Kobiton API and then add it to the non-SSO users list.
+
+=== Prerequisites
+
+* An existing admin account in your organization.
+* That admin's username.
+* That admin's API key. Sign in as the admin, then go to *Account > Settings*. Your API keys appear at the top of the page.
+
+=== Create the user
+
+. In Postman, create a *POST* request to `https://api.kobiton.com/v2/organizations/members`.
+. On the *Authorization* tab, set the type to *Basic Auth*:
+.. In the *Username* field, enter your admin username.
+.. In the *Password* field, enter your admin API key.
+. On the *Body* tab, select *raw* and paste the following JSON. Replace each placeholder value with a value for the new user:
++
+[source,json]
+----
+{
+  "email": "<email>",
+  "enable_sso": false,
+  "password": "<strong-password>",
+  "username": "<username>",
+  "first_name": "<first-name>",
+  "last_name": "<last-name>"
+}
+----
+. Keep `enable_sso` set to `false`.
+. Click *Send*.
+
+When the request succeeds, the new user can sign in immediately with the password you set. No email verification or further SSO configuration is required.
+
+// IMAGE PLACEHOLDER 2 — postman-create-member.png
+
+=== Assign the Admin role, if needed
+
+The new user receives the *Member* role by default. If they need admin permissions, assign the Admin role.
+
+. In Postman, create a *PUT* request to `https://api.kobiton.com/v2/organizations/members/<memberId>/assign-role`. Replace `<memberId>` with the new user's username.
+. On the *Authorization* tab, set the type to *Basic Auth*:
+.. In the *Username* field, enter your admin username.
+.. In the *Password* field, enter your admin API key.
+. On the *Body* tab, select *raw* and paste the following JSON:
++
+[source,json]
+----
+{ "role": "ADMIN" }
+----
+. Click *Send*.
+
+// IMAGE PLACEHOLDER 3 — postman-assign-role.png
+
+=== Add the user to the non-SSO users list
+
+. Sign in to Kobiton Portal as an org admin.
+. Go to *Account > Settings > SSO settings* and scroll to *Verify Configuration* (panel 4).
+. Under *Choose users who are allowed to login without SSO*, add the new user in the *Add Users..* field.
+. Save your changes.
+
+// IMAGE PLACEHOLDER 4 — non-sso-users-list.png
+
+=== Verify the user can sign in
+
+. Sign out of Kobiton Portal.
+. Sign in as the new user with the email and password you set.
+. If you assigned the Admin role, confirm the *Org Management* icon appears in Kobiton Portal.
+
+// IMAGE PLACEHOLDER 5 — org-management-icon.png
+
+== Related guides
+
+* xref:organization:sso-authentication/about-sso-authentication.adoc[]
