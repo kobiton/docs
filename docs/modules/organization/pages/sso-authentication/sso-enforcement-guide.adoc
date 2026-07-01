@@ -33,15 +33,11 @@ image:user-sso-config.png[width=1000,alt="Where to find the users in the Org man
 
 === Behavior when individual SSO enforcement is enabled
 
-When *SSO Only* is enabled for a user:
-
 - The user must log in through SSO.
-- Username and password login is disabled.
+- Username and password login is turned off.
 - The user cannot reset their password through *Forgot Password*.
 
-=== Behavior when individual SSO enforcement is disabled
-
-When *SSO Only* is disabled for a user:
+=== Behavior when individual SSO enforcement is turned off
 
 - The user can log in through SSO, if the organization's SSO configuration is valid.
 - The user can log in with a username and password.
@@ -59,8 +55,6 @@ image:enforce-sso-ui.png[width=1000,alt="Enforce SSO login in Settings > SSO Set
 
 === Behavior when organization-wide SSO enforcement is enabled
 
-When *Enforce SSO* is enabled:
-
 - All active users must log in through SSO unless they are on the exemption list.
 - *SSO Only* is automatically enabled for all active users except exempted users.
 - Users who are not exempted cannot use username/password login or *Forgot Password*.
@@ -75,9 +69,7 @@ When *Enforce SSO* is enabled, the *Choose users who are allowed to login withou
 Keep at least one administrator on the exemption list. If SSO becomes unavailable, exempted users are the only accounts that can still access Kobiton Portal.
 ====
 
-=== Behavior when organization-wide SSO enforcement is disabled
-
-When *Enforce SSO* is disabled:
+=== Behavior when organization-wide SSO enforcement is turned off
 
 - Users can log in through SSO if the organization's SSO configuration is valid.
 - Users can log in with a username and password.
@@ -110,16 +102,12 @@ Ensure all of the following conditions are met:
 
 === Behavior when role and team passthrough is enabled
 
-When role and team passthrough is enabled:
-
 - Kobiton synchronizes user roles and team assignments from IdP group memberships during SSO login.
 - Users who exist in Kobiton but not in the IdP retain their current roles and teams.
-- The *Invite* button in *Org Management* > *Users* is disabled. New users can only be created through the IdP.
-- Manual role assignment in *Org Management* > *Users* and *Org Management* > *Roles* is disabled.
+- The *Invite* button in *Org Management* > *Users* is turned off. New users can only be created through the IdP.
+- Manual role assignment in *Org Management* > *Users* and *Org Management* > *Roles* is turned off.
 
-=== Behavior when role and team passthrough is disabled
-
-When role and team passthrough is disabled:
+=== Behavior when role and team passthrough is turned off
 
 - Kobiton stops synchronizing roles and teams from the IdP during SSO login.
 - Manual role assignment in *Org Management* > *Users* and *Org Management* > *Roles* is enabled for users with the appropriate permissions.
@@ -147,7 +135,7 @@ Example: if your IdP sends the group value `Engineering-QA`, enter `Engineering-
 4. To add multiple values, separate them with `;` or press *Enter* after each value.
 5. Save the role.
 
-When role and team passthrough is disabled, the *SSO Attribute Value* field is hidden.
+When role and team passthrough is turned off, the *SSO Attribute Value* field is hidden.
 
 == Role and team synchronization rules
 
