@@ -1,16 +1,19 @@
-= Sign in to an Apple ID during a manual session
+= Enter an Apple ID verification code during a manual session
 
-== Sign in to the Apple ID
+During a manual iOS session, Apple might block direct text entry for protected Apple ID verification fields. When this happens, use your physical keyboard to enter the verification code or Mac password shown on the device screen.
 
-. On the device screen, start the Apple ID sign-in and continue until the *Apple ID Verification Code* prompt appears with the message "A message with a verify code has been sent to your other devices."
-. Locate the six-digit verification code. Kobiton displays the code in a new window on the Mac mini host.
-. Click the verification code field on the device screen to focus it, then type the code on your physical keyboard.
-. When the *Enter Mac password* prompt appears on the device screen, note the host ID shown. The host ID resembles a serial number, not an IP address. The prompt asks for the Mac password, not the iCloud password.
-. When the *Apple Security Enablement* window opens in Portal, follow the instruction shown: "Type on your physical keyboard to enter this Apple-protected field." Do not type into the Portal window. Leave the *Input as sensitive data* toggle at its default; it does not affect this workflow.
-. Type the Mac password on your physical keyboard. The value populates the *Enter Mac password* field on the device screen.
-. Submit the password to continue.
-. On the device screen, when the iCloud merge prompt appears for Safari data and Freeform, select *Don't Merge*.
+== Complete Apple ID verification
 
-== Verification
+. On the device screen, open Settings and start the Apple ID sign-in process.
+. Follow the prompts on the device screen.
+. If the Apple ID Verification Code prompt appears, type the six-digit verification code on your physical keyboard.
++
+The verification code appears in a separate window on the Mac mini host. After you enter the code, the verification window closes and the Apple ID sign-in process continues.
+. If the Enter Mac Password prompt appears, type the password for the Mac mini host on your physical keyboard.
+. If the Apple Security Enablement window appears in Portal, do not type in that window. Continue typing on your physical keyboard to enter the value on the device screen.
++
+image:manual-testing:enter-mac-pw.png[width=400, alt="The Apple Security Enablement window appears in a separate window"]
++
+. If the iCloud merge prompt appears for Safari data and Freeform, select **Don’t Merge**.
 
-The Apple ID name and email appear on the device screen. Sign-in is complete.
+When the Apple ID name and email appear on the device screen, sign-in is complete.
