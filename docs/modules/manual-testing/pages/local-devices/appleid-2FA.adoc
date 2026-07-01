@@ -1,0 +1,21 @@
+= Sign in to an Apple ID during a manual session
+
+== Before you start
+
+* An active manual session on a local iOS device.
+* The Apple ID credentials for the account.
+* The password used to unlock the Mac mini host running the session. This is not the iCloud password.
+
+== Sign in to the Apple ID
+
+. On the device screen, start the Apple ID sign-in and continue until the *Apple ID Verification Code* prompt appears with the message "A message with a verify code has been sent to your other devices."
+. Locate the six-digit verification code. Kobiton displays the code in a new window on the Mac mini host, outside Portal and the device testing window.
+. When the *Enter Mac password* prompt appears on the device screen, note the host ID shown. The host ID resembles a serial number, not an IP address. The prompt asks for the Mac password, not the iCloud password.
+. When the *Apple Security Enablement* window opens in Portal, follow the instruction shown: "Type on your physical keyboard to enter this Apple-protected field." Do not type into the Portal window.
+. Type the Mac password on your physical keyboard. The value populates the *Enter Mac password* field on the device screen.
+. Submit the password to continue.
+. On the device screen, when the iCloud merge prompt appears for Safari data and Freeform, select *Don't Merge*.
+
+== Verification
+
+The Apple ID name and email appear on the device screen. Sign-in is complete.
