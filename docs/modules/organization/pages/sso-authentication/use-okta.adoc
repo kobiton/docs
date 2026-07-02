@@ -1,85 +1,180 @@
 = Use Okta for SSO authentication
 :navtitle: Use Okta
 
-Learn how to use link:https://www.okta.com/[Okta] for Single Sign-On (SSO) authentication with SAML 2.0 so members of your organization can sign in to Kobiton using their Okta credentials.
+Use link:https://www.okta.com/[Okta] for single sign-on (SSO) authentication with SAML 2.0 so members of your organization can sign in to Kobiton with their Okta credentials.
 
 [#_get_kobiton_parameters]
 == Get Kobiton parameters
 
 include::partial$sso-authentication/get-kobiton-parameters.adoc[]
 
-== Create IdP application
+== Create an IdP application
 
-In Okta, select Admin.
+In Okta, select **Admin**.
 
-image:organization:okta-admin-button.png[width=1000,alt="The Admin button in Okta home page"]
+image:organization:okta-admin-button.png[width=750,alt="The Admin button in Okta home page"]
 
-Select *Applications*, then *Create App Integration*.
+Okta may ask you to sign in again.
 
-image:organization:okta-applications.png[width=1000,alt="The Applications page with the Create App Integration option"]
+In the **Admin Console**, select **Applications**, then select **Applications** from the submenu.
 
-For *Sign-in method*, select *SAML 2.0* then choose *Next*.
+Select **Create App Integration**.
 
-image:organization:okta-create-app-sign-in-method.png[width=1000,alt="Choose SAML 2.0 in the select sign-in method step"]
+image:organization:okta-applications.png[width=750,alt="The Applications page with the Create App Integration option"]
 
-In *General Settings*, enter a display name and add a logo to customize your sign-in portal, then select *Next*.
+In the **Create a new app integration** window, select **SAML 2.0**, then select **Next**.
 
-image:organization:general-settings.png[width=1000,alt="General Settings window"]
+In **General Settings**, enter an **App name**. Optionally, add a logo to customize your sign-in portal. Then select **Next**.
 
-== Map parameters and download certificate
+== Configure SAML settings
 
-Now that your IdP application is created, you'll need to create Okta SSO parameters mapped to Kobiton and download your Okta certificate. Go to *SAML Settings* to get started.
+In the **Configure SAML Integration** window, use your xref:_get_kobiton_parameters[Kobiton SSO parameters] to fill the following fields.
 
-Using your xref:_get_kobiton_parameters[Kobiton SSO parameters from earlier], fill out the following fields:
+In **Single sign-on URL**, enter the Kobiton reply URL.
 
-* *Single sign on URL*
-** *Use this for Recipient URL and Destination URL*: &#9745;
-** *Allow this app to request other SSO URLs*: &#9744;
-* *Audience URI (SP Entity ID)*
-* *Default RelayState*
+.Example
+[source,text]
+----
+https://api.kobiton.com/v1/users/sso/saml/callback
+----
 
-image:organization:okta-fill-out-fields-context.png[width=1000,alt= "Fields to fill to Kobiton SSO"]
+For **Audience URI (SP Entity ID)**, enter the Kobiton entity ID.
 
-Next, create the following custom parameters:
+.Example
+[source,text]
+----
+https://api.kobiton.com/v1/users/sso/saml
+----
 
-Parameter 1::
-* *Name:* `email`
-* *Name format:* Basic
-* *Value:* `user.email`
-Parameter 2::
-* *Name:* `firstName`
-* *Name format:* Basic
-* *Value:* `user.firstName`
-Parameter 3::
-* *Name:* `lastName`
-* *Name format:* Basic
-* *Value:* `user.lastName`
+For **Default RelayState**, enter the value from the Kobiton SSO basic configuration.
 
-image:organization:okta-groups-attributes-context.png[width=1000,alt="Attribute Statements of OKTA"]
+.Example
+[source,json]
+----
+{"domainName": "Kobiton"}
+----
 
-Finally select *Download Okta Certificate*.
+Select Next.
 
-image:organization:download-okta-certificate.png[width=1000,alt="Select Okta Certificate"]
+On the feedback page, select an App type.
 
-When you're done, select *Next*, then *Finish*.
+For internal apps, select This is an internal app that we have created.
 
-== Get IdP parameters
+Answer any optional feedback questions, then select Finish.
 
-Next you'll need to save a copy of your Okta parameters you can add to Kobiton later. Select *Sign On*, then *View Setup Instructions*.
+Okta opens the app configuration page.
 
-image:organization:okta-view-setup-instruction-context.png[width=1000,click View Setup Instruction in OKTA]
+== Configure sign-on attributes
 
-In your SAML application's configuration, go to the *Sign On* tab. Click *View Setup Instructions* and populate Box 3 of your Kobiton portal SSO settings page with this information.
+On the Okta app configuration page, select the **Sign On** tab.
 
-image:organization:saml-config.png[width=1000,alt="SAML configuration window"]
+In the **SAML 2.0 section**, expand **Show legacy configuration** to display the attribute statement settings.
 
-Copy the following values and save them to a note:
+image:organization:okta-expand-legacy-config.png[width=750,alt="Expanded view of the legacy configurations panel"]
 
-* *Identity provider issuer*
-* *Identity issuer URL*
-* *Identity provider sign-in URL*
-* *Identity provider sign-out URL*
-* *Identity provider certificate*
+In **Profile attribute statements**, add the following attributes. For each row, enter the name into **Name**, select **Basic** from the **Name format** drop-down list, and select the corresponding value from the **Value** drop-down list.
+
+[cols="1,1,1"]
+|===
+| Name | Name format | Value
+
+| `email`
+| Basic
+| `user.email`
+
+| `firstName`
+| Basic
+| `user.firstName`
+
+| `lastName`
+| Basic
+| `user.lastName`
+
+| `phoneNumber`
+| Basic
+| `device.trusted`
+|===
+
+In **Group attribute statements**, add the following attribute. For **Filter**, select **Matches regex** from the drop-down list and enter `.*` in the adjoining field.
+
+[cols="1,1,1"]
+|===
+| Name | Name format | Filter
+
+| `memberOf`
+| Basic
+| Matches regex `.*`
+|===
+
+Each name and value must match the corresponding attribute in your Kobiton portal SSO settings tab exactly. Select **Copy** next to each attribute in the Kobiton portal to copy the value to your clipboard.
+
+// TODO: Replace okta-groups-attributes-context.png with a new screenshot showing all five attribute entries (Profile: email, firstName, lastName, phoneNumber; Group: memberOf).
+image:organization:okta-groups-attributes-context.png[width=1000,alt="All required attribute values mapped"]
+
+Select **Save**.
+
+Optionally, select **Preview the SAML assertion** to review it before continuing.
+
+== Get Okta IdP values and certificate
+
+On the **Sign On** tab, go to the **About** section to the right of the **Settings** panel, then select **View SAML setup instructions**.
+
+image:organization:okta-view-saml-inst.png[width=300,alt=“Select Download certificate for the Okta SAML signing certificate”]
+
+From the setup instructions page, copy and save the following values:
+
+* Identity Provider Single Sign-On URL
+* Identity Provider Issuer
+* X.509 Certificate
+
+Use these values when you configure the Okta IdP settings in Kobiton:
+
+[cols=“1,1”]
+|===
+| Kobiton field | Okta value
+
+| Identity provider sign in URL
+| Identity Provider Single Sign-On URL
+
+| Identity issuer URL
+| Identity Provider Issuer
+
+| Identity provider sign out URL
+| Use the same value as Identity Provider Single Sign-On URL, unless your organization uses a separate sign-out URL.
+
+| Identity provider certificate
+| X.509 Certificate
+|===
+
+[NOTE]
+
+The Identity provider sign out URL is optional. If your organization does not provide a separate sign-out URL, use the same URL as the Identity provider sign in URL.
+
+The optional IdP metadata XML contains the same Okta IdP configuration in a machine-readable format. If the setup instructions page provides the IdP values separately, use those fields instead of manually parsing the XML.
+
+To download the certificate file, return to the Okta app configuration page. On the Sign On tab, go to the SAML Signing Certificates section. Under Actions, select Download certificate.
+
+image:organization:okta-download-certificate.png[width=1000,alt=“Select Download certificate for the Okta SAML signing certificate”]
+
+== Assign users
+
+Assign users in Okta so they can sign in to Kobiton through SSO. Each user's **Username** in Okta must match the email address on their Kobiton account exactly.
+
+On the Okta app configuration page, select the **Assignments** tab.
+
+Select **Assign**, then select **Assign to People**.
+
+In the people list, select **Assign** next to the user's Okta account.
+
+In the assignment window, confirm the **Username** field contains the user's Kobiton account email address. If it doesn't, enter the email exactly as it appears in Kobiton.
+
+Select **Save and Go Back**, then select **Done**.
+
+The assigned user appears in the **Assignments** panel.
+
+To assign additional users, select **Assign** again and repeat these steps.
+
+To confirm a user's Kobiton account email, check the Kobiton portal.
 
 == Add IdP parameters and certificate to Kobiton
 
@@ -90,3 +185,4 @@ include::partial$sso-authentication/sso-provider-url-mappings.adoc[tag=okta]
 == Verify and save configuration
 
 include::partial$sso-authentication/verify-and-save-configuration.adoc[]
+
