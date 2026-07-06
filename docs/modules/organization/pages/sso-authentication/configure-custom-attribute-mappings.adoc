@@ -41,9 +41,15 @@ Custom attribute mappings let you tell Kobiton which name your IdP uses for each
 
 . Open your organization settings and choose *SSO Settings*.
 . Go to the *User attributes (or parameters)* section.
++
+By default, *Custom attribute mappings* is off, and Kobiton shows the five attribute names as a read-only list with Copy buttons.
++
+image:organization:sso-custom-attribute-mappings-off.png[width=1000, alt="User attributes section with Custom attribute mappings turned off, showing the read-only attribute names with Copy buttons"]
 . Turn on *Custom attribute mappings*.
 +
-The read-only attribute list is replaced by a mapping table. Each row pairs a fixed *Platform Attribute* with an editable field.
+The read-only attribute list is replaced by a mapping table. Each row pairs a fixed *Platform Attribute* with an editable field where you enter the name your IdP uses.
++
+image:organization:sso-custom-attribute-mappings-on.png[width=1000, alt="User attributes section with Custom attribute mappings turned on, showing the two-column Platform Attribute and Your IdP's Attribute Name mapping table"]
 . For each platform attribute, enter the attribute name your IdP sends. Match the name your IdP uses exactly.
 +
 [IMPORTANT]
@@ -75,6 +81,3 @@ To stop using custom attribute mappings, turn off *Custom attribute mappings* an
 * xref:organization:sso-authentication/about-sso-authentication.adoc[]
 * xref:organization:sso-authentication/use-okta.adoc[]
 * xref:organization:sso-authentication/use-azure-ad.adoc[]
-
-// TODO: Add screenshot of the User attributes section with the Custom attribute mappings toggle turned off (single-column read-only attribute names with Copy buttons).
-// TODO: Add screenshot of the two-column mapping table shown when the toggle is turned on (Platform Attribute label | editable IdP field-name input per row).
