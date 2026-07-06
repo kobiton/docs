@@ -1,16 +1,17 @@
 = Create a test case
 :navtitle: Create a test case
 
-Learn how to create a test case so you can run xref:scriptless-automation:index.adoc[Scriptless Automation].
+Convert a completed session into a test case so you can run xref:scriptless-automation:index.adoc[Scriptless Automation]. You can convert manual sessions and automation (Appium) sessions.
 
 == Before you start
 
-You'll need to complete the following:
+You'll need a completed, convertible session:
 
-* xref:scriptless-automation:create-a-baseline-session.adoc[Create a baseline session].
+* For a manual test case, xref:scriptless-automation:create-a-baseline-session.adoc[create a baseline session].
+* For an automation test case, use a completed Appium session.
 * If applicable, xref:remediation/annotate-a-test-step.adoc[annotate any flagged test steps].
 
-== Create a test case
+== Convert a session from Session Explorer
 
 In *Sessions*, xref:session-explorer:search-for-a-session.adoc[search for a session], then select a session.
 
@@ -27,5 +28,31 @@ image:test-case-ready-to-go-context.png[width=1000,alt="Test case after all anno
 When you're ready, select *Convert to Test Case*.
 
 image:convert-to-test-case-context.png[width=1000,alt="Click Convert to Test case"]
+
+=== Automation session eligibility
+
+*Convert to Test Case* is available for convertible automation (Appium) sessions in addition to manual sessions. It is not available for unsupported automation types, such as XCUITest.
+
+== Convert a session from the Test Case list
+
+You can also start from the Test Case list:
+
+. Select *+New Test Case*.
+. In *Choose Session to Convert to Test Case*, select a manual or automation session. Sessions appear in the same order as Session Explorer, with the most recent session first.
+. To narrow the list to Appium sessions, search `type:appium`.
+. Select *Convert*.
+
+== Conversion result
+
+After conversion, a success message appears with a *View Test Case &#8594;* link.
+
+For automation sessions, the message reflects the session's capture quality:
+
+* With the `kobiton:scriptlessCapture` capability: "Test Case converted with kobiton:scriptlessCapture! Full data captured for optimal test case."
+* Without the `kobiton:scriptlessCapture` capability: "Some session data might be limited. Add 'kobiton:scriptlessCapture' for better results next time."
+
+To capture more complete test data, add the `kobiton:scriptlessCapture` capability to your automation session before you run it.
+
+Manual sessions show "Test Case converted successfully."
 
 If you'd like to make changes to your test case before running Scriptless Automation, see xref:manage-test-steps.adoc[].
