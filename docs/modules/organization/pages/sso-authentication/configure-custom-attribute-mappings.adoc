@@ -45,6 +45,11 @@ Custom attribute mappings let you tell Kobiton which name your IdP uses for each
 +
 The read-only attribute list is replaced by a mapping table. Each row pairs a fixed *Platform Attribute* with an editable field.
 . For each platform attribute, enter the attribute name your IdP sends. Match the name your IdP uses exactly.
++
+[IMPORTANT]
+====
+The following special characters are not supported in an IdP attribute name: `.` (period), `[` (opening bracket), and `]` (closing bracket). Make sure the attribute name you enter does not contain these characters.
+====
 . Save your SSO settings.
 
 The mappings apply the next time a user signs in through SSO.
@@ -57,6 +62,7 @@ To stop using custom attribute mappings, turn off *Custom attribute mappings* an
 * *Unmapped attributes pass through.* Attributes your IdP sends that are not in the mapping are ignored, and other attributes are read under their original names.
 * *Duplicate names are not allowed.* If you enter the same IdP attribute name for two platform attributes, Kobiton shows an error on the affected rows and blocks the save until you resolve it.
 * *Empty mappings prompt a warning.* If you turn on custom attribute mappings but leave every field blank, Kobiton warns you before saving that SSO will use the default attribute names. You can still save.
+* *Some special characters are not supported.* An IdP attribute name must not contain `.` (period), `[` (opening bracket), or `]` (closing bracket).
 
 == Limitations
 
