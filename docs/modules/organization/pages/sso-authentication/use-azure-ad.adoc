@@ -1,15 +1,15 @@
-= Configure Kobiton Single Sign-on for Single sign-on with Microsoft Entra ID
+= Use Microsoft Entra ID for SSO authentication
 :navtitle: Use Entra ID (formerly Azure AD)
 
-In this article, you learn how to integrate Kobiton Single Sign-on with Microsoft Entra ID. When you integrate Kobiton Single Sign-on with Microsoft Entra ID, you can:
+Learn how to integrate Kobiton Single Sign-on with Microsoft Entra ID. When you integrate Kobiton Single Sign-on with Microsoft Entra ID, you can:
 
 * Control in Microsoft Entra ID who has access to Kobiton Single Sign-on.
-* Enable your users to be automatically signed-in to Kobiton Single Sign-on with their Microsoft Entra accounts.
+* Enable users to sign in to Kobiton automatically using their Microsoft Entra accounts.
 * Manage your accounts in one central location.
 
 == Prerequisites
 
-The scenario outlined in this article assumes that you already have the following prerequisites:
+The scenario outlined in this article assumes you have the following:
 
 * A Microsoft Entra user account with an active subscription. If you don't already have one, you can link:https://azure.microsoft.com/pricing/purchase-options/azure-account?cid=msft_learn_29260c13-c56b-30d7-9ea1-85d1031e2166[Create an account for free,window=read-later].
 * One of the following roles:
@@ -25,7 +25,7 @@ include::partial$sso-authentication/get-kobiton-parameters.adoc[]
 
 == Create IdP application
 
-Sign in to the Microsoft Entra admin center as at least a link:https://learn.microsoft.com/en-us/entra/identity/role-based-access-control/permissions-reference#cloud-application-administrator[Cloud Application Administrator,window=read-later].
+Sign in to the Microsoft Entra admin center as a user with at least the link:https://learn.microsoft.com/en-us/entra/identity/role-based-access-control/permissions-reference#cloud-application-administrator[Cloud Application Administrator,window=read-later] role.
 
 Browse to *Entra ID > Enterprise apps > New application*.
 
@@ -47,7 +47,7 @@ You'll *set up single sign on* in the next section.
 
 == Map parameters
 
-Now that your IdP application is initially created, you'll need to create Entra ID parameters mapped to Kobiton and download your Base64 certificate. Select *Set up single sign on* to get started.
+Now that you’ve created the application, configure the Microsoft Entra ID settings required for Kobiton and download the Base64 certificate. To get started, select *Set up single sign-on*.
 
 image:organization:azure-select-setup-single-sign-on-context.png[width=1000,alt="Select Setup Single Sign On option in Getting Started"]
 
