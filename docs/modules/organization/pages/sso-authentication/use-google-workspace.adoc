@@ -10,21 +10,19 @@ include::partial$sso-authentication/get-kobiton-parameters.adoc[]
 
 == Create IdP application
 
-In the Google Admin console, and select *Apps*.
+In the Google Admin console, select *Apps > Web and mobile apps*.
 
-image:organization:gsuite-select-apps-context.png[width=1000,alt=In Google Admin Console, select Apps]
+//image:organization:gsuite-select-apps-context.png[width=1000,alt=In Google Admin Console, select Apps]
 
-In Apps, choose *SAML apps*.
+Choose *Add app > Add custom SAML app*.
 
-image:organization:gsuite-select-saml-apps-context.png[width=1000,alt="Select SAML apps"]
+//image:organization:gsuite-select-saml-apps-context.png[width=1000,alt="Select SAML apps"]
 
-Select the *Add App* dropdown, then select *Add custom SAML app*.
+//image:organization:gsuite-select-add-custom-saml-context.png[width=1000,alt="Select Add custom SAML app in the dropdown"]
 
-image:organization:gsuite-select-add-custom-saml-context.png[width=1000,alt="Select Add custom SAML app in the dropdown"]
+In  *App details*, enter a name for your application.
 
-In step 1, *App details*, enter a name for your application.
-
-image:organization:gsuite-enter-app-details-context.png[width=1000,alt="Enter a name for the app"]
+//image:organization:gsuite-enter-app-details-context.png[width=1000,alt="Enter a name for the app"]
 
 == Get IdP parameters and download certificate
 
@@ -41,10 +39,7 @@ In **Google Identity Provider Details**, copy and save the following IdP values.
 | Entity ID
 
 | Identity provider certificate
-| Certificate
-
-| SHA-256 fingerprint
-| SHA-256 fingerprint
+| Certificate (Download)
 |===
 
 image:organization:gsuite-fill-sso-url-id-certificate-sha-context.png[width=1000,alt="Values in Google Identity Provider Details"]
@@ -63,7 +58,7 @@ In Service Provider Details, use your Kobiton SSO parameters from earlier to fil
 | Entity ID
 | Kobiton Entity ID
 
-| Domain Key
+| Start URL
 | Kobiton Domain name
 |===
 
