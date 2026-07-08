@@ -38,9 +38,18 @@ For background on this flag and how developers enable it, see the external guide
 
 The path form you can use depends on how the app was signed:
 
-* *Apps signed with an Apple development certificate* — you can access app data with `@<bundle>:./Documents/<path>` (note the leading `./`). This works whether or not the app sets `UIFileSharingEnabled` to `true`.
+[cols="1,2,2",options="header"]
+|===
+| Signing certificate | Path form | `UIFileSharingEnabled`
 
-* *Apps signed with a distribution or enterprise certificate* — the `@<bundle>:./Documents/<path>` form is not available. The app must set `UIFileSharingEnabled` to `true`, and you access its data with `@<bundle>:Documents/<path>`.
+| Apple development
+| `@<bundle>:./Documents/<path>` (note the leading `./`)
+| Not required. Access works whether or not the flag is set.
+
+| Distribution or enterprise
+| `@<bundle>:Documents/<path>`
+| Must be set to `true`. The `./` form is not available.
+|===
 
 == Examples by app
 
