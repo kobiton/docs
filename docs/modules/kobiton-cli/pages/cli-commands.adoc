@@ -3,16 +3,15 @@
 
 Commands that operate on an active CLI session require session context.
 
-Provide session context using one of the following:
+The CLI determines the session context using one of the following methods:
 
+* Use the session token stored in `~/.token/.session` (default). This file is automatically created or updated when you run `kobiton session create`, and commands will use the token for the *most recently created session*.
 * Pass the session token with the command: `--session-token <SESSION_TOKEN>` (or `-a <SESSION_TOKEN>`)
 * Set the `KOBITON_SESSION_TOKEN` environment variable
 
 The `<SESSION_TOKEN>` value is returned when you create a CLI session. For details, see xref:use-the-cli.adoc[Start using Kobiton CLI].
 
-The CLI automatically saves the session token to a local file for reuse in subsequent commands. This approach is convenient for single-user workflows but is not recommended for environments with concurrent or parallel executions.
-
-The locally stored session token will be overwritten when a new CLI session is created.
+Relying on the default `~/.token/.session` file is convenient for single-user workflows but is not recommended for environments with concurrent or parallel executions, because it is overwritten each time a new CLI session is created.
 
 == Synopsis
 
@@ -109,7 +108,7 @@ kobiton app kill [OPTIONS] <IDENTITY>
 |===
 | Argument | Description
 
-| `<IDENTITY>` | PID or application identifier of the process to signal.
+| `<IDENTITY>` | PID, package name, or bundle ID of the process to signal.
 |===
 
 .Options
@@ -147,7 +146,7 @@ kobiton app install [OPTIONS]
 |===
 | Option | Argument | Description
 
-| `-n`, `--name` | `<NAME>` | The application name, bundle, or package to install.
+| `-n`, `--name` | `<NAME>` | The app to install. Can be an app name, package name, bundle ID, app ID, or app version ID.
 | `--app-id` | `<APP_ID>` | The Kobiton application ID.
 | `--app-version-id` | `<APP_VERSION_ID>` | The Kobiton application version ID.
 | `--search-pages` | `<SEARCH_PAGES>` | Max pages to scan when resolving an app version via deviceConnect install. Default: `10`.
@@ -157,14 +156,22 @@ Plus all <<global-options,global options>>.
 
 *Requires:*
 
-* `-s <SESSION_ID>` and one of:
+* `-s <SESSION_ID>`, and `-a <SESSION_TOKEN>` or the `KOBITON_SESSION_TOKEN` environment variable
+* One of:
 ** `-n <NAME>`, or
 ** both `--app-id <APP_ID>` and `--app-version-id <APP_VERSION_ID>`
 
 .Example
 [source,shell]
 ----
+# Install on session 123 the latest version of a specific app ID
 kobiton app install -s 123 -n 651911
+
+# Install on session 123 the app with a specific package name or bundle ID
+kobiton app install -s 123 -n com.example.app
+
+# Install on session 123 the app with specific app ID and app version ID
+kobiton app install -s 123 --app-id 651911 --app-version-id 739431
 ----
 
 .Output
@@ -258,7 +265,7 @@ kobiton app find [OPTIONS] <KEYWORD>
 |===
 | Argument | Description
 
-| `<KEYWORD>` | Keyword to find the app. Put `<KEYWORD>` between double quotes for space or special characters.
+| `<KEYWORD>` | Keyword to find the app. Can be text contained in the app name, text contained in the package name or bundle ID, an app ID (for example `651911`), or an app version ID prefixed with `v` (for example `v739431`). Put `<KEYWORD>` between double quotes for spaces or special characters.
 |===
 
 Accepts all <<global-options,global options>>.
@@ -380,7 +387,10 @@ Manage files on the device: list, push, and pull.
 
 [NOTE]
 ====
-Path syntax. Android paths are absolute device paths (for example, `/data/local/tmp`). iOS paths use the `@<bundle-id>:<path>` form to address an app's sandbox (for example, `@com.company.app:Documents/`).
+Path syntax:
+
+* *Android:* absolute device paths, for example `/data/local/tmp`.
+* *iOS:* the base filesystem is accessible via normal paths such as `Downloads` or `DCIM/100APPLE`. To access files under an app container, use `@<bundle_id>:<container_name>/`, for example `@com.sample.app:Documents/`.
 ====
 
 === `file list`
@@ -602,6 +612,13 @@ Accepts all <<global-options,global options>>.
 .Example
 [source,shell]
 ----
+# Run a simple adb shell command
+kobiton device adb-shell ls
+
+# Run an adb shell command with extra arguments (pass after --)
+kobiton device adb-shell -- ls --color=auto
+
+# Quote characters that the local shell would interpret, such as a pipe
 kobiton device adb-shell "dumpsys window displays | grep -E 'mCurrentFocus|mFocusedApp'"
 ----
 
@@ -643,6 +660,11 @@ Plus all <<global-options,global options>>.
 
 * `-a <SESSION_TOKEN>` or `KOBITON_SESSION_TOKEN` environment variable
 * `<LOCAL_ADDRESS>` and `<REMOTE_ADDRESS>` in `tcp:<port>` format
+
+[NOTE]
+====
+The port forward remains active until the CLI session or the forward process ends. The local port stays occupied while the forward process is running — stop the forward process to release it.
+====
 
 .Example
 [source,shell]
@@ -708,7 +730,7 @@ PID NAME
 
 === `device log`
 
-Stream logs from the device.
+Stream logs from the device. Use `Control + C` to stop the log stream.
 
 .Syntax
 ----
@@ -729,7 +751,7 @@ kobiton device log
 
 === `device screen`
 
-Retrieve the device screen as a JPEG.
+Retrieve the device screen in `jpg` format. Pipe the output to a `.jpg` file to save the screenshot.
 
 .Syntax
 ----
@@ -762,7 +784,7 @@ Reservation operations: list and terminate device reservations.
 
 === `reservation list`
 
-List reservations.
+List device reservations (retainments).
 
 .Syntax
 ----
@@ -774,8 +796,8 @@ kobiton reservation list [OPTIONS]
 |===
 | Option | Argument | Description
 
-| `--page` | `<PAGE>` | Page to retrieve.
-| `--size` | `<SIZE>` | Max number of items to return.
+| `--page` | `<PAGE>` | Page to retrieve. Default: `1`.
+| `--size` | `<SIZE>` | Max number of items to return. Default: `20`.
 |===
 
 Plus all <<global-options,global options>>.
@@ -786,9 +808,20 @@ Plus all <<global-options,global options>>.
 kobiton reservation list
 ----
 
+.Output
+----
+ID, Status, Creator, UDIDs
+7, RESERVED, johndoe@example.com, 00008030-00057190****802E
+
+Page 1 (20 items), 1 total
+----
+
 === `reservation terminate`
 
-Terminate a reservation by ID.
+Terminate a reservation by its ID.
+
+[NOTE]
+Only users with the `soft_book.terminate_other_soft_book` permission can terminate reservations that are not their own.
 
 .Syntax
 ----
@@ -800,7 +833,7 @@ kobiton reservation terminate [OPTIONS] <RESERVATION_ID>
 |===
 | Argument | Description
 
-| `<RESERVATION_ID>` | Reservation ID to terminate.
+| `<RESERVATION_ID>` | Reservation ID to terminate. Use `kobiton reservation list` to retrieve the ID.
 |===
 
 Accepts all <<global-options,global options>>.
@@ -812,7 +845,12 @@ Accepts all <<global-options,global options>>.
 .Example
 [source,shell]
 ----
-kobiton reservation terminate 44821
+kobiton reservation terminate 7
+----
+
+.Output
+----
+OK
 ----
 
 == `session`
