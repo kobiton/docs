@@ -1,0 +1,71 @@
+= Access app files on iOS devices
+:navtitle: iOS file sharing
+
+The `kobiton file list`, `kobiton file push`, and `kobiton file pull` commands can transfer files to and from an iOS app's shared storage. Accessing an app's files works differently from Android because of how iOS sandboxes each app. This page explains the path syntax and the conditions an app must meet.
+
+For the command syntax and options, see xref:cli-commands.adoc[Kobiton CLI commands].
+
+== Path syntax
+
+To access the files of a specific app on iOS, use the following syntax:
+
+----
+@<bundle>:<container>/<path>
+----
+
+* `<bundle>` — the bundle ID of the application, for example `com.apple.Keynote`.
+* `<container>` — a shared container exposed by the app. `Documents` is the most common, but an app can expose more than one container.
+* `<path>` — the path to the file within the container.
+
+[NOTE]
+The device base filesystem can be accessed without the `@<bundle>:<container>` prefix, using normal paths such as `Downloads` or `DCIM/100APPLE`.
+
+.Example
+[source,shell]
+----
+kobiton file list @com.apple.Keynote:Documents/
+kobiton file push test.txt @com.apple.Keynote:Documents/test.txt
+kobiton file pull @com.apple.Keynote:Documents/test.txt
+----
+
+== File sharing must be enabled by the app
+
+To access an app's container, *file sharing must be enabled by the app developer*. The app's `UIFileSharingEnabled` flag must be set to `true`. If it is not enabled, attempts to access the container fail.
+
+For background on this flag and how developers enable it, see the external guide https://blog.eidinger.info/make-your-apps-files-user-visible-on-the-iphone[Make your app's files user-visible on the iPhone].
+
+== How the app's signing certificate affects access
+
+The path form you can use depends on how the app was signed:
+
+* *Apps signed with an Apple development certificate* — you can access app data with `@<bundle>:./Documents/<path>` (note the leading `./`). This works whether or not the app sets `UIFileSharingEnabled` to `true`.
+
+* *Apps signed with a distribution or enterprise certificate* — the `@<bundle>:./Documents/<path>` form is not available. The app must set `UIFileSharingEnabled` to `true`, and you access its data with `@<bundle>:Documents/<path>`.
+
+== Examples by app
+
+The following apps are commonly used to verify file sharing. The `--udid` and session-context arguments are omitted for brevity.
+
+=== VLC media player (`org.videolan.vlc-ios`)
+
+Available on the App Store.
+
+.Example
+[source,shell]
+----
+kobiton file list @org.videolan.vlc-ios:Documents/
+kobiton file push test.txt @org.videolan.vlc-ios:Documents/test.txt
+kobiton file pull @org.videolan.vlc-ios:Documents/test.txt
+----
+
+=== Apple Keynote (`com.apple.Keynote`)
+
+Available on the App Store.
+
+.Example
+[source,shell]
+----
+kobiton file list @com.apple.Keynote:Documents/
+kobiton file push test.txt @com.apple.Keynote:Documents/test.txt
+kobiton file pull @com.apple.Keynote:Documents/test.txt
+----
