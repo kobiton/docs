@@ -1,7 +1,15 @@
-= Kobiton 4.26.5S Release Notes
-:navtitle: Kobiton 4.26.5S release notes
+= Kobiton 4.26S Release Notes
+:page-aliases: release-notes:all-releases:4_26_5S.adoc
+
+:navtitle: Kobiton 4.26S release notes
 
 _June 1, 2026_
+
+== New OS support
+
+This release added support for the following:
+
+* iOS/iPadOS 27 Beta
 
 == deviceConnect service management migration to launchd
 
@@ -206,15 +214,17 @@ By introducing the *Pop-up Handler* into the Blocker Remediation flow, this feat
 
 This feature is available for users with an *AI subscription*.
 
-== Kobiton plugin for Claude Code
+== Kobiton plugin for AI Coding Agents
 
-Kobiton now integrates directly with Claude Code, enabling AI-driven mobile test automation on real devices without leaving the AI workspace.
+Kobiton now integrates directly with well-known AI Coding Agents, enabling AI-driven mobile test automation on real devices without leaving the AI workspace.
 
-With the Kobiton plugin, developers and testers can use natural language to upload apps, manage devices, execute Appium tests, and review results — all within Claude. This keeps test creation, execution, and validation in a single continuous workflow.
+The list of supported AI Coding Agents are: Claude Code, Gemini, Copilot, and Codex.
+
+With the Kobiton plugin, developers and testers can use natural language to upload apps, manage devices, execute Appium tests, and review results — all within the AI Coding Agents' command-line interface (CLI). This keeps test creation, execution, and validation in a single continuous workflow.
 
 *Key capabilities*
 
-* Upload and install mobile apps directly from Claude
+* Upload and install mobile apps directly from AI Coding Agents CLI.
 * Run Appium-based automation tests on real iOS and Android devices
 * Manage devices and sessions without switching tools
 * View logs, screenshots, and execution results in real time
@@ -222,9 +232,12 @@ With the Kobiton plugin, developers and testers can use natural language to uplo
 
 *Availability*
 
-Kobiton for Claude Code is available to users with active Kobiton and Claude Code subscriptions.
+Kobiton plugin for AI Coding Agents is available to users with active Kobiton and Agents subscriptions.
 
-Instructions to use Claude Code plugin with Standalone is coming soon.
+Refer to the below instructions to use the plugin with Standalone:
+
+* xref:ai:mcp/claude-code.adoc[Claude Code,window=read-later]
+* xref:ai:mcp/install-local-ai-plugin.adoc["Gemini, Copilot, and Codex",window=read-later]
 
 == Kobiton MCP server updates
 
@@ -235,18 +248,14 @@ The Kobiton MCP server now supports OAuth 2.1 authentication using existing Kobi
 *Highlights*
 
 - OAuth login flow for MCP server connections
-- Automatic browser-based authentication flow in Claude Code
+- Automatic browser-based authentication flow in AI Coding Agents
 - Uses existing Kobiton credentials
-
-Instructions to connect to Standalone MCP server is coming soon.
 
 === MCP server improvements
 
 * Added Appium capabilities fetching and session correlation to the MCP server.
 * Added interactive session support for running natural-language Appium commands on devices.
 * New Kobiton MCP skills are now available for AI-assisted mobile testing workflows, including device interaction, session management, and Appium-based automation.
-
-Instructions to connect to Standalone MCP server is coming soon.
 
 == Scriptless improvements
 
