@@ -27,13 +27,13 @@ Kobiton reads five attributes from the SAML assertion your IdP sends at sign-in:
 | The groups the user belongs to, used for role mapping.
 |===
 
-By default, Kobiton expects your IdP to send each attribute under these exact names. When your IdP sends them under different names, sign-in fails.
+By default, Kobiton expects your identity provider (IdP) to send each attribute using specific names. If your IdP uses different attribute names, SSO authentication fails.
 
-Custom attribute mappings let you tell Kobiton which name your IdP uses for each attribute. At the next sign-in, Kobiton renames the matching attributes in the assertion to its expected names before it validates the assertion. The rest of SSO validation is unchanged.
+Custom attribute mappings let you specify the attribute names used by your IdP. During sign-in, Kobiton maps those attributes to the names it expects before validating the SAML assertion. The remainder of the SSO validation process is unchanged.
 
 == Before you start
 
-* You have administrator access to your organization's SSO settings in Kobiton.
+* Your Kobiton account is assigned the `ADMIN` role or the `org_setting.modify_sso_setting` permission.
 * You have completed the SSO setup for your IdP. See xref:organization:sso-authentication/about-sso-authentication.adoc[].
 * You know the exact attribute names your IdP sends in the SAML assertion.
 
@@ -72,7 +72,7 @@ To stop using custom attribute mappings, turn off *Custom attribute mappings* an
 
 == Limitations
 
-* Custom attribute mappings change only the *names* Kobiton reads attributes under. They do not change attribute values.
+* Custom attribute mappings change only the attribute names that Kobiton uses. They do not modify attribute values.
 * Conditional mapping, such as choosing a name based on another condition, is not supported.
 * Turning off custom attribute mappings does not change any other SSO setting.
 
