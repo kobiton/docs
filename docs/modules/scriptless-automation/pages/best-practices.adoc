@@ -1,0 +1,103 @@
+= Best practices for Scriptless automation
+
+== Overview
+
+Best practices help improve the reliability and consistency of Scriptless automation.
+
+These guidelines are not required to run Scriptless tests, but following them can reduce execution issues and minimize the need for remediation as test coverage expands.
+
+== Baseline session best practices
+
+Baseline sessions are most effective when they reflect a clear and stable test flow.
+
+When creating a baseline session:
+
+* Enable session capture by selecting the *Play* button before interacting with the application to ensure accurate element detection.
+* Use a physical keyboard instead of the virtual device keyboard.
+* Follow a single, intentional path through the application.
+* Be precise and deliberate when interacting with the application. For example, tap the center of a button instead of the edge.
+* Dismiss pop-ups by selecting the close control instead of tapping outside the pop-up.
+* Avoid rapid swiping or tapping. Wait at least 2 seconds between actions.
+* Avoid tapping auto-corrected text.
+* Use supported interactions only.
+
+Baseline sessions that are focused and repeatable are easier to reuse and more reliable during execution.
+
+== Unsupported actions
+
+Scriptless automation does not support the following actions:
+
+* Double tap
+* Double Home
+* Pinch or zoom
+* Screenshot
+* Set time zone
+* Image injection
+* Custom gestures
+
+== Test design considerations
+
+Keeping tests concise improves maintainability.
+
+Shorter test flows are easier to understand, execute, and troubleshoot. Instead of extending a single test to cover many variations, related tests can be grouped and executed together.
+
+If a test requires frequent adjustments to continue running, recreating the baseline session may be more effective than repeatedly refining an unstable definition.
+
+== Execution consistency
+
+Consistency across devices and environments improves execution reliability.
+
+When possible:
+
+* Use similar device types, operating system versions, and screen layouts.
+* Follow Kobiton device setup instructions before running Scriptless tests.
+* Keep test devices in light mode.
+
+Greater variation across devices may increase the likelihood of execution differences that require review.
+
+Greater variation across devices may increase the likelihood of execution differences that require review.
+
+== Scaling test execution
+
+Tests can be executed across many devices once a baseline has proven reliable.
+
+Expanding execution incrementally allows issues to surface early and keeps results easier to interpret. Grouping related tests helps maintain clarity as execution scales.
+
+== Reducing remediation effort
+
+Remediation is an expected part of automated execution, but its frequency can often be reduced.
+
+Before starting a new test run, review the test case and update any steps that no longer match the current application flow.
+
+Clear baseline sessions, consistent navigation paths, and stable application states all contribute to smoother execution. Repeated remediation across many steps may indicate that the underlying test flow no longer reflects current application behavior.
+
+== Workflows to avoid
+
+Some workflows are not suited for Scriptless automation.
+
+Avoid using Scriptless automation for apps or flows with:
+
+* First-run states that differ from later app launches
+* Dynamic content that changes frequently or unpredictably
+* Random pop-ups, such as promotional messages
+* Non-English app text
+* Complex gesture-based interactions
+* Gaming apps
+
+These workflows may require script-based automation for greater control.
+
+== Unsupported frameworks and environments
+
+Scriptless automation does not support:
+
+* Espresso
+* UIAutomator
+* XCUITest
+* GameDriver
+* Virtual devices
+
+== Related pages
+
+* xref:scriptless-automation:baseline-session.adoc[Create a baseline session]
+* xref:scriptless-automation:run-scriptless.adoc[Run a Scriptless test]
+* xref:test-management:remediations.adoc[Remediations]
