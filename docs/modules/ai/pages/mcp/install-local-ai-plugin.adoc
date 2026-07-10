@@ -1,0 +1,198 @@
+= Install and configure local Kobiton AI plugin
+:navtitle: Install and configure local Kobiton AI plugin
+
+Install the local Kobiton AI plugin to use it with a Standalone or Cloud with custom domain environment.
+
+[NOTE]
+This guide does not apply to Claude Code or Claude Desktop.
+
+== Before you start
+
+Make sure the Kobiton Portal version is at least `4.26.0S` before continuing. Use the xref:help-widget:index.adoc[Help widget] to verify the Portal version.
+
+[#_get_your_mcp_server_url]
+== Retrieve your MCP server URL
+
+Use the API base URL of your environment:
+
+include::help-widget:partial$get-api-base-url.adoc[]
+
+Add `/mcp` at the end of the retrieved API base URL. This will be the MCP server URL.
+
+*Examples:*
+
+[cols="1,2,2",options="header"]
+|===
+|Environment |API base URL |MCP server URL
+
+|Kobiton Cloud (default)
+|`\https://api.kobiton.com`
+|`\https://api.kobiton.com/mcp`
+
+|Cloud with custom domain
+|`\https://api-custom-domain.kobiton.com`
+|`\https://api-custom-domain.kobiton.com/mcp`
+
+|Standalone
+|`\https://custom-domain.kobiton.local:3000`
+|`\https://custom-domain.kobiton.local:3000/mcp`
+
+|===
+
+If you are using the default Kobiton Cloud URL (`\https://api.kobiton.com/mcp`), you can install the plugin from the online marketplace. Refer to guidance from the respective AI assistance tool to install and authenticate.
+
+* xref:ai:mcp/codex.adoc[Codex]
+* xref:ai:mcp/copilot.adoc[Copilot]
+* xref:ai:mcp/gemini.adoc[Gemini]
+
+If you are using a custom environment, continue with this guide.
+
+== Download the Kobiton automate repository
+
+Open a command-line tool on your machine:
+
+- macOS: Terminal
+- Windows: PowerShell or Command Prompt
+
+If `git` is installed on your machine, clone the `automate` GitHub repository:
+
+[source,bash]
+----
+git clone https://github.com/kobiton/automate.git && cd automate
+----
+
+If you do not have `git` installed, download the https://github.com/kobiton/automate/archive/refs/heads/main.zip[repository] as a `.zip` file, then extract it into the `automate-main` folder.
+
+== Edit MCP configuration
+
+After retrieving the <<_get_your_mcp_server_url,custom MCP URL>>, edit the following file in the `automate` or `automate-main` folder:
+
+[cols="1,2",options="header"]
+|===
+|Platform | MCP configuration file path
+
+|Copilot
+|`.mcp.json`
+
+|Gemini
+|`gemini-extension.json`
+
+|Codex
+|`.codex/.mcp.json`
+
+|===
+
+For all files above, replace the default value of `url` with the custom MCP server URL.
+
+*Examples:*
+
+.Default
+[source,json]
+----
+{
+  "mcpServers": {
+    "kobiton": {
+      "type": "http",
+      "url": "https://api.kobiton.com/mcp",
+      "headers": {
+        "X-AI-Tool-Name": "Codex"
+      }
+    }
+  }
+}
+----
+
+.Custom Cloud domain
+[source,json]
+----
+{
+  "mcpServers": {
+    "kobiton": {
+      "type": "http",
+      "url": "https://api-custom-domain.kobiton.com/mcp",
+      "headers": {
+        "X-AI-Tool-Name": "Codex"
+      }
+    }
+  }
+}
+----
+
+.Standalone
+[source,json]
+----
+{
+  "mcpServers": {
+    "kobiton": {
+      "type": "http",
+      "url": "https://custom-domain.kobiton.local:3000/mcp",
+      "headers": {
+        "X-AI-Tool-Name": "Codex"
+      }
+    }
+  }
+}
+----
+
+== Install local plugin
+
+Run the commands in the table below in a command-line tool on your machine according to the AI platform. Replace `/path/to/automate` with the actual path to the `automate` or `automate-main` folder.
+
+[cols="1,2",options="header"]
+|===
+|Platform | Command to install
+
+|Claude Code
+|`claude plugin marketplace add /path/to/automate`
+
+`claude plugin install automate@kobiton`
+
+|Copilot
+|`copilot plugin marketplace add /path/to/automate`
+
+`copilot plugin install automate@kobiton`
+
+|Gemini
+|`gemini extensions install /path/to/automate`
+
+|Codex
+|`codex plugin marketplace add /path/to/automate`
+
+`codex plugin add automate@kobiton`
+
+|===
+
+== Verify MCP URL
+
+After installing the plugin, verify that the MCP URL is configured correctly:
+
+[cols="1,2",options="header"]
+|===
+|Platform | Steps to verify
+
+|Copilot
+|`copilot`
+
+`/mcp`
+
+Verify the URL of `kobiton`
+
+|Gemini
+|`gemini mcp list`
+
+Verify the URL of `kobiton` under *Configured MCP servers*
+
+|Codex
+|`codex mcp list`
+
+Verify the URL of `kobiton`
+
+|===
+
+== Authenticate and use the plugin
+
+Refer to the respective AI assistance tool guide to authenticate and use the plugin.
+
+* xref:ai:mcp/codex.adoc#_authentication[Codex]
+* xref:ai:mcp/copilot.adoc#_authentication[Copilot]
+* xref:ai:mcp/gemini.adoc#_authentication[Gemini]
