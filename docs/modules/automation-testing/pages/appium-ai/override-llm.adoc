@@ -116,3 +116,4 @@ Local endpoints are resolved from the host running the Appium session. For examp
 - Capabilities apply only to the session that passed them; other sessions continue to use the defaults.
 - `kobiton:llmApiFormat` must match the provider used by `kobiton:llmBaseUrl`.
 - Vision-based features require a model that accepts image input such as screenshots.
+- Kobiton masks `kobiton:llmApiKey` in session artifacts. In Session Explorer, the value appears as `+******+` in the WebDriver Traffic request and response bodies, and Kobiton redacts it in the session's Appium log. Masking covers existing sessions and does not change the key sent to your LLM provider.
