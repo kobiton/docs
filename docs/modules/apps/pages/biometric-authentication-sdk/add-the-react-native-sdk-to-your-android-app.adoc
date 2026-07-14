@@ -1,24 +1,22 @@
 = Add the React Native biometrics authentication SDK to your Android app
 :navtitle: Add the React Native SDK to your Android app
 
-Learn how to add the React Native biometrics authentication SDK to your Android app so you can test biometric authentication during your manual and automated test sessions.
+The Kobiton React Native biometrics SDK lets you test biometric authentication in manual and automated sessions on Android. This page walks through installing the SDK and building a signed APK.
 
 To add the SDK to a native Android app instead, see xref:apps:biometric-authentication-sdk/add-the-sdk-to-your-android-app.adoc[Add the SDK to your Android app].
 
 [NOTE]
 iOS support is not yet available.
 
-== Before you start
-
-You'll need:
+== Prerequisites
 
 * JDK version 17–20
-* *Android Studio* installed
-* A development machine set up for React Native (Android)
+* Android Studio
+* A React Native (Android) development environment
 
-== Prepare the test app
+== Choose a supported biometrics library
 
-Prepare a test version of an app that uses one of the following biometrics libraries:
+Use a React Native app that depends on one of the following biometrics libraries:
 
 * `react-native-touch-id`
 * `react-native-biometrics`
@@ -38,9 +36,9 @@ npm uninstall react-native-biometrics
 npm uninstall react-native-touch-id
 ----
 
-=== Install the Kobiton biometrics package
+=== Install the SDK
 
-Install the supported biometric SDK for React Native:
+Install the SDK for React Native:
 
 [source,bash]
 ----
@@ -95,28 +93,25 @@ Start the Android dev server using one of the following commands:
 ----
 # Using npm
 npm run android
-----
 
-[source,bash]
-----
 # Using npx
 npx react-native run-android
 ----
 
-== Configure AndroidManifest.xml
+// == Configure AndroidManifest.xml
+//
+// Open `android/app/src/main/AndroidManifest.xml`. Inside the `<application>` element, add:
+//
+// [source,xml]
+// ----
+// android:usesCleartextTraffic="true"
+// ----
+//
+// This allows HTTP traffic instead of HTTPS-only connections during testing.
 
-Open `android/app/src/main/AndroidManifest.xml`. Inside the `<application>` element, add:
+== Replace biometric calls with SDK calls
 
-[source,xml]
-----
-android:usesCleartextTraffic="true"
-----
-
-This allows HTTP traffic instead of HTTPS-only connections during testing.
-
-== Apply the Kobiton biometrics SDK
-
-Import the Kobiton biometrics SDK into your project:
+Import the SDK into your project:
 
 [source,javascript]
 ----
@@ -155,9 +150,9 @@ KobitonBiometric.simplePrompt({
   });
 ----
 
-For the latest usage guidance, see the link:https://www.npmjs.com/package/react-native-kobiton-biometrics[official npm package,window=read-later] page.
+For the latest usage guidance, see link:https://www.npmjs.com/package/react-native-kobiton-biometrics[react-native-kobiton-biometrics on npm,window=read-later].
 
-Save your changes, then build the test app.
+Save your changes.
 
 == Build the APK in Android Studio
 
@@ -173,14 +168,14 @@ Save your changes, then build the test app.
 1. Upload the generated APK to your app repository.
 2. Start a manual test session.
 3. Launch the app and trigger biometric authentication.
-4. Confirm the biometric flow works as expected and review the logs to verify your changes.
+4. Confirm the biometric prompt appears and returns a success result. Review the session logs to confirm the SDK ran.
 
-== Known issues
+== Troubleshoot build errors"
 
-None reported for this setup. If you encounter build or runtime errors, verify:
+If you encounter build or runtime errors, verify:
 
 * The Maven path configuration.
 * The package version (`react-native-kobiton-biometrics >= 1.0.5`).
-* That `android:usesCleartextTraffic="true"` is correctly applied.
+//* That `android:usesCleartextTraffic="true"` is correctly applied.
 
 If issues persist, capture the logs and rebuild the APK.
