@@ -23,10 +23,6 @@ Org admins can now enforce automatic Portal logout after a configurable duration
 - After re-authenticating, the user is deep-linked back to the page they were on before expiry.
 - Kobiton enforces session expiry independently of your identity provider or SSO. Auto Logout does not require SSO SLO support.
 
-*Availability*
-
-Available now.
-
 === Embedded Reporting
 
 Kobiton's predefined reports are now delivered through a new embedded reporting tool with per-organization and per-team data isolation, granular view restrictions, and the ability to build your own reports.
@@ -57,10 +53,6 @@ A new display mode shows the device screen on its own, with no surrounding Kobit
 - A floating exit button (top right) ends the manual session and releases the device. Tooltip wording changes depending on whether an Appium session is still running.
 - The Kobiton MCP surface (`getSession`, `getSessionArtifacts`) now returns `liveViewUrl` and `deviceOnlyViewUrl` fields. Both are omitted when no device is assigned.
 
-*Availability*
-
-Available now.
-
 === Canvas touch and swipe capture with `getUserInputEvents` MCP tool
 
 In the new device-only view, canvas touch and swipe interactions are captured and exposed through a new MCP tool, enabling human-in-the-loop workflows where a user's tap can redirect an agent-driven test in flight.
@@ -71,10 +63,6 @@ In the new device-only view, canvas touch and swipe interactions are captured an
 - Those same events are exposed to agents through a new MCP tool, `getUserInputEvents`, ordered oldest first.
 - Capture is limited to canvas touch and swipe. Keystrokes, right-clicks, pinch, and drag-off-canvas are not captured.
 
-*Availability*
-
-Available now.
-
 === Kobiton MCP: create and monitor test runs from Claude
 
 Claude can now create a Kobiton test run and watch it live, surfacing live remediation when a blocker hits.
@@ -82,12 +70,8 @@ Claude can now create a Kobiton test run and watch it live, surfacing live remed
 *Highlights*
 
 - Kick off a test run conversationally. Pick defaults or customize, with a confirmation summary before it runs.
-- Watch the run and get notified the moment an execution is blocked, with a link to the live-remediation view.
+- Watch the run and get notified the moment an execution is blocked, with a link to the live remediation view.
 - When a run ends because of an unresolved blocker, Claude flags that in the summary instead of showing it as passed.
-
-*Availability*
-
-Available now.
 
 === Convert an Automation Session into a Test Case
 
@@ -102,10 +86,6 @@ Completed Automation Sessions (Appium and XIUM) can now be converted into Test C
 - The *+New Test Case* pop-up lists Automation Sessions and supports keyword search, for example `type:appium`.
 - After converting an Automation Session, the confirmation message notes whether full data was captured. If `kobiton:scriptlessCapture` was set, it confirms full capture. If not, it recommends setting it next time.
 
-*Availability*
-
-Available now.
-
 == Bug fixes and improvements
 
 === ADB Shell
@@ -117,18 +97,18 @@ Available now.
 - Fixed generated Appium script projects failing on Standalone deployments that use a self-signed SSL certificate.
 +
 ** Python direct Kobiton REST calls (device lookup, app download URL, OTP) now honor the same trust-all-certificates setting the proxy already used.
-** The C# template now exposes `Config.TrustAllCerts` and a `Config.CreateHttpClient()` helper backed by a permissive `HttpClientHandler`. The helper is used by `ProxyServer`, `TestBase` (three call sites), and `OtpService`. See the C# README for the Standalone run instructions.
+** The C# template now exposes `Config.TrustAllCerts` and a `Config.CreateHttpClient()` helper backed by a permissive `HttpClientHandler`. The helper is used by `ProxyServer`, `TestBase` (three call sites), and `OtpService`. See the README included in the generated C# project for Standalone run instructions.
 ** Node and Java retain their existing documented workarounds.
-- Fixed generated Appium tests failing at the first UI transition because `element.click()` sent an empty body, which blocked Kobiton flex-correct from matching the command stream.
+- Fixed generated Python Appium tests failing at the first UI transition. `element.click()` was sending an empty body, which blocked Kobiton flex-correct from matching the command stream. Java tests were not affected.
 
 === Apps and app storage
 
 - Fixed an issue where app versions with missing binary files could not be distinguished from active ones. Affected versions are now distinguishable in the UI, API, and CLI. Install attempts on such versions return the error `Failed to prepare application blob. Response status code does not indicate success: 404 (Not Found)`.
-- Improved error messages returned by the app-signing API.
+- The app-signing API now returns descriptive error messages for specific failure cases such as missing profiles, expired profiles, and invalid bundle IDs. Previously, these cases returned a generic 500 error.
 
 === Automation Session capture
 
-- Added `kobiton:scriptlessCapture` as the canonical desired capability for marking an automation session as convertible to a test case. Set it in your initial script (optional) to guarantee bypass-cache and full metadata for later conversion.
+- Added `kobiton:scriptlessCapture` as the canonical desired capability for marking an Automation Session as convertible to a Test Case. Setting it in your initial script is optional. When set, the session bypasses cache and captures full metadata for later conversion.
 - The existing `kobiton:scriptlessEnable` desired capability continues to work identically and is preserved for backwards compatibility. Setting both is safe and produces no conflict.
 
 === CLI
@@ -146,37 +126,39 @@ Available now.
 - Added *Collapse all* and *Expand all* actions under the View menu.
 - Each host machine remembers its own collapsed or expanded state in your browser.
 
-=== Device tunneling stability (iOS and Android)
+=== Device tunneling stability
 
-- Improved iOS device tunneling reliability across multiple paths, including CoreDevice tunnel client isolation, the daemon-side tunnel state machine, tunnel-registration handling, tunnel-slot claiming during error states, and CoreDevice reconciler cancellation. Fixed a lockdown-instruments ownership leak and a CoreDevice build-retry backoff issue.
-- Improved iOS device connection lifecycle: connections now close cleanly and per-device limits are enforced. Devices are now released reliably when a session ends.
-- Android install reliability: the quarantine bit is now removed on install through adb.
+- Improved iOS device connection reliability across multiple failure modes affecting tunnel setup, error handling, and cleanup when a session ends.
+- Devices are now released reliably at the end of a session, so they return to the pool without delay.
+- Fixed an issue where Android app installs through adb could fail because of a file attribute macOS applies to downloaded APKs.
 
 === Inspector
 
-- Fixed the Inspector failing to capture elements on app screens with frequent re-renders on Android 14 and 15. Android 16 was not affected. Android view-tree capture is now faster on high-refresh-rate apps, and the capture timeout is configurable. [VERIFY: this fix is currently in *Wait For Deployment* status in Jira. Confirm inclusion in 4.27 before publishing.]
+- Fixed the Inspector failing to capture elements on app screens with frequent re-renders on Android 14 and 15. Android 16 was not affected. Android view-tree capture is now faster on high-refresh-rate apps, and the capture timeout is configurable.
+// [VERIFY: this fix is currently in *Wait For Deployment* status in Jira. Confirm inclusion in 4.27 before publishing.]
 
 === MCP and integrations
 
-- The MCP `confirmAppUpload` handler now posts to `/v2/apps` (previously `/v1/apps`), and app-upload URLs are generated through `/v2/apps/upload-url`. Agent-facing response keys are unchanged (`appId`, `versionId`). This aligns the write side of the MCP app-upload flow with the read side (`listApps`, `getApp`), which was already on v2.
-- Added a new Portal login endpoint `POST /v2/users/login` that returns the JWT along with `grpc_server_url` and other user information. Clients that previously required both a Portal API URL and a gRPC URL can now retrieve both from a single login call. The existing `POST /v1/users/info` remains available for backwards compatibility.
+- The MCP `confirmAppUpload` handler now posts to `/v2/apps` (previously `/v1/apps`), and app-upload URLs are generated through `/v2/apps/upload-url`. Agent-facing response keys are unchanged (`appId`, `versionId`).
+- Added a new Portal login endpoint `POST /v2/users/login` that returns a JSON Web Token (JWT) along with `grpc_server_url` and other user information. Clients that previously required both a Portal API URL and a gRPC URL can now retrieve both from a single login call. The existing `POST /v1/users/info` remains available for backwards compatibility.
 
 === Portal and SSO
 
-- Fixed an issue where teams did not appear in the UI immediately after SSO login and required a manual page refresh to become visible. Affected both Cloud and Standalone. The username-and-password login flow was not affected.
-- Fixed several session flows where users signed in via SSO or social signup could be terminated with a "User not found" error caused by the account decode path.
+- Fixed an issue where teams did not appear in the UI immediately after SSO login and required a manual page refresh to become visible. The username-and-password login flow was not affected.
 - Fixed the App Repository page hanging or showing all apps as missing when an app had zero live versions.
-- Fixed the *Convert to test case* flow hanging (with `is_generating` never clearing) for web and element-based automation sessions.
+- Fixed the *Convert to Test Case* flow hanging or producing incomplete steps for automation sessions that interact with WebView elements.
 
-=== Reporting infrastructure
+=== Reporting
 
-- Fixed the SLA state sync query saturating database CPU because `date_trunc` on cursor columns blocked index use.
+- Fixed a performance issue in SLA reporting that could cause database slowdowns during report generation.
 
-=== Revisit (scriptless)
+=== Revisit (Scriptless)
 
-- Fixed Revisit failing with "NotFoundAnyAppUnderTest" when a recorded test case had no real app under test.
-- The Revisit parallel-test pre-check now runs on production.
-- Fixed Revisit failing with "Device retry exceeded" from parallel-test self-collision on organizations with `PARALLEL_TEST=1`.
+- Fixed Revisit failing when a test case was recorded only on the device home screen. Home-screen-only recordings now revisit correctly, launching the home screen.
+- Test cases recorded with no app under test are now rejected immediately with a clear message, instead of booking a device and failing partway through.
+- A Scriptless rerun on an account already at its parallel-test limit now waits for a slot to free up, instead of attempting a booking that would be rejected.
+- Fixed Revisit reruns failing with "Device retry exceeded" errors on organizations with parallel test enabled.
+- Fixed Scriptless (Revisit) reruns failing with "User not found" errors for users signed in via SSO or social login.
 
 === Security
 
@@ -185,8 +167,8 @@ Available now.
 === Session lifecycle
 
 - Portal release messages now forcefully terminate all sessions associated with a device, preventing stale CLI sessions from persisting after a device is released and re-linked.
-- Command latency is now calculated correctly for sessions with multiple reconnects.
-- Fixed intermittent "Broken pipe" failures during iOS app installs delivered through ZipConduit. Added supporting diagnostic tooling around install feedback.
+- Fixed missing or incomplete command latency data for manual sessions with multiple reconnects.
+- Fixed intermittent iOS app install failures through ZipConduit. Added diagnostic tooling around install feedback.
 
 // ============================================================================
 // WORKING NOTES BELOW. Remove before publishing.
@@ -196,9 +178,5 @@ Available now.
 == Needs confirmation
 
 - *Reporting on-prem availability (KOB-52245):* Source ticket described this as an early-phase rollout with on-prem availability gated on a later phase. Confirm whether it ships to Standalone in this release or Cloud only.
-- *Android Inspector fix shipment (KOB-53089):* Currently in *Wait For Deployment* status in Jira. Confirm inclusion in 4.27 before publishing this entry.
-
-== Review notes
-
-- *Portal-log-only tickets (KOB-53279, KOB-53791, KOB-53781, KOB-53977, KOB-53779, KOB-53778, KOB-53654, KOB-53675, KOB-53648, KOB-53267, KOB-53218):* These were drafted from PR deployment log lines only, not from Jira ticket content. Tiffany is reviewing these separately.
+- *Android Inspector fix shipment (KOB-53089):* Currently in *Wait For Deployment* status in Jira. Confirm inclusion in 4.27.
 ////
