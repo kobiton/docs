@@ -13,11 +13,13 @@ Org admins can now enforce automatic Portal logout after a configurable duration
 
 *Highlights*
 
-- Configure the timeout under *Org Settings > Other Settings*. Enter a value and pick Hours or Days from the dropdown.
-- Minimum timeout is 1 hour. You can also turn Auto Logout off entirely.
+- Turn on Auto Logout under *Account > Settings > Other Settings*. Scroll to the *Auto Logout* setting and select the checkbox.
+- When the checkbox is selected, a *Log users out after* field appears. Enter a whole number (type the value or use the arrows) and pick *Hour(s)* or *Day(s)* from the dropdown.
+- Minimum timeout is 1 hour. Clear the checkbox to turn Auto Logout off.
+- A helper message on the setting notes: "Users with ongoing manual sessions will be logged out once their sessions ends."
 - When the configured duration elapses, users are automatically redirected to the login page with the message "Your session has expired. Please log in again."
 - There is no warning modal and no "stay logged in" prompt before logout.
-- If a user has any active session (manual, mixed, CLI, scriptless, or another non-terminal session type) when the timer expires, their Portal login stays alive until all such sessions end.
+- If a user has an ongoing manual session when the timer expires, their logout is deferred until that session ends.
 - After re-authenticating, the user is deep-linked back to the page they were on before expiry.
 - Kobiton enforces session expiry independently of your identity provider or SSO. Auto Logout does not require SSO SLO support.
 
@@ -25,27 +27,28 @@ Org admins can now enforce automatic Portal logout after a configurable duration
 
 Available now.
 
-=== Embedded Reporting (Reporting Product Integration, Phase 1)
+=== Embedded Reporting
 
-Kobiton's predefined reports are now delivered through a new embedded reporting tool. Phase 1 covers migration of the existing reports, tenant isolation, granular view restrictions, and the ability to build your own reports.
+Kobiton's predefined reports are now delivered through a new embedded reporting tool with per-organization and per-team data isolation, granular view restrictions, and the ability to build your own reports.
 
 *Highlights*
 
 - The four existing Predefined Reports have been migrated to the new reporting engine.
-- Multi-tenancy support at the organization level and the team level.
-- Row, column, and table-level view restrictions.
+- Report data is isolated between organizations and between teams.
+- View restrictions can be applied at the row, column, and table level.
 - Build custom reports through the reporting UI.
-- SSO credentials are federated to the reporting tool.
+- If you sign in to Kobiton with SSO, the reporting tool honors that sign-in. No separate login.
 - New team-level permission: *Can View Team Reports*.
 - Report usage is surfaced to org admins through a new customer-admin report.
 
 *Availability*
 
-Available now in Cloud. [VERIFY: whether Phase 1 ships to Standalone in this release, or waits for a later phase.]
+Available now in Cloud.
+// [VERIFY: whether this ships to Standalone in this release. Source ticket described this as an early-phase rollout, so Standalone availability may be gated on a later phase.]
 
 === Device-only view for live sessions
 
-A new stripped-down display mode of the live session view hides the surrounding Kobiton UI so you can share, embed, or demo just the device screen.
+A new display mode shows the device screen on its own, with no surrounding Kobiton UI. Use it to share, embed, or demo just the device.
 
 *Highlights*
 
@@ -66,7 +69,7 @@ In the new device-only view, canvas touch and swipe interactions are captured an
 
 - Canvas touch and swipe events in the device-only view are forwarded to the device under test.
 - Those same events are exposed to agents through a new MCP tool, `getUserInputEvents`, ordered oldest first.
-- Only touch and swipe on the device canvas are captured. Keystrokes, right-clicks, pinch, and drag-off-canvas remain suppressed.
+- Capture is limited to canvas touch and swipe. Keystrokes, right-clicks, pinch, and drag-off-canvas are not captured.
 
 *Availability*
 
@@ -79,9 +82,8 @@ Claude can now create a Kobiton test run and watch it live, surfacing live remed
 *Highlights*
 
 - Kick off a test run conversationally. Pick defaults or customize, with a confirmation summary before it runs.
-- Watch the run and get notified the moment an execution is blocked, with a one-click link to the live-remediation view (auto-opened on request).
-- Blocked-but-failed runs are reported accurately (never shown as passed).
-- New `getOrgSettings` read surfaces the org's live-remediation setting.
+- Watch the run and get notified the moment an execution is blocked, with a link to the live-remediation view.
+- When a run ends because of an unresolved blocker, Claude flags that in the summary instead of showing it as passed.
 
 *Availability*
 
@@ -194,7 +196,7 @@ Available now.
 ////
 == Needs confirmation
 
-- *Reporting Phase 1 on-prem availability (KOB-52245):* No Phase 3 ticket found in Jira; only Phase 1 and Phase 4 tickets exist. Confirm whether Phase 1 ships to Standalone in this release or Cloud only.
+- *Reporting on-prem availability (KOB-52245):* Source ticket described this as an early-phase rollout with on-prem availability gated on a later phase. Confirm whether it ships to Standalone in this release or Cloud only.
 - *Android Inspector fix shipment (KOB-53089):* Currently in *Wait For Deployment* status in Jira. Confirm inclusion in 4.27 before publishing this entry.
 
 == Review notes
