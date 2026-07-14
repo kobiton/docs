@@ -1,0 +1,38 @@
+= Search and organize host machines
+:navtitle: Search and organize host machines
+
+On the Device Management page, search host machines by IP address and expand or collapse them to navigate large device labs.
+
+== Open Device Management
+
+. Open Kobiton Portal and select **Profile**.
+
+. Select **Settings**, then choose the **Device Management** tab.
+
+Host machines appear expanded by default, with their devices listed under each machine.
+
+== Search host machines by IP
+
+Enter a host machine IP address in the search bar. The list filters as you type and shows only the host machines whose IP matches. You can search using:
+
+* A full IP address, for example `192.168.0.5`.
+* A partial IP address, for example `192.168`, which matches every host machine whose IP contains that text.
+* A partial IP address with a wildcard, for example `192.168.*`, where `*` matches any sequence of characters.
+
+When a host machine's IP matches, the machine appears with all of its devices. When the search text does not match any host machine IP, the existing device search by name, UDID, OS, status, or location still applies.
+
+== Expand or collapse host machines
+
+Host machines are expanded by default. To change how the list is displayed:
+
+* Select a host machine to expand or collapse that machine.
+
+* Select **View**, then select **Expand all** or **Collapse all** to expand or collapse every host machine at once.
+
+Your expand and collapse state is saved in the browser and restored the next time you open Device Management, including after a page reload.
+
+NOTE: The state is stored per browser, not per account. Anyone who signs in on the same browser sees the same expand and collapse state.
+
+== Related
+
+* xref:device-lab-management:tidy-up-devices.adoc[]
