@@ -1,0 +1,184 @@
+= Add the React Native biometrics authentication SDK to your Android app
+:navtitle: Add the React Native SDK to your Android app
+
+The Kobiton React Native biometrics SDK lets you test biometric authentication in manual and automated sessions on Android. This page walks through installing the SDK and building a signed APK.
+
+[NOTE]
+====
+
+* iOS support is not yet available.
+* To add the SDK to a native Android app instead, see xref:apps:biometric-authentication-sdk/add-the-sdk-to-your-android-app.adoc[Add the SDK to your Android app].
+
+====
+
+== Prerequisites
+
+* JDK version 17–20
+* Android Studio
+* A React Native (Android) development environment
+
+== Choose a supported biometrics library
+
+Use a React Native app that depends on one of the following biometrics libraries:
+
+* `react-native-touch-id`
+* `react-native-biometrics`
+
+[NOTE]
+Contact Kobiton Support if you want to use other biometrics libraries.
+
+== Update project dependencies
+
+=== Remove the old biometric dependency
+
+Open a terminal in the project root and remove the current biometrics package:
+
+[source,bash]
+----
+npm uninstall react-native-biometrics
+npm uninstall react-native-touch-id
+----
+
+=== Install the SDK
+
+Install the SDK for React Native:
+
+[source,bash]
+----
+npm install react-native-kobiton-biometrics
+----
+
+=== Install remaining dependencies
+
+Make sure all required dependencies are installed:
+
+[source,bash]
+----
+npm install
+----
+
+=== Verify the package version
+
+Open `package.json` and confirm that the `react-native-kobiton-biometrics` version is `>= 1.0.5`.
+
+== Configure the Maven repository
+
+=== Modify build.gradle
+
+Open `android/app/build.gradle`. At the same level as the `android {}` and `dependencies {}` blocks, add:
+
+[source,groovy]
+----
+repositories {
+    maven {
+        url '../../node_modules/react-native-kobiton-biometrics/android/MavenLocal'
+    }
+}
+----
+
+=== Find the correct Maven path
+
+If you're unsure about the path, run:
+
+[source,bash]
+----
+cd node_modules/react-native-kobiton-biometrics/android
+./gradlew setupKobitonBiometric
+----
+
+Follow the output instructions to confirm the correct Maven location, then update `build.gradle` if required.
+
+== Run the Android dev server
+
+Start the Android dev server using one of the following commands:
+
+[source,bash]
+----
+# Using npm
+npm run android
+
+# Using npx
+npx react-native run-android
+----
+
+// == Configure AndroidManifest.xml
+//
+// Open `android/app/src/main/AndroidManifest.xml`. Inside the `<application>` element, add:
+//
+// [source,xml]
+// ----
+// android:usesCleartextTraffic="true"
+// ----
+//
+// This allows HTTP traffic instead of HTTPS-only connections during testing.
+
+== Replace biometric calls with SDK calls
+
+Import the SDK into your project:
+
+[source,javascript]
+----
+import { KobitonFingerprintAuth, KobitonBiometric } from 'react-native-kobiton-biometrics';
+----
+
+If you use `react-native-touch-id`, replace each instance of `TouchID` with `KobitonFingerprintAuth`:
+
+[source,javascript]
+----
+KobitonFingerprintAuth.authenticate('Authenticate using fingerprint', optionalConfigObject)
+  .then(success => {
+    Alert.alert('Authenticated Successfully');
+  })
+  .catch(error => {
+    Alert.alert('Authentication Failed');
+  });
+----
+
+If you use `react-native-biometrics`, replace each instance of `new ReactNativeBiometrics()` with `KobitonBiometric`:
+
+[source,javascript]
+----
+KobitonBiometric.simplePrompt({
+  promptMessage: 'Confirm fingerprint'
+})
+  .then(result => {
+    if (result.success) {
+      Alert.alert('Authenticated Successfully');
+    } else {
+      Alert.alert('Authentication Failed');
+    }
+  })
+  .catch(error => {
+    Alert.alert('Authentication Failed');
+  });
+----
+
+For the latest usage guidance, see link:https://www.npmjs.com/package/react-native-kobiton-biometrics[react-native-kobiton-biometrics on npm,window=read-later].
+
+Save your changes.
+
+== Build the APK in Android Studio
+
+1. Open *Android Studio*.
+2. Select *Build → Clean Project*.
+3. Select *Build → Rebuild Project*.
+4. Select *Build → Generate Signed Bundle / APK*.
+5. Select *APK*, click *Next*, and complete the keystore setup.
+6. Choose *Release* to generate the APK file.
+
+== Verify your changes
+
+1. Upload the generated APK to your app repository.
+2. Start a manual test session.
+3. Launch the app and trigger biometric authentication.
+4. Confirm the biometric prompt appears and returns a success result. Review the session logs to confirm the SDK ran.
+
+== Troubleshoot build errors
+
+If you encounter build or runtime errors, verify:
+
+* The Maven path configuration.
+* The package version (`react-native-kobiton-biometrics >= 1.0.5`).
+//* That `android:usesCleartextTraffic="true"` is correctly applied.
+
+If issues persist, capture the logs and rebuild the APK.
