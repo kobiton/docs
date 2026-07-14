@@ -23,7 +23,7 @@ Org admins can now enforce automatic Portal logout after a configurable duration
 
 *Availability*
 
-Available now in Cloud Portal. [VERIFY: Standalone availability for 4.27, or Cloud only?]
+Available now.
 
 === Embedded Reporting (Reporting Product Integration, Phase 1)
 
@@ -41,7 +41,7 @@ Kobiton's predefined reports are now delivered through a new embedded reporting 
 
 *Availability*
 
-Available now in Cloud. [VERIFY: whether Phase 1 ships to Standalone in this release, or waits for the air-gapped-license phase.]
+Available now in Cloud. [VERIFY: whether Phase 1 ships to Standalone in this release, or waits for a later phase.]
 
 === Device-only view for live sessions
 
@@ -51,7 +51,6 @@ A new stripped-down display mode of the live session view hides the surrounding 
 
 - Access the mode by appending `?view=device-only` to a live device launch URL. Only the literal value `device-only` activates the mode; any other value renders the default view.
 - Works for Android and iOS, phones and tablets, in portrait and landscape.
-- The device canvas is display-only in this view. Touches, swipes, and keyboard input on the canvas are suppressed so viewers cannot accidentally drive the device.
 - A floating exit button (top right) ends the manual session and releases the device. Tooltip wording changes depending on whether an Appium session is still running.
 - The Kobiton MCP surface (`getSession`, `getSessionArtifacts`) now returns `liveViewUrl` and `deviceOnlyViewUrl` fields. Both are omitted when no device is assigned.
 
@@ -61,32 +60,28 @@ Available now.
 
 === Canvas touch and swipe capture with `getUserInputEvents` MCP tool
 
-In the new device-only view, canvas touch and swipe interactions are now captured and exposed through a new MCP tool, enabling human-in-the-loop workflows where a user's tap can redirect an agent-driven test in flight.
+In the new device-only view, canvas touch and swipe interactions are captured and exposed through a new MCP tool, enabling human-in-the-loop workflows where a user's tap can redirect an agent-driven test in flight.
 
 *Highlights*
 
-- Canvas touch and swipe events in the device-only view are captured to a shared per-session buffer (200-event cap over a rolling 5-minute window).
-- New MCP tool `getUserInputEvents` returns those events for agent consumption, ordered oldest first.
+- Canvas touch and swipe events in the device-only view are forwarded to the device under test.
+- Those same events are exposed to agents through a new MCP tool, `getUserInputEvents`, ordered oldest first.
 - Only touch and swipe on the device canvas are captured. Keystrokes, right-clicks, pinch, and drag-off-canvas remain suppressed.
-- [VERIFY: forwarding behavior. Ticket description shows both "observational only, not forwarded to direct-hub" (Constraints) and "forwarded to the device under test" (2026-05-27 revision). Confirm which shipped before publishing this bullet.]
 
 *Availability*
 
 Available now.
 
-=== `monitorTestRun` MCP skill for agent-launched test runs
+=== Kobiton MCP: create and monitor test runs from Claude
 
-Agents that launch a test run through the Kobiton MCP can now follow the run to completion, surface a live-remediation URL when a blocker is encountered, and report accurate final outcomes per execution.
+Claude can now create a Kobiton test run and watch it live, surfacing live remediation when a blocker hits.
 
 *Highlights*
 
-- Pairs with the existing `createTestRun` flow. After launching a run, the agent can watch it end to end without you leaving your agent conversation.
-- Reads the org's live-remediation setting up front using the new read-only MCP tool `getOrgSettings`.
-- When live-remediation is on: on a blocker, the skill surfaces the device launch URL and prompts the user to open it and resolve the blocker interactively.
-- When live-remediation is off: the skill warns that the execution will end with `BLOCKER_ENCOUNTERED`, and any resolution submitted in the Portal will apply on the next rerun.
-- An auto-failed-blocker execution is never reported as `passed`.
-- Works for both suite reruns and multi-execution reruns, surfacing per-execution status in the final summary.
-- New MCP tool: `getOrgSettings` (read-only).
+- Kick off a test run conversationally. Pick defaults or customize, with a confirmation summary before it runs.
+- Watch the run and get notified the moment an execution is blocked, with a one-click link to the live-remediation view (auto-opened on request).
+- Blocked-but-failed runs are reported accurately (never shown as passed).
+- New `getOrgSettings` read surfaces the org's live-remediation setting.
 
 *Availability*
 
@@ -103,7 +98,7 @@ Completed automation sessions can now be converted directly into test cases from
 - The session must not be in `RUNNING` status to convert.
 - Session Explorer now shows a *Convert to test case* button on every convertible XIUM session.
 - The *+ New Test Case* popup in the Test Case List includes a new *Automation* source type with the list of convertible sessions.
-- Search filter supported in the popup: `type:appium`. [VERIFY: exact filter syntax that shipped.]
+- Search filter supported in the popup: `type:appium`.
 - Toast messages vary based on whether the source session used `kobiton:scriptlessCapture` (or Manual capture mode).
 
 *Availability*
@@ -114,20 +109,20 @@ Available now.
 
 === ADB Shell
 
-- `am start` now succeeds for protected packages such as Chrome and Settings, which were previously rejected as "Unsupported command." [VERIFY: whether the fix also covers Work Profile access via `am start --user <id>` and `pm list packages --user <id>`, or only the system-package launch path.]
+- Fixed the "Unsupported command" error returned by `am start` for protected packages such as Chrome and Settings. These packages can now be launched from the ADB Shell.
 
 === Appium script generation
 
 - Fixed generated Appium script projects failing on Standalone deployments that use a self-signed SSL certificate.
 +
 ** Python direct Kobiton REST calls (device lookup, app download URL, OTP) now honor the same trust-all-certificates setting the proxy already used.
-** The C# template adds a permissive `HttpClientHandler` (opt-in flag) applied to all `HttpClient` sites, along with new README guidance for the Standalone run. [VERIFY: exact naming of the C# opt-in flag.]
+** The C# template now exposes `Config.TrustAllCerts` and a `Config.CreateHttpClient()` helper backed by a permissive `HttpClientHandler`. The helper is used by `ProxyServer`, `TestBase` (three call sites), and `OtpService`. See the C# README for the Standalone run instructions.
 ** Node and Java retain their existing documented workarounds.
 - Fixed generated Appium tests failing at the first UI transition because `element.click()` sent an empty body, which blocked Kobiton flex-correct from matching the command stream.
 
 === Apps and app storage
 
-- Fixed the raw 404 returned when installing an app version whose binary had been removed from storage. Affected versions are now distinguishable from active ones in the UI, API, and CLI, and install attempts now return a clear message explaining that the file is no longer available. [VERIFY: exact wording of the shipped error message.]
+- Fixed an issue where app versions with missing binary files could not be distinguished from active ones. Affected versions are now distinguishable in the UI, API, and CLI. Install attempts on such versions return the error `Failed to prepare application blob. Response status code does not indicate success: 404 (Not Found)`.
 - Improved error messages returned by the app-signing API.
 
 === Automation Session capture
@@ -199,22 +194,10 @@ Available now.
 ////
 == Needs confirmation
 
-- *Canvas touch and swipe forwarding (KOB-53093):* Ticket description is internally contradictory. Late-cycle revision says the events are forwarded to the device under test; earlier constraints say they are observational only. Confirm the shipped behavior before publishing the Highlights bullet for that feature.
-- *Reporting Phase 1 on-prem availability (KOB-52245):* Ticket notes on-prem support of predefined reports depends on the Phase 3 air-gapped license. Confirm whether Phase 1 ships to Standalone in this release or Cloud only.
-- *Orphaned app version error wording (KOB-52914):* Ticket acceptance criteria gave an example error string. Confirm the final wording that shipped so it can be quoted accurately, or generalized in the draft.
-- *ADB Shell scope (KOB-51850):* Confirm whether the fix covers Work Profile access (`am start --user <id>`, `pm list packages --user <id>`) in addition to system-package launch, or only the latter.
-- *Standalone C# opt-in flag name (KOB-53650):* Confirm the exact flag or configuration name so it can be documented in the release note and README.
+- *Reporting Phase 1 on-prem availability (KOB-52245):* No Phase 3 ticket found in Jira; only Phase 1 and Phase 4 tickets exist. Confirm whether Phase 1 ships to Standalone in this release or Cloud only.
 - *Android Inspector fix shipment (KOB-53089):* Currently in *Wait For Deployment* status in Jira. Confirm inclusion in 4.27 before publishing this entry.
-- *Portal Auto Logout availability (KOB-52747):* Confirm whether this ships to Cloud only in 4.27, or Cloud plus Standalone.
-- *Convert-to-test-case Appium filter syntax (KOB-43479):* Confirm that `type:appium` is the exact filter syntax customers should use.
 
 == Review notes
 
-- *`monitorTestRun` product naming (KOB-53297):* The tool descriptions reference "Claude" and "Kobi AI" by name. Confirm whether public release notes should use those product names verbatim, or use more neutral phrasing such as "the agent" and "Kobiton's live-remediation assistant."
-- *`getUserInputEvents` audience (KOB-53093):* The MCP tool description explains that events are consumed "between commands" by skill code. That's implementation detail that may not belong in public release notes. Consider trimming to the user-visible outcome only.
-- *Reporting Phase 1 internal report (KOB-52245):* Ticket lists an internal report used by Kobiton to monitor report usage. It is omitted from the public draft (only the customer-admin report is mentioned). Confirm that split.
-- *CLI `test --stream` APNS framing (KOB-52800):* The APNS-entitlement impact was originally raised through a specific customer report. The draft keeps the customer-agnostic behavior claim ("preserves APNS entitlements that could previously be stripped"). Confirm this framing is safe to publish.
-- *deviceConnect stability rollup recommendation:* The grouped "Device tunneling stability improvements" shape above is intentional (rather than listing nine individual reliability fixes). Reasons: each fix is not individually actionable by the customer, and grouping surfaces the meaningful signal (iOS and Android connection reliability improved) without diluting higher-impact fixes in the notes. Adjust if a different shape is preferred.
-- *Cross-referenced tickets in the "Out of scope" list:* `createTestRun` shipped as part of the `automate` MCP under a ticket marked internal (KOB-52949). It is referenced from `monitorTestRun` and is likely customer-visible in the MCP surface. Confirm whether `createTestRun` should get its own release-note entry, or stay unmentioned as an already-shipped precursor.
-- *Portal-log-only tickets (KOB-53279, KOB-53791, and the Revisit fixes):* These were drafted from PR deployment log lines only, not from Jira ticket content. Confirm the behavior descriptions map to what actually shipped, or pull the tickets for enrichment.
+- *Portal-log-only tickets (KOB-53279, KOB-53791, KOB-53781, KOB-53977, KOB-53779, KOB-53778, KOB-53654, KOB-53675, KOB-53648, KOB-53267, KOB-53218):* These were drafted from PR deployment log lines only, not from Jira ticket content. Tiffany is reviewing these separately.
 ////
