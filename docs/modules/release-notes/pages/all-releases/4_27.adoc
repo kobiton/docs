@@ -91,17 +91,16 @@ Available now.
 
 === Convert an Automation Session into a Test Case
 
-Completed automation sessions can now be converted directly into test cases from the API and from the Session Explorer or Test Case List UI, without needing the `kobiton:scriptlessCapture` desired capability to be set in advance.
+Completed Automation Sessions (Appium and XIUM) can now be converted into Test Cases, matching the existing Manual Session flow. Available from the API, from Session Explorer, and from the *+New Test Case* pop-up in the Test Case List.
 
 *Highlights*
 
-- The `kobiton:scriptlessCapture` desired capability is now optional for conversion (previously required).
-- All XIUM automation sessions are convertible. Revisit sessions and other automation types (XCUI, UIAutomator, and similar) are not convertible.
-- The session must not be in `RUNNING` status to convert.
-- Session Explorer now shows a *Convert to test case* button on every convertible XIUM session.
-- The *+ New Test Case* popup in the Test Case List includes a new *Automation* source type with the list of convertible sessions.
-- Search filter supported in the popup: `type:appium`.
-- Toast messages vary based on whether the source session used `kobiton:scriptlessCapture` (or Manual capture mode).
+- The `kobiton:scriptlessCapture` desired capability is no longer required to convert a session. Setting it in your initial script is optional.
+- All Automation Sessions (Appium and XIUM) are convertible. Revisit Sessions and other automation types (XCUI, UIAutomator, and similar) are not convertible.
+- The session must not be running when you start the conversion.
+- Session Explorer shows a *Convert to Test Case* action on eligible Automation Sessions.
+- The *+New Test Case* pop-up lists Automation Sessions and supports keyword search, for example `type:appium`.
+- After converting an Automation Session, the confirmation message notes whether full data was captured. If `kobiton:scriptlessCapture` was set, it confirms full capture. If not, it recommends setting it next time.
 
 *Availability*
 
