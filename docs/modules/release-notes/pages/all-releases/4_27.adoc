@@ -1,0 +1,220 @@
+= Kobiton 4.27 Release Notes
+:navtitle: Kobiton 4.27 release notes
+
+_[Release date to be confirmed]_
+
+// Working draft. [VERIFY:] flags in the prose and the Needs confirmation / Review notes sections at the end must be resolved before merge.
+
+== New features and major changes
+
+=== Portal Auto Logout (configurable session timeout)
+
+Org admins can now enforce automatic Portal logout after a configurable duration, meeting common security requirements around idle session management.
+
+*Highlights*
+
+- Configure the timeout under *Org Settings > Other Settings*. Enter a value and pick Hours or Days from the dropdown.
+- Minimum timeout is 1 hour. You can also turn Auto Logout off entirely.
+- When the configured duration elapses, users are automatically redirected to the login page with the message "Your session has expired. Please log in again."
+- There is no warning modal and no "stay logged in" prompt before logout.
+- If a user has any active session (manual, mixed, CLI, scriptless, or another non-terminal session type) when the timer expires, their Portal login stays alive until all such sessions end.
+- After re-authenticating, the user is deep-linked back to the page they were on before expiry.
+- Kobiton enforces session expiry independently of your identity provider or SSO. Auto Logout does not require SSO SLO support.
+
+*Availability*
+
+Available now in Cloud Portal. [VERIFY: Standalone availability for 4.27, or Cloud only?]
+
+=== Embedded Reporting (Reporting Product Integration, Phase 1)
+
+Kobiton's predefined reports are now delivered through a new embedded reporting tool. Phase 1 covers migration of the existing reports, tenant isolation, granular view restrictions, and the ability to build your own reports.
+
+*Highlights*
+
+- The four existing Predefined Reports have been migrated to the new reporting engine.
+- Multi-tenancy support at the organization level and the team level.
+- Row, column, and table-level view restrictions.
+- Build custom reports through the reporting UI.
+- SSO credentials are federated to the reporting tool.
+- New team-level permission: *Can View Team Reports*.
+- Report usage is surfaced to org admins through a new customer-admin report.
+
+*Availability*
+
+Available now in Cloud. [VERIFY: whether Phase 1 ships to Standalone in this release, or waits for the air-gapped-license phase.]
+
+=== Device-only view for live sessions
+
+A new stripped-down display mode of the live session view hides the surrounding Kobiton UI so you can share, embed, or demo just the device screen.
+
+*Highlights*
+
+- Access the mode by appending `?view=device-only` to a live device launch URL. Only the literal value `device-only` activates the mode; any other value renders the default view.
+- Works for Android and iOS, phones and tablets, in portrait and landscape.
+- The device canvas is display-only in this view. Touches, swipes, and keyboard input on the canvas are suppressed so viewers cannot accidentally drive the device.
+- A floating exit button (top right) ends the manual session and releases the device. Tooltip wording changes depending on whether an Appium session is still running.
+- The Kobiton MCP surface (`getSession`, `getSessionArtifacts`) now returns `liveViewUrl` and `deviceOnlyViewUrl` fields. Both are omitted when no device is assigned.
+
+*Availability*
+
+Available now.
+
+=== Canvas touch and swipe capture with `getUserInputEvents` MCP tool
+
+In the new device-only view, canvas touch and swipe interactions are now captured and exposed through a new MCP tool, enabling human-in-the-loop workflows where a user's tap can redirect an agent-driven test in flight.
+
+*Highlights*
+
+- Canvas touch and swipe events in the device-only view are captured to a shared per-session buffer (200-event cap over a rolling 5-minute window).
+- New MCP tool `getUserInputEvents` returns those events for agent consumption, ordered oldest first.
+- Only touch and swipe on the device canvas are captured. Keystrokes, right-clicks, pinch, and drag-off-canvas remain suppressed.
+- [VERIFY: forwarding behavior. Ticket description shows both "observational only, not forwarded to direct-hub" (Constraints) and "forwarded to the device under test" (2026-05-27 revision). Confirm which shipped before publishing this bullet.]
+
+*Availability*
+
+Available now.
+
+=== `monitorTestRun` MCP skill for agent-launched test runs
+
+Agents that launch a test run through the Kobiton MCP can now follow the run to completion, surface a live-remediation URL when a blocker is encountered, and report accurate final outcomes per execution.
+
+*Highlights*
+
+- Pairs with the existing `createTestRun` flow. After launching a run, the agent can watch it end to end without you leaving your agent conversation.
+- Reads the org's live-remediation setting up front using the new read-only MCP tool `getOrgSettings`.
+- When live-remediation is on: on a blocker, the skill surfaces the device launch URL and prompts the user to open it and resolve the blocker interactively.
+- When live-remediation is off: the skill warns that the execution will end with `BLOCKER_ENCOUNTERED`, and any resolution submitted in the Portal will apply on the next rerun.
+- An auto-failed-blocker execution is never reported as `passed`.
+- Works for both suite reruns and multi-execution reruns, surfacing per-execution status in the final summary.
+- New MCP tool: `getOrgSettings` (read-only).
+
+*Availability*
+
+Available now.
+
+=== Convert an Automation Session into a Test Case
+
+Completed automation sessions can now be converted directly into test cases from the API and from the Session Explorer or Test Case List UI, without needing the `kobiton:scriptlessCapture` desired capability to be set in advance.
+
+*Highlights*
+
+- The `kobiton:scriptlessCapture` desired capability is now optional for conversion (previously required).
+- All XIUM automation sessions are convertible. Revisit sessions and other automation types (XCUI, UIAutomator, and similar) are not convertible.
+- The session must not be in `RUNNING` status to convert.
+- Session Explorer now shows a *Convert to test case* button on every convertible XIUM session.
+- The *+ New Test Case* popup in the Test Case List includes a new *Automation* source type with the list of convertible sessions.
+- Search filter supported in the popup: `type:appium`. [VERIFY: exact filter syntax that shipped.]
+- Toast messages vary based on whether the source session used `kobiton:scriptlessCapture` (or Manual capture mode).
+
+*Availability*
+
+Available now.
+
+== Bug fixes and improvements
+
+=== ADB Shell
+
+- `am start` now succeeds for protected packages such as Chrome and Settings, which were previously rejected as "Unsupported command." [VERIFY: whether the fix also covers Work Profile access via `am start --user <id>` and `pm list packages --user <id>`, or only the system-package launch path.]
+
+=== Appium script generation
+
+- Fixed generated Appium script projects failing on Standalone deployments that use a self-signed SSL certificate.
++
+** Python direct Kobiton REST calls (device lookup, app download URL, OTP) now honor the same trust-all-certificates setting the proxy already used.
+** The C# template adds a permissive `HttpClientHandler` (opt-in flag) applied to all `HttpClient` sites, along with new README guidance for the Standalone run. [VERIFY: exact naming of the C# opt-in flag.]
+** Node and Java retain their existing documented workarounds.
+- Fixed generated Appium tests failing at the first UI transition because `element.click()` sent an empty body, which blocked Kobiton flex-correct from matching the command stream.
+
+=== Apps and app storage
+
+- Fixed the raw 404 returned when installing an app version whose binary had been removed from storage. Affected versions are now distinguishable from active ones in the UI, API, and CLI, and install attempts now return a clear message explaining that the file is no longer available. [VERIFY: exact wording of the shipped error message.]
+- Improved error messages returned by the app-signing API.
+
+=== Automation Session capture
+
+- Added `kobiton:scriptlessCapture` as the canonical desired capability for marking an automation session as convertible to a test case. Set it in your initial script (optional) to guarantee bypass-cache and full metadata for later conversion.
+- The existing `kobiton:scriptlessEnable` desired capability continues to work identically and is preserved for backwards compatibility. Setting both is safe and produces no conflict.
+
+=== CLI
+
+- The CLI `test --stream` command now retrieves signed application copies through the Portal signed-app API. This removes the legacy signing path and preserves APNS entitlements that could previously be stripped during test execution.
+
+=== Device details
+
+- The device modal now shows an *OS Build Number* field on the Details tab, directly below *CPU Platform*, for both Android and iOS devices. The value updates automatically after an OS upgrade.
+
+=== Device management
+
+- Search the Device Management page by full or partial host machine IP. Wildcards are supported.
+- All host machines are expanded by default when you open Device Management.
+- Added *Collapse all* and *Expand all* actions under the View menu.
+- Each host machine remembers its own collapsed or expanded state in your browser.
+
+=== Device tunneling stability (iOS and Android)
+
+- Improved iOS device tunneling reliability across multiple paths, including CoreDevice tunnel client isolation, the daemon-side tunnel state machine, tunnel-registration handling, tunnel-slot claiming during error states, and CoreDevice reconciler cancellation. Fixed a lockdown-instruments ownership leak and a CoreDevice build-retry backoff issue.
+- Improved iOS device connection lifecycle: connections now close cleanly and per-device limits are enforced. Devices are now released reliably when a session ends.
+- Android install reliability: the quarantine bit is now removed on install through adb.
+
+=== Inspector
+
+- Fixed the Inspector failing to capture elements on app screens with frequent re-renders on Android 14 and 15. Android 16 was not affected. Android view-tree capture is now faster on high-refresh-rate apps, and the capture timeout is configurable. [VERIFY: this fix is currently in *Wait For Deployment* status in Jira. Confirm inclusion in 4.27 before publishing.]
+
+=== MCP and integrations
+
+- The MCP `confirmAppUpload` handler now posts to `/v2/apps` (previously `/v1/apps`), and app-upload URLs are generated through `/v2/apps/upload-url`. Agent-facing response keys are unchanged (`appId`, `versionId`). This aligns the write side of the MCP app-upload flow with the read side (`listApps`, `getApp`), which was already on v2.
+- Added a new Portal login endpoint `POST /v2/users/login` that returns the JWT along with `grpc_server_url` and other user information. Clients that previously required both a Portal API URL and a gRPC URL can now retrieve both from a single login call. The existing `POST /v1/users/info` remains available for backwards compatibility.
+
+=== Portal and SSO
+
+- Fixed an issue where teams did not appear in the UI immediately after SSO login and required a manual page refresh to become visible. Affected both Cloud and Standalone. The username-and-password login flow was not affected.
+- Fixed several session flows where users signed in via SSO or social signup could be terminated with a "User not found" error caused by the account decode path.
+- Fixed the App Repository page hanging or showing all apps as missing when an app had zero live versions.
+- Fixed the *Convert to test case* flow hanging (with `is_generating` never clearing) for web and element-based automation sessions.
+
+=== Reporting infrastructure
+
+- Fixed the SLA state sync query saturating database CPU because `date_trunc` on cursor columns blocked index use.
+
+=== Revisit (scriptless)
+
+- Fixed Revisit failing with "NotFoundAnyAppUnderTest" when a recorded test case had no real app under test.
+- The Revisit parallel-test pre-check now runs on production.
+- Fixed Revisit failing with "Device retry exceeded" from parallel-test self-collision on organizations with `PARALLEL_TEST=1`.
+
+=== Security
+
+- Fixed an issue where `kobiton:llmApiKey` appeared in plaintext in the WebDriver Traffic Request and Response Body panels.
+
+=== Session lifecycle
+
+- Portal release messages now forcefully terminate all sessions associated with a device, preventing stale CLI sessions from persisting after a device is released and re-linked.
+- Command latency is now calculated correctly for sessions with multiple reconnects.
+- Fixed intermittent "Broken pipe" failures during iOS app installs delivered through ZipConduit. Added supporting diagnostic tooling around install feedback.
+
+// ============================================================================
+// WORKING NOTES BELOW. Remove before publishing.
+// ============================================================================
+
+////
+== Needs confirmation
+
+- *Canvas touch and swipe forwarding (KOB-53093):* Ticket description is internally contradictory. Late-cycle revision says the events are forwarded to the device under test; earlier constraints say they are observational only. Confirm the shipped behavior before publishing the Highlights bullet for that feature.
+- *Reporting Phase 1 on-prem availability (KOB-52245):* Ticket notes on-prem support of predefined reports depends on the Phase 3 air-gapped license. Confirm whether Phase 1 ships to Standalone in this release or Cloud only.
+- *Orphaned app version error wording (KOB-52914):* Ticket acceptance criteria gave an example error string. Confirm the final wording that shipped so it can be quoted accurately, or generalized in the draft.
+- *ADB Shell scope (KOB-51850):* Confirm whether the fix covers Work Profile access (`am start --user <id>`, `pm list packages --user <id>`) in addition to system-package launch, or only the latter.
+- *Standalone C# opt-in flag name (KOB-53650):* Confirm the exact flag or configuration name so it can be documented in the release note and README.
+- *Android Inspector fix shipment (KOB-53089):* Currently in *Wait For Deployment* status in Jira. Confirm inclusion in 4.27 before publishing this entry.
+- *Portal Auto Logout availability (KOB-52747):* Confirm whether this ships to Cloud only in 4.27, or Cloud plus Standalone.
+- *Convert-to-test-case Appium filter syntax (KOB-43479):* Confirm that `type:appium` is the exact filter syntax customers should use.
+
+== Review notes
+
+- *`monitorTestRun` product naming (KOB-53297):* The tool descriptions reference "Claude" and "Kobi AI" by name. Confirm whether public release notes should use those product names verbatim, or use more neutral phrasing such as "the agent" and "Kobiton's live-remediation assistant."
+- *`getUserInputEvents` audience (KOB-53093):* The MCP tool description explains that events are consumed "between commands" by skill code. That's implementation detail that may not belong in public release notes. Consider trimming to the user-visible outcome only.
+- *Reporting Phase 1 internal report (KOB-52245):* Ticket lists an internal report used by Kobiton to monitor report usage. It is omitted from the public draft (only the customer-admin report is mentioned). Confirm that split.
+- *CLI `test --stream` APNS framing (KOB-52800):* The APNS-entitlement impact was originally raised through a specific customer report. The draft keeps the customer-agnostic behavior claim ("preserves APNS entitlements that could previously be stripped"). Confirm this framing is safe to publish.
+- *deviceConnect stability rollup recommendation:* The grouped "Device tunneling stability improvements" shape above is intentional (rather than listing nine individual reliability fixes). Reasons: each fix is not individually actionable by the customer, and grouping surfaces the meaningful signal (iOS and Android connection reliability improved) without diluting higher-impact fixes in the notes. Adjust if a different shape is preferred.
+- *Cross-referenced tickets in the "Out of scope" list:* `createTestRun` shipped as part of the `automate` MCP under a ticket marked internal (KOB-52949). It is referenced from `monitorTestRun` and is likely customer-visible in the MCP surface. Confirm whether `createTestRun` should get its own release-note entry, or stay unmentioned as an already-shipped precursor.
+- *Portal-log-only tickets (KOB-53279, KOB-53791, and the Revisit fixes):* These were drafted from PR deployment log lines only, not from Jira ticket content. Confirm the behavior descriptions map to what actually shipped, or pull the tickets for enrichment.
+////
