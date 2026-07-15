@@ -2,9 +2,14 @@
 
 == Overview
 
-A Test Case represents a reusable test flow created from a baseline session.
+A Test Case represents a reusable test flow. Test Cases store the interactions captured during a session and serve as the definition used for automated execution. Once created, a Test Case can be run repeatedly without recreating the original session.
 
-Test Cases store the interactions captured during a manual session and serve as the definition used for automated execution. Once created, a Test Case can be run repeatedly without recreating the original session.
+Test Cases have one of two source types:
+
+* *Manual* — created from a captured manual session.
+* *Automation* — created from a completed automation session.
+
+Both source types appear together in the Test Case list and share the same core actions. Some capabilities differ by source type, as described in xref:test-management:test-cases.adoc#_test_cases_from_automation_sessions[Test Cases from automation sessions].
 
 [#_convert_to_test_case]
 == Convert a session to a Test Case
@@ -28,6 +33,12 @@ After conversion, the option to view the Test Case becomes available. Selecting 
 
 image::tm-newtcscreen.png[width=700,alt="Create a New Test Case in Test Management]
 
+[NOTE]
+====
+Test Cases can also originate from automation sessions. These appear in the Test Case list with a source type of *Automation*.
+// TODO(KOB-43480): confirm the user-facing entry point for creating a Test Case from an automation session. The conversion flow is delivered by related IQS stories and is intentionally not documented here.
+====
+
 == Manage Test Cases
 
 Test Cases are managed through Test Management in the Kobiton platform.
@@ -38,7 +49,10 @@ The Test Case list provides an overview of the Test Cases available to the selec
 
 From this view, users can locate Test Cases, review basic information, and open individual Test Cases for detailed review and management.
 
-Use the search bar at the top of the list to find a specific Test Case by name or ID.
+The list displays all Test Cases regardless of source type. Each row indicates whether the Test Case was created from a manual session or an automation session.
+// TODO(KOB-43480): confirm the exact column label and indicator (icon, badge, or text) used to show source type in the list. Design mockups were not available during drafting.
+
+Use the search bar at the top of the list to find a specific Test Case by name. You can sort the list by name. Search and sort apply to both source types. Filtering the list by source type is not supported.
 
 The following actions are available for each Test Case in the list:
 
@@ -101,6 +115,39 @@ For the full procedure, see xref:test-management:remediations.adoc[Remediations]
 
 After you save the remediation, Kobiton creates a new version of the Test Case.
 
+[#_test_cases_from_automation_sessions]
+== Test Cases from automation sessions
+
+Test Cases created from automation sessions appear in the Test Case list alongside those created from manual sessions and support the same core actions, including run, clone, delete, tag, versioning, and assignment to test suites. The following behavior is specific to automation-sourced Test Cases.
+
+=== Source type
+
+The Test Case details view shows a *Source Type* of *Automation* for Test Cases created from an automation session. Test Cases created from a manual session show a *Source Type* of *Manual*.
+// TODO(KOB-43480): confirm the exact field label and its placement in the details metadata against the final UI.
+
+=== Supported apps
+
+Only apps from App Repo and existing apps are supported for automation-sourced Test Cases.
+// TODO(KOB-43480): confirm the exact UI terms for "App Repo" and "existing apps," and how a step is presented when its app comes from an unsupported source.
+
+Only the app installed at session start is captured. Apps installed later in the session are not captured and appear as unsupported actions after conversion.
+
+=== Test step names
+
+Test step names follow the action path of the automation step. When a step name is too long to display in full, the complete name is available in a tooltip.
+
+=== Unsupported steps
+
+An automation session can include actions that are not supported for conversion. A step that maps to an unsupported endpoint is labeled *Unsupported* in the Test Case details view.
+
+=== Element selection remediation
+
+Touch actions captured with screen coordinates can be remediated when element selection needs correction. Remediating a step updates the Test Case definition and the step name. For the procedure, see xref:test-management:remediations.adoc[Remediations].
+
+=== Appium script generation
+
+Appium script generation is not available for Test Cases created from automation sessions. The control is disabled and displays the tooltip: "Generating Appium scripts is not supported for test cases converted from automation sessions".
+
 == Editing and versioning
 
 Changes to a Test Case create new versions.
@@ -129,6 +176,11 @@ Generated Appium scripts are typically used when test definitions need to be ext
 Using Scriptless automation does not require generating or maintaining Appium scripts.
 
 If a Test Case is modified after an Appium script has been generated, the script must be regenerated to reflect the updated changes.
+
+[NOTE]
+====
+Appium script generation is available only for Test Cases created from manual sessions. For Test Cases created from automation sessions, the control is disabled. See xref:test-management:test-cases.adoc#_test_cases_from_automation_sessions[Test Cases from automation sessions].
+====
 
 For supported languages and frameworks, see xref:test-management:generate-appium.adoc[Generate an Appium script].
 
