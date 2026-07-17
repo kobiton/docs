@@ -1,0 +1,56 @@
+= Device-only view for live sessions
+:navtitle: Device-only view
+
+The device-only view hides the surrounding Kobiton UI (sidebars, headers, action panels, overlays, and modals) and shows only the device screen. Use it to share, embed, or demonstrate just the device.
+
+The device-only view is available on live device sessions. It is not available on historical session playback.
+
+== Before you begin
+
+* Start a live device session so you have an active device launch URL.
+
+== Launch the device-only view
+
+To activate the device-only view, append `?view=device-only` to the device launch URL:
+
+[source]
+----
+<portal>/devices/launch?id=<deviceId>&view=device-only
+----
+
+Replace `<portal>` with your Kobiton Portal URL and `<deviceId>` with the device ID from your session.
+
+You can bookmark, share, or reload the URL. Loading it directly renders the device-only view.
+
+Only the literal value `device-only` activates the mode. Any other value or a missing `view` parameter renders the default view.
+
+== Supported devices and orientations
+
+The device-only view supports:
+
+* Android and iOS
+* Phones and tablets
+* Portrait and landscape orientations
+
+== Exit the device-only view
+
+To end the session and release the device, select the floating exit button in the top-right corner of the device-only view.
+
+The exit-button tooltip changes depending on whether an Appium session is running:
+
+* No Appium session running: "End the session and release the device."
+* Appium session running: "Close the live device view. Your Appium session will keep running."
+
+To return to the default view without ending the session, remove `?view=device-only` from the URL. The session remains active.
+
+== Canvas input
+
+Canvas touches and swipes in the device-only view are forwarded to the device under test.
+
+== Session recording
+
+The saved session video is the mixed-session recording. There is no separate device-only recording.
+
+== See also
+
+* xref:automation-testing:start-a-mixed-session.adoc[]
