@@ -1,0 +1,58 @@
+= Embedded reporting
+:navtitle: Embedded reporting
+
+Kobiton Portal includes an embedded reporting tool. The reporting tool hosts four predefined reports and isolates report data between organizations and teams.
+
+image:embedded-reporting-landing.png[width=1000,alt="The embedded reporting tool landing view in the Kobiton Portal."]
+
+== Availability
+
+Embedded reporting is available for Kobiton Cloud in release 4.27.
+
+Standalone availability is planned for a future phase and is not yet available.
+
+== Sign in
+
+If your organization uses SSO, the reporting tool honors your Kobiton SSO sign-in. No separate sign-in is required.
+
+== Predefined reports
+
+The reporting tool includes four predefined reports:
+
+* Usage
+* Device Availability (formerly SLA)
+* Device Summary
+* System Latency
+
+To use a specific report:
+
+* xref:reporting:usage-report/use-the-report.adoc[]
+* xref:reporting:device-availability-report/use-the-report.adoc[]
+* xref:reporting:device-summary-report/use-the-report.adoc[]
+* xref:reporting:system-latency-report/use-the-report.adoc[]
+
+== Report actions
+
+Within the reporting tool, you can:
+
+* View the full report
+* Export a report
+* Pin a report
+
+image:embedded-reporting-actions.png[width=800,alt="The report toolbar showing the View, Export, and Pin controls."]
+
+== Data isolation
+
+Kobiton isolates report data by organization and by team. Kobiton automatically enforces this isolation at the row, column, and table level. You do not configure these restrictions.
+
+== Permissions
+
+The reporting tool adds a new team-level permission: *Can View Team Reports*.
+
+For the full team permission set, see xref:organization:teams/team-roles-and-permissions.adoc[].
+
+== Report usage for org admins
+
+Org admins can review report usage across the organization through a new usage report.
+
+image:embedded-reporting-admin-usage.png[width=1000,alt="The new usage report showing report activity across the organization."]
