@@ -40,9 +40,9 @@ If a capability is omitted, the session uses the default value configured by you
 | `LlmClient.ApiFormat`
 | `OpenAiResponses`
 
-| `kobiton:llmAzureApiVersion`
+| `kobiton:llmApiVersion`
 | Required only when using Azure OpenAI formats.
-| `LlmClient.AzureApiVersion`
+| `LlmClient.ApiVersion`
 | `2024-02-01`
 
 | `kobiton:llmTextModel`
@@ -84,7 +84,7 @@ desired_capabilities = {
   'kobiton:llmBaseUrl': 'https://my-resource.openai.azure.com',
   'kobiton:llmApiKey': '<your-azure-key>',
   'kobiton:llmApiFormat': 'AzureOpenAiV1ChatCompletions',
-  'kobiton:llmAzureApiVersion': '2024-02-01',
+  'kobiton:llmApiVersion': '2024-02-01',
   'kobiton:llmTextModel': 'my-gpt4o-deployment',
   'kobiton:llmVisionModel': 'my-gpt4o-deployment',
 }
