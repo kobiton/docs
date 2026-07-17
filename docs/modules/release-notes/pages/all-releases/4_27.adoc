@@ -17,7 +17,7 @@ Org admins can now enforce automatic Portal logout after a configurable duration
 - When the checkbox is selected, a *Log users out after* field appears. Enter a whole number (type the value or use the arrows) and pick *Hour(s)* or *Day(s)* from the dropdown.
 - Minimum timeout is 1 hour. Clear the checkbox to turn Auto Logout off.
 - A helper message on the setting notes: "Users with ongoing manual sessions will be logged out once their sessions ends."
-- When the configured duration elapses, users are automatically redirected to the login page with the message "Your session has expired. Please log in again."
+- When the configured duration elapses, users are automatically redirected to the sign-in page with the message "Your session has expired. Please log in again."
 - There is no warning modal and no "stay logged in" prompt before logout.
 - If a user has an ongoing manual session when the timer expires, their logout is deferred until that session ends.
 - After re-authenticating, the user is deep-linked back to the page they were on before expiry.
@@ -25,15 +25,13 @@ Org admins can now enforce automatic Portal logout after a configurable duration
 
 === Embedded Reporting
 
-Kobiton's predefined reports are now delivered through a new embedded reporting tool with per-organization and per-team data isolation, granular view restrictions, and the ability to build your own reports.
+Kobiton's predefined reports are now delivered through a new embedded reporting tool with per-organization and per-team data isolation.
 
 *Highlights*
 
 - The four existing Predefined Reports have been migrated to the new reporting engine.
-- Report data is isolated between organizations and between teams.
-- View restrictions can be applied at the row, column, and table level.
-- Build custom reports through the reporting UI.
-- If you sign in to Kobiton with SSO, the reporting tool honors that sign-in. No separate login.
+- Report data is isolated by organization and by team. Kobiton enforces this isolation automatically at the row, column, and table level.
+- If you sign in to Kobiton with SSO, the reporting tool honors that sign-in. No separate sign-in required.
 - New team-level permission: *Can View Team Reports*.
 - Report usage is surfaced to org admins through a new customer-admin report.
 
@@ -51,11 +49,10 @@ A new display mode shows the device screen on its own, with no surrounding Kobit
 - Access the mode by appending `?view=device-only` to a live device launch URL. Only the literal value `device-only` activates the mode; any other value renders the default view.
 - Works for Android and iOS, phones and tablets, in portrait and landscape.
 - A floating exit button (top right) ends the manual session and releases the device. Tooltip wording changes depending on whether an Appium session is still running.
-- The Kobiton MCP surface (`getSession`, `getSessionArtifacts`) now returns `liveViewUrl` and `deviceOnlyViewUrl` fields. Both are omitted when no device is assigned.
 
 === Canvas touch and swipe capture with `getUserInputEvents` MCP tool
 
-In the new device-only view, canvas touch and swipe interactions are captured and exposed through a new MCP tool, enabling human-in-the-loop workflows where a user's tap can redirect an agent-driven test in flight.
+In the new device-only view, canvas touch and swipe interactions are captured and exposed through a new MCP tool, so a user's tap can steer an agent-driven test in flight.
 
 *Highlights*
 
@@ -65,26 +62,27 @@ In the new device-only view, canvas touch and swipe interactions are captured an
 
 === Kobiton MCP: create and monitor test runs from Claude
 
-Claude can now create a Kobiton test run and watch it live, surfacing live remediation when a blocker hits.
+Claude can now create a Kobiton test run and watch it live, surfacing Live Remediation when a blocker hits.
 
 *Highlights*
 
+- `monitorTestRun` is a beta feature.
 - Kick off a test run conversationally. Pick defaults or customize, with a confirmation summary before it runs.
-- Watch the run and get notified the moment an execution is blocked, with a link to the live remediation view.
+- Watch the run and get notified the moment an execution is blocked, with a link to the Live Remediation view.
 - When a run ends because of an unresolved blocker, Claude flags that in the summary instead of showing it as passed.
 
-=== Convert an Automation Session into a Test Case
+=== Convert an automation session into a Test Case
 
-Completed Automation Sessions (Appium and XIUM) can now be converted into Test Cases, matching the existing Manual Session flow. Available from the API, from Session Explorer, and from the *+New Test Case* pop-up in the Test Case List.
+Completed automation sessions can now be converted into Test Cases, matching the existing manual session flow. Available from the API, from Session Explorer, and from the *+New Test Case* pop-up in the Test Case List.
 
 *Highlights*
 
 - The `kobiton:scriptlessCapture` desired capability is no longer required to convert a session. Setting it in your initial script is optional.
-- All Automation Sessions (Appium and XIUM) are convertible. Revisit Sessions and other automation types (XCUI, UIAutomator, and similar) are not convertible.
+- All automation sessions are convertible. Revisit Sessions and other automation types (XCUI, UIAutomator, and similar) are not convertible.
 - The session must not be running when you start the conversion.
-- Session Explorer shows a *Convert to Test Case* action on eligible Automation Sessions.
-- The *+New Test Case* pop-up lists Automation Sessions and supports keyword search, for example `type:appium`.
-- After converting an Automation Session, the confirmation message notes whether full data was captured. If `kobiton:scriptlessCapture` was set, it confirms full capture. If not, it recommends setting it next time.
+- Session Explorer shows a *Convert to Test Case* action on eligible automation sessions.
+- The *+New Test Case* pop-up lists automation sessions and supports keyword search, for example `type:appium`.
+- After converting an automation session, the confirmation message notes whether full data was captured. If `kobiton:scriptlessCapture` was set, it confirms full capture. If not, it recommends setting it next time.
 
 == Bug fixes and improvements
 
@@ -106,9 +104,9 @@ Completed Automation Sessions (Appium and XIUM) can now be converted into Test C
 - Fixed an issue where app versions with missing binary files could not be distinguished from active ones. Affected versions are now distinguishable in the UI, API, and CLI. Install attempts on such versions return the error `Failed to prepare application blob. Response status code does not indicate success: 404 (Not Found)`.
 - The app-signing API now returns descriptive error messages for specific failure cases such as missing profiles, expired profiles, and invalid bundle IDs. Previously, these cases returned a generic 500 error.
 
-=== Automation Session capture
+=== Automation session capture
 
-- Added `kobiton:scriptlessCapture` as the canonical desired capability for marking an Automation Session as convertible to a Test Case. Setting it in your initial script is optional. When set, the session bypasses cache and captures full metadata for later conversion.
+- Added `kobiton:scriptlessCapture` as the canonical desired capability for marking an automation session as convertible to a Test Case. Setting it in your initial script is optional. When set, the session bypasses cache and captures full metadata for later conversion.
 - The existing `kobiton:scriptlessEnable` desired capability continues to work identically and is preserved for backwards compatibility. Setting both is safe and produces no conflict.
 
 === CLI
@@ -144,13 +142,13 @@ Completed Automation Sessions (Appium and XIUM) can now be converted into Test C
 
 === Portal and SSO
 
-- Fixed an issue where teams did not appear in the UI immediately after SSO login and required a manual page refresh to become visible. The username-and-password login flow was not affected.
+- Fixed an issue where teams did not appear in the UI immediately after SSO sign-in and required a manual page refresh to become visible. The username-and-password sign-in flow was not affected.
 - Fixed the App Repository page hanging or showing all apps as missing when an app had zero live versions.
 - Fixed the *Convert to Test Case* flow hanging or producing incomplete steps for automation sessions that interact with WebView elements.
 
 === Reporting
 
-- Fixed a performance issue in SLA reporting that could cause database slowdowns during report generation.
+- Fixed a performance issue in Device Availability reporting (formerly SLA) that could cause database slowdowns during report generation.
 
 === Revisit (Scriptless)
 
