@@ -1,0 +1,46 @@
+= Convert an automation session to a Test Case
+:navtitle: Convert an automation session
+
+You can convert a completed automation session into a Test Case from Kobiton Portal. This lets you reuse the same test flow as a Test Case that can be run repeatedly and organized into Test Suites.
+
+== Before you begin
+
+* Your automation session is complete. Running sessions cannot be converted.
+* Your automation session type is convertible. The following types are not convertible:
+** Revisit Sessions
+** XCUI
+** UIAutomator
+** Gaming
+** GameDriver
+** Emulator
+* Recommended: set `kobiton:scriptlessCapture` in your initial script for the most complete data capture. Without it, some session data might not be captured.
+
+== Convert from Session Explorer
+
+. Open the automation session in Session Explorer.
+. Select *Convert to Test Case*.
+
+== Convert from the Test Case List
+
+. In Kobiton Portal, open the Test Case List in Test Management.
+. Select *+New Test Case*.
+. In the pop-up, find the automation session you want to convert. To narrow the list, search for `type:appium`.
+. Select the session, then select *Convert*.
+
+== Confirmation and data capture
+
+Kobiton confirms the conversion with a toast message. The wording depends on whether your automation session had `kobiton:scriptlessCapture` set.
+
+* With `kobiton:scriptlessCapture` set: "Test Case converted with kobiton:scriptlessCapture! Full data captured for optimal test case."
+* Without `kobiton:scriptlessCapture`: "Some session data might be limited. Add 'kobiton:scriptlessCapture' for better results next time."
+
+After conversion, you can open the new Test Case to review the captured steps and interactions.
+
+// API note: The same convert operation is available via the Kobiton API. The API is documented in a separate framework and is not included in the public docs, so no API section appears here. See KOB-43478 for internal reference.
+
+== See also
+
+* xref:test-management:test-cases.adoc[Test Cases]
+* xref:scriptless-automation:baseline-session.adoc[Create a baseline session]
+// TODO: uncomment when the scriptlessCapture capability doc lands (tracked as KOB-41142)
+// * xref:<TBD>[`kobiton:scriptlessCapture` capability]
