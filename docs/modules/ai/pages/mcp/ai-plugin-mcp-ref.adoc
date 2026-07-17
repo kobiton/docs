@@ -7,7 +7,7 @@ For the latest updates on the plugin, refer to the https://github.com/kobiton/au
 
 == MCP tools
 
-The plugin exposes 13 MCP tools across 4 domains.
+The plugin exposes 29 MCP tools across 7 domains.
 
 === Devices
 
@@ -45,6 +45,9 @@ The plugin exposes 13 MCP tools across 4 domains.
 
 |`terminateSession`
 |Stop a running test session.
+
+|`getUserInputEvents`
+|Get canvas touch and swipe events captured during a live device-only session. See xref:mcp/get-user-input-events.adoc[].
 |===
 
 === Apps
@@ -74,6 +77,72 @@ The plugin exposes 13 MCP tools across 4 domains.
 
 |`getCredential`
 |Return the OAuth-authenticated user's username, API key (existing or newly generated), and portal URL. Backs the `/automate:setup` command - no manual file editing required.
+
+|`getOrgSettings`
+|Return your organization's settings, including feature flags such as Live Remediation.
+|===
+
+=== Test cases
+
+[cols="1,3",options="header"]
+|===
+|Tool |Description
+
+|`saveTestCase`
+|Convert a manual session into a reusable IQS test case. Rejects non-manual sessions.
+
+|`listTestCases`
+|List test cases in your organization with optional filters for app, keyword, and pagination.
+
+|`getTestCase`
+|Get a test case's details and steps. Returns the latest version by default; a specific version with `versionCode`.
+
+|`updateTestCase`
+|Edit test case metadata, step text, element-selection remediation, or version.
+
+|`deleteTestCase`
+|Delete a test case.
+|===
+
+=== Test runs
+
+[cols="1,3",options="header"]
+|===
+|Tool |Description
+
+|`createTestRun`
+|Launch a test run against a test suite or specific test case versions. Fire-and-forget.
+
+|`listTestRuns`
+|List test runs in your organization with optional filters.
+
+|`getTestRun`
+|Get a test run's details, sessions, and status.
+
+|`terminateTestRun`
+|Stop an in-progress test run.
+|===
+
+=== Test suites
+
+[cols="1,3",options="header"]
+|===
+|Tool |Description
+
+|`listTestSuites`
+|List test suites in your organization with optional filters for app, keyword, and pagination.
+
+|`getTestSuite`
+|Get a test suite's details, including member test cases and their pinned versions.
+
+|`createTestSuite`
+|Create a test suite from a name and a list of test case IDs.
+
+|`updateTestSuite`
+|Edit test suite metadata or membership.
+
+|`deleteTestSuite`
+|Delete a test suite. Member test cases are unaffected.
 |===
 
 == Skills
