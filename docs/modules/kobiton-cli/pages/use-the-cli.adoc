@@ -7,7 +7,7 @@ Learn how to use Kobiton Command Line Interface to control and operate your priv
 
 * xref:set-up-cli.adoc[Set up] Kobiton CLI.
 
-* Ensure private devices are available in the Kobiton Portal. Public devices are not supported.
+* Ensure devices are available in the Kobiton Portal. CLI sessions are supported on private and public cloud devices.
 
 == Create a CLI session
 
@@ -19,6 +19,11 @@ Find a private device that is available (not in use or retained by other users):
 kobiton device list --booked false --reserved false --private
 
 Note down the UDID of the device to use.
+
+[NOTE]
+====
+To run a session on a public cloud device, filter the device list with `--cloud` instead of `--private`.
+====
 
 Create a session on the device:
 
