@@ -23,22 +23,23 @@ Org admins can now enforce automatic Portal logout after a configurable duration
 - After re-authenticating, the user is deep-linked back to the page they were on before expiry.
 - Kobiton enforces session expiry independently of your identity provider or SSO. Auto Logout does not require SSO SLO support.
 
-=== Embedded Reporting
+// === Embedded Reporting
 
-Kobiton's predefined reports are now delivered through a new embedded reporting tool with per-organization and per-team data isolation.
+// Kobiton's predefined reports are now delivered through a new embedded reporting tool with per-organization and per-team data isolation.
 
-*Highlights*
+// *Highlights*
 
-- The four existing Predefined Reports have been migrated to the new reporting engine.
-- Report data is isolated by organization and by team. Kobiton enforces this isolation automatically at the row, column, and table level.
-- If you sign in to Kobiton with SSO, the reporting tool honors that sign-in. No separate sign-in required.
-- New team-level permission: *Can View Team Reports*.
-- Report usage is surfaced to org admins through a new customer-admin report.
+// - The four existing Predefined Reports have been migrated to the new reporting engine.
+// - Report data is isolated by organization and by team. Kobiton enforces this isolation automatically at the row, column, and table level.
+// - If you sign in to Kobiton with SSO, the reporting tool honors that sign-in. No separate sign-in required.
+// - New team-level permission: *Can View Team Reports*.
+// - Report usage is surfaced to org admins through a new customer-admin report.
 
-*Availability*
+// *Availability*
 
-Available now in Cloud.
+// Available now in Cloud.
 // [VERIFY: whether this ships to Standalone in this release. Source ticket described this as an early-phase rollout, so Standalone availability may be gated on a later phase.]
+// INTERNAL ONLY
 
 === Device-only view for live sessions
 
@@ -46,7 +47,7 @@ A new display mode shows the device screen on its own, with no surrounding Kobit
 
 *Highlights*
 
-- Access the mode by appending `?view=device-only` to a live device launch URL. Only the literal value `device-only` activates the mode; any other value renders the default view.
+- Access the mode by appending `&view=device-only` to a live device launch URL. Only the literal value `device-only` activates the mode; any other value renders the default view.
 - Works for Android and iOS, phones and tablets, in portrait and landscape.
 - A floating exit button (top right) ends the manual session and releases the device. Tooltip wording changes depending on whether an Appium session is still running.
 
@@ -70,6 +71,10 @@ Claude can now create a Kobiton test run and watch it live, surfacing Live Remed
 - Kick off a test run conversationally. Pick defaults or customize, with a confirmation summary before it runs.
 - Watch the run and get notified the moment an execution is blocked, with a link to the Live Remediation view.
 - When a run ends because of an unresolved blocker, Claude flags that in the summary instead of showing it as passed.
+
+*Availability*
+
+Available now in Cloud. Not yet available for Standalone deployments.
 
 === Convert an automation session into a Test Case
 
