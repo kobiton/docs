@@ -1,0 +1,98 @@
+= Get user input events from a session
+:navtitle: Get user input events
+
+The `getUserInputEvents` MCP tool returns canvas touch and swipe events captured during a live device-only session. Events are ordered oldest first. Call it between commands during an agent-driven test to observe user gestures on the device canvas. This supports workflows where a user's tap can steer the agent.
+
+== Signature
+
+[source,typescript]
+----
+getUserInputEvents({ sessionId, sinceTimestamp? })
+----
+
+=== Parameters
+
+`sessionId` (required)::
+The ID of the live session to read events from.
+
+`sinceTimestamp` (optional)::
+Cursor to filter events. Only events newer than this timestamp are returned. Omit to receive all events currently in the buffer.
+
+== Return
+
+The tool returns an array of event objects. Each event is either a touch or a swipe.
+
+Touch event:
+
+[source,javascript]
+----
+{
+  kind: 'touch',
+  xNorm: 0.5,
+  yNorm: 0.5,
+  timestamp: 1729876543210
+}
+----
+
+Swipe event:
+
+[source,javascript]
+----
+{
+  kind: 'swipe',
+  xNorm: 0.2,
+  yNorm: 0.8,
+  xNorm2: 0.8,
+  yNorm2: 0.2,
+  durationMs: 400,
+  timestamp: 1729876543210
+}
+----
+
+`xNorm`, `yNorm`, `xNorm2`, and `yNorm2` are normalized 0..1 against the canvas bounds. On a swipe, `xNorm` and `yNorm` are the start point, `xNorm2` and `yNorm2` are the end point, and `durationMs` is the swipe duration in milliseconds. `timestamp` marks when the event occurred and can be reused as the next call's `sinceTimestamp` to poll for newer events.
+
+// TODO: add a full end-to-end example (sample call + sample response). Pending SME confirmation on timestamp format and error-response shape. See KOB-54072 open questions.
+
+== Scope
+
+Captured:
+
+* Canvas touch
+* Canvas swipe
+
+Not captured:
+
+* Keystrokes
+* Right-clicks
+* Pinch
+* Drag-off-canvas
+* Any input in other views
+
+Capture is active only in the `?view=device-only` view. See xref:automation-testing:device-only-view.adoc[] for how to launch that view.
+
+== Retention
+
+Each session's event buffer:
+
+* Up to 200 events.
+* Events older than 5 minutes are dropped.
+* When the buffer overflows, the oldest events are dropped first.
+
+== Polling
+
+Use `sinceTimestamp` as a cursor between calls. Reads are non-destructive. Multiple consumers can poll the same session, and each call returns all events that match its `sinceTimestamp`.
+
+End-to-end latency from the user's gesture to event availability is about 1 second.
+
+== Authorization
+
+Only the session owner and organization admins can read events. Other requests return `FORBIDDEN`.
+
+== Edge cases
+
+* If `sinceTimestamp` is in the future, the tool returns an empty array.
+
+== See also
+
+* xref:automation-testing:device-only-view.adoc[]
+* xref:ai:mcp/ai-plugin-mcp-ref.adoc[]
