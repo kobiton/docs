@@ -3,8 +3,6 @@
 
 _July 17, 2026_
 
-// Working draft. [VERIFY:] flags in the prose and the Needs confirmation / Review notes sections at the end must be resolved before merge.
-
 == New features and major changes
 
 === Portal Auto Logout (configurable session timeout)
@@ -85,7 +83,7 @@ Completed automation sessions can now be converted into Test Cases, matching the
 - All automation sessions are convertible. Revisit Sessions and other automation types (XCUI, UIAutomator, and similar) are not convertible.
 - A session must be complete to convert it to a test case.
 - Session Explorer shows a *Convert to Test Case* action on eligible automation sessions.
-- The *+New Test Case* pop-up lists automation sessions and supports keyword search, for example `type:appium`.
+- The *+New Test Case* pop-up on the Test Cases list page lists automation sessions and supports keyword search, for example `type:appium`.
 - After converting an automation session, the confirmation message notes whether full data was captured. If `kobiton:scriptlessCapture` was set, it confirms full capture. If not, it recommends setting it next time.
 
 == Bug fixes and improvements
@@ -105,6 +103,7 @@ Completed automation sessions can now be converted into Test Cases, matching the
 
 === Apps and app storage
 
+- Optimized iOS app transfer performance for iOS 17+ devices, resulting in an install time reduction up to 50% for some applications.
 - Fixed an issue where app versions with missing binary files could not be distinguished from active ones. Affected versions are now distinguishable in the UI, API, and CLI. Install attempts on such versions return the error `Failed to prepare application blob. Response status code does not indicate success: 404 (Not Found)`.
 - The app-signing API now returns descriptive error messages for specific failure cases such as missing profiles, expired profiles, and invalid bundle IDs. Previously, these cases returned a generic 500 error.
 
@@ -146,14 +145,3 @@ Completed automation sessions can now be converted into Test Cases, matching the
 - Improved handling of CLI sessions to prevent stale CLI sessions from persisting.
 - Fixed missing or incomplete command latency data for manual sessions with multiple reconnects.
 - Fixed intermittent iOS app install failures through ZipConduit. Added diagnostic tooling around install feedback.
-
-// ============================================================================
-// WORKING NOTES BELOW. Remove before publishing.
-// ============================================================================
-
-////
-== Needs confirmation
-
-- *Reporting on-prem availability (KOB-52245):* Source ticket described this as an early-phase rollout with on-prem availability gated on a later phase. Confirm whether it ships to Standalone in this release or Cloud only.
-- *Android Inspector fix shipment (KOB-53089):* Currently in *Wait For Deployment* status in Jira. Confirm inclusion in 4.27.
-////
