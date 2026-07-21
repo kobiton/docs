@@ -79,11 +79,11 @@ Completed automation sessions can now be converted into Test Cases, matching the
 *Highlights*
 
 - The `kobiton:scriptlessCapture` desired capability is no longer required to convert a session. Setting it in your initial script is optional.
-- All automation sessions are convertible. Revisit Sessions and other automation types (XCUI, UIAutomator, and similar) are not convertible.
+- All Appium automation sessions are convertible. Revisit Sessions and other automation types (XCUI, UIAutomator, Gaming, GameDriver, Emulator Automation) are not convertible; the UI flags non-convertible session types when the *Convert to Test Case* action is unavailable.
 - A session must be complete to convert it to a test case.
 - Session Explorer shows a *Convert to Test Case* action on eligible automation sessions.
 - The *+New Test Case* pop-up on the Test Cases list page lists automation sessions and supports keyword search, for example `type:appium`.
-- After converting an automation session, the confirmation message notes whether full data was captured. If `kobiton:scriptlessCapture` was set, it confirms full capture. If not, it recommends setting it next time.
+- After converting an automation session, Session Explorer shows a confirmation message with a *View Test Case* link that opens the new test case. When `kobiton:scriptlessCapture` was set on the session, the message confirms full data capture; otherwise, it recommends setting the capability next time for better results.
 
 == Bug fixes and improvements
 
