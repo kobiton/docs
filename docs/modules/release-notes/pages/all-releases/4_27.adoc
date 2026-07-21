@@ -58,15 +58,15 @@ During an AI-driven session in device-only view, tap or swipe on the device scre
 
 Requires device-only view.
 
-=== Kobiton MCP: create and monitor test runs from Claude
+=== Kobiton MCP: create and monitor Test Runs from Claude
 
-Claude can now create Kobiton test runs from saved Scriptless test cases and monitor each run through completion (via the `monitorTestRun` MCP tool, currently in beta). If a blocker occurs, Claude notifies the user, provides a link to Live Remediation, and reports blocked runs accurately instead of treating them as passed.
+Claude can now create Test Runs from saved Scriptless Test Cases and monitor each run through completion (via the `monitorTestRun` MCP tool, currently in beta). If a blocker occurs, Claude notifies the user, provides a link to Live Remediation, and reports blocked runs accurately instead of treating them as passed.
 
 *Highlights*
 
-- Kick off a test run conversationally. Pick defaults or customize, with a confirmation summary before it runs.
-- Run a single Scriptless test case, several at once, or a full test suite; pin each selection to a specific test case version for reproducible runs.
-- Ask Claude for a status check while a run is in progress, or terminate the run early if needed.
+- Kick off a Test Run conversationally. Pick defaults or customize, with a confirmation summary before it runs.
+- Run a single Scriptless Test Case, several at once, or a full Test Suite; pin each selection to a specific Test Case version for reproducible runs.
+- Ask Claude for a status check while a Test Run is in progress, or terminate it early if needed.
 
 *Availability*
 
@@ -74,18 +74,18 @@ Available now in Cloud. Not yet available for Standalone deployments.
 
 === Convert an automation session into a Test Case
 
-Completed automation sessions can now be converted into Test Cases, matching the existing manual session flow. Available from the API, from Session Explorer, and from the *+New Test Case* pop-up in the Test Case List.
+Completed automation sessions can now be converted into Test Cases, matching the existing manual session flow. Available from the API, from Session Explorer, and from the *+New Test Case* pop-up on the Test Cases list page.
 
 *Highlights*
 
 - The `kobiton:scriptlessCapture` desired capability is no longer required to convert a session. Setting it in your initial script is optional.
 - All Appium automation sessions are convertible. Revisit Sessions and other automation types (XCUI, UIAutomator, Gaming, GameDriver, Emulator Automation) are not convertible; the UI flags non-convertible session types when the *Convert to Test Case* action is unavailable.
-- A session must be complete to convert it to a test case.
+- A session must be complete to convert it to a Test Case.
 - Session Explorer shows a *Convert to Test Case* action on eligible automation sessions.
 - The *+New Test Case* pop-up on the Test Cases list page lists automation sessions and supports keyword search, for example `type:appium`.
-- After converting an automation session, Session Explorer shows a confirmation message with a *View Test Case* link that opens the new test case. When `kobiton:scriptlessCapture` was set on the session, the message confirms full data capture; otherwise, it recommends setting the capability next time for better results.
+- After converting an automation session, Session Explorer shows a confirmation message with a *View Test Case* link that opens the new Test Case. When `kobiton:scriptlessCapture` was set on the session, the message confirms full data capture; otherwise, it recommends setting the capability next time for better results.
 
-== Bug fixes and improvements
+== Improvements and fixes
 
 === ADB Shell
 
@@ -134,10 +134,10 @@ Completed automation sessions can now be converted into Test Cases, matching the
 
 === Scriptless Test Runs
 
-- Fixed an issue where Home-screen-only Scriptless test cases could fail when run. These test cases now correctly launch the Home screen.
-- Test cases recorded with no app under test are now rejected immediately with a clear message, instead of booking a device and failing partway through.
-- Fixed an issue where Scriptless test runs could fail with "Device retry exceeded" errors on organizations with parallel testing enabled. Test runs now wait until a parallel test slot becomes available instead of attempting a booking that would be rejected.
-- Fixed Scriptless test runs failing with "User not found" errors for users signed in via SSO, Google, or GitHub.
+- Fixed an issue where Home-screen-only Scriptless Test Cases could fail when run. These Test Cases now correctly launch the Home screen.
+- Scriptless Test Runs submitted for Test Cases with no app under test are now rejected immediately with a clear message, and no Test Run is created. Previously, the run would book a device and fail partway through.
+- Fixed an issue where Scriptless Test Runs could fail with "Device retry exceeded" errors on organizations with parallel testing enabled. Test Runs now wait until a parallel test slot becomes available instead of attempting a booking that would be rejected.
+- Fixed Scriptless Test Runs failing with "User not found" errors for users signed in via SSO, Google, or GitHub.
 
 === Session lifecycle
 
