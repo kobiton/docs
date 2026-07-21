@@ -42,7 +42,7 @@ Device-only view is useful for demos, screen sharing, and observing automation r
 
 *Availability*
 
-Available for in-progress live sessions.
+Available for in-progress live sessions in Cloud. Not yet available for Standalone deployments.
 
 === Guide AI-driven sessions from device-only view
 
@@ -60,14 +60,13 @@ Requires device-only view.
 
 === Kobiton MCP: create and monitor test runs from Claude
 
-Claude can now create a Kobiton test run and watch it live, surfacing Live Remediation when a blocker hits.
+Claude can now create Kobiton test runs from saved Scriptless test cases and monitor each run through completion (via the `monitorTestRun` MCP tool, currently in beta). If a blocker occurs, Claude notifies the user, provides a link to Live Remediation, and reports blocked runs accurately instead of treating them as passed.
 
 *Highlights*
 
-- `monitorTestRun` is a beta feature.
 - Kick off a test run conversationally. Pick defaults or customize, with a confirmation summary before it runs.
-- Watch the run and get notified the moment an execution is blocked, with a link to the Live Remediation view.
-- When a run ends because of an unresolved blocker, Claude flags that in the summary instead of showing it as passed.
+- Run a single Scriptless test case, several at once, or a full test suite; pin each selection to a specific test case version for reproducible runs.
+- Ask Claude for a status check while a run is in progress, or terminate the run early if needed.
 
 *Availability*
 
