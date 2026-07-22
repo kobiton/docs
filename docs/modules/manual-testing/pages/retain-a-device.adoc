@@ -1,0 +1,35 @@
+= Retain a device
+:navtitle: Retain a device
+
+Learn how to retain a device so you can return to the same device in a later session without waiting for it to become available.
+
+How you retain a device depends on whether it's public, private, or local.
+
+== Retain a private or local device
+
+Private and local devices are retained from the device list. Select the *Retain* dropdown next to the device and choose a duration. Available durations are 1 hour, 2 hours, 4 hours, 8 hours, 24 hours, or Unlimited.
+
+For the full procedure, including how to cancel a retain, see xref:devices:manage-devices.adoc#_retain_the_device[Retain the device].
+
+Retaining a private or local device does not consume usage minutes.
+
+== Retain a public device
+
+Public devices can only be retained during the exit-session flow, not from the device list. Public device retention is limited to 24 hours.
+
+In your active manual session, select *Exit Session*.
+
+image:manual-testing:PLACEHOLDER-exit-session-button.png[width=1000,alt="Exit Session button in the manual session toolbar"]
+// SCREENSHOT SOURCE: manual session toolbar showing Exit Session action.
+
+In the confirmation window, select *Retain*.
+
+image:manual-testing:PLACEHOLDER-exit-session-retain-option.png[width=1000,alt="Exit Session confirmation with Retain as one of the action options"]
+// SCREENSHOT SOURCE: Exit Session confirmation dialog showing Retain among the action options.
+
+Choose a retain duration up to 24 hours.
+
+image:manual-testing:PLACEHOLDER-public-retain-durations.png[width=1000,alt="Retain duration options for a public device"]
+// SCREENSHOT SOURCE: duration picker for public-device Retain.
+
+IMPORTANT: Retaining a public device consumes usage minutes for the full duration of the retain, whether or not you connect to the device. For example, retaining a public device for 1 hour reduces your available minutes by 60, even if you never open a session during that time. New Kobiton accounts include 300 free trial minutes.
