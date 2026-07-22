@@ -5,42 +5,59 @@ Learn how to use the system latency report so you can view how long it takes the
 
 == Open the report
 
-In Kobiton, select *Reports*.
+In Kobiton, select *Analytics Reports*.
 
-image:reporting:select-report-context.png[width=1000,alt="A context to Report feature selected"]
+image:reporting:PLACEHOLDER-analytics-reports-list.png[width=1000,alt="Analytics Reports landing view"]
+// SCREENSHOT SOURCE: capture the Analytics Reports table showing Name, Category, Last synced at, Actions columns.
 
-Select *System Latency Report* to open the report.
+Select *System Latency* to open the report.
 
-image:reporting:system-latency-report-context.png[width=1000,alt="A context to System latency report in Predefined report"]
+image:reporting:PLACEHOLDER-system-latency-open.png[width=1000,alt="System Latency Report opened"]
+// SCREENSHOT SOURCE: opened System Latency Report with filter controls visible at top.
 
 == Filter the report
 
-=== By connection or location
+Use the filter controls at the top of the report to narrow the data.
 
-To filter the report by the type of network connection, select *By connection*.
+// TODO: confirm behavior for each filter (defaults, ranges, dependencies) once SME time is available. Keep filter descriptions to one line each per the self-explanatory-labels principle.
 
-image:reporting:filter-by-connection-context.png[width=1000,alt="A context to the report filtered by connection"]
+=== Date Range
 
-To filter the report by the physical location of the session, select *By location*.
+=== Connection Type
 
-image:reporting:filter-by-location-context.png[width=1000,alt="A context to the report filtered by location"]
+=== Location
 
-=== By date range
+=== deviceShare
 
-To filter the report by a specific date range, choose any range up to 90 days. The report will be updated automatically.
+=== Search
 
-image:reporting:sort-by-date-closeup.png[width=,alt=[width=1000,alt="A closeup to sort the report by date"]
+// TODO (parked 2026-07-22): Ticket KOB-48331 asked to add instructions on how to use Search. Tung told Tiffany that Search takes a "search criteria + search value" and that three criteria types would be sufficient to document. However, when Tiffany tested the current UI, no values she entered filtered results. BLOCKED pending SME confirmation from Tung on how Search currently behaves and which three criteria are supported.
 
-== Review a session
+== Review the data
 
-To review a specific session, select *Details*.
+The report presents data across two tabs: *By Connection* and *By Location*.
 
-image:reporting:display-details-context.png[width=1000,alt="Display additional latency details"]
+=== By Connection
 
-Search for the session using the search bar.
+The By Connection tab contains the following tables:
 
-image:reporting:report-details-context.png[width=1000,alt="The details of System Latency Report with sorting out the sessions"]
+* Connection Summary
+* Connection Location Summary
+* Connection deviceShare Summary
+* Connection Details
 
-Select the session ID to open the xref:session-explorer:manage-sessions.adoc[session overview] and review the session.
+image:reporting:PLACEHOLDER-by-connection-tab.png[width=1000,alt="By Connection tab tables"]
+// SCREENSHOT SOURCE: capture the By Connection tab. If it's too tall for a single shot, capture each of the four tables separately.
 
-image:reporting:click-session-id-context.png[width=1000,alt="Select session ID to open Session Overview"]
+=== By Location
+
+The By Location tab contains the following tables:
+
+* Location Summary
+* Location deviceShare Summary
+* Location Details
+
+image:reporting:PLACEHOLDER-by-location-tab.png[width=1000,alt="By Location tab tables"]
+// SCREENSHOT SOURCE: capture the By Location tab. If it's too tall for a single shot, capture each of the three tables separately.
+
+// TODO (parked 2026-07-22): The prior version of this page had a "Review a session" workflow (Details -> session ID) for drilling into a specific session from the report. Tiffany's UI walk-through of the current version did not surface this workflow. Confirm with Tung whether it still exists. If yes, add a "== Review a session" H2 with updated screenshots. If no, remove this TODO.
