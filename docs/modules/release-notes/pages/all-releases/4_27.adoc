@@ -1,0 +1,145 @@
+= Kobiton 4.27 Release Notes
+:navtitle: Kobiton 4.27 release notes
+
+_July 17, 2026_
+
+== New features and major changes
+
+=== Portal Auto Logout (configurable session timeout)
+
+Org admins can now enforce automatic Portal logout after a configurable duration, meeting common security requirements around idle session management.
+
+*Highlights*
+
+- Turn on Auto Logout under *Account > Settings > Other Settings*. Scroll to the *Auto Logout* setting and select the checkbox.
+- When the checkbox is selected, a *Log users out after* field appears. Enter a whole number (type the value or use the arrows) and pick *Hour(s)* or *Day(s)* from the dropdown.
+- Minimum timeout is 1 hour. Clear the checkbox to turn Auto Logout off.
+- A helper message on the setting notes: "Users with ongoing manual sessions will be logged out once their sessions ends."
+- When the configured duration elapses, users are automatically redirected to the sign-in page with the message "Your session has expired. Please log in again."
+- There is no warning modal and no "stay logged in" prompt before logout.
+- If a user has an ongoing manual session when the timer expires, their logout is deferred until that session ends.
+- After re-authenticating, the user is deep-linked back to the page they were on before expiry.
+- Kobiton enforces session expiry independently of your identity provider or SSO.
+
+=== New Reporting Experience
+
+We've introduced a new reporting experience that provides richer reports with built-in capabilities such as filtering and exporting. Reports can now be downloaded as a CSV for further analysis or as a PNG for presentations and sharing.
+
+Our initial rollout includes the existing reports, now delivered through this enhanced reporting experience. This new foundation allows us to add reports much more quickly, and we'll be expanding the reporting library with additional reports in the coming months. Stay tuned for more.
+
+=== Device-only view for live sessions
+
+View just the device screen during a live session, without the surrounding Kobiton interface. Device-only view hides the sidebars, headers, and panels and sizes the viewport to the device screen. It works for phones and tablets, on Android and iOS, in portrait and landscape.
+
+Device-only view is useful for demos, screen sharing, and observing automation runs.
+
+*Highlights*
+
+- Activate device-only view by adding `&view=device-only` to a live session URL.
+- In device-only view, only touches and swipes are sent to the device. Keyboard input is not sent to the device under test.
+- A floating exit button ends the session and releases the device. When an Appium session is running, the button instead closes the live view and keeps the automation running.
+- For AI-assisted workflows, you can retrieve the live view and the device-only view from the agent during a live session.
+
+*Availability*
+
+Available for in-progress live sessions in Cloud. Not yet available for Standalone deployments.
+
+=== Guide AI-driven sessions from device-only view
+
+During an AI-driven session in device-only view, tap or swipe on the device screen to steer the device. The agent observes your touch and swipe input between its scripted commands and acknowledges it.
+
+*Highlights*
+
+- Tap or swipe on the device screen in device-only view to signal intent to the AI agent.
+- A new `getUserInputEvents` MCP tool lets the agent read these events.
+- Only screen touch and swipe are sent to the device. Keyboard input and other interactions remain disabled in device-only view.
+
+*Availability*
+
+Requires device-only view.
+
+=== Kobiton MCP: create and monitor Test Runs from Claude
+
+Claude can now create Test Runs from saved Scriptless Test Cases and monitor each run through completion (via the `monitorTestRun` MCP tool, currently in beta). If a blocker occurs, Claude notifies the user, provides a link to Live Remediation, and reports blocked runs accurately instead of treating them as passed.
+
+*Highlights*
+
+- Kick off a Test Run conversationally. Pick defaults or customize, with a confirmation summary before it runs.
+- Run a single Scriptless Test Case, several at once, or a full Test Suite; pin each selection to a specific Test Case version for reproducible runs.
+- Ask Claude for a status check while a Test Run is in progress, or terminate it early if needed.
+
+*Availability*
+
+Available now in Cloud. Not yet available for Standalone deployments.
+
+=== Convert an automation session into a Test Case
+
+Completed automation sessions can now be converted into Test Cases, matching the existing manual session flow. Available from the API, from Session Explorer, and from the *+New Test Case* pop-up on the Test Cases list page.
+
+*Highlights*
+
+- The `kobiton:scriptlessCapture` desired capability is no longer required to convert a session. Setting it in your initial script is optional.
+- All *Appium* automation sessions are convertible. Scriptless Test Run sessions and other automation types (Basic Appium 2, native XCUI, native UIAutomator/Espresso, Gaming, GameDriver, Emulator Automation) are not convertible; the UI flags non-convertible session types when the *Convert to Test Case* action is unavailable.
+- A session must be complete to convert it to a Test Case.
+- Session Explorer shows a *Convert to Test Case* action on eligible automation sessions.
+- The *+New Test Case* pop-up on the Test Cases list page lists automation sessions and supports keyword search, for example `type:appium`.
+- After converting an automation session, Session Explorer shows a confirmation message with a *View Test Case* link that opens the new Test Case. When `kobiton:scriptlessCapture` was set on the session, the message confirms full data capture; otherwise, it recommends setting the capability next time for better results.
+
+== Improvements and fixes
+
+=== ADB Shell
+
+- Fixed the "Unsupported command" error returned by `am start` for protected packages such as Chrome and Settings. These packages can now be launched from the ADB Shell.
+
+=== Appium script generation
+
+- Fixed generated Appium script projects failing on Standalone deployments that use a self-signed SSL certificate.
++
+** Python direct Kobiton REST calls (device lookup, app download URL, OTP) now honor the same trust-all-certificates setting the proxy already used.
+** The C# template now exposes `Config.TrustAllCerts` and a `Config.CreateHttpClient()` helper backed by a permissive `HttpClientHandler`. The helper is used by `ProxyServer`, `TestBase` (three call sites), and `OtpService`. See the README included in the generated C# project for Standalone run instructions.
+** Node and Java retain their existing documented workarounds.
+- Fixed generated Python Appium tests failing at the first UI transition. `element.click()` was sending an empty body, which blocked Kobiton flex-correct from matching the command stream. Java tests were not affected.
+
+=== Apps and app storage
+
+- Optimized iOS app transfer performance for iOS 17+ devices, resulting in an install time reduction up to 50% for some applications.
+- Fixed an issue where app versions with missing binary files could not be distinguished from active ones. Affected versions are now distinguishable in the UI, API, and CLI. Install attempts on such versions return the error `Failed to prepare application blob. Response status code does not indicate success: 404 (Not Found)`.
+- The app-signing API now returns descriptive error messages for specific failure cases such as missing profiles, expired profiles, and invalid bundle IDs. Previously, these cases returned a generic 500 error.
+
+=== CLI
+
+- The CLI `test --stream` command now retrieves signed application copies through the Portal signed-app API. This removes the legacy signing path and preserves APNS entitlements that could previously be stripped during test execution.
+
+=== Device details
+
+- The device modal now shows an *OS Build Number* field on the Details tab, directly below *CPU Platform*, for both Android and iOS devices. The value updates automatically after an OS upgrade and can be helpful to distinguish beta versions of an OS.
+
+=== Device management
+
+- Search the Device Management page by full or partial host machine IP. Wildcards are supported.
+- All host machines are expanded by default when you open Device Management.
+- Added *Collapse all* and *Expand all* actions under the View menu.
+- Each host machine remembers its own collapsed or expanded state in your browser.
+
+=== MCP and integrations
+
+- The MCP `confirmAppUpload` handler now posts to `/v2/apps` (previously `/v1/apps`), and app-upload URLs are generated through `/v2/apps/upload-url`. Agent-facing response keys are unchanged (`appId`, `versionId`).
+- Added a new Portal login endpoint `POST /v2/users/login` that returns a JSON Web Token (JWT) along with `grpc_server_url` and other user information. Clients that previously required both a Portal API URL and a gRPC URL can now retrieve both from a single login call. The existing `POST /v1/users/info` remains available for backwards compatibility.
+
+=== Portal and SSO
+
+- Fixed an issue where teams did not appear in the UI immediately after SSO sign-in and required a manual page refresh to become visible. The username-and-password sign-in flow was not affected.
+- Fixed the App Repository page hanging or showing all apps as missing when an app had zero live versions.
+- Fixed the *Convert to Test Case* flow hanging or producing incomplete steps for automation sessions that interact with WebView elements.
+
+=== Scriptless Test Runs
+
+- Fixed an issue where Home-screen-only Scriptless Test Cases could fail when run. These Test Cases now correctly launch the Home screen.
+- Fixed an issue where Scriptless Test Runs could fail with "Device retry exceeded" errors on organizations with parallel testing enabled. Test Runs now wait until a parallel test slot becomes available instead of attempting a booking that would be rejected.
+- Fixed Scriptless Test Runs failing with "User not found" errors for users signed in via SSO, Google, or GitHub.
+
+=== Session lifecycle
+
+- Improved handling of CLI sessions to prevent stale CLI sessions from persisting.
+- Fixed missing or incomplete command latency data for manual sessions with multiple reconnects.
+- Fixed intermittent iOS app install failures through ZipConduit. Added diagnostic tooling around install feedback.
