@@ -35,8 +35,7 @@ image::tm-newtcscreen.png[width=700,alt="Create a New Test Case in Test Manageme
 
 [NOTE]
 ====
-Test Cases can also originate from automation sessions. These appear in the Test Case list with a source type of *Automation*.
-// TODO(KOB-43480): confirm the user-facing entry point for creating a Test Case from an automation session. The conversion flow is delivered by related IQS stories and is intentionally not documented here.
+Test Cases can also originate from completed automation sessions, using the same entry points described above. Automation-sourced Test Cases appear in the Test Case list with a source type of *Automation*.
 ====
 
 == Manage Test Cases
@@ -127,10 +126,9 @@ The Test Case details view shows a *Source Type* of *Automation* for Test Cases 
 
 === Supported apps
 
-Only apps from App Repo and existing apps are supported for automation-sourced Test Cases.
-// TODO(KOB-43480): confirm the exact UI terms for "App Repo" and "existing apps," and how a step is presented when its app comes from an unsupported source.
+Only apps from *App Repo* and *Existing Apps* are supported for automation-sourced Test Cases.
 
-Only the app installed at session start is captured. Apps installed later in the session are not captured and appear as unsupported actions after conversion.
+Only the app installed at session start is captured. Apps installed later in the session are not captured, and the corresponding steps are labeled *Unsupported* after conversion.
 
 === Test step names
 
