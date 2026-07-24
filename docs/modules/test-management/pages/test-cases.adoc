@@ -48,8 +48,9 @@ The Test Case list provides an overview of the Test Cases available to the selec
 
 From this view, users can locate Test Cases, review basic information, and open individual Test Cases for detailed review and management.
 
-The list displays all Test Cases regardless of source type. Each row indicates whether the Test Case was created from a manual session or an automation session.
-// TODO(KOB-43480): confirm the exact column label and indicator (icon, badge, or text) used to show source type in the list. Design mockups were not available during drafting.
+The list displays all Test Cases regardless of source type. The *Source* column uses an icon to indicate whether each Test Case was created from a manual or an automation session.
+
+image::tc-list-source.png[width=700,alt="Test Cases list showing the Source column"]
 
 Use the search bar at the top of the list to find a specific Test Case by name. You can sort the list by name. Search and sort apply to both source types. Filtering the list by source type is not supported.
 
@@ -121,8 +122,9 @@ Test Cases created from automation sessions appear in the Test Case list alongsi
 
 === Source type
 
-The Test Case details view shows a *Source Type* of *Automation* for Test Cases created from an automation session. Test Cases created from a manual session show a *Source Type* of *Manual*.
-// TODO(KOB-43480): confirm the exact field label and its placement in the details metadata against the final UI.
+In the Test Case details view, the info bar shows *Source Type: Automation* for Test Cases created from an automation session, or *Source Type: Manual* for those created from a manual session. The adjacent *Source* field links to the originating session in Session Explorer.
+
+image::tc-details-infobar.png[width=700,alt="Test Case details info bar with Source and Source Type"]
 
 === Supported apps
 
