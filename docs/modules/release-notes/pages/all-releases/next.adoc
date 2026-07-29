@@ -1,0 +1,36 @@
+= Kobiton X.X release notes
+:navtitle: Kobiton X.X release notes
+
+_DATE_
+
+// DRAFT staging page for the release following 4.28 (July 17, 2026).
+// The version number and date above are intentional placeholders: the source
+// ticket was awaiting deployment when this draft was written, so no release
+// artifact was confirmed. Fold the entries below into the numbered release
+// page once the version and date are known, add that page to nav.adoc, and
+// delete this file. This page is deliberately not listed in nav.adoc.
+
+== Improvements and fixes
+
+=== Scriptless Test Runs
+
+- For Test Cases converted from automation sessions, Camera Roll now names each automation test step by its WebDriver endpoint path, matching the names on the Test Case Details page. The *Baseline Screenshot* and *Revisit Screenshot* panels both use the endpoint path. Previously, these steps showed a generic *Auto Command* label.
+- Camera Roll shortens an endpoint path that does not fit the step card. Hover over the name to see the full path.
+
+// Held for docs review, not published above. Each item lacks the evidence
+// needed to state it as shipped behavior:
+//
+// 1. Unsupported automation steps. Implementation notes indicate a step whose
+//    Appium endpoint is unsupported renders an *Unsupported* label with an
+//    action tooltip in Camera Roll, matching Test Case Details. This rendering
+//    was not covered by automated verification. Confirm before publishing.
+//
+// 2. Manual-session Test Cases. The same notes suggest baseline steps from
+//    manual sessions that contain an unsupported action may now show the
+//    *Unsupported* label as well. If that is correct, this release note
+//    understates the scope, because it reads as automation-only. Confirm
+//    whether manual-session Test Runs are affected.
+//
+// 3. Step name format. Epic grooming asked for `/path (action)`. The shipped
+//    behavior appears to render the endpoint path alone, without a trailing
+//    `(action)` segment. Confirm which format users actually see.
