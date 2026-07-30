@@ -1,33 +1,88 @@
 = Kobiton Command Line Interface commands
 :navtitle: Kobiton CLI commands
+:table-caption!:
 
 Commands that operate on an active CLI session require session context.
 
-Provide session context using one of the following:
+The CLI determines the session context using one of the following methods:
 
+* Use the session token stored in `~/.token/.session` (default). This file is automatically created or updated when you run `kobiton session create`, and commands will use the token for the *most recently created session*.
 * Pass the session token with the command: `--session-token <SESSION_TOKEN>` (or `-a <SESSION_TOKEN>`)
 * Set the `KOBITON_SESSION_TOKEN` environment variable
 
 The `<SESSION_TOKEN>` value is returned when you create a CLI session. For details, see xref:use-the-cli.adoc[Start using Kobiton CLI].
 
-The CLI automatically saves the session token to a local file for reuse in subsequent commands. This approach is convenient for single-user workflows but is not recommended for environments with concurrent or parallel executions.
+Relying on the default `~/.token/.session` file is convenient for single-user workflows but is not recommended for environments with concurrent or parallel executions, because it is overwritten each time a new CLI session is created.
 
-The locally stored session token will be overwritten when a new CLI session is created.
+== Synopsis
 
-== `app run`
+----
+kobiton [OPTIONS] <COMMAND> [SUBCOMMAND] [ARGS]...
+----
 
-Run app on device.
+**kobiton** is a command-line client for the Kobiton mobile device cloud. It lets you create and manage device sessions, drive devices over WebDriver, transfer files, install and run applications, inspect device state, and launch built-in test runs.
+
+Most commands operate against a single device session. A device is identified by its UDID (`-u`, `--udid`) and, once a session exists, by its session ID (`-s`, `--session-id`) and session token (`-a`, `--session-token`). A typical workflow is:
+
+. Find a device — `kobiton device list`
+. Open a session on it — `kobiton session create -u <UDID>`
+. Operate on the device — `kobiton app install`, `kobiton file push`, `kobiton webdriver post`, and so on
+. Close the session — `kobiton session end -s <SESSION_ID>`
+
+[#global-options]
+== Global options
+
+These options are accepted by every command and subcommand.
+
+[cols="1,1,3",options="header"]
+|===
+| Option | Argument | Description
+
+| `-a`, `--session-token` | `<SESSION_TOKEN>` | Authorization token returned by `session create`.
+| `-u`, `--udid` | `<UDID>` | UDID of the device to use.
+| `-p`, `--portal` | `<PORTAL>` | Portal base address (Kobiton API/portal endpoint).
+| `-s`, `--session-id` | `<SESSION_ID>` | Kobiton session ID returned by `session create`.
+| `-l`, `--log-level` | `<LOG_LEVEL>` | Log verbosity: `error`, `warn`, `info`, `debug`, `trace`. Default: `info`.
+| `-h`, `--help` | | Print help for the command or subcommand.
+| `-V`, `--version` | | Print version (top-level command only).
+|===
+
+== `app`
+
+Manage apps: run, install, uninstall, upload, and inspect application versions in the Kobiton App Repo.
+
+=== `app run`
+
+Run an application on the device.
 
 .Syntax
 ----
 kobiton app run [OPTIONS] <APP_IDENTIFIER> [ARGS]...
 ----
 
+.Arguments
+[cols="1,3",options="header"]
+|===
+| Argument | Description
+
+| `<APP_IDENTIFIER>` | Bundle ID or package name to run.
+| `[ARGS]...` | Arguments to pass to the app (before or after `--`).
+|===
+
+.Options
+[cols="1,1,3",options="header"]
+|===
+| Option | Argument | Description
+
+| `-e`, `--env` | `<KEY> <VALUE>` | Environment variable pair. Repeatable: `--env KEY VALUE`.
+|===
+
+Plus all <<global-options,global options>>.
+
 *Requires:*
 
-* `[OPTIONS]`: requires `-a <SESSION_TOKEN>` or `KOBITON_SESSION_TOKEN` environment variable
-
-* `<APP_IDENTIFIER>`: package name or bundle ID of the app to run
+* `-a <SESSION_TOKEN>` or `KOBITON_SESSION_TOKEN` environment variable
+* `<APP_IDENTIFIER>`
 
 .Example
 [source,shell]
@@ -40,20 +95,37 @@ kobiton app run com.example.app
 PID 32124
 ----
 
-== `app kill`
+=== `app kill`
 
-Kill app on device.
+Terminate an application, or send it a signal.
 
 .Syntax
 ----
 kobiton app kill [OPTIONS] <IDENTITY>
 ----
 
+.Arguments
+[cols="1,3",options="header"]
+|===
+| Argument | Description
+
+| `<IDENTITY>` | PID, package name, or bundle ID of the process to signal.
+|===
+
+.Options
+[cols="1,1,3",options="header"]
+|===
+| Option | Argument | Description
+
+| `-n`, `--signal` | `<SIGNAL>` | Signal to send. Default: `SIGTERM`.
+|===
+
+Plus all <<global-options,global options>>.
+
 *Requires:*
 
-* `[OPTIONS]`: requires `-a <SESSION_TOKEN>` or `KOBITON_SESSION_TOKEN` environment variable
-
-* `<IDENTITY>`: package name or bundle ID of the app to kill
+* `-a <SESSION_TOKEN>` or `KOBITON_SESSION_TOKEN` environment variable
+* `<IDENTITY>`
 
 .Example
 [source,shell]
@@ -61,24 +133,47 @@ kobiton app kill [OPTIONS] <IDENTITY>
 kobiton app kill com.example.app
 ----
 
-== `app install`
+[#_app_install]
+=== `app install`
 
-Install app on device.
+Install an application. Requires either an app identifier (`--name`), or both `--app-id` and `--app-version-id`.
 
 .Syntax
 ----
 kobiton app install [OPTIONS]
 ----
 
+.Options
+[cols="1,1,3",options="header"]
+|===
+| Option | Argument | Description
+
+| `-n`, `--name` | `<NAME>` | The app to install. Can be an app name, package name, bundle ID, app ID, or app version ID.
+| `--app-id` | `<APP_ID>` | The Kobiton application ID.
+| `--app-version-id` | `<APP_VERSION_ID>` | The Kobiton application version ID.
+| `--search-pages` | `<SEARCH_PAGES>` | Max pages to scan when resolving an app version via deviceConnect install. Default: `10`.
+|===
+
+Plus all <<global-options,global options>>.
+
 *Requires:*
 
-* `[OPTIONS]`: requires `-s <SESSION_ID>` and `-n <NAME>`
-
+* `-s <SESSION_ID>`, and `-a <SESSION_TOKEN>` or the `KOBITON_SESSION_TOKEN` environment variable
+* One of:
+** `-n <NAME>`, or
+** both `--app-id <APP_ID>` and `--app-version-id <APP_VERSION_ID>`
 
 .Example
 [source,shell]
 ----
+# Install on session 123 the latest version of a specific app ID
 kobiton app install -s 123 -n 651911
+
+# Install on session 123 the app with a specific package name or bundle ID
+kobiton app install -s 123 -n com.example.app
+
+# Install on session 123 the app with specific app ID and app version ID
+kobiton app install -s 123 --app-id 651911 --app-version-id 739431
 ----
 
 .Output
@@ -86,20 +181,29 @@ kobiton app install -s 123 -n 651911
 Install app successfully
 ----
 
-== `app uninstall`
+=== `app uninstall`
 
-Uninstall app on device.
+Uninstall an application.
 
 .Syntax
 ----
 kobiton app uninstall [OPTIONS] <APP_IDENTIFIER>
 ----
 
+.Arguments
+[cols="1,3",options="header"]
+|===
+| Argument | Description
+
+| `<APP_IDENTIFIER>` | Bundle ID or package name to uninstall.
+|===
+
+Accepts all <<global-options,global options>>.
+
 *Requires:*
 
-* `[OPTIONS]`: requires `-u <UDID>`
-
-* `<APP_IDENTIFIER>`: package name or bundle ID of the app to uninstall
+* `-u <UDID>`
+* `<APP_IDENTIFIER>`
 
 .Example
 [source,shell]
@@ -112,18 +216,29 @@ kobiton app uninstall -u 3e4e7fe7 com.example.app
 The application is uninstalled successfully
 ----
 
-== `app upload`
+=== `app upload`
 
-Upload an app to the Kobiton App Repo.
+Upload an application to the Kobiton App Repo.
 
 .Syntax
 ----
 kobiton app upload [OPTIONS] <PATH> [APP_ID]
 ----
 
+.Arguments
+[cols="1,3",options="header"]
+|===
+| Argument | Description
+
+| `<PATH>` | Local path to an app package that belongs to a xref:apps:supported-filetypes.adoc[supported filetype and size,window=read-later].
+| `[APP_ID]` | Kobiton application ID, if uploading a new version of an existing app.
+|===
+
+Accepts all <<global-options,global options>>.
+
 *Requires:*
 
-* `<PATH>`: local path to an app package that belongs to a xref:apps:supported-filetypes.adoc[supported filetype and size,window=read-later].
+* `<PATH>`
 
 .Example
 [source,shell]
@@ -138,19 +253,28 @@ App ID: 651911
 Version ID: 739431
 ----
 
-== `app find`
+=== `app find`
 
-Find an app on the Kobiton App Repo using keyword.
+Find an app in the Kobiton App Repo using a keyword.
 
 .Syntax
 ----
 kobiton app find [OPTIONS] <KEYWORD>
 ----
 
+.Arguments
+[cols="1,3",options="header"]
+|===
+| Argument | Description
+
+| `<KEYWORD>` | Keyword to find the app. Can be text contained in the app name, text contained in the package name or bundle ID, an app ID (for example `651911`), or an app version ID prefixed with `v` (for example `v739431`). Put `<KEYWORD>` between double quotes for spaces or special characters.
+|===
+
+Accepts all <<global-options,global options>>.
+
 *Requires:*
 
-* `<KEYWORD>`: keyword to find the app. Put `<KEYWORD>` between double quotes for space or special character.
-
+* `<KEYWORD>`
 
 .Example
 [source,shell]
@@ -166,22 +290,135 @@ App ID: 651911
 Version ID: 739431
 ----
 
-== `file list`
+=== `app get-version`
 
-List files on the specified path of the device.
+Get information about a specific application version.
+
+.Syntax
+----
+kobiton app get-version [OPTIONS] --app-id <APP_ID> --app-version-id <APP_VERSION_ID>
+----
+
+.Options
+[cols="1,1,3",options="header"]
+|===
+| Option | Argument | Description
+
+| `--app-id` | `<APP_ID>` | The Kobiton application ID.
+| `--app-version-id` | `<APP_VERSION_ID>` | The Kobiton application version ID.
+|===
+
+Plus all <<global-options,global options>>.
+
+*Requires:*
+
+* `--app-id <APP_ID>`
+* `--app-version-id <APP_VERSION_ID>`
+
+.Example
+[source,shell]
+----
+kobiton app get-version --app-id 651911 --app-version-id 739431
+----
+
+=== `app sign`
+
+Get the signed download URL for a specific application version on a device.
+
+.Syntax
+----
+kobiton app sign [OPTIONS] --app-id <APP_ID> --app-version-id <APP_VERSION_ID>
+----
+
+.Options
+[cols="1,1,3",options="header"]
+|===
+| Option | Argument | Description
+
+| `--app-id` | `<APP_ID>` | The Kobiton application ID.
+| `--app-version-id` | `<APP_VERSION_ID>` | The Kobiton application version ID.
+|===
+
+Plus all <<global-options,global options>>.
+
+*Requires:*
+
+* `--app-id <APP_ID>`
+* `--app-version-id <APP_VERSION_ID>`
+
+.Example
+[source,shell]
+----
+kobiton app sign --app-id 651911 --app-version-id 739431
+----
+
+=== `app list-versions`
+
+List the versions of an application.
+
+.Syntax
+----
+kobiton app list-versions [OPTIONS] --app-id <APP_ID>
+----
+
+.Options
+[cols="1,1,3",options="header"]
+|===
+| Option | Argument | Description
+
+| `--app-id` | `<APP_ID>` | The Kobiton application ID.
+| `--page` | `<PAGE>` | Page to retrieve.
+| `--size` | `<SIZE>` | Max number of items to return.
+|===
+
+Plus all <<global-options,global options>>.
+
+*Requires:*
+
+* `--app-id <APP_ID>`
+
+.Example
+[source,shell]
+----
+kobiton app list-versions --app-id 651911
+----
+
+== `file`
+
+Manage files on the device: list, push, and pull.
+
+[NOTE]
+====
+Path syntax:
+
+* *Android:* absolute device paths, for example `/data/local/tmp`.
+* *iOS:* the base filesystem is accessible via normal paths such as `Downloads` or `DCIM/100APPLE`. To access files under an app container, use `@<bundle_id>:<container_name>/`, for example `@com.sample.app:Documents/`.
+====
+
+For how iOS app containers and file sharing work — including the `UIFileSharingEnabled` requirement and per-app examples — see xref:ios-file-sharing.adoc[Access app files on iOS devices].
+
+=== `file list`
+
+List files at a path on the device.
 
 .Syntax
 ----
 kobiton file list [OPTIONS] [PATH]
 ----
 
+.Arguments
+[cols="1,3",options="header"]
+|===
+| Argument | Description
+
+| `[PATH]` | Path to list. If empty, the home location is used.
+|===
+
+Accepts all <<global-options,global options>>.
+
 *Requires:*
 
-* `[OPTIONS]`: requires `-a <SESSION_TOKEN>` or `KOBITON_SESSION_TOKEN` environment variable.
-
-[NOTE]
-If `[PATH]` is empty, the home location is used.
-
+* `-a <SESSION_TOKEN>` or `KOBITON_SESSION_TOKEN` environment variable
 
 .Example (Android)
 [source,shell]
@@ -201,24 +438,30 @@ sampleFolder
 sampleFile1.tmp
 ----
 
-== `file push`
+=== `file push`
 
-Push a file to the specified path on the device.
+Push a local file to a remote path on the device.
 
 .Syntax
 ----
 kobiton file push [OPTIONS] <LOCAL_PATH> <REMOTE_PATH>
 ----
 
+.Arguments
+[cols="1,3",options="header"]
+|===
+| Argument | Description
+
+| `<LOCAL_PATH>` | Local source path.
+| `<REMOTE_PATH>` | Destination path on the device. If empty, the home location is used.
+|===
+
+Accepts all <<global-options,global options>>.
+
 *Requires:*
 
-* `[OPTIONS]`: requires `-a <SESSION_TOKEN>` or `KOBITON_SESSION_TOKEN` environment variable.
-
-* `<LOCAL_PATH>`: local file path to push.
-
-[NOTE]
-If `<REMOTE_PATH>` is empty, the home location is used.
-
+* `-a <SESSION_TOKEN>` or `KOBITON_SESSION_TOKEN` environment variable
+* `<LOCAL_PATH>`
 
 .Example (Android)
 [source,shell]
@@ -237,29 +480,50 @@ kobiton file push foo.dat @com.company.app:Documents/foo.dat
 Pushed 505031 bytes to /data/local/tmp/foo.dat
 ----
 
-== `file pull`
+=== `file pull`
 
-Pull a file from the specified path on the device.
+Pull a file or directory from the device to a local path.
 
 .Syntax
 ----
 kobiton file pull [OPTIONS] <REMOTE_PATH> [LOCAL_PATH]
 ----
 
+.Arguments
+[cols="1,3",options="header"]
+|===
+| Argument | Description
+
+| `<REMOTE_PATH>` | Source path on the device.
+| `[LOCAL_PATH]` | Local destination path. If empty, the current location is used.
+|===
+
+.Options
+[cols="1,1,3",options="header"]
+|===
+| Option | Argument | Description
+
+| `-r`, `--recursive` | | Recursively pull a directory and all its contents.
+| `-j`, `--concurrency` | `<CONCURRENCY>` | Maximum simultaneous transfers (recursive pulls only). Default: `5`.
+|===
+
+Plus all <<global-options,global options>>.
+
 *Requires:*
 
-* `[OPTIONS]`: requires `-a <SESSION_TOKEN>` or `KOBITON_SESSION_TOKEN` environment variable.
-
-* `<REMOTE_PATH>`: remote location of the file to pull from.
-
-[NOTE]
-If `[LOCAL_PATH]` is empty, the current location is used.
-
+* `-a <SESSION_TOKEN>` or `KOBITON_SESSION_TOKEN` environment variable
+* `<REMOTE_PATH>`
 
 .Example (Android)
 [source,shell]
 ----
 kobiton file pull /data/local/tmp/foo.dat foo.dat
+----
+
+.Example (Android, recursive)
+[source,shell]
+----
+kobiton file pull -r /data/local/tmp/mydir
 ----
 
 .Example (iOS)
@@ -273,22 +537,45 @@ kobiton file pull @com.company.app:Documents/foo.dat
 Pulled 505031 bytes to foo.dat
 ----
 
-== `device list`
+== `device`
 
-List devices.
+Device operations: discovery, shell access, port forwarding, logs, and screenshots.
+
+=== `device list`
+
+List devices, with optional filters.
 
 .Syntax
 ----
 kobiton device list [OPTIONS]
 ----
 
+.Options
+[cols="1,1,3",options="header"]
+|===
+| Option | Argument | Description
+
+| `--udid` | `<UDID>` | Filter devices with this UDID.
+| `--model` | `<MODEL>` | Filter devices by model.
+| `--name` | `<NAME>` | Filter devices by name. Supports wildcards, for example `iPad*` or `*Note*`.
+| `--platform` | `<PLATFORM>` | Filter devices by platform.
+| `--version` | `<VERSION>` | Filter devices by platform version.
+| `--reserved` | `<true\|false>` | Filter by whether the device is reserved (retained).
+| `--booked` | `<true\|false>` | Filter by whether the device is being used.
+| `--online` | `<true\|false>` | Filter by whether the device is online. Default: `true`.
+| `--team` | `<TEAM>` | Filter devices assigned to the team with this ID.
+| `--private` | | Filter for private devices.
+| `--cloud` | | Filter for cloud devices.
+| `--network` | `<true\|false>` | Filter for device network reachability.
+|===
+
+Plus all <<global-options,global options>>.
+
 [NOTE]
 ====
-Highly recommended to use:
+`device list` uses `--udid` as a filter flag and does not accept the short `-u` alias here.
 
-* `--private`: filter only private devices.
-* `--booked false`: filter only devices not in use.
-* `--reserved false`: filter only devices not retained.
+Highly recommended to use `--private --booked false --reserved false` to filter to private devices that are free to use.
 ====
 
 .Example
@@ -303,26 +590,39 @@ Display Name, UDID, Platform, List, Status, Host
 iPhone 12, 79de3c497b9f1****19040aeb44, iOS 18.1, Private, ACTIVATED, 192.168.50.86
 ----
 
-== `device adb-shell`
+=== `device adb-shell`
 
-Run ADB shell command on Android device.
+Run `adb shell` commands on an Android device.
 
 .Syntax
 ----
 kobiton device adb-shell [OPTIONS] [ARGS]...
 ----
 
+.Arguments
+[cols="1,3",options="header"]
+|===
+| Argument | Description
+
+| `[ARGS]...` | Arguments to pass (before or after `--`). If not provided, launches an interactive adb shell.
+|===
+
+Accepts all <<global-options,global options>>.
+
 *Requires:*
 
-* `[OPTIONS]`: requires `-a <SESSION_TOKEN>` or `KOBITON_SESSION_TOKEN` environment variable.
-
-[NOTE]
-If `[ARGS]...` is not provided, launch an interactive adb shell.
-
+* `-a <SESSION_TOKEN>` or `KOBITON_SESSION_TOKEN` environment variable
 
 .Example
 [source,shell]
 ----
+# Run a simple adb shell command
+kobiton device adb-shell ls
+
+# Run an adb shell command with extra arguments (pass after --)
+kobiton device adb-shell -- ls --color=auto
+
+# Quote characters that the local shell would interpret, such as a pipe
 kobiton device adb-shell "dumpsys window displays | grep -E 'mCurrentFocus|mFocusedApp'"
 ----
 
@@ -332,21 +632,43 @@ mCurrentFocus=Window{272f9b1 u0 com.example.app/MainActivity}
 mFocusedApp=ActivityRecord{3d12396 u0 com.example.app/.MainActivity t2823}
 ----
 
-== `device forward`
+=== `device forward`
 
-Forward a port on the device to a port on the local machine.
+Forward a local port to a service on the device. Address format is `tcp:<port>`. Transient network connection failures are retried for up to 5 minutes.
 
 .Syntax
 ----
 kobiton device forward [OPTIONS] <LOCAL_ADDRESS> <REMOTE_ADDRESS>
 ----
 
+.Arguments
+[cols="1,3",options="header"]
+|===
+| Argument | Description
+
+| `<LOCAL_ADDRESS>` | Address on localhost, for example `tcp:8080`.
+| `<REMOTE_ADDRESS>` | Address on the device, for example `tcp:80`.
+|===
+
+.Options
+[cols="1,1,3",options="header"]
+|===
+| Option | Argument | Description
+
+| `--mode` | `<MODE>` | How accepted connections map onto gRPC channels. `mux` (default): multiplexed over a single shared channel. `demux`: each connection gets its own dedicated channel (1:1, not shared).
+|===
+
+Plus all <<global-options,global options>>.
+
 *Requires:*
 
-* `[OPTIONS]`: requires `-a <SESSION_TOKEN>` or `KOBITON_SESSION_TOKEN` environment variable.
+* `-a <SESSION_TOKEN>` or `KOBITON_SESSION_TOKEN` environment variable
+* `<LOCAL_ADDRESS>` and `<REMOTE_ADDRESS>` in `tcp:<port>` format
 
-* `<LOCAL_ADDRESS>` and `<REMOTE_ADDRESS>`: must follow `tcp:<port>` format.
-
+[NOTE]
+====
+The port forward remains active until the CLI session or the forward process ends. The local port stays occupied while the forward process is running — stop the forward process to release it.
+====
 
 .Example
 [source,shell]
@@ -359,18 +681,41 @@ kobiton device forward tcp:8080 tcp:80
 Listening on 127.0.0.1:8080.
 ----
 
-== `device ps`
+=== `device restart`
 
-View running processes on the device.
+Restart the device.
+
+.Syntax
+----
+kobiton device restart [OPTIONS]
+----
+
+Accepts all <<global-options,global options>>.
+
+*Requires:*
+
+* `-u <UDID>`
+
+.Example
+[source,shell]
+----
+kobiton device restart -u 3e4e7fe7
+----
+
+=== `device ps`
+
+List processes running on the device.
 
 .Syntax
 ----
 kobiton device ps [OPTIONS]
 ----
 
+Accepts all <<global-options,global options>>.
+
 *Requires:*
 
-* `[OPTIONS]`: requires `-a <SESSION_TOKEN>` or `KOBITON_SESSION_TOKEN` environment variable.
+* `-a <SESSION_TOKEN>` or `KOBITON_SESSION_TOKEN` environment variable
 
 .Example
 [source,shell]
@@ -387,22 +732,157 @@ PID NAME
  5 [kworker/0:0H]
 ----
 
-== `session create`
+=== `device log`
 
-Create a CLI session.
+Stream logs from the device. Use `Control + C` to stop the log stream.
+
+.Syntax
+----
+kobiton device log [OPTIONS]
+----
+
+Accepts all <<global-options,global options>>.
+
+*Requires:*
+
+* `-a <SESSION_TOKEN>` or `KOBITON_SESSION_TOKEN` environment variable
+
+.Example
+[source,shell]
+----
+kobiton device log
+----
+
+=== `device screen`
+
+Retrieve the device screen in `jpg` format. Pipe the output to a `.jpg` file to save the screenshot.
+
+.Syntax
+----
+kobiton device screen [OPTIONS]
+----
+
+.Options
+[cols="1,1,3",options="header"]
+|===
+| Option | Argument | Description
+
+| `-q`, `--quality` | `<QUALITY>` | JPEG quality as a percentage, 0–100.
+|===
+
+Plus all <<global-options,global options>>.
+
+*Requires:*
+
+* `-a <SESSION_TOKEN>` or `KOBITON_SESSION_TOKEN` environment variable
+
+.Example
+[source,shell]
+----
+kobiton device screen -q 80 > screen.jpg
+----
+
+== `reservation`
+
+Reservation operations: list and terminate device reservations.
+
+=== `reservation list`
+
+List device reservations (retainments).
+
+.Syntax
+----
+kobiton reservation list [OPTIONS]
+----
+
+.Options
+[cols="1,1,3",options="header"]
+|===
+| Option | Argument | Description
+
+| `--page` | `<PAGE>` | Page to retrieve. Default: `1`.
+| `--size` | `<SIZE>` | Max number of items to return. Default: `20`.
+|===
+
+Plus all <<global-options,global options>>.
+
+.Example
+[source,shell]
+----
+kobiton reservation list
+----
+
+.Output
+----
+ID, Status, Creator, UDIDs
+7, RESERVED, johndoe@example.com, 00008030-00057190****802E
+
+Page 1 (20 items), 1 total
+----
+
+=== `reservation terminate`
+
+Terminate a reservation by its ID.
+
+[NOTE]
+Only users with the `soft_book.terminate_other_soft_book` permission can terminate reservations that are not their own.
+
+.Syntax
+----
+kobiton reservation terminate [OPTIONS] <RESERVATION_ID>
+----
+
+.Arguments
+[cols="1,3",options="header"]
+|===
+| Argument | Description
+
+| `<RESERVATION_ID>` | Reservation ID to terminate. Use `kobiton reservation list` to retrieve the ID.
+|===
+
+Accepts all <<global-options,global options>>.
+
+*Requires:*
+
+* `<RESERVATION_ID>`
+
+.Example
+[source,shell]
+----
+kobiton reservation terminate 7
+----
+
+.Output
+----
+OK
+----
+
+== `session`
+
+Session creation, termination, and keepalive.
+
+=== `session create`
+
+Create a session.
 
 .Syntax
 ----
 kobiton session create [OPTIONS]
 ----
 
-*Requires*
+.Options
+[cols="1,1,3",options="header"]
+|===
+| Option | Argument | Description
 
-* `[OPTIONS]`: requires `-u <UDID>`.
+| `-t`, `--timeout` | `<TIMEOUT>` | Inactivity timeout for this session, in minutes. Default/minimum is `10`, maximum is `120`. Can be refreshed with `session ping`.
+|===
 
-[NOTE]
-Use `-t` to set session timeout in minutes. Default/minimum is `10` and maximum is `120`.
+Plus all <<global-options,global options>>.
 
+*Requires:*
+
+* `-u <UDID>`
 
 .Example
 [source,shell]
@@ -416,18 +896,20 @@ Session 8155111 created for device 3e4e7fe7.
 Session token eyJhbGciOiJ...
 ----
 
-== `session end`
+=== `session end`
 
-End an active session (all types).
+Complete a session, setting its status to *ended*.
 
 .Syntax
 ----
 kobiton session end [OPTIONS]
 ----
 
+Accepts all <<global-options,global options>>.
+
 *Requires:*
 
-* `[OPTIONS]`: requires `-s <SESSION_ID>`
+* `-s <SESSION_ID>`
 
 .Example
 [source,shell]
@@ -440,18 +922,20 @@ kobiton session end -s 8155111
 Session 8155111 ended.
 ----
 
-== `session terminate`
+=== `session terminate`
 
-Terminate a non-responsive session (all types).
+Complete a non-responsive session, setting its status to *terminated*.
 
 .Syntax
 ----
 kobiton session terminate [OPTIONS]
 ----
 
+Accepts all <<global-options,global options>>.
+
 *Requires:*
 
-* `[OPTIONS]`: requires `-s <SESSION_ID>`
+* `-s <SESSION_ID>`
 
 .Example
 [source,shell]
@@ -464,18 +948,20 @@ kobiton session terminate -s 8155111
 Session 8155111 terminated.
 ----
 
-== `session delete`
+=== `session delete`
 
-Delete and remove a completed CLI session from the Session list.
+Delete a completed session from history (removes it from the Session list).
 
 .Syntax
 ----
 kobiton session delete [OPTIONS]
 ----
 
+Accepts all <<global-options,global options>>.
+
 *Requires:*
 
-* `[OPTIONS]`: requires `-s <SESSION_ID>`
+* `-s <SESSION_ID>`
 
 .Example
 [source,shell]
@@ -488,18 +974,20 @@ kobiton session delete -s 8155111
 OK
 ----
 
-== `session ping`
+=== `session ping`
 
-Ping an active CLI session to reset the timeout counter.
+Reset the timeout period for this session (keepalive).
 
 .Syntax
 ----
 kobiton session ping [OPTIONS]
 ----
 
+Accepts all <<global-options,global options>>.
+
 *Requires:*
 
-* `[OPTIONS]`: requires *both* `-s <SESSION_ID>` and `KOBITON_SESSION_TOKEN` environment variable (or `-a <SESSION_TOKEN>`).
+* *both* `-s <SESSION_ID>` and `KOBITON_SESSION_TOKEN` environment variable (or `-a <SESSION_TOKEN>`)
 
 .Example
 [source,shell]
@@ -513,14 +1001,16 @@ kobiton session ping -s 8155111
 Session 8155111 pinged.
 ----
 
-== `session list-active`
+=== `session list-active`
 
-List active sessions (all types).
+Display a list of all active sessions.
 
 .Syntax
 ----
 kobiton session list-active [OPTIONS]
 ----
+
+Accepts all <<global-options,global options>>.
 
 .Example
 [source,shell]
@@ -533,18 +1023,20 @@ kobiton session list-active
 Session 8155111, device 3e4e7fe7, status RUNNING, created 2025-10-09T03:38:03Z, ended active
 ----
 
-== `session show`
+=== `session show`
 
-Show details of a session (all types).
+Show information about a session.
 
 .Syntax
 ----
 kobiton session show [OPTIONS]
 ----
 
+Accepts all <<global-options,global options>>.
+
 *Requires:*
 
-* `[OPTIONS]`: requires `-s <SESSION_ID>`
+* `-s <SESSION_ID>`
 
 .Example
 [source,shell]
@@ -561,7 +1053,11 @@ Device 3e4e7fe7: Android 11
 Status: COMPLETE
 ----
 
-== `test run`
+== `test`
+
+Test runs and management.
+
+=== `test run`
 
 Run a native framework automation session (XCUITest, UIAutomator, or Espresso). GameDriver is not supported.
 
@@ -570,24 +1066,44 @@ Run a native framework automation session (XCUITest, UIAutomator, or Espresso). 
 kobiton test run [OPTIONS] --app <APP> --runner <TEST_RUNNER> <FRAMEWORK>
 ----
 
+.Arguments
+[cols="1,3",options="header"]
+|===
+| Argument | Description
+
+| `<FRAMEWORK>` | Framework to test with. Must be either `uiautomator2` or `xcuitest`.
+|===
+
+.Options
+[cols="1,1,3",options="header"]
+|===
+| Option | Argument | Description
+
+| `--app` | `<APP>` | Application to test. A URL or a kobiton-store ID. *(required)*
+| `--runner` | `<TEST_RUNNER>` | Test runner to use. A URL or a kobiton-store ID. *(required)*
+| `--session-name` | `<SESSION_NAME>` | Name of this session.
+| `--description` | `<SESSION_DESCRIPTION>` | Longer description of this session.
+| `-d`, `--device-name` | `<DEVICE_NAME>` | Friendly device name to use. This or UDID is required. Supports wildcards.
+| `-v`, `--platform-version` | `<PLATFORM_VERSION>` | Platform version to match. Supports wildcards.
+| `-g`, `--device-group` | `<DEVICE_GROUP>` | Group of devices to match within.
+| `--plan` | `<TEST_PLAN>` | Test plan to use. A URL or a path to a file. Required for XCUITest, unless tests are specified.
+| `-t`, `--test` | `<TESTS>` | Tests to execute. Repeatable. Required for XCUITest, unless a test plan is specified.
+| `-o`, `--session-timeout` | `<SESSION_TIMEOUT>` | Terminate the session if not completed before this timeout, in seconds. Default: `1800` (30 minutes).
+| `--reset` | `<RESET>` | Reset options. Valid types: `full`, `data`, `none`.
+| `--follow` | | Follow a session until it is completed, then print a plain-text test report.
+| `--stream` | | Stream test logs as they are emitted. Session test reports are not available with this option.
+| `--run-command` | `<RUN_COMMAND>` | Run command for TurboTest execution.
+| `-e`, `--env` | `<KEY> <VALUE>` | Environment variable pair. Repeatable: `--env KEY VALUE`.
+|===
+
+Plus all <<global-options,global options>>.
+
 *Requires:*
 
-
-* `[OPTIONS]`: different requirements based on framework:
-
-** Either `-u <UDID>` or `-d <DEVICE_NAME>` is required for any framework.
-
-** Either `-t <TESTS>` or `--plan <TEST_PLAN>` is required for XCUITest.
-
-*** `<TEST_PLAN>` must be a direct URL. Local path is not supported.
-
-* `<FRAMEWORK>`: must be either `uiautomator2` or `xcuitest`.
-
-* `<APP>` and `<TEST_RUNNER>`: must be either Kobiton App Repo ID (`kobiton-store:<APP_ID>` or `kobiton-store:v<APP_VERSION_ID>`) or direct URL. Local path is not supported.
-
-[TIP]
-Add the `--follow` argument to continually request the status of the test until completion, then print a plain text test report.
-
+* `--app <APP>` and `--runner <TEST_RUNNER>`, each a Kobiton App Repo ID (`kobiton-store:<APP_ID>` or `kobiton-store:v<APP_VERSION_ID>`) or a direct URL. Local path is not supported.
+* Either `-u <UDID>` or `-d <DEVICE_NAME>` for any framework.
+* Either `-t <TESTS>` or `--plan <TEST_PLAN>` for XCUITest. `<TEST_PLAN>` must be a direct URL.
+* `<FRAMEWORK>`
 
 .Example (UIAutomator or Espresso)
 [source,shell]
@@ -633,4 +1149,69 @@ XCUITestSampleUITests#testXYZ [0.324] PASSED
 out: Start Test at 2025-10-09 11:24:58.684
 out: Set Up
 out: Tear Down
+----
+
+== `webdriver`
+
+Send generic WebDriver commands to the session. The session path prefix (`/session/<id>`) is supplied automatically — provide only the path suffix.
+
+=== `webdriver post`
+
+Send a generic WebDriver POST command.
+
+.Syntax
+----
+kobiton webdriver post [OPTIONS] <PATH> [ARGS]
+----
+
+.Arguments
+[cols="1,3",options="header"]
+|===
+| Argument | Description
+
+| `<PATH>` | Path suffix to POST, excluding `/session/id`. For example, `element` for find element.
+| `[ARGS]` | Request body as a single JSON string.
+|===
+
+Accepts all <<global-options,global options>>.
+
+*Requires:*
+
+* `-a <SESSION_TOKEN>` or `KOBITON_SESSION_TOKEN` environment variable
+* `<PATH>`
+
+.Example
+[source,shell]
+----
+kobiton webdriver post element '{"using":"id","value":"login"}'
+----
+
+=== `webdriver get`
+
+Send a generic WebDriver GET command.
+
+.Syntax
+----
+kobiton webdriver get [OPTIONS] <PATH>
+----
+
+.Arguments
+[cols="1,3",options="header"]
+|===
+| Argument | Description
+
+| `<PATH>` | Path suffix to GET, excluding `/session/id`. For example, `source` for page source.
+|===
+
+Accepts all <<global-options,global options>>.
+
+*Requires:*
+
+* `-a <SESSION_TOKEN>` or `KOBITON_SESSION_TOKEN` environment variable
+* `<PATH>`
+
+.Example
+[source,shell]
+----
+kobiton webdriver get source
 ----
