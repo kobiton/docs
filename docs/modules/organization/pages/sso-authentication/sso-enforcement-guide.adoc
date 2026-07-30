@@ -64,7 +64,7 @@ image:enforce-sso-ui.png[width=1000,alt="Enforce SSO login in Settings > SSO Set
 
 When *Enforce SSO* is enabled, the *Choose users who are allowed to login without SSO* field appears. Add users to this list to exempt them from organization-wide SSO enforcement.
 
-[Important]
+[IMPORTANT]
 ====
 Keep at least one administrator on the exemption list. If SSO becomes unavailable, exempted users are the only accounts that can still access Kobiton Portal.
 ====
@@ -92,7 +92,7 @@ image:pass-enforce-sso.png[width=1000,alt="Pass enforcments window in Settings >
 
 === Before enabling role and team passthrough
 
-Ensure all of the following conditions are met:
+Ensure all the following conditions are met:
 
 - *Enforce SSO* is enabled in *Settings* > *SSO Settings*.
 - A valid value has been entered in the *Org Admin Team* field.
@@ -135,11 +135,11 @@ Example: if your IdP sends the group value `Engineering-QA`, enter `Engineering-
 4. To add multiple values, separate them with `;` or press *Enter* after each value.
 5. Save the role.
 
-When role and team passthrough is turned off, the *SSO Attribute Value* field is hidden.
+When role and team pass-through is turned off, the *SSO Attribute Value* field is hidden.
 
 == Role and team synchronization rules
 
-When role and team passthrough is enabled, Kobiton synchronizes roles and team assignments from IdP group memberships during SSO login.
+When role and team pass-through is enabled, Kobiton synchronizes roles and team assignments from IdP group memberships during SSO login.
 
 === Team assignment
 
