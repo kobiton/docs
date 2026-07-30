@@ -80,15 +80,15 @@ Keep at least one administrator on the exemption list. If SSO becomes unavailabl
 
 The *Pass role / team assignments to users in the SAML validations* switch delegates role and team assignment to the identity provider (IdP).
 
-When enabled, Kobiton synchronizes user roles and team assignments from IdP group memberships during SSO login.
-
-In the UI, this setting appears as *Pass role / team assignments to users in the SAML validations*. The feature maps IdP-provided SAML attribute values to Kobiton roles and teams.
+When enabled, Kobiton synchronizes user roles and team assignments from IdP group memberships during SSO login. The feature maps IdP-provided SAML attribute values to Kobiton roles and teams.
 
 *Location:* *Settings* > *SSO Settings*
 
 *Required permission:* `org_setting.modify_sso_setting`
 
-image:pass-enforce-sso.png[width=1000,alt="Pass enforcments window in Settings > SSO Settings"]
+image:pass-enforce-sso.png[width=1000,alt="Pass role and team assignments switch in Settings > SSO Settings"]
+
+To create the IdP groups and map them to Kobiton roles and teams, see xref:organization:sso-authentication/pass-role-and-team-assignments.adoc[].
 
 === Before enabling role and team passthrough
 
@@ -110,32 +110,19 @@ Ensure all the following conditions are met:
 === Behavior when role and team passthrough is turned off
 
 - Kobiton stops synchronizing roles and teams from the IdP during SSO login.
+- The *SSO Attribute Value* field on teams and roles is hidden.
 - Manual role assignment in *Org Management* > *Users* and *Org Management* > *Roles* is enabled for users with the appropriate permissions.
 - The *Invite* button in *Org Management* > *Users* is enabled for users with the appropriate permissions.
 
-== Configure SSO Attribute Values
+== SSO Attribute Values
 
-The *SSO Attribute Value* field contains the IdP group or attribute value that Kobiton maps to a role or team.
+The *SSO Attribute Value* field contains the IdP group or attribute value that Kobiton maps to a role or team. The field appears on each team in *Org Management* > *Teams* and each role in *Org Management* > *Roles*.
 
 Example: if your IdP sends the group value `Engineering-QA`, enter `Engineering-QA` as the *SSO Attribute Value* for the corresponding Kobiton team.
 
-=== Configure Attribute values for a team
+A team or role accepts more than one value, so several IdP groups can map to the same team or role.
 
-1. Open *Org Management* > *Teams*.
-2. Select an existing team or create a new team.
-3. In the *SSO Attribute Value* field, enter the IdP group values that map to this team.
-4. To add multiple values, separate them with `;` or press *Enter* after each value.
-5. Save the team.
-
-=== Configure Attribute values for a role
-
-1. Open *Org Management* > *Roles*.
-2. Select an existing role or create a new role.
-3. In the *SSO Attribute Value* field, enter the IdP group values that map to this role.
-4. To add multiple values, separate them with `;` or press *Enter* after each value.
-5. Save the role.
-
-When role and team passthrough is turned off, the *SSO Attribute Value* field is hidden.
+For the steps to configure these values, see xref:organization:sso-authentication/pass-role-and-team-assignments.adoc[].
 
 == Role and team synchronization rules
 
