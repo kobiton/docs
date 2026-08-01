@@ -8,17 +8,7 @@ This feature is currently in Beta and is limited to Private devices.
 
 Learn how to run your Appium script with optimal execution speed and minimal latency using Appium Turbo Test Execution.
 
-After reading this document, you will be able to:
-
-* Modify your existing Appium automation script to make it compatible with Appium Turbo Test.
-
-* Package your script into a test runner and upload it to Kobiton.
-
-* Make a request to the Kobiton API v2 to execute the Appium Turbo test with the uploaded test runner.
-
-* Retrieve the test result and other test artifacts.
-
-== Why Use Turbo Test Execution with Appium
+== Why use Turbo Test Execution with Appium
 
 Kobiton has analyzed thousands of Appium script executions from around the world and found that, on average, *28% of total execution time* is spent on communication between the Appium client and the Appium server.
 
@@ -28,7 +18,7 @@ This overhead is influenced by factors such as:
 * *Geographical distance* between where the test runs and where the Appium server is hosted
 * *Payload type and frequency*, including screenshots, logs, and element metadata exchanged during each command
 
-*Turbo Test Execution* minimizes this communication overhead by streamlining the client–server interaction.As a result, your Appium scripts execute *up to 28% faster* on average without requiring any code changes.
+*Turbo Test Execution* minimizes this communication overhead by streamlining the client–server interaction. As a result, your Appium scripts execute *up to 28% faster* on average without requiring any code changes.
 
 When you use *Xium*, Kobiton’s optimized runtime, instead of *Basic Appium 2*:
 
@@ -40,7 +30,7 @@ The combination of Turbo Test Execution and Xium delivers a significant reductio
 [#_prerequisites]
 == Prerequisites
 
-* A Kobiton account.Note down the below information:
+* A Kobiton account. Note down the below information:
 
 ** xref:profile:manage-your-profile.adoc#_view_your_username_and_email[Username or email,window=read-later]
 
@@ -51,6 +41,10 @@ The combination of Turbo Test Execution and Xium delivers a significant reductio
 * Private devices available in the Kobiton account.
 
 * An Appium automation script that satisfies the below prerequisites.
+
++
+
+Turbo Test Execution for Appium supports *XIUM* and *Basic Appium 2*.
 
 +
 
@@ -186,9 +180,9 @@ public class SimpleTurboTest {
             String kobitonRuntime = System.getenv("KOBITON_RUNTIME");
 
             // Validate env vars
-            if (webdriverUrl == null || kobitonSession == null || udid == null ||
-                    webdriverUrl.isEmpty() || kobitonSession.isEmpty() || udid.isEmpty())  {
-                System.err.println("Missing required env vars: KOBITON_UDID, KOBITON_WEBDRIVER_URL, or KOBITON_SESSION");
+            if (kobitonUrl == null || kobitonSession == null || udid == null ||
+                    kobitonUrl.isEmpty() || kobitonSession.isEmpty() || udid.isEmpty())  {
+                System.err.println("Missing required env vars: KOBITON_UDID, KOBITON_URL, or KOBITON_SESSION");
                 return;
             }
 
@@ -201,7 +195,7 @@ public class SimpleTurboTest {
                 sessionName = "A Turbo Test session for Android";
             }
 
-            if (sessionDescription == null || kobitonUsername.isEmpty()) {
+            if (sessionDescription == null || sessionDescription.isEmpty()) {
                 sessionDescription = "A sample Turbo Test session for Android";
             }
 
@@ -218,7 +212,7 @@ public class SimpleTurboTest {
             caps.setCapability("kobiton:runtime", kobitonRuntime);
 
             // Initialize driver
-            AndroidDriver driver = new AndroidDriver(new URI(kobitonBaseUrl).toURL(), caps);
+            AndroidDriver driver = new AndroidDriver(new URI(kobitonUrl).toURL(), caps);
 
             // Save page source
             Files.writeString(Path.of("output/page_source.xml"), driver.getPageSource());
@@ -230,8 +224,6 @@ public class SimpleTurboTest {
 
             driver.quit();
             log.write("Completed successfully at " + LocalDateTime.now() + "\n");
-
-            driver.quit();
 
         } catch (Exception e) {
             try (FileWriter err = new FileWriter("output/error.log", true)) {
@@ -274,9 +266,9 @@ public class SimpleTurboTest {
             String kobitonRuntime = System.getenv("KOBITON_RUNTIME");
 
             // Validate env vars
-            if (webdriverUrl == null || kobitonSession == null || udid == null ||
-                    webdriverUrl.isEmpty() || kobitonSession.isEmpty() || udid.isEmpty())  {
-                System.err.println("Missing required env vars: KOBITON_UDID, KOBITON_WEBDRIVER_URL, or KOBITON_SESSION");
+            if (kobitonUrl == null || kobitonSession == null || udid == null ||
+                    kobitonUrl.isEmpty() || kobitonSession.isEmpty() || udid.isEmpty())  {
+                System.err.println("Missing required env vars: KOBITON_UDID, KOBITON_URL, or KOBITON_SESSION");
                 return;
             }
 
@@ -289,7 +281,7 @@ public class SimpleTurboTest {
                 sessionName = "A Turbo Test session for iOS";
             }
 
-            if (sessionDescription == null || kobitonUsername.isEmpty()) {
+            if (sessionDescription == null || sessionDescription.isEmpty()) {
                 sessionDescription = "A sample Turbo Test session for iOS";
             }
 
@@ -318,8 +310,6 @@ public class SimpleTurboTest {
 
             driver.quit();
             log.write("Completed successfully at " + LocalDateTime.now() + "\n");
-
-            driver.quit();
 
         } catch (Exception e) {
             try (FileWriter err = new FileWriter("output/error.log", true)) {
@@ -401,7 +391,7 @@ curl --location '<api_base_url>/v2/sessions/native' \
   "app": "<kobiton_app>",
   "udid": "<udid>",
   "device_name": "<device_name>",
-  "tags": <array_of_device_tags>,
+  "device_tags": [<array_of_device_tags>],
   "platform_version": "<device_os_version>",
   "env": {<environment_variables>},
   "args": [<array_of_arguments>],
@@ -422,9 +412,9 @@ If the request is successful, the response is similar to the below:
 [source,json]
 ----
 {
-  "session_id": "<session_id>",
+  "session_id": <session_id>,
   "device_udid": "<device_udid>",
-  "device_id": "<device_id>",
+  "device_id": <device_id>,
   "request_id": "<appium_request_id>",
   "test_report_download_url": "<test_report_url>"
 }
@@ -501,13 +491,13 @@ See the next sections for request and response parameter reference.
 
 * `udid`
 ** *Type:* string
-** *Required:* Yes if `tags` and `device_name` is not provided
+** *Required:* Yes if `device_tags` and `device_name` is not provided
 ** *Example:* `8bf2c82a`
 ** *Description:* UDID of the Kobiton Private device
 
 * `device_name`
 ** *Type:* string
-** *Required:* Yes if `tags` and `udid` is not provided
+** *Required:* Yes if `device_tags` and `udid` is not provided
 ** *Example:* `Pixel 8`, `iPad *`, `*`
 ** *Description:* Name of the Kobiton Private device. Wildcard (`*`) is supported.
 
@@ -517,7 +507,7 @@ See the next sections for request and response parameter reference.
 ** *Example:* `12`
 ** *Description:* OS version of the device
 
-* `tags`
+* `device_tags`
 ** *Type:* array of strings
 ** *Required:* Yes if `udid` and `device_name` is not provided
 ** *Example:* `[[ "healthy" ], [ "project", "dev" ]]`
@@ -525,6 +515,14 @@ See the next sections for request and response parameter reference.
 *** Single group with a single tag: `[[ "healthy" ]]` (Only select devices with `healthy` tag)
 *** Single group with multiple tags (OR within group): `[[ "project", "dev" ]]` (Select devices with either `project` or `dev` tag)
 *** Multiple groups (AND across groups): `[[ "healthy" ], [ "project", "dev" ]]` (Select devices with `healthy` and either `project` or `dev` tag)
+
+* `device_tag_type`
+** *Type:* enum
+** *Required:* No
+** *Values:* `private` or `public`
+** *Description:*
+*** Only applies when `device_tags` is provided.
+*** When specified, filters by public or private device tags only. Otherwise, both private and public device tags are used.
 
 * `env`
 ** *Type:* object (string keys and values)
@@ -661,7 +659,7 @@ curl --location '<api_base_url>/v2/sessions/<session_id>' \
 --header 'Authorization: Basic <credentials>'
 ----
 
-* `<session_id>` is obtained from the response of the <<Run the automation test,check queue status>> request.
+* `<session_id>` is obtained from the response of the <<Check status for queued execution mode,check queue status>> request.
 
 The test report download URL is the value of `test_report_url` in the response. *Note:* if the `test_report_url` is not available, wait until the test has finished executing before trying again.
 
@@ -725,7 +723,7 @@ curl --location '<api_base_url>/v2/sessions/native' \
 
 * Download the test report from the URL in the response.
 ** If `execution_mode` is `QUEUED`, follow the instructions from the <<Download test report>> section to obtain the test report.
-* The test report should contain:
+* The test report contains:
 ** A `stdout.log` file that captures the output of the run command.
 ** A `stderr.log` file that captures the error(s) when executing the run command, if any.
 ** An `output` folder that contains the test log, XML page source, and screenshot of the app under test.
