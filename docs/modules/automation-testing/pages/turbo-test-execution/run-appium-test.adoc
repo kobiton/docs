@@ -440,7 +440,7 @@ See the next sections for request and response parameter reference.
 * `<api_base_url>`
 ** *Type:* string
 ** *Required:* Yes
-** *Example:* `https://api.kobiton.com`
+** *Example:* `+https://api.kobiton.com+`
 ** *Description:* The API base URL.
 
 * `<credentials>`
@@ -462,7 +462,7 @@ See the next sections for request and response parameter reference.
 ** *Type:* string
 ** *Required:* Yes
 ** *Example:* either of the below:
-*** `https://kobiton-*.s3.amazonaws.com/test-runner/users/17/test_runner-xyz.zip`
+*** `+https://kobiton-*.s3.amazonaws.com/test-runner/users/17/test_runner-xyz.zip+`
 *** `f8b6967d-1975-4c08-92b7-037512416127`
 ** *Description:* Can be either of the below:
 *** Download URL of the test runner
@@ -485,7 +485,7 @@ See the next sections for request and response parameter reference.
 * `app`
 ** *Type:* string
 ** *Required:* No
-** *Example:* `kobiton-store:v34321`, `https://example.com/downloads/sample.ipa`
+** *Example:* `kobiton-store:v34321`, `+https://example.com/downloads/sample.ipa+`
 ** *Description:* The app to test.
 ** *Note:* requires `KOBITON_APP` environment variable.
 
@@ -584,7 +584,7 @@ See the next sections for request and response parameter reference.
 
 * `test_report_download_url`
 ** *Type:* string
-** *Example:* `https://kobiton-acme.s3.amazonaws.com/organizations/6/sessions/d8c22b16-e863-47ed-b2b5-c1103c4a91a0/test-report.zip`
+** *Example:* `+https://kobiton-acme.s3.amazonaws.com/organizations/6/sessions/d8c22b16-e863-47ed-b2b5-c1103c4a91a0/test-report.zip+`
 ** *Description:* URL to download the test report. Only downloadable after the test has finished.
 
 ==== Queued execution mode
