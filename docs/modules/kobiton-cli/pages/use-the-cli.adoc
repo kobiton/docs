@@ -3,7 +3,7 @@
 
 Learn how to use Kobiton Command Line Interface to control and operate your private device lab.
 
-== Before you start
+== Before you begin
 
 * xref:set-up-cli.adoc[Set up] Kobiton CLI.
 
@@ -62,22 +62,38 @@ set KOBITON_SESSION_TOKEN=<SESSION_TOKEN>
 --
 ====
 
-Most CLI commands require either `SESSION_ID` or `KOBITON_SESSION_TOKEN`. See xref:cli-commands.adoc[this page,window=read-later] for the list of commands and their basic usage.
+== Use session context consistently
+
+After creating a CLI session, you receive both a `<SESSION_ID>` and a `<SESSION_TOKEN>`.
 
 [NOTE]
 ====
-
-* For CLI sessions:
-
-** No Session Explorer available.
-
-** Session video and logs are not available in Session Overview.
-
-** Mixed sessions between manual and CLI are not supported.
-
-** CLI sessions time out after 10 minutes by default and can be configured for up to 2 hours. You can reset the timeout using the `kobiton session ping` command.
-
+The *session ID* identifies the session record. The *session token* authorizes and scopes CLI commands to that session.
 ====
+
+Many commands that operate on an active CLI session require session context. Provide session context using one of the following methods:
+
+* Pass the session token explicitly: `--session-token <SESSION_TOKEN>` (or `-a <SESSION_TOKEN>`)
+* Set the `KOBITON_SESSION_TOKEN` environment variable
+
+The session token ensures each command is applied to the intended active session.
+
+If you are running multiple sessions concurrently, always provide the session context explicitly. This prevents commands from being applied to the wrong session when more than one session is active.
+
+For interactive use, set `KOBITON_SESSION_TOKEN` once per terminal session.
+
+For scripts or isolated commands, pass `--session-token` explicitly with each command.
+
+
+== Known limitations
+
+* Session Explorer is not available when using Kobiton CLI.
+
+* Session video and logs are not available in Session Overview.
+
+* Mixed sessions between manual testing and CLI testing are not supported.
+
+* By default, CLI sessions time out after 10 minutes. You can configure the timeout up to 2 hours using the `kobiton session ping` command.
 
 [#_troubleshooting]
 == Troubleshooting

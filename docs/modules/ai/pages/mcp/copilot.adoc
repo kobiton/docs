@@ -1,0 +1,306 @@
+= Kobiton for Copilot CLI
+:navtitle: Copilot CLI
+
+Kobiton for GitHub Copilot CLI connects Copilot to the Kobiton mobile testing platform. You can manage devices, upload apps, run automation tests, and review results using natural language commands without switching between the terminal, the Kobiton portal, and local test scripts.
+
+https://discord.gg/uHvBFDZVP[image:discord-badge.svg[Join our Discord]]
+https://kobiton.com[image:kobiton-cloud.svg[Kobiton Cloud]]
+
+== Get started
+
+=== Open a workspace folder
+
+Before using the Copilot CLI, open a command-line tool on your machine:
+
+- macOS: Terminal
+- Windows: PowerShell or Command Prompt
+
+Create a folder:
+
+[source,bash]
+----
+mkdir kobiton-project
+----
+
+You can create this folder anywhere, for example in your Documents directory.
+
+=== Install the plugin
+
+include::partial$local-plugin.adoc[]
+
+For standard Cloud environment, start the Copilot CLI from the created workspace:
+
+[source,bash]
+----
+cd kobiton-project
+copilot
+----
+
+Once the Copilot CLI starts in your Terminal, run the following commands one at a time in that window:
+
+[source,bash]
+----
+/plugin marketplace add kobiton/automate
+----
+then
+
+[source,bash]
+----
+/plugin install automate@kobiton
+----
+
+Both steps are required and must be run separately.
+
+[#_authentication]
+== Authentication
+
+Kobiton MCP supports:
+
+* OAuth authentication (recommended)
+* API key authentication
+
+OAuth authentication is the default authentication method for the Copilot CLI.
+
+=== OAuth authentication (recommended)
+
+Trigger the OAuth flow from inside the session:
+
+[source,bash]
+----
+/mcp auth kobiton
+----
+
+A browser window opens for authentication.
+
+Sign in using:
+
+* Kobiton credentials
+* Google
+* GitHub
+
+The Copilot CLI stores OAuth tokens automatically for future sessions. Use `/mcp` (or `/mcp show`) at any time to inspect server status.
+
+=== API key authentication
+
+Use API key authentication for:
+
+* CI/CD pipelines
+* headless environments
+* systems without browser access
+
+Generate an API key in *Kobiton Portal > Settings > API Keys*. Then set:
+
+[source,bash]
+----
+export KOBITON_AUTH="Basic $(echo -n 'username:api-key' | base64)"
+----
+
+Update `.mcp.json` (or `~/.copilot/mcp-config.json`) to include the `Authorization` header.
+
+[NOTE]
+====
+OAuth and API key authentication cannot be used together in the same `.mcp.json` configuration.
+
+OAuth uses browser-based authentication and token management, while API key authentication uses explicit authorization headers. Configure only one authentication method at a time.
+====
+
+=== Bootstrap credentials and CLI wrapper
+
+After installation and OAuth login, run setup once to fetch your credentials and install the CLI wrapper used by the `run-interactive-test` skill:
+
+[source,bash]
+----
+/automate:setup
+----
+
+The Copilot CLI has no SessionStart hook, so the wrapper is not re-installed automatically. Re-run `/automate:setup` if `~/.kobiton/bin/kobiton` ever goes missing.
+
+To verify everything is wired correctly:
+
+[source,bash]
+----
+/automate:doctor
+----
+
+=== Run a command
+
+After authentication, enter commands in the Copilot CLI using natural language.
+
+[source,bash]
+----
+Show available Android devices
+Show results for session 12345
+Upload app.apk and run tests/smoke_test.js
+----
+
+If tool calls are blocked, allow Kobiton tools explicitly:
+
+[source,bash]
+----
+copilot --allow-tool='kobiton'
+----
+
+Or allow specific tools:
+
+[source,bash]
+----
+copilot --allow-tool='kobiton(listDevices)' --allow-tool='kobiton(getSession)'
+----
+
+== Common workflows
+
+The Copilot CLI plugin supports common mobile testing workflows, including device management, app uploads, test execution, and session review.
+
+=== Device management
+
+- View available devices
+- Check device status
+- Reserve and release devices
+
+=== App management
+
+- Upload Android and iOS apps
+- View uploaded apps
+- Get app details
+
+=== Test execution
+
+The `run-automation-suite` workflow guides you through the full test lifecycle:
+
+- Upload or select an app
+- Select a device
+- Parse capabilities from your script
+- Run the test
+- Return results and artifacts
+
+Supported languages:
+
+[cols=",,",options="header"]
+|===
+|Language |Extension |Command
+
+|Node.js
+|`.js`
+|`node <script> <udid>`
+
+|Python
+|`.py`
+|`python <script> <udid>`
+
+|.NET
+|`.cs` / `.csproj`
+|`dotnet test`
+
+|Java
+|`.java`
+|`mvn test` or `java -cp ...`
+|===
+
+=== Session management
+
+- View active and past sessions
+- Get logs, screenshots, and videos
+- Stop running sessions
+
+== Example prompts
+
+=== Device management
+
+....
+Show available Android devices
+Check if Galaxy S23 is available
+Reserve Pixel 6 for 60 minutes
+....
+
+=== App management
+
+....
+Show uploaded Android apps
+Upload resources/apps/GS.apk
+....
+
+=== Test execution
+
+....
+Run tests/smoke_test.js on a Pixel device
+....
+
+=== Session management
+
+....
+Show running sessions
+Get details for session 12345
+Download logs from last failed session
+....
+
+For a complete reference of available Kobiton tools, skills, and commands, see the xref:mcp/ai-plugin-mcp-ref.adoc[Kobiton AI plugin and tools reference].
+
+== Troubleshooting
+
+=== MCP tools not available after plugin install
+
+Verify the plugin is installed and the MCP server is configured:
+
+[source,bash]
+----
+exit
+copilot plugin list
+copilot
+/mcp show
+----
+
+If the `kobiton` MCP server does not appear, add it manually by running `/mcp add` and entering the following when prompted:
+
+- Server name: `kobiton`
+- Type: `http`
+- URL: `https://api.kobiton.com/mcp`
+
+Alternatively, edit `~/.copilot/mcp-config.json` directly:
+
+[source,json]
+----
+{
+  "mcpServers": {
+    "kobiton": {
+      "type": "http",
+      "url": "https://api.kobiton.com/mcp"
+    }
+  }
+}
+----
+
+=== MCP server does not appear in `/mcp` after install
+
+The Copilot CLI caches plugin state when the session starts. After installing or updating the plugin, exit and relaunch:
+
+[source,bash]
+----
+exit
+copilot
+----
+
+=== Tool calls are blocked
+
+The Copilot CLI requires explicit tool permissions. Allow Kobiton tools as shown in *Run a command* above.
+
+=== Device not found
+
+The device may be unavailable. Filter for available devices.
+
+=== Upload timeout
+
+Large files or slow connections can cause timeouts. Retry the upload.
+
+=== Session stuck
+
+Terminate the session and run it again.
+
+=== Authentication not recognized
+
+Reload your shell and restart the Copilot CLI.
+
+== Additional resources
+
+- https://github.com/kobiton/automate/issues/new?template=bug_report.md[Report an issue]
+- https://discord.com/channels/1486036652685267055/1488189710248710327[Community support]
+- https://kobiton.com/privacy-policy[Privacy policy]

@@ -7,27 +7,21 @@ Learn how to manage sessions so you can rename a session, change the session des
 
 In Kobiton, select *Sessions*.
 
-image:select-sessions-closeup.png[width=1000,alt="Select Sessions tab"]
+image:select-sessions-closeup.png[width=150,alt="Select Sessions tab"]
 
 xref:session-explorer:search-for-a-session.adoc[Search for a session], then select the session ID to open the session overview.
 
 image:search-session-id-closeup.png[width=1000,alt="Search for a session ID"]
 
-From the Session Overview window, users can view below mentioned information.
+From the **Session Overview**, you can view session info, video, device info, logs, and more.
 
-image:session-overview-context copy.png[width=1000,alt="A context to Session Overview"]
+image:session-overview-context.png[width=1000,alt="A context to Session Overview"]
 
 == Manage the session
 
-=== Rename the session
+=== Edit the session info
 
-To rename the session, select the *Edit* icon beneath *Session Name*, then enter a new name. You can also change this xref:manual-testing:change-manual-session-settings.adoc[during a test session].
-
-image:edit-session-name-context.png[width=1000,alt="Edit a session name"]
-
-=== Change session description
-
-To change the session description, select the *Edit* icon beneath *Session Description*, then enter a new description. You can also change this xref:manual-testing:change-manual-session-settings.adoc[during a test session].
+To rename the session or change the description, select *Edit Info*. You can also change this xref:manual-testing:change-manual-session-settings.adoc[during a test session].
 
 image:edit-session-description-context.png[width=1000,alt="Edit a session description"]
 
@@ -40,9 +34,9 @@ image:session-explorer:logs-closeup.png[width=400,alt="Logs section in Session O
 
 === Download last mile speed test logs
 [NOTE]
-Last mile speed test log is only available for Cloud and Hybrid (Cloud Customer-hosted) deployments
+Last mile speed test log is only available for Cloud and Hybrid (Cloud Customer-hosted) deployments.
 
-To download the last mile speed test logs, select *Last Mile Speed Result*.
+To download the last mile speed test logs, select *View Last Mile Speed Result Logs*.
 
 image:session-explorer:logs-last-mile-speed.png[width=500,alt="Last mile speed result section in Session Overview"]
 
@@ -69,3 +63,28 @@ The Applitools Eyes status is also displayed from the session list. You can ente
 image:session-explorer:applitools-session-list.png[width:500,alt="The Applitools Eyes status in Session Overview"]
 
 ====
+
+=== View the execution history for tagged sessions
+
+Session Overview includes an Execution History section for sessions with tags, allowing you to see the status, device, and OS information for up to five related sessions.
+
+To view the execution history of tagged sessions:
+
+. Go to *Session Overview* for any tagged session.
+
+. Scroll to the *Execution History* section.
+
+. You’ll see the last five sessions with the same tag, including:
+
+** Session statuses (e.g., passed, failed)
+
+** Device and OS information
+
+** Details like Session ID and Creation Date when hovering over a session
+
+image:session-overview-execution-history.png[width=600,alt="The Execution History by Tag section under Session Overview"]
+
+[NOTE]
+If the current session is not one of the five most recent sessions, you’ll see an ellipsis (…) indicating that additional sessions exist but aren’t shown in this view.
+
+Clicking on a tag name in the Execution History section will open the Session List, automatically filtered to show all sessions associated with that tag.

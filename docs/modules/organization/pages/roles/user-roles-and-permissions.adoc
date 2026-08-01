@@ -19,79 +19,103 @@ The ADMIN role must be assigned by the Organization Owner or another ADMIN. ADMI
 
 Every user xref:organization:users/invite-a-user.adoc[invited to your organization] is assigned the MEMBER role and given the following permissions:
 
-* xref:_system_login[]
-* xref:_system_logout[]
-* xref:_app_repo_view_all_application[]
+* xref:_system_login[`system.login`]
+* xref:_system_logout[`system.logout`]
+* xref:_app_repo_view_all_application[`app_repo.view_all_application`]
 
 [#_permissions]
 == Permissions
 
-[#_system_login]
-=== `system.login`
+[#_system permissions]
+=== System Permissions
 
+[#_system_login]
+`system.login` +
 Allows a user to log in to Kobiton. _Always required._
 
 [#_system_logout]
-=== `system.logout`
-
+`system.logout` +
 Allows a user to log out of Kobiton. _Always required._
 
-=== `app_repo.delete_other_application`
+[#_app_repo]
+=== App Repo
 
-Allows a user to delete public apps in the app repository. If xref:_app_repo_view_all_application[] is assigned, the user can also delete private apps.
+[#_app_repo_delete_other_application]
+`app_repo.delete_other_application` +
+Allows a user to delete public apps in the app repository. If xref:_app_repo_view_all_application[`app_repo.view_all_application`] is also assigned, the user can delete private apps.
 
-[#_app_repo_view_all_application]
-=== `app_repo.view_all_application`
-
-Allows a user to view all apps in the app repository, including private and locked apps.
-
-=== `app_repo.upload_application`
-
+[#_app_repo_upload_application]
+`app_repo.upload_application` +
 Allows a user to upload and rename any apps they previously uploaded.
 
-=== `device.custom_device_name`
+[#_app_repo_view_all_application]
+`app_repo.view_all_application` +
+Allows a user to view all apps in the app repository, including private and locked apps.
 
+[#_device_permissions]
+=== Devices
+
+`device.custom_device_name` +
 Allows a user to create custom device names.
 
-=== `device.tag_devices`
-
+`device.tag_devices` +
 Allows a user to create device tags.
 
-=== `org_management.modify`
+[#_org_management]
+=== Org Management
 
+`org_management.modify` +
 Allows a user to manage all teams, roles, users, and device bundles.
 
-=== `org_setting.modify`
+[#_settings_permissions]
+=== Settings
 
+[#_org_setting_modify]
+`org_setting.modify` +
 Allows a user to manage all organization settings, including cleanup policies, integrations, configurations, and more.
 
-=== `org_setting.modify_sso_setting`
-
-Allows a user to manage all Single-Sign On (SSO) authentication settings.
+[#_org_setting_modify_machine_location]
+`org_setting.modify_machine_location` +
+Allows a user to edit the location of a Mac mini host via the Device Management page.
 
 [#_org_setting_modify_security_banner]
-=== `org_setting.modify_security_banner`
-
+`org_setting.modify_security_banner` +
 Allows a user to change the portal login message.
 
-=== `session.view_all_session`
-
-Allows a user to view all test sessions.
-
-=== `session.terminate_other_session`
-
-Allows a user to end another user's test session.
-
-=== `session.modify_other_session`
-
-Allows a user to change session details and delete sessions.
-
-[#_cancel_retain]
-=== `soft_book.terminate_other_soft_book`
-
-Allows a user to remove the retention of any device by any user.
+[#_org_setting_modify_sso_setting]
+`org_setting.modify_sso_setting` +
+Allows a user to manage all Single-Sign On (SSO) authentication settings.
 
 [#_org_setting_reboot_private_device]
-=== `org_setting.reboot_private_device`
-
+`org_setting.reboot_private_device` +
 Allows a user without the `ADMIN` predefined role to restart assigned devices from the xref:devices:manage-devices.adoc#_restart_private_device[manage device,window=read-later] page.
+
+[#_session_permissions]
+=== Sessions
+
+[#_session_modify_other_session]
+`session.modify_other_session` +
+Allows a user to change session details and delete sessions.
+
+[#_session_terminate_other_session]
+`session.terminate_other_session` +
+Allows a user to end another user's test session.
+
+[#_session_view_all]
+`session.view_all_session` +
+Allows a user to view all test sessions.
+
+[#_softbook_permissions]
+=== Softbook
+
+[#_cancel_retain]
+`soft_book.terminate_other_soft_book` +
+Allows a user to remove the retention of any device by any user.
+
+[#_subscription_permissions]
+=== Subscriptions
+
+`subscription.modify_subscription` +
+Allows Admins to manage subscriptions on self-serve plans. +
+
+NOTE: This permission is not assigned to the ADMIN predefined role.
