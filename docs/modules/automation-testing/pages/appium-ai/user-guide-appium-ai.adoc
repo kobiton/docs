@@ -5,7 +5,6 @@
 Ensure the following:
 
 * Your environment is configured to support natural language locators. If you are unsure, contact your lab administrator or Kobiton Support.
-* Your test runs in a supported context (view hierarchy available)
 * You are familiar with basic Appium commands such as `findElement(...)`
 * You are using a private device deployment (natural language locators are not available for Public Cloud devices)
 
@@ -53,7 +52,7 @@ When multiple similar elements are present, include additional context such as p
 
 == Expected behavior
 
-Appium AI evaluates the description and returns the most relevant matching element based on available UI metadata.
+Appium AI evaluates the description and returns the most relevant matching element, using either metadata from the view hierarchy or vision-based analysis of a screenshot, depending on what the application exposes.
 
 Results are not guaranteed to be deterministic. If multiple elements match the description, you may need to refine the description to improve accuracy.
 
@@ -69,7 +68,9 @@ If an element is not found or the wrong element is returned:
 
 * Verify that the UI element is visible and accessible in the view hierarchy
 
-* Confirm that the application exposes sufficient UI metadata for element identification
+* For metadata-based resolution, confirm that the application exposes sufficient UI metadata (view hierarchy or accessibility attributes) for element identification
+
+* For vision-based resolution, ensure the target element is clearly visible on the current screen
 
 If natural language locators are not working as expected, contact your lab administrator to verify the following:
 

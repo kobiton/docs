@@ -12,9 +12,9 @@ This approach improves test resilience in environments where selectors are britt
 
 Appium AI (Natural Language Locators) is currently available in Beta.
 
-This feature requires access to an OpenAI API or Azure OpenAI API. You must provide your own API credentials.
+This feature requires access to a compatible LLM provider. Kobiton supports OpenAI, Azure OpenAI, and self-hosted OpenAI-compatible endpoints such as Ollama. You must provide your own API credentials or a reachable local endpoint.
 
-NOTE: Access to the OpenAI API is required and is separate from a ChatGPT subscription. ChatGPT access alone does not enable this feature.
+NOTE: Access to a supported LLM API is required. A ChatGPT subscription alone does not enable this feature.
 
 This feature is available for private device deployments *only*. Appium AI is not available for Public Cloud devices.
 
@@ -53,14 +53,21 @@ Natural language locators identify elements only. Actions such as `click()`, `se
 
 This approach works within existing Appium scripts and does not require changes to client libraries or test structure.
 
+=== How Appium AI resolves elements
 
+Appium AI uses one of two resolution strategies for each `findElement("natural", ...)` request, based on what the application exposes:
+
+* *Metadata-based:* When the application exposes a view hierarchy or accessibility attributes, Appium AI reads that metadata and returns a matching element by XPath or CSS selector. This is the default path for most native and web applications.
+
+* *Vision-based:* When the application exposes little or no metadata, such as canvas-based UIs, games, or other graphics-heavy apps, Appium AI analyzes a screenshot of the current view using a vision-capable LLM and returns an interactable element representing the matched region. This enables element location on apps that were previously unreachable with traditional selectors.
 
 == What this feature supports
 
 Appium AI enables natural language-based element location for the following conditions:
 
 * Using natural language descriptions with `findElement(...)` to locate UI elements
-* Native and web application contexts where a view hierarchy is available
+* Native and web applications that expose a view hierarchy (metadata-based resolution)
+* Canvas-based applications, games, and other graphics-heavy apps that lack UI metadata (vision-based resolution)
 * Integration with existing Appium scripts without requiring structural changes
 
 == Use cases
@@ -89,8 +96,6 @@ This approach may not be suitable when:
 
 * Exact element matching is required (for example, when multiple similar elements are present)
 
-* The application does not expose sufficient UI metadata
-
 * The environment does not support natural language locators (such as Basic Appium or unsupported configurations)
 
 Current limitations:
@@ -99,11 +104,9 @@ Current limitations:
 
 * Script generation and full AI-driven test creation are not supported
 
-* Canvas-based or fully visual UI element detection is not currently supported. Support for visual and canvas-based UI detection is planned for a future release.
-
 * Automatic fallback from traditional locators to natural language is not supported
 
-Natural language locators rely on available UI metadata (such as view hierarchy and accessibility attributes) to resolve elements. If this information is limited or unavailable, results may be less reliable.
+Element identification quality depends on the resolution strategy used for each request. Metadata-based resolution depends on the view hierarchy exposed by the application, and vision-based resolution depends on the visual clarity and layout of the current screen. Clear, specific descriptions improve results for both paths.
 
 == Next steps
 
