@@ -1,0 +1,306 @@
+= Kobiton for Cursor CLI
+:navtitle: Cursor CLI
+
+Kobiton for Cursor CLI connects Cursor to the Kobiton mobile testing platform. Manage devices, upload apps, run Appium automation suites, and review session results using natural language, without switching between the terminal, Kobiton Portal, and local test scripts.
+
+https://discord.gg/uHvBFDZVP[image:discord-badge.svg[Join our Discord]]
+https://kobiton.com[image:kobiton-cloud.svg[Kobiton Cloud]]
+
+== Get started
+
+=== Open a workspace folder
+
+Open a command-line tool on your machine:
+
+- macOS: Terminal
+- Windows: PowerShell or Command Prompt
+
+Create a folder:
+
+[source,bash]
+----
+mkdir kobiton-project
+----
+
+You can create this folder anywhere, for example in your Documents directory.
+
+=== Install the plugin
+
+[NOTE]
+====
+These instructions apply to Cloud only. Standalone and Cloud with custom domain instructions are coming soon.
+====
+
+Start Cursor CLI from the created workspace:
+
+[source,bash]
+----
+cd kobiton-project
+agent
+----
+
+Inside the session, add the Kobiton marketplace:
+
+[source,bash]
+----
+/plugin marketplace add github.com/kobiton/automate
+----
+
+Cursor parses the repository for a few seconds. When the *automate* entry appears, press *Enter* to install and select the installation scope you want. The installation adds the bundled skills, the `kobiton` MCP server, and the plugin slash commands.
+
+Exit and relaunch `agent`. Cursor CLI loads plugin skills only at session start, so the skills do not appear until a fresh session:
+
+[source,bash]
+----
+exit
+agent
+----
+
+[NOTE]
+====
+Cursor CLI and Cursor IDE share plugin installs. A plugin installed from `agent` appears in Cursor IDE, and a plugin installed from Cursor IDE appears in `agent`. Install the plugin once. Installing it in both registers the skills, commands, and MCP server twice.
+====
+
+== Authentication
+
+Kobiton MCP supports:
+
+* OAuth authentication (recommended)
+* API key authentication
+
+OAuth authentication is the default authentication method for Cursor CLI.
+
+=== OAuth authentication (recommended)
+
+Trigger the OAuth flow from inside the session:
+
+[source,bash]
+----
+/mcp list
+----
+
+Select *kobiton*, then select *Login*. A browser window opens for authentication.
+
+Sign in using:
+
+* Kobiton credentials
+* Google
+* GitHub
+
+Cursor stores OAuth tokens in the operating system keychain for future sessions.
+
+=== API key authentication
+
+Use API key authentication for:
+
+* CI/CD pipelines
+* headless environments
+* systems without browser access
+
+Generate an API key in *Kobiton Portal > Settings > API Keys*. Then set:
+
+[source,bash]
+----
+export KOBITON_AUTH="Basic $(echo -n 'username:api-key' | base64)"
+----
+
+Reload your shell and restart Cursor CLI.
+
+The MCP configuration must also send this value as an `Authorization` header. The configuration file location for Cursor is not yet documented. For custom environments, see xref:ai:mcp/install-local-ai-plugin.adoc[Install and configure local plugin].
+
+[NOTE]
+====
+OAuth and API key authentication cannot be used together in the same MCP configuration.
+
+OAuth uses browser-based authentication and token management, while API key authentication uses an explicit authorization header. Configure only one authentication method at a time.
+====
+
+=== Set up credentials and CLI wrapper
+
+After installation and OAuth sign-in, run setup once to fetch your credentials and install the CLI wrapper used by the `run-interactive-session` skill:
+
+[source,bash]
+----
+/setup
+----
+
+Cursor registers plugin commands without a namespace prefix, so the plugin setup and diagnostic commands appear as `/setup` and `/doctor`. Select the entry with the Kobiton description to tell them apart from Cursor's built-in commands of the same name.
+
+Cursor CLI does not reinstall the wrapper automatically. Re-run `/setup` if `~/.kobiton/bin/kobiton` ever goes missing.
+
+To verify the configuration:
+
+[source,bash]
+----
+/doctor
+----
+
+== Run a command
+
+After authentication, enter commands in Cursor CLI using natural language.
+
+[source,bash]
+----
+Show available Android devices
+Show results for session 12345
+Upload app.apk and run tests/smoke_test.js
+----
+
+== Common workflows
+
+Cursor CLI supports common mobile testing workflows, including device management, app uploads, test execution, and session review.
+
+=== Device management
+
+- View available devices
+- Check device status
+- Reserve and release devices
+
+=== App management
+
+- Upload Android and iOS apps
+- View uploaded apps
+- Get app details
+
+=== Test execution
+
+The `run-automation-suite` workflow guides you through the full test lifecycle:
+
+- Upload or select an app
+- Select a device
+- Parse capabilities from your script
+- Run the test
+- Return results and artifacts
+
+Supported languages:
+
+[cols=",,",options="header"]
+|===
+|Language |Extension |Command
+
+|Node.js
+|`.js`
+|`node <script> <udid>`
+
+|Python
+|`.py`
+|`python <script> <udid>`
+
+|.NET
+|`.cs` / `.csproj`
+|`dotnet test`
+
+|Java
+|`.java`
+|`mvn test` or `java -cp ...`
+|===
+
+=== Interactive sessions
+
+The `run-interactive-session` workflow translates natural language into device actions, including WebDriver commands, device operations, and file transfers.
+
+[NOTE]
+====
+The `run-interactive-session` skill ships a CLI binary for macOS only. On Linux and Windows, use `run-automation-suite` or the Kobiton MCP tools directly.
+====
+
+=== Session management
+
+- View active and past sessions
+- Get logs, screenshots, and videos
+- Stop running sessions
+
+== Example prompts
+
+=== Device management
+
+....
+Show available Android devices
+Check if Galaxy S23 is available
+Reserve Pixel 6 for 60 minutes
+....
+
+=== App management
+
+....
+Show uploaded Android apps
+Upload resources/apps/GS.apk
+....
+
+=== Test execution
+
+....
+Run tests/smoke_test.js on a Pixel device
+....
+
+=== Session management
+
+....
+Show running sessions
+Get details for session 12345
+Download logs from last failed session
+....
+
+For a complete reference of available Kobiton tools, skills, and commands, see the xref:mcp/ai-plugin-mcp-ref.adoc[Kobiton AI plugin and tools reference].
+
+== Troubleshooting
+
+=== Skills or slash commands do not appear after install
+
+Cursor CLI caches plugin state per session. Exit and relaunch:
+
+[source,bash]
+----
+exit
+agent
+----
+
+After an install or update, the command list can render stale entries from the previous install. A fresh launch resolves this.
+
+If the skills are still missing, update Cursor CLI. Plugin skills register only in CLI builds from `2026.05.05` onward:
+
+[source,bash]
+----
+agent update
+----
+
+Relaunch `agent` after the update completes.
+
+=== `kobiton` shows Disconnected or tool calls fail silently
+
+Confirm you are signed in. Run `/mcp list`, select *kobiton*, and select *Login* to start the browser OAuth flow.
+
+If the server is connected and tool calls still fail, update Cursor CLI with `agent update`, then relaunch `agent`. Some CLI builds list MCP tools without executing the calls.
+
+=== CLI wrapper missing
+
+Interactive testing fails when `~/.kobiton/bin/kobiton` is missing. Cursor CLI does not create the wrapper automatically, so run `/setup` once after install. Re-run it if the symlink goes missing.
+
+=== Update the plugin
+
+Cursor CLI has no dedicated plugin update command. Re-run the marketplace command and reinstall:
+
+[source,bash]
+----
+/plugin marketplace add github.com/kobiton/automate
+----
+
+Reinstall the *automate* plugin, then restart `agent` so the new manifest is picked up.
+
+=== Device not found
+
+The device may be unavailable. Filter for available devices.
+
+=== Upload timeout
+
+Large files or slow connections can cause timeouts. Retry the upload.
+
+=== Session stuck
+
+Terminate the session and run it again.
+
+== Additional resources
+
+- https://github.com/kobiton/automate/issues/new?template=bug_report.md[Report an issue]
+- https://discord.com/channels/1486036652685267055/1488189710248710327[Community support]
+- https://kobiton.com/privacy-policy[Privacy policy]
