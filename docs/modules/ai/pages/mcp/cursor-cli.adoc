@@ -148,9 +148,22 @@ OAuth and API key authentication cannot be used together for the same server.
 OAuth uses browser-based authentication and token management, while API key authentication uses an explicit authorization header. Configure only one authentication method at a time. Registering `kobiton` in both the plugin configuration and a project-level `.cursor/mcp.json` creates two entries for the same server.
 ====
 
+[IMPORTANT]
+====
+`/setup` does not work with API key authentication. It fetches your credentials through an OAuth-authenticated MCP session and writes them to `~/.kobiton/.credentials`.
+
+Without that file, these skills are unavailable:
+
+* `run-interactive-session`
+* `drive-automation-session`
+* `monitor-test-run`
+
+The MCP tools, the `run-automation-suite` skill, and the `create-test-run` skill do not read that file and work normally under API key authentication.
+====
+
 === Set up credentials and CLI wrapper
 
-After installation and OAuth sign-in, run setup once to fetch your credentials and install the CLI wrapper used by the `run-interactive-session` skill:
+After installation and OAuth sign-in, run setup once to fetch your credentials and install the CLI wrapper used by the `run-interactive-session` skill. This step requires OAuth and does not work with API key authentication.
 
 [source,bash]
 ----
