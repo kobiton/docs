@@ -110,7 +110,7 @@ export KOBITON_AUTH="Basic $(echo -n '<username>:<api-key>' | base64)"
 +
 Replace `<username>` with your Kobiton username and `<api-key>` with the key generated in step 1. Add this line to `~/.zshrc`, `~/.bashrc`, or `~/.bash_profile` to persist it across sessions.
 
-. Add the `Authorization` header to a project-level `.cursor/mcp.json`. The plugin ships a ready-made template at `.cursor/mcp.apikey-example.json`. Copy that file rather than writing the JSON by hand.
+. Create a project-level `.cursor/mcp.json` that registers the server with an `Authorization` header:
 +
 [source,json]
 ----
@@ -125,6 +125,14 @@ Replace `<username>` with your Kobiton username and `<api-key>` with the key gen
     }
   }
 }
+----
++
+To download this template instead of writing the file:
++
+[source,bash]
+----
+mkdir -p .cursor
+curl -sL -o .cursor/mcp.json https://raw.githubusercontent.com/kobiton/automate/main/.cursor/mcp.apikey-example.json
 ----
 
 . Restart Cursor CLI. If you added the export to a shell profile, reload your shell first.
