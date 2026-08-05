@@ -97,18 +97,20 @@ Use API key authentication for:
 * headless environments
 * systems without browser access
 
+To configure API key authentication:
+
 . Generate an API key in *Kobiton Portal > Settings > API Keys*.
 
 . Export the credentials in the shell that launches Cursor CLI:
 +
 [source,bash]
 ----
-export KOBITON_AUTH="Basic $(echo -n 'username:api-key' | base64)"
+export KOBITON_AUTH="Basic $(echo -n '<username>:<api-key>' | base64)"
 ----
 +
-Add this line to `~/.zshrc`, `~/.bashrc`, or `~/.bash_profile` to persist it across sessions.
+Replace `<username>` with your Kobiton username and `<api-key>` with the key generated in step 1. Add this line to `~/.zshrc`, `~/.bashrc`, or `~/.bash_profile` to persist it across sessions.
 
-. Configure the `kobiton` MCP server to send the credentials as an `Authorization` header:
+. Add the `Authorization` header to a project-level `.cursor/mcp.json`. The plugin ships a ready-made template at `.cursor/mcp.apikey-example.json`. Copy that file rather than writing the JSON by hand.
 +
 [source,json]
 ----
@@ -125,13 +127,11 @@ Add this line to `~/.zshrc`, `~/.bashrc`, or `~/.bash_profile` to persist it acr
 }
 ----
 
-. Reload your shell and restart Cursor CLI.
+. Restart Cursor CLI. If you added the export to a shell profile, reload your shell first.
 
-Cursor expands `${env:NAME}` at startup. This syntax is specific to Cursor. The bare `${NAME}` form used by other MCP clients is sent as a literal string, and authentication fails.
+Other MCP clients use a bare `${NAME}`. Cursor expands `${env:NAME}` at startup and sends the bare form as a literal string, which makes authentication fail.
 
-The plugin ships this configuration as `.cursor/mcp.apikey-example.json`. Copy that file rather than writing the JSON by hand.
-
-The plugin reads its MCP configuration from `.cursor/mcp.json`, declared as `mcpServers` in `.cursor-plugin/plugin.json`. Edit that file to switch the installed plugin to API key authentication. It sits in the plugin cache and is pinned to a plugin version, so reinstalling or updating the plugin replaces it and the change must be reapplied. To keep the configuration across plugin updates, register the server in a project-level `.cursor/mcp.json` instead.
+A project-level `.cursor/mcp.json` keeps the configuration across plugin updates. The plugin also carries its own `.cursor/mcp.json`, but that copy sits in the plugin cache pinned to a plugin version, so reinstalling or updating the plugin replaces it and you must reapply the change.
 
 [NOTE]
 ====
