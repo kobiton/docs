@@ -254,6 +254,8 @@ On Cursor CLI and Cursor IDE, plugin commands register without a namespace prefi
 * *Claude Code* and *Codex CLI* recreate the Kobiton CLI wrapper symlink at the start of every new session. On Codex CLI, the first session prompts you to trust the hook once through `/hooks`.
 
 * On *GitHub Copilot CLI* and *Gemini CLI*, the symlink is not recreated automatically. Run `/automate:setup` once after install to create the wrapper, and run it again if the symlink goes missing.
+
+* On *Cursor CLI*, the symlink is not recreated automatically. Run `/setup` once after install to create the wrapper, and run it again if the symlink goes missing.
 ====
 
 == Test execution
