@@ -97,22 +97,47 @@ Use API key authentication for:
 * headless environments
 * systems without browser access
 
-Generate an API key in *Kobiton Portal > Settings > API Keys*. Then set:
+. Generate an API key in *Kobiton Portal > Settings > API Keys*.
 
+. Export the credentials in the shell that launches Cursor CLI:
++
 [source,bash]
 ----
 export KOBITON_AUTH="Basic $(echo -n 'username:api-key' | base64)"
 ----
++
+Add this line to `~/.zshrc`, `~/.bashrc`, or `~/.bash_profile` to persist it across sessions.
 
-Reload your shell and restart Cursor CLI.
+. Configure the `kobiton` MCP server to send the credentials as an `Authorization` header:
++
+[source,json]
+----
+{
+  "mcpServers": {
+    "kobiton": {
+      "url": "https://api.kobiton.com/mcp",
+      "headers": {
+        "Authorization": "${env:KOBITON_AUTH}",
+        "X-AI-Tool-Name": "Cursor"
+      }
+    }
+  }
+}
+----
 
-The MCP configuration must also send this value as an `Authorization` header. The configuration file location for Cursor is not yet documented. For custom environments, see xref:ai:mcp/install-local-ai-plugin.adoc[Install and configure local plugin].
+. Reload your shell and restart Cursor CLI.
+
+Cursor expands `${env:NAME}` at startup. This syntax is specific to Cursor. The bare `${NAME}` form used by other MCP clients is sent as a literal string, and authentication fails.
+
+The plugin ships this configuration as `.cursor/mcp.apikey-example.json`. Copy that file rather than writing the JSON by hand.
+
+The plugin reads its MCP configuration from `.cursor/mcp.json`, declared as `mcpServers` in `.cursor-plugin/plugin.json`. Edit that file to switch the installed plugin to API key authentication. It sits in the plugin cache and is pinned to a plugin version, so reinstalling or updating the plugin replaces it and the change must be reapplied. To keep the configuration across plugin updates, register the server in a project-level `.cursor/mcp.json` instead.
 
 [NOTE]
 ====
-OAuth and API key authentication cannot be used together in the same MCP configuration.
+OAuth and API key authentication cannot be used together for the same server.
 
-OAuth uses browser-based authentication and token management, while API key authentication uses an explicit authorization header. Configure only one authentication method at a time.
+OAuth uses browser-based authentication and token management, while API key authentication uses an explicit authorization header. Configure only one authentication method at a time. Registering `kobiton` in both the plugin configuration and a project-level `.cursor/mcp.json` creates two entries for the same server.
 ====
 
 === Set up credentials and CLI wrapper
