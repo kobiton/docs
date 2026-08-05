@@ -97,7 +97,7 @@ Use API key authentication for:
 * headless environments
 * systems without browser access
 
-To configure API key authentication:
+To configure it:
 
 . Generate an API key in *Kobiton Portal > Settings > API Keys*.
 
@@ -108,7 +108,7 @@ To configure API key authentication:
 export KOBITON_AUTH="Basic $(echo -n '<username>:<api-key>' | base64)"
 ----
 +
-Replace `<username>` with your Kobiton username and `<api-key>` with the key generated in step 1. Add this line to `~/.zshrc`, `~/.bashrc`, or `~/.bash_profile` to persist it across sessions.
+Replace `<username>` with your Kobiton username and `<api-key>` with the key from step 1. Add this line to `~/.zshrc`, `~/.bashrc`, or `~/.bash_profile` to persist it across sessions.
 
 . Create a project-level `.cursor/mcp.json` that registers the server with an `Authorization` header:
 +
@@ -127,7 +127,7 @@ Replace `<username>` with your Kobiton username and `<api-key>` with the key gen
 }
 ----
 +
-To download this template instead of writing the file:
+The plugin ships an equivalent template that also carries a `_comment` field describing the setup. Cursor ignores that field. To download it instead of writing the file:
 +
 [source,bash]
 ----
@@ -139,7 +139,7 @@ curl -sL -o .cursor/mcp.json https://raw.githubusercontent.com/kobiton/automate/
 
 Other MCP clients use a bare `${NAME}`. Cursor expands `${env:NAME}` at startup and sends the bare form as a literal string, which makes authentication fail.
 
-A project-level `.cursor/mcp.json` keeps the configuration across plugin updates. The plugin also carries its own `.cursor/mcp.json`, but that copy sits in the plugin cache pinned to a plugin version, so reinstalling or updating the plugin replaces it and you must reapply the change.
+A project-level `.cursor/mcp.json` keeps the configuration across plugin updates. The plugin also carries its own `.cursor/mcp.json` in the version-pinned plugin cache. Reinstalling or updating the plugin replaces that copy, and you must reapply the change.
 
 [NOTE]
 ====
