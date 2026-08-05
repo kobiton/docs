@@ -34,8 +34,6 @@ https://kobiton.com[image:kobiton-cloud.svg[Kobiton Cloud]]
 
 image::ai:copilot-vs-code-harness.png[alt="VS Code Chat agent dropdown with Copilot available for selection"]
 
-_Figure 1. Select Copilot from the VS Code agent dropdown._
-
 For a walkthrough of setting up GitHub Copilot, see https://docs.github.com/en/copilot/get-started/quickstart[GitHub Copilot quickstart].
 
 === Enable agent plugins in VS Code
@@ -66,8 +64,6 @@ If the file already contains other settings, insert these entries inside the exi
 
 image::ai:copilot-vs-code-settings.png[alt="VS Code settings.json with chat.agentHost.enabled and chat.plugins.enabled set to true"]
 
-_Figure 2. Enable the Agent Host and agent-plugin settings in VS Code._
-
 [NOTE]
 ====
 An administrator can set `chat.plugins.enabled` centrally. If you cannot change it on your machine, ask your VS Code or GitHub Copilot administrator to allow agent plugins and MCP usage.
@@ -96,8 +92,6 @@ https://github.com/kobiton/automate
 
 image::ai:copilot-vs-code-plugin.png[alt="VS Code Extensions Agent Plugins view showing the automate plugin installed"]
 
-_Figure 3. The Kobiton Automate plugin installed under VS Code Agent Plugins._
-
 For details on the VS Code plugin installation flow, see https://code.visualstudio.com/docs/agent-customization/agent-plugins[VS Code agent plugins].
 
 == Authentication
@@ -124,8 +118,6 @@ This is a read-only request. Do not reserve, modify, reboot, or release any devi
 . After the browser confirms sign-in, return to VS Code. VS Code opens a localhost callback (for example, `127.0.0.1`) to return the OAuth result to the local client.
 
 image::ai:copilot-vs-code-oauth.png[alt="Browser page showing successful Kobiton sign-in returning control to VS Code"]
-
-_Figure 4. Successful Kobiton OAuth callback returning control to VS Code._
 
 === API key authentication
 
