@@ -1,0 +1,13 @@
+// Pending release note. No target release is assigned for this change yet.
+// Partials are not published by Antora, so nothing in this file renders on the site.
+// When the release is known, move these bullets into the matching page under
+// docs/modules/release-notes/pages/all-releases/ in its "Improvements and fixes"
+// section, confirm the area heading, then delete this file.
+//
+// Source ticket: KOB-54289. Do not carry the ticket ID into published wording.
+
+=== Device details
+
+- Fixed the *Apps* tab of the device modal reporting the newest version in the app repository as *Installed* instead of the build actually installed on the device. Android devices were affected when several builds of an app shared the same version.
+- The app row on the *Apps* tab now shows *Installed* when any version of the app is installed, and names the installed build. Previously the row reported the status of the newest version in the app repository.
+- When the build on the device cannot be matched to a version in the app repository, no version is marked *Installed*. Previously the newest version in the app repository was marked *Installed* in this case.
