@@ -1,0 +1,218 @@
+= Kobiton for Copilot in VS Code
+:navtitle: Copilot in VS Code
+
+Kobiton for Copilot in VS Code connects GitHub Copilot to the Kobiton mobile testing platform through the Kobiton Model Context Protocol (MCP) server. Copilot can discover devices, work with applications, run automation test workflows, and review sessions using natural language prompts without leaving Visual Studio Code.
+
+https://discord.gg/uHvBFDZVP[image:discord-badge.svg[Join our Discord]]
+https://kobiton.com[image:kobiton-cloud.svg[Kobiton Cloud]]
+
+[NOTE]
+====
+
+* VS Code 1.129.1 introduced the Agent Plugins workflow. For the terminal-first path, see xref:mcp/copilot.adoc[Kobiton for Copilot CLI].
+
+====
+
+== Before you begin
+
+- A Kobiton account with access to the devices and applications required for testing.
+- A GitHub account with GitHub Copilot access. Copilot Free works for trying the integration; organizational plans may enforce additional policies.
+- Visual Studio Code 1.129.1 or later. Screenshots in this guide use VS Code 1.129.1 on macOS.
+- A trusted project folder open in VS Code. Run the AI agent from the project workspace, not from your home folder.
+- Outbound HTTPS access to GitHub and the Kobiton MCP endpoint.
+- Organizational approval for GitHub Copilot, MCP servers, and VS Code agent plugins.
+
+== Get started
+
+=== Enable Copilot in Chat
+
+. Update VS Code to the latest approved version.
+. Sign in to VS Code with the GitHub account that has Copilot access.
+. Open the Chat view. Use *View > Chat*, or press *Command + Shift + P* and run *Chat: Focus on Chat View*.
+. Set the interaction mode to *Agent*.
+. At the bottom of Chat, use the dropdown that shows the current AI agent. If it says *Local*, switch it to *Copilot*.
+
+image::ai:copilot-vs-code-harness.png[alt="VS Code Chat agent dropdown with Copilot available for selection"]
+
+_Figure 1. Select Copilot from the VS Code agent dropdown._
+
+For a walkthrough of setting up GitHub Copilot, see https://docs.github.com/en/copilot/get-started/quickstart[GitHub Copilot quickstart].
+
+=== Enable agent plugins in VS Code
+
+. Press *Command + Shift + P* to open the Command Palette.
+. Run *Preferences: Open User Settings (JSON)*.
+. Add the Agent Host and agent-plugin settings to `settings.json`.
++
+If the file is empty, paste this complete example:
++
+[source,json]
+----
+{
+  "chat.agentHost.enabled": true,
+  "chat.plugins.enabled": true
+}
+----
++
+If the file already contains other settings, insert these entries inside the existing object and adjust commas so the JSON stays valid:
++
+[source,json]
+----
+"chat.agentHost.enabled": true,
+"chat.plugins.enabled": true
+----
+. Save `settings.json`.
+. Press *Command + Shift + P* and run *Developer: Reload Window*.
+
+image::ai:copilot-vs-code-settings.png[alt="VS Code settings.json with chat.agentHost.enabled and chat.plugins.enabled set to true"]
+
+_Figure 2. Enable the Agent Host and agent-plugin settings in VS Code._
+
+[NOTE]
+====
+An administrator can set `chat.plugins.enabled` centrally. If you cannot change it on your machine, ask your VS Code or GitHub Copilot administrator to allow agent plugins and MCP usage.
+====
+
+=== Install the Kobiton Automate plugin
+
+[NOTE]
+====
+For Standalone and Cloud with custom domain environments, follow the xref:mcp/install-local-ai-plugin.adoc[local plugin guide] instead. The local plugin is required to configure a custom MCP server URL, and the steps below do not apply.
+====
+
+For standard Cloud environment, install directly from the public repository:
+
+. Press *Command + Shift + P*.
+. Run *Chat: Install Plugin From Source*.
+. Paste the Kobiton Automate repository URL:
++
+[source]
+----
+https://github.com/kobiton/automate
+----
+. Review the source and accept the trust prompt.
+. Reload VS Code when prompted, or run *Developer: Reload Window* if no prompt appears.
+. Open the Extensions view and search for `@agentPlugins`. Confirm that *automate* is listed and turned on.
+
+image::ai:copilot-vs-code-plugin.png[alt="VS Code Extensions Agent Plugins view showing the automate plugin installed"]
+
+_Figure 3. The Kobiton Automate plugin installed under VS Code Agent Plugins._
+
+For details on the VS Code plugin installation flow, see https://code.visualstudio.com/docs/agent-customization/agent-plugins[VS Code agent plugins].
+
+== Authentication
+
+Kobiton MCP supports:
+
+* OAuth authentication (recommended)
+* API key authentication
+
+OAuth is the default for interactive VS Code sessions.
+
+=== OAuth authentication (recommended)
+
+. Return to the VS Code Chat panel and confirm *Agent* and *Copilot* are selected.
+. Send a read-only prompt that requires a Kobiton tool, for example:
++
+[source]
+----
+Use the Kobiton MCP tools to list my available Android devices.
+This is a read-only request. Do not reserve, modify, reboot, or release any devices.
+----
+. Approve the Kobiton tool call when VS Code asks for permission.
+. A browser window opens. Sign in with Kobiton credentials, Google, or GitHub.
+. After the browser confirms sign-in, return to VS Code. VS Code opens a localhost callback (for example, `127.0.0.1`) to return the OAuth result to the local client.
+
+image::ai:copilot-vs-code-oauth.png[alt="Browser page showing successful Kobiton sign-in returning control to VS Code"]
+
+_Figure 4. Successful Kobiton OAuth callback returning control to VS Code._
+
+=== API key authentication
+
+Use API key authentication for CI/CD pipelines, headless environments, or systems without browser access.
+
+Generate an API key in *Kobiton Portal > Settings > API Keys*. Then set:
+
+[source,bash]
+----
+export KOBITON_AUTH="Basic $(echo -n 'username:api-key' | base64)"
+----
+
+Update the MCP configuration file used by your VS Code host to include the `Authorization` header.
+
+[NOTE]
+====
+OAuth and API key authentication cannot be used together in the same MCP configuration.
+
+OAuth uses browser-based authentication and token management. API key authentication uses explicit authorization headers. Configure only one method at a time.
+====
+
+== Verify the MCP server and tools
+
+. Press *Command + Shift + P* and run *MCP: List Servers*.
+. Confirm that *kobiton* appears and is running. Select the server to restart it or review output when troubleshooting.
+. In Chat, open *Configure Tools* and search for `kobiton`. Confirm the Kobiton tools are turned on.
+. Run the read-only device-list prompt again. A successful response includes device names, platforms, OS versions, and availability from your Kobiton organization.
+. Type `/` in Chat and check for the optional `/automate:setup` and `/automate:doctor` commands. These commands are documented for Copilot CLI. If they are not exposed by the current VS Code host, the MCP tools can still be used directly.
+
+For managing MCP servers in VS Code, see https://code.visualstudio.com/docs/agent-customization/mcp-servers[VS Code MCP servers].
+
+== Run a command
+
+After authentication, enter commands in Chat using natural language.
+
+[source]
+----
+Show available Android devices
+Show results for session 12345
+Upload app.apk and run tests/smoke_test.js
+----
+
+For a complete reference of available Kobiton tools, skills, and commands, see the xref:mcp/ai-plugin-mcp-ref.adoc[Kobiton AI plugin and tools reference].
+
+== Troubleshooting
+
+=== Kobiton does not appear under @agentPlugins
+
+Confirm `chat.plugins.enabled` is `true`, save `settings.json`, run *Developer: Reload Window*, and install from `https://github.com/kobiton/automate` using *Chat: Install Plugin From Source*.
+
+=== Kobiton is not in the MCP server list
+
+Confirm the plugin is turned on, reload VS Code, run *MCP: List Servers*, and inspect the MCP output. Turning off the plugin also stops its MCP server.
+
+=== Kobiton tools do not appear in Chat
+
+Open *Configure Tools*, search for `kobiton`, and turn on the required tools. Start a new Copilot agent session after plugin updates.
+
+=== OAuth browser does not open
+
+Send a prompt that uses a Kobiton tool, confirm a default browser is configured, and verify that localhost callback ports are not blocked by security software or firewall policy.
+
+=== OAuth succeeds but tool calls fail
+
+Restart the `kobiton` server from *MCP: List Servers*, review *Show Output*, and retry a read-only tool call. Reauthenticate if the cached token cannot refresh.
+
+=== Slash commands are missing
+
+The MCP tools can still work directly. Use the xref:mcp/copilot.adoc[Copilot CLI path] when `/automate:setup` or `/automate:doctor` is required.
+
+=== Custom Kobiton URL or Standalone deployment
+
+See the xref:mcp/install-local-ai-plugin.adoc[local plugin guide]. The default URL does not apply to these environments.
+
+=== Settings are locked by the organization
+
+Ask your administrator to allow GitHub Copilot MCP access and VS Code agent plugins. Enterprise policies can restrict both features.
+
+== Additional resources
+
+- xref:mcp/copilot.adoc[Kobiton for Copilot CLI]
+- xref:mcp/install-local-ai-plugin.adoc[Install and configure the local Kobiton AI plugin]
+- xref:mcp/ai-plugin-mcp-ref.adoc[Kobiton AI plugin and tools reference]
+- https://github.com/kobiton/automate[Kobiton Automate repository]
+- https://code.visualstudio.com/docs/agent-customization/agent-plugins[VS Code agent plugins]
+- https://code.visualstudio.com/docs/agent-customization/mcp-servers[VS Code MCP servers]
+- https://docs.github.com/en/copilot/get-started/quickstart[GitHub Copilot quickstart]
+- https://github.com/kobiton/automate/issues/new?template=bug_report.md[Report an issue]
+- https://discord.com/channels/1486036652685267055/1488189710248710327[Community support]
+- https://kobiton.com/privacy-policy[Privacy policy]
