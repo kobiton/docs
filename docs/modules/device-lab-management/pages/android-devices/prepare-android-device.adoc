@@ -87,9 +87,20 @@ Find and open **Developer options** in *Settings*, then enable **Install via USB
 [IMPORTANT]
 Depending on the Xiaomi model, you must either have a SIM card inserted or logged into a MI account to enable _USB Debugging (security setting)_.
 
-In **Developer options**, disable **MIUI Optimization**.
+In **Developer options**, turn off the system optimization setting. Its name and location depend on the version of the operating system:
 
-If you can’t find the **MIUI Optimization** option, tap to **Reset to default** value field 4 times.
+* On **MIUI**, disable **MIUI Optimization**.
+
+* On **HyperOS**, go to **Settings** > **Additional settings** > **Developer options** and turn off **Turn on system optimization**. Select **Accept** to confirm.
+
+If you cannot find the option, tap the **Reset to default values** field several times to reveal it: 4 times on MIUI, 6 times on HyperOS.
+
+[IMPORTANT]
+====
+
+Leaving system optimization on prevents Kobiton software from installing and updating the device control app on the device. A permission popup displays during installation, and the device may not come back online after a restart.
+
+====
 
 image:device-lab-management:device-lab-management-android-chinese-developer-options.png[width=240, alt="Enabling Install via USB and USB Debuigging (security setting) inside Developer Options"] -> image:device-lab-management:device-lab-management-android-chinese-developer-options-disable-miui-optimization.png[width=240, alt="Turning off MIUI iptimization in Developer options"] -> image:device-lab-management:device-lab-management-android-chinese-developer-options-reset-to-default-value.png[width=240, alt="In Developer options, tapping Reset to default values field 4 times"]
 
@@ -112,6 +123,25 @@ Scroll down to the **Default USB configuration** option. You can use the search 
 Choose *File transfer / Android Auto* or *Transferring files / Android Auto* depending on the model.
 
 image:device-lab-management:device-lab-management-android-prepare-developer-options-2.png[width=240, alt="Developer options inside Settings"] -> image:device-lab-management:device-lab-management-android-prepare-default-usb-config.png[width=240, alt="The Default USB configuration menu under Developer options"] -> image:device-lab-management:device-lab-management-android-prepare-usb-file-transfer.png[width=240, alt="The option File transfer / Android Auto selected under USB configuration screen"]
+
+[#disable_permission_monitoring]
+== Turn on _Disable permission monitoring_ (required for automation on some models)
+
+[IMPORTANT]
+====
+
+On some Android models, permission monitoring revokes permissions that Kobiton software grants itself during a session. Automation sessions on these devices fail to start, or stop responding partway through.
+
+====
+
+xref:#enable_developer_mode[Enable Developer mode and USB debugging] before attempting.
+
+Open **Settings** and navigate to **Developer options**. On Pixel devices, this option is under **System**.
+
+Scroll down to the **Disable permission monitoring** option and turn it on. You can use the search function to quickly locate it.
+
+[NOTE]
+The option name describes what it turns off. Turning the option _on_ disables permission monitoring, which is what Kobiton requires.
 
 == Disable passcode (required)
 
