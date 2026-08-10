@@ -397,6 +397,7 @@ Path syntax:
 
 For how iOS app containers and file sharing work — including the `UIFileSharingEnabled` requirement and per-app examples — see xref:ios-file-sharing.adoc[Access app files on iOS devices].
 
+[#file-list]
 === `file list`
 
 List files at a path on the device.
@@ -604,7 +605,7 @@ kobiton device adb-shell [OPTIONS] [ARGS]...
 |===
 | Argument | Description
 
-| `[ARGS]...` | Arguments to pass (before or after `--`). If not provided, launches an interactive adb shell.
+| `[ARGS]...` | Arguments to pass (before or after `--`). If not provided, launches an interactive adb shell. The interactive shell is unavailable on public cloud and trial devices.
 |===
 
 Accepts all <<global-options,global options>>.
@@ -613,16 +614,48 @@ Accepts all <<global-options,global options>>.
 
 * `-a <SESSION_TOKEN>` or `KOBITON_SESSION_TOKEN` environment variable
 
+[#adb-shell-restricted-sessions]
+[IMPORTANT]
+====
+*Public cloud and trial devices run a restricted shell.*
+
+Commands are checked against a deny-by-default whitelist before they reach the device, and the interactive shell is unavailable, so every invocation must name a command to run. Private cloud and on-premise deployments with dedicated devices are not restricted.
+
+A restricted session rejects control characters and these shell metacharacters anywhere in the input:
+
+----
+& ; | $ ` ( ) > < \ " ' * ? ~ { } # !
+----
+
+Pipes, redirection, command and variable substitution, backgrounding, globbing, and quoting are therefore unavailable on the device. Arguments cannot contain whitespace, and a command line cannot exceed 1024 characters. Individual commands further restrict which arguments and file paths they accept, so a whitelisted command can still reject an argument.
+
+Run `kobiton device adb-shell --help` for the current list of allowed commands, permitted file path roots, and per-command restrictions. That help text is kept in sync with the component that enforces the whitelist, so it stays accurate as the whitelist changes.
+====
+
 .Example
 [source,shell]
 ----
-# Run a simple adb shell command
-kobiton device adb-shell ls
+# Read a device property
+kobiton device adb-shell getprop ro.build.version.sdk
 
-# Run an adb shell command with extra arguments (pass after --)
-kobiton device adb-shell -- ls --color=auto
+# Pass arguments after -- so the local shell does not claim the flags
+kobiton device adb-shell -- logcat -d -t 200
+----
 
-# Quote characters that the local shell would interpret, such as a pipe
+To list files on a device, use <<file-list,`kobiton file list`>> rather than `adb-shell ls`. A restricted session accepts bare `ls` and lists `/`, but rejects a path argument such as `ls -l /sdcard`.
+
+.Filter command output
+A restricted session rejects the pipe character, so filter locally and send only the command to the device:
+
+[source,shell]
+----
+kobiton device adb-shell dumpsys window displays | grep -E 'mCurrentFocus|mFocusedApp'
+----
+
+On a dedicated device, quote the whole expression instead. The pipe then runs on the device, which transfers less output:
+
+[source,shell]
+----
 kobiton device adb-shell "dumpsys window displays | grep -E 'mCurrentFocus|mFocusedApp'"
 ----
 
@@ -1071,8 +1104,13 @@ kobiton test run [OPTIONS] --app <APP> --runner <TEST_RUNNER> <FRAMEWORK>
 |===
 | Argument | Description
 
-| `<FRAMEWORK>` | Framework to test with. Must be either `uiautomator2` or `xcuitest`.
+| `<FRAMEWORK>` | Framework to test with. Either `uiautomator` or `xcuitest`. Use `uiautomator` for both UIAutomator and Espresso test runners. Kobiton reports the resulting session with this value in uppercase, such as `UIAUTOMATOR`.
 |===
+
+[NOTE]
+====
+`<FRAMEWORK>` is not the Appium `automationName` capability. An Appium session sets `appium:automationName` to `UiAutomator2`; `test run` takes `uiautomator`. The two values serve different purposes and are not interchangeable.
+====
 
 .Options
 [cols="1,1,3",options="header"]
@@ -1100,7 +1138,14 @@ Plus all <<global-options,global options>>.
 
 *Requires:*
 
-* `--app <APP>` and `--runner <TEST_RUNNER>`, each a Kobiton App Repo ID (`kobiton-store:<APP_ID>` or `kobiton-store:v<APP_VERSION_ID>`) or a direct URL. Local path is not supported.
+// TODO (KOB-54479, AC-2): state in one sentence what a bare `kobiton-store:<APP_ID>` resolves to.
+// Blocked pending verification against CLI or API behavior. Candidates: the newest version,
+// the first version, or the version bound at upload time. Do not publish a guess.
+// `app install -n <APP_ID>` is documented on this page as resolving to the latest version,
+// but that is a different command and is not evidence for `test run`.
+* `--app <APP>` and `--runner <TEST_RUNNER>`, each a Kobiton App Repo ID or a direct URL. Local path is not supported. An App Repo ID takes one of two forms:
+** `kobiton-store:v<APP_VERSION_ID>` pins an exact version, such as `kobiton-store:v762538`. `kobiton app upload` prints both the App ID and the Version ID, so use its output to pin a version.
+** `kobiton-store:<APP_ID>` names the app and lets Kobiton resolve the version.
 * Either `-u <UDID>` or `-d <DEVICE_NAME>` for any framework.
 * Either `-t <TESTS>` or `--plan <TEST_PLAN>` for XCUITest. `<TEST_PLAN>` must be a direct URL.
 * `<FRAMEWORK>`
