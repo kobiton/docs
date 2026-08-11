@@ -55,19 +55,30 @@ This approach works within existing Appium scripts and does not require changes 
 
 === How Appium AI resolves elements
 
-Appium AI uses one of two resolution strategies for each `findElement("natural", ...)` request, based on what the application exposes:
+Appium AI resolves elements with one of two locator strategies. You select the
+strategy per session with the `kobiton:locatorStrategy` capability.
 
-* *Metadata-based:* When the application exposes a view hierarchy or accessibility attributes, Appium AI reads that metadata and returns a matching element by XPath or CSS selector. This is the default path for most native and web applications.
+* *`uitree`:* Reads the view hierarchy or accessibility attributes exposed by the
+application and returns a matching element by XPath or CSS selector. This is the
+default strategy.
 
-* *Vision-based:* When the application exposes little or no metadata, such as canvas-based UIs, games, or other graphics-heavy apps, Appium AI analyzes a screenshot of the current view using a vision-capable LLM and returns an interactable element representing the matched region. This enables element location on apps that were previously unreachable with traditional selectors.
+* *`visionvirtual`:* Analyzes a screenshot of the current view with a
+vision-capable LLM and returns a virtual element representing the matched region.
+This enables element location on canvas-based UIs, games, and other
+graphics-heavy apps that were previously unreachable with traditional selectors.
+
+The strategy is fixed for the session. For instructions on setting it, see the
+xref:appium-ai/user-guide-appium-ai.adoc[Appium AI user guide].
 
 == What this feature supports
 
 Appium AI enables natural language-based element location for the following conditions:
 
 * Using natural language descriptions with `findElement(...)` to locate UI elements
-* Native and web applications that expose a view hierarchy (metadata-based resolution)
-* Canvas-based applications, games, and other graphics-heavy apps that lack UI metadata (vision-based resolution)
+* Native and web applications that expose a view hierarchy, using the `uitree`
+strategy
+* Canvas-based applications, games, and other graphics-heavy apps that lack UI
+metadata, using the `visionvirtual` strategy
 * Integration with existing Appium scripts without requiring structural changes
 
 == Use cases
@@ -106,7 +117,16 @@ Current limitations:
 
 * Automatic fallback from traditional locators to natural language is not supported
 
-Element identification quality depends on the resolution strategy used for each request. Metadata-based resolution depends on the view hierarchy exposed by the application, and vision-based resolution depends on the visual clarity and layout of the current screen. Clear, specific descriptions improve results for both paths.
+* A session uses a single locator strategy. Switching strategies during a test
+run is not supported
+
+* Canvas-based apps are not detected automatically. Set
+`kobiton:locatorStrategy` to `visionvirtual` for these apps
+
+Element identification quality depends on the locator strategy set for the
+session. `uitree` depends on the view hierarchy exposed by the application, and
+`visionvirtual` depends on the visual clarity and layout of the current screen.
+Clear, specific descriptions improve results for both strategies.
 
 == Next steps
 
