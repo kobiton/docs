@@ -1138,14 +1138,9 @@ Plus all <<global-options,global options>>.
 
 *Requires:*
 
-// TODO (KOB-54479, AC-2): state in one sentence what a bare `kobiton-store:<APP_ID>` resolves to.
-// Blocked pending verification against CLI or API behavior. Candidates: the newest version,
-// the first version, or the version bound at upload time. Do not publish a guess.
-// `app install -n <APP_ID>` is documented on this page as resolving to the latest version,
-// but that is a different command and is not evidence for `test run`.
 * `--app <APP>` and `--runner <TEST_RUNNER>`, each a Kobiton App Repo ID or a direct URL. Local path is not supported. An App Repo ID takes one of two forms:
-** `kobiton-store:v<APP_VERSION_ID>` pins an exact version, such as `kobiton-store:v762538`. `kobiton app upload` prints both the App ID and the Version ID, so use its output to pin a version.
-** `kobiton-store:<APP_ID>` names the app and lets Kobiton resolve the version.
+** `kobiton-store:<APP_ID>` runs the most recently uploaded version of that app, such as `kobiton-store:662537`.
+** `kobiton-store:v<APP_VERSION_ID>` pins an exact version, such as `kobiton-store:v762538`. Pin the version when a run must stay reproducible, since a later upload changes what the bare App ID resolves to. `kobiton app upload` prints both the App ID and the Version ID.
 * Either `-u <UDID>` or `-d <DEVICE_NAME>` for any framework.
 * Either `-t <TESTS>` or `--plan <TEST_PLAN>` for XCUITest. `<TEST_PLAN>` must be a direct URL.
 * `<FRAMEWORK>`
