@@ -642,6 +642,8 @@ kobiton device adb-shell getprop ro.build.version.sdk
 kobiton device adb-shell -- logcat -d -t 200
 ----
 
+Both examples run on a restricted session.
+
 To list files on a device, use <<file-list,`kobiton file list`>>. A restricted session confines `adb-shell ls` to the permitted directories, so `ls -l /sdcard` is rejected while `ls -l /sdcard/Download/` is accepted.
 
 .Filter command output
@@ -652,17 +654,17 @@ A restricted session rejects the pipe character, so filter locally and send only
 kobiton device adb-shell dumpsys window displays | grep -E 'mCurrentFocus|mFocusedApp'
 ----
 
+.Output (both forms)
+----
+mCurrentFocus=Window{272f9b1 u0 com.example.app/MainActivity}
+mFocusedApp=ActivityRecord{3d12396 u0 com.example.app/.MainActivity t2823}
+----
+
 On a dedicated device, quote the whole expression instead. The pipe then runs on the device, so less output crosses the network:
 
 [source,shell]
 ----
 kobiton device adb-shell "dumpsys window displays | grep -E 'mCurrentFocus|mFocusedApp'"
-----
-
-.Output
-----
-mCurrentFocus=Window{272f9b1 u0 com.example.app/MainActivity}
-mFocusedApp=ActivityRecord{3d12396 u0 com.example.app/.MainActivity t2823}
 ----
 
 === `device forward`
