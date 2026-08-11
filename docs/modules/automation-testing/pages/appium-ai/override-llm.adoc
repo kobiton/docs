@@ -1,7 +1,12 @@
-= Override LLM provider settings per session
-:description: Use Appium desired capabilities to override the default LLM provider for an Appium AI session.
+= Override Appium AI settings per session
+:description: Use Appium desired capabilities to override the default Appium AI provider and locator settings for a session.
 
 Appium AI uses an LLM provider configured by your Kobiton administrator by default. You can override those settings for a single Appium session by passing `kobiton:*` desired capabilities.
+
+`kobiton:locatorStrategy` selects how Appium AI resolves elements. It is not an
+LLM provider setting, but it is set the same way. See the
+xref:appium-ai/user-guide-appium-ai.adoc[Appium AI user guide] for guidance on
+choosing a strategy.
 
 Use this to:
 
@@ -54,6 +59,11 @@ If a capability is omitted, the session uses the default value configured by you
 | Model used for vision-based operations (screenshot analysis). Must support image input. For Azure, pass the deployment name.
 | `LlmClient.VisionModel`
 | `gpt-5.2`
+
+| `kobiton:locatorStrategy`
+| Locator strategy used to resolve natural language locators. Set to `visionvirtual` for canvas-based apps. Accepts `uitree` and `visionvirtual`.
+| `NaturalLanguageLocator.LocatorStrategy`
+| `uitree`
 |===
 
 `kobiton:llmApiFormat` supports the following values:
