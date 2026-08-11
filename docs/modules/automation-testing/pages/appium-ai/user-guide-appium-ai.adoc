@@ -38,13 +38,17 @@ capabilities = {
 }
 ----
 
-A lab administrator can set the default for all sessions in `dc.ini`:
+Set `visionvirtual` per session with the capability. A lab administrator can also
+set a host-wide default with `NaturalLanguageLocator.LocatorStrategy` in `dc.ini`,
+but leave that default at `uitree`.
 
-----
-NaturalLanguageLocator.LocatorStrategy=visionvirtual
-----
+A `dc.ini` default of `visionvirtual` applies to every session on that host,
+including sessions that test apps exposing a view hierarchy. Those sessions lose
+the precision of selector-based resolution and capture a screenshot on each
+request. Because the strategy is chosen per app, the capability is the correct
+place to set it.
 
-The capability takes precedence over the `dc.ini` value.
+A capability passed in the session takes precedence over the `dc.ini` value.
 
 IMPORTANT: Appium AI does not detect canvas-based apps. To use vision-based
 resolution, set `kobiton:locatorStrategy` to `visionvirtual` explicitly.

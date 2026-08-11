@@ -61,7 +61,7 @@ If a capability is omitted, the session uses the default value configured by you
 | `gpt-5.2`
 
 | `kobiton:locatorStrategy`
-| Locator strategy used to resolve natural language locators. Set to `visionvirtual` for canvas-based apps. Accepts `uitree` and `visionvirtual`.
+| Locator strategy used to resolve natural language locators. Pass `visionvirtual` per session for canvas-based apps. Accepts `uitree` and `visionvirtual`.
 | `NaturalLanguageLocator.LocatorStrategy`
 | `uitree`
 |===
@@ -126,3 +126,4 @@ Local endpoints are resolved from the host running the Appium session. For examp
 - Capabilities apply only to the session that passed them; other sessions continue to use the defaults.
 - `kobiton:llmApiFormat` must match the provider used by `kobiton:llmBaseUrl`.
 - Vision-based features require a model that accepts image input such as screenshots.
+- Pass `kobiton:locatorStrategy` per session instead of changing the `dc.ini` default. A `dc.ini` default of `visionvirtual` applies to every session on that host, including sessions that test apps exposing a view hierarchy.
