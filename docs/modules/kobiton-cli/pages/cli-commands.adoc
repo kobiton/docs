@@ -619,7 +619,7 @@ Accepts all <<global-options,global options>>.
 ====
 *Public cloud and trial devices run a restricted shell.*
 
-Commands are checked against a deny-by-default whitelist before they reach the device, and the interactive shell is unavailable, so every invocation must name a command to run. Private cloud and on-premise deployments with dedicated devices are not restricted.
+Commands are checked against a deny-by-default whitelist before they reach the device, and the interactive shell is unavailable, so every invocation must name a command to run. Private cloud and on-premises deployments with dedicated devices are not restricted.
 
 A restricted session rejects control characters and these shell metacharacters anywhere in the input:
 
@@ -629,7 +629,7 @@ A restricted session rejects control characters and these shell metacharacters a
 
 Pipes, redirection, command and variable substitution, backgrounding, globbing, and quoting are therefore unavailable on the device. Arguments cannot contain whitespace, and a command line cannot exceed 1024 characters. Individual commands further restrict which arguments and file paths they accept, so a whitelisted command can still reject an argument.
 
-Run `kobiton device adb-shell --help` for the current list of allowed commands, permitted file path roots, and per-command restrictions. That help text is kept in sync with the component that enforces the whitelist, so it stays accurate as the whitelist changes.
+Run `kobiton device adb-shell --help` for the current list of allowed commands, permitted directories, and per-command restrictions.
 ====
 
 .Example
@@ -638,11 +638,11 @@ Run `kobiton device adb-shell --help` for the current list of allowed commands, 
 # Read a device property
 kobiton device adb-shell getprop ro.build.version.sdk
 
-# Pass arguments after -- so the local shell does not claim the flags
+# Pass arguments after -- so the CLI does not read them as its own options
 kobiton device adb-shell -- logcat -d -t 200
 ----
 
-To list files on a device, use <<file-list,`kobiton file list`>>. A restricted session confines `adb-shell ls` to the permitted directories, so `ls -l /sdcard` is rejected while `ls -l /sdcard/Download/` is accepted. Run `kobiton device adb-shell --help` for the permitted directories.
+To list files on a device, use <<file-list,`kobiton file list`>>. A restricted session confines `adb-shell ls` to the permitted directories, so `ls -l /sdcard` is rejected while `ls -l /sdcard/Download/` is accepted.
 
 .Filter command output
 A restricted session rejects the pipe character, so filter locally and send only the command to the device:
@@ -652,7 +652,7 @@ A restricted session rejects the pipe character, so filter locally and send only
 kobiton device adb-shell dumpsys window displays | grep -E 'mCurrentFocus|mFocusedApp'
 ----
 
-On a dedicated device, quote the whole expression instead. The pipe then runs on the device, which transfers less output:
+On a dedicated device, quote the whole expression instead. The pipe then runs on the device, so less output crosses the network:
 
 [source,shell]
 ----
@@ -1109,7 +1109,7 @@ kobiton test run [OPTIONS] --app <APP> --runner <TEST_RUNNER> <FRAMEWORK>
 
 [NOTE]
 ====
-`<FRAMEWORK>` is not the Appium `automationName` capability. An Appium session sets `appium:automationName` to `UiAutomator2`; `test run` takes `uiautomator`. The two values serve different purposes and are not interchangeable.
+`<FRAMEWORK>` is not the Appium `automationName` capability. An Appium session sets `appium:automationName` to `UiAutomator2`; `test run` takes `uiautomator`.
 ====
 
 .Options
