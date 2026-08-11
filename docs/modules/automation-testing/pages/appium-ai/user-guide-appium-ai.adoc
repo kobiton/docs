@@ -50,6 +50,11 @@ place to set it.
 
 A capability passed in the session takes precedence over the `dc.ini` value.
 
+`visionvirtual` uses the vision model already configured for Appium AI. You do
+not need to set `kobiton:llmVisionModel` to use it. To route vision requests
+through a different model or provider, see
+xref:appium-ai/override-llm.adoc[Override Appium AI settings per session].
+
 IMPORTANT: Appium AI does not detect canvas-based apps. To use vision-based
 resolution, set `kobiton:locatorStrategy` to `visionvirtual` explicitly.
 
