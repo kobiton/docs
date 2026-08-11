@@ -642,7 +642,7 @@ kobiton device adb-shell getprop ro.build.version.sdk
 kobiton device adb-shell -- logcat -d -t 200
 ----
 
-To list files on a device, use <<file-list,`kobiton file list`>> rather than `adb-shell ls`. A restricted session accepts bare `ls` and lists `/`, but rejects a path argument such as `ls -l /sdcard`.
+To list files on a device, use <<file-list,`kobiton file list`>>. A restricted session confines `adb-shell ls` to the permitted directories, so `ls -l /sdcard` is rejected while `ls -l /sdcard/Download/` is accepted. Run `kobiton device adb-shell --help` for the permitted directories.
 
 .Filter command output
 A restricted session rejects the pipe character, so filter locally and send only the command to the device:
