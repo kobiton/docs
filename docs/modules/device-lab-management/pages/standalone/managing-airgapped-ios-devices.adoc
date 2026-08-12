@@ -1,89 +1,70 @@
-= Managing iOS Devices in Air‑Gapped Kobiton Environments
+= Manage iOS devices in air-gapped environments
+:navtitle: Air-gapped iOS devices
 
-:navtitle: Managing iOS Devices in Air-Gapped Environments
+iOS 17 and above devices require an initial online validation with Apple before they can run tests on a Mac mini host that has no Internet access.
 
-This document outlines Kobiton’s standardized process for enabling iOS device management within air‑gapped environments—data centers or secured labs isolated from the internet. It addresses Apple’s security requirements (e.g., personalized Developer Disk Images and certificate verification) and provides step-by-step guidance to maintain device operability without compromising security.
+[IMPORTANT]
+This guide applies only to Standalone/On-Prem deployments where the Mac mini host has no Internet access.
 
-== Requirements from Apple
+== How Apple validation works
 
-* **Developer Certificate Verification**
+Apple applies two checks that determine how iOS devices behave in an air-gapped lab.
 
-+
+=== Signing certificate validation
 
-Apple requires all provisioning profiles and signing certificates to be verified against their servers on first installation. This validation must occur online at least once. Subsequent launches will rely on cached credentials.
+Apple validates provisioning profiles and signing certificates against Apple servers the first time they are installed on a device. This validation requires Internet access once. Later launches use the result cached on the device.
 
-* **Personalized Developer Disk Image (DDI)**
+=== Personalized Developer Disk Image
 
-+
+Each iOS 17 and above device requires a Developer Disk Image (DDI) that Apple personalizes for that specific device. Xcode requests the personalization from Apple at `https://gs.apple.com/TSS` and stores the signature on the device. After the signature is in place, the device no longer needs Internet access to mount the DDI.
 
-For iOS 17+, each device requires a unique, Apple‑personalized DDI via a TSS request to Apple servers (https://gs.apple.com/TSS). This signature is stored locally on the device and does not require internet access after the initial retrieval—but may expire over time.
+[IMPORTANT]
+Apple has not published whether a personalized DDI expires or how long it lasts in an air-gapped environment. If connection errors occur and other troubleshooting steps do not resolve the issue, the personalized DDI may have expired. Repeat the preparation process in that case.
 
-== Process Overview
+== Requirements
 
-=== Initial Setup & Certificate Verification
+* The Internet Mac: a macOS machine with Internet access and *Xcode* installed.
+* Xcode on the Internet Mac at the same version as the air-gapped Mac mini host, or later.
+* xref:ios-devices/prepare-ios-device.adoc[Developer Mode enabled,window=read-later] on each iOS device.
+* deviceConnect installed on each air-gapped Mac mini host.
+* Physical USB access to the devices.
 
-* Prepare a **dedicated, internet‑connected macOS host** with supported Xcode (e.g., Xcode 16.4 on macOS 15.5).
+[NOTE]
+Kobiton software, such as deviceConnect and deviceShare, does not need to be installed on the Internet Mac.
 
-* Connect each iOS device via **USB** and enable Developer Mode.
+== Prepare a device for an air-gapped host
 
-* Launch Xcode with the device active and foregrounded to establish trust and verify the certificate.
+See xref:ios-devices/add-ios-device.adoc#preload-ddi-air-gapped[Preload DDI for air-gapped Mac mini hosts,window=read-later]. The procedure covers three phases:
 
-=== Personalized DDI Acquisition
+* On the Internet Mac, connect the device over USB and open Xcode so the device establishes trust, validates its certificate, and receives its personalized DDI.
+* Copy the DDI files from the Internet Mac to the air-gapped Mac mini host.
+* Connect the device to the air-gapped host, then restart deviceConnect services so the host mounts the DDI.
 
-* For each iOS 17+ device:
-** Connect via USB to the internet‑connected macOS host.
-** Let Xcode request and download the personalized DDI signature from Apple.
-** Confirm that the personalization ticket is recorded locally on the device.
+Repeat the procedure for every iOS 17 and above device and every air-gapped Mac mini host in the lab.
 
-=== Air‑Gapped Deployment
+== Verify the device
 
-* Remove the device from the online macOS host.
-* Connect it via USB or Cambrionix hub to the air‑gapped Kobiton device host.
-* xref:device-lab-management:deviceConnect/restart-deviceconnect-services.adoc[Restart deviceConnect services,window=read-later] on the Mac mini to mount and load the DDI.
-* If verification fails, reconnect the device to the internet‑enabled host and refresh credentials.
+Open Chrome on the Mac mini host, go to *localhost*, and sign in. Navigate to *Devices*. The device displays as *Available*.
 
-=== Air‑Gapped Deployment DDI Transfer
+For the full verification steps, see xref:ios-devices/add-ios-device.adoc#_verify_device_is_available_in_kobiton[Verify device is available in Kobiton,window=read-later].
 
-For air-gapped or datacenter environments where it’s cumbersome to follow manual steps to allow Xcode to download this file, administrators can copy the base image from the Internet macOS host to the air-gapped host.
+== Troubleshooting
 
-Follow the steps from the previous sections to generate the DDI on the Internet host.
+A device that fails after preparation usually has an expired or missing credential, an unmounted DDI, or a certificate that does not cover the device. Check deviceConnect logs first. See xref:deviceConnect/retrieve-deviceconnect-logs.adoc[Retrieve deviceConnect logs,window=read-later].
 
-include::device-lab-management:ios-devices/add-ios-device.adoc[tag=ddi]
-
-=== Monitoring & Remediation
-
-Kobiton logs will alert on:
-
-* DDI mount failures.
-* `deviceControl` (Kobiton mobile agent) launch issues.
-
-These typically indicate expired credentials or missing certificates. In such cases, repeat the steps in the _Personalized DDI Acquisition_ and _Air‑Gapped Deployment_ sections.
-
-== System Administrator Checklist
-
-* A secure macOS machine with **Xcode installed** and internet access.
-* iOS devices connected via USB with **Developer Mode enabled**.
-* Kobiton’s `deviceConnect` deployed on air‑gapped hosts.
-* Physical USB access to devices in the lab while maintaining network isolation.
-
-== Troubleshooting & Common Errors
-
-[cols="1,2,3", options="header"]
+[cols="1,1,2", options="header"]
 |===
-| Symptom                     | Likely Cause                | Recommended Action
-| `deviceControl failed to launch` | Certificate expired or missing provisioning | Reconnect to internet host and re-verify certificate
-| `DDI mount error`          | Missing or expired personalization ticket | Repeat personalized DDI process via internet host
-| New device not recognized  | No provisioning profile or mismatched certificate | Update provisioning, ensure UDID is included
+| Symptom | Likely cause | Action
+
+| `deviceControl` fails to launch
+| The signing certificate expired, or the provisioning profile does not cover the device
+| Reconnect the device to the Internet Mac and open Xcode to revalidate the certificate. If the error persists, xref:ios-devices/import-ios-signing-certificates-and-provisioning-profiles.adoc#_resolve_common_errors_with_certificates_and_provisioning_profiles[generate and import the correct certificate and provisioning profile,window=read-later].
+
+| The DDI does not mount
+| The personalization signature is missing or expired on the device
+| Repeat xref:ios-devices/add-ios-device.adoc#preload-ddi-air-gapped[the preparation procedure,window=read-later], then xref:deviceConnect/restart-deviceconnect-services.adoc[restart deviceConnect services,window=read-later].
+
+| A new device is not recognized
+| The device UDID is not included in the provisioning profile
+| xref:ios-devices/generate-an-ios-signing-certificate-and-provisioning-profile.adoc[Generate a provisioning profile,window=read-later] that includes the device UDID, then import it to the host.
 |===
-
-== Future Enhancements
-Kobiton plans to store **personalization tickets per device** by default—reducing dependency on initial setup hosts and supporting multi-node labs more robustly.
-
-== Summary
-Kobiton’s process enables secure iOS device management in air‑gapped environments by:
-
-* Using an online macOS host for Apple compliance steps
-* Mounting devices offline following credential and DDI setup
-* Maintaining a repeatable, compliant workflow even as Apple's requirements evolve
-
-For detailed configuration, USB hub setup guidance, provisioning profile help, or Kobiton log analysis, consult the official Kobiton documentation or contact support.
