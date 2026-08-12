@@ -1,0 +1,83 @@
+= Configure custom SAML attribute mappings
+:navtitle: Configure custom attribute mappings
+
+Configure custom attribute mappings to use SSO with an identity provider (IdP) that sends SAML attributes under names you cannot change. Kobiton translates your IdP's attribute names into the names it expects before it processes each sign-in, so SSO works without changes to your IdP.
+
+== How custom attribute mappings work
+
+Kobiton reads five attributes from the SAML assertion your IdP sends at sign-in:
+
+[cols="1,3"]
+|===
+| Platform attribute | Purpose
+
+| `email`
+| The user's email address, used to match their Kobiton account.
+
+| `firstName`
+| The user's first name.
+
+| `lastName`
+| The user's last name.
+
+| `phoneNumber`
+| The user's phone number.
+
+| `memberOf`
+| The groups the user belongs to, used for role mapping.
+|===
+
+By default, Kobiton expects your identity provider (IdP) to send each attribute using specific names. If your IdP uses different attribute names, SSO authentication fails.
+
+Custom attribute mappings let you specify the attribute names used by your IdP. During sign-in, Kobiton maps those attributes to the names it expects before validating the SAML assertion. The remainder of the SSO validation process is unchanged.
+
+== Before you start
+
+* Your Kobiton account is assigned the `ADMIN` role or the `org_setting.modify_sso_setting` permission.
+* You have completed the SSO setup for your IdP. See xref:organization:sso-authentication/about-sso-authentication.adoc[].
+* You know the exact attribute names your IdP sends in the SAML assertion.
+
+== Turn on custom attribute mappings
+
+. Open your organization settings and choose *SSO Settings*.
+. Go to the *User attributes (or parameters)* section.
++
+By default, *Custom attribute mappings* is off, and Kobiton shows the five attribute names as a read-only list with Copy buttons.
++
+image:organization:sso-custom-attribute-mappings-off.png[width=1000, alt="User attributes section with Custom attribute mappings turned off, showing the read-only attribute names with Copy buttons"]
+. Turn on *Custom attribute mappings*.
++
+The read-only attribute list is replaced by a mapping table. Each row pairs a fixed *Platform Attribute* with an editable field where you enter the name your IdP uses.
++
+image:organization:sso-custom-attribute-mappings-on.png[width=1000, alt="User attributes section with Custom attribute mappings turned on, showing the two-column Platform Attribute and Your IdP's Attribute Name mapping table"]
+. For each platform attribute, enter the attribute name your IdP sends. Match the name your IdP uses exactly.
++
+[IMPORTANT]
+====
+The following special characters are not supported in an IdP attribute name: `.` (period), `[` (opening bracket), and `]` (closing bracket). Make sure the attribute name you enter does not contain these characters.
+====
+. Save your SSO settings.
+
+The mappings apply the next time a user signs in through SSO.
+
+To stop using custom attribute mappings, turn off *Custom attribute mappings* and save. The section returns to the read-only attribute list, and Kobiton expects the default attribute names again.
+
+== How Kobiton applies your mappings
+
+* *Empty fields use the default name.* If you leave a row blank, Kobiton uses the platform attribute name for that attribute.
+* *Unmapped attributes pass through.* Attributes your IdP sends that are not in the mapping are ignored, and other attributes are read under their original names.
+* *Duplicate names are not allowed.* If you enter the same IdP attribute name for two platform attributes, Kobiton shows an error on the affected rows and blocks the save until you resolve it.
+* *Empty mappings prompt a warning.* If you turn on custom attribute mappings but leave every field blank, Kobiton warns you before saving that SSO will use the default attribute names. You can still save.
+* *Some special characters are not supported.* An IdP attribute name must not contain `.` (period), `[` (opening bracket), or `]` (closing bracket).
+
+== Limitations
+
+* Custom attribute mappings change only the attribute names that Kobiton uses. They do not modify attribute values.
+* Conditional mapping, such as choosing a name based on another condition, is not supported.
+* Turning off custom attribute mappings does not change any other SSO setting.
+
+== Related guides
+
+* xref:organization:sso-authentication/about-sso-authentication.adoc[]
+* xref:organization:sso-authentication/use-okta.adoc[]
+* xref:organization:sso-authentication/use-azure-ad.adoc[]

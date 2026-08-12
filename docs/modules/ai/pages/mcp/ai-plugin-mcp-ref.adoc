@@ -1,13 +1,13 @@
 = Kobiton AI plugin and tools reference
 :navtitle: Kobiton AI plugin and tools reference
 
-The Kobiton `automate` plugin connects AI coding assistants - Claude Code, Claude Desktop, the GitHub Copilot CLI, the Gemini CLI, and the Codex CLI - to the Kobiton mobile testing platform. The plugin ships a set of MCP tools, skills, and commands that cover device management, app uploads, test execution, and session review.
+The Kobiton `automate` plugin connects AI coding assistants to Kobiton. Supported hosts are Claude Code, Claude Desktop, GitHub Copilot CLI, Gemini CLI, Codex CLI, Cursor CLI, and Cursor IDE. The plugin ships MCP tools, skills, and commands covering device management, app uploads, test case and test suite management, test execution, and session review.
 
-For the latest updates on the plugin, refer to the https://github.com/kobiton/automate[automate GitHub repo,window=read-later].
+This reference covers `automate` plugin version 1.9.0. For newer changes, see the https://github.com/kobiton/automate[automate GitHub repo,window=read-later].
 
 == MCP tools
 
-The plugin exposes 13 MCP tools across 4 domains.
+The plugin exposes 30 MCP tools across 5 domains.
 
 === Devices
 
@@ -16,13 +16,13 @@ The plugin exposes 13 MCP tools across 4 domains.
 |Tool |Description
 
 |`listDevices`
-|List available devices filtered by platform, availability, device group, name, UDID, or group ID. Returns device name, UDID, platform, OS version, and availability.
+|List available devices, filtered by platform, availability, device group, name, UDID, or group ID. Returns device name, UDID, platform, OS version, and availability.
 
 |`getDeviceStatus`
-|Get the real-time status of a specific device including availability, current session info, battery level, and connection state.
+|Get the real-time status of one device, including availability, current session, battery level, and connection state.
 
 |`reserveDevice`
-|Reserve a device for exclusive use during testing. Returns a reservation ID needed by `terminateReservation`.
+|Reserve a device for exclusive use during testing. Returns the reservation ID that `terminateReservation` requires.
 
 |`terminateReservation`
 |Release a reserved device by terminating its reservation.
@@ -35,13 +35,16 @@ The plugin exposes 13 MCP tools across 4 domains.
 |Tool |Description
 
 |`listSessions`
-|List test sessions with filters for status, device, platform, and date range. Returns session ID, status, device info, duration, and timestamps.
+|List test sessions, filtered by state, device, platform, and date range. Returns session ID, state, device information, duration, and timestamps.
 
 |`getSession`
-|Get session details including commands, capabilities, and metadata.
+|Get session details, including commands, capabilities, and metadata.
 
 |`getSessionArtifacts`
-|Get download URLs for the session's video, logs, screenshots, and reports.
+|Get download URLs for a session's video, logs, screenshots, and reports.
+
+|`getUserInputEvents`
+|Get the touch and swipe gestures performed in device-only live view during a session.
 
 |`terminateSession`
 |Stop a running test session.
@@ -56,14 +59,68 @@ The plugin exposes 13 MCP tools across 4 domains.
 |`listApps`
 |List uploaded app builds in your organization.
 
-|`getApp`
-|Get app details and version history.
-
 |`uploadAppToStore`
-|Upload an app to the Kobiton Store. Uploaded apps are permanent and visible in the Kobiton Portal.
+|Upload an app to Kobiton Store. Uploaded apps are permanent and visible in Kobiton Portal.
 
 |`confirmAppUpload`
-|Confirm an uploaded app to create a tracking record.
+|Confirm an uploaded file so Kobiton creates the app record. Parsing runs asynchronously, so the record is not immediately complete.
+
+|`getAppParsingStatus`
+|Check the parsing status of an uploaded app version until it reaches a terminal state.
+
+|`getApp`
+|Get app details and version history.
+|===
+
+=== Test management
+
+A test case is a saved, replayable sequence of steps created from a completed session. A test suite is an ordered collection of test cases. A test run executes a test case or a suite across one or more devices and reports results per device.
+
+[cols="1,3",options="header"]
+|===
+|Tool |Description
+
+|`saveTestCase`
+|Convert a finished manual session into a reusable test case.
+
+|`listTestCases`
+|List test cases, filtered by team, keyword, or platform.
+
+|`getTestCase`
+|Get test case details, including its steps.
+
+|`updateTestCase`
+|Update a test case's name, description, or steps.
+
+|`deleteTestCase`
+|Delete a test case.
+
+|`createTestRun`
+|Create a test run from a test suite or from selected test cases.
+
+|`listTestRuns`
+|List test runs, filtered by team, keyword, or platform.
+
+|`getTestRun`
+|Get test run details, including its sessions.
+
+|`terminateTestRun`
+|Stop a running test run.
+
+|`listTestSuites`
+|List test suites, filtered by team or keyword.
+
+|`getTestSuite`
+|Get test suite details, including member test cases.
+
+|`createTestSuite`
+|Create a test suite from existing test cases.
+
+|`updateTestSuite`
+|Update a test suite's name, description, or membership.
+
+|`deleteTestSuite`
+|Delete a test suite. Member test cases are kept.
 |===
 
 === Account
@@ -73,12 +130,15 @@ The plugin exposes 13 MCP tools across 4 domains.
 |Tool |Description
 
 |`getCredential`
-|Return the OAuth-authenticated user's username, API key (existing or newly generated), and portal URL. Backs the `/automate:setup` command - no manual file editing required.
+|Return your username, API key (existing or newly generated), and portal URL. Backs the `/automate:setup` command, so no manual file editing is required.
+
+|`getOrgSettings`
+|Return your organization's settings, including the live remediation flag that determines what happens when a test run execution hits a blocker.
 |===
 
 == Skills
 
-The plugin ships two guided skills.
+The plugin ships five guided skills.
 
 IMPORTANT: Using these skills in Claude Desktop requires a Claude Code subscription.
 
@@ -87,15 +147,91 @@ IMPORTANT: Using these skills in Claude Desktop requires a Claude Code subscript
 |Skill |Description
 
 |`run-automation-suite`
-|Guided workflow for running local Appium test scripts against Kobiton devices. Walks through app upload, device selection, capability parsing, local execution, and result collection. Supports Node.js, Python, .NET, and Java.
+|Run local Appium test scripts against Kobiton devices. Covers app upload, device selection, capability parsing, local execution, and result collection. Supports Node.js, Python, .NET, and Java.
 
-|`run-interactive-test`
-|Guided workflow for interactive testing using natural language. Translates user intent into CLI commands - WebDriver actions (find elements, type, click, swipe), device operations (`adb shell`, screen capture, port forwarding), file management (push/pull), app management, and test execution.
+|`run-interactive-session`
+|Interact with a device using natural language. Translates intent into CLI commands for WebDriver actions (find elements, type, click, swipe), device operations (`adb shell`, screen capture, port forwarding), file transfer, app management, and test execution.
+
+|`drive-automation-session`
+|Drive a reserved device through a flow you describe. Opens an automation session against Kobiton WebDriver hub and works through the flow one action at a time. Save the resulting session as a test case with `saveTestCase`.
+
+|`create-test-run`
+|Create a test run from a test case or a test suite. Fills in defaults, confirms a summary before creating the run, then offers to monitor it.
+
+|`monitor-test-run`
+|Watch a running test run and report state changes. Surfaces the live remediation URL when an execution is blocked, and reports a blocked execution as blocked rather than passed.
 |===
+
+=== Choose a skill
+
+[cols="2,1",options="header"]
+|===
+|Goal |Skill
+
+|Run Appium scripts you already have on Kobiton devices
+|`run-automation-suite`
+
+|Exercise a flow hands-off and save it as a test case to rerun later
+|`drive-automation-session`
+
+|Inspect or troubleshoot a device directly, pull logs, push files
+|`run-interactive-session`
+
+|Start a test run from an existing test case or suite
+|`create-test-run`
+
+|Follow a running test run and catch blockers
+|`monitor-test-run`
+|===
+
+=== Skill requirements by host
+
+Skills differ in what they need from the host running them. Check the requirement, not the host name: a chat surface with code execution provides a filesystem and Node.js and still cannot run the credential-dependent skills, because nothing there runs `/automate:setup` to write `~/.kobiton/.credentials`.
+
+[cols="2,1,1,2,1",options="header"]
+|===
+|Skill |Local file access |Credentials file |Platform |Runs on an MCP connection alone
+
+|`create-test-run`
+|No
+|No
+|Any
+|Yes
+
+|`monitor-test-run`
+|Yes
+|Yes
+|Any, with Node.js 18 or later
+|No
+
+|`drive-automation-session`
+|Yes
+|Yes
+|Any, with Node.js 18 or later
+|No
+
+|`run-automation-suite`
+|Yes
+|No
+|Any, with Node.js 18 or later, Appium 2.x, and your script's language runtime
+|No
+
+|`run-interactive-session`
+|Yes
+|Yes
+|macOS only
+|No
+|===
+
+`create-test-run` is the only skill that runs with nothing but an authenticated MCP connection. If you opt into monitoring, it hands off to `monitor-test-run`, which needs local file access and the credentials file. On a host without those, create the run and note its ID instead of watching it.
+
+`monitor-test-run` reports progress best when the host streams output from a background command. Without that, it falls back to a foreground loop rather than refusing to run.
 
 [NOTE]
 ====
-All MCP tools and the `run-automation-suite` skill work on every platform the host CLI supports. The `run-interactive-test` skill ships a CLI binary for *macOS Apple Silicon* only. On other platforms, use `run-automation-suite` or the MCP tools directly.
+All MCP tools and the `run-automation-suite` skill work on every platform your host supports.
+
+The `run-interactive-session` skill ships a CLI binary built for macOS as a single-architecture x86_64 executable. It runs natively on Intel Macs and under Rosetta 2 on Apple Silicon. No Linux or Windows build ships. On those platforms, use `run-automation-suite` or `drive-automation-session`, or call the MCP tools directly.
 ====
 
 == Commands
@@ -105,22 +241,26 @@ All MCP tools and the `run-automation-suite` skill work on every platform the ho
 |Command |Description
 
 |`/automate:setup`
-|Fetch credentials from the authenticated MCP server and write them to `~/.kobiton/.credentials`. Also installs the `~/.kobiton/bin/kobiton` CLI wrapper used by `run-interactive-test`.
+|Fetch credentials from the authenticated MCP server and write them to `~/.kobiton/.credentials`. Also installs the `~/.kobiton/bin/kobiton` CLI wrapper used by `run-interactive-session`.
 
 |`/automate:doctor`
-|Read-only diagnostic for the CLI installation, credentials file, active profile, and required fields. Prints actionable remediation hints for any failures.
+|Read-only diagnostic for the CLI installation, credentials file, active profile, and required fields. Prints remediation hints for any failures.
 |===
+
+On Cursor CLI and Cursor IDE, plugin commands register without a namespace prefix, so these appear as `/setup` and `/doctor`. Select the entry with the Kobiton description to tell them apart from Cursor's built-in commands.
 
 [NOTE]
 ====
-* *Claude Code* and the *Codex CLI* automatically recreate the symlink to Kobiton CLI wrapper everytime a new session starts. On the Codex CLI, the first session prompts you to trust the hook once via `/hooks`.
+* *Claude Code* and *Codex CLI* recreate the Kobiton CLI wrapper symlink at the start of every new session. On Codex CLI, the first session prompts you to trust the hook once through `/hooks`.
 
-* For *GitHub Copilot CLI* and the *Gemini CLI*, the symlink is not automatically recreated . Run `/automate:setup` once after install to create the wrapper, and re-run it if the symlink ever goes missing.
+* On *GitHub Copilot CLI* and *Gemini CLI*, the symlink is not recreated automatically. Run `/automate:setup` once after install to create the wrapper, and run it again if the symlink goes missing.
+
+* On *Cursor CLI*, the symlink is not recreated automatically. Run `/setup` once after install to create the wrapper, and run it again if the symlink goes missing.
 ====
 
 == Test execution
 
-The `run-automation-suite` workflow guides you through the full test lifecycle:
+The `run-automation-suite` skill guides you through the full test lifecycle:
 
 - Upload or select an app
 - Select a device
@@ -167,6 +307,7 @@ Release my reserved Pixel 6
 ....
 Show uploaded Android apps
 Upload resources/apps/GS.apk
+Check whether app version 12345 finished parsing
 Get details for app version 12345
 ....
 
@@ -177,6 +318,13 @@ Run tests/smoke_test.js on a Pixel device
 Run my Appium suite under tests/ on an iPhone 15
 ....
 
+=== Driving a device through a flow
+
+....
+Open my app on the reserved device, log in, and add the first item to the cart
+Drive the checkout flow on the reserved Pixel 6
+....
+
 === Interactive testing
 
 ....
@@ -185,6 +333,16 @@ Type "hello" in the search field
 Swipe down to refresh
 Pull /sdcard/Download/report.txt from the device
 Run adb shell pm list packages on the current device
+....
+
+=== Test cases and test runs
+
+....
+Save session 51234 as a test case named smoke-add-to-cart
+List my Android test cases
+Create a test run for smoke-add-to-cart on 3 Android devices
+Watch test run 8891 and tell me if anything blocks
+Stop test run 8891
 ....
 
 === Session management
