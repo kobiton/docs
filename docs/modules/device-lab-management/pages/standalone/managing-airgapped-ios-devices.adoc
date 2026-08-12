@@ -18,6 +18,9 @@ Apple validates provisioning profiles and signing certificates against Apple ser
 
 Each iOS 17 and above device requires a Developer Disk Image (DDI) that Apple personalizes for that specific device. Xcode requests the personalization from Apple at `https://gs.apple.com/TSS` and stores the signature on the device. After the signature is in place, the device no longer needs Internet access to mount the DDI.
 
+[NOTE]
+Apple can change this endpoint. Confirm the current address if the Internet Mac has restricted outbound access.
+
 [IMPORTANT]
 Apple has not published whether a personalized DDI expires or how long it lasts in an air-gapped environment. If connection errors occur and other troubleshooting steps do not resolve the issue, the personalized DDI may have expired. Repeat the preparation process in that case.
 
@@ -51,6 +54,8 @@ For the full verification steps, see xref:ios-devices/add-ios-device.adoc#_verif
 == Troubleshooting
 
 A device that fails after preparation usually has an expired or missing credential, an unmounted DDI, or a certificate that does not cover the device. Check deviceConnect logs first. See xref:deviceConnect/retrieve-deviceconnect-logs.adoc[Retrieve deviceConnect logs,window=read-later].
+
+Apple changes the wording of these errors between Xcode versions. Match on the behavior described below rather than on an exact message.
 
 [cols="1,1,2", options="header"]
 |===
