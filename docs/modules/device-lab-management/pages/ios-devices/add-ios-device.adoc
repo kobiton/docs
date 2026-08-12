@@ -193,7 +193,7 @@ Access any macOS machine with Internet access. This will be referred to as the I
 [NOTE]
 Kobiton software, such as deviceConnect and deviceShare, does not need to be installed on the Internet Mac.
 
-Ensure *Xcode* is installed on the Internet Mac. Make sure the Xcode version is compatible with the iOS device.
+Install *Xcode* on the Internet Mac.
 
 [IMPORTANT]
 Make sure the Xcode version on the Internet Mac *is the same or greater* than the version on the Mac mini host to transfer the DDI to.
@@ -216,15 +216,19 @@ Repeat the above processes for all iOS/iPadOS 17 and above devices to be hosted 
 
 Open *Finder* on the Internet Mac. Press *Shift + Command + G* on the keyboard, then input the following path depending on the version of Xcode:
 
-* `/Library/Developer/DeveloperDiskImages` (Xcode 16 and above)
+* `/Library/Developer/CoreDevice/CandidateDDIs` (Xcode 16.3 and above). If that folder does not exist, use `~/Library/Developer/CoreDevice/CandidateDDIs`.
+
+* `/Library/Developer/DeveloperDiskImages` (Xcode 16 to 16.2)
 
 * `~/Library/Developer/DeveloperDiskImages` (Xcode below 16)
 
 Copy the two files `iOS_DDI-version.plist` and `iOS_DDI.dmg` to the *air-gapped Mac mini* that will host the iOS devices. Put the copied files into the following folder on the air-gapped Mac mini:
 
-* `/Library/Developer/DeveloperDiskImages` if the current Xcode version is 16 or above.
+* `/Library/Developer/CoreDevice/CandidateDDIs` (Xcode 16.3 and above)
 
-* `~/Library/Developer/DeveloperDiskImages` if the current Xcode version is below 16.
+* `/Library/Developer/DeveloperDiskImages` (Xcode 16 to 16.2)
+
+* `~/Library/Developer/DeveloperDiskImages` (Xcode below 16)
 
 Repeat the above process for all air-gapped Mac mini hosts with iOS/iPadOS 17 and above devices.
 
