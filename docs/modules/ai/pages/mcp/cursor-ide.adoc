@@ -1,0 +1,82 @@
+= Kobiton for Cursor IDE
+:navtitle: Cursor IDE
+
+Kobiton for Cursor IDE connects the Cursor desktop editor to the Kobiton mobile testing platform. Install the plugin from the built-in plugin browser, then manage devices, run automation tests, and review session results using natural language in the editor.
+
+== Overview
+
+The plugin installs the bundled skills, the `kobiton` MCP server, and the plugin commands. After authentication, Kobiton tools are available in Cursor IDE.
+
+For a full list of available tools and capabilities, see the xref:mcp/ai-plugin-mcp-ref.adoc[Kobiton AI plugin and tools reference,window=read-later].
+
+== Before you begin
+
+To use Kobiton for Cursor IDE, you need:
+
+- A Kobiton account
+- Cursor IDE installed on your machine
+
+== Install the plugin
+
+[NOTE]
+====
+These instructions apply to Cloud only. Standalone and Cloud with custom domain instructions are coming soon.
+====
+
+. Open *Cursor Settings* > *Plugins*.
+. Paste `https://github.com/kobiton/automate` into the search box.
+. Select the *automate* result.
+. Click *Add to Cursor*, then click *Install*.
+
+[NOTE]
+====
+Cursor IDE and Cursor CLI share plugin installs. A plugin installed from Cursor IDE appears in the `agent` CLI, and a plugin installed from `agent` appears in Cursor IDE. Install the plugin once. Installing it in both registers the skills, commands, and MCP server twice.
+
+To set up Cursor CLI instead, see xref:mcp/cursor-cli.adoc[Kobiton for Cursor CLI].
+====
+
+== Authenticate
+
+. Open *Cursor Settings* > *Tool & MCPs*.
+. Search for *kobiton*.
+. Click *Authenticate*.
+. A browser window opens. Sign in with your Kobiton credentials.
+
+Cursor stores OAuth tokens in the operating system keychain. After authentication, Kobiton tools are available in Cursor IDE.
+
+== Set up credentials and CLI wrapper
+
+After the first sign-in, run setup once to fetch your credentials and install the CLI wrapper used by the `run-interactive-session` skill:
+
+[source,bash]
+----
+/setup
+----
+
+Cursor registers plugin commands without a namespace prefix, so the plugin setup and diagnostic commands appear as `/setup` and `/doctor`. Select the entry with the Kobiton description to tell them apart from Cursor's built-in commands of the same name.
+
+To verify the configuration:
+
+[source,bash]
+----
+/doctor
+----
+
+== Common workflows
+
+Cursor IDE supports the same mobile testing workflows as Cursor CLI:
+
+- Device management: view availability, check status, reserve and release devices
+- App management: upload Android and iOS apps, view uploaded apps
+- Test execution: run local Appium scripts through the `run-automation-suite` workflow
+- Session management: view sessions, retrieve logs, screenshots, and videos
+
+== Limitations
+
+The `run-interactive-session` skill ships a CLI binary for macOS only. On Linux and Windows, use `run-automation-suite` or the Kobiton MCP tools directly.
+
+== Additional resources
+
+- https://github.com/kobiton/automate/issues/new?template=bug_report.md[Report an issue]
+- https://discord.com/channels/1486036652685267055/1488189710248710327[Community support]
+- https://kobiton.com/privacy-policy[Privacy policy]

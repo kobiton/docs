@@ -1,0 +1,45 @@
+= Android FAQs
+:navtitle: Android FAQs
+
+Find answers to frequently asked questions related to Android devices.
+
+== Manual sessions
+
+=== Why do I see a black screen during a manual session on Android?
+
+A black screen can appear during an Android manual session for a few reasons. One common cause is the use of the `FLAG_SECURE` setting in an app. This setting helps protect sensitive content by blocking screenshots and screencast for specific windows, such as login screens.
+
+[NOTE]
+Learn more about `FLAG_SECURE` on https://developer.android.com/security/fraud-prevention/activities[Android Developers,window=read-later].
+
+image:faqs:android-black-screen-flag-secure.png[width=800,alt="Android manual session screen shows a black device screen likely caused by FLAG_SECURE, with inspector hierarchy visible."]
+
+Although the screen is black, you can still use the Inspector in a xref:manual-testing:device-information/inspector.adoc[manual session,window=read-later] or xref:session-explorer:analytics/reinspect-appium-elements.adoc[Session Explorer,window=read-later] to inspect elements on the screen.
+
+Suggested solutions and workarounds for the black screen issue:
+
+* Ask the app developers for a debug version of the app without the `FLAG_SECURE` setting enabled.
+
+* If you're familiar with the screen layout, open _adb shell_ during the manual session and use input commands to navigate past the black screen. The next question shows this in action for Google Play login on passcode-protected devices.
+
+=== How can I bypass the black screen when logging into Google Play Store (device with passcode)?
+
+On passcode-enabled devices with Android 12 and later, during a manual session, the screen turns black when logging into Google Play.
+
+The black screen is actually the passcode input screen. This screen has been protected from screen sharing to prevent recording of passcode input.
+
+To bypass this screen in a manual session:
+
+* Copy the passcode in the session information (only for organizations with passcode enabled).
+
++
+
+image:faqs:passcode-device-manual-session.png[width=700,alt="Device details in a manual session reveal the passcode."]
+
+* Open xref:manual-testing:device-controls.adoc#_adb_shell[adb shell terminal,window=read-later] from the device actions toolbar.
+
+* Type `input text <passcode>` (replace `<passcode>` with the copied passcode) and hit *Enter* on the keyboard. This command enters the passcode on the device screen.
+
+* Type `input keyevent 66` and hit *Enter* on the keyboard. This simulates the *Enter* key in the virtual keyboard.
+
+* You can then move on to the next screen, which is no longer protected from screen sharing.

@@ -1,0 +1,57 @@
+At the start of a Network Payload Capture (NPC)–enabled session, the system sets a custom HTTP proxy on the device. This proxy is not cleared if:
+
+* the _No Cleanup_ policy is the default organization or team Cleanup Policy,
+* or the Mac mini host has Cleanup disabled in the `dc.ini` configuration file (`HealthService.EnableCleanup=false`).
+
+If the NPC proxy is configured incorrectly or the proxy is turned off, the device will lose internet connectivity. NPC proxy configurations also block updates from Apple and Google servers and prevent provisioning profile verification from Apple servers due to certificate pinning.
+
+Methods to clear custom proxy settings and restore connectivity:
+
+* Use a Cleanup Policy:
+
+** Ensure that in the `dc.ini` file of the Mac mini host, `HealthService.EnableCleanup` is `true`. xref:device-lab-management:deviceConnect/restart-deviceconnect-services.adoc[Restart deviceConnect services] to apply changes.
+
+** Set any custom Cleanup Policy or the Thorough Cleanup Policy as the default for the organization and/or team.
+
+** Launch an NPC-enabled session on the device.
+
+** Exit the session without retaining the device.
+
+** The Cleanup step clears the custom proxy and restores internet connectivity.
+
++
+
+[IMPORTANT]
+The custom proxy is cleared at the end of an NPC-enabled session, but not at the end of a normal session.
+
+* Clear proxy settings manually:
+
+** For Android devices:
+
+*** Launch a manual session.
+
+*** On the controls toolbar, select *adb shell*.
+
+*** Run the following command: `settings put global http_proxy :0`
+
+** For iOS devices configured with Option 1:
+
+*** Launch a manual session.
+
+*** Open the *Settings* app, then select *General*.
+
+*** Select *VPN & Device Management*.
+
+*** Open the *Kobiton Certificate* under *Configuration Profiles*.
+
+*** Select *Remove Profile*.
+
+** For iOS devices configured with Option 2:
+
+*** Launch a manual session.
+
+*** Open the *Settings* app, then select *Wi-Fi*.
+
+*** Select the *information icon* next to the connected network.
+
+*** Under *HTTP Proxy*, select *Configure Proxy*, then choose *Off*.

@@ -11,7 +11,7 @@ Scripts contain one or more space-separated xref:_functions[functions]. Dependin
 
 [source,]
 ----
-down(0%, 0%, 3) move(50%, 50%, 3) up(3) // Places the 4th finger on the screen at 0%, 0%, moves the finger to 50%, 50%, and then removes the finger.
+down(0%, 0%, 3) wait(10) move(50%, 50%, 3) wait(10) up(3) // Places the 4th finger at 0%, 0%, moves it to 50%, 50%, then removes it. wait() lets each action complete before the next.
 ----
 
 [#_functions]
@@ -167,3 +167,84 @@ An integer that represents the measure of time in seconds.
 === `ms`
 
 An integer that represents the measure of time in milliseconds.
+
+== Common gesture recipes
+
+These recipes combine xref:_functions[functions] into complete gestures. The `wait()` durations shown are starting points. Adjust them based on the app's behavior and the device's response.
+
+[#_two_finger_tap]
+=== Two-finger tap
+
+Two adjacent fingers tap the screen three times.
+
+[source,]
+----
+down(15%, 15%, 0)
+down(16%, 15%, 1)
+wait(10)
+up(15%, 15%, 0)
+up(16%, 15%, 1)
+wait(200)
+
+down(15%, 15%, 0)
+down(16%, 15%, 1)
+wait(10)
+up(15%, 15%, 0)
+up(16%, 15%, 1)
+wait(200)
+
+down(15%, 15%, 0)
+down(16%, 15%, 1)
+wait(10)
+up(15%, 15%, 0)
+up(16%, 15%, 1)
+wait(200)
+----
+
+[#_double_tap]
+=== Double-tap
+
+A single finger taps the center of the screen twice.
+
+[source,]
+----
+down(50%, 50%, 0)
+wait(10)
+up(0)
+wait(200)
+
+down(50%, 50%, 0)
+wait(10)
+up(0)
+----
+
+[#_single_finger_swipe]
+=== Single-finger swipe
+
+One finger swipes from left to right across the screen.
+
+[source,]
+----
+down(10%, 50%, 0)
+wait(10)
+move(90%, 50%, 0)
+wait(10)
+up(0)
+----
+
+[#_two_finger_swipe]
+=== Two-finger swipe
+
+Two fingers swipe upward in parallel.
+
+[source,]
+----
+down(40%, 80%, 0)
+down(60%, 80%, 1)
+wait(10)
+move(40%, 20%, 0)
+move(60%, 20%, 1)
+wait(10)
+up(0)
+up(1)
+----

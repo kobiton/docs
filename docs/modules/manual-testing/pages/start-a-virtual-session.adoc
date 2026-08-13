@@ -1,0 +1,30 @@
+= Start a virtual session
+:navtitle: Start a virtual session
+
+Start a manual test session on a virtual device in Kobiton Portal. The session behaves the same as a session on a real device, including the xref:manual-testing:device-controls.adoc[device controls].
+
+== Prerequisites
+
+Virtual devices must be enabled by your organization's admin before you can start a session. If the *virtual devices* tab does not appear in the device list, contact your admin.
+
+To enable virtual devices, your admin sets up the following:
+
+* *A dedicated server for virtual devices* — a separate Linux server with at least 32 GB of RAM, in addition to your existing device host. One server supports up to three virtual devices; each additional device needs about 9 GB more RAM.
+* *Up-to-date host software* — the device host running a supported version of deviceConnect, plus the Kobiton Executor software and Android system image, which your admin obtains from Kobiton support.
+* *Network access between the servers* — the device host and the virtual-device server must be able to reach each other, and, for Cloud and Hybrid deployments, reach Kobiton's cloud services.
+
+NOTE: Virtual devices are available for Cloud and Hybrid deployments only. They are not yet supported on Standalone (On-Prem) deployments. Contact Kobiton support for the full setup instructions.
+
+== Start the session
+
+. Sign in to Kobiton Portal.
+. In the device list, select the *virtual devices* tab.
++
+image:manual-testing:virtual-devices-tab-context.png[width=1000,alt="The virtual devices tab in the device list"]
+. Find a virtual device, then select *Launch* to start the session.
+
+== Find a virtual session in the session list
+
+After the session ends, search for `is:virtual` on the Sessions page to filter the list to virtual-device sessions.
+
+image:manual-testing:is-virtual-filter-context.png[width=1000,alt="The Sessions page filtered by is:virtual"]

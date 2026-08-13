@@ -1,9 +1,33 @@
-= Supported methods of image injection SDK
-:navtitle: Supported methods of image injection SDK
+= Supported methods of image injection
+:navtitle: Supported methods of image injection
 
-This article list all supported methods for the custom SDK library for xref:apps:image-injection-sdk/add-the-sdk-to-your-android-app.adoc[Android] and xref:apps:image-injection-sdk/add-the-sdk-to-your-ios-app.adoc[iOS/iPadOS] image injection.
+This article list all supported methods:
 
-== Android methods
+* the automated instrumentation and custom SDK libraries for xref:apps:image-injection-sdk/add-the-sdk-to-your-android-app.adoc[Android]
+
+* the custom SDK library for xref:apps:image-injection-sdk/add-the-sdk-to-your-ios-app.adoc[iOS/iPadOS] image injection.
+
+[#_android_automated_instrumentation_methods]
+== Android automated instrumentation methods
+
+All methods supported by xref:#_android_custom_sdk_methods[custom SDK], plus:
+
+* Camera.PreviewCallback (Camera v1)
+
+** `android.hardware.Camera.setPreviewCallback`
+
+** `android.hardware.Camera.setPreviewCallbackWithBuffer`
+
+** `android.hardware.Camera.setOneShotPreviewCallback`
+
+* `Camera.ShutterCallback`, `Camera.PictureCallback`, `Camera.PictureCallback` (Camera v1)
+
+** `android.hardware.Camera.takePicture`
+
+* `ACTION_IMAGE_CAPTURE` intent API
+
+[#_android_custom_sdk_methods]
+== Android custom SDK methods
 
 All methods below are from the `camera2` library.
 

@@ -1,7 +1,7 @@
 = Configure the Mac mini host for network payload capture
 :navtitle: Configure Mac mini host
 
-Learn how to configure your local Cloud or Standalone Kobiton Mac mini host so you and your team can use network payload capture during a xref:manual-testing:local-devices/capture-network-payload-data.adoc[manual session] or xref:automation-testing:local-devices/capture-network-payload-data.adoc[automation session].
+Learn how to configure your local Cloud or Standalone Kobiton Mac mini host so you and your team can use network payload capture (NPC) during a xref:manual-testing:local-devices/capture-network-payload-data.adoc[manual session] or xref:automation-testing:local-devices/capture-network-payload-data.adoc[automation session].
 
 [#_before_you_start]
 == Before you start
@@ -9,12 +9,21 @@ Learn how to configure your local Cloud or Standalone Kobiton Mac mini host so y
 You'll need to:
 
 * Access the Mac mini host as the *deviceconnect* user for all the operations below.
+
+* For iOS devices, decide which xref:decide_ios_option[option] to use for setting up the iOS devices, as each option requires different setup steps for the Mac mini host.
+
+* Make sure that the current deviceConnect version on the Mac mini hosting the device is at least *4.19.5*. xref:device-lab-management:deviceConnect/remote-update-deviceconnect.adoc[Update deviceConnect] if the version is lower.
+
 * Make sure the Mac mini is connected to a network that satisfies the network requirements for Network Payload Capture before proceeding.
 
-== Install Rosetta (for Mac mini with Apple Silicon)
+[#decide_ios_option]
+include::partial$network-payload-capture/npc-ios-options.adoc[]
 
-[NOTE]
-This section is only required for Mac mini host with Apple Silicon.
+== Required setup steps
+
+This section applies to both hosting Android and iOS devices.
+
+=== Mac mini with Apple Silicon: Install Rosetta
 
 Open *Terminal* on the Mac mini host.
 
@@ -23,7 +32,7 @@ Run the below command to install Rosetta:
 [source,shell]
 softwareupdate --install-rosetta --agree-to-license
 
-== Modify the `dc.ini` file
+=== Enable NPC in `dc.ini` file
 
 Edit the `dc.ini` file from the location `/usr/local/deviceconnect/` using any text editor (Create a backup of the `dc.ini` file prior to making updates).
 
@@ -45,15 +54,20 @@ DeviceNetworkCapture.Trace=true
 DeviceNetworkCapture.ExternalDebugLog=false
 ----
 
-Replace `[deviceConnect IP address]` with the local IP address of the Mac mini host. You can retrieve the local IP address of the Mac mini by either:
+Replace `[deviceConnect IP address]` with the local IP address of the Mac mini host.
+
+[NOTE]
+If the Mac mini is connected to more than one network at the same time (for example, both Ethernet and Wi-Fi), make sure `[deviceconnect IP address]` is the IP address obtained from the interface that is connected to the same network as the mobile devices.
+
+You can retrieve the local IP address(es) of the Mac mini by either:
 
 * Navigating to *Settings > Network > Ethernet* or *Wi-Fi* and copying the IP address value. For Wi-Fi, click the *Details…* button next to the connected network to view the IP.
 
-* Opening *Terminal*, then entering the `ifconfig` command. The IP address is usually under the `e `en0` entry (for Etheret) or `en1` entry (for Wi-Fi), next to `inet`.
+* Opening *Terminal*, then entering the `ifconfig` command. The IP address is usually under the `en0` entry (for Ethernet) or `en1` entry (for Wi-Fi), next to `inet`.
 
 +
 
-.example of ifconfig command
+.example of `ifconfig` command
 [source,shell]
 ----
 en0: flags=8863<UP,BROADCAST,SMART,RUNNING,SIMPLEX,MULTICAST> mtu 1500
@@ -69,11 +83,132 @@ en1: flags=8863<UP,BROADCAST,SMART,RUNNING,SIMPLEX,MULTICAST> mtu 1500
 	inet 192.168.50.118 netmask 0xffffff00 broadcast 192.168.50.255
 ----
 
-[NOTE]
-If the Mac mini is connected to more than 1 network at the same time (for example, both Ethernet and Wi-Fi), make sure `[deviceconnect IP address]` is the IP address obtained from the interface that is connected to the same network as the mobile devices.
-
 Save the file, then xref:device-lab-management:deviceConnect/restart-deviceconnect-services.adoc[restart services] on the Mac mini host to apply the changes.
 
+If you are only hosting Android devices, you can move on to configure your xref:devices:local-devices/network-payload-capture/configure-an-android-device.adoc[Android device]. The next sections are only required for hosting iOS devices.
+
+== Additional setup for hosting iOS devices
+
+Configure the Mac mini host based on the selected xref:decide_ios_option[option].
+
+=== Option 1: Verify supervision identity and dc.ini configuration
+
+Access the Mac mini host and open *Finder*.
+
+Press *Shift + Command + G*, enter `/usr/local/deviceconnect`, and press *Enter*.
+
+* If the files `organization.crt` and `organization.der` are present, the supervision identity already exists.
+
+* If the files are not present, follow xref:devices:local-devices/network-payload-capture/configure-an-ios-device.adoc#_create_an_organization_then_export_the_supervision_identity[this guide,window=read-later] to create and export the supervision identity files on a Mac that is not running Kobiton software, then transfer the files to the Mac mini host.
+
+Open the `dc.ini` file from `/usr/local/deviceconnect/` using a text editor. Create a backup before making changes.
+
+Locate the line `IOSDeviceController.WifiCaptureProxyAutomation=ui`.
+
+* If the line does not exist, add `IOSDeviceController.WifiCaptureProxyAutomation=profile`.
+
+* If the line exists, change it to `IOSDeviceController.WifiCaptureProxyAutomation=profile`
+
+xref:device-lab-management:deviceConnect/restart-deviceconnect-services.adoc[Restart deviceConnect services,window=read-later] to apply the changes.
+
+=== Option 2: Establish a trusted SSH connection and install Automation Tools
+
+Access the Mac mini host.
+
+[#_check_for_an_existing_ssh_key]
+==== Check for an existing SSH key
+
+In the terminal, ensure the `.ssh` directory exists, then list its contents.
+
+[source,shell]
+----
+mkdir -p ~/.ssh
+cd ~/.ssh && ls -a
+----
+
+If the file `id_rsa` is present, proceed to xref:_modify_the_ssh_key[modifying the SSH key]. If not, continue to generate a new key.
+
+[#_generate_a_new_ssh_key]
+==== Generate a new SSH key
+
+In the `.ssh` directory, enter the following command:
+
+[source,shell]
+----
+ssh-keygen -t rsa
+----
+
+Leave the passphrase empty and press *Enter* when prompted.
+
+[source,shell]
+----
+> Enter passphrase (empty for no passphrase): [Leave empty]
+> Enter same passphrase again: [Leave empty]
+----
+
+[#_modify_the_ssh_key]
+==== Modify the SSH key
+
+Copy the contents of the `id_rsa.pub` file into the `authorized_keys` file:
+
+[source,shell]
+----
+cat id_rsa.pub >> ./authorized_keys
+----
+
+[NOTE]
+If `authorized_keys` does not exist, the command creates it automatically.
+
+Log in using the SSH key. If prompted to trust the connection, type *yes* and press *Enter*.
+
+[source,shell]
+----
+ssh 127.0.0.1
+----
+
+After successfully logging in, exit the session and restart the Mac mini host:
+
+[source,shell]
+----
+exit && sudo shutdown -r now
+----
+
+==== Install Automation Tools from Apple Configurator
+
+After the restart, access the Mac mini host.
+
+Open the *App Store*, search for *Apple Configurator*, and install it. An Apple ID is required.
+
+image:apple-configurator-mac-app-store.png[width=800,alt="Apple Configurator in the Mac App Store"]
+
+Open Apple Configurator. From the menu bar, select *Apple Configurator > Install Automation Tools*.
+
+image:apple-configurator-menu-install-automation-tools.png[width=400,alt="The Install Automation Tools option under the Apple Configurator menu bar"]
+
+When prompted, select *Install* and provide the administrator password.
+
+image:apple-configurator-install-automation-tools-popup.png[width=300,alt="The Install Automation Tools confirmation pop-up"]
+
+After installation, close Apple Configurator. It does not need to remain open for network payload capture.
+
+==== Add dc.ini configuration
+
+Open the `dc.ini` file from `/usr/local/deviceconnect/` using a text editor. Create a backup before making changes.
+
+Locate the line that begins with `IOSDeviceController.WifiCaptureProxyAutomation`.
+
+* If the line does not exist, add the following to the end of the file:
+
++
+
+[source]
+IOSDeviceController.WifiCaptureProxyAutomation=ui
+
+* If the line exists, confirm that it matches exactly the above. Update it if necessary.
+
+xref:device-lab-management:deviceConnect/restart-deviceconnect-services.adoc[Restart deviceConnect services,window=read-later] to apply the changes.
+
+[#next_steps]
 == Next steps
 
 Configure the xref:devices:local-devices/network-payload-capture/configure-an-android-device.adoc[Android] and xref:devices:local-devices/network-payload-capture/configure-an-ios-device.adoc[iOS devices] for network payload capture.
