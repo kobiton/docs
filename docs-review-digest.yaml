@@ -1,0 +1,53 @@
+name: Dinner Bell
+
+on:
+  workflow_dispatch:
+
+  schedule:
+    # 10:00 AM Eastern during daylight saving time.
+    # GitHub cron uses UTC.
+    - cron: "0 14 * * 1-5"
+
+  permissions:
+    contents: read
+    pull-requests: read
+    issues: read
+
+  jobs:
+    docs-review-digest:
+      runs-on: ubuntu-latest
+
+      steps:
+        - name: Check out docs repo
+          uses: actions/checkout@v4
+
+        - name: Setup Node.js
+          uses: actions/setup-node@v4
+          with:
+            node-version: "20"
+
+        - name: Build docs review digest
+          run: node .github/scripts/docs-review-digest.js > ${{ runner.temp }}/docs-review-digest.json
+          env:
+            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+            GITHUB_REPOSITORY: ${{ github.repository }}
+            READY_LABEL: "ready for review"
+            REVIEWED_LABEL: "✅ REVIEWED ✅"
+            CHANGES_NEEDED_LABEL: "changes needed"
+            REVIEW_ACTIVITY_WINDOW_HOURS: "48"
+
+        - name: Show digest summary
+          run: |
+            echo "Digest file created:"
+            ls -lh ${{ runner.temp }}/docs-review-digest.json
+            echo "Digest summary:"
+            node -e "const fs=require('fs'); const d=JSON.parse(fs.readFileSync(process.env.DIGEST_FILE,'utf8')); console.log('Total PRs:', d.total_count); console.log('3-4 days:', d.buckets.coming_up.length); console.log('5-6 days:', d.buckets.needs_attention.length); console.log('7-13 days:', d.buckets.stale.length); console.log('14+ days:', d.buckets.very_stale.length);"
+          env:
+            DIGEST_FILE: ${{ runner.temp }}/docs-review-digest.json
+
+        - name: Upload digest artifact
+          uses: actions/upload-artifact@v5
+          with:
+            name: docs-review-digest
+            path: ${{ runner.temp }}/docs-review-digest.json
+            retention-days: 7
