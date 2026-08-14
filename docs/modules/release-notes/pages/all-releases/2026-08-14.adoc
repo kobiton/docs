@@ -1,0 +1,84 @@
+= Release Notes
+:navtitle: Release notes
+
+_August 14, 2026_
+
+// TODO REVIEWER: title, header, and page structure under review. First collection doc for
+// date-based CI/CD release notes post-4.28. Filename and per-release-date sectioning are
+// placeholders — confirm before publishing.
+
+== 2026.07.28
+
+=== Device passcode
+
+- Fixed an issue where a device connecting for the first time in a passcode-enabled organization came online without its passcode. The passcode is now applied on that first connection. You no longer need to disconnect and reconnect the device or restart deviceConnect services to apply it.
+
+== 2026.08.10
+
+// KOB-48664: EPA-02 of parent epic KOB-54056. Removal-only change (force-offline + old banner).
+// EPA-04 (KOB-54286) is the non-punitive replacement banner — status "To Do" as of 2026-08-14,
+// so this release has a "no banner at all" gap until EPA-04 ships. Related product-doc updates
+// (Force offline outdated deviceConnect, Auto upgrade deviceConnect feature) are held for a
+// separate pass. No Robot Ranch draft PR was generated for this ticket — sourced from Slack.
+
+=== Device management
+
+- Force-offline enforcement based on deviceConnect version age has been removed. Machines are no longer taken offline for being one or more major versions behind, and the upgrade-deadline concept has been retired.
+- The old orange warning banner for out-of-date deviceConnect versions has been removed. Admins can still trigger a manual upgrade from Device Management, and the automatic/manual upgrade toggle is unchanged.
+
+== Target release TBD
+
+// KOB-53798 (PR #549): new-feature entry (not a fix). Uses the *Highlights* shape from the
+// 4_28.adoc "New features and major changes" section. Related product-doc updates on
+// start-a-mixed-session.adoc and test-cases.adoc are held for a separate pass and stay
+// parked on PR #549. Note: PR is labeled "open question" — review before publishing.
+
+=== Convert a mixed session into a Test Case
+
+Completed mixed sessions can now be converted into Test Cases, extending the flow already available for manual and Appium automation sessions. The converted Test Case holds the manual steps and the automation steps in the order they were recorded, so a combined flow can be rerun without recreating the session.
+
+*Highlights*
+
+- A mixed session must be complete before it can be converted. Sessions that are still running are not eligible.
+- The Test Case preserves the original recorded order across the manual and automation steps, and tags each step with its source.
+- Convert from Session Explorer or from the *+New Test Case* pop-up on the Test Cases list page. Search for eligible sessions with `type:mixed`.
+- Test Cases converted from a mixed session show *Mixed* as the Source type.
+- A Revisit replays each step through the execution path that matches its source and reports per-step results. Steps with no replayable equivalent, such as an unsupported Appium endpoint, are skipped with a reason and the run continues.
+- Appium script generation is not available for Test Cases converted from mixed sessions.
+
+// KOB-54289 (PR #548): pending release-note partial in the source PR — target release not yet
+// assigned. Related product-doc update on install-an-app.adoc is held for a separate pass and
+// stays parked on PR #548.
+
+=== Device details
+
+- Fixed the *Apps* tab of the device modal reporting the newest version in the app repository as *Installed* instead of the build actually installed on the device. Android devices were affected when several builds of an app shared the same version.
+- The app row on the *Apps* tab now shows *Installed* when any version of the app is installed, and names the installed build. Previously the row reported the status of the newest version in the app repository.
+- When the build on the device cannot be matched to a version in the app repository, no version is marked *Installed*. Previously the newest version in the app repository was marked *Installed* in this case.
+
+// KOB-43481 (PR #541): source ticket was awaiting deployment when the draft was written.
+// Three held items to confirm before publishing:
+//   1. Unsupported label rendering (Camera Roll) — implementation notes suggest steps with
+//      unsupported Appium endpoints render an *Unsupported* label with action tooltip, matching
+//      Test Case Details. Not covered by automated verification.
+//   2. Manual-session Test Cases — baseline steps from manual sessions with unsupported actions
+//      may also now show the *Unsupported* label. If correct, the entry below understates scope
+//      because it reads as automation-only.
+//   3. Step name format — spec asked for `/path (action)`. Shipped behavior appears to render the
+//      endpoint path alone, without a trailing `(action)` segment. Confirm which format users see.
+
+=== Scriptless Test Runs
+
+- For Test Cases converted from automation sessions, Camera Roll now names each automation test step by its WebDriver endpoint path, matching the names on the Test Case Details page. The *Baseline Screenshot* and *Revisit Screenshot* panels both use the endpoint path. Previously, these steps showed a generic *Auto Command* label.
+- Camera Roll shortens an endpoint path that does not fit the step card. Hover over the name to see the full path.
+
+// KOB-51470 (PR #539): fix was in open PRs and had not completed test validation when the draft
+// was written. Standalone-only change — no post-4.28 Standalone release page exists yet, so
+// filing under the collection doc with a Standalone callout in the entry text.
+
+=== Security Banner
+
+- Fixed *Settings > Security Banner* being blocked on Standalone deployments. The page displayed _Security Banner setting page is available by upgrading your plan_ instead of the banner editor, which prevented admins from editing or publishing the login message and stopped published banners from appearing to users at sign-in.
++
+** Subscription expiry no longer gates the Security Banner on Standalone deployments, where plan upgrades do not apply. Cloud deployments are unaffected.
+** Permission requirements are unchanged. Only *Admins* or users with the `org_setting.modify_security_banner` permission can change the xref:organization:change-the-login-message.adoc[login message,window=read-later].
