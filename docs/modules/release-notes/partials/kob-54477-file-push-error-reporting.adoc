@@ -1,0 +1,24 @@
+// Release-note draft for KOB-54477. Staged as a partial, so it is not published.
+//
+// Docs team: fold this entry into the release page for the version that ships
+// the change, then delete this file. The release version and date are not yet
+// assigned, and the change had not shipped at the time of drafting.
+
+=== Kobiton CLI reports refused file pushes
+
+`kobiton file push` now reports a refused push and exits with a non-zero exit code. Previously a refused push printed `Pushed N bytes` and exited `0`, so a pipeline recorded a transfer that never reached the device.
+
+A push is refused when the device does not permit writing to the destination path. Public cloud and trial devices run a restricted session that limits writes to the permitted directories.
+
+This is a behavior change that affects automation workflows relying on CLI exit codes.
+
+*Highlights*
+
+- `file push` exits non-zero when the device refuses the destination path
+- The CLI reports the reason for the refusal instead of a success message
+- Successful pushes are unaffected
+- CI/CD pipelines that check exit codes now detect refused pushes
+
+*Availability*
+
+Requires the latest Kobiton CLI. Download it from the Downloads icon in the left navigation of Kobiton Portal. Earlier CLI versions continue to report a refused push as successful.
