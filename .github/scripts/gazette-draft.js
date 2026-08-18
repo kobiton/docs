@@ -6,6 +6,10 @@ const sourceFile = process.env.GAZETTE_SOURCES_FILE;
 const releaseDate = process.env.RELEASE_DATE || "Target release date TBD";
 const releaseLabel = process.env.RELEASE_LABEL || "Target release TBD";
 
+function stripLeadingComments(content) {
+  return content.replace(/^(\/\/.*\n|\s*\n)+/, "").trim();
+}
+
 if (!sourceFile) {
   console.error("Missing GAZETTE_SOURCES_FILE.");
   process.exit(1);
@@ -33,7 +37,7 @@ if (data.sources.length === 0) {
     lines.push(`// Source: ${source.ticket_key || "Unknown ticket"} from PR #${source.pr.number}`);
     lines.push(`// ${source.pr.url}`);
     lines.push("");
-    lines.push(source.content.trim());
+    lines.push(stripLeadingComments(source.content));
     lines.push("");
   }
 }
