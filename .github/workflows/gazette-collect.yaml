@@ -1,0 +1,69 @@
+name: The Gazette
+
+on:
+  workflow_dispatch:
+    inputs:
+      lookback_days:
+        description: "How many days of PRs to scan"
+        required: false
+        default: "14"
+        type: string
+      include_open:
+        description: "Include open PRs"
+        required: false
+        default: "true"
+        type: choice
+        options:
+          - "true"
+          - "false"
+      include_merged:
+        description: "Include merged PRs"
+        required: false
+        default: "true"
+        type: choice
+        options:
+          - "true"
+          - "false"
+
+permissions:
+  contents: read
+  pull-requests: read
+
+jobs:
+  collect-release-note-drafts:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out docs repo
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Collect release-note draft partials
+        run: node .github/scripts/release-collect.js > ${{ runner.temp }}/gazette-sources.json
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
+          LOOKBACK_DAYS: ${{ inputs.lookback_days }}
+          INCLUDE_OPEN: ${{ inputs.include_open }}
+          INCLUDE_MERGED: ${{ inputs.include_merged }}
+          PARTIALS_PATH: "docs/modules/release-notes/partials/"
+
+      - name: Show Gazette summary
+        run: |
+          echo "Gazette source file created:"
+          ls -lh ${{ runner.temp }}/gazette-sources.json
+          echo "Gazette summary:"
+          node -e "const fs=require('fs'); const d=JSON.parse(fs.readFileSync(process.env.GAZETTE_FILE,'utf8')); console.log('Candidate PRs:', d.candidate_pr_count); console.log('Release-note partials:', d.partial_count); console.log('Ignored non-partial files:', d.ignored_non_partial_file_count);"
+        env:
+          GAZETTE_FILE: ${{ runner.temp }}/gazette-sources.json
+
+      - name: Upload Gazette source artifact
+        uses: actions/upload-artifact@v5
+        with:
+          name: gazette-sources
+          path: ${{ runner.temp }}/gazette-sources.json
+          retention-days: 7
