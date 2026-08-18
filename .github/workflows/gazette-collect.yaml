@@ -104,3 +104,17 @@ jobs:
           name: gazette-release-notes
           path: ${{ runner.temp }}/gazette-release-notes.adoc
           retention-days: 7
+
+      - name: Write Gazette release note file
+        run: |
+          mkdir -p docs/modules/release-notes/pages/all-releases
+          cp ${{ runner.temp }}/gazette-release-notes.adoc docs/modules/release-notes/pages/all-releases/gazette-preview.adoc
+          echo "Wrote Gazette preview file:"
+          ls -lh docs/modules/release-notes/pages/all-releases/gazette-preview.adoc
+
+      - name: Upload Gazette repo-shaped artifact
+        uses: actions/upload-artifact@v5
+        with:
+          name: gazette-repo-shaped-release-note
+          path: docs/modules/release-notes/pages/all-releases/gazette-preview.adoc
+          retention-days: 7
