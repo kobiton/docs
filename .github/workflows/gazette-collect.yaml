@@ -95,8 +95,8 @@ jobs:
         run: node .github/scripts/gazette-draft.js > ${{ runner.temp }}/gazette-release-notes.adoc
         env:
           GAZETTE_SOURCES_FILE: ${{ runner.temp }}/gazette-sources.json
-          RELEASE_DATE: ${{ inputs.release_date }}
-          RELEASE_LABEL: ${{ inputs.release_label }}
+          RELEASE_DATE: ${{ github.event_name == 'workflow_dispatch' && inputs.release_date || 'Target release date TBD' }}
+          RELEASE_LABEL: ${{ github.event_name == 'workflow_dispatch' && inputs.release_label || 'Target release TBD' }}
 
       - name: Upload Gazette draft artifact
         uses: actions/upload-artifact@v5

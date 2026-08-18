@@ -3,16 +3,11 @@
 const fs = require("fs");
 
 const sourceFile = process.env.GAZETTE_SOURCES_FILE;
-const releaseDate = process.env.RELEASE_DATE;
+const releaseDate = process.env.RELEASE_DATE || "Target release date TBD";
 const releaseLabel = process.env.RELEASE_LABEL || "Target release TBD";
 
 if (!sourceFile) {
   console.error("Missing GAZETTE_SOURCES_FILE.");
-  process.exit(1);
-}
-
-if (!releaseDate) {
-  console.error("Missing RELEASE_DATE.");
   process.exit(1);
 }
 
