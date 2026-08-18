@@ -25,6 +25,11 @@ on:
           - "true"
           - "false"
 
+  pull_request:
+    paths:
+      - ".github/workflows/gazette-collect.yaml"
+      - ".github/scripts/release-collect.js"
+
 permissions:
   contents: read
   pull-requests: read
