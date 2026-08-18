@@ -55,6 +55,7 @@ jobs:
           LOOKBACK_DAYS: ${{ inputs.lookback_days }}
           INCLUDE_OPEN: ${{ inputs.include_open }}
           INCLUDE_MERGED: ${{ inputs.include_merged }}
+          INCLUDE_SKIPPED: "false"
           PARTIALS_PATH: "docs/modules/release-notes/partials/"
 
       - name: Show Gazette summary
