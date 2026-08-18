@@ -6,6 +6,7 @@ const PARTIALS_PATH = process.env.PARTIALS_PATH || "docs/modules/release-notes/p
 const LOOKBACK_DAYS = Number(process.env.LOOKBACK_DAYS || "14");
 const INCLUDE_OPEN = (process.env.INCLUDE_OPEN || "true") === "true";
 const INCLUDE_MERGED = (process.env.INCLUDE_MERGED || "true") === "true";
+const INCLUDE_SKIPPED = (process.env.INCLUDE_SKIPPED || "false") === "true";
 
 function requireEnv() {
   for (const key of REQUIRED_ENV) {
@@ -210,13 +211,16 @@ async function collectSources(owner, repo) {
     const ignoredFiles = files.filter((file) => !file.filename.startsWith(PARTIALS_PATH));
 
     if (partialFiles.length === 0) {
-      output.skipped.push({
-        pr_number: pr.number,
-        pr_title: pr.title,
-        pr_url: pr.html_url,
-        reason: "No release-note partial files changed",
-        changed_file_count: files.length
-      });
+        if (INCLUDE_SKIPPED) {
+          output.skipped.push({
+            pr_number: pr.number,
+            pr_title: pr.title,
+            pr_url: pr.html_url,
+            reason: "No release-note partial files changed",
+            changed_file_count: files.length
+          });
+        }
+
       continue;
     }
 

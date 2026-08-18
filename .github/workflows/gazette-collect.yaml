@@ -24,6 +24,23 @@ on:
         options:
           - "true"
           - "false"
+      release_date:
+        description: "Target release date, YYYY-MM-DD"
+        required: true
+        type: string
+      release_label:
+        description: "Release label, for example 2608.18"
+        required: false
+        default: ""
+        type: string
+      run_claude:
+        description: "Compile release-note draft with Claude"
+        required: false
+        default: "false"
+        type: choice
+        options:
+          - "true"
+          - "false"
 
   pull_request:
     paths:
@@ -72,4 +89,18 @@ jobs:
         with:
           name: gazette-sources
           path: ${{ runner.temp }}/gazette-sources.json
+          retention-days: 7
+
+      - name: Create draft release note artifact
+        run: node .github/scripts/gazette-draft.js > ${{ runner.temp }}/gazette-release-notes.adoc
+        env:
+          GAZETTE_SOURCES_FILE: ${{ runner.temp }}/gazette-sources.json
+          RELEASE_DATE: ${{ inputs.release_date }}
+          RELEASE_LABEL: ${{ inputs.release_label }}
+
+      - name: Upload Gazette draft artifact
+        uses: actions/upload-artifact@v5
+        with:
+          name: gazette-release-notes
+          path: ${{ runner.temp }}/gazette-release-notes.adoc
           retention-days: 7
