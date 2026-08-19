@@ -2,6 +2,15 @@ name: Dinner Bell
 
 on:
   workflow_dispatch:
+    inputs:
+      post_to_slack:
+        description: "Post the digest to Slack"
+        required: false
+        default: "false"
+        type: choice
+        options:
+          - "true"
+          - "false"
 
   pull_request:
     paths:
@@ -70,3 +79,21 @@ jobs:
           name: docs-review-digest-slack
           path: ${{ runner.temp }}/docs-review-digest-slack.txt
           retention-days: 7
+
+      - name: Post Slack digest
+        if: ${{ github.event_name == 'workflow_dispatch' && inputs.post_to_slack == 'true' }}
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+          SLACK_MESSAGE_FILE: ${{ runner.temp }}/docs-review-digest-slack.txt
+        run: |
+          if [ -z "$SLACK_WEBHOOK_URL" ]; then
+            echo "Missing SLACK_WEBHOOK_URL."
+            exit 1
+          fi
+
+          MESSAGE="$(cat "$SLACK_MESSAGE_FILE")"
+
+          curl -X POST \
+            -H "Content-type: application/json" \
+            --data "$(jq -n --arg text "$MESSAGE" '{text: $text}')" \
+            "$SLACK_WEBHOOK_URL"
