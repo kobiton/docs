@@ -26,30 +26,41 @@ on:
           - "false"
       release_date:
         description: "Target release date, YYYY-MM-DD"
-        required: true
+        required: false
+        default: "2026-08-22"
         type: string
       release_label:
         description: "Release label, for example 2608.18"
         required: false
         default: ""
         type: string
-      run_claude:
-        description: "Compile release-note draft with Claude"
+      create_pr:
+        description: "Create a pull request"
         required: false
         default: "false"
         type: choice
         options:
           - "true"
           - "false"
+      # Turn off Claude, probably not needed.
+      # run_claude:
+      #  description: "Compile release-note draft with Claude"
+      #  required: false
+      #  default: "false"
+      #  type: choice
+      #  options:
+      #    - "true"
+      #    - "false"
 
   pull_request:
     paths:
       - ".github/workflows/gazette-collect.yaml"
       - ".github/scripts/release-collect.js"
+      - ".github/scripts/gazette-draft.js"
 
 permissions:
-  contents: read
-  pull-requests: read
+  contents: write
+  pull-requests: write
 
 jobs:
   collect-release-note-drafts:
@@ -62,7 +73,7 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: "20"
+          node-version: "24"
 
       - name: Collect release-note draft partials
         run: node .github/scripts/release-collect.js > ${{ runner.temp }}/gazette-sources.json
@@ -98,23 +109,70 @@ jobs:
           RELEASE_DATE: ${{ github.event_name == 'workflow_dispatch' && inputs.release_date || 'Target release date TBD' }}
           RELEASE_LABEL: ${{ github.event_name == 'workflow_dispatch' && inputs.release_label || 'Target release TBD' }}
 
-      - name: Upload Gazette draft artifact
-        uses: actions/upload-artifact@v5
-        with:
-          name: gazette-release-notes
-          path: ${{ runner.temp }}/gazette-release-notes.adoc
-          retention-days: 7
+      # For compiler testing.
+      # - name: Upload Gazette draft artifact
+      #  uses: actions/upload-artifact@v5
+      #  with:
+      #    name: gazette-release-notes
+      #    path: ${{ runner.temp }}/gazette-release-notes.adoc
+      #    retention-days: 7
 
       - name: Write Gazette release note file
         run: |
           mkdir -p docs/modules/release-notes/pages/all-releases
-          cp ${{ runner.temp }}/gazette-release-notes.adoc docs/modules/release-notes/pages/all-releases/gazette-preview.adoc
-          echo "Wrote Gazette preview file:"
-          ls -lh docs/modules/release-notes/pages/all-releases/gazette-preview.adoc
+          cp ${{ runner.temp }}/gazette-release-notes.adoc docs/modules/release-notes/pages/all-releases/${RELEASE_DATE}.adoc
+          echo "Wrote Gazette release note file:"
+          ls -lh docs/modules/release-notes/pages/all-releases/${RELEASE_DATE}.adoc
+        env:
+          RELEASE_DATE: ${{ github.event_name == 'workflow_dispatch' && inputs.release_date || '2026-08-22' }}
 
       - name: Upload Gazette repo-shaped artifact
         uses: actions/upload-artifact@v5
         with:
           name: gazette-repo-shaped-release-note
-          path: docs/modules/release-notes/pages/all-releases/gazette-preview.adoc
+          path: docs/modules/release-notes/pages/all-releases/${{ github.event_name == 'workflow_dispatch' && inputs.release_date || '2026-08-22' }}.adoc
           retention-days: 7
+
+      - name: Create Gazette pull request
+        if: ${{ github.event_name == 'workflow_dispatch' && inputs.create_pr == 'true' }}
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          RELEASE_DATE: ${{ inputs.release_date }}
+        run: |
+          BRANCH="gazette/release-notes-${RELEASE_DATE}"
+          FILE="docs/modules/release-notes/pages/all-releases/${RELEASE_DATE}.adoc"
+          
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          
+          git checkout -b "$BRANCH"
+          
+          git add "$FILE"
+          
+          if git diff --cached --quiet; then
+            echo "No Gazette changes to commit."
+            exit 0
+          fi
+          
+          git commit -m "Compile release notes for ${RELEASE_DATE}"
+          git push --set-upstream origin "$BRANCH"
+          
+          gh pr create \
+            --title "The Gazette: compile release notes for ${RELEASE_DATE}" \
+            --body "## Summary
+
+      The Gazette compiled release-note partials into a draft release notes page.
+
+      Generated file:
+        - \`${FILE}\`
+
+      This PR was generated from release-note partials under:
+        - \`docs/modules/release-notes/partials/\`
+
+      Review notes:
+        - Confirm release date and section title.
+        - Confirm included entries are assigned to the correct release.
+        - Confirm nav/sidebar placement if this page should be published.
+        - Product-doc changes bundled in source PRs are not applied here." \
+          --base main \
+          --head "$BRANCH"
