@@ -124,13 +124,13 @@ jobs:
           echo "Wrote Gazette release note file:"
           ls -lh docs/modules/release-notes/pages/all-releases/${RELEASE_DATE}.adoc
         env:
-          RELEASE_DATE: ${{ github.event_name == 'workflow_dispatch' && inputs.release_date || '2026-08-22' }}
+          RELEASE_FILE_NAME: ${{ github.event_name == 'workflow_dispatch' && format('{0}.adoc', inputs.release_date) || 'gazette-preview.adoc' }}
 
       - name: Upload Gazette repo-shaped artifact
         uses: actions/upload-artifact@v5
         with:
           name: gazette-repo-shaped-release-note
-          path: docs/modules/release-notes/pages/all-releases/${{ github.event_name == 'workflow_dispatch' && inputs.release_date || '2026-08-22' }}.adoc
+          path: docs/modules/release-notes/pages/all-releases/${{ github.event_name == 'workflow_dispatch' && format('{0}.adoc', inputs.release_date) || 'gazette-preview.adoc' }}
           retention-days: 7
 
       - name: Create Gazette pull request
