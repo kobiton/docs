@@ -140,25 +140,39 @@ jobs:
         if: ${{ github.event_name == 'workflow_dispatch' && inputs.create_pr == 'true' }}
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          RELEASE_DATE: ${{ inputs.release_date }}
+          BRANCH: gazette/weekly-release-note-harvest
+          FILE: docs/modules/release-notes/pages/all-releases/gazette-preview.adoc
         run: |
-          BRANCH="gazette/release-notes-${RELEASE_DATE}"
-          FILE="docs/modules/release-notes/pages/all-releases/${RELEASE_DATE}.adoc"
-
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
-          git checkout -b "$BRANCH"
+          if git ls-remote --exit-code --heads origin "$BRANCH" > /dev/null 2>&1; then
+            echo "Gazette branch already exists. Checking it out."
+            git fetch origin "$BRANCH"
+            git checkout -B "$BRANCH" "origin/$BRANCH"
+          else
+            echo "Gazette branch does not exist. Creating it."
+            git checkout -b "$BRANCH"
+          fi
+
+          mkdir -p "$(dirname "$FILE")"
+          cp "${{ runner.temp }}/gazette-release-notes.adoc" "$FILE"
 
           git add "$FILE"
 
           if git diff --cached --quiet; then
             echo "No Gazette changes to commit."
-            exit 0
+          else
+            git commit -m "Update weekly Gazette release-note harvest"
+            git push --set-upstream origin "$BRANCH"
           fi
 
-          git commit -m "Compile release notes for ${RELEASE_DATE}"
-          git push --set-upstream origin "$BRANCH"
+          EXISTING_PR="$(gh pr list --head "$BRANCH" --base main --state open --json number --jq '.[0].number // empty')"
+
+          if [ -n "$EXISTING_PR" ]; then
+            echo "Gazette PR already exists: #$EXISTING_PR"
+            exit 0
+          fi
 
           cat > /tmp/gazette-pr-body.md <<EOF
           ## Summary
@@ -172,14 +186,14 @@ jobs:
           - \`docs/modules/release-notes/partials/\`
 
           Review notes:
-          - Confirm release date and section title.
           - Confirm included entries are assigned to the correct release.
+          - Rename or move the generated page if publishing for a specific release date.
           - Confirm nav/sidebar placement if this page should be published.
           - Product-doc changes bundled in source PRs are not applied here.
           EOF
 
           gh pr create \
-            --title "The Gazette: compile release notes for ${RELEASE_DATE}" \
+            --title "The Gazette: weekly release-note harvest" \
             --body-file /tmp/gazette-pr-body.md \
             --base main \
             --head "$BRANCH"
