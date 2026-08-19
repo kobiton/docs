@@ -141,38 +141,42 @@ jobs:
         run: |
           BRANCH="gazette/release-notes-${RELEASE_DATE}"
           FILE="docs/modules/release-notes/pages/all-releases/${RELEASE_DATE}.adoc"
-          
+
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          
+
           git checkout -b "$BRANCH"
-          
+
           git add "$FILE"
-          
+
           if git diff --cached --quiet; then
             echo "No Gazette changes to commit."
             exit 0
           fi
-          
+
           git commit -m "Compile release notes for ${RELEASE_DATE}"
           git push --set-upstream origin "$BRANCH"
-          
+
+          cat > /tmp/gazette-pr-body.md <<EOF
+          ## Summary
+
+          The Gazette compiled release-note partials into a draft release notes page.
+
+          Generated file:
+          - \`${FILE}\`
+
+          This PR was generated from release-note partials under:
+          - \`docs/modules/release-notes/partials/\`
+
+          Review notes:
+          - Confirm release date and section title.
+          - Confirm included entries are assigned to the correct release.
+          - Confirm nav/sidebar placement if this page should be published.
+          - Product-doc changes bundled in source PRs are not applied here.
+          EOF
+
           gh pr create \
             --title "The Gazette: compile release notes for ${RELEASE_DATE}" \
-            --body "## Summary
-
-      The Gazette compiled release-note partials into a draft release notes page.
-
-      Generated file:
-        - \`${FILE}\`
-
-      This PR was generated from release-note partials under:
-        - \`docs/modules/release-notes/partials/\`
-
-      Review notes:
-        - Confirm release date and section title.
-        - Confirm included entries are assigned to the correct release.
-        - Confirm nav/sidebar placement if this page should be published.
-        - Product-doc changes bundled in source PRs are not applied here." \
-          --base main \
-          --head "$BRANCH"
+            --body-file /tmp/gazette-pr-body.md \
+            --base main \
+            --head "$BRANCH"
