@@ -6,12 +6,12 @@ on:
   pull_request:
     paths:
       - ".github/workflows/status-digest.yaml"
-      - ".github/scripts/check-review-status.js"
+      - ".github/scripts/docs-review-digest.js"
 
-#  schedule:
-    # 10:00 AM Eastern during daylight saving time.
-    # GitHub cron uses UTC.
-#    - cron: "0 14 * * 1-5"
+  # schedule:
+  #   # 10:00 AM Eastern during daylight saving time.
+  #   # GitHub cron uses UTC.
+  #   - cron: "0 14 * * 1-5"
 
 permissions:
   contents: read
@@ -29,7 +29,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: "20"
+          node-version: "24"
 
       - name: Build docs review digest
         run: node .github/scripts/docs-review-digest.js > ${{ runner.temp }}/docs-review-digest.json
