@@ -120,9 +120,12 @@ jobs:
       - name: Write Gazette release note file
         run: |
           mkdir -p docs/modules/release-notes/pages/all-releases
-          cp ${{ runner.temp }}/gazette-release-notes.adoc docs/modules/release-notes/pages/all-releases/${RELEASE_DATE}.adoc
+          echo "Release file name: ${RELEASE_FILE_NAME}"
+          cp "${{ runner.temp }}/gazette-release-notes.adoc" "docs/modules/release-notes/pages/all-releases/${RELEASE_FILE_NAME}"
           echo "Wrote Gazette release note file:"
-          ls -lh docs/modules/release-notes/pages/all-releases/${RELEASE_DATE}.adoc
+          ls -lh "docs/modules/release-notes/pages/all-releases/${RELEASE_FILE_NAME}"
+          echo "Release note files:"
+          find docs/modules/release-notes/pages/all-releases -maxdepth 1 -type f -print
         env:
           RELEASE_FILE_NAME: ${{ github.event_name == 'workflow_dispatch' && format('{0}.adoc', inputs.release_date) || 'gazette-preview.adoc' }}
 
