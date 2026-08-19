@@ -7,6 +7,7 @@ on:
     paths:
       - ".github/workflows/status-digest.yaml"
       - ".github/scripts/docs-review-digest.js"
+      - ".github/scripts/render-docs-review-digest.js"
 
   # schedule:
   #   # 10:00 AM Eastern during daylight saving time.
@@ -55,4 +56,17 @@ jobs:
         with:
           name: docs-review-digest
           path: ${{ runner.temp }}/docs-review-digest.json
+          retention-days: 7
+
+      - name: Render Slack digest message
+        run: node .github/scripts/render-docs-review-digest.js
+        env:
+          DIGEST_FILE: ${{ runner.temp }}/docs-review-digest.json
+          SLACK_MESSAGE_FILE: ${{ runner.temp }}/docs-review-digest-slack.txt
+
+      - name: Upload Slack digest artifact
+        uses: actions/upload-artifact@v5
+        with:
+          name: docs-review-digest-slack
+          path: ${{ runner.temp }}/docs-review-digest-slack.txt
           retention-days: 7
