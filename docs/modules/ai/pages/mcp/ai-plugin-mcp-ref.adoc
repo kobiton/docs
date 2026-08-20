@@ -7,7 +7,7 @@ This reference covers `automate` plugin version 1.9.0. For newer changes, see th
 
 == MCP tools
 
-The plugin exposes 30 MCP tools across 5 domains.
+The plugin exposes 31 MCP tools across 5 domains.
 
 === Devices
 
@@ -48,6 +48,9 @@ The plugin exposes 30 MCP tools across 5 domains.
 
 |`terminateSession`
 |Stop a running test session.
+
+|`startNativeSession`
+|Start a native automation session with XCUITest, UIAutomator, or GameDriver. Upload the app and the test runner to Kobiton Store first, then pass their `kobiton-store:` identifiers. This books a device and starts a billable session.
 |===
 
 === Apps
@@ -135,6 +138,20 @@ A test case is a saved, replayable sequence of steps created from a completed se
 |`getOrgSettings`
 |Return your organization's settings, including the live remediation flag that determines what happens when a test run execution hits a blocker.
 |===
+
+== AI tool attribution
+
+Kobiton records which AI tool made each MCP call, and stores that name on sessions started with `startNativeSession`. The server resolves the name from the request itself, so no tool accepts it as an argument and no prompt or skill has to supply it.
+
+The server checks, in order:
+
+. The `X-AI-Tool-Name` header, when your MCP server configuration sets it.
+. The `User-Agent` sent by your AI assistant, when the header is absent.
+. `Unknown`, when neither identifies a recognized tool.
+
+An unrecognized value never fails a call. The call runs normally and Kobiton records the tool as `Unknown`.
+
+Set `X-AI-Tool-Name` to attribute your calls explicitly. The Codex CLI and Cursor CLI setup guides already include this header in their MCP configuration examples. See xref:mcp/install-local-ai-plugin.adoc[Install and configure local plugin] and xref:mcp/cursor-cli.adoc[Kobiton for Cursor CLI].
 
 == Skills
 
@@ -350,6 +367,7 @@ Stop test run 8891
 ....
 Show running sessions
 Get details for session 12345
+Start a UIAutomator session on a Pixel 8 with my uploaded app and test runner
 Download logs from the last failed session
 Stop session 12345
 ....
