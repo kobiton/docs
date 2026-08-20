@@ -20,7 +20,7 @@ _August 14, 2026_
 == Device management
 
 - Force-offline enforcement based on deviceConnect version age has been removed. Machines are no longer taken offline for being one or more major versions behind, and the upgrade-deadline concept has been retired.
-- The old orange warning banner for out-of-date deviceConnect versions has been removed. Admins can still trigger a manual upgrade from Device Management, and the automatic/manual upgrade toggle is unchanged.
+- The orange warning banner for out-of-date deviceConnect versions has been removed. Admins can still trigger a manual upgrade from Device Management, and the automatic/manual upgrade toggle is unchanged.
 
 // KOB-53798 (PR #549): new-feature entry (not a fix). Uses the *Highlights* shape from the
 // 4_28.adoc "New features and major changes" section. Related product-doc updates on
@@ -65,14 +65,3 @@ Completed mixed sessions can now be converted into Test Cases, extending the flo
 
 - For Test Cases converted from automation sessions, Camera Roll now names each automation test step by its WebDriver endpoint path, matching the names on the Test Case Details page. The *Baseline Screenshot* and *Revisit Screenshot* panels both use the endpoint path. Previously, these steps showed a generic *Auto Command* label.
 - Camera Roll shortens an endpoint path that does not fit the step card. Hover over the name to see the full path.
-
-// KOB-51470 (PR #539): fix was in open PRs and had not completed test validation when the draft
-// was written. Standalone-only change — no post-4.28 Standalone release page exists yet, so
-// filing under the collection doc with a Standalone callout in the entry text.
-
-== Security Banner
-
-- Fixed *Settings > Security Banner* being blocked on Standalone deployments. The page displayed _Security Banner setting page is available by upgrading your plan_ instead of the banner editor, which prevented admins from editing or publishing the login message and stopped published banners from appearing to users at sign-in.
-+
-** Subscription expiry no longer gates the Security Banner on Standalone deployments, where plan upgrades do not apply. Cloud deployments are unaffected.
-** Permission requirements are unchanged. Only *Admins* or users with the `org_setting.modify_security_banner` permission can change the xref:organization:change-the-login-message.adoc[login message,window=read-later].
