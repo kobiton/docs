@@ -1,0 +1,21 @@
+// Draft release-note entry. Not published.
+//
+// Antora does not build files in partials/ as pages. This content goes live only
+// when a writer includes it in a page under pages/all-releases/ and assigns the
+// release version and date.
+//
+// Source: KOB-53962 (App Repository / MCP getApp).
+// Target section: "Improvements and fixes".
+// Heading level assumes inclusion directly beneath "== Improvements and fixes".
+//
+// PENDING: release version and date are not confirmed. The fix passed test
+// validation but had not been deployed at drafting time.
+//
+// The second bullet covers the MCP surface of the same defect. Move it to an
+// "MCP and integrations" subsection if the release page separates those areas.
+
+=== Apps and app storage
+
+- Fixed `GET /v2/apps/{appId}` omitting `latest_version` when the request sets `includeAllAppVersions=true`. The response now returns `latest_version` alongside `versions`, with the same value the endpoint returns when `includeAllAppVersions` is omitted or set to `false`.
+- Fixed the `getApp` MCP tool returning `latest_version` as `null` when called with `includeAllVersions=true`.
+- `latest_version` skips versions that are still importing or parsing. An app with no other versions returns no `latest_version`.
