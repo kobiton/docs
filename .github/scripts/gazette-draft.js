@@ -42,4 +42,39 @@ if (data.sources.length === 0) {
   }
 }
 
+if (data.needs_editor_review && data.needs_editor_review.length > 0) {
+  lines.push("");
+  lines.push("== Editor review candidates");
+  lines.push("");
+  lines.push("// These PRs may contain release-note-worthy changes.");
+  lines.push("// They did not include release-note partial files.");
+  lines.push("// Human review required before inclusion.");
+  lines.push("");
+
+  for (const candidate of data.needs_editor_review) {
+    lines.push(`=== ${candidate.pr_title}`);
+    lines.push("");
+    lines.push(`// PR: ${candidate.pr_url}`);
+    lines.push(`// Reason: ${candidate.reason}`);
+
+    if (candidate.signal && candidate.signal.length > 0) {
+      lines.push("// Signals:");
+      for (const signal of candidate.signal) {
+        lines.push(`// - ${signal}`);
+      }
+    }
+
+    lines.push("");
+
+    if (candidate.changed_files && candidate.changed_files.length > 0) {
+      lines.push("// Changed files:");
+      for (const file of candidate.changed_files) {
+        lines.push(`// - ${file}`);
+      }
+    }
+
+    lines.push("");
+  }
+}
+
 process.stdout.write(lines.join("\n"));

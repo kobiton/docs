@@ -194,7 +194,8 @@ async function collectSources(owner, repo) {
     partial_count: 0,
     ignored_non_partial_file_count: 0,
     sources: [],
-    skipped: []
+    skipped: [],
+    needs_editor_review: []
   };
 
   for (const pr of prs) {
@@ -211,7 +212,27 @@ async function collectSources(owner, repo) {
     const ignoredFiles = files.filter((file) => !file.filename.startsWith(PARTIALS_PATH));
 
     if (partialFiles.length === 0) {
-        if (INCLUDE_SKIPPED) {
+      const isPotentialReleaseNoteCandidate =
+        pr.user?.login === "IT-Kobiton" &&
+        files.some((file) =>
+            file.filename.startsWith("docs/modules/")
+        );
+
+      if (isPotentialReleaseNoteCandidate) {
+          output.needs_editor_review.push({
+            pr_number: pr.number,
+            pr_title: pr.title,
+            pr_url: pr.html_url,
+            reason:
+              "IT-Kobiton docs PR without a release-note partial. Changed customer-facing docs surface. Human review recommended.",
+            signal: [
+              "author: IT-Kobiton",
+              "changed_path: docs/modules/"
+            ],
+            changed_files: files.map((file) => file.filename)
+          });
+        }
+
           output.skipped.push({
             pr_number: pr.number,
             pr_title: pr.title,
@@ -219,7 +240,6 @@ async function collectSources(owner, repo) {
             reason: "No release-note partial files changed",
             changed_file_count: files.length
           });
-        }
 
       continue;
     }
