@@ -27,7 +27,7 @@ on:
       release_date:
         description: "Target release date, YYYY-MM-DD"
         required: false
-        default: "2026-08-22"
+        default: ""
         type: string
       release_label:
         description: "Release label, for example 2608.18"
@@ -57,6 +57,11 @@ on:
       - ".github/workflows/gazette-collect.yaml"
       - ".github/scripts/release-collect.js"
       - ".github/scripts/gazette-draft.js"
+
+  schedule:
+    # Wednesday 9:00 PM Eastern during daylight saving time.
+    # GitHub cron uses UTC.
+    - cron: "0 1 * * 4"
 
 permissions:
   contents: write
@@ -137,7 +142,7 @@ jobs:
           retention-days: 7
 
       - name: Create Gazette pull request
-        if: ${{ github.event_name == 'workflow_dispatch' && inputs.create_pr == 'true' }}
+        if: ${{ github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && inputs.create_pr == 'true') }}
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           BRANCH: gazette/weekly-release-note-harvest
