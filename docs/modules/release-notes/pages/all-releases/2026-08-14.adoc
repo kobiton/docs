@@ -74,6 +74,16 @@ Completed mixed sessions can now be converted into Test Cases, extending the flo
 - For Test Cases converted from automation sessions, Camera Roll now names each automation test step by its WebDriver endpoint path, matching the names on the Test Case Details page. The *Baseline Screenshot* and *Revisit Screenshot* panels both use the endpoint path. Previously, these steps showed a generic *Auto Command* label.
 - Camera Roll shortens an endpoint path that does not fit the step card. Hover over the name to see the full path.
 
+== XIUM
+
+- Fixed XIUM Android tests using `UiScrollable.scrollIntoView` returning `NoSuchElementException` without scrolling. The query now scrolls to the target element and returns it, matching the behavior on Basic Appium 2.
+
+// REVIEWER NOTE:
+// KOB-54483: XIUM Android UiScrollable.scrollIntoView regression against Basic Appium 2 behavior.
+// Fix shipped in build 2608.12 (2026-08-12). No Robot Ranch draft PR was generated. The ticket
+// was filed directly as a QA-reported bug against the XIUM component without a .ai spec folder,
+// so The Gazette had nothing to harvest. QA verified the fix across 5 portal-test sessions.
+
 // Source: KOB-53962 from PR #561
 // https://github.com/kobiton/docs/pull/561
 
