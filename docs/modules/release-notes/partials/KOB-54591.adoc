@@ -1,0 +1,5 @@
+// Release-note entry for the MCP listDevices name filter. Include under "MCP and integrations".
+
+- The MCP `listDevices` tool now documents how its `deviceName` filter matches. The filter matches case-insensitively against the full device name, and `*` wildcards select partial matches: `*galaxy*` returns every Galaxy device, `Galaxy*` returns names starting with Galaxy, and a bare `Galaxy` matches only a device whose full name is exactly `Galaxy`. Previously the tool description did not state this, so a partial name returned an empty device list with no explanation.
+- `listDevices` now returns an `applied_filters` object when every device list in the response is empty. This distinguishes a filter that matched no devices from an organization that has no devices to list.
+- The `listDevices` description now states that devices returned with `is_cloud: true` have restricted shell-command access in CLI sessions, and devices returned with `is_cloud: false` are unrestricted.

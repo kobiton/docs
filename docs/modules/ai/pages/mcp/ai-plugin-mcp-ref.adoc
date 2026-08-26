@@ -16,7 +16,7 @@ The plugin exposes 30 MCP tools across 5 domains.
 |Tool |Description
 
 |`listDevices`
-|List available devices, filtered by platform, availability, device group, name, UDID, or group ID. Returns device name, UDID, platform, OS version, and availability.
+|List available devices, filtered by platform, availability, device group, name, UDID, or group ID. Returns device name, UDID, platform, OS version, availability, and an `is_cloud` flag.
 
 |`getDeviceStatus`
 |Get the real-time status of one device, including availability, current session, battery level, and connection state.
@@ -27,6 +27,28 @@ The plugin exposes 30 MCP tools across 5 domains.
 |`terminateReservation`
 |Release a reserved device by terminating its reservation.
 |===
+
+`listDevices` matches `deviceName` case-insensitively against the full device name. Use `*` wildcards for partial matches.
+
+[cols="1,2",options="header"]
+|===
+|Value |Matches
+
+|`*galaxy*`
+|Any name containing "galaxy", such as `Galaxy S22+` and `Galaxy Tab S8`
+
+|`Galaxy*`
+|Any name starting with "Galaxy"
+
+|`Galaxy S22+`
+|Only the device whose full name is `Galaxy S22+`
+|===
+
+A value without wildcards matches the exact full name only, so `Galaxy` on its own returns no devices. The `--name` filter in xref:kobiton-cli:cli-commands.adoc#_device_list[Kobiton CLI] uses the same convention.
+
+When every device list in the response is empty, `listDevices` returns an `applied_filters` object that echoes the filter values it used. Check it to tell a filter that matched no devices apart from an organization that has no devices to list.
+
+Devices returned with `is_cloud: true` have restricted shell-command access in CLI sessions. Devices returned with `is_cloud: false` are unrestricted.
 
 === Sessions
 
