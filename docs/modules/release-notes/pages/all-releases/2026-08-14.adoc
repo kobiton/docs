@@ -13,7 +13,7 @@ Kobiton now uses date-based release versioning. Instead of version numbers such 
 //   KOB-52016 (Q2 - 4.26), KOB-52092 (2026.07.07), KOB-52245 (2026.06.11),
 //   KOB-53297 (2026.06.29 + MCP tool minor), KOB-53592 (2026.07.03/06),
 //   KOB-53653 (2026.07.07 + internal API), KOB-53791 (2026.07.02),
-//   KOB-52406 (Q2 - 4.26 + virtualUSB).
+//   KOB-52406 (Q2 - 4.26).
 // Also dropped as internal-only: KOB-53672 (R2 auto-upgrade infra plumbing, no user-visible change).
 
 == Kobiton version management
@@ -139,20 +139,6 @@ The deny-by-default `adb-shell` whitelist for public cloud and trial devices has
 // KOB-52850 | Team: Phoenix | Deployment: Cloud | ship_date: 2026-08-13 | bucket_source: updated_fallback
 // bucket:updated — verify
 // Component: deviceConnect.
-
-////
-// virtualUSB — held for future release, do not publish yet
-== virtualUSB
-
-- Simultaneous (mixed) session support for Core Device — held for future virtualUSB release.
-- Fixed iOS Core Device dropping after ~10 min idle on macOS and being unable to reconnect (tunnel parameter negotiation timeout; device stuck "Utilizing") — held for future virtualUSB release.
-- Fixed invalid gRPC server URL on macOS + CLI leaking raw tonic/Rust internals; grpc URL is now validated before device connect — held for future virtualUSB release.
-
-// REVIEWER NOTES (virtualUSB held):
-// KOB-52406 | Phoenix | Cloud | 2026-08-10 | updated_fallback | virtualUSB_hold
-// KOB-53929 | Phoenix | Cloud | 2026-08-10 | updated_fallback | virtualUSB_hold
-// KOB-53677 | Phoenix | Cloud | 2026-08-13 | resolutiondate | virtualUSB_hold
-////
 
 == Component versions
 

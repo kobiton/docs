@@ -133,24 +133,6 @@ The restricted ADB shell used on public cloud and trial devices has been re-arch
 // KOB-54023 | Team: Phoenix | Deployment: Cloud | ship_date: 2026-08-24 | bucket_source: resolutiondate
 // Component: deviceConnect. Xiaomi-specific device-idle behavior.
 
-////
-// virtualUSB — held for future release, do not publish yet
-== virtualUSB
-
-- Fixed unnormalized login error messages: GUI printed raw JSON, CLI dumped raw Rust/HTML internals (held).
-- Fixed CLI login failure printing the raw internal error object instead of a user-facing message (held).
-- Fixed macOS GUI showing a generic "server is temporarily unavailable" for every non-400/401 login failure, discarding the server's reason and CLI guidance (held).
-- Fixed iOS 17+ Core Device not being released after CLI Disconnect on macOS + CLI — device stuck "Utilizing"/"device is preparing" (held).
-- Fixed macOS PKG installer being unsigned and the app bundle being un-notarized; Gatekeeper warned "Apple could not verify… free of malware" (held).
-
-// REVIEWER NOTES (virtualUSB held):
-// KOB-54641 | Phoenix | Cloud | 2026-08-24 | resolutiondate | virtualUSB_hold
-// KOB-54595 | Phoenix | Cloud | 2026-08-26 | resolutiondate | virtualUSB_hold
-// KOB-54734 | Phoenix | Cloud | 2026-08-26 | resolutiondate | virtualUSB_hold
-// KOB-54592 | Phoenix | Cloud | 2026-08-27 | updated_fallback | virtualUSB_hold
-// KOB-53088 | Phoenix | Cloud | 2026-08-27 | updated_fallback | virtualUSB_hold
-////
-
 == Component versions
 
 This release includes the following component versions:
