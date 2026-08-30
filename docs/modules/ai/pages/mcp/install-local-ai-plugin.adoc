@@ -136,7 +136,7 @@ For all files above, replace the default value of `url` with the custom MCP serv
 
 == Install local plugin
 
-Run the commands in the table below in a command-line tool on your machine according to the AI platform. Replace `/path/to/automate` with the actual path to the `automate` or `automate-main` folder.
+Run the commands in the table below in a command-line tool on your machine according to the AI Agent tool. Replace `/path/to/automate` with the actual path to the `automate` or `automate-main` folder.
 
 [cols="1,2",options="header"]
 |===
@@ -188,6 +188,14 @@ Verify the URL of `kobiton` under *Configured MCP servers*
 Verify the URL of `kobiton`
 
 |===
+
+== Trust self-signed SSL certificate (Standalone/On-Prem only)
+
+These steps are only necessary if the Standalone/On-Prem Portal uses a self-signed SSL certificate. Import the certificate on each end-user computer that runs the AI Agent tool.
+
+include::debugging:partial$trust-self-signed-ssl-cert.adoc[]
+
+After importing the certificate, restart the AI Agent tool before authenticating with the MCP server.
 
 == Authenticate and use the plugin
 

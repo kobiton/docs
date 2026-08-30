@@ -121,7 +121,16 @@ Once you have obtained the custom URL, create a `.mcp.json` file in your project
 
 Replace `\https://api-custom-domain.kobiton.com/mcp` with the actual URL of your Kobiton MCP server.
 
-After creating the file, continue with either OAuth or API key authentication.
+After creating the file, continue with either <<oauth-authentication,OAuth>> or <<api-key-authentication,API key authentication>> . For Standalone customer with self-signed SSL certificate, trust the certificate before authenticating.
+
+== Trust self-signed SSL certificate (Standalone/On-Prem only)
+
+These steps are only necessary if the Standalone/On-Prem Portal uses a self-signed SSL certificate. Import the certificate on each end-user computer that runs Claude Code.
+
+include::debugging:partial$trust-self-signed-ssl-cert.adoc[]
+
+After importing the certificate, restart Claude Code before authenticating with the MCP server.
+
 
 [[oauth-authentication]]
 === OAuth authentication (recommended)
