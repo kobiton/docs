@@ -15,6 +15,11 @@ Kobiton now uses date-based release versioning. Instead of version numbers such 
 //   KOB-53653 (2026.07.07 + internal API), KOB-53791 (2026.07.02),
 //   KOB-52406 (Q2 - 4.26).
 // Also dropped as internal-only: KOB-53672 (R2 auto-upgrade infra plumbing, no user-visible change).
+// Dropped during refinement:
+//   KOB-52121 (Appium find element with LLM vision / visionvirtual locator) — already documented
+//   in 4.26S as "Appium AI: Natural language locators (Beta)" (2026-04-something ship). This is
+//   the same feature; the updated_fallback bucket landed it here on the Aug 11 update timestamp,
+//   but the feature was released long before this window.
 
 == Kobiton version management
 
@@ -28,56 +33,36 @@ Kobiton now uses date-based release versioning. Instead of version numbers such 
 // EPA-04 (KOB-54286) — the non-punitive replacement banner — is still "To Do" as of 2026-08-27,
 // so this release ships a "no banner at all" gap until EPA-04 lands.
 
-== Appium find element with LLM vision (canvas apps)
+== Kobiton MCP server: run-interactive-session on Windows and Linux
 
-Portal now supports a new `visionvirtual` locator strategy for Appium `find element`, aimed at canvas apps where native elements expose no metadata. When enabled, Kobiton uses an LLM with a 50x50 grid overlay on the device screenshot to identify elements by natural language and returns a virtual element for the match. Five LLM providers are supported.
-
-*Highlights*
-
-- Set the strategy per test with the desired capability `kobiton:locatorStrategy: visionvirtual` (accepted values: `uitree` (default), `visionvirtual`), or globally via dc.ini `NaturalLanguageLocator.LocatorStrategy=visionvirtual`. The capability wins.
-- The strategy is fixed at session start and cannot be switched mid-run.
-- Requires an LLM API key configured via `LlmClient.ApiKey` in dc.ini.
-
-*Availability*
-
-- Configuration lives in dc.ini. Set `LlmClient.Enabled=true`, `LlmClient.ApiKey=<key>`, and set the locator strategy per test or globally.
-
-// REVIEWER NOTE:
-// KOB-52121 | Team: DLM | Deployment: Cloud | ship_date: 2026-08-11 | bucket_source: updated_fallback
-// bucket:updated — verify
-// Zscaler-driven work. Underlying implementation KOB-52301. Component: AI Nova Engine.
-
-== Kobiton CLI — Windows and Linux support, unbundled binary
-
-`run-interactive-session` now supports Windows and Linux in addition to macOS. Apple Silicon uses the native `macos-arm64` build, removing the previous Rosetta 2 requirement. The kobiton CLI binary is no longer bundled with the plugin — it downloads a pinned, checksum-verified build from `public.kobiton.download` at install time and caches it locally.
-
-*Highlights*
-
-- Fresh install on macOS (arm64), Linux (x64), and Windows (x64) yields a working `kobiton` wrapper running the pinned CLI version.
-- Install script runs at Claude Code session start; if the cached binary matches the pin, no download occurs.
-- Corrupted or mismatched downloads (bad sha256) are rejected with a clear error and do not replace a working cached binary.
-- `/automate:doctor` reports the pinned version, the installed version, and the latest available version as a drift check.
-- The plugin never defaults to `latest` — pin bumps are explicit and coordinated with SKILL.md validation.
+- The Kobiton MCP server's `run-interactive-session` skill now runs on Windows (x64) and Linux (x64) in addition to macOS. Apple Silicon Macs use the native `macos-arm64` build, removing the previous Rosetta 2 requirement.
 
 // REVIEWER NOTE:
 // KOB-54550 | Team: DLM | Deployment: Cloud | ship_date: 2026-08-12 | bucket_source: updated_fallback
 // bucket:updated — verify
 // Kept under MCP filter as a major change (new platform support). Components: MCP server, Plugin.
 // Intel macOS is the one regression — no macos-x64 artifact is published upstream. Confirm acceptable.
+// Section trimmed during refinement — the following details were dropped as internal or off-topic:
+//   - Binary unbundling and pinned download from `public.kobiton.download` (implementation detail;
+//     users don't manage the cached binary themselves)
+//   - Checksum verification, cache path (`~/.kobiton`), install-script mechanics
+//   - "Install script runs at Claude Code session start" (Claude Code SessionStart hook plumbing)
+//   - `/automate:doctor` version-drift check — user-visible in Claude Code, but not the focus of
+//     this entry; users will encounter it through normal plugin use
+//   - "Plugin never defaults to `latest`" pin policy (internal maintenance policy)
 
 == Restricted ADB shell — expanded commands, safe-path file transfers
 
-The deny-by-default `adb-shell` whitelist for public cloud and trial devices has been expanded to cover more diagnostic workflows, and file transfers now work from a defined set of safe directories.
+On Public Devices, `kobiton device adb-shell` now allows more diagnostic commands and supports file transfers from a defined set of safe directories. Private Devices are unaffected.
 
 *Highlights*
 
-- New allowed commands: `screencap`, `input`, `pm install -r` (when the APK is staged in a safe path), and `settings get|put secure enabled_accessibility_services`. All other `settings` keys and subcommands remain rejected.
-- New allowed read: `/proc/version`.
-- Safe directories for `PUT file:` (push) and `GET file:` (pull): `/sdcard/Download/`, `/sdcard/Documents/`, `/data/local/tmp/`. Writes cannot target `/proc/version` or a safe directory itself.
-- `PUT` was previously blocked outright; `GET` was previously unchecked. Both now go through the same path validation as shell arguments (length, control characters, forbidden metacharacters, whitespace, `..` traversal, safe-directory prefixes).
-- Denied transfers now surface `AdbShellCommandRejectedException` instead of `SecurityException`.
-- `kobiton device adb-shell --help` documents the deny-by-default policy, allowed commands, permitted path roots, the settings restriction, and examples.
-- Unrestricted (private cloud / dedicated) devices are unaffected.
+- Newly allowed commands: `screencap`, `input`, and `settings get|put secure enabled_accessibility_services`. Other `settings` keys and subcommands remain rejected.
+- Newly allowed read: `/proc/version`.
+- `pm install -r` now works when the APK is staged in a safe directory, for example `pm install -r /data/local/tmp/app.apk`.
+- File push (`PUT file:`) and pull (`GET file:`) now support the safe directories `/sdcard/Download/`, `/sdcard/Documents/`, and `/data/local/tmp/`. Writes cannot target `/proc/version` or a safe directory itself.
+- Denied transfers now surface `AdbShellCommandRejectedException` instead of `SecurityException` — customer automation that catches the old exception name should be updated.
+- `kobiton device adb-shell --help` documents the current policy, allowed commands, and permitted paths.
 
 // REVIEWER NOTE:
 // KOB-54468 + KOB-54472 | Team: Phoenix | Deployment: Cloud | ship_date: 2026-08-10 | bucket_source: updated_fallback
@@ -86,6 +71,12 @@ The deny-by-default `adb-shell` whitelist for public cloud and trial devices has
 // same components (CLI, deviceConnect).
 // Behavior change on `SecurityException → AdbShellCommandRejectedException` is worth calling out
 // to any customer automation that catches the old exception name.
+// Section trimmed during refinement:
+//   - Dropped "deny-by-default whitelist" framing — internal implementation, users don't see the
+//     whitelist mechanism directly
+//   - Dropped the historical "PUT was previously blocked / GET was previously unchecked" bullet
+//     and the internal path-validation mechanics (control chars, metacharacters, `..` traversal,
+//     safe-directory prefixes) — how the sanitizer works internally, not what the user needs
 
 == XIUM
 
@@ -127,7 +118,7 @@ The deny-by-default `adb-shell` whitelist for public cloud and trial devices has
 // REVIEWER NOTE:
 // KOB-54428 | Team: DLM | Deployment: Cloud | ship_date: 2026-08-05 (fixVersion 2026.08.15) | bucket_source: fixVersion
 // Moved from Aug 7 page during compilation — resolutiondate is 08-05 but fixVersion is 08-15,
-// which places it in the Aug 10-16 week. If the fix went live before Aug 10, move to Aug 7.
+// which places it in the Aug 10-16 week. Placement confirmed during refinement.
 
 == deviceConnect
 
