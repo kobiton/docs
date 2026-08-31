@@ -25,43 +25,58 @@ Kobiton now uses date-based release versioning. Instead of version numbers such 
 //   KOB-54423 (EPA-05 point api's auto-upgrade at dl.kobiton.download — URL change, no user-visible behavior)
 //   KOB-52733 (deviceConnect general exhaust writer — internal telemetry plumbing)
 //   KOB-54637 (Update deviceConnect nginx — infra, no user-visible change)
+//   KOB-44438 (Remove dC support for upstreaming archive media via gRPC — dead-code cleanup;
+//     per ticket description "we no longer have ever desire to upstream video via gRPC. Thus the
+//     code that supports this is now dead code in dC and should be removed for simplification."
+//     Nothing in production relied on it; there is no customer migration path. Prior draft
+//     incorrectly framed this as a customer-facing deprecation.)
+//   KOB-54639 (InstrumentsClient.WriteMessage NRE + leaked InstrumentsServiceObject on
+//     stream-disposed-mid-write) — broken-teardown marker; per the ticket the observed 8 leaks
+//     over ~19h "will not exhaust resources on its own" and "has not been shown to cause the
+//     watchdog restarts on that host." No proven customer symptom; internal hygiene.
 
-== Kobiton version management (continued)
+== deviceConnect version display and upgrade banner
 
-The auto-upgrade rebuild that started with the EPA-02 removal on 2026-08-10 (see the August 14 page) continues with the replacement banner and version-string handling:
-
-*Highlights*
-
-- Auto-upgrade now runs on R2 with the new date-based versioning format. The non-punitive replacement banner from EPA-04 is live — filling the gap left when the old force-offline banner was removed. Admins see the new banner surface in Device Management when a machine is behind on deviceConnect.
-- deviceConnect version strings are no longer rejected by shape. Any version string is accepted as valid, matching the new build-timestamp format `YYMM.DDHHMM.P+commit`.
-- The parent auto-upgrade epic wraps up: removal of force-offline enforcement (from Aug 14 page) plus new-format handling ship together as one behavior change.
+- Portal now displays the new date-based deviceConnect version strings correctly on Device Management (for example `2608.20` or `2607.131545.0+389afda`). Previously these appeared as `N/A` because Portal only recognized the older `major.minor.build.timestamp.branch@commit` format. Missing or malformed version strings now display as `Unknown` without blocking the host machine.
+- A new informational banner appears in Portal for Organization Admins when one or more host machines are behind on deviceConnect: *"Version {latest_version} is available. {n}/{total} host machines should be upgraded."* — with *Upgrade Now* and dismiss (X). The banner is hidden when all machines are current and is not shown to non-admin users. This banner replaces the orange force-offline warning that was removed in the August 14 release.
+- Host machines that had been previously forced offline due to version lag come back online automatically.
 
 // REVIEWER NOTE:
 // KOB-54286 (EPA-04) | Team: DLM | Deployment: Cloud | ship_date: 2026-08-18 | bucket_source: updated_fallback
-// bucket:updated — verify
-// This is the non-punitive replacement banner that PR #566 flagged as "To Do" on 2026-08-14.
+// bucket:updated — verify. New informational replacement banner (Org Admin only); banner copy
+// preserved verbatim per KOB-54286 acceptance criteria.
 //
 // KOB-54259 (EPA-01) | Team: DLM | Deployment: Cloud | ship_date: 2026-08-18 | bucket_source: updated_fallback
-// bucket:updated — verify
+// bucket:updated — verify. Accepts any version string (removes the strict format validation that
+// caused new date-based versions to show as N/A).
 //
 // KOB-54056 (parent) | Team: DLM | Deployment: Cloud | ship_date: 2026-08-17 | bucket_source: fixVersion (2026.08.17)
+// Parent epic — the Auto Upgrade Feature rework that removed force-offline enforcement (shipped on
+// the Aug 14 page as KOB-48664 / EPA-02) and replaced it with this informational banner plus
+// version-format acceptance.
 //
-// Held as backend-only (see file-top notes): KOB-54260 (EPA-03), KOB-54423 (EPA-05).
+// Held as backend-only (see file-top notes): KOB-54260 (EPA-03 offlineExclusionList removal —
+// code-level only, no user-visible change), KOB-54423 (EPA-05 auto-upgrade source change from
+// Nexus to R2 — internal distribution migration, no user-visible behavior).
+// Section rewritten during refinement — stripped EPA-01/EPA-04 internal codes, "R2"/"Nexus"
+// distribution names, "non-punitive" engineering framing, and the self-referential "parent epic
+// wraps up" project-management flavor. Auto-upgrade mechanics bullet dropped — behavior is
+// unchanged from the customer's perspective (source changed under the hood).
 
 == API v2 — Terminate reservation by device UDIDs
 
-- `POST` to the terminate-reservation endpoint now accepts a set of device UDIDs alongside the reservation ID. Callers can end a reservation for specific devices without terminating the whole reservation set.
+- `DELETE /v2/reservations/terminate` now accepts an optional set of device UDIDs alongside `reservation_ids`. Callers can end a reservation for specific devices without terminating the whole reservation set. UDIDs with no active reservation are reported in the response's `failed` list. Requests that pass only `reservation_ids` are unchanged. Authorization is unchanged — only reservations the caller has permission to terminate are affected.
 
 // REVIEWER NOTE:
 // KOB-54045 | Team: DLM | Deployment: Cloud | ship_date: 2026-08-18 | bucket_source: updated_fallback
 // bucket:updated — verify. Component: API v2.
-// TODO: confirm endpoint path + request shape from ticket description before publish.
+// Endpoint + request shape confirmed from lead-engineer comment on ticket.
 
 == Kobiton CLI
 
 - Fixed CLI-driven public-device sessions not counting session minutes toward usage when the session hit its timeout and was terminated. Usage now records these minutes.
 - Fixed the CLI writing the pre-signed S3 upload URL and the session JWT to client-visible output. These credentials are no longer logged.
-- New: create a user via the Kobiton CLI. Previously only the Portal allowed user creation.
+- New: create a user from the Kobiton CLI with `kobiton org user create` (wraps `POST /v2/organizations/members`). Required: `--email`, `--username`. Choose one of `--password` or `--enable-sso` (mutually exclusive). Optional: `--first-name`, `--last-name`. To keep the password out of shell history, supply it via the `KOBITON_NEW_USER_PASSWORD` environment variable. The caller's role must have `org_management.modify` permission.
 
 // REVIEWER NOTE:
 // KOB-54262 | Team: DLM | Deployment: Cloud | ship_date: 2026-08-17 | bucket_source: updated_fallback
@@ -72,15 +87,19 @@ The auto-upgrade rebuild that started with the EPA-02 removal on 2026-08-10 (see
 //
 // KOB-54547 | Team: DLM | Deployment: Cloud | ship_date: 2026-08-20 | bucket_source: updated_fallback
 // bucket:updated — verify. Component: CLI. New capability.
-// TODO: expand from ticket body — confirm the exact CLI command + flags.
+// Command syntax + env-var + permission requirement confirmed from lead-engineer comment on ticket.
 
 == Device Hub
 
-- Fixed CLI-testing device locks never being released for direct-hub-initiated session ends. The event handler no longer crashes on `getErrorMessage`, and a stream-end fallback plus a TTL now guarantee the lock is released.
+- Fixed public and shared devices getting stuck as unavailable (`MH-400 ... is being used for CLI testing`) after a CLI session ended abnormally — for example a session timeout, a dropped client, or a background service deploy. Previously the device remained locked until an operator restarted device-hub. Devices now release the lock cleanly in all these cases, and a fallback timeout releases any lock that persists past its expected lifetime.
 
 // REVIEWER NOTE:
 // KOB-54584 | Team: DLM | Deployment: Cloud | ship_date: 2026-08-17 | bucket_source: updated_fallback
 // bucket:updated — verify. Component: Device Hub.
+// Rewritten during refinement — dropped internal mechanics (`getErrorMessage` crash,
+// stream-end fallback, TTL). Kept the user-visible error string `MH-400 ... is being used for CLI
+// testing` since customers see it. Reference incident: 9+ shared sandbox devices locked during
+// KOB-54477 verification, all recovered only via device-hub restart.
 
 == Apps and app storage
 
@@ -90,29 +109,29 @@ The auto-upgrade rebuild that started with the EPA-02 removal on 2026-08-10 (see
 
 // REVIEWER NOTE:
 // KOB-53962 | Team: DLM | Deployment: Cloud | ship_date: 2026-08-20 | bucket_source: fixVersion (2026.08.20)
-// Draft reused from PR #566 (verbatim). Components: Appium, Apps Repo, MCP server.
+// Components: Appium, Apps Repo, MCP server.
 
 == deviceConnect
 
-- Fixed WatchDog unable to restart dc-services because the default restart command still used `runit sv` after the launchd migration. WatchDog now uses the correct restart command post-migration.
-- Fixed `InstrumentsClient.WriteMessage` NREs and leaked `InstrumentsServiceObject` when the stream is disposed mid-write. Disposal is now clean and no object is leaked.
+- Fixed a service-recovery failure on macOS host machines: when deviceConnect's internal services hit a failure timeout, they are now restarted automatically as intended.
 - Fixed the deviceControl initialization failing with `mobile_image_mounter.shim.remote: PasswordProtected` on iOS devices reported by EJ. deviceControl now initializes on affected devices.
-- Fixed `adb shell reboot bootloader` bypassing the restricted-shell protection on Android manual sessions. The command is now rejected under the restricted whitelist.
+- Fixed `adb shell reboot bootloader` bypassing the restricted-shell protection on Android manual sessions. The command is now rejected.
 
 // REVIEWER NOTE:
 // KOB-54640 | Team: Phoenix | Deployment: Cloud | ship_date: 2026-08-18 | bucket_source: resolutiondate
-// KOB-54639 | Team: Phoenix | Deployment: Cloud | ship_date: 2026-08-19 | bucket_source: resolutiondate
+// Rewritten during refinement — dropped internal mechanics (WatchDog service, `runit sv` vs
+// launchd migration). The May migration referenced was KOB-52667.
+//
 // KOB-54594 | Team: Phoenix | Deployment: Cloud | ship_date: 2026-08-19 | bucket_source: resolutiondate | Customer: EJ
+//
 // KOB-54676 | Team: Phoenix | Deployment: Cloud | ship_date: 2026-08-20 | bucket_source: resolutiondate
-
-== deviceConnect — deprecated capability
-
-- Support for upstreaming archive media via gRPC has been removed from deviceConnect. Automation workflows that relied on gRPC upstreaming must migrate to the current transport.
-
-// REVIEWER NOTE:
-// KOB-44438 | Team: Phoenix | Deployment: Cloud | ship_date: 2026-08-21 | bucket_source: updated_fallback
-// bucket:updated — verify. Deprecation notice — this may warrant a customer heads-up
-// before publishing. TODO: confirm what the replacement transport is.
+//
+// KOB-54639 dropped from user-facing bullets — see file-top backend-only list. Per the ticket:
+// "8 leaks over ~19h will not exhaust resources on its own — this is a broken-teardown marker,
+// not a resource-exhaustion cause. It has not been shown to cause the watchdog restarts on that
+// host; that is a separate open question." Internal hygiene; no proven customer symptom.
+// Also dropped `restricted whitelist` phrasing from the reboot-bootloader bullet — same
+// user-facing rationale as the Aug 14 restricted-ADB-shell rewrite.
 
 == Image Injection (Android)
 
