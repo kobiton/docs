@@ -65,7 +65,7 @@ Kobiton now uses date-based release versioning. Instead of version numbers such 
 //   - KOB-54613 migration example added inline so customers with existing dc.ini config aren't
 //     left figuring out the Temperature → TextExtraBody mapping themselves.
 
-== Restricted ADB shell
+== ADB shell on Public Cloud devices
 
 - On Public Cloud devices, `kobiton device adb-shell` is now more permissive: pipes, redirection, quoted arguments, whitespace in arguments, and a broader set of commands and file paths are accepted. Dangerous patterns (interactive shell, `..` path traversal, oversized command lines, unsafe write targets) are still rejected.
 - On Public Cloud Android devices, the `adb shell` toolbar in Portal manual sessions now uses the same policy as the CLI.
