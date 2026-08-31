@@ -65,12 +65,18 @@ Kobiton now uses date-based release versioning. Instead of version numbers such 
 
 == Kobiton CLI
 
-- CLI connection retries are now limited. Previously the CLI could retry indefinitely against an unreachable server.
+- The CLI now retries transient connection failures automatically. Built-in retries were added to resource connections so a brief network blip no longer fails the operation outright.
+- File-pull transient-error detection was broadened to catch additional gRPC (tonic) errors that were previously treated as terminal.
 
 // REVIEWER NOTE:
-// KOB-53228 | Team: DLM | Deployment: Cloud | ship_date: 2026-07-24 | bucket_source: changelog
+// KOB-53228 | Team: DLM | Deployment: Cloud | ship_date: 2026-07-24 | bucket_source: updated_fallback
 // Component: CLI.
-// TODO: confirm the exact retry limit and whether it's configurable.
+// PLACEMENT NOTE: fixVersion on this ticket is `2026 Q2 - 4.27` (shipped July 17, 2026 as 4.28).
+// This entry belongs on the 4.28 release notes page but was not documented there. Landed here so the
+// change is captured somewhere in user-facing docs. Do not retroactively edit 4.28.
+// TODO: unverified detail — a "~600ms retry window" figure surfaced during review; confirm whether
+// retries are count-capped, time-bounded (e.g. ~600ms window), or both, and whether the behavior is
+// configurable. Check with Chris Faulhaber (reporter/assignee) before publish.
 
 == Device cleanup policy
 
