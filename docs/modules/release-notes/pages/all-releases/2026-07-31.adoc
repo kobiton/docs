@@ -25,16 +25,16 @@ Kobiton now uses date-based release versioning. Instead of version numbers such 
 //   KOB-53311, KOB-53312, KOB-53313 (Appium AI internal infra)
 //   KOB-47783, KOB-45044 (docs work for old releases)
 
-== Portal auto-plugin enforcement
+== Kobiton MCP server: per-skill environment rules
 
 *Highlights*
 
-- The automate plugin now declares and enforces per-skill host/platform/file-access rules. Skills that don't meet a caller's environment surface a clear rejection instead of silently mis-executing.
+- The Kobiton MCP server now declares and enforces per-skill host/platform/file-access rules. Skills that don't meet a caller's environment surface a clear rejection instead of silently mis-executing.
+- This matters because the MCP server runs across hosts with different capabilities (local file access, streamed watch/monitor affordance, macOS/Apple Silicon, etc.). A skill that needs a local binary or local file access will now say so up front instead of failing opaquely on a host that can't provide it.
 
 // REVIEWER NOTE:
 // KOB-54047 | Team: DLM | Deployment: Cloud | ship_date: 2026-07-31 | bucket_source: updated_fallback
 // bucket:updated — verify. Components: MCP server, Plugin. Kept under MCP filter as major (new enforcement mechanism).
-// TODO: expand from ticket description before publish.
 
 == Reports
 
@@ -54,13 +54,12 @@ Kobiton now uses date-based release versioning. Instead of version numbers such 
 
 == Scriptless Test Runs
 
-- For Test Cases converted from automation sessions, the Test Run Overview now displays a new action name for each Test Step when Revisit is active. Previously the step used a generic label.
+- For Test Cases converted from automation sessions, the Test Run Overview now labels each Test Step with the underlying automation action when Revisit is active — for example `/click`, `/back`, or `/orientation`. At conversion time the Test Steps still display human-friendly labels (`Tap`, `Press Back`, `Install`); during Revisit they switch to the forward-slash-prefixed Appium endpoint, which matches how the step is referenced in the automation script. This makes it easier to trace each Revisit step back to its source command.
 
 // REVIEWER NOTE:
 // KOB-43481 | Team: DLM | Deployment: Cloud | ship_date: 2026-07-29 (fixVersion 2026.07.29) | bucket_source: fixVersion
 // Moved from the Aug 21 bucket during compilation — resolutiondate mapped it to 2026-08-18 but
 // fixVersion 2026.07.29 places it here.
-// TODO: confirm the exact "new action name" format before publish.
 
 == Component versions
 
