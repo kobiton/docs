@@ -35,11 +35,10 @@ Kobiton now uses date-based release versioning. Instead of version numbers such 
 //     over ~19h "will not exhaust resources on its own" and "has not been shown to cause the
 //     watchdog restarts on that host." No proven customer symptom; internal hygiene.
 
-== deviceConnect version display and upgrade banner
+== Host machines
 
-- Portal now displays the new date-based deviceConnect version strings correctly on Device Management (for example `2608.20` or `2607.131545.0+389afda`). Previously these appeared as `N/A` because Portal only recognized the older `major.minor.build.timestamp.branch@commit` format. Missing or malformed version strings now display as `Unknown` without blocking the host machine.
-- A new informational banner appears in Portal for Organization Admins when one or more host machines are behind on deviceConnect: *"Version {latest_version} is available. {n}/{total} host machines should be upgraded."* — with *Upgrade Now* and dismiss (X). The banner is hidden when all machines are current and is not shown to non-admin users. This banner replaces the orange force-offline warning that was removed in the August 14 release.
-- Host machines that had been previously forced offline due to version lag come back online automatically.
+- Device Management now displays the deviceConnect version for each host machine. Previously some host machines showed `N/A`.
+- Host machines that were forced offline because of version lag come back online automatically.
 
 // REVIEWER NOTE:
 // KOB-54286 (EPA-04) | Team: DLM | Deployment: Cloud | ship_date: 2026-08-18 | bucket_source: updated_fallback
@@ -62,7 +61,13 @@ Kobiton now uses date-based release versioning. Instead of version numbers such 
 // distribution names, "non-punitive" engineering framing, and the self-referential "parent epic
 // wraps up" project-management flavor. Auto-upgrade mechanics bullet dropped — behavior is
 // unchanged from the customer's perspective (source changed under the hood).
-// FINAL: ok to include, but for the 1st point, simplify to: correctly display deviceConnect version instead of N/A, as user should not care about the format change and why it breaks the version display. Remove 2nd point as it provides little impact. Keep the 3rd point.
+// Heading is `Host machines`, not `deviceConnect version display` — both bullets are host-machine
+// behavior on Device Management, and the second (forced-offline machines returning online) is not
+// a version-display change. Do not re-narrow the heading.
+// Final review: version-display bullet cut back to the observable outcome (version shows instead
+// of N/A) — the old vs. new version-string format and why it broke display are not the user's
+// concern. The KOB-54286 upgrade banner bullet (Org Admin "Version X is available…" notice with
+// Upgrade Now / dismiss) was dropped as low impact; heading narrowed to match. Third bullet kept.
 
 == API v2 — Terminate reservation by device UDIDs
 
@@ -92,9 +97,9 @@ Kobiton now uses date-based release versioning. Instead of version numbers such 
 // Command syntax + env-var + permission requirement confirmed from lead-engineer comment on ticket.
 // FINAL: ok to include
 
-== Device Hub
+== Device availability
 
-- Fixed public and shared devices getting stuck as unavailable (`MH-400 ... is being used for CLI testing`) after a CLI session ended abnormally — for example a session timeout, a dropped client, or a background service deploy. Previously the device remained locked until an operator restarted device-hub. Devices now release the lock cleanly in all these cases, and a fallback timeout releases any lock that persists past its expected lifetime.
+- Fixed public and shared devices staying unavailable (`MH-400 ... is being used for CLI testing`) after a CLI session ended abnormally — for example a session timeout or a dropped connection. Devices now return to the available pool automatically, including any device still held past its expected session duration.
 
 // REVIEWER NOTE:
 // KOB-54584 | Team: DLM | Deployment: Cloud | ship_date: 2026-08-17 | bucket_source: updated_fallback
@@ -103,7 +108,9 @@ Kobiton now uses date-based release versioning. Instead of version numbers such 
 // stream-end fallback, TTL). Kept the user-visible error string `MH-400 ... is being used for CLI
 // testing` since customers see it. Reference incident: 9+ shared sandbox devices locked during
 // KOB-54477 verification, all recovered only via device-hub restart.
-// FINAL: ok to include, but remove any mention of Device Hub, as the user has no concept of the term. Just re-word it to be a general improvement in device stability.
+// Final review: all "Device Hub" wording removed (heading and bullet) — not a term users know.
+// Framed as a device-availability fix; the operator-side recovery step (restarting device-hub) and
+// the background-service-deploy trigger were dropped for the same reason.
 
 == Apps and app storage
 
@@ -119,7 +126,7 @@ Kobiton now uses date-based release versioning. Instead of version numbers such 
 == deviceConnect
 
 - Fixed a service-recovery failure on macOS host machines: when deviceConnect's internal services hit a failure timeout, they are now restarted automatically as intended.
-- Fixed the deviceControl initialization failing with `mobile_image_mounter.shim.remote: PasswordProtected` on iOS devices reported by EJ. deviceControl now initializes on affected devices.
+- Fixed the deviceControl initialization failing with `mobile_image_mounter.shim.remote: PasswordProtected` on some iOS devices. deviceControl now initializes on affected devices.
 - Fixed `adb shell reboot bootloader` bypassing the restricted-shell protection on Android manual sessions. The command is now rejected.
 
 // REVIEWER NOTE:
@@ -161,11 +168,12 @@ Kobiton now uses date-based release versioning. Instead of version numbers such 
 
 This release includes the following component versions:
 
-* Portal 2608.21
+* Portal 2608.20
 * deviceConnect 2608.20
 * Kobiton CLI 2608.19
-// TODO: confirm Portal build — no Portal URL posted in ticket comments. Best guess 2608.21
-// (matches KOB-54056 fixVersion 2026.08.17 → 2608.17-21 window). Ask release team.
+// Portal build confirmed by the release team at final review.
+// gigacap is intentionally not listed, per final review: no gigacap change shipped to customers in
+// the Aug 17-21 window. No gigacap URL was posted in this bucket's bulk-status comments.
 // Extracted from `dl.kobiton.download/deviceconnect/2608.200116.0+master.1c336f4/` and
 // `public.kobiton.download/kobiton-cli/2608.191335.0+master.1e8f487/` per the mass bulk-status
 // comment posted across shipped tickets.

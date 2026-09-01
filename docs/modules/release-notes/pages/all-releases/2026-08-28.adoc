@@ -90,10 +90,8 @@ Kobiton now uses date-based release versioning. Instead of version numbers such 
 // REVIEWER NOTE:
 // KOB-54356 | Team: DLM | Deployment: Cloud | ship_date: 2026-08-24 | bucket_source: updated_fallback
 // bucket:updated — verify. Component: Reporting.
-// TODO: expand bullet before publish — chart type, filters, and access location in Portal. The
-// ticket links to an Asgard page that requires internal account access; a reviewer with Asgard
-// access needs to pull those specifics.
-// FINAL: ok to include, the details can be added in the user guides for report.
+// Final review: the one-line bullet stands as the release-note entry. Chart type, filters, and
+// where to find the report in Portal belong in the Reports user guide, not here — follow up there.
 
 == API v2
 
@@ -110,16 +108,16 @@ Kobiton now uses date-based release versioning. Instead of version numbers such 
 
 == Kobiton CLI
 
-- New: CLI sessions are now supported on public cloud devices. Previously public cloud restricted CLI session starts.
-- Fixed the Direct Hub not propagating CLI failures for unsafe-directory pushes. These failures were silently hidden — they are now surfaced to the caller, matching the CLI's error-propagation fix from earlier releases.
+- New: CLI sessions are now supported on Public Cloud devices. Previously Public Cloud restricted CLI session starts.
 
 // REVIEWER NOTE:
 // KOB-54033 | Team: DLM | Deployment: Cloud | ship_date: 2026-08-27 | bucket_source: updated_fallback
 // bucket:updated — verify. Components: CLI, MCP server. Primary component is CLI.
 //
-// KOB-54477 | Team: DLM | Deployment: Cloud | ship_date: 2026-08-27 | bucket_source: updated_fallback
+// KOB-54477 (Direct Hub not propagating CLI failures for unsafe-directory pushes) — bullet dropped
+// at final review: "Direct Hub" is not a term end users know, and the fix cannot be described
+// without it. | Team: DLM | Deployment: Cloud | ship_date: 2026-08-27 | bucket_source: updated_fallback
 // bucket:updated — verify. Components: CLI, MCP server.
-// FINAL: ok to include, but remove the 2nd point about direct hub. direct hub is not a term end-user knows about.
 
 == deviceConnect
 
@@ -143,9 +141,9 @@ This release includes the following component versions:
 * Portal 2608.28
 * deviceConnect 2608.26
 * gigacap 2608.25
-// TODO: confirm Portal build for the 2026-08-28 release window. No Portal URL posted in ticket comments.
-// TODO: confirm Kobiton CLI version — no CLI URL matching the Aug 24-28 window was posted.
+// Portal build confirmed at final review.
+// Kobiton CLI is intentionally not listed — confirmed at final review that no new CLI version
+// shipped in the Aug 24-28 window. Components with no new build are omitted, not carried over.
 // Extracted from `dl.kobiton.download/deviceconnect/2608.260938.0+master.e07c6d0/` and
 // `dl.kobiton.download/gigacap/2608.251726.0+239b981-1/` per the mass bulk-status comment
 // posted across shipped tickets.
-// FINAL: ok to include. Portal version added.

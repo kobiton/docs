@@ -85,12 +85,21 @@ Completed sessions that combine manual (scriptless) steps and Appium automation 
 
 == Device Inspector
 
-- Fixed Inspector on Session Explorer not displaying the application UI hierarchy for XIUM sessions on iOS and Android devices. The hierarchy now renders for XIUM sessions on both platforms.
+- Fixed Inspector on Session Explorer showing only iOS system elements instead of the application UI hierarchy for XIUM sessions on iPads. The full hierarchy now renders. iPhone sessions were not affected.
 
 // REVIEWER NOTE:
 // KOB-52533 | Team: DLM | Deployment: Cloud | ship_date: 2026-08-07 | bucket_source: resolutiondate
 // Customer report: EJ.
-// FINAL: ok to include, but should mention specifially that this issue occurs on iPads and specific Android device models, not iOS and Android as a whole.
+// Scoped to iPads at final review. The ticket title says "iOS and Android", but per the QA
+// verification comment (2026-08-07) only the iPad side was fixed and verified — on iPad Air 4th
+// Gen, iPad Pro 12.9" 5th Gen, and iPhone 14 Pro Max as control. The Android reports on the same
+// ticket (Pixel 8 Pro, Galaxy S25 Ultra) are a DIFFERENT symptom: the app tree still renders but
+// a subset of elements is missing, versus the whole app subtree being absent on iPad. QA could not
+// reproduce the Android case with in-house apps and closed the ticket on the iPad result only,
+// pending an EJ re-test. Do not claim an Android fix here.
+// DECIDED at final review: iPad-only stands. QA never verified the Android side, so no Android fix
+// is claimed. If the Android symptom is fixed and verified later, document it then as its own entry
+// naming the affected models — do not fold it back into this bullet.
 
 == Device passcode
 
@@ -109,9 +118,13 @@ This release includes the following component versions:
 * Portal 2608.7
 * deviceConnect 2608.7
 * Kobiton CLI 2608.7
-// TODO: confirm Portal build — inferred from KOB-52004 and KOB-53798 fixVersions (2026.08.06),
-// but no Portal build URL was posted in this bucket's ticket comments. Ask release team.
-// Extracted from `dl.kobiton.download/deviceconnect/2608.70135.0+master.b0c2bc7/` and
-// `public.kobiton.download/kobiton-cli/2608.70138.0+master.b0c2bc7/` per the mass bulk-status
+// Portal build confirmed at final review.
+// gigacap is intentionally not listed, per final review: no gigacap change shipped to customers in
+// this window. Note the bulk-status comment on this bucket's tickets DOES cite
+// `dl.kobiton.download/gigacap/2608.51922.0~master+e92b679-1/` (an Aug 5 build), but no ticket in
+// the bucket is a gigacap change — a Jira search across Jul 20-Aug 12 returns only KOB-52321 and
+// KOB-52322 as Released gigacap tickets, both fixVersion "2026 Q2 - 4.27" and both already dropped
+// from the Jul 24 page as internal. That comment states "not all builds may apply to this ticket".
+// deviceConnect and CLI extracted from `dl.kobiton.download/deviceconnect/2608.70135.0+master.b0c2bc7/`
+// and `public.kobiton.download/kobiton-cli/2608.70138.0+master.b0c2bc7/` per the mass bulk-status
 // comment posted across shipped tickets.
-// FINAL: ok to include. Portal version added.

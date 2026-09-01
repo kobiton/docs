@@ -25,17 +25,15 @@ Kobiton now uses date-based release versioning. Instead of version numbers such 
 //   KOB-53311, KOB-53312, KOB-53313 (Appium AI internal infra)
 //   KOB-47783, KOB-45044 (docs work for old releases)
 
-== Kobiton MCP server: per-skill environment rules
+== Kobiton MCP server
 
-*Highlights*
-
-- The Kobiton MCP server now declares and enforces per-skill host/platform/file-access rules. Skills that don't meet a caller's environment surface a clear rejection instead of silently mis-executing.
-- This matters because the MCP server runs across hosts with different capabilities (local file access, streamed watch/monitor affordance, macOS/Apple Silicon, etc.). A skill that needs a local binary or local file access will now say so up front instead of failing opaquely on a host that can't provide it.
+- Skills that cannot run on the current host now fail immediately and name the missing requirement — local file access, a local binary, or a specific platform. Previously the skill started and failed part-way through with an error that gave no indication of the cause.
 
 // REVIEWER NOTE:
 // KOB-54047 | Team: DLM | Deployment: Cloud | ship_date: 2026-07-31 | bucket_source: updated_fallback
 // bucket:updated — verify. Components: MCP server, Plugin. Kept under MCP filter as major (new enforcement mechanism).
-// FINAL: ok to include, but re-word the items so it sound less as some tasks to do, but actual improvements to the experience of the user.
+// Reworded at final review — bullets now describe the change from the caller's point of view
+// (clear, early failure with a reason) rather than the declare/enforce mechanism.
 
 == Reports
 
@@ -48,12 +46,13 @@ Kobiton now uses date-based release versioning. Instead of version numbers such 
 
 == Device passcode
 
-- Fixed the Portal not populating the passcode config in `DeviceConfiguration` on the initial device connection. Passcode is now applied on first connection.
+- Passcode configuration now takes effect the first time a device connects. Previously it applied only after a deviceConnect service restart.
 
 // REVIEWER NOTE:
 // KOB-52048 | Team: DLM | Deployment: Cloud | ship_date: 2026-07-28 | bucket_source: resolutiondate
 // Component: Passcode.
-// FINAL: ok to include, but the main improvement for the user here is that deviceConnect services do not need a restart for passcode configuration to be populated.
+// Reworded at final review — the user-visible win is that no deviceConnect restart is needed for
+// passcode configuration to be populated. Dropped the internal `DeviceConfiguration` object name.
 
 == Scriptless Test Runs
 
@@ -70,9 +69,7 @@ Kobiton now uses date-based release versioning. Instead of version numbers such 
 This release includes the following component versions:
 
 * Portal 2607.29
-// TODO: confirm Portal build. KOB-43481 has fixVersion 2026.07.29; other tickets in bucket lack fixVersions.
-// TODO: no deviceConnect or Kobiton CLI build URL found in ticket comments for this week — ask
-// release team. The mass-status comment convention appears to have started with the Aug 7 wave;
-// nothing in this bucket's ticket comments points to a `dl.kobiton.download` or
-// `public.kobiton.download` build for the Jul 27-31 window.
-// FINAL: ok to include. there is no change in deviceConnect and CLI so no need to include.
+// Portal build from KOB-43481 fixVersion 2026.07.29.
+// deviceConnect, Kobiton CLI, and gigacap are intentionally not listed — confirmed at final review
+// that none shipped a new version in the Jul 27-31 window. Components with no new build are
+// omitted, not carried over.

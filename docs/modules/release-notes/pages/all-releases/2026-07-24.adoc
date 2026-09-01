@@ -15,18 +15,10 @@ Kobiton now uses date-based release versioning. Instead of version numbers such 
 //   KOB-52321 (gigacap DTLS RSA → EC P-256 — internal crypto swap, no user-visible behavior)
 //   KOB-52322 (gigacap trickle-ICE SDP fix — internal WebRTC signaling)
 
-== Convert automation session to Test Case — Revisit support
-
-*Highlights*
-
-- Test Cases converted from an automation (Appium) session can now be revisited end-to-end. The Revisit path replays each converted step through the automation-command-replay executor and reports per-step results.
-- Steps with no replayable equivalent (for example, an unsupported Appium endpoint) are skipped with a reason. The Revisit run continues rather than aborting.
-
-// REVIEWER NOTE:
-// KOB-53790 | Team: DLM | Deployment: Cloud | ship_date: 2026-07-24 | bucket_source: updated_fallback
-// bucket:updated — verify. Component: Test Management.
-// This is the foundation the MIXED Revisit work on KOB-53798 (Aug 7 page) builds on.
-// FINAL: remove because already mentioned in 4.28 release notes
+// REMOVED during final review:
+//   KOB-53790 (Convert automation session to Test Case — Revisit support) — already documented in
+//   the 4.28 release notes. It remains the foundation the MIXED Revisit work on KOB-53798
+//   (Aug 7 page) builds on, but it does not warrant a second entry here.
 
 == Appium
 
@@ -69,8 +61,7 @@ Kobiton now uses date-based release versioning. Instead of version numbers such 
 
 == Kobiton CLI
 
-- The CLI now retries transient connection failures automatically. Built-in retries were added to resource connections so a brief network blip no longer fails the operation outright.
-- File-pull transient-error detection was broadened to catch additional gRPC (tonic) errors that were previously treated as terminal.
+- The CLI now retries transient connection failures automatically, so a brief network interruption no longer fails the operation.
 
 // REVIEWER NOTE:
 // KOB-53228 | Team: DLM | Deployment: Cloud | ship_date: 2026-07-24 | bucket_source: updated_fallback
@@ -78,19 +69,12 @@ Kobiton now uses date-based release versioning. Instead of version numbers such 
 // PLACEMENT NOTE: fixVersion on this ticket is `2026 Q2 - 4.27` (shipped July 17, 2026 as 4.28).
 // This entry belongs on the 4.28 release notes page but was not documented there. Landed here so the
 // change is captured somewhere in user-facing docs. Do not retroactively edit 4.28.
-// TODO: unverified detail — a "~600ms retry window" figure surfaced during review; confirm whether
-// retries are count-capped, time-bounded (e.g. ~600ms window), or both, and whether the behavior is
-// configurable. Check with Chris Faulhaber (reporter/assignee) before publish.
-// FINAL: ok to include. Do not need to mention the 600s retry windows. Also remove the second point as it is too technical to mention file-pull transient error.
+// Per final review: retry-window figures are deliberately not published, and the file-pull
+// transient-error (gRPC/tonic) bullet was dropped as too technical for a user-facing note.
 
-== Device cleanup policy
-
-- The device cleanup policy now supports `cfgutil erase`, `prepare`, and `install-profile` operations via `MCInstallCommand`. Cleanup runs can now use these to fully reset and re-provision iOS devices between sessions.
-
-// REVIEWER NOTE:
-// KOB-52807 | Team: DLM | Deployment: Cloud | ship_date: 2026-07-24 | bucket_source: changelog
-// Component: Cleanup Policy.
-// FINAL: remove as they are only useful internally.
+// REMOVED during final review:
+//   KOB-52807 (Device cleanup policy — `cfgutil erase`/`prepare`/`install-profile` via
+//   `MCInstallCommand`) — cleanup-policy operations are only useful internally; no user-facing entry.
 
 == Automate plugin
 
@@ -110,13 +94,6 @@ Kobiton now uses date-based release versioning. Instead of version numbers such 
 // Component: deviceConnect.
 // FINAL: ok to include
 
-== Component versions
-
-This release includes the following component versions:
-
-// TODO: no build URL found in ticket comments for this week — ask release team.
-// The comment-scan across this bucket's tickets turned up no `dl.kobiton.download` or
-// `public.kobiton.download` URLs, so Portal, deviceConnect, and Kobiton CLI versions cannot
-// be extracted automatically. This is the first weekly page after the 4.28 cutover — the
-// mass-status comment convention may not have been in place yet.
-// FINAL: remove this section as the packages are still marked as 4.28 and the weekly release format have not been introduced.
+// NO COMPONENT VERSIONS SECTION on this page, by decision at final review: the packages shipped
+// this week are still marked 4.28 and the weekly release-versioning format had not been introduced
+// yet. Do not add a "Component versions" section here.
