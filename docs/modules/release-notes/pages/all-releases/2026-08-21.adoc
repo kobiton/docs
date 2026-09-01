@@ -62,6 +62,7 @@ Kobiton now uses date-based release versioning. Instead of version numbers such 
 // distribution names, "non-punitive" engineering framing, and the self-referential "parent epic
 // wraps up" project-management flavor. Auto-upgrade mechanics bullet dropped — behavior is
 // unchanged from the customer's perspective (source changed under the hood).
+// FINAL: ok to include, but for the 1st point, simplify to: correctly display deviceConnect version instead of N/A, as user should not care about the format change and why it breaks the version display. Remove 2nd point as it provides little impact. Keep the 3rd point.
 
 == API v2 — Terminate reservation by device UDIDs
 
@@ -71,6 +72,7 @@ Kobiton now uses date-based release versioning. Instead of version numbers such 
 // KOB-54045 | Team: DLM | Deployment: Cloud | ship_date: 2026-08-18 | bucket_source: updated_fallback
 // bucket:updated — verify. Component: API v2.
 // Endpoint + request shape confirmed from lead-engineer comment on ticket.
+// FINAL: ok to include
 
 == Kobiton CLI
 
@@ -88,6 +90,7 @@ Kobiton now uses date-based release versioning. Instead of version numbers such 
 // KOB-54547 | Team: DLM | Deployment: Cloud | ship_date: 2026-08-20 | bucket_source: updated_fallback
 // bucket:updated — verify. Component: CLI. New capability.
 // Command syntax + env-var + permission requirement confirmed from lead-engineer comment on ticket.
+// FINAL: ok to include
 
 == Device Hub
 
@@ -100,6 +103,7 @@ Kobiton now uses date-based release versioning. Instead of version numbers such 
 // stream-end fallback, TTL). Kept the user-visible error string `MH-400 ... is being used for CLI
 // testing` since customers see it. Reference incident: 9+ shared sandbox devices locked during
 // KOB-54477 verification, all recovered only via device-hub restart.
+// FINAL: ok to include, but remove any mention of Device Hub, as the user has no concept of the term. Just re-word it to be a general improvement in device stability.
 
 == Apps and app storage
 
@@ -110,6 +114,7 @@ Kobiton now uses date-based release versioning. Instead of version numbers such 
 // REVIEWER NOTE:
 // KOB-53962 | Team: DLM | Deployment: Cloud | ship_date: 2026-08-20 | bucket_source: fixVersion (2026.08.20)
 // Components: Appium, Apps Repo, MCP server.
+// FINAL: ok to include
 
 == deviceConnect
 
@@ -132,6 +137,7 @@ Kobiton now uses date-based release versioning. Instead of version numbers such 
 // host; that is a separate open question." Internal hygiene; no proven customer symptom.
 // Also dropped `restricted whitelist` phrasing from the reboot-bootloader bullet — same
 // user-facing rationale as the Aug 14 restricted-ADB-shell rewrite.
+// FINAL: ok to include
 
 == Image Injection (Android)
 
@@ -140,6 +146,7 @@ Kobiton now uses date-based release versioning. Instead of version numbers such 
 // REVIEWER NOTE:
 // KOB-54466 | Team: DLM | Deployment: Cloud | ship_date: 2026-08-21 | bucket_source: updated_fallback
 // bucket:updated — verify. Component: Image Injection.
+// FINAL: ok to include
 
 == XIUM
 
@@ -148,6 +155,7 @@ Kobiton now uses date-based release versioning. Instead of version numbers such 
 // REVIEWER NOTE:
 // KOB-54484 | Team: Phoenix | Deployment: Cloud | ship_date: 2026-08-21 | bucket_source: updated_fallback
 // bucket:updated — verify. Component: XIUM.
+// FINAL: ok to include
 
 == Component versions
 
@@ -161,3 +169,4 @@ This release includes the following component versions:
 // Extracted from `dl.kobiton.download/deviceconnect/2608.200116.0+master.1c336f4/` and
 // `public.kobiton.download/kobiton-cli/2608.191335.0+master.1e8f487/` per the mass bulk-status
 // comment posted across shipped tickets.
+// FINAL: ok to include
