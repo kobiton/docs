@@ -36,44 +36,31 @@ Version information for individual software components is available in the Compo
 //     by the 2026-08-27 mass component-edit timestamp. If a genuinely new iOS 26-specific
 //     addition later needs documenting, treat it as a separate entry then.
 
-== Appium AI enhancements
-
-- Full-resolution screenshots are now sent to the LLM by default, matching the resolution the accuracy benchmarks were measured at. To restore the previous 1080 px downscale (for example to reduce bandwidth or per-request cost), set `NaturalLanguageLocator.KeepOriginalScreenshot=false` in `dc.ini`.
-
-// REVIEWER NOTE:
+// REMOVED at post-merge review (2026-09-04): entire Appium AI enhancements section removed.
+// Reason: Cloud release notes cannot reference dc.ini. Only Standalone and Hybrid customers
+// can edit dc.ini; Cloud customers do not access, see, or receive it (Kobiton manages Cloud
+// deviceConnect). The last remaining bullet ("Full-resolution screenshots now sent to LLM by
+// default; opt out via NaturalLanguageLocator.KeepOriginalScreenshot in dc.ini") violated
+// this rule. The default change itself is also not actionable for Cloud users, who don't
+// configure LLM setup — Kobiton chooses the defaults.
+//
+// All Appium AI tickets in this batch are Cloud AI Nova Engine changes. They may still be
+// relevant for internal enablement docs but do not belong in customer-facing Cloud release
+// notes. Prior refinement decisions preserved for compilation-workflow reference:
+//
 // KOB-54607, KOB-54608, KOB-54609, KOB-54610, KOB-54611, KOB-54613, KOB-54614, KOB-54645
 // Team: DLM | Deployment: Cloud | ship_date: 2026-08-27 | bucket_source: updated_fallback
 // bucket:updated — verify (all). Component: AI Nova Engine.
-// Section rewritten during refinement:
-//   - KOB-54607 (system prompt simplified) dropped from user-facing bullets — internal prompt
-//     refactor + default Text/Vision model switched to `gpt-5.6-terra`. Customers benefit from
-//     better vision accuracy (95.6% centroid on the ai-serving benchmark at 30,921 elements)
-//     without any config change. The default-model switch was not called out separately since
-//     customers who explicitly set a model are unaffected.
-//   - KOB-54609 (server-wide coord-space) and KOB-54610 (per-session coord-space capability)
-//     merged into one bullet — same feature at different scopes.
-//   - KOB-54645 reworded as a plain change description ("sessions that override the LLM base
-//     URL must provide their own API key") rather than "security tightening — prevents leaking
-//     a server-side key to a customer-controlled endpoint" — same technical content, without
-//     the framing that implies the past state was insecure.
-//   - KOB-54613 migration example added inline so customers with existing dc.ini config aren't
-//     left figuring out the Temperature → TextExtraBody mapping themselves.
-// FINAL: ok to include
-//
-// REMOVED at post-merge review:
-//   - "New: Anthropic Claude models" and "New: Kobiton-hosted LLM gateway" bullets. Manager
-//     decision: these describe internal-only LLM setup and shouldn't be user-facing.
-//   - Vision coordinate-space conventions bullet (KOB-54609, KOB-54610). Per Tu's Slack response
-//     (2026-09-04), `Normalized` is future-proofing only; no current supported deployment
-//     (Kobiton-hosted Qwen2.5-VL, Opus, GPT) requires customer action. No customer action = no
-//     release note.
-//   - "Breaking change: LlmClient.Temperature removed" bullet (KOB-54613). Per Tu: `Temperature`
-//     was server-side dc.ini only, never a session capability, so no customer script could
-//     reference it. Nothing to migrate; not actually a breaking change. If a customer needs
-//     ExtraBody, the dc.ini reference is the right home, not release notes.
-//   - Base-URL override API key bullet (KOB-54645). Same audience as the removed Anthropic and
-//     Kobiton-LLM-gateway bullets (customers who self-configure LLM providers). If that
-//     configuration path is treated as internal, this rule is internal by the same rationale.
+//   - KOB-54607 (system prompt simplified) — internal prompt refactor + default Text/Vision
+//     model switched to `gpt-5.6-terra`. Customer-invisible except for accuracy gains.
+//   - KOB-54608 / KOB-54611 (Anthropic Claude + Kobiton-hosted LLM gateway) — customer-facing
+//     wording described dc.ini setup that Cloud customers cannot perform.
+//   - KOB-54609 + KOB-54610 (coord-space) — future-proofing per Tu's 2026-09-04 Slack response;
+//     no current supported deployment (Qwen2.5-VL, Opus, GPT) requires customer action.
+//   - KOB-54613 (LlmClient.Temperature removed / TextExtraBody migration) — Temperature was
+//     server-side dc.ini only, never a session capability; nothing for external users to migrate.
+//   - KOB-54645 (base-URL override API key) — audience is customers self-configuring LLM
+//     providers, which is a Standalone/Hybrid concern, not Cloud.
 
 // CONSOLIDATED at post-merge review (2026-09-04): ADB shell on Public Cloud devices section
 // removed from this page and folded into the Aug 14 consolidated ADB entry. Manager decision:
@@ -84,7 +71,7 @@ Version information for individual software components is available in the Compo
 
 == Reports
 
-- New report: *Parallel Sessions over time*. Tracks concurrent session counts across a time range.
+- New report: *Parallel Sessions over time*, which tracks concurrent session counts across a time range.
 
 // REVIEWER NOTE:
 // KOB-54356 | Team: DLM | Deployment: Cloud | ship_date: 2026-08-24 | bucket_source: updated_fallback
@@ -108,7 +95,7 @@ Version information for individual software components is available in the Compo
 
 == Kobiton CLI
 
-- New: CLI sessions are now supported on Public Cloud devices. Previously Public Cloud restricted CLI session starts.
+- New: CLI sessions are now supported on Public Cloud devices. Previously, CLI sessions could not start on Public Cloud devices.
 
 // REVIEWER NOTE:
 // KOB-54033 | Team: DLM | Deployment: Cloud | ship_date: 2026-08-27 | bucket_source: updated_fallback
