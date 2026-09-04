@@ -36,9 +36,9 @@ Version information for individual software components is available in the Compo
 //     over ~19h "will not exhaust resources on its own" and "has not been shown to cause the
 //     watchdog restarts on that host." No proven customer symptom; internal hygiene.
 
-== Host machines
+== Device Management
 
-- Device Management now displays the deviceConnect version for each host machine. Previously some host machines showed `N/A`.
+- Device Management now displays the deviceConnect version for each host machine. Previously, some host machines showed `N/A`.
 - Host machines that were forced offline because of version lag come back online automatically.
 
 // REVIEWER NOTE:
@@ -62,9 +62,9 @@ Version information for individual software components is available in the Compo
 // distribution names, "non-punitive" engineering framing, and the self-referential "parent epic
 // wraps up" project-management flavor. Auto-upgrade mechanics bullet dropped — behavior is
 // unchanged from the customer's perspective (source changed under the hood).
-// Heading is `Host machines`, not `deviceConnect version display` — both bullets are host-machine
-// behavior on Device Management, and the second (forced-offline machines returning online) is not
-// a version-display change. Do not re-narrow the heading.
+// Heading renamed from `Host machines` to `Device Management` at post-merge review — Device
+// Management is the specific admin page customers know, more customer-friendly than the generic
+// "Host machines". Both bullets are host-machine behavior on Device Management.
 // Final review: version-display bullet cut back to the observable outcome (version shows instead
 // of N/A) — the old vs. new version-string format and why it broke display are not the user's
 // concern. The KOB-54286 upgrade banner bullet (Org Admin "Version X is available…" notice with
@@ -116,36 +116,35 @@ Version information for individual software components is available in the Compo
 == Apps and app storage
 
 - Fixed `GET /v2/apps/{appId}` omitting `latest_version` when the request sets `includeAllAppVersions=true`. The response now returns `latest_version` alongside `versions`, with the same value the endpoint returns when `includeAllAppVersions` is omitted or set to `false`.
-- Fixed the `getApp` MCP tool returning `latest_version` as `null` when called with `includeAllVersions=true`.
 - `latest_version` skips versions that are still importing or parsing. An app with no other versions returns no `latest_version`.
 
 // REVIEWER NOTE:
 // KOB-53962 | Team: DLM | Deployment: Cloud | ship_date: 2026-08-20 | bucket_source: fixVersion (2026.08.20)
 // Components: Appium, Apps Repo, MCP server.
 // FINAL: ok to include
+//
+// DROPPED at post-merge review: the `getApp` MCP tool bullet ("Fixed the getApp MCP tool returning
+// latest_version as null when called with includeAllVersions=true"). Routine MCP tool fix that
+// mirrors the API v2 fix above. Per house rule, routine MCP tool tweaks are omitted from release
+// notes; MCP is called out only when the change is substantive on its own.
 
-== deviceConnect
+== Device passcode
 
-- Fixed a service-recovery failure on macOS host machines: when deviceConnect's internal services hit a failure timeout, they are now restarted automatically as intended.
-- Fixed the deviceControl initialization failing with `mobile_image_mounter.shim.remote: PasswordProtected` on some iOS devices. deviceControl now initializes on affected devices.
-- Fixed `adb shell reboot bootloader` bypassing the restricted-shell protection on Android manual sessions. The command is now rejected.
+- Fixed some iOS devices failing to start sessions with a passcode-related initialization error. Affected devices now start sessions as expected.
 
 // REVIEWER NOTE:
-// KOB-54640 | Team: Phoenix | Deployment: Cloud | ship_date: 2026-08-18 | bucket_source: resolutiondate
-// Rewritten during refinement — dropped internal mechanics (WatchDog service, `runit sv` vs
-// launchd migration). The May migration referenced was KOB-52667.
-//
 // KOB-54594 | Team: Phoenix | Deployment: Cloud | ship_date: 2026-08-19 | bucket_source: resolutiondate | Customer: EJ
-//
-// KOB-54676 | Team: Phoenix | Deployment: Cloud | ship_date: 2026-08-20 | bucket_source: resolutiondate
-//
-// KOB-54639 dropped from user-facing bullets — see file-top backend-only list. Per the ticket:
-// "8 leaks over ~19h will not exhaust resources on its own — this is a broken-teardown marker,
-// not a resource-exhaustion cause. It has not been shown to cause the watchdog restarts on that
-// host; that is a separate open question." Internal hygiene; no proven customer symptom.
-// Also dropped `restricted whitelist` phrasing from the reboot-bootloader bullet — same
-// user-facing rationale as the Aug 14 restricted-ADB-shell rewrite.
+// Moved from a dedicated deviceConnect section at post-merge review; bullet rewritten to describe
+// the user-visible outcome (some iOS devices failing to initialize) instead of internal
+// deviceControl / mobile_image_mounter mechanics.
 // FINAL: ok to include
+//
+// REMOVED at post-merge review: KOB-54640 (macOS service-recovery / WatchDog).
+// Manager decision: internal service plumbing, not user or admin facing.
+//
+// REMOVED at post-merge review: KOB-54676 (adb shell reboot bootloader restricted-shell bypass).
+// Manager decision: likely a regression from the Aug 14 restricted-ADB-shell work. Fixing our
+// own regression is not worth calling out as a separate release-note entry.
 
 == Image Injection (Android)
 
@@ -156,7 +155,7 @@ Version information for individual software components is available in the Compo
 // bucket:updated — verify. Component: Image Injection.
 // FINAL: ok to include
 
-== XIUM
+== Appium automation
 
 - Fixed XIUM not dismissing the iOS notification permission alert after Accept Alert. XIUM now dismisses the alert as expected.
 
