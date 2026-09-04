@@ -25,14 +25,15 @@ Version information for individual software components is available in the Compo
 == Kobiton version management
 
 - Force-offline enforcement based on deviceConnect version age has been removed. Machines are no longer taken offline for being one or more major versions behind, and the upgrade-deadline concept has been retired.
-- The orange warning banner for out-of-date deviceConnect versions has been removed. Admins can still trigger a manual upgrade from Device Management, and the automatic/manual upgrade toggle is unchanged.
+- The orange warning banner for outdated deviceConnect versions has been removed. A purple notification banner will continue to appear when a newer deviceConnect version is available. Admins can still initiate a manual upgrade from Device Management, and the automatic/manual upgrade toggle is unchanged.
 
 // REVIEWER NOTE:
 // KOB-48664 | Team: DLM | Deployment: Cloud | ship_date: 2026-08-10 | bucket_source: fixVersion
 // FixVersion 2026.08.10.
 // Related product-doc updates on force-offline and auto-upgrade are held for a separate pass.
-// EPA-04 (KOB-54286) — the non-punitive replacement banner — is still "To Do" as of 2026-08-27,
-// so this release ships a "no banner at all" gap until EPA-04 lands.
+// EPA-04 (KOB-54286) was still To Do at draft time (2026-08-27); a purple "newer deviceConnect
+// version available" banner has since become present in the UI. Bullet updated per post-merge
+// review to reflect current UI state.
 
 == Kobiton MCP server: run-interactive-session on Windows and Linux
 
@@ -81,19 +82,12 @@ On Public Cloud devices, `kobiton device adb-shell` now allows more diagnostic c
 //     safe-directory prefixes) — how the sanitizer works internally, not what the user needs
 // FINAL: ok to include
 
-== XIUM
-
-- Fixed XIUM Android tests using `UiScrollable.scrollIntoView` returning `NoSuchElementException` without scrolling. The query now scrolls to the target element and returns it, matching the behavior on Basic Appium 2.
-
-// REVIEWER NOTE:
-// KOB-54483 | Team: Phoenix | Deployment: Cloud | ship_date: 2026-08-12 | bucket_source: resolutiondate
-// Fix shipped in build 2608.12 (2026-08-12). QA verified across 5 portal-test sessions.
-// FINAL: ok to include
-
 == Automation sessions
 
 - Fixed iOS automation Safari `driver.get()` failing with `Page.navigate not found` on iOS 26.4.2 and iOS 26.5. Safari navigation now works on both iOS versions.
 - Fixed `SessionNotCreatedException (kAXErrorIPCTimeout)` and app launch taking more than two minutes when starting an XIUM automation session. Session creation and app launch now return in expected time.
+- Fixed XIUM Android tests using `UiScrollable.scrollIntoView` returning `NoSuchElementException` without scrolling. The query now scrolls to the target element and returns it, matching the behavior on Basic Appium 2.
+- When a Kobiton session is terminated, active client requests now include the termination reason in the response, instead of failing without context.
 
 // REVIEWER NOTE:
 // KOB-54067 | Team: DLM | Deployment: Cloud | ship_date: 2026-08-13 | bucket_source: resolutiondate
@@ -101,6 +95,14 @@ On Public Cloud devices, `kobiton device adb-shell` now allows more diagnostic c
 //
 // KOB-54051 | Team: Phoenix | Deployment: Cloud | ship_date: 2026-08-11 | bucket_source: resolutiondate
 // Components: App Installation, Automation Session, XIUM.
+//
+// KOB-54483 | Team: Phoenix | Deployment: Cloud | ship_date: 2026-08-12 | bucket_source: resolutiondate
+// Fix shipped in build 2608.12 (2026-08-12). QA verified across 5 portal-test sessions.
+// XIUM scrollIntoView; folded in from a dedicated XIUM section at post-merge review since XIUM is the default automation.
+//
+// KOB-52850 | Team: Phoenix | Deployment: Cloud | ship_date: 2026-08-13 | bucket_source: updated_fallback
+// bucket:updated (verify). Component: deviceConnect. Session-termination-reason API response;
+// folded in from a dedicated deviceConnect section at post-merge review since the audience is automation clients.
 // FINAL: ok to include
 
 == Device passcode automation
@@ -124,16 +126,6 @@ On Public Cloud devices, `kobiton device adb-shell` now allows more diagnostic c
 // KOB-54428 | Team: DLM | Deployment: Cloud | ship_date: 2026-08-05 (fixVersion 2026.08.15) | bucket_source: fixVersion
 // Moved from Aug 7 page during compilation — resolutiondate is 08-05 but fixVersion is 08-15,
 // which places it in the Aug 10-16 week. Placement confirmed during refinement.
-// FINAL: ok to include
-
-== deviceConnect
-
-- Session terminations now include the reason on any in-flight requests, so clients see why a session ended instead of an unexplained failure.
-
-// REVIEWER NOTE:
-// KOB-52850 | Team: Phoenix | Deployment: Cloud | ship_date: 2026-08-13 | bucket_source: updated_fallback
-// bucket:updated — verify
-// Component: deviceConnect.
 // FINAL: ok to include
 
 == Component versions
