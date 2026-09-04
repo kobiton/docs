@@ -31,6 +31,7 @@ capabilities.setCapability("kobiton:sessionName", "Login test");
 Capabilities with the `kobiton:` prefix cannot be used without the prefix.
 
 .Kobiton capability index
+* <<_accessibilityValidation,kobiton:accessibilityValidation>>
 * <<_app_install,kobiton:app-install>>
 * <<_baselineSessionId,kobiton:baselineSessionId>>
 * <<_kobitoncapturescreenshots,kobiton:captureScreenshot>>
@@ -52,6 +53,21 @@ Capabilities with the `kobiton:` prefix cannot be used without the prefix.
 * <<_web_find,kobiton:web-find>>
 * <<_work_app,kobiton:workApp>>
 * <<_xpath2,kobiton:xpath2>>
+
+[#_accessibilityValidation]
+=== `kobiton:accessibilityValidation`
+
+Enables accessibility checks during Appium automation sessions. Set to `true` to capture accessibility validation results and display them in the Session Explorer, matching the behavior of manual sessions. When this capability is omitted from your script, accessibility checks do not run for the session.
+
+* *Type:* `boolean`
+* *Required capabilities:* None
+* *Optional capabilities:* None
+
+.Example
+[source,java]
+----
+capabilities.setCapability("kobiton:accessibilityValidation", true);
+----
 
 [#_app_install]
 === `kobiton:app-install`
