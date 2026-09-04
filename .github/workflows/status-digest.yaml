@@ -18,10 +18,10 @@ on:
       - ".github/scripts/docs-review-digest.js"
       - ".github/scripts/render-docs-review-digest.js"
 
-  # schedule:
-  #   # 10:00 AM Eastern during daylight saving time.
-  #   # GitHub cron uses UTC.
-  #   - cron: "0 14 * * 1-5"
+   schedule:
+     # 10:00 AM Eastern during daylight saving time.
+     # GitHub cron uses UTC.
+     - cron: "0 14 * * 1,3,5"
 
 permissions:
   contents: read
@@ -81,7 +81,7 @@ jobs:
           retention-days: 7
 
       - name: Post Slack digest
-        if: ${{ github.event_name == 'workflow_dispatch' && inputs.post_to_slack == 'true' }}
+        if: ${{ github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && inputs.post_to_slack == 'true') }}
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
           SLACK_MESSAGE_FILE: ${{ runner.temp }}/docs-review-digest-slack.txt
@@ -97,3 +97,5 @@ jobs:
             -H "Content-type: application/json" \
             --data "$(jq -n --arg text "$MESSAGE" '{text: $text}')" \
             "$SLACK_WEBHOOK_URL"
+          
+          echo "Dinner Bell posted successfully."
