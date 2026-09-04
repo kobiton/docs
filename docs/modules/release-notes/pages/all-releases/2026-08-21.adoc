@@ -70,9 +70,9 @@ Version information for individual software components is available in the Compo
 // concern. The KOB-54286 upgrade banner bullet (Org Admin "Version X is available…" notice with
 // Upgrade Now / dismiss) was dropped as low impact; heading narrowed to match. Third bullet kept.
 
-== API v2 — Terminate reservation by device UDIDs
+== API v2: Terminate reservation by device UDIDs
 
-- `DELETE /v2/reservations/terminate` now accepts an optional set of device UDIDs alongside `reservation_ids`. Callers can end a reservation for specific devices without terminating the whole reservation set. UDIDs with no active reservation are reported in the response's `failed` list. Requests that pass only `reservation_ids` are unchanged. Authorization is unchanged — only reservations the caller has permission to terminate are affected.
+- `DELETE /v2/reservations/terminate` now accepts an optional set of device UDIDs alongside `reservation_ids`. Callers can end a reservation for specific devices without terminating the whole reservation set. UDIDs with no active reservation are reported in the response's `failed` list. Requests that pass only `reservation_ids` are unchanged. Authorization is unchanged. Only reservations the caller has permission to terminate are affected.
 
 // REVIEWER NOTE:
 // KOB-54045 | Team: DLM | Deployment: Cloud | ship_date: 2026-08-18 | bucket_source: updated_fallback
@@ -100,7 +100,7 @@ Version information for individual software components is available in the Compo
 
 == Device availability
 
-- Fixed public and shared devices staying unavailable (`MH-400 ... is being used for CLI testing`) after a CLI session ended abnormally — for example a session timeout or a dropped connection. Devices now return to the available pool automatically, including any device still held past its expected session duration.
+- Fixed public and shared devices staying unavailable (`MH-400 ... is being used for CLI testing`) after a CLI session ended abnormally (for example, a session timeout or a dropped connection). Devices now return to the available pool automatically, including any device still held past its expected session duration.
 
 // REVIEWER NOTE:
 // KOB-54584 | Team: DLM | Deployment: Cloud | ship_date: 2026-08-17 | bucket_source: updated_fallback
