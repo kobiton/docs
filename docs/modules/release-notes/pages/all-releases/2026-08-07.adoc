@@ -19,9 +19,9 @@ Version information for individual software components is available in the Compo
 // surface (users configure it on-prem), so it doesn't belong on a Cloud page even if the fix
 // were real. If Tung determines a real fix shipped, it can go on the next Standalone page.
 
-== Convert a combined manual + automation session into a Test Case
+== Convert mixed (manual + automation) session to a Test Case
 
-Completed sessions that combine manual (scriptless) steps and Appium automation steps can now be converted into a single Test Case, extending the flow already available for pure manual and pure automation sessions. The converted Test Case holds both step types in their original recorded order, so a combined workflow can be rerun without recreating the session.
+Completed mixed sessions that combine manual and Appium automation steps can now be converted into a Test Case. Previously, only manual-only or automation-only sessions could be converted into Test Cases.
 
 *Highlights*
 
@@ -29,7 +29,7 @@ Completed sessions that combine manual (scriptless) steps and Appium automation 
 - The Test Case preserves the original recorded order across the manual and automation steps, and tags each step with its source (manual or automation).
 - Convert from Session Explorer or from the *+New Test Case* pop-up on the Test Cases list page. Search for eligible sessions with the `type:mixed` keyword.
 - Converted Test Cases show *Mixed* as the *Source type* on the Test Cases list.
-- A Revisit run replays each step through the execution path that matches its source (manual or automation) and reports per-step pass/fail results. Steps with no replayable equivalent, such as an unsupported Appium endpoint, are skipped with a reason and the run continues rather than aborting.
+- Test Runs for mixed Test Cases execute manual and automation steps in sequence, reporting pass/fail results for each step. If a step cannot be performed, such as an unsupported Appium command, it is skipped with a reason, and the Test Run continues.
 - Appium script generation is not available for Test Cases converted from these sessions.
 
 // REVIEWER NOTE:
@@ -63,44 +63,29 @@ Completed sessions that combine manual (scriptless) steps and Appium automation 
 // Components: Android Talkback, iOS VoiceOver, Lightning Mode, Portal.
 // FINAL: ok to include
 
-== deviceConnect
+== deviceConnect Console
 
-- Fixed a stalled Password-Protected iOS device causing every subsequent CoreDevice tunnel reset to stall. Recovering the stalled device no longer blocks unrelated tunnel operations.
-- Fixed the deviceConnect *System* page returning *Internal Server Error* because `/Admin/Poll` failed to serialize the device list. The endpoint now returns the device list successfully.
+- Fixed the deviceConnect Console *System* page returning *Internal Server Error* when loading the device list.
 
 // REVIEWER NOTE:
-// KOB-54391 | Team: Phoenix | Deployment: Cloud | ship_date: 2026-08-06 | bucket_source: resolutiondate
-// Customer report: AT&T.
-//
 // KOB-54424 | Team: Phoenix | Deployment: Cloud | ship_date: 2026-08-06 | bucket_source: resolutiondate
-// deviceConnect /Admin/Poll serialization fix.
+// deviceConnect Console System page fix (formerly framed via /Admin/Poll serialization).
 // FINAL: ok to include
+//
+// REMOVED at post-merge review: KOB-54391 (Password-Protected iOS + CoreDevice tunnel reset).
+// Manager decision: CoreDevice tunnel framing is internal engineering. No clean user-visible
+// rewrite; customer-observable behavior isn't documented in the ticket.
 
-== Emulator and Simulator sessions
+// REMOVED at post-merge review: KOB-54332 (Android emulator Portal manual sessions).
+// Manager decision: don't advertise fixes for surfaces with no active customer usage. This
+// entry came from an Uber verification exercise; Simulators are not currently supported and
+// Emulator usage is not widespread.
 
-- Fixed Android emulator Portal manual sessions failing to establish and ending after approximately two minutes. Sessions now establish and remain active.
-
-// REVIEWER NOTE:
-// KOB-54332 | Team: DLM | Deployment: Cloud | ship_date: 2026-08-06 | bucket_source: resolutiondate
-// FINAL: ok to include
-
-== Device Inspector
-
-- Fixed Inspector on Session Explorer showing only iOS system elements instead of the application UI hierarchy for XIUM sessions on iPads. The full hierarchy now renders. iPhone sessions were not affected.
-
-// REVIEWER NOTE:
-// KOB-52533 | Team: DLM | Deployment: Cloud | ship_date: 2026-08-07 | bucket_source: resolutiondate
-// Customer report: EJ.
-// Scoped to iPads at final review. The ticket title says "iOS and Android", but per the QA
-// verification comment (2026-08-07) only the iPad side was fixed and verified — on iPad Air 4th
-// Gen, iPad Pro 12.9" 5th Gen, and iPhone 14 Pro Max as control. The Android reports on the same
-// ticket (Pixel 8 Pro, Galaxy S25 Ultra) are a DIFFERENT symptom: the app tree still renders but
-// a subset of elements is missing, versus the whole app subtree being absent on iPad. QA could not
-// reproduce the Android case with in-house apps and closed the ticket on the iPad result only,
-// pending an EJ re-test. Do not claim an Android fix here.
-// DECIDED at final review: iPad-only stands. QA never verified the Android side, so no Android fix
-// is claimed. If the Android symptom is fixed and verified later, document it then as its own entry
-// naming the affected models — do not fold it back into this bullet.
+// REMOVED at post-merge review: KOB-52533 (Inspector on Session Explorer / iPad XIUM sessions).
+// Manager decision: the fix is not end-to-end complete. deviceConnect side shipped but a
+// Portal-side change is still needed for the fix to be user-visible. Do not republish until
+// the Portal change ships and QA re-verifies. Prior compilation reviewer note assumed iPad-only
+// completeness based on the QA comment, which only covered the deviceConnect component.
 
 == Device passcode
 
