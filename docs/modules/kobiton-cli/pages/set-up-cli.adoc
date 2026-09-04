@@ -1,15 +1,13 @@
 = Set up Kobiton Command Line Interface
 :navtitle: Set up Kobiton CLI
 
-Learn how to set up Kobiton Command Line Interface (CLI).
-
-== Before you start
+== Before you begin
 
 * Obtain the xref:profile:manage-your-profile.adoc#_manage_your_profile[username,window=read-later] and xref:profile:manage-your-api-credentials.adoc#_get_an_api_key[API key,window=read-later] from a Kobiton Enterprise account.
 
-* Ensure Private or Local devices are available in the Kobiton Portal. Public devices are not supported.
+* Ensure devices are available in the Kobiton Portal. CLI sessions are supported on devices from the *Private & Local Devices* and *Public Cloud Devices* tabs.
 
-* Access the Kobiton CLI from the Downloads icon in the left navigation of the Kobiton Portal. The package is available for the below platforms:
+* Access the Kobiton CLI from the Downloads icon in the left navigation of the Kobiton Portal. The package is available for the following platforms:
 
 ** macOS - ARM64 (for Macs with Apple silicon)
 ** Linux - x64
@@ -45,7 +43,7 @@ Export the following environment variables for authentication using the command 
 .Examples
 # Check the actual server URL of your Kobiton Portal
 export KOBITON_PORTAL=https://api.kobiton.com
-# Obtain the below from the Profile and Settings page of the Kobiton Portal
+# Obtain the following from the Profile and Settings page of the Kobiton Portal
 export KOBITON_USER=johndoe
 export KOBITON_API_KEY=be99***0-c*df-4224-aed6-907****92d0
 
@@ -55,7 +53,7 @@ Put the export commands for the above variables in a `.env` file, then run `sour
 
 [source,bash]
 .Example
-# The below assumes that all required export variable commands are in the file variables.env
+# The following assumes that all required export variable commands are in the file variables.env
 source variables.env
 =====
 --
@@ -68,9 +66,9 @@ Open the location of the downloaded CLI package in File Explorer.
 
 Right-click the `kobiton-cli.win-x64.<version>.zip` package and select *Extract All...*, then choose *Extract*. This results in a folder with the file `kobiton.exe`.
 
-Open *Powershell*, then navigate to the location of the `kobiton.exe` file.
+Open *PowerShell*, then navigate to the location of the `kobiton.exe` file.
 
-Export the following environment variables for authentication using the command `$env:<VARIABLE_NAME>="<VALUE>"` in Powershell.
+Export the following environment variables for authentication using the command `$env:<VARIABLE_NAME>="<VALUE>"` in PowerShell.
 
 * `KOBITON_PORTAL`: the API URL of the Kobiton Portal
 ** Example: if the Server URL is `\https://api.kobiton.com/wd/hub`, then use `\https://api.kobiton.com`
@@ -81,13 +79,13 @@ Export the following environment variables for authentication using the command 
 .Cloud/Hybrid
 # Check the actual server URL of your Kobiton Portal
 $env:KOBITON_PORTAL = "https://api.kobiton.com"
-# Obtain the below from the Profile and Settings page of the Kobiton Portal
+# Obtain the following from the Profile and Settings page of the Kobiton Portal
 $env:KOBITON_USER = "johndoe"
 $env:KOBITON_API_KEY = "be99***0-c*df-4224-aed6-907****92d0"
 
 [NOTE]
 =====
-For *Command Prompt* (cmd.exe), use the below command instead to set environment variables:
+For *Command Prompt* (cmd.exe), use the following command instead to set environment variables:
 [source,bash]
 set KOBITON_PORTAL=https://api.kobiton.com
 set KOBITON_USER=johndoe
@@ -97,13 +95,13 @@ set KOBITON_API_KEY=be99***0-c*df-4224-aed6-907****92d0
 --
 ====
 
-After the CLI has been set up for the appropriate platform, run the below command from the same location as the `kobiton` file to check if the variables are valid and the CLI is working:
+After the CLI has been set up for the appropriate platform, run the following command from the same location as the `kobiton` file to verify the variables and confirm the CLI is working:
 
 [tabs]
 
 ====
 
-macOS, Linux, Windows - Powershell::
+macOS, Linux, Windows - PowerShell::
 +
 --
 
@@ -137,9 +135,9 @@ macOS or Linux::
 
 --
 
-These commands can be added to your shell initialization script to persist the variables across shell sessions. Refer to external resources for help locating your shell configuration file (e.g., `.bashrc`, `.zshrc`, `.bash_profile`).
+These commands can be added to your shell initialization script to persist the variables across shell sessions. The shell configuration file is typically `.bashrc`, `.zshrc`, or `.bash_profile`. Consult your shell's documentation if you're unsure.
 
-It is possible to also update the `PATH` environment variable to include the `kobiton` location.
+You can also update the `PATH` environment variable to include the `kobiton` location.
 
 [source,bash]
 # Export authentication variables
@@ -161,11 +159,11 @@ Windows - Command Prompt::
 Run these commands to set the permanent environment variables for shell instances. You can also update the `PATH` variable to include the tool directories if needed.
 
 [source,bash]
-REM Run the below to export authentication variables
+REM Run the following to export authentication variables
 setx KOBITON_PORTAL=<PORTAL_URL>
 setx KOBITON_USER=<USERNAME>
 setx KOBITON_API_KEY=<API_KEY>
-REM Run the below to add kobiton executable path to PATH
+REM Run the following to add kobiton executable path to PATH
 setx PATH "%PATH%;<PATH_TO_KOBITON>"
 
 Exit the current shell instance, and launch a new one to apply the changes.
@@ -180,11 +178,11 @@ Windows - PowerShell::
 Run these commands to set the permanent environment variables for shell instances. You can also update the `PATH` variable to include the tool directories if needed.
 
 [source]
-# Run the below to export authentication variables
+# Run the following to export authentication variables
 [System.Environment]::SetEnvironmentVariable("KOBITON_PORTAL","<PORTAL_URL>","User")
 [System.Environment]::SetEnvironmentVariable("KOBITON_USER","<USERNAME>","User")
 [System.Environment]::SetEnvironmentVariable("KOBITON_API_KEY","<API_KEY>","User")
-# Run the below to add kobiton executable path to PATH
+# Run the following to add kobiton executable path to PATH
 [System.Environment]::SetEnvironmentVariable("PATH",$env:PATH + ";<PATH_TO_KOBITON>","User")
 
 Exit the current shell instance, and launch a new one to apply the changes.
