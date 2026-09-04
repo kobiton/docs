@@ -28,7 +28,7 @@ Version information for individual software components is available in the Compo
 
 == Kobiton MCP server
 
-- Skills that cannot run on the current host now fail immediately and name the missing requirement — local file access, a local binary, or a specific platform. Previously the skill started and failed part-way through with an error that gave no indication of the cause.
+- Skills that cannot run on the current host now fail immediately and name the missing requirement: local file access, a local binary, or a specific platform. Previously, the skill started and failed part-way through with an error that gave no indication of the cause.
 
 // REVIEWER NOTE:
 // KOB-54047 | Team: DLM | Deployment: Cloud | ship_date: 2026-07-31 | bucket_source: updated_fallback
@@ -47,7 +47,7 @@ Version information for individual software components is available in the Compo
 
 == Device passcode
 
-- Passcode configuration now takes effect the first time a device connects. Previously it applied only after a deviceConnect service restart.
+- Passcode configuration now takes effect the first time a device connects. Previously, it applied only after a deviceConnect service restart.
 
 // REVIEWER NOTE:
 // KOB-52048 | Team: DLM | Deployment: Cloud | ship_date: 2026-07-28 | bucket_source: resolutiondate
@@ -57,13 +57,19 @@ Version information for individual software components is available in the Compo
 
 == Scriptless Test Runs
 
-- For Test Cases converted from automation sessions, the Test Run Overview now labels each Test Step with the underlying automation action when Revisit is active — for example `/click`, `/back`, or `/orientation`. At conversion time the Test Steps still display human-friendly labels (`Tap`, `Press Back`, `Install`); during Revisit they switch to the forward-slash-prefixed Appium endpoint, which matches how the step is referenced in the automation script. This makes it easier to trace each Revisit step back to its source command.
+- Improved step labeling for Test Cases converted from automation sessions. Test Cases display descriptive step names such as `Tap` and `Press Back`, while Scriptless Test Runs display the corresponding automation commands (for example, `/click` and `/back`). This makes it easier to trace executed steps back to the original automation script.
 
 // REVIEWER NOTE:
 // KOB-43481 | Team: DLM | Deployment: Cloud | ship_date: 2026-07-29 (fixVersion 2026.07.29) | bucket_source: fixVersion
 // Moved from the Aug 21 bucket during compilation — resolutiondate mapped it to 2026-08-18 but
 // fixVersion 2026.07.29 places it here.
 // FINAL: ok to include
+
+// PR REVIEW REPLY (Component versions section — respond in the review thread, not in doc prose):
+// Portal 2607.29 is the only new component build in the Jul 27-31 window. The section lists
+// new builds only. Components without a new build that week are omitted, not carried over.
+// The passcode change is a code fix carried in the Portal build; deviceConnect didn't cut a
+// new version that week.
 
 == Component versions
 
