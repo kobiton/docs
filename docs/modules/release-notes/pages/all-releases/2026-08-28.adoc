@@ -38,14 +38,7 @@ Version information for individual software components is available in the Compo
 
 == Appium AI enhancements
 
-*Highlights*
-
-- *New: Anthropic Claude models* — set `LlmApiFormat=AnthropicMessages` with an Anthropic `BaseUrl`, API key, and model name. Refusals (`stop_reason=refusal`) and truncations (`stop_reason=max_tokens`) surface as clear errors instead of returning partial text.
-- *New: Kobiton-hosted LLM gateway* (`llm.kobiton.com`) — set `LlmApiFormat=KobitonChatCompletions` and `BaseUrl=https://llm.kobiton.com/v1`. On Kobiton-linked deployments, the gateway can inherit the tenant's platform API key when no explicit `LlmClient.ApiKey` is configured; an explicit key always wins.
 - Full-resolution screenshots are now sent to the LLM by default, matching the resolution the accuracy benchmarks were measured at. To restore the previous 1080 px downscale (for example to reduce bandwidth or per-request cost), set `NaturalLanguageLocator.KeepOriginalScreenshot=false` in `dc.ini`.
-- Two vision coordinate-space conventions are now supported: `Pixel` (default; compatible with OpenAI and Anthropic Claude) and `Normalized 0-1000` (used by Qwen3-VL and Gemini-class models). Set globally via `NaturalLanguageLocator.VisionCoordSpace=Normalized` in `dc.ini`, or per-session via the `kobiton:visioncoordspace=Normalized` capability. An invalid value fails session creation with a message listing valid values.
-- *Breaking change: `LlmClient.Temperature` removed.* Newer models (gpt-5.6 and above) reject the `temperature` request parameter with HTTP 400, so hard-coding it was no longer viable. To send `temperature` — or any other model-specific parameter — use the new `LlmClient.TextExtraBody` / `LlmClient.VisionExtraBody` settings, which pass a JSON object verbatim into the request body. Per-session equivalents: `kobiton:llmtextextrabody` / `kobiton:llmvisionextrabody`. Migration example: replace `LlmClient.Temperature=0` with `LlmClient.TextExtraBody={"temperature": 0}`.
-- Sessions that override the LLM base URL (`kobiton:llmbaseurl`) must now provide their own API key (`kobiton:llmapikey`). Session setup fails with an explicit error if the base URL is overridden without a session-provided key. Sessions that don't override the base URL inherit the server-configured key exactly as before.
 
 // REVIEWER NOTE:
 // KOB-54607, KOB-54608, KOB-54609, KOB-54610, KOB-54611, KOB-54613, KOB-54614, KOB-54645
@@ -66,23 +59,28 @@ Version information for individual software components is available in the Compo
 //   - KOB-54613 migration example added inline so customers with existing dc.ini config aren't
 //     left figuring out the Temperature → TextExtraBody mapping themselves.
 // FINAL: ok to include
-
-== ADB shell on Public Cloud devices
-
-- On Public Cloud devices, `kobiton device adb-shell` is now more permissive: pipes, redirection, quoted arguments, whitespace in arguments, and a broader set of commands and file paths are accepted. Dangerous patterns (interactive shell, `..` path traversal, oversized command lines, unsafe write targets) are still rejected.
-- On Public Cloud Android devices, the `adb shell` toolbar in Portal manual sessions now uses the same policy as the CLI.
-
-// REVIEWER NOTE:
-// KOB-54601 | Team: Phoenix | Deployment: Cloud | ship_date: 2026-08-24 | bucket_source: updated_fallback
-// bucket:updated — verify. Components: CLI, deviceConnect.
 //
-// KOB-54705 | Team: Phoenix | Deployment: Cloud | ship_date: 2026-08-24 | bucket_source: updated_fallback
-// bucket:updated — verify. Components: deviceConnect, Manual Session.
-// Section rewritten during refinement — dropped the intro paragraph + Highlights block (a single
-// bullet per change reads cleaner), the self-reference to the August 14 release, and the
-// "significant policy shift" framing. Scope simplified to "Public Cloud devices" (title case,
-// drops "trial" — trial users share the Public Cloud device pool).
-// FINAL: ok to include
+// REMOVED at post-merge review:
+//   - "New: Anthropic Claude models" and "New: Kobiton-hosted LLM gateway" bullets. Manager
+//     decision: these describe internal-only LLM setup and shouldn't be user-facing.
+//   - Vision coordinate-space conventions bullet (KOB-54609, KOB-54610). Per Tu's Slack response
+//     (2026-09-04), `Normalized` is future-proofing only; no current supported deployment
+//     (Kobiton-hosted Qwen2.5-VL, Opus, GPT) requires customer action. No customer action = no
+//     release note.
+//   - "Breaking change: LlmClient.Temperature removed" bullet (KOB-54613). Per Tu: `Temperature`
+//     was server-side dc.ini only, never a session capability, so no customer script could
+//     reference it. Nothing to migrate; not actually a breaking change. If a customer needs
+//     ExtraBody, the dc.ini reference is the right home, not release notes.
+//   - Base-URL override API key bullet (KOB-54645). Same audience as the removed Anthropic and
+//     Kobiton-LLM-gateway bullets (customers who self-configure LLM providers). If that
+//     configuration path is treated as internal, this rule is internal by the same rationale.
+
+// CONSOLIDATED at post-merge review (2026-09-04): ADB shell on Public Cloud devices section
+// removed from this page and folded into the Aug 14 consolidated ADB entry. Manager decision:
+// one final-policy statement is clearer than a two-week chronology for a feature that only
+// affects Public Cloud. See Aug 14 page for the consolidated content.
+// Removed tickets: KOB-54601 (further-permissive expansion), KOB-54705 (Portal manual-session
+// toolbar parity).
 
 == Reports
 
@@ -96,16 +94,17 @@ Version information for individual software components is available in the Compo
 
 == API v2
 
-- The installed-applications API now returns the App Version ID alongside the application identifiers.
-- New Portal API to retrieve the gRPC URL for the caller's session.
+- The installed-applications API response now includes `app_version_id` alongside the existing device and application identifiers. The value matches `kobiton-store:v` from Appium scripts, so callers can compare installed apps against the intended version in the App Repository.
 
 // REVIEWER NOTE:
 // KOB-54284 | Team: DLM | Deployment: Cloud | ship_date: 2026-08-27 | bucket_source: updated_fallback
-// bucket:updated — verify. Component: API.
-//
-// KOB-53966 | Team: DLM | Deployment: Cloud | ship_date: 2026-08-27 | bucket_source: updated_fallback
-// bucket:updated — verify. Component: API v2.
+// bucket:updated — verify. Component: API. Bullet expanded at post-merge review with `app_version_id`
+// field name and `kobiton-store:v` equivalence per ticket confirmation.
 // FINAL: ok to include
+//
+// REMOVED at post-merge review: KOB-53966 (New Portal API to retrieve the gRPC URL for the
+// caller's session). Manager decision: Portal APIs are typically Portal-only, not documented in
+// public API docs. If public API docs are not being updated for this endpoint, it isn't external.
 
 == Kobiton CLI
 
@@ -120,20 +119,22 @@ Version information for individual software components is available in the Compo
 // without it. | Team: DLM | Deployment: Cloud | ship_date: 2026-08-27 | bucket_source: updated_fallback
 // bucket:updated — verify. Components: CLI, MCP server.
 
-== deviceConnect
+== Xiaomi device behavior
 
-- Fixed a network-capture burst deadlocking a session's upstream writes and freezing screenshots.
 - Xiaomi devices now stay awake for the duration of long automation runs. Xiaomi's aggressive deep-idle behavior previously suspended sessions mid-run.
 
 // REVIEWER NOTE:
-// KOB-54704 | Team: Phoenix | Deployment: Cloud | ship_date: 2026-08-27 | bucket_source: updated_fallback
-// bucket:updated — verify. Component: deviceConnect.
-//
 // KOB-54023 | Team: Phoenix | Deployment: Cloud | ship_date: 2026-08-24 | bucket_source: resolutiondate
 // Component: deviceConnect. Xiaomi-specific device-idle behavior. Bullet reworded during
 // refinement to drop `deviceidle`/`whitelist` mechanism-talk; framed by customer effect
 // (device stays awake) rather than the Android system command used to fix it.
+// Section renamed from `deviceConnect` to `Xiaomi device behavior` at post-merge review — describes
+// what changed (Xiaomi-specific behavior) rather than the internal component that shipped the fix.
 // FINAL: ok to include
+//
+// REMOVED at post-merge review: KOB-54704 (network-capture burst deadlocking upstream writes,
+// freezing screenshots). Manager decision: internal framing (network-capture burst, upstream
+// writes) and no clean user-visible rewrite of the customer-observable symptom.
 
 == Component versions
 

@@ -56,15 +56,18 @@ Version information for individual software components is available in the Compo
 
 == ADB shell on Public Cloud devices
 
-On Public Cloud devices, `kobiton device adb-shell` now allows more diagnostic commands and supports file transfers from a defined set of safe directories. Private Devices are unaffected.
+On Public Cloud devices, `kobiton device adb-shell` supports a defined set of diagnostic commands, argument syntax, and file transfers from safe directories. Private Devices are unaffected.
 
 *Highlights*
 
-- Newly allowed commands: `screencap`, `input`, and `settings get|put secure enabled_accessibility_services`. Other `settings` keys and subcommands remain rejected.
-- Newly allowed read: `/proc/version`.
-- `pm install -r` now works when the APK is staged in a safe directory, for example `pm install -r /data/local/tmp/app.apk`.
-- File push (`PUT file:`) and pull (`GET file:`) now support the safe directories `/sdcard/Download/`, `/sdcard/Documents/`, and `/data/local/tmp/`. Writes cannot target `/proc/version` or a safe directory itself.
-- Denied transfers now surface `AdbShellCommandRejectedException` instead of `SecurityException` — customer automation that catches the old exception name should be updated.
+- Supported commands include `screencap`, `input`, and `settings get|put secure enabled_accessibility_services`. Other `settings` keys and subcommands are rejected.
+- Supported read: `/proc/version`.
+- Pipes, redirection, quoted arguments, and whitespace in arguments are supported.
+- `pm install -r` works when the APK is staged in a safe directory, for example `pm install -r /data/local/tmp/app.apk`.
+- File push (`PUT file:`) and pull (`GET file:`) support the safe directories `/sdcard/Download/`, `/sdcard/Documents/`, and `/data/local/tmp/`. Writes cannot target `/proc/version` or a safe directory itself.
+- Denied transfers surface `AdbShellCommandRejectedException` instead of `SecurityException`. Customer automation that catches the old exception name should be updated.
+- The `adb shell` toolbar in Portal manual sessions on Public Cloud Android devices uses the same policy as the CLI.
+- The following actions are not supported: interactive shell, path traversal (`..`), oversized command lines, and unsafe write targets.
 - `kobiton device adb-shell --help` documents the current policy, allowed commands, and permitted paths.
 
 // REVIEWER NOTE:
@@ -81,6 +84,16 @@ On Public Cloud devices, `kobiton device adb-shell` now allows more diagnostic c
 //     and the internal path-validation mechanics (control chars, metacharacters, `..` traversal,
 //     safe-directory prefixes) — how the sanitizer works internally, not what the user needs
 // FINAL: ok to include
+//
+// CONSOLIDATED at post-merge review (2026-09-04):
+// Aug 28 ADB entries folded in here (KOB-54601 further-permissive expansion: pipes, redirection,
+// quoted args, whitespace, broader commands/paths; KOB-54705 Portal manual-session toolbar parity
+// on Public Cloud Android). Manager decision: one consolidated final-policy statement is clearer
+// than a two-week chronology for a feature that only affects Public Cloud, and version specificity
+// isn't important because Public Cloud customers cannot self-manage the deployment version.
+// Also dropped "newly" framing throughout since the consolidated content spans two release weeks,
+// and rewrote the "dangerous patterns" line as the neutral "The following actions are not supported:"
+// list per manager wording preference.
 
 == Automation sessions
 
