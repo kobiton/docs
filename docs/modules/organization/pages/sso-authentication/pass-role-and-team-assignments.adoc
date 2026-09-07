@@ -1,0 +1,123 @@
+= Pass role and team assignments from your identity provider
+:navtitle: Pass role and team assignments
+:description: Create identity provider groups and map them to Kobiton roles and teams so SSO sign-in assigns roles and teams automatically
+
+Kobiton can assign roles and teams from identity provider (IdP) group memberships each time a user signs in through SSO. Setup has two parts: create the groups in your IdP and send them in the SAML assertion, then map each group name to a Kobiton role or team in Kobiton Portal.
+
+For switch behavior and dependencies, see xref:organization:sso-authentication/sso-enforcement-guide.adoc[].
+
+== Before you start
+
+* Your Kobiton account is assigned the `ADMIN` role or the `org_setting.modify_sso_setting` permission.
+* A valid SSO configuration is added, verified, and saved in *Settings* > *SSO Settings*. See xref:organization:sso-authentication/about-sso-authentication.adoc[].
+* *Enforce users to login to Kobiton only through SSO* is turned on in *Settings* > *SSO Settings*.
+* You have administrator access to your IdP to create groups and edit SAML attributes.
+
+== Step 1: Set up groups in your identity provider
+
+=== Plan the group names
+
+Choose one IdP group for each Kobiton role and team that the IdP drives, and one group for organization administrators. Members of the administrator group receive the predefined *ADMIN* role in Kobiton.
+
+Kobiton matches group values as literal text, so record each group name exactly as your IdP sends it.
+
+=== Create the groups
+
+. Create each group in your IdP.
+. Add users to the groups that match the roles and teams they need in Kobiton.
+. Add your own IdP account to the administrator group.
++
+[IMPORTANT]
+====
+Role and team passthrough requires the administrator group to exist in your IdP and your account to belong to it. Confirm both before you continue to Step 2.
+====
+
+For provider-specific steps, use your IdP's documentation:
+
+Okta::
+* link:https://help.okta.com/en-us/content/topics/users-groups-profiles/usgp-groups-create.htm[Create a group,window=read-later]
+* link:https://help.okta.com/en-us/content/topics/users-groups-profiles/usgp-assign-group-people.htm[Manually assign people to a group,window=read-later]
+OneLogin::
+* link:https://onelogin.service-now.com/kb_view_customer.do?sysparm_article=KB0010606[Roles,window=read-later]
++
+Kobiton reads OneLogin *User Roles* as group membership. Create a role rather than a group.
+PingOne::
+* link:https://docs.pingidentity.com/pingone/directory/p1_create_group.html[Creating a group,window=read-later]
+* link:https://docs.pingidentity.com/pingone/directory/p1_add_members_to_group.html[Managing groups,window=read-later]
+
+=== Send the group names in the memberOf attribute
+
+Kobiton reads group membership from the `memberOf` attribute in the SAML assertion. Configure your IdP to send it.
+
+[cols="1,2"]
+|===
+| Identity provider | Group attribute configuration
+
+| Okta
+| In *Group attribute statements*, add the name `memberOf` with the name format *Basic*, then set *Filter* to *Matches regex* and enter `.*`. See xref:organization:sso-authentication/use-okta.adoc[].
+
+| OneLogin
+| Add a custom parameter with the field name `memberOf` and the value *User Roles*, then select *Include in SAML assertion*. See xref:organization:sso-authentication/use-onelogin.adoc[].
+
+| PingOne
+| On the *Attribute Mappings* tab, map `memberOf` to *Group Names*. See xref:organization:sso-authentication/use-ping.adoc[].
+|===
+
+If your IdP is not listed, add a SAML attribute named `memberOf` whose value is the user's group membership.
+
+If your IdP cannot send the attribute under the name `memberOf`, map your IdP's attribute name to `memberOf` instead. See xref:organization:sso-authentication/configure-custom-attribute-mappings.adoc[].
+
+== Step 2: Map the groups in Kobiton Portal
+
+=== Turn on role and team passthrough
+
+. Open *Settings* > *SSO Settings*.
+. In *Org Admin Team*, enter the IdP group name for organization administrators.
+. Turn on *Pass role / team assignments to users in the SAML validations*.
+. Save your SSO settings.
+
+image:organization:pass-enforce-sso.png[width=1000,alt="Pass role and team assignments switch and the Org Admin Team field in Settings > SSO Settings"]
+
+The *SSO Attribute Value* field on teams and roles appears only while passthrough is on.
+
+The *SSO Attribute Value* for the predefined *ADMIN* role always matches *Org Admin Team*. Updating either field updates the other.
+
+=== Map a group to a team
+
+. Open *Org Management* > *Teams*.
+. Select an existing team or create a team.
+. In *SSO Attribute Value*, enter the IdP group name that maps to this team.
+. To map more than one group to the team, separate the values with `;` or press *Enter* after each value.
+. Save the team.
+
+=== Map a group to a role
+
+. Open *Org Management* > *Roles*.
+. Select an existing role or create a role.
+. In *SSO Attribute Value*, enter the IdP group name that maps to this role.
+. To map more than one group to the role, separate the values with `;` or press *Enter* after each value.
+. Save the role.
+
+== Verify the setup
+
+. Sign out of Kobiton.
+. Sign in through SSO with an account that belongs to one of the mapped IdP groups.
+. Open *Org Management* > *Users* and confirm the account shows the expected role and team.
+
+Kobiton reevaluates roles and teams at each SSO sign-in.
+
+== What changes while passthrough is on
+
+* The *Invite* button in *Org Management* > *Users* is turned off. Create new users in your IdP.
+* Manual role assignment in *Org Management* > *Users* and *Org Management* > *Roles* is turned off.
+* Users in the *Org Admin Team* group receive the *ADMIN* role and are not assigned additional teams through group mapping.
+* Users who are not in the *Org Admin Team* group receive the predefined *MEMBER* role.
+* Users are removed from a Kobiton role or team when no current IdP group matches its *SSO Attribute Value*.
+* All users remain assigned to *Default Team* regardless of IdP group membership.
+* Users who exist in Kobiton but not in your IdP keep their current roles and teams.
+
+== Related guides
+
+* xref:organization:sso-authentication/sso-enforcement-guide.adoc[]
+* xref:organization:sso-authentication/configure-custom-attribute-mappings.adoc[]
+* xref:organization:sso-authentication/about-sso-authentication.adoc[]
