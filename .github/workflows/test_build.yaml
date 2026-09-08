@@ -24,8 +24,7 @@ jobs:
         uses: webfactory/ssh-agent@v0.9.0
         with:
           ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
-          ssh: |
-            default=${{ env.SSH_AUTH_SOCK }}
+          ssh-auth-sock: ${{ github.workspace }}/ssh-auth.sock
       - name: Build
         uses: dagger/dagger-for-github@847ae4458ef34fe9b5f566655957bde6d4891112 # v7.0.3
         with:
