@@ -1,0 +1,24 @@
+// Release-note entry for KOB-54604 (API Keys page: hide/unhide + redesign).
+// Include this partial from the dated release page for the release that ships the change:
+//   include::release-notes:partial$kob-54604.adoc[]
+// Not included anywhere yet. At the time of drafting the change had passed sandbox test
+// validation but had not reached production, so it must not be published until the
+// deploying release is confirmed.
+
+== API keys
+
+- API keys on *Settings > API Keys* are now hidden by default. Select the eye icon next to a key to show its value, and select the icon again to hide it. Each key is controlled independently, and every key returns to the hidden state when you leave the page and open it again.
+- The *Copy* action copies the real key value whether the key is hidden or shown.
+- The API Keys page now includes a *Created* column showing the date each key was generated.
+
+// REVIEWER NOTE: candidate bullet held back pending confirmation of whether the v1 user
+// API is covered by the public API reference. Precedent from the 2026-08-28 page is that
+// Portal-only endpoints are not documented publicly, so this is not included by default:
+//
+//   - `GET /v1/users/keys` now returns a `createdAt` timestamp for each key alongside the
+//     existing `alias` and `key` fields. The change is additive; existing consumers are
+//     unaffected.
+//
+// REVIEWER NOTE: the accessible name of the show/hide control is not confirmed in the
+// source evidence. The wording above describes the control as "the eye icon", which is how
+// the originating ticket describes it. Replace with the shipped label if one exists.
