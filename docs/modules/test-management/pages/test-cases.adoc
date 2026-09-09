@@ -4,25 +4,31 @@
 
 A Test Case represents a reusable test flow created from a baseline session.
 
-Test Cases store the interactions captured during a manual session and serve as the definition used for automated execution. Once created, a Test Case can be run repeatedly without recreating the original session.
+Test Cases store the interactions captured during a session and serve as the definition used for automated execution. Once created, a Test Case can be run repeatedly without recreating the original session.
 
 [#_convert_to_test_case]
 == Convert a session to a Test Case
 
-Test Cases are created by converting completed manual sessions.
+Test Cases are created by converting completed sessions. The following session types are convertible:
 
-After you run a manual session with capture enabled, Kobiton can convert the captured interactions into a reusable Test Case.
+* Manual sessions
+* Appium automation sessions
+* Mixed sessions, which combine manual and automation testing in a single session
+
+A session must be complete before it can be converted. Sessions that are still running are not eligible.
 
 You can convert a session to a Test Case from either of the following locations:
 
-* Session Explorer, after a completed manual session
-* Test Management, by selecting *New Test Case* and choosing from the list of completed manual sessions
+* Session Explorer, after a completed session
+* Test Management, by selecting *New Test Case* and choosing from the list of completed sessions
 
-In Test Management, completed manual sessions are listed from newest to oldest. Select the session you want to convert, then select *Convert*.
+In Test Management, completed sessions are listed from newest to oldest. Select the session you want to convert, then select *Convert*.
 
-In both cases, the Test Case is created from a captured manual session. The captured interactions from the baseline session define the test flow.
+In both cases, the captured interactions from the baseline session define the test flow.
 
-Converting a manual session to a Test Case unlocks additional capabilities, including generating an Appium script and running the test across other devices.
+When a mixed session is converted, the Test Case holds both the manual steps and the automation steps in the order they were recorded. Each step is tagged with its source, so a Revisit replays it through the matching execution path. Test Cases converted from a mixed session show *Mixed* as the Source type.
+
+Converting a session to a Test Case unlocks additional capabilities, including running the test across other devices. Appium script generation is available for Test Cases converted from manual sessions.
 
 After conversion, the option to view the Test Case becomes available. Selecting this opens the Test Case details view, where the captured steps and interactions can be reviewed and managed.
 
@@ -47,7 +53,7 @@ The following actions are available for each Test Case in the list:
 * *Clone Test Case* — create a duplicate that can be modified independently.
 * *Delete Test Case* — remove the Test Case from the list and from any test suites it was assigned to.
 
-To create a new Test Case from a past session, select *New Test Case* in the Test Cases view. Completed manual sessions that have not yet been converted are available for selection.
+To create a new Test Case from a past session, select *New Test Case* in the Test Cases view. Completed sessions that have not yet been converted are available for selection. Use a keyword search such as `type:mixed` to narrow the list to a specific session type.
 
 === Test Case details
 
