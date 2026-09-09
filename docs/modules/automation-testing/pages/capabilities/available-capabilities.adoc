@@ -44,6 +44,7 @@ Capabilities with the `kobiton:` prefix cannot be used without the prefix.
 * <<_passcodeKey,kobiton:passcodeKey>>
 * <<_passcodeType,kobiton:passcodeType>>
 * <<_runtime,kobiton:runtime>>
+* <<_scriptlessCapture,kobiton:scriptlessCapture>>
 * <<_kobitonsessiondescription,kobiton:sessionDescription>>
 * <<_kobitonsessionname,kobiton:sessionName>>
 * <<_kobtionsessiontags,kobiton:sessionTags>>
@@ -285,6 +286,24 @@ Configure the automation runtime that executes the test. Values are `xium` (Xium
 [source,java]
 ----
 capabilities.setCapability("kobiton:runtime", "appium");
+----
+
+[#_scriptlessCapture]
+=== `kobiton:scriptlessCapture`
+
+[NOTE]
+This capability replaces `kobiton:scriptlessEnable`, which continues to work identically. Setting both on the same session is safe and produces no conflict.
+
+Marks an automation session as convertible into a Test Case. When set on an initial Appium or Xium script, the resulting session bypasses cache and captures full metadata for later conversion. Setting this capability is optional but recommended for full conversion support.
+
+* *Type:* `boolean`
+* *Required capabilities:* None
+* *Optional capabilities:* None
+
+.Example
+[source,java]
+----
+capabilities.setCapability("kobiton:scriptlessCapture", true);
 ----
 
 === `kobiton:sessionDescription`

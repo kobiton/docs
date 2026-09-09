@@ -1,0 +1,58 @@
+= TestFlight integration
+:navtitle: TestFlight
+
+Learn how to test a TestFlight beta build on a Kobiton device.
+
+TestFlight is Apple's beta distribution platform for iOS, iPadOS, tvOS, watchOS, and visionOS apps. Use TestFlight with Kobiton when you need to test a prerelease build on a wider range of devices than your local lab covers.
+
+NOTE: TestFlight is not available on Kobiton public devices. Public devices do not have App Store access and are fully wiped after every session, so TestFlight cannot be installed or persist on them. To test a TestFlight build with Kobiton, use a private device or a local device connected to Kobiton. See xref:devices:index.adoc[].
+
+== Before you begin
+
+You'll need the following:
+
+* An Apple Developer account.
+* A TestFlight invitation, either as an email invitation or a public link. Your developer sends this from link:https://appstoreconnect.apple.com/[App Store Connect].
+* A Kobiton private or local device with a compatible iOS version.
+
+== Launch a Kobiton device
+
+Open link:https://portal.kobiton.com/devices[Kobiton Devices] and launch a private or local iOS device.
+
+image:integrations:PLACEHOLDER-kobiton-launch-ios-device.png[width=1000,alt="Launch an iOS device in Kobiton"]
+// SCREENSHOT SOURCE: capture from portal.kobiton.com/devices showing device launch.
+
+== Install TestFlight
+
+On the launched device, open the App Store and search for *TestFlight*.
+
+image:integrations:PLACEHOLDER-testflight-appstore-search.png[width=1000,alt="Search for TestFlight in the App Store"]
+// SCREENSHOT SOURCE: capture on Kobiton device after search, showing TestFlight in results.
+
+Install TestFlight, then open it and sign in with your Apple ID.
+
+NOTE: The Apple ID you use to sign in to TestFlight does not need to match the Apple ID associated with App Store Connect.
+
+== Redeem your invitation
+
+Open the invitation email you received on the Kobiton device. Select *View in TestFlight*.
+
+image:integrations:PLACEHOLDER-testflight-invitation-email.png[width=1000,alt="View in TestFlight link in the invitation email"]
+// SCREENSHOT SOURCE: capture invitation email on the device.
+
+TestFlight opens and redeems the invitation. You'll see a preview page for the app.
+
+TIP: If you received a public link instead of an email invitation, open the link in Safari on the device. Copy the redemption code and paste it into TestFlight manually.
+
+== Install the beta build
+
+On the app preview page, select *Install*. TestFlight downloads the beta build and adds it to the device home screen.
+
+image:integrations:PLACEHOLDER-testflight-install.png[width=1000,alt="Install the beta build from TestFlight"]
+// SCREENSHOT SOURCE: capture TestFlight app preview page with Install button.
+
+Launch the app from the home screen to begin testing.
+
+== Update to a newer build
+
+When your developer publishes a new beta build, TestFlight sends a notification. Open TestFlight and select *Update* next to the app to install the latest build.
