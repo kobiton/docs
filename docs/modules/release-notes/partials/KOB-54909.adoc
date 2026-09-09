@@ -1,0 +1,14 @@
+// Release-note partial for KOB-54909.
+// Not yet wired into a release page: no ship date is confirmed for this fix.
+// When the release date is known, include it from the target page in
+// release-notes/pages/all-releases/ with:
+//   include::partial$KOB-54909.adoc[]
+// Add leveloffset=+1 when including beneath an "Improvements and fixes" section.
+
+== Device management
+
+- Fixed the Device Management page failing to open. On a fresh page load it redirected to a "Can't find what you're looking for" error, and when opened from another Settings page it reported "You currently have no hosting machine" even though host machines were connected. This occurred only when a single host machine ran two or more devices that share a device name and report no operating system. Device Management now lists every connected host machine and its devices.
+
+== Session Explorer
+
+- Fixed the Overview tab showing `undefined` in the *Operating System* field for a device that reports no operating system. The field now shows only the OS version.
