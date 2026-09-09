@@ -1,0 +1,158 @@
+= Device Management page
+:navtitle: Device Management page
+:figure-caption!:
+
+The **Device Management** page in the Kobiton Portal lists every dedicated device in the organization, grouped by the host machine it is connected to, and provides the controls for managing both.
+
+For the steps to complete a specific task, see xref:#_related_tasks[Related tasks].
+
+== Before you start
+
+Sign in with an account that has the **ADMIN** predefined role. ADMINs are given all user permissions, including xref:organization:roles/user-roles-and-permissions.adoc#_org_setting_modify_machine_location[permission to edit the location of a host machine].
+
+NOTE: The xref:organization:roles/user-roles-and-permissions.adoc#_org_setting_modify[`org_setting.modify`] permission does not grant access to the **Device Management** page.
+
+== Open the Device Management page
+
+include::profile:partial$open-settings.adoc[]
+
+Select the **Device Management** tab.
+
+image::device-lab-management:device-management-page-overview.png[width=1000,alt="The Device Management page with one host machine and its devices"]
+
+== Page controls
+
+=== Default Location
+
+Displays the default location assigned to your organization. New host machines inherit this location.
+
+The field is read-only. To change the default location for your organization, contact https://support.kobiton.com/hc/en-us/requests/new[Kobiton Support].
+
+=== Tidy up
+
+Opens the **Remove unused devices** window, where you can hide offline or unplugged devices from the device list. Hidden devices stay hidden until they are reconnected.
+
+See xref:device-lab-management:tidy-up-devices.adoc[].
+
+=== View
+
+Filters the device list and controls how host machines are displayed. Unlike **Tidy up**, these options change only what is displayed in your browser.
+
+image::device-lab-management:device-management-view-menu.png[width=300,alt="The options in the View menu"]
+
+NOTE: Your filter selection and the expanded or collapsed state of each host machine are stored per browser, not per account. Anyone who signs in on the same browser sees the same selections.
+
+**Hide unplugged devices**, **Hide offline devices**, and **Show error devices** are mutually exclusive. Selecting one clears the others.
+
+**Hide unplugged devices** (default)::
+Hides offline devices that are in an unplugged state. Offline devices in any other state remain in the list.
+
+**Hide offline devices**::
+Hides all offline devices, regardless of their state.
+
+**Show error devices**::
+Lists only the devices that are reporting an error. Host machines with no such devices appear with an empty device table.
+
+**Hide unavailable devices** is independent and combines with any of the three filters.
+
+**Hide unavailable devices**::
+Hides devices that are hosted on a machine that has reached its capacity limit. These devices stay online but cannot be launched. See xref:device-lab-management:deviceConnect/control-host-capacity.adoc[].
+
+The menu also contains two display actions:
+
+**Collapse all**::
+Collapses every host machine, hiding its device table.
+
+**Expand all**::
+Expands every host machine, showing its device table.
+
+=== Search
+
+Filters the list by device name, device UDID, OS, status, location, or host machine IP address.
+
+See xref:device-lab-management:search-host-machines.adoc[].
+
+== Host machine details
+
+Each host machine appears as a card with the devices connected to it listed underneath.
+
+The details and actions on the card apply to host machines running deviceConnect. Environments that include a Dell server running GigaCap require upgrades coordinated with Kobiton Support. See xref:device-lab-management:deviceConnect/remote-update-deviceconnect.adoc[].
+
+The card displays:
+
+* The host machine name and IP address, followed by the installed deviceConnect version and build number.
+
+* The location assigned to the host machine. Select the pencil icon to open the **Edit Location** window, select a location, then select **Save**.
++
+image::device-lab-management:device-management-edit-location.png[width=400,alt="The Edit Location window for a host machine"]
+
+* The number of Android and iOS devices connected to the host machine, with the number of those devices that are currently offline. These counts reflect the current filter and search.
+
+The card provides the following actions:
+
+**Save Logs (3 days)**::
+Saves the deviceConnect logs from the last three days. Select the dropdown icon, then select **Save Logs (7 days)** instead. See xref:device-lab-management:deviceConnect/retrieve-deviceconnect-logs.adoc[].
+
+**Restart services**::
+Restarts the deviceConnect services on the host machine. See xref:device-lab-management:deviceConnect/restart-deviceconnect-services.adoc[].
+
+**Settings**::
+Opens the **Settings** window, where **Max Parallel Tests** limits the number of parallel sessions the host machine accepts. See xref:device-lab-management:deviceConnect/control-host-capacity.adoc[].
+
+Expand or collapse icon::
+Shows or hides the device table for that host machine.
+
+NOTE: When a new deviceConnect version is available for a Mac mini host, an **Upgrade** option also appears on the card. See xref:device-lab-management:deviceConnect/remote-update-deviceconnect.adoc[].
+
+== Device table
+
+The device table lists the devices connected to a host machine.
+
+**Name**::
+The device name.
+
+**UDID**::
+The unique device identifier.
+
+**Slot**::
+The slot number of the device on the Cambrionix hub, when the device is connected through one.
+
+**OS**::
+The operating system and version installed on the device.
+
+**Status**::
+Whether the device is **Online** or **Offline**.
+
+**State**::
+The current state of the device, such as `ACTIVATED` for a device that is ready for use.
+
+**Message**::
+Any message reported for the device, such as `Kobiton upgrade required` when the host machine needs a deviceConnect update.
+
+**Error Count (1hr)**::
+The number of times the device went offline in the last hour. When the count exceeds 10, a warning icon appears next to the count, indicating a possible hardware issue. Hover over the icon to view suggested actions.
++
+NOTE: Restarting services, unplugging and reconnecting a device, or rebooting the host machine also cause a device to go offline and increase this count.
+
+Each device row also provides the following actions:
+
+**Launch**::
+Starts a manual session on the device. The button is disabled while the device is unavailable, including when its host machine has reached its capacity limit.
+
+**Restart**::
+Restarts the device.
+
+[#_related_tasks]
+== Related tasks
+
+* xref:device-lab-management:search-host-machines.adoc[]
+
+* xref:device-lab-management:tidy-up-devices.adoc[]
+
+* xref:device-lab-management:deviceConnect/control-host-capacity.adoc[]
+
+* xref:device-lab-management:deviceConnect/retrieve-deviceconnect-logs.adoc[]
+
+* xref:device-lab-management:deviceConnect/restart-deviceconnect-services.adoc[]
+
+* xref:device-lab-management:deviceConnect/remote-update-deviceconnect.adoc[]
