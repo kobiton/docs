@@ -110,65 +110,12 @@ Version information for individual software components is available in the Compo
 //   record in KOB-54954 (internal verification ticket)
 // - KOB-55039 (GameDriver dotnet vstest run_command) — Deployed but not Released, so out of
 //   scope for this window
+// - HarmonyOS NEXT set (KOB-54634, KOB-54633, KOB-54632, KOB-54631) — internal foundation
+//   work, matches last week's flagging. HarmonyOS is not exposed in Portal (no HarmonyOS
+//   devices listed, no user-facing OS filter), so these entries are not customer-facing yet
 //
 // "Ship signal" = the release-versions the ticket shipped on, based on the deployment
 // bulk-update comment posted on shipped tickets.
-
-=== HarmonyOS NEXT: deviceConnect platform extension
-
-// Ticket: https://kobiton.atlassian.net/browse/KOB-54634
-// Status: Released
-// Type: Story
-// Team: deviceConnect (Phoenix)
-// Components: deviceConnect, Manual Session
-// Created: 2026-08-17
-// Updated: 2026-09-10
-// Ship signal: deviceConnect 2609.1, gigacap 2609.1, Kobiton CLI 2609.4
-// Source: phoenix-candidates 12.json
-// REVIEWER NOTE: entire HarmonyOS NEXT set (KOB-54634, KOB-54633, KOB-54632, KOB-54631) may
-// be foundation-only work — not customer-facing yet if HarmonyOS isn't actively supported.
-// Confirm HarmonyOS active-support status before drafting.
-
-=== HarmonyOS NEXT: Xium support (view tree, element search, AI locators)
-
-// Ticket: https://kobiton.atlassian.net/browse/KOB-54633
-// Status: Released
-// Type: Story
-// Team: deviceConnect (Phoenix)
-// Components: deviceConnect, Element selection, XIUM
-// Created: 2026-08-17
-// Updated: 2026-09-10
-// Ship signal: deviceConnect 2609.1, gigacap 2609.1, Kobiton CLI 2609.4
-// Source: phoenix-candidates 12.json
-// REVIEWER NOTE: see HarmonyOS NEXT support-status note on KOB-54634.
-
-=== HarmonyOS NEXT: kobiton-cli support
-
-// Ticket: https://kobiton.atlassian.net/browse/KOB-54632
-// Status: Released
-// Type: Story
-// Team: deviceConnect (Phoenix)
-// Components: CLI, deviceConnect
-// Created: 2026-08-17
-// Updated: 2026-09-10
-// Ship signal: deviceConnect 2609.1, gigacap 2609.1, Kobiton CLI 2609.4
-// Source: phoenix-candidates 12.json
-// REVIEWER NOTE: see HarmonyOS NEXT support-status note on KOB-54634.
-
-=== HarmonyOS NEXT: HDC protocol client
-
-// Ticket: https://kobiton.atlassian.net/browse/KOB-54631
-// Status: Released
-// Type: Story
-// Team: deviceConnect (Phoenix)
-// Components: deviceConnect
-// Created: 2026-08-17
-// Updated: 2026-09-10
-// Ship signal: deviceConnect 2609.1, gigacap 2609.1, Kobiton CLI 2609.4
-// Source: phoenix-candidates 12.json
-// REVIEWER NOTE: see HarmonyOS NEXT support-status note on KOB-54634.
-
-// The following entries came from the Jira sweep on 2026-09-10:
 
 === [XIUM][Android][iOS] Cached element click returns HTTP 404 no such element error after the underlying accessibility node is recreated; identical Basic Appium test succeeds
 
@@ -205,9 +152,8 @@ This release includes the following component versions:
 * gigacap 2609.1
 * Kobiton CLI 2609.4
 
-// Versions confirmed for KOB-54824 at 2026-09-10 triage. Same versions apply to the other
-// candidates carrying the same 2026-09-10 deployment bulk-update comment (KOB-54634, KOB-54633,
-// KOB-54632, KOB-54631, KOB-54760).
+// Versions confirmed for KOB-54824 at 2026-09-10 triage. Same versions apply to KOB-54760,
+// which carries the same 2026-09-10 deployment bulk-update comment.
 //
 // REVIEWER NOTE: no new Portal version shipped this window. Slightly unexpected — call this
 // out in the draft so the release reader knows Portal is unchanged, and verify at final review
