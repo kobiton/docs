@@ -26,8 +26,7 @@ on:
           - "false"
       release_date:
         description: "Target release date, YYYY-MM-DD"
-        required: false
-        default: ""
+        required: true
         type: string
       release_label:
         description: "Release label, for example 2608.18"
@@ -85,9 +84,9 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GITHUB_REPOSITORY: ${{ github.repository }}
-          LOOKBACK_DAYS: ${{ inputs.lookback_days }}
-          INCLUDE_OPEN: ${{ inputs.include_open }}
-          INCLUDE_MERGED: ${{ inputs.include_merged }}
+          LOOKBACK_DAYS: ${{ github.event_name == 'workflow_dispatch' && inputs.lookback_days || '14' }}
+          INCLUDE_OPEN: ${{ github.event_name == 'workflow_dispatch' && inputs.include_open || 'true' }}
+          INCLUDE_MERGED: ${{ github.event_name == 'workflow_dispatch' && inputs.include_merged || 'true' }}
           INCLUDE_SKIPPED: "false"
           PARTIALS_PATH: "docs/modules/release-notes/partials/"
 
@@ -107,11 +106,35 @@ jobs:
           path: ${{ runner.temp }}/gazette-sources.json
           retention-days: 7
 
+      - name: Set Gazette release date and file
+        id: gazette_release
+        run: |
+          if [[ "${{ github.event_name }}" == "workflow_dispatch" ]]; then
+            RELEASE_DATE="${{ inputs.release_date }}"
+          else
+            RELEASE_DATE="$(TZ=America/New_York date +%Y-%m-%d)"
+          fi
+
+          if [[ -z "${RELEASE_DATE}" ]]; then
+            echo "::error::release_date is required for Gazette runs."
+            exit 1
+          fi
+
+          RELEASE_FILE_NAME="${RELEASE_DATE}.adoc"
+          RELEASE_FILE_PATH="docs/modules/release-notes/pages/all-releases/${RELEASE_FILE_NAME}"
+
+          echo "release_date=${RELEASE_DATE}" >> "$GITHUB_OUTPUT"
+          echo "release_file_name=${RELEASE_FILE_NAME}" >> "$GITHUB_OUTPUT"
+          echo "release_file_path=${RELEASE_FILE_PATH}" >> "$GITHUB_OUTPUT"
+
+          echo "Gazette release date: ${RELEASE_DATE}"
+          echo "Gazette release file: ${RELEASE_FILE_PATH}"
+
       - name: Create draft release note artifact
         run: node .github/scripts/gazette-draft.js > ${{ runner.temp }}/gazette-release-notes.adoc
         env:
           GAZETTE_SOURCES_FILE: ${{ runner.temp }}/gazette-sources.json
-          RELEASE_DATE: ${{ github.event_name == 'workflow_dispatch' && inputs.release_date || 'Target release date TBD' }}
+          RELEASE_DATE: ${{ steps.gazette_release.outputs.release_date }}
           RELEASE_LABEL: ${{ github.event_name == 'workflow_dispatch' && inputs.release_label || 'Target release TBD' }}
 
       # For compiler testing.
@@ -122,53 +145,72 @@ jobs:
       #    path: ${{ runner.temp }}/gazette-release-notes.adoc
       #    retention-days: 7
 
+      - name: Set Gazette branch name
+        id: gazette_branch
+        run: |
+          RUN_DATE="$(TZ=America/New_York date +%Y%m%d)"
+          DISPLAY_DATE="$(TZ=America/New_York date +%Y-%m-%d)"
+          BRANCH_NAME="gazette/weekly-release-note-harvest-${RUN_DATE}"
+
+          echo "run_date=${RUN_DATE}" >> "$GITHUB_OUTPUT"
+          echo "display_date=${DISPLAY_DATE}" >> "$GITHUB_OUTPUT"
+          echo "branch_name=${BRANCH_NAME}" >> "$GITHUB_OUTPUT"
+
+          echo "Gazette branch: ${BRANCH_NAME}"
+
+      - name: Create or checkout Gazette branch
+        run: |
+          BRANCH_NAME="${{ steps.gazette_branch.outputs.branch_name }}"
+    
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+    
+          git fetch origin main
+          git checkout main
+          git pull --ff-only origin main
+    
+          if git ls-remote --exit-code --heads origin "${BRANCH_NAME}" >/dev/null 2>&1; then
+            echo "Gazette branch already exists. Checking it out."
+            git fetch origin "${BRANCH_NAME}"
+            git checkout -B "${BRANCH_NAME}" "origin/${BRANCH_NAME}"
+          else
+            echo "Creating Gazette branch ${BRANCH_NAME} from main."
+            git checkout -b "${BRANCH_NAME}"
+          fi
+
       - name: Write Gazette release note file
         run: |
-          mkdir -p docs/modules/release-notes/pages/all-releases
-          echo "Release file name: ${RELEASE_FILE_NAME}"
-          cp "${{ runner.temp }}/gazette-release-notes.adoc" "docs/modules/release-notes/pages/all-releases/${RELEASE_FILE_NAME}"
+          mkdir -p "$(dirname "${RELEASE_FILE_PATH}")"
+          cp "${{ runner.temp }}/gazette-release-notes.adoc" "${RELEASE_FILE_PATH}"
           echo "Wrote Gazette release note file:"
-          ls -lh "docs/modules/release-notes/pages/all-releases/${RELEASE_FILE_NAME}"
-          echo "Release note files:"
-          find docs/modules/release-notes/pages/all-releases -maxdepth 1 -type f -print
+          ls -lh "${RELEASE_FILE_PATH}"
         env:
-          RELEASE_FILE_NAME: ${{ github.event_name == 'workflow_dispatch' && format('{0}.adoc', inputs.release_date) || 'gazette-preview.adoc' }}
+          RELEASE_FILE_PATH: ${{ steps.gazette_release.outputs.release_file_path }}
 
       - name: Upload Gazette repo-shaped artifact
         uses: actions/upload-artifact@v5
         with:
-          name: gazette-repo-shaped-release-note
-          path: docs/modules/release-notes/pages/all-releases/${{ github.event_name == 'workflow_dispatch' && format('{0}.adoc', inputs.release_date) || 'gazette-preview.adoc' }}
+          name: gazette-repo-shaped-release-note-${{ steps.gazette_branch.outputs.run_date }}
+          path: ${{ steps.gazette_release.outputs.release_file_path }}
           retention-days: 7
 
       - name: Create Gazette pull request
         if: ${{ github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && inputs.create_pr == 'true') }}
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          BRANCH: gazette/weekly-release-note-harvest
-          FILE: docs/modules/release-notes/pages/all-releases/gazette-preview.adoc
+          BRANCH: ${{ steps.gazette_branch.outputs.branch_name }}
+          DISPLAY_DATE: ${{ steps.gazette_branch.outputs.display_date }}
+          FILE: ${{ steps.gazette_release.outputs.release_file_path }}
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-
-          if git ls-remote --exit-code --heads origin "$BRANCH" > /dev/null 2>&1; then
-            echo "Gazette branch already exists. Checking it out."
-            git fetch origin "$BRANCH"
-            git checkout -B "$BRANCH" "origin/$BRANCH"
-          else
-            echo "Gazette branch does not exist. Creating it."
-            git checkout -b "$BRANCH"
-          fi
-
-          mkdir -p "$(dirname "$FILE")"
-          cp "${{ runner.temp }}/gazette-release-notes.adoc" "$FILE"
 
           git add "$FILE"
 
           if git diff --cached --quiet; then
             echo "No Gazette changes to commit."
           else
-            git commit -m "Update weekly Gazette release-note harvest"
+            git commit -m "Update weekly Gazette release-note harvest for ${DISPLAY_DATE}"
             git push --set-upstream origin "$BRANCH"
           fi
 
@@ -198,10 +240,7 @@ jobs:
           EOF
 
           gh pr create \
-            --title "The Gazette: weekly release-note harvest" \
+            --title "The Gazette: weekly release-note harvest ${DISPLAY_DATE}" \
             --body-file /tmp/gazette-pr-body.md \
             --base main \
             --head "$BRANCH"
-          
-          
-          
