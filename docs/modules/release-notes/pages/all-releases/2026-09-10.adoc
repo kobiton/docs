@@ -80,86 +80,6 @@ Version information for individual software components is available in the Compo
 - Fixed an issue where opening Kobiton Portal at its root URL hid features included in your subscription until you refreshed the page. The *virtual devices* tab was missing from the device list, and Kobiton CLI packages were missing from Downloads in the left navigation. Opening a Portal page by its direct URL was not affected.
 
 
-== Editor review candidates
-
-// These PRs may contain release-note-worthy changes.
-// They did not include release-note partial files.
-// Human review required before inclusion.
-
-=== doc update: ADB commands for public devices
-
-// PR: https://github.com/kobiton/docs/pull/567
-// Reason: IT-Kobiton docs PR without a release-note partial. Changed customer-facing docs surface. Human review recommended.
-// Signals:
-// - author: IT-Kobiton
-// - changed_path: docs/modules/
-
-// Changed files:
-// - docs/modules/manual-testing/pages/adb-commands.adoc
-
-=== docs(KOB-54924): document the Device Management page, including host machine search by IP
-
-// PR: https://github.com/kobiton/docs/pull/512
-// Reason: IT-Kobiton docs PR without a release-note partial. Changed customer-facing docs surface. Human review recommended.
-// Signals:
-// - author: IT-Kobiton
-// - changed_path: docs/modules/
-
-// Changed files:
-// - docs/modules/device-lab-management/images/device-management-edit-location.png
-// - docs/modules/device-lab-management/images/device-management-page-overview.png
-// - docs/modules/device-lab-management/images/device-management-view-menu.png
-// - docs/modules/device-lab-management/nav.adoc
-// - docs/modules/device-lab-management/pages/device-management-page.adoc
-// - docs/modules/device-lab-management/pages/search-host-machines.adoc
-
-=== Update Test Cases and add Start Mixed Session
-
-// PR: https://github.com/kobiton/docs/pull/549
-// Reason: IT-Kobiton docs PR without a release-note partial. Changed customer-facing docs surface. Human review recommended.
-// Signals:
-// - author: IT-Kobiton
-// - changed_path: docs/modules/
-
-// Changed files:
-// - docs/modules/automation-testing/pages/start-a-mixed-session.adoc
-// - docs/modules/test-management/pages/test-cases.adoc
-
-=== CLI docs updated to 4.28
-
-// PR: https://github.com/kobiton/docs/pull/531
-// Reason: IT-Kobiton docs PR without a release-note partial. Changed customer-facing docs surface. Human review recommended.
-// Signals:
-// - author: IT-Kobiton
-// - changed_path: docs/modules/
-
-// Changed files:
-// - docs/modules/kobiton-cli/pages/set-up-cli.adoc
-// - docs/modules/kobiton-cli/pages/use-the-cli.adoc
-
-=== K-CLI: file push error reporting
-
-// PR: https://github.com/kobiton/docs/pull/556
-// Reason: IT-Kobiton docs PR without a release-note partial. Changed customer-facing docs surface. Human review recommended.
-// Signals:
-// - author: IT-Kobiton
-// - changed_path: docs/modules/
-
-// Changed files:
-// - docs/modules/kobiton-cli/pages/cli-commands.adoc
-
-=== MCP tool page update
-
-// PR: https://github.com/kobiton/docs/pull/560
-// Reason: IT-Kobiton docs PR without a release-note partial. Changed customer-facing docs surface. Human review recommended.
-// Signals:
-// - author: IT-Kobiton
-// - changed_path: docs/modules/
-
-// Changed files:
-// - docs/modules/ai/pages/mcp/ai-plugin-mcp-ref.adoc
-
-
 == Phoenix candidates
 
 // Jira tickets in "Wait For Deployment" / "Deployed" status when swept, plus a follow-up
@@ -175,10 +95,16 @@ Version information for individual software components is available in the Compo
 // - Already covered by drafted notes above: KOB-54809, KOB-54909, KOB-54806
 // - Junk / obsoleted / QA-internal: KOB-54822, KOB-54891, KOB-54954
 //
-// "Ship signal" = presence of the 2026-09-10 deployment bulk-update comment on the ticket
-// (posted across shipped tickets with build URLs for dC / gigacap / CLI). Absence does NOT
-// mean the change didn't ship — it may have shipped via a different train or the comment
-// was not applied.
+// Removed at 2026-09-10 triage:
+// - virtualUSB entries (KOB-53968, KOB-23149) — out of scope for this page
+// - Internal-only work (KOB-54816 ASP.NET rewrite, KOB-54814 ObjC->Swift port, KOB-54819
+//   Google Tag Manager marketing conversion)
+// - Duplicate: KOB-54832 (duplicates KOB-54806, already drafted)
+// - Closed-by-design MCP behavior tickets: KOB-54807, KOB-54808 (KOB-54808 closed via
+//   KOB-54811; both flagged as by-design, not shipping changes)
+//
+// "Ship signal" = the release-versions the ticket shipped on, based on the deployment
+// bulk-update comment posted on shipped tickets.
 
 === HarmonyOS NEXT: deviceConnect platform extension
 
@@ -189,7 +115,7 @@ Version information for individual software components is available in the Compo
 // Components: deviceConnect, Manual Session
 // Created: 2026-08-17
 // Updated: 2026-09-10
-// Ship signal: 2026-09-10 bulk-update present (dC 2609.10, gigacap 2609.1, CLI 2609.4)
+// Ship signal: deviceConnect 2609.1, gigacap 2609.1, Kobiton CLI 2609.4
 // Source: phoenix-candidates 12.json
 
 === HarmonyOS NEXT: Xium support (view tree, element search, AI locators)
@@ -201,7 +127,7 @@ Version information for individual software components is available in the Compo
 // Components: deviceConnect, Element selection, XIUM
 // Created: 2026-08-17
 // Updated: 2026-09-10
-// Ship signal: 2026-09-10 bulk-update present
+// Ship signal: deviceConnect 2609.1, gigacap 2609.1, Kobiton CLI 2609.4
 // Source: phoenix-candidates 12.json
 
 === HarmonyOS NEXT: kobiton-cli support
@@ -213,7 +139,7 @@ Version information for individual software components is available in the Compo
 // Components: CLI, deviceConnect
 // Created: 2026-08-17
 // Updated: 2026-09-10
-// Ship signal: 2026-09-10 bulk-update present
+// Ship signal: deviceConnect 2609.1, gigacap 2609.1, Kobiton CLI 2609.4
 // Source: phoenix-candidates 12.json
 
 === HarmonyOS NEXT: HDC protocol client
@@ -225,7 +151,7 @@ Version information for individual software components is available in the Compo
 // Components: deviceConnect
 // Created: 2026-08-17
 // Updated: 2026-09-10
-// Ship signal: 2026-09-10 bulk-update present
+// Ship signal: deviceConnect 2609.1, gigacap 2609.1, Kobiton CLI 2609.4
 // Source: phoenix-candidates 12.json
 
 === HarmonyOS NEXT: app installation (.hap / .app bundles) via Portal
@@ -240,62 +166,8 @@ Version information for individual software components is available in the Compo
 // Ship signal: none observed
 // Source: phoenix-candidates 12.json
 // REVIEWER NOTE: status regressed from "Wait For Deployment" (at 2026-09-02 sweep) to "New"
-// now. Confirm whether this actually shipped in this window before drafting. Also possibly
+// now. Confirm whether this actually shipped in this window before drafting. Possibly
 // related to KOB-54970 below (both HarmonyOS + .hap/.app).
-
-=== [virtualUSB 2][macOS + CLI/GUI] Closing the GUI Releases Devices Retained by the CLI — GUI Does Not Check Active CLI Connections on Exit
-
-// Ticket: https://kobiton.atlassian.net/browse/KOB-53968
-// Status: Released
-// Type: Bug
-// Resolution: Fixed
-// Team: deviceConnect (Phoenix)
-// Components: virtualUSB
-// Created: 2026-06-26
-// Updated: 2026-09-10
-// Ship signal: 2026-09-10 bulk-update present
-// Source: phoenix-candidates 12.json
-
-=== Replace deviceConnect custom web stack with ASP.NET Core
-
-// Ticket: https://kobiton.atlassian.net/browse/KOB-54816
-// Status: Wait For Deployment
-// Type: Story
-// Team: deviceConnect (Phoenix)
-// Components: deviceConnect, device Connect Console
-// Created: 2026-08-31
-// Updated: 2026-09-10
-// Ship signal: none observed (not yet shipped per status)
-// Source: phoenix-candidates 13.json
-// REVIEWER NOTE: internal architecture refactor (web stack replacement). Likely not
-// customer-facing unless behavior/API changes surface for customers.
-
-=== Port the iOS agent from Objective-C to Swift (RemoteControl framework)
-
-// Ticket: https://kobiton.atlassian.net/browse/KOB-54814
-// Status: Wait For Deployment
-// Type: Story
-// Team: deviceConnect (Phoenix)
-// Components: deviceControl
-// Created: 2026-08-31
-// Updated: 2026-09-10
-// Ship signal: none observed (not yet shipped per status)
-// Source: phoenix-candidates 13.json
-// REVIEWER NOTE: internal implementation change (language port). Likely not customer-facing.
-
-=== User can terminate virtualUSB Session from Portal if they need to
-
-// Ticket: https://kobiton.atlassian.net/browse/KOB-23149
-// Status: Deployed
-// Type: Story
-// Team: deviceConnect (Phoenix)
-// Components: virtualUSB
-// Created: 2021-11-24
-// Updated: 2026-09-04
-// Ship signal: none observed (no bulk-update comment on this ticket)
-// Source: phoenix-candidates 13.json
-// REVIEWER NOTE: ticket dates back to 2021; updated status in this window doesn't necessarily
-// mean the change shipped now. Verify actual ship date before drafting.
 
 // The following entries came from the Jira sweep on 2026-09-10:
 
@@ -325,20 +197,6 @@ Version information for individual software components is available in the Compo
 // REVIEWER NOTE: possible sibling of KOB-54630 above (same HarmonyOS + .hap/.app area).
 // Confirm whether these should merge or one supersedes the other.
 
-=== [MCP] Team-aware TCM tools: listTeams discovery + accurate team-scoping descriptions
-
-// Ticket: https://kobiton.atlassian.net/browse/KOB-54832
-// Status: Closed
-// Type: Story
-// Team: DLM Team
-// Components: MCP server
-// Created: 2026-09-03
-// Updated: 2026-09-03
-// Ship signal: none observed
-// Source: Jira sweep 2026-09-10
-// REVIEWER NOTE: probable sibling of KOB-54604 (already drafted under "AI and MCP" —
-// same listTeams + team-scoping story). Confirm before adding a second entry.
-
 === [XIUM][Android][iOS] Cached element click returns HTTP 404 no such element error after the underlying accessibility node is recreated; identical Basic Appium test succeeds
 
 // Ticket: https://kobiton.atlassian.net/browse/KOB-54824
@@ -350,22 +208,8 @@ Version information for individual software components is available in the Compo
 // Deployment: Cloud (per customfield_10379)
 // Created: 2026-09-02
 // Updated: 2026-09-10
-// Ship signal: 2026-09-10 bulk-update present (dC 2609.10, gigacap 2609.1, CLI 2609.4)
+// Ship signal: deviceConnect 2609.1, gigacap 2609.1, Kobiton CLI 2609.4
 // Source: Jira sweep 2026-09-10
-
-=== Add Google Tag Manager back to the register page
-
-// Ticket: https://kobiton.atlassian.net/browse/KOB-54819
-// Status: Released
-// Type: Story
-// Team: DLM Team
-// Components: Portal
-// Created: 2026-09-01
-// Updated: 2026-09-10
-// Ship signal: none observed (no bulk-update comment on this ticket, but Portal component
-// suggests a Portal build shipped — may be a signal for the Component versions section)
-// Source: Jira sweep 2026-09-10
-// REVIEWER NOTE: marketing/analytics restore — likely not customer-release-note material.
 
 === GameDriver Turbo Test: test_runner / run_command dropped between API and deviceConnect — executor never invoked on production
 
@@ -378,31 +222,10 @@ Version information for individual software components is available in the Compo
 // Updated: 2026-09-11
 // Ship signal: none observed
 // Source: Jira sweep 2026-09-10
-// REVIEWER NOTE: reads like internal QA infrastructure rather than a customer-facing fix.
-
-=== [MCP] saveTestCase returns a structured retryable error (SESSION_PROCESSING) during post-session processing
-
-// Ticket: https://kobiton.atlassian.net/browse/KOB-54808
-// Status: Closed
-// Type: Story
-// Team: DLM Team
-// Components: MCP server
-// Created: 2026-08-28
-// Updated: 2026-08-28
-// Ship signal: none observed
-// Source: Jira sweep 2026-09-10
-
-=== [MCP] terminateSession is idempotent — already-ended session returns status 'already_ended' instead of an error
-
-// Ticket: https://kobiton.atlassian.net/browse/KOB-54807
-// Status: Closed
-// Type: Story
-// Team: DLM Team
-// Components: MCP server
-// Created: 2026-08-28
-// Updated: 2026-08-28
-// Ship signal: none observed
-// Source: Jira sweep 2026-09-10
+// REVIEWER NOTE: HOLD — needs investigation. Reads like internal QA infrastructure ("Direct
+// Hub", "Turbo Test") but the reported symptom ("executor never invoked on production") is
+// production-facing. Dig into the ticket to determine whether the fix has a customer-observable
+// effect before drafting or dropping.
 
 === iOS native alert "Shared All Contacts" not detected in element tree, blocks automated tests
 
@@ -413,7 +236,7 @@ Version information for individual software components is available in the Compo
 // Components: Element selection, Portal
 // Created: 2026-08-28
 // Updated: 2026-09-10
-// Ship signal: 2026-09-10 bulk-update present (dC 2609.10, gigacap 2609.1, CLI 2609.4)
+// Ship signal: deviceConnect 2609.1, gigacap 2609.1, Kobiton CLI 2609.4
 // Source: Jira sweep 2026-09-10
 
 
@@ -421,19 +244,17 @@ Version information for individual software components is available in the Compo
 
 This release includes the following component versions:
 
-* deviceConnect 2609.10
+* deviceConnect 2609.1
 * gigacap 2609.1
 * Kobiton CLI 2609.4
 
-// Extracted from the 2026-09-10 deployment bulk-update comment posted across shipped tickets
-// (KOB-54634, KOB-54633, KOB-54632, KOB-54631, KOB-53968, KOB-54760, KOB-54824). Build URLs:
-// - dC: https://dl.kobiton.download/deviceconnect/2609.100219.0+master.088997a/
-// - gigacap: https://dl.kobiton.download/gigacap/2609.11812.0+e054f0e-1/
-// - CLI: https://public.kobiton.download/kobiton-cli/2609.41321.0+master.add250c/
+// Versions confirmed for KOB-54824 at 2026-09-10 triage. Same versions apply to the other
+// candidates carrying the same 2026-09-10 deployment bulk-update comment (KOB-54634, KOB-54633,
+// KOB-54632, KOB-54631, KOB-54760).
 //
-// REVIEWER NOTE: Portal version not confirmed for this window. Two candidates have Portal as
-// a component (KOB-54819, KOB-54760), suggesting a Portal build shipped, but no Portal build
-// URL surfaced in the sampled bulk-update comments. Verify Portal version at final review.
+// REVIEWER NOTE: Portal version not confirmed for this window. KOB-54760 has Portal as one of
+// its components, suggesting a Portal build shipped, but no Portal build URL surfaced in the
+// sampled bulk-update comments. Verify Portal version at final review.
 //
 // REVIEWER NOTE: deviceShare and kobiCTL (distinct from the CLI) not observed in build URLs
 // this window. Confirm at final review whether they need to be listed. Omit components with
