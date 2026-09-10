@@ -91,17 +91,25 @@ Version information for individual software components is available in the Compo
 // - phoenix-candidates 13.json (queried 2026-09-10)
 // - Jira sweep 2026-09-10: project = KOB AND statusCategory = Done AND created > "2026-08-28"
 //
-// Excluded from Jira sweep:
+// Excluded / removed at 2026-09-10 triage:
 // - Already covered by drafted notes above: KOB-54809, KOB-54909, KOB-54806
 // - Junk / obsoleted / QA-internal: KOB-54822, KOB-54891, KOB-54954
-//
-// Removed at 2026-09-10 triage:
-// - virtualUSB entries (KOB-53968, KOB-23149) — out of scope for this page
-// - Internal-only work (KOB-54816 ASP.NET rewrite, KOB-54814 ObjC->Swift port, KOB-54819
-//   Google Tag Manager marketing conversion)
-// - Duplicate: KOB-54832 (duplicates KOB-54806, already drafted)
-// - Closed-by-design MCP behavior tickets: KOB-54807, KOB-54808 (KOB-54808 closed via
-//   KOB-54811; both flagged as by-design, not shipping changes)
+// - virtualUSB entries (out of scope): KOB-53968, KOB-23149
+// - Internal-only work: KOB-54816 (ASP.NET rewrite), KOB-54814 (ObjC->Swift port),
+//   KOB-54819 (Google Tag Manager marketing conversion)
+// - Duplicate: KOB-54832 (dupes KOB-54806)
+// - Closed-by-design MCP tickets: KOB-54807, KOB-54808 (KOB-54808 closed via KOB-54811;
+//   both by-design, not shipping changes)
+// - KOB-54630 (HarmonyOS app installation) — was moved to "Wait For Deployment" by accident;
+//   correct state is "New", not shipping in this window
+// - KOB-54970 (HarmonyOS .hap/.app upload rejection) — closed because the underlying feature
+//   (KOB-54630) is not done, so the reported bug does not actually exist
+// - KOB-54818 (GameDriver Turbo Test executor drop) — original diagnosis was wrong; Vinh
+//   re-verified GameDriver end-to-end on Production against a GEM-hosted Android device with
+//   an executor client in place, and it works (hosted test report and video included). Full
+//   record in KOB-54954 (internal verification ticket)
+// - KOB-55039 (GameDriver dotnet vstest run_command) — Deployed but not Released, so out of
+//   scope for this window
 //
 // "Ship signal" = the release-versions the ticket shipped on, based on the deployment
 // bulk-update comment posted on shipped tickets.
@@ -117,6 +125,9 @@ Version information for individual software components is available in the Compo
 // Updated: 2026-09-10
 // Ship signal: deviceConnect 2609.1, gigacap 2609.1, Kobiton CLI 2609.4
 // Source: phoenix-candidates 12.json
+// REVIEWER NOTE: entire HarmonyOS NEXT set (KOB-54634, KOB-54633, KOB-54632, KOB-54631) may
+// be foundation-only work — not customer-facing yet if HarmonyOS isn't actively supported.
+// Confirm HarmonyOS active-support status before drafting.
 
 === HarmonyOS NEXT: Xium support (view tree, element search, AI locators)
 
@@ -129,6 +140,7 @@ Version information for individual software components is available in the Compo
 // Updated: 2026-09-10
 // Ship signal: deviceConnect 2609.1, gigacap 2609.1, Kobiton CLI 2609.4
 // Source: phoenix-candidates 12.json
+// REVIEWER NOTE: see HarmonyOS NEXT support-status note on KOB-54634.
 
 === HarmonyOS NEXT: kobiton-cli support
 
@@ -141,6 +153,7 @@ Version information for individual software components is available in the Compo
 // Updated: 2026-09-10
 // Ship signal: deviceConnect 2609.1, gigacap 2609.1, Kobiton CLI 2609.4
 // Source: phoenix-candidates 12.json
+// REVIEWER NOTE: see HarmonyOS NEXT support-status note on KOB-54634.
 
 === HarmonyOS NEXT: HDC protocol client
 
@@ -153,49 +166,9 @@ Version information for individual software components is available in the Compo
 // Updated: 2026-09-10
 // Ship signal: deviceConnect 2609.1, gigacap 2609.1, Kobiton CLI 2609.4
 // Source: phoenix-candidates 12.json
-
-=== HarmonyOS NEXT: app installation (.hap / .app bundles) via Portal
-
-// Ticket: https://kobiton.atlassian.net/browse/KOB-54630
-// Status: New
-// Type: Story
-// Team: DLM Team
-// Components: App Installation, Apps Repo, deviceConnect
-// Created: 2026-08-17
-// Updated: 2026-09-09
-// Ship signal: none observed
-// Source: phoenix-candidates 12.json
-// REVIEWER NOTE: status regressed from "Wait For Deployment" (at 2026-09-02 sweep) to "New"
-// now. Confirm whether this actually shipped in this window before drafting. Possibly
-// related to KOB-54970 below (both HarmonyOS + .hap/.app).
+// REVIEWER NOTE: see HarmonyOS NEXT support-status note on KOB-54634.
 
 // The following entries came from the Jira sweep on 2026-09-10:
-
-=== [GameDriver] Allow "dotnet vstest" As A Valid run_command For Hosted Script Execution
-
-// Ticket: https://kobiton.atlassian.net/browse/KOB-55039
-// Status: Deployed
-// Type: Story
-// Team: DLM Team
-// Components: GameDriver
-// Created: 2026-09-10
-// Updated: 2026-09-10
-// Ship signal: none observed
-// Source: Jira sweep 2026-09-10
-
-=== [HarmonyOS][CLI] Apps Repo rejects .hap and .app uploads
-
-// Ticket: https://kobiton.atlassian.net/browse/KOB-54970
-// Status: Closed
-// Type: Bug
-// Team: DLM Team
-// Components: App Installation, Apps Repo, deviceConnect
-// Created: 2026-09-08
-// Updated: 2026-09-09
-// Ship signal: none observed
-// Source: Jira sweep 2026-09-10
-// REVIEWER NOTE: possible sibling of KOB-54630 above (same HarmonyOS + .hap/.app area).
-// Confirm whether these should merge or one supersedes the other.
 
 === [XIUM][Android][iOS] Cached element click returns HTTP 404 no such element error after the underlying accessibility node is recreated; identical Basic Appium test succeeds
 
@@ -210,22 +183,6 @@ Version information for individual software components is available in the Compo
 // Updated: 2026-09-10
 // Ship signal: deviceConnect 2609.1, gigacap 2609.1, Kobiton CLI 2609.4
 // Source: Jira sweep 2026-09-10
-
-=== GameDriver Turbo Test: test_runner / run_command dropped between API and deviceConnect — executor never invoked on production
-
-// Ticket: https://kobiton.atlassian.net/browse/KOB-54818
-// Status: Closed
-// Type: Bug
-// Team: Orion (Automation)
-// Components: Direct Hub, GameDriver, Turbo test
-// Created: 2026-09-01
-// Updated: 2026-09-11
-// Ship signal: none observed
-// Source: Jira sweep 2026-09-10
-// REVIEWER NOTE: HOLD — needs investigation. Reads like internal QA infrastructure ("Direct
-// Hub", "Turbo Test") but the reported symptom ("executor never invoked on production") is
-// production-facing. Dig into the ticket to determine whether the fix has a customer-observable
-// effect before drafting or dropping.
 
 === iOS native alert "Shared All Contacts" not detected in element tree, blocks automated tests
 
@@ -252,11 +209,10 @@ This release includes the following component versions:
 // candidates carrying the same 2026-09-10 deployment bulk-update comment (KOB-54634, KOB-54633,
 // KOB-54632, KOB-54631, KOB-54760).
 //
-// REVIEWER NOTE: Portal version not confirmed for this window. KOB-54760 has Portal as one of
-// its components, suggesting a Portal build shipped, but no Portal build URL surfaced in the
-// sampled bulk-update comments. Verify Portal version at final review.
+// REVIEWER NOTE: no new Portal version shipped this window. Slightly unexpected — call this
+// out in the draft so the release reader knows Portal is unchanged, and verify at final review
+// (KOB-54760 has Portal in its components, which is what surfaced the question).
 //
-// REVIEWER NOTE: deviceShare and kobiCTL (distinct from the CLI) not observed in build URLs
-// this window. Confirm at final review whether they need to be listed. Omit components with
-// no new build (per the 2026-08-28 precedent — Kobiton CLI was omitted from that window
-// because no new CLI shipped).
+// REVIEWER NOTE: no new deviceShare or kobiCTL versions this window — tracks with what's
+// active. Omit per the 2026-08-28 precedent (components with no new build are not carried
+// over on the versions list).
