@@ -1,0 +1,9 @@
+// Release-note partial for KOB-54806 (MCP team-aware test management tools).
+// Not yet included from a release page: the change is at Wait for Deployment and no
+// ship date is confirmed. Include this partial from the dated release page for the
+// release that carries it, then verify the wording against the shipped tool schema.
+
+== AI and MCP
+
+- New: the Kobiton `automate` plugin adds a `listTeams` tool that returns the teams you belong to. Organization members can now look up a team id and complete a test management list call that previously failed with `Team id is required`.
+- The `teamId` descriptions on the test case, test suite, and test run tools now state the team scoping rules that the API enforces. Organization admins who omit `teamId` receive organization-level items only. Organization members pass a `teamId`. No list call returns items from more than one team.
