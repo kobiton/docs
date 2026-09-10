@@ -7,11 +7,34 @@ image:manual-testing:adb-shell-context.png[width=1000, alt="A manual session wit
 
 == Public devices
 
-Since public devices are shared across all Kobiton users, only the following `adb` commands are supported:
+Public devices are shared across all Kobiton users, so they run a restricted shell. Kobiton checks each command before it reaches the device and rejects any command that can disrupt the device or affect other users. A rejected command returns a message stating that shell access on this device is restricted. The device stays online and the session continues.
+
+Read-only diagnostic commands run normally. For example:
 
 * `dumpsys display`
 * `dumpsys battery`
+* `getprop ro.build.version.release`
 * `pm list packages -3`
+
+Commands that restart, power off, or reconfigure the device are rejected. For example:
+
+* `reboot -p bootloader`
+* `svc usb`
+
+The restriction applies wherever you reach the shell on a public device:
+
+* the *adb shell* control in a manual session
+* the manual view of a xref:automation-testing:start-a-mixed-session.adoc[mixed session]
+* the xref:kobiton-cli:cli-commands.adoc#adb-shell-restricted-sessions[`kobiton device adb-shell`] CLI command
+
+// REVIEWER NOTE (Robot Ranch draft, KOB-54705): two items need SME confirmation before merge.
+// 1. This section previously listed `dumpsys display`, `dumpsys battery`, and `pm list packages -3` as the
+//    only supported commands. Source evidence for KOB-54705 contradicts that: `getprop ro.build.version.release`
+//    is confirmed allowed and is absent from that list, and enforcement is now a deny list rather than an allow
+//    list. The lists above are therefore written as examples, not as the complete set. Please confirm the
+//    authoritative allowed and denied commands, or link to a maintained source for them.
+// 2. Confirm the exact rejection message text shown in the toolbar. The source evidence quotes it only in
+//    truncated form, so it is paraphrased above rather than reproduced verbatim.
 
 == Private and local devices
 
