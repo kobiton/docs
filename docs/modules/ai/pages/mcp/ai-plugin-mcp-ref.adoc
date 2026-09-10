@@ -7,7 +7,7 @@ This reference covers `automate` plugin version 1.9.0. For newer changes, see th
 
 == MCP tools
 
-The plugin exposes 31 MCP tools across 5 domains.
+The plugin exposes 32 MCP tools across 5 domains.
 
 === Devices
 
@@ -79,12 +79,29 @@ The plugin exposes 31 MCP tools across 5 domains.
 
 A test case is a saved, replayable sequence of steps created from a completed session. A test suite is an ordered collection of test cases. A test run executes a test case or a suite across one or more devices and reports results per device.
 
+Every test case, test suite, and test run belongs to one team, or to the organization level when it has no team. Responses carry `team_id`, where `null` means organization level. No list tool returns items from more than one team in a single call.
+
+The `teamId` parameter on `listTestCases`, `listTestSuites`, and `listTestRuns` works differently for each role.
+
+[cols="1,3",options="header"]
+|===
+|Role |`teamId` on the list tools
+
+|Organization admin
+|Optional. Omit it to list organization-level items only. Pass a `teamId` to list that team's items.
+
+|Organization member
+|Required. The API returns `Team id is required` without it. Call `listTeams` to get your team ids, then retry with one of them.
+|===
+
+Reuse the `team_id` returned on a listed item when you compose suites and runs. Test suites and test runs are team-homogeneous: every test case in a suite belongs to the suite's team, and a run's suite or selected test cases all belong to one team.
+
 [cols="1,3",options="header"]
 |===
 |Tool |Description
 
 |`saveTestCase`
-|Convert a finished manual session into a reusable test case.
+|Convert a finished manual session into a reusable test case. The new test case inherits the source session's team. A session with no team produces a test case at the organization level, which organization members cannot list.
 
 |`listTestCases`
 |List test cases, filtered by team, keyword, or platform.
@@ -99,7 +116,7 @@ A test case is a saved, replayable sequence of steps created from a completed se
 |Delete a test case.
 
 |`createTestRun`
-|Create a test run from a test suite or from selected test cases.
+|Create a test run from a test suite or from selected test cases. The suite or the selected test cases all belong to one team.
 
 |`listTestRuns`
 |List test runs, filtered by team, keyword, or platform.
@@ -117,7 +134,7 @@ A test case is a saved, replayable sequence of steps created from a completed se
 |Get test suite details, including member test cases.
 
 |`createTestSuite`
-|Create a test suite from existing test cases.
+|Create a test suite from existing test cases. Every test case added belongs to the suite's team. Organization admins may omit `teamId` to create the suite at the organization level. Organization members pass a team they belong to.
 
 |`updateTestSuite`
 |Update a test suite's name, description, or membership.
@@ -137,6 +154,9 @@ A test case is a saved, replayable sequence of steps created from a completed se
 
 |`getOrgSettings`
 |Return your organization's settings, including the live remediation flag that determines what happens when a test run execution hits a blocker.
+
+|`listTeams`
+|Return the teams you belong to as a `groups` array. Use it to scope a test management list call as an organization member, or to recover from `Team id is required`. An empty array means you belong to no team. Ask an organization admin to assign you to one.
 |===
 
 == AI tool attribution
@@ -355,6 +375,7 @@ Run adb shell pm list packages on the current device
 === Test cases and test runs
 
 ....
+Show my teams
 Save session 51234 as a test case named smoke-add-to-cart
 List my Android test cases
 Create a test run for smoke-add-to-cart on 3 Android devices
