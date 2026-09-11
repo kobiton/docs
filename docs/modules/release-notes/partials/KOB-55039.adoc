@@ -1,0 +1,37 @@
+// Release-note partial for KOB-55039.
+// Drafted by Robot Ranch (Valentine -> Dish -> Scout -> Bloodhound -> Town Crier -> Style Sheriff -> Gatekeeper).
+// Surface: public docs / release notes. Not yet included from a dated release page.
+//
+// EVIDENCE BASIS (thin, read before publishing):
+// Jira was not reachable from this run, and no features/KOB-55039* spec folder exists on .ai@main.
+// The only available evidence is a secondary reference in two sibling tickets' task logs
+// (features/KOB-54806-tcm-list-teamid-400/tasks.md and
+//  features/KOB-54809-listtestruns-sortby-enum/tasks.md), which record:
+//   "KOB-55039 folded ... api#5108 merged as 6729f422 (GameDriver dotnet vstest run_command
+//    + latest-session query perf re-land; zero overlap; api-only, no sibling PRs).
+//    KOB-55039 already at Wait For Deployment (teammate's ticket, tested on its own)."
+//
+// SCOPE DECISIONS:
+// - The "latest-session query perf" half is deliberately excluded as internal. Precedent:
+//   KOB-54731 ("Turbo Test backend performance") was dropped as internal from the
+//   2026-08-28 Cloud release notes.
+// - Only the run_command half is user-visible: run_command is a documented public request
+//   parameter on POST /v2/sessions/native.
+//
+// BLOCKING QUESTIONS FOR SME / DOCS REVIEW:
+// 1. Is this new support for dotnet vstest, or a fix restoring support that regressed?
+//    "re-land" in the source note implies a revert-and-reland, so the bullet below may need to
+//    be reframed as a fix ("Fixed ...") rather than as newly accepted input.
+// 2. What is the exact supported dotnet vstest command string, and does testParam passing
+//    (Mode, testHost, testPort) work the same way it does with the NUnit console runner?
+// 3. Does the existing mono + nunit3-console.exe run_command remain supported?
+// 4. Does the test runner package layout change? vstest needs the .NET test SDK and adapter
+//    rather than NUnit.ConsoleRunner in the ext folder.
+// 5. Which release page should include this partial?
+// Until 2 through 4 are answered, do not extend
+// automation-testing:turbo-test-execution/run-game-driver-test.adoc. That page currently
+// documents only the mono + NUnit console runner command.
+
+== Turbo Test Execution
+
+- GameDriver test runs now accept a `dotnet vstest` command in the `run_command` parameter.
