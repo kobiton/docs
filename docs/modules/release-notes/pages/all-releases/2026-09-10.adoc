@@ -78,7 +78,7 @@ Version information for individual software components is available in the Compo
 // for a customer-facing runtime name.
 // Source: Jira sweep 2026-09-10.
 
-- The iOS 18 *Shared All Contacts* screen now appears in the element tree with its *Select Contacts* and *Share All N Contacts* buttons, which test authors can locate and tap by `accessibility id`. Previously, the screen was absent from the tree and automated sessions blocked until timeout. The screen is a view rather than an alert, so `autoAcceptAlerts` and alert-accept commands do not apply. Write an explicit tap step. iOS versions earlier than 18.0 are unaffected.
+- On iOS 18, the *Shared All Contacts* screen and its *Select Contacts* and *Share All N Contacts* buttons now appear in the element tree and can be targeted by `accessibility id`. Because the screen is a view rather than an alert, `autoAcceptAlerts` and alert-accept commands do not apply; automated tests must include an explicit tap step. Earlier iOS versions are unaffected.
 
 // REVIEWER NOTE:
 // KOB-54760 | Team: Phoenix | Deployment: Cloud | ship_date: 2026-09-10 (deployment bulk-update)
