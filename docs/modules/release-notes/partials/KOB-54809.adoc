@@ -1,0 +1,22 @@
+// Release-note partial: KOB-54809 (listTestRuns sortBy contract).
+// Staged only. No release page includes this partial yet.
+// Include it from the dated release page for the release that ships the change.
+//
+// EDITORIAL DECISION NEEDED: the house rule recorded in
+// pages/all-releases/2026-08-21.adoc omits routine MCP tool tweaks from release notes and
+// calls MCP out only when the change is substantive on its own. That rule dropped a
+// comparable single-tool MCP fix (getApp latest_version). A single-parameter schema
+// correction on one tool plausibly falls under the same rule, so Town Crier marked this
+// Needs confirmation rather than Yes - minor. Docs team decides keep or drop.
+//
+// If kept, confirm the section heading: "Kobiton AI plugin" matches the public docs
+// surface name, while reviewer notes on prior pages call the component "MCP server".
+// Folding the bullet into an existing area section may be preferable to a dedicated one.
+//
+// Source evidence places the schema change in production as of 2026-09-10; the ticket's
+// formal release step (merging the feature PRs) was still open. Confirm release state and
+// the correct dated release page before publishing.
+
+== Kobiton AI plugin
+
+- Fixed an issue where sorting test runs through the `listTestRuns` MCP tool failed with a validation error. The tool schema now declares the accepted sort keys, `NAME` and `CREATED_AT`. Requests that send the previously documented `createdAt` spelling continue to succeed.
