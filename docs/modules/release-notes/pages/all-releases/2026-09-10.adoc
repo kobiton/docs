@@ -2,7 +2,7 @@
 
 [NOTE]
 ====
-Kobiton now uses date-based release versioning. Instead of version numbers such as 4.26S or 4.19.3, releases are identified by the build date in YYYYMM.DD format. For example, 202609.10 represents a build created on September 10, 2026.
+Kobiton now uses date-based release versioning. Instead of version numbers such as 4.26S or 4.19.3, releases are identified by the build date in YYYYMM.DD format. For example, 202609.1 represents a build created on September 1, 2026.
 
 Cloud release notes are typically published weekly and summarize changes since the previous publication. +
 Version information for individual software components is available in the Component versions section.
@@ -13,23 +13,20 @@ Version information for individual software components is available in the Compo
 
 == Kobiton MCP server
 
-- Fixed the `getCredential` MCP tool returning an authorization error for MCP servers configured with API key authentication. The tool now returns your username, API key, and portal URL under both API key and OAuth authentication.
+- The `getCredential` MCP tool now returns your username, API key, and portal URL under both API key and OAuth authentication. Previously, it returned an authorization error when the MCP server used API key authentication.
 
-// Source: KOB-54809 from PR #584
-// https://github.com/kobiton/docs/pull/584
+// Source: KOB-54809
 
-- Fixed the `listTestRuns` tool rejecting requests that sorted test runs by creation date. The tool now declares the sort keys it accepts, `CREATED_AT` and `NAME`, and requests that use the earlier lowercase spelling succeed.
+- The `listTestRuns` tool now declares the sort keys it accepts, `CREATED_AT` and `NAME`, and requests that use the earlier lowercase spelling succeed.
 
-// Source: KOB-54806 from PR #583
-// https://github.com/kobiton/docs/pull/583
+// Source: KOB-54806
 
 - New: the `automate` MCP plugin adds a `listTeams` tool that returns the teams you belong to. Organization members can now look up a team id and complete a Test Management list call that previously failed with `Team id is required`.
 - The `teamId` descriptions on the Test Case, Test Suite, and Test Run tools now state the team scoping rules that the API enforces. Organization admins who omit `teamId` receive organization-level items only. Organization members pass a `teamId`. No list call returns items from more than one team.
 
-// Source: KOB-54604 from PR #581
-// https://github.com/kobiton/docs/pull/581
+// Source: KOB-54604
 
-== API keys
+== API Keys
 
 - API keys on *Settings > API Keys* are now hidden by default. Select the eye icon next to a key to show its value, and select the icon again to hide it. Each key is controlled independently, and every key returns to the hidden state when you leave the page and open it again.
 - The *Copy* action copies the real key value whether the key is hidden or shown.
@@ -47,32 +44,29 @@ Version information for individual software components is available in the Compo
 // source evidence. The wording above describes the control as "the eye icon", which is how
 // the originating ticket describes it. Replace with the shipped label if one exists.
 
-// Source: KOB-54909 from PR #578
-// https://github.com/kobiton/docs/pull/578
+// Source: KOB-54909
 
-== Device management
+== Device Management
 
-- Fixed the Device Management page failing to open. On a fresh page load it redirected to a "Can't find what you're looking for" error, and when opened from another Settings page it reported "You currently have no hosting machine" even though host machines were connected. This occurred only when a single host machine ran two or more devices that share a device name and report no operating system. Device Management now lists every connected host machine and its devices.
+- The Device Management page now lists every connected host machine and its devices, including host machines that run two or more devices sharing a device name and reporting no operating system.
 
 == Session Explorer
 
-- Fixed the Overview tab showing `undefined` in the *Operating System* field for a device that reports no operating system. The field now shows only the OS version.
+- For devices that report no operating system, the *Operating System* field on the Overview tab now shows only the OS version instead of `undefined`.
 
-// Source: KOB-54740 from PR #572
-// https://github.com/kobiton/docs/pull/572
+// Source: KOB-54740
 
-- Fixed the *CLI for Mac*, *CLI for Windows*, and *CLI for Linux* links under *Downloads* in Kobiton Portal, which pointed to an outdated package location. Each link now resolves to the most recently published CLI build for its platform.
+== Portal
 
-// Source: KOB-54741 from PR #571
-// https://github.com/kobiton/docs/pull/571
+- The *CLI for Mac*, *CLI for Windows*, and *CLI for Linux* links under *Downloads* in Kobiton Portal now resolve to the most recently published CLI build.
 
-=== Portal
+// Source: KOB-54741
 
-- Fixed Kobiton Portal's root URL hiding subscription features until you refreshed the page. The *virtual devices* tab was missing from the device list, and Kobiton CLI packages were missing from Downloads in the left navigation. Opening a Portal page by its direct URL was not affected.
+- Kobiton Portal's root URL now shows all subscription features on the first page load, including the *virtual devices* tab in the device list and Kobiton CLI packages under *Downloads* in the left navigation.
 
 == Appium automation
 
-- Fixed a cached element reference returning `no such element` when the underlying view was rebuilt with an element that still matches the original locator. On Android, XIUM re-runs the original search and clicks the rebuilt element. If the element is really gone, XIUM returns `stale element reference`. On iOS, XIUM returns `stale element reference` instead of reporting success without tapping. Android caches up to 50 element references, and each reference expires 2 minutes after it is issued.
+- Cached element references in Appium automation now resolve correctly when the underlying view is rebuilt with an element that still matches the original locator. On Android, the session re-runs the original search and clicks the rebuilt element, or returns `stale element reference` if the element is truly gone. On iOS, the session returns `stale element reference` when the element cannot be tapped. Android caches up to 50 element references, and each reference expires 2 minutes after it is issued.
 
 // REVIEWER NOTE:
 // KOB-54824 | Team: Phoenix | Deployment: Cloud | ship_date: 2026-09-10 (deployment bulk-update)
@@ -84,9 +78,7 @@ Version information for individual software components is available in the Compo
 // for a customer-facing runtime name.
 // Source: Jira sweep 2026-09-10.
 
-== iOS 18 element tree
-
-- Fixed the iOS 18 *Shared All Contacts* screen not appearing in the element tree, which previously left automated sessions blocked until timeout. The screen now appears in the tree with its *Select Contacts* and *Share All N Contacts* buttons, which test authors can locate and tap by accessibility id. The screen is a view rather than an alert, so `autoAcceptAlerts` and alert-accept commands do not apply. Write an explicit tap step. iOS versions earlier than 18.0 are unaffected.
+- The iOS 18 *Shared All Contacts* screen now appears in the element tree with its *Select Contacts* and *Share All N Contacts* buttons, which test authors can locate and tap by `accessibility id`. Previously, the screen was absent from the tree and automated sessions blocked until timeout. The screen is a view rather than an alert, so `autoAcceptAlerts` and alert-accept commands do not apply. Write an explicit tap step. iOS versions earlier than 18.0 are unaffected.
 
 // REVIEWER NOTE:
 // KOB-54760 | Team: Phoenix | Deployment: Cloud | ship_date: 2026-09-10 (deployment bulk-update)
