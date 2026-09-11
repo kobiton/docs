@@ -1,0 +1,30 @@
+// Release-note partial for KOB-54737 (Town Crier / Robot Ranch).
+//
+// STAGED, NOT PUBLISHED. This partial is intentionally not included from a dated release page.
+// The fix was verified on a sandbox environment only. At drafting time the feature PRs were
+// still open and the pipeline's test-validation step was incomplete, so the change has not
+// shipped to Cloud and must not appear in customer-facing release notes yet.
+//
+// When it ships, include this partial from the dated page for that release, or fold the bullet
+// into that page's existing MCP section:
+//   include::partial$KOB-54737.adoc[]
+//
+// EDITORIAL DECISION NEEDED: the house rule recorded on the 2026-08-21 page omits routine MCP
+// tool tweaks and calls out MCP "only when the change is substantive on its own" (the `getApp`
+// bullet was dropped under that rule; KOB-52399, an MCP OAuth change, was dropped as routine on
+// the 2026-08-28 page). This fix is offered as substantive because it restores a documented
+// authentication mode rather than adjusting one tool's response shape: API key authentication is
+// the documented path for CI/CD and headless environments, and the credential tool was unusable
+// under it. If the docs team judges it routine, drop the bullet and delete this partial.
+//
+// FOLLOW-UP (do not action before this ships): ai/pages/mcp/cursor-cli.adoc states that `/setup`
+// "does not work with API key authentication" and attributes it to fetching credentials "through
+// an OAuth-authenticated MCP session". That limitation exists because this tool returned an
+// authorization error, so the stated mechanism is no longer accurate. It was deliberately left
+// unchanged here because `/automate:setup` was never run end to end under API key
+// authentication, so the wider claim about `/setup` is not yet confirmed. Re-verify after
+// deployment, then correct the callout and the "Set up credentials and CLI wrapper" step.
+
+== Kobiton MCP server
+
+- Fixed an issue where the `getCredential` MCP tool returned an authorization error for MCP servers configured with API key authentication. The tool now returns your username, API key, and portal URL under both API key and OAuth authentication.
