@@ -5,7 +5,7 @@
 
 * Certificate pinning prevents network payload capture. If you want to capture payload for a native application, make sure to disable certificate pinning in your app.
 
-* iOS devices cannot access any Apple domains (including App Store) in an NPC session.
+* On iOS, Apple domains (including the App Store) stay reachable in an NPC session, so apps can still be verified with Apple before installation. However, NPC can't capture payload on Apple domains because Apple enforces certificate pinning on iOS. Reaching Apple domains in an NPC session requires deviceConnect 4.25.0 or later.
 
 * A custom configuration profile is needed to enable the HTTP Proxy on iOS devices. Therefore, NPC does not work if there is another HTTP Proxy configuration profile installed on the device.
 

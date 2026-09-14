@@ -1,0 +1,78 @@
+= Sign in to Kobiton
+:navtitle: Sign in to Kobiton
+
+Sign in to Kobiton Portal using your email address, username, or a linked Google or GitHub account. Available sign-in methods depend on your deployment type.
+
+== Sign-in methods
+
+Cloud deployments support the following sign-in methods:
+
+* Email address or username with your Kobiton password
+* Google account
+* GitHub account
+
+Standalone deployments support:
+
+* Email address or username with your Kobiton password
+
+Google and GitHub sign-in are not available for Standalone deployments.
+
+[NOTE]
+====
+If your organization uses Single Sign-On (SSO), refer to
+xref:organization:sso-authentication/about-sso-authentication.adoc[]
+for SSO-specific sign-in instructions.
+====
+
+== Sign in with email or username
+
+. Open the Kobiton Portal sign-in page.
+. In the *Email or Username* field, enter your email address or Kobiton username. Your username is configured in xref:profile:manage-your-profile.adoc#_change_your_name[your profile].
+. Enter your password.
+. Select *Continue*.
+
+[NOTE]
+====
+Cloud and Standalone deployments both support email address or username sign-in.
+====
+
+== Sign in with Google or GitHub
+
+Google and GitHub sign-in are available for Cloud deployments only.
+
+. Open the Cloud Portal sign-in page.
+. Select *Log in with Google* or *Log in with GitHub*.
+. Complete the provider sign-in and consent flow.
+
+If the Google or GitHub email address is not associated with an existing Kobiton account, Kobiton creates a new account and organization automatically. The username is generated from the email address used during registration.
+
+If you already have a Kobiton account, you can link your Google or GitHub account during sign-in.
+
+If your account belongs to multiple organizations, you are prompted to select an organization after signing in.
+
+The first time you link a Google or GitHub account, Kobiton imports your first name, last name, and profile picture from the provider. You can update these values later in xref:profile:manage-your-profile.adoc[your profile].
+
+[NOTE]
+====
+Google and GitHub accounts cannot be linked to Standalone accounts.
+====
+
+== Reset your password
+
+Password reset is available for Cloud Portal accounts.
+
+. On the Cloud Portal sign-in page, select *Forgot Password?*.
+. Enter your email address or username.
+. Open the reset link sent to the email address associated with your account.
+. Choose a new password.
+
+[NOTE]
+====
+Standalone Portal does not support email-based password reset. If you cannot sign in to Standalone Portal, contact your organization administrator.
+====
+
+== Related guides
+
+* xref:profile:manage-your-profile.adoc[]
+* xref:organization:sso-authentication/about-sso-authentication.adoc[]
+* xref:organization:change-the-login-message.adoc[]

@@ -1,0 +1,75 @@
+= Manage iOS devices in air-gapped environments
+:navtitle: Air-gapped iOS devices
+
+iOS 17 and above devices require an initial online validation with Apple before they can run tests on a Mac mini host that has no Internet access.
+
+[IMPORTANT]
+This guide applies only to Standalone/On-Prem deployments where the Mac mini host has no Internet access.
+
+== How Apple validation works
+
+Apple applies two checks that determine how iOS devices behave in an air-gapped lab.
+
+=== Signing certificate validation
+
+Apple validates provisioning profiles and signing certificates against Apple servers the first time they are installed on a device. This validation requires Internet access once. Later launches use the result cached on the device.
+
+=== Personalized Developer Disk Image
+
+Each iOS 17 and above device requires a Developer Disk Image (DDI) that Apple personalizes for that specific device. Xcode requests the personalization from Apple at `https://gs.apple.com/TSS` and stores the signature on the device. After the signature is in place, the device no longer needs Internet access to mount the DDI.
+
+[NOTE]
+Apple can change this endpoint. Confirm the current address if the Internet Mac has restricted outbound access.
+
+[IMPORTANT]
+Apple has not published whether a personalized DDI expires or how long it lasts in an air-gapped environment. If connection errors occur and other troubleshooting steps do not resolve the issue, the personalized DDI may have expired. Repeat the preparation process in that case.
+
+== Requirements
+
+* The Internet Mac: a macOS machine with Internet access and *Xcode* installed.
+* Xcode on the Internet Mac at the same version as the air-gapped Mac mini host, or later.
+* xref:ios-devices/prepare-ios-device.adoc[Developer Mode enabled,window=read-later] on each iOS device.
+* deviceConnect installed on each air-gapped Mac mini host.
+* Physical USB access to the devices.
+
+[NOTE]
+Kobiton software, such as deviceConnect and deviceShare, does not need to be installed on the Internet Mac.
+
+== Prepare a device for an air-gapped host
+
+See xref:ios-devices/add-ios-device.adoc#preload-ddi-air-gapped[Preload DDI for air-gapped Mac mini hosts,window=read-later]. The procedure covers three phases:
+
+* On the Internet Mac, connect the device over USB and open Xcode so the device establishes trust, validates its certificate, and receives its personalized DDI.
+* Copy the DDI files from the Internet Mac to the air-gapped Mac mini host.
+* Connect the device to the air-gapped host, then restart deviceConnect services so the host mounts the DDI.
+
+Repeat the procedure for every iOS 17 and above device and every air-gapped Mac mini host in the lab.
+
+== Verify the device
+
+Open Chrome on the Mac mini host, go to *localhost*, and sign in. Navigate to *Devices*. The device displays as *Available*.
+
+For the full verification steps, see xref:ios-devices/add-ios-device.adoc#_verify_device_is_available_in_kobiton[Verify device is available in Kobiton,window=read-later].
+
+== Troubleshooting
+
+A device that fails after preparation usually has an expired or missing credential, an unmounted DDI, or a certificate that does not cover the device. Check deviceConnect logs first. See xref:deviceConnect/retrieve-deviceconnect-logs.adoc[Retrieve deviceConnect logs,window=read-later].
+
+Apple changes the wording of these errors between Xcode versions. Match on the behavior described below rather than on an exact message.
+
+[cols="1,1,2", options="header"]
+|===
+| Symptom | Likely cause | Action
+
+| `deviceControl` fails to launch
+| The signing certificate expired, or the provisioning profile does not cover the device
+| Reconnect the device to the Internet Mac and open Xcode to revalidate the certificate. If the error persists, xref:ios-devices/import-ios-signing-certificates-and-provisioning-profiles.adoc#_resolve_common_errors_with_certificates_and_provisioning_profiles[generate and import the correct certificate and provisioning profile,window=read-later].
+
+| The DDI does not mount
+| The personalization signature is missing or expired on the device
+| Repeat xref:ios-devices/add-ios-device.adoc#preload-ddi-air-gapped[the preparation procedure,window=read-later], then xref:deviceConnect/restart-deviceconnect-services.adoc[restart deviceConnect services,window=read-later].
+
+| A new device is not recognized
+| The device UDID is not included in the provisioning profile
+| xref:ios-devices/generate-an-ios-signing-certificate-and-provisioning-profile.adoc[Generate a provisioning profile,window=read-later] that includes the device UDID, then import it to the host.
+|===

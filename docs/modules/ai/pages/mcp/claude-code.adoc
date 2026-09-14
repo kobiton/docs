@@ -1,0 +1,338 @@
+= Kobiton for Claude Code
+:navtitle: Claude Code
+
+Kobiton for Claude Code connects Claude Code to the Kobiton mobile testing platform. You can manage devices, upload apps, run automation tests, and review results using natural language commands without switching between the terminal, the Kobiton portal, and local test scripts.
+
+https://discord.gg/uHvBFDZVP[image:discord-badge.svg[Join our Discord]]
+https://kobiton.com[image:kobiton-cloud.svg[Kobiton Cloud]]
+
+[NOTE]
+====
+
+* For the best experience, use Claude Code instead of Claude.ai. MCP integration in Claude.ai may be unreliable.
+
+====
+
+== Get started
+
+=== Open a workspace folder
+
+Before using Claude Code, open a command-line tool on your machine:
+
+- macOS: Terminal
+- Windows: PowerShell or Command Prompt
+
+Create a folder:
+
+[source,bash]
+----
+mkdir kobiton-project
+----
+
+You can create this folder anywhere, for example in your Documents directory.
+
+Next, start Claude Code from that location:
+
+[source,bash]
+----
+cd kobiton-project
+claude
+----
+
+Claude Code uses this folder as its workspace.
+
+NOTE: This folder is optional. It is highly recommended for Standalone or Cloud with custom domain customers to store environment-specific information.
+
+=== Install the plugin
+
+Once Claude Code starts in your Terminal, run the following commands one at a time in that window:
+
+[source,bash]
+----
+/plugin marketplace add kobiton/automate
+----
+then
+
+[source,bash]
+----
+/plugin install automate@kobiton
+----
+
+Both steps are required and must be run separately.
+
+== Authentication
+
+Kobiton MCP supports:
+
+* OAuth authentication (recommended)
+* API key authentication
+
+OAuth authentication is the default authentication method for Claude Code.
+
+[[get-mcp-url]]
+=== Retrieve your MCP server URL
+
+Use the API base URL for your environment:
+
+include::help-widget:partial$get-api-base-url.adoc[]
+
+Add `/mcp` at the end of the retrieved API base URL. This will be the MCP server URL. See below for examples:
+
+[cols="1,2,2",options="header"]
+|===
+|Environment |API base URL |MCP server URL
+
+|Kobiton Cloud (default)
+|`\https://api.kobiton.com`
+|`\https://api.kobiton.com/mcp`
+
+|Cloud with custom domain
+|`\https://api-custom-domain.kobiton.com`
+|`\https://api-custom-domain.kobiton.com/mcp`
+
+|Standalone
+|`\https://custom-domain.kobiton.local:3000`
+|`\https://custom-domain.kobiton.local:3000/mcp`
+
+|===
+
+If you are using the default Kobiton Cloud URL (`\https://api.kobiton.com/mcp`), you can skip the `.mcp.json` setup and proceed to <<oauth-authentication,OAuth authentication>> or <<api-key-authentication,API key authentication>>.
+
+If you are using a custom environment, follow the steps in <<custom-environment-configuration,Custom environment configuration>> before authenticating.
+
+[[custom-environment-configuration]]
+=== Custom environment configuration
+
+If your Kobiton MCP server is hosted at a URL other than `\https://api.kobiton.com/mcp`, you first need to retrieve your custom MCP server URL.
+
+Once you have obtained the custom URL, create a `.mcp.json` file in your project folder:
+
+[source,json]
+----
+{
+  "mcpServers": {
+    "kobiton": {
+      "type": "http",
+      "url": "https://api-custom-domain.kobiton.com/mcp"
+    }
+  }
+}
+----
+
+Replace `\https://api-custom-domain.kobiton.com/mcp` with the actual URL of your Kobiton MCP server.
+
+After creating the file, continue with either OAuth or API key authentication.
+
+[[oauth-authentication]]
+=== OAuth authentication (recommended)
+
+If you are using the default Kobiton Cloud URL (`\https://api.kobiton.com/mcp`), no `.mcp.json` file is required. The plugin connects automatically.
+
+If you are using a custom environment, make sure you have created the `.mcp.json` file as described in <<custom-environment-configuration,Custom environment configuration>>.
+
+Start Claude Code, then run `/mcp` to list the MCP servers:
+
+[source,bash]
+----
+
+claude
+/mcp
+
+----
+
+For *Standalone and Cloud with custom domain* environment, select `kobiton` under *Project MCPs* and authenticate.
+
+For default Cloud environment, select `plugin:automate:kobiton` under *Built-in MCPs* and authenticate.
+
+Sign in using:
+
+* Kobiton credentials
+* Google (not available for Standalone)
+* GitHub (not available for Standalone)
+
+Claude Code stores OAuth tokens automatically for future sessions.
+
+[[api-key-authentication]]
+=== API key authentication
+
+Use API key authentication for:
+
+* CI/CD pipelines
+* headless environments
+* systems without browser access
+
+Generate an API key in *Kobiton Portal > Settings > API Keys*. Then set:
+
+[source,bash]
+----
+export KOBITON_AUTH="Basic $(echo -n 'username:api-key' | base64)"
+----
+
+For API key authentication, the `.mcp.json` file is required regardless of which environment you use.
+
+For the default Kobiton Cloud URL, create a new `.mcp.json` file in your project folder with the following content:
+
+[source,json]
+----
+{
+  "mcpServers": {
+    "kobiton": {
+      "type": "http",
+      "url": "https://api.kobiton.com/mcp",
+      "headers": {
+        "Authorization": "${KOBITON_AUTH}"
+      }
+    }
+  }
+}
+----
+
+For a custom environment, update the `.mcp.json` file with the content above, then replace the `url` value with your custom MCP server URL.
+
+[NOTE]
+====
+OAuth and API key authentication cannot be used together in the same `.mcp.json` configuration.
+
+OAuth uses browser-based authentication and token management, while API key authentication uses explicit authorization headers. Configure only one authentication method at a time.
+====
+
+=== Run a command
+
+After authentication, enter commands in Claude Code using natural language.
+
+[source,bash]
+----
+Show available Android devices
+Show results for session 12345
+Upload app.apk and run tests/smoke_test.js
+----
+
+== Common workflows
+
+The Claude Code plugin supports common mobile testing workflows, including device management, app uploads, test execution, and session review.
+
+=== Device management
+
+- View available devices
+- Check device status
+- Reserve and release devices
+
+=== App management
+
+- Upload Android and iOS apps
+- View uploaded apps
+- Get app details
+
+=== Test execution
+
+The `run-automation-suite` workflow guides you through the full test lifecycle:
+
+- Upload or select an app
+- Select a device
+- Parse capabilities from your script
+- Run the test
+- Return results and artifacts
+
+Supported languages:
+
+[cols=",,",options="header"]
+|===
+|Language |Extension |Command
+
+|Node.js
+|`.js`
+|`node <script> <udid>`
+
+|Python
+|`.py`
+|`python <script> <udid>`
+
+|.NET
+|`.cs` / `.csproj`
+|`dotnet test`
+
+|Java
+|`.java`
+|`mvn test` or `java -cp ...`
+|===
+
+=== Session management
+
+- View active and past sessions
+- Get logs, screenshots, and videos
+- Stop running sessions
+
+== Example prompts
+
+=== Device management
+
+....
+Show available Android devices
+Check if Galaxy S23 is available
+Reserve Pixel 6 for 60 minutes
+....
+
+=== App management
+
+....
+Show uploaded Android apps
+Upload resources/apps/GS.apk
+....
+
+=== Test execution
+
+....
+Run tests/smoke_test.js on a Pixel device
+....
+
+=== Session management
+
+....
+Show running sessions
+Get details for session 12345
+Download logs from last failed session
+....
+
+For a complete reference of available Claude Code plugins, commands, agents, and skills, see the xref:mcp/ai-plugin-mcp-ref.adoc[plugin and tools reference].
+
+== Troubleshooting
+
+=== Claude keeps asking to open a folder
+
+Open or create a folder in Claude Code before running plugin commands.
+
+=== Browser does not open for login
+
+Ensure a default browser is set and you are not in a restricted environment.
+
+=== Device not found
+
+The device may be unavailable. Filter for available devices.
+
+=== Upload timeout
+
+Large files or slow connections can cause timeouts. Retry the upload.
+
+=== Session stuck
+
+Terminate the session and run it again.
+
+=== Authentication not recognized
+
+Reload your shell and restart Claude Code.
+
+=== Cannot connect to custom MCP server
+
+If you are using a custom environment, verify that:
+
+* A `.mcp.json` file exists in your project folder.
+* The `url` value in `.mcp.json` matches your Kobiton MCP server URL exactly.
+* The MCP server is reachable from your machine.
+
+If you are using the default Kobiton Cloud URL, remove any `.mcp.json` file from your project folder and restart Claude Code.
+
+== Additional resources
+
+- https://github.com/kobiton/automate/issues/new?template=bug_report.md[Report an issue]
+- https://discord.com/channels/1486036652685267055/1488189710248710327[Community support]
+- https://kobiton.com/privacy-policy[Privacy policy]
