@@ -1,0 +1,84 @@
+= Enable virtualUSB for host machines
+:navtitle: Enable virtualUSB for host machines
+
+== Overview
+
+Organization admins enable virtualUSB on individual host machines from Device Management in Kobiton Portal, and set the network routing each machine uses to reach end users.
+
+Enabling virtualUSB on a host machine makes the devices connected to that machine reachable through virtualUSB. Installing and signing in to the virtualUSB desktop app is a separate task. See xref:debugging:set-up-virtualusb.adoc[Set up virtualUSB].
+
+== Availability
+
+The *virtualUSB* tab appears only for organizations subscribed to virtualUSB. Organizations without the subscription see the *Settings* dialog with the *Max Parallel Tests* tab only.
+
+// REVIEWER NOTE: the tab is gated on a per-organization subscription entitlement.
+// Confirm the customer-facing name of that subscription before publishing.
+
+== Requirements
+
+* An account with the *ADMIN* predefined role
+* A host machine already connected to the organization
+* For self-managed routing, an IP address for the host machine that is reachable from end users' machines
+
+== Network routing options
+
+Network routing determines the address that virtualUSB connections use to reach a host machine.
+
+*Managed by Kobiton*:: Kobiton configures and maintains the routing. No address is entered, and the *Connection Address* column reads *Auto-configured by Kobiton*. This option is available only when the organization has a Kobiton-managed virtual network configured. When it is not configured, the option is unavailable. Contact Kobiton Support to have it set up.
+
+*Self-managed*:: You supply the address. Enter the IP address that end users' machines use to reach the host machine. Kobiton does not verify reachability, so confirm the address works from an end user's network before saving.
+
+On Standalone deployments, the *Network Routing* column is not shown. Every enabled host machine requires a *Connection Address*.
+
+== Enable virtualUSB on a host machine
+
+. Sign in to Kobiton Portal using an account with the *ADMIN* predefined role.
+
+. Select your profile picture, then choose *Settings*.
+
+. Open *Device Management*.
+
+. Select *Settings* at the top of the screen.
+
+. Open the *virtualUSB* tab.
+
+. Find the host machine you want to configure. Search by machine name or IP address, or select *Show enabled only* to list machines that already have virtualUSB enabled.
+
+. Turn on the toggle in the *Enabled* column for the host machine.
+
+. Set *Network Routing* for the machine:
++
+* For *Managed by Kobiton*, no further input is required.
++
+* For *Self-managed*, enter the IP address in *Connection Address*. The field is pre-filled with the machine's current IP address. A connection address is required, and *Save* is blocked with an inline message if the field is empty.
+
+. Repeat for any other host machines. Changes across both tabs are saved together.
+
+. Select *Save*.
+
+Closing or cancelling the dialog with unsaved changes prompts you to confirm before the changes are discarded.
+
+// REVIEWER NOTE: screenshots are still needed for this procedure. Source evidence for this
+// draft is a set of pre-release design mockups, which are not suitable for publication.
+// Capture the Settings dialog on the virtualUSB tab, and the enabled-machine badge on
+// Device Management, from the shipped build.
+
+== Verify the configuration
+
+After a successful save, the dialog closes and each host machine with virtualUSB enabled shows a purple *virtualUSB* badge on its row in Device Management.
+
+If some machines are updated and others are rejected, the dialog stays open and reports which machines failed. Your entries are preserved so you can correct them and save again.
+
+== Disable virtualUSB on a host machine
+
+Turn off the toggle in the *Enabled* column for the machine, then select *Save*. The *virtualUSB* badge is removed from the machine's row in Device Management.
+
+// REVIEWER NOTE: source evidence confirms the UI toggle and the badge behavior. It does not
+// confirm what happens to virtualUSB sessions that are active on the machine at the moment
+// it is disabled. Confirm with engineering before adding a statement about active sessions.
+
+== Related guides
+
+* xref:deviceConnect/control-host-capacity.adoc[Control host machine capacity]
+* xref:debugging:set-up-virtualusb.adoc[Set up virtualUSB]
+* xref:debugging:start-debugging.adoc[Start debugging]
