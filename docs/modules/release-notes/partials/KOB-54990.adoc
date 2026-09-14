@@ -1,0 +1,34 @@
+== Device passcode
+
+- Fixed Kobiton generating a PIN passcode that a mobile device management (MDM) passcode policy could reject. A generated PIN no longer contains a run of three positions where each digit steps up or down by exactly 1, such as `123`, `321`, `232`, or `565`. Previously, only runs that moved in a single direction were blocked. A device whose MDM refused the passcode prompted for a passcode update and could go offline, because the passcode could not be applied.
+- A PIN passcode submitted through the API is checked against the same rule. `POST /devices/{deviceId}/passcode/verify` now returns `400` for a PIN that contains a run such as `232`, which it previously accepted.
+
+[NOTE]
+====
+PIN passcodes already set on devices before this change are not reissued. If a device still holds a passcode that your MDM rejects, contact Kobiton support to have it reissued.
+====
+
+_Applies to organizations with passcode mode enabled._
+
+// Source: KOB-54990 | Bug | Component: Passcode.
+//
+// REVIEWER NOTE: staged as a partial, and no page includes it yet, so nothing renders. The
+// change was at Wait for Deployment when this was drafted, with no ship date confirmed.
+// Include this partial on the correct weekly page once the build ships, and delete this note.
+//
+// REVIEWER NOTE: the availability line is deliberately generic. The source evidence names the
+// organization passcode mode setting but not the mode numbers, and earlier release notes scope
+// passcode changes to specific modes (for example "passcode mode 1" in 4.14 and "passcode mode
+// 3" in 4.4). Confirm which modes are affected and tighten the line, or remove it if it applies
+// to all passcode modes.
+//
+// REVIEWER NOTE: confirm the support reissue path in the NOTE with the support team before
+// publishing. Reissuing passcodes on already-affected devices was explicitly out of scope for
+// the fix and is handled as a support action.
+//
+// REVIEWER NOTE: the passcode verify endpoint has no page in the api-reference module, so the
+// second bullet names an endpoint that is otherwise undocumented. Confirm whether to name it
+// here or describe the rejection without the path.
+//
+// Sanitized for public release notes: the reporting customer, their MDM product, the internal
+// validation routine, and test detail were removed.
