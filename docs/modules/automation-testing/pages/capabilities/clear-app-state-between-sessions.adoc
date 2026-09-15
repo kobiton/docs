@@ -1,0 +1,49 @@
+= Clear app state between sessions
+
+When you need to clear app state at the start of a session rather than relying on Kobiton's cleanup policy, combine the Appium `fullReset` and `enforceAppInstall` capabilities in your script.
+
+If the app is already on the device, `fullReset` alone may not clear app data, because the install step can be skipped. Adding `enforceAppInstall` forces the reinstall so app data is cleared before the session begins.
+
+[NOTE]
+This pattern applies to private devices only. Public devices always run Kobiton's factory-reset cleanup policy after every session and cannot be configured through capabilities.
+
+== When to use this pattern
+
+Use `fullReset` together with `enforceAppInstall` when:
+
+* Kobiton's cleanup policy is not clearing app data for the device or group.
+* App data must be cleared at session start rather than after the previous session ends.
+* `fullReset` alone is not clearing app data because the app is already installed on the device.
+
+Because the reinstall happens as part of session start, this approach skips the separate cleanup wait that runs after the previous session ends.
+
+== Configure the capabilities
+
+Add both capabilities to your Appium script:
+
+[cols="1,1"]
+|===
+| Capability | Value
+
+| `appium:fullReset`
+| `true`
+
+| `appium:enforceAppInstall`
+| `true`
+|===
+
+Example (Java):
+
+[source,java]
+----
+capabilities.setCapability("appium:fullReset", true);
+capabilities.setCapability("appium:enforceAppInstall", true);
+----
+
+Save your changes and run the script. At session start, Kobiton reinstalls the app and clears any app data from the previous session.
+
+== Related capabilities
+
+* xref:automation-testing:capabilities/available-capabilities.adoc#_fullreset[appium:fullReset,window=read-later]
+* xref:automation-testing:capabilities/available-capabilities.adoc#_enforceappinstall[appium:enforceAppInstall,window=read-later]
+* xref:automation-testing:capabilities/available-capabilities.adoc#_noreset[appium:noReset,window=read-later]
