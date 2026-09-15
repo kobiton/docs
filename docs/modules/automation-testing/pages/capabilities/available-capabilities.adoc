@@ -529,7 +529,7 @@ capabilities.setCapability("appium:deviceOrientation", "landscape");
 
 === `enforceAppInstall`
 
-Force a reinstall of the app at session start, even if the app is already installed on the device. Use with xref:_fullreset[] to clear app data at session start. For more information, see xref:automation-testing:capabilities/clear-app-state-between-sessions.adoc[window=read-later]. *Only available for private devices.*
+Force installation of the app at session start, even if the app is already installed on the device. Use with xref:_fullreset[] to clear app data at session start. For more information, see xref:automation-testing:capabilities/clear-app-state-between-sessions.adoc[window=read-later]. *Only available for private devices.*
 
 * *Type:* `boolean`
 * *Required capabilities:* None
@@ -545,7 +545,7 @@ capabilities.setCapability("appium:enforceAppInstall", true);
 
 Remove all apps installed during the test session. To keep the apps and only remove their data, use xref:_noreset[]. *Only available for private devices.*
 
-If the app is already on the device, `fullReset` may not clear app data, because the install step can be skipped. Pair with xref:_enforceappinstall[] to force a reinstall and clear app data. For more information, see xref:automation-testing:capabilities/clear-app-state-between-sessions.adoc[window=read-later].
+If the app is already on the device, `fullReset` alone may leave app data in place, because installing the app can be skipped. Pair with xref:_enforceappinstall[] to force the installation and clear app data. For more information, see xref:automation-testing:capabilities/clear-app-state-between-sessions.adoc[window=read-later].
 
 * *Type:* `boolean`
 * *Required capabilities:* None

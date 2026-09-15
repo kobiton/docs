@@ -1,25 +1,20 @@
 = Clear app state between sessions
 
-When you need to clear app state at the start of a session rather than relying on Kobiton's cleanup policy, combine the Appium `fullReset` and `enforceAppInstall` capabilities in your script.
+The device's cleanup policy clears app data at the end of each session. If you have disabled the cleanup policy, or if you need app data cleared at the start of a session instead of the end, add the Appium `fullReset` and `enforceAppInstall` capabilities to your Appium script.
 
-If the app is already on the device, `fullReset` alone may not clear app data, because the install step can be skipped. Adding `enforceAppInstall` forces the reinstall so app data is cleared before the session begins.
+Use both capabilities together. `fullReset` alone can leave app data in place when the app is already on the device, because installing the app can be skipped. `enforceAppInstall` forces the installation, which clears the app data.
 
 [NOTE]
-This pattern applies to private devices only. Public devices always run Kobiton's factory-reset cleanup policy after every session and cannot be configured through capabilities.
+This applies to private devices only. Public devices clear app data automatically after every session.
 
-== When to use this pattern
+== When to use both capabilities
 
-Use `fullReset` together with `enforceAppInstall` when:
+Add both capabilities when:
 
-* Kobiton's cleanup policy is not clearing app data for the device or group.
-* App data must be cleared at session start rather than after the previous session ends.
-* `fullReset` alone is not clearing app data because the app is already installed on the device.
+* App data is persisting between sessions even though `fullReset` is in your Appium script.
+* You want to shorten the time between sessions. The reinstall runs at session start, which removes the separate cleanup step that runs after each session ends.
 
-Because the reinstall happens as part of session start, this approach skips the separate cleanup wait that runs after the previous session ends.
-
-== Configure the capabilities
-
-Add both capabilities to your Appium script:
+== Add the capabilities to your script
 
 [cols="1,1"]
 |===
@@ -40,7 +35,7 @@ capabilities.setCapability("appium:fullReset", true);
 capabilities.setCapability("appium:enforceAppInstall", true);
 ----
 
-Save your changes and run the script. At session start, Kobiton reinstalls the app and clears any app data from the previous session.
+At session start, the app is installed, which clears any app data from the previous session.
 
 == Related capabilities
 
