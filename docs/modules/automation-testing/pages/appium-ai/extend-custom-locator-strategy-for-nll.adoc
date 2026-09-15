@@ -1,0 +1,99 @@
+= Extend custom locator strategy for Appium AI
+:description: Extend custom locator strategy to support Natural Language Locator in Appium AI.
+
+Extend the custom locator strategy for Appium clients that do not support using `natural` as the strategy value, such as `java-client` 10.x and above.
+
+== Java (Appium java-client)
+
+In java-client 10.x, `AppiumBy.custom()` hardcodes the strategy as `custom` internally. To override this value, create a custom `By` subclass:
+
+[source,java]
+----
+
+public static class ByNatural extends AppiumBy {
+
+    protected ByNatural(String selector) {
+        super("natural", selector, "natural");
+    }
+
+    public static By natural(String selector) {
+        return new ByNatural(selector);
+    }
+}
+
+----
+
+Use the custom `ByNatural` subclass when finding element to use Appium AI:
+
+[source,java]
+----
+
+WebElement el = driver.findElement(ByNatural.natural("the Accessibility button"));
+
+----
+
+[source,java]
+.Full example
+----
+
+import io.appium.java_client.AppiumBy;
+import io.appium.java_client.android.AndroidDriver;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.remote.DesiredCapabilities;
+
+import java.net.MalformedURLException;
+import java.net.URI;
+import java.net.URISyntaxException;
+
+import static io.appium.java_client.AppiumBy.*;
+
+public class UIAutomator2
+{
+    public static void main(String[] args) throws MalformedURLException, URISyntaxException {
+        UIAutomator2Test();
+    }
+
+    // In java-client 10.x, AppiumBy.custom() hardcodes the strategy as "custom" internally.
+    // To override it with "natural" for Appium Natural Language Locator (NLL), we need to create our own By subclass:
+    public static class ByNatural extends AppiumBy {
+
+        protected ByNatural(String selector) {
+            super("natural", selector, "natural");
+        }
+
+        public static By natural(String selector) {
+            return new ByNatural(selector);
+        }
+    }
+
+    public static void UIAutomator2Test() throws URISyntaxException, MalformedURLException {
+        // Set desired capabilities.
+        DesiredCapabilities capabilities = new DesiredCapabilities();
+
+        capabilities.setCapability("platformName", "Android");
+        capabilities.setCapability("appium:udid", "UDID");
+        capabilities.setCapability("appium:app", "kobiton-store:v14345343");
+        capabilities.setCapability("appium:automationName", "UiAutomator2");
+        capabilities.setCapability("kobiton:username","YOUR_USERNAME_HERE");
+        capabilities.setCapability("kobiton:accessKey","YOUR_API_KEY_HERE");
+
+        AndroidDriver driver = new AndroidDriver(
+                new URI("https://api.kobiton.com/wd/hub").toURL(), capabilities
+        );
+        try {
+            // Use our custom ByNatural subclass when finding element to use Appium NLL
+            WebElement el = driver.findElement(ByNatural.natural("the Accessibility button"));
+            el.click();
+            Thread.sleep(2000);
+            driver.getPageSource();
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        } finally {
+            driver.quit();
+        }
+    }
+
+}
+
+----

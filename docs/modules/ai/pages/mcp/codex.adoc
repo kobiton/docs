@@ -1,0 +1,327 @@
+= Kobiton for Codex CLI
+:navtitle: Codex CLI
+
+Kobiton for the Codex CLI connects the Codex CLI to the Kobiton mobile testing platform. You can manage devices, upload apps, run automation tests, and review results using natural language commands without switching between the terminal, the Kobiton portal, and local test scripts.
+
+https://discord.gg/uHvBFDZVP[image:discord-badge.svg[Join our Discord]]
+https://kobiton.com[image:kobiton-cloud.svg[Kobiton Cloud]]
+
+== Get started
+
+=== Open a workspace folder
+
+Before using the Codex CLI, open a command-line tool on your machine:
+
+- macOS: Terminal
+- Windows: PowerShell or Command Prompt
+
+Create a folder:
+
+[source,bash]
+----
+mkdir kobiton-project
+----
+
+You can create this folder anywhere, for example in your Documents directory.
+
+=== Install the plugin
+
+include::partial$local-plugin.adoc[]
+
+For standard Cloud environment, add the Kobiton marketplace, then install the plugin from the in-session plugin browser:
+
+[source,bash]
+----
+cd kobiton-project
+codex plugin marketplace add kobiton/automate
+codex
+----
+
+Inside the Codex CLI:
+
+. Type `/plugins` to open the plugin browser.
+. Select the *kobiton* marketplace, then install the *automate* plugin.
+. The first session prompts you to trust the bundled SessionStart hook. Approve it once via `/hooks` so the `~/.kobiton/bin/kobiton` CLI wrapper installs automatically on every future session.
+. Run `/mcp` (or `/mcp verbose`) to confirm `kobiton` is *Connected*.
+
+[NOTE]
+====
+The bundled SessionStart hook recreates the `~/.kobiton/bin/kobiton` symlink each time the Codex CLI starts. If you decline the hook, run the manual fallback below from any shell:
+
+[source,bash]
+----
+bash "$(find ~/.codex -name install-cli.sh -path '*automate*' 2>/dev/null | head -1)"
+----
+
+The script is idempotent.
+====
+
+==== Manual fallback: register the MCP server directly
+
+If you prefer not to use the marketplace, register the MCP server in `~/.codex/config.toml`:
+
+[source,toml]
+----
+[mcp_servers.kobiton]
+url = "https://api.kobiton.com/mcp"
+----
+
+Then copy `AGENTS.md` into your workspace so the Codex CLI picks up the tool list and skill reference:
+
+[source,bash]
+----
+curl -sLO https://raw.githubusercontent.com/kobiton/automate/main/AGENTS.md
+----
+
+Launch `codex` and run `/mcp` to confirm. The OAuth flow still applies on the first tool call.
+
+[#_authentication]
+== Authentication
+
+Kobiton MCP supports:
+
+* OAuth authentication (recommended)
+* API key authentication
+
+OAuth authentication is the default authentication method for the Codex CLI.
+
+=== OAuth authentication (recommended)
+
+The system browser opens automatically the first time the Codex CLI calls a Kobiton tool (for example, *"List my Kobiton devices"*).
+
+Sign in using:
+
+* Kobiton credentials
+* Google
+* GitHub
+
+Tokens are cached in the OS keychain with automatic refresh:
+
+* *macOS*: Keychain
+* *Linux*: Secret Service (GNOME Keyring, KWallet)
+* *Windows*: Credential Manager
+
+Use `/mcp` (or `/mcp verbose`) to inspect server status.
+
+=== API key authentication
+
+Use API key authentication for:
+
+* CI/CD pipelines
+* headless environments
+* systems without browser access
+
+Generate an API key in *Kobiton Portal > Settings > API Keys*. Then export:
+
+[source,bash]
+----
+export KOBITON_AUTH="Basic $(echo -n 'username:api-key' | base64)"
+----
+
+For the Codex CLI, switch to API key authentication by adding an `env_http_headers` block to the plugin's `.mcp.json`:
+
+[source,json]
+----
+"env_http_headers": { "Authorization": "KOBITON_AUTH" }
+----
+
+[NOTE]
+====
+*Recommended approach:* maintain a fork of `kobiton/automate` with this change committed, then install from your fork. The fork survives plugin reinstalls and Codex CLI upgrades.
+
+*Last resort:* edit the installed copy at `~/.codex/.tmp/marketplaces/kobiton/.codex/.mcp.json` directly. This file is part of the Codex CLI cache; the edit is overwritten on every reinstall.
+
+OAuth and API key authentication cannot be used together in the same `.mcp.json`.
+====
+
+=== Bootstrap credentials
+
+After installation and OAuth login, run setup to fetch your credentials:
+
+[source,bash]
+----
+/automate:setup
+----
+
+The bundled SessionStart hook keeps the CLI wrapper installed automatically. To verify everything is wired correctly:
+
+[source,bash]
+----
+/automate:doctor
+----
+
+=== Run a command
+
+After authentication, enter commands in the Codex CLI using natural language.
+
+[source,bash]
+----
+Show available Android devices
+Show results for session 12345
+Upload app.apk and run tests/smoke_test.js
+----
+
+== Common workflows
+
+The Codex CLI plugin supports common mobile testing workflows, including device management, app uploads, test execution, and session review.
+
+=== Device management
+
+- View available devices
+- Check device status
+- Reserve and release devices
+
+=== App management
+
+- Upload Android and iOS apps
+- View uploaded apps
+- Get app details
+
+=== Test execution
+
+The `run-automation-suite` workflow guides you through the full test lifecycle:
+
+- Upload or select an app
+- Select a device
+- Parse capabilities from your script
+- Run the test
+- Return results and artifacts
+
+Supported languages:
+
+[cols=",,",options="header"]
+|===
+|Language |Extension |Command
+
+|Node.js
+|`.js`
+|`node <script> <udid>`
+
+|Python
+|`.py`
+|`python <script> <udid>`
+
+|.NET
+|`.cs` / `.csproj`
+|`dotnet test`
+
+|Java
+|`.java`
+|`mvn test` or `java -cp ...`
+|===
+
+=== Session management
+
+- View active and past sessions
+- Get logs, screenshots, and videos
+- Stop running sessions
+
+== Example prompts
+
+=== Device management
+
+....
+Show available Android devices
+Check if Galaxy S23 is available
+Reserve Pixel 6 for 60 minutes
+....
+
+=== App management
+
+....
+Show uploaded Android apps
+Upload resources/apps/GS.apk
+....
+
+=== Test execution
+
+....
+Run tests/smoke_test.js on a Pixel device
+....
+
+=== Session management
+
+....
+Show running sessions
+Get details for session 12345
+Download logs from last failed session
+....
+
+For a complete reference of available Kobiton tools, skills, and commands, see the xref:mcp/ai-plugin-mcp-ref.adoc[Kobiton AI plugin and tools reference].
+
+== Updating the plugin
+
+To pull the latest version of the Kobiton plugin:
+
+[source,bash]
+----
+codex plugin marketplace upgrade
+----
+
+Then reinstall the plugin from the `/plugins` browser to pull the latest manifest. Exit and relaunch the Codex CLI. Confirm with `codex plugin list`.
+
+== Troubleshooting
+
+=== Tools not appearing or "MCP server kobiton not initialized"
+
+Verify each step:
+
+. *Plugin installed* - open `/plugins` inside the Codex CLI and confirm `automate` is listed under the `kobiton` marketplace as *Installed*. If missing, run `codex plugin marketplace add kobiton/automate` and reinstall from the plugin browser.
+. *Codex CLI version recent enough* - update with `npm install -g @openai/codex@latest`.
+
+After fixing, exit the Codex CLI and relaunch. The server should show in `/mcp` (or `/mcp verbose`).
+
+=== Browser does not open for OAuth login
+
+The Codex CLI launches the system browser when Kobiton requires sign-in. If nothing opens, check:
+
+. *Default browser is set* - your OS needs a default browser. SSH sessions without X forwarding cannot open one.
+. *Localhost ports not blocked* - the Codex CLI listens on a local port to receive the login callback. Firewall rules that block all localhost ports will break the flow.
+. *Headless environment* - switch to API key authentication.
+
+=== OAuth login completes but `/mcp` still shows Disconnected
+
+This usually means the cached token is stale and refresh failed. Force a re-login by clearing the OS keychain entry and reconnecting:
+
+* *macOS:* open Keychain Access, search for `codex-mcp` or `kobiton`, delete the entry, then trigger a tool call to re-run OAuth.
+* *Linux:* `secret-tool clear service codex-mcp`, or use Seahorse to remove the entry.
+* *Windows:* open Credential Manager, find the Codex entry under Generic Credentials, remove it.
+
+After clearing, run any Kobiton tool prompt; the browser should reopen for fresh login.
+
+=== MCP server does not appear in `/mcp` after install
+
+The Codex CLI caches plugin state when the session starts. After installing or updating the plugin, exit and relaunch:
+
+[source,bash]
+----
+/exit
+codex plugin marketplace list
+codex plugin list
+codex
+----
+
+If using the manual fallback config, also check:
+
+[source,bash]
+----
+grep -A 4 "mcp_servers.kobiton" ~/.codex/config.toml
+----
+
+=== Device not found
+
+The device may be unavailable. Filter for available devices.
+
+=== Upload timeout
+
+Large files or slow connections can cause timeouts. Retry the upload.
+
+=== Session stuck
+
+Terminate the session and run it again.
+
+== Additional resources
+
+- https://github.com/kobiton/automate/issues/new?template=bug_report.md[Report an issue]
+- https://discord.com/channels/1486036652685267055/1488189710248710327[Community support]
+- https://kobiton.com/privacy-policy[Privacy policy]

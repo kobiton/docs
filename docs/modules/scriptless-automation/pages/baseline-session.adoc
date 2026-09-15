@@ -1,0 +1,80 @@
+= Create a baseline session
+
+== Overview
+
+A baseline session is a manual test session that serves as the source for automated test execution. It captures how an application is exercised on a real device and provides the reference used to create a test case.
+
+Baseline sessions are created through manual interaction in the Kobiton platform and are required before a test can be run automatically.
+
+== What is a baseline session?
+
+A baseline session is a manual session performed on a real device through the platform.
+
+During the session, a user interacts with the application as they would during normal testing. These interactions are captured by the platform and later reused to define a test flow.
+
+Once converted into a test case, the baseline session becomes the reference for future test execution. Test cases can also be used to generate Appium scripts.
+
+== Create a baseline session
+
+Baseline sessions are created by running a manual test session with capture enabled and completing a defined test flow.
+
+=== 1. Start a manual session and enable capture
+
+From the Devices view in the Kobiton platform, select a device and launch a manual session.
+
+Before interacting with the application, select the *Play* button to enable session capturing mode.
+
+image::capture-session-icon.png[width=600,alt="Capture Session icon in Session Explorer"]
+
+Session capturing mode improves the accuracy of element detection by capturing precise element bounding boxes. Actions performed while capturing is enabled provide the most reliable results for scriptless execution.
+
+If your test requires an application, install or select the app at the start of the session.
+
+NOTE: Actions performed before capture is enabled are still saved with the session, but may result in reduced element accuracy during automated execution.
+
+=== 2. Perform the test flow
+
+Interact with the application as you would during normal testing.
+
+While capture is enabled, the platform captures supported interactions and associates them with the current application state. These captured interactions form the basis of the baseline session.
+
+Focus on completing a single, intentional test flow from start to finish.
+
+=== 3. End the session and convert it to a test case
+
+When the test flow is complete, exit the manual session by selecting the *X* icon.
+
+The session then opens in Session Explorer, where it can be converted into a test case. Once converted, the test case is managed through Test Management, where it can be reviewed, edited, and used to create test runs.
+
+To convert a session into a test case or learn more about Test Management, see xref:test-management:test-cases.adoc[Test cases].
+
+image::convert-test-case.png[width=600,alt="Convert Test Case in Session Explorer"]
+
+== What makes a good baseline
+
+Baseline sessions are most reliable when they reflect a clear and stable test flow.
+
+Good baseline sessions typically:
+
+* Follow a single, intentional path through the application
+* Use supported interactions only
+* Avoid unnecessary navigation or exploratory actions
+
+Baseline quality directly affects how reliably a test can be executed later.
+
+== Platform considerations
+
+Baseline sessions are platform-specific.
+
+Separate baseline sessions are required for Android and iOS, even when the application behavior is similar.
+
+Baseline sessions must target a supported application context: a web application (Safari or Chrome), an app installed from the App Repository, or an existing app already available on the device.
+
+Manual sessions can be converted into test cases even if unsupported actions were captured. Test cases that contain unsupported actions cannot be executed in a test run until those steps are removed and the test case is saved as a new version.
+
+== Related pages
+
+* xref:test-management:test-cases.adoc#_convert_to_test_case[Convert a session to a Test Case]
+* xref:scriptless-automation:run-scriptless.adoc[Run a Scriptless test]
+* xref:test-management:index.adoc[Test management]
+* xref:scriptless-automation:best-practices.adoc[Best practices]

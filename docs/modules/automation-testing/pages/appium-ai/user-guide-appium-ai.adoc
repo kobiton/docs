@@ -1,0 +1,150 @@
+= Use natural language locators in Appium AI
+
+== Before you begin
+
+Ensure the following:
+
+* Your environment is configured to support natural language locators. If you are unsure, contact your lab administrator or Kobiton Support.
+* You are familiar with basic Appium commands such as `findElement(...)`
+* You are using a private device deployment (natural language locators are not available for Public Cloud devices)
+
+== Choose a locator strategy
+
+Appium AI resolves natural language locators with one of two strategies. Select
+the strategy before the session starts.
+
+[cols="1,3", options="header"]
+|===
+| Strategy | Behavior
+
+| `uitree`
+| Reads the view hierarchy, sends the filtered metadata to a text model, and
+returns a validated XPath or CSS selector. This is the default.
+
+| `visionvirtual`
+| Captures a screenshot, analyzes it with a vision model, and returns a virtual
+element for the matched region. Use this strategy for canvas-based apps, games,
+and other apps that expose no usable view hierarchy.
+|===
+
+Set the strategy with the `kobiton:locatorStrategy` capability:
+
+[source,python]
+.python
+----
+capabilities = {
+    # ...
+    'kobiton:locatorStrategy': 'visionvirtual',
+}
+----
+
+Set `visionvirtual` per session with the capability. A lab administrator can also
+set a host-wide default with `NaturalLanguageLocator.LocatorStrategy` in `dc.ini`,
+but leave that default at `uitree`.
+
+A `dc.ini` default of `visionvirtual` applies to every session on that host,
+including sessions that test apps exposing a view hierarchy. Those sessions lose
+the precision of selector-based resolution and capture a screenshot on each
+request. Because the strategy is chosen per app, the capability is the correct
+place to set it.
+
+A capability passed in the session takes precedence over the `dc.ini` value.
+
+`visionvirtual` uses the vision model already configured for Appium AI. You do
+not need to set `kobiton:llmVisionModel` to use it. To route vision requests
+through a different model or provider, see
+xref:appium-ai/override-llm.adoc[Override Appium AI settings per session].
+
+IMPORTANT: Appium AI does not detect canvas-based apps. To use vision-based
+resolution, set `kobiton:locatorStrategy` to `visionvirtual` explicitly.
+
+Appium AI resolves the strategy once when the session starts. You cannot switch
+strategies during a test run, and a single session cannot use both. To exercise
+both strategies, run separate sessions.
+
+== Use a natural language locator
+
+To locate an element using natural language, pass a descriptive string into `findElement(...)` using the "natural" locator strategy.
+
+[source,python]
+.python
+----
+element = driver.find_element("natural", "The login button at the bottom")
+element.click()
+----
+
+[source,java]
+.java
+----
+WebElement el = driver.findElement(ByNatural.natural("the Accessibility button"));
+el.click();
+----
+
+NOTE: The above Java example used the custom `ByNatural` class to extend the default custom locator strategy value. See xref:automation-testing:appium-ai/extend-custom-locator-strategy-for-nll.adoc[this guide,window=read-later] for instructions.
+
+== Write effective descriptions
+
+Use clear, specific descriptions to help identify the correct element.
+
+Good examples:
+
+----
+java
+driver.findElement(ByNatural.natural("the Accessibility button"));
+driver.findElement(ByNatural.natural("the Username field"));
+driver.findElement(ByNatural.natural("the City dropdown list"));
+----
+
+Less effective examples:
+
+----
+driver.findElement(ByNatural.natural("Click button")
+driver.findElement("Select item")
+----
+
+When multiple similar elements are present, include additional context such as position, label, or surrounding UI to improve accuracy.
+
+== Expected behavior
+
+Appium AI evaluates the description and returns the most relevant matching
+element using the locator strategy set for the session. `uitree` returns a
+selector resolved from the view hierarchy. `visionvirtual` returns a virtual
+element mapped to coordinates on the screenshot.
+
+Results are not guaranteed to be deterministic. If multiple elements match the description, you may need to refine the description to improve accuracy.
+
+Natural language locators work alongside traditional selector strategies and are best used in combination with them, rather than as a complete replacement.
+
+== Troubleshooting
+
+If an element is not found or the wrong element is returned:
+
+* If the app renders its UI on a canvas, set `kobiton:locatorStrategy` to
+`visionvirtual`. The default `uitree` strategy cannot locate elements in an app
+that exposes no view hierarchy.
+
+* Use more specific language in the description
+
+* Include additional context such as position, labels, or surrounding elements
+
+* Verify that the UI element is visible and accessible in the view hierarchy
+
+* When using `uitree`, confirm that the application exposes sufficient UI
+metadata (view hierarchy or accessibility attributes) for element identification
+
+* When using `visionvirtual`, ensure the target element is clearly visible on
+the current screen
+
+If natural language locators are not working as expected, contact your lab administrator to verify the following:
+
+* OpenAI or Azure OpenAI API credentials are configured correctly
+
+* Natural language locators are properly configured in your environment
+
+* The deployment uses private devices (natural language locators are not available on Public Cloud devices)
+
+If issues persist, contact Kobiton Support for assistance.
+
+== Next steps
+
+For an overview of how natural language locators work and their limitations, see the xref:appium-ai/overview-appium-ai.adoc[Appium AI] guide.
