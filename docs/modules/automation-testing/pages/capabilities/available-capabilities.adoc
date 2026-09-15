@@ -422,6 +422,7 @@ For Basic Appium 2 sessions, follow the https://appium.io/docs/en/2.0/guides/mig
 * <<browsername,browserName>>
 * <<devicename,deviceName>>
 * <<deviceorientation,deviceOrientation>>
+* <<enforceappinstall,enforceAppInstall>>
 * <<fullreset,fullReset>>
 * <<noreset,noReset>>
 * <<platformname,platformName>>
@@ -526,13 +527,29 @@ capabilities.setCapability("appium:deviceOrientation", "portrait");
 capabilities.setCapability("appium:deviceOrientation", "landscape");
 ----
 
+=== `enforceAppInstall`
+
+Force installation of the app at session start, even if the app is already installed on the device. Use with xref:_fullreset[] to clear app data at session start. For more information, see xref:automation-testing:capabilities/clear-app-state-between-sessions.adoc[window=read-later]. *Only available for private devices.*
+
+* *Type:* `boolean`
+* *Required capabilities:* None
+* *Optional capabilities:* xref:_fullreset[]
+
+.Example
+[source,java]
+----
+capabilities.setCapability("appium:enforceAppInstall", true);
+----
+
 === `fullReset`
 
 Remove all apps installed during the test session. To keep the apps and only remove their data, use xref:_noreset[]. *Only available for private devices.*
 
+If the app is already on the device, `fullReset` alone may leave app data in place, because installing the app can be skipped. Pair with xref:_enforceappinstall[] to force the installation and clear app data. For more information, see xref:automation-testing:capabilities/clear-app-state-between-sessions.adoc[window=read-later].
+
 * *Type:* `boolean`
 * *Required capabilities:* None
-* *Optional capabilities:* None
+* *Optional capabilities:* xref:_enforceappinstall[]
 
 .Example
 [source,java]

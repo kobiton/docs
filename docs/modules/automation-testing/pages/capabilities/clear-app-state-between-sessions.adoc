@@ -1,0 +1,44 @@
+= Clear app state between sessions
+
+The device's cleanup policy clears app data at the end of each session. If you have disabled the cleanup policy, or if you need app data cleared at the start of a session instead of the end, add the Appium `fullReset` and `enforceAppInstall` capabilities to your Appium script.
+
+Use both capabilities together. `fullReset` alone can leave app data in place when the app is already on the device, because installing the app can be skipped. `enforceAppInstall` forces the installation, which clears the app data.
+
+[NOTE]
+This applies to private devices only. Public devices clear app data automatically after every session.
+
+== When to use both capabilities
+
+Add both capabilities when:
+
+* App data is persisting between sessions even though `fullReset` is in your Appium script.
+* You want to shorten the time between sessions. The reinstall runs at session start, which removes the separate cleanup step that runs after each session ends.
+
+== Add the capabilities to your script
+
+[cols="1,1"]
+|===
+| Capability | Value
+
+| `appium:fullReset`
+| `true`
+
+| `appium:enforceAppInstall`
+| `true`
+|===
+
+Example (Java):
+
+[source,java]
+----
+capabilities.setCapability("appium:fullReset", true);
+capabilities.setCapability("appium:enforceAppInstall", true);
+----
+
+At session start, the app is installed, which clears any app data from the previous session.
+
+== Related capabilities
+
+* xref:automation-testing:capabilities/available-capabilities.adoc#_fullreset[appium:fullReset,window=read-later]
+* xref:automation-testing:capabilities/available-capabilities.adoc#_enforceappinstall[appium:enforceAppInstall,window=read-later]
+* xref:automation-testing:capabilities/available-capabilities.adoc#_noreset[appium:noReset,window=read-later]
