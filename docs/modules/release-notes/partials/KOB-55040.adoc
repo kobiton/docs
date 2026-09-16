@@ -1,0 +1,21 @@
+== Appium automation
+
+- Automation sessions that use `appium:autoWebview` on Safari now recover automatically from a lost web-inspector connection. A device that could not previously return a web context, for example after *Settings > Safari > Advanced > Web Inspector* was toggled off and back on, now attaches to a valid page on the next session without a manual reboot or manual Safari setup. Previously, an affected device kept failing every session with `Unable to find any web views` until it was physically rebooted.
+
+// Source: KOB-55040 | Story | Component: Automation Session.
+//
+// STAGED. This ticket was at Wait For Deployment at drafting time. Hold this partial off
+// any dated release page until deployment is confirmed and the fix reaches production.
+//
+// REVIEWER NOTE: The ticket title reflects the original scope, "restore automated Safari
+// launch to a URL." Apple removed that API years ago and it did not come back. The
+// delivered fix instead refreshes the WebKit inspector connection at session start, so a
+// session that would previously fail on a device in a lost-inspector state now recovers
+// on its own. The customer report that opened the ticket (New Pig, iOS 26.6.2 iPhone 11)
+// was hitting exactly this state, and the fix restores their automation without requiring
+// a device reboot between runs.
+//
+// REVIEWER NOTE: QA verified on iOS 17.4, 18.7, and 26.5.2, on devices first put into
+// the "lost inspector" state on purpose by toggling Web Inspector off and back on. If
+// the inspector connection is lost mid-session, that session stays without a web page
+// until it ends and the next session picks up a working one.
