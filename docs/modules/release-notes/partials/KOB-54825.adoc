@@ -1,0 +1,34 @@
+== Session recording
+
+- A manual or automation session on an iOS device that cannot source high-quality video now falls back to screenshot-based recording, so the session ends with a video attached to its detail page. Previously, sessions on an affected device ended with no recording, and the session detail page had no video.
+
+[NOTE]
+====
+The fallback recording is short and low frame rate by design. Lightning Mode does not activate on an affected device, and the device must be rebooted to source full-quality video again.
+====
+
+_Applies to iOS devices in a state where video capture is blocked. The state persists across sessions and clears only after a device reboot._
+
+// Source: KOB-54825 | Bug | Component: gigacap.
+//
+// STAGED. This ticket was at Wait For Deployment at drafting time. Hold this partial off
+// any dated release page until deployment is confirmed and the fix reaches production.
+//
+// REVIEWER NOTE: This is a partial fix. The root trigger that puts a device into the
+// no-video state is still unknown, and an affected device still needs a reboot to source
+// Lightning-quality video again. What the fix ensures is that the session at least
+// produces a screenshot-based recording instead of an empty session-media directory. The
+// customer-visible improvement is "session detail page always has a video," not "video
+// capture is restored."
+//
+// REVIEWER NOTE: An adjacent gap is tracked separately as KOB-52334 (no user-facing
+// indication when video generation fails). If that ticket ships in the same release, its
+// partial and this one should cross-reference each other on the release page.
+//
+// REVIEWER NOTE: Ticket was escalated (jira_escalated label). Before the fix, affected
+// devices had 100 percent of their sessions produce no video, and some hosts had been in
+// that state for over a month (137, 85, and 55 consecutive video timeouts). Reboot is
+// the current remediation for restoring full-quality video.
+//
+// REVIEWER NOTE: Internal component name for the video-source driver was deliberately
+// omitted from customer-facing text.
