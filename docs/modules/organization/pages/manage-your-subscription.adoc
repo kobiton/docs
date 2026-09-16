@@ -1,0 +1,66 @@
+= Manage your subscription
+:navtitle: Manage your subscription
+
+Use Account settings to manage your Kobiton self-serve subscription. For the underlying permission that controls who can change a subscription, see xref:organization:roles/user-roles-and-permissions.adoc#_subscription_permissions[Subscriptions permissions].
+
+== Purchase a plan
+
+// Placeholder — source ticket KOB-51004 does not include purchase-flow steps. Replace with verified UI steps before publishing.
+
+[NOTE]
+====
+This section needs input from the author. Confirm the following before drafting:
+
+* Entry point — where a new self-serve customer starts the purchase flow (signup, in-product upgrade prompt, or *Account* > *Subscription*).
+* Plan-selection UI — which plans are presented, and how the user chooses between them.
+* Payment fields — what payment information is collected (card, billing address, tax ID), and which provider handles checkout.
+* Confirmation — what the user sees after a successful purchase (receipt, confirmation email, in-product banner).
+* Post-purchase state — when the new plan becomes active and where the user can verify it.
+====
+
+== Change your plan
+
+// Placeholder — source ticket KOB-51004 does not include plan-change steps. Replace with verified UI steps before publishing.
+
+[NOTE]
+====
+This section needs input from the author. Confirm the following before drafting:
+
+* Entry point — whether plan switching is reached from *Account* > *Subscription* > *Overview*, or from a separate control.
+* Available changes — whether the owner can upgrade, downgrade, or both, and whether any moves are blocked mid-cycle.
+* Proration and timing — whether a change takes effect immediately, at the next billing cycle, or both, depending on direction.
+* Payment — what the user sees when an upgrade requires additional payment, and whether the existing payment method is reused.
+* Confirmation — what the user sees after the change is applied and where they verify the new plan.
+====
+
+== Cancel your subscription
+
+Only the account owner can cancel a Kobiton subscription. Sign in as the account owner before you begin.
+
+. In the left navigation, scroll down and select *Account*.
+. Select *Subscription*. The *Overview* tab shows your active subscription details.
+. Select *Cancel Subscription*.
+. Review the end date shown in the confirmation message. Because the current billing cycle is already paid, you can continue using Kobiton until that date.
+. Select *Yes, cancel my subscription* to confirm.
+
+Proposed nav diff
+Append one line to docs/docs/modules/organization/nav.adoc, after the existing transfer-your-organization.adoc entry:
+
+* xref:organization:transfer-your-organization.adoc[]
+* xref:organization:manage-your-subscription.adoc[]
+
+Open questions or verification needed
+
+1. Purchase flow — no source material. The ticket lists "purchase" in the title but provides no steps. Sections needs: entry point, plan-selection UI, payment fields, confirmation, post-purchase state.
+2. Change-plan flow — no source material. Same gap. Needs: entry point, upgrade/downgrade rules, proration and timing, payment handling, confirmation.
+3. Permission contradiction to reconcile. The ticket says "Only the account owner can adjust a subscription." The existing user-roles-and-permissions.adoc says subscription.modify_subscription is grantable to Admins on
+self-serve plans (and is not assigned to the predefined ADMIN role). Two readings are possible: (a) only the owner can act, full stop — the permission is dormant or vestigial; (b) the owner can always act, and Admins
+can also act once an org explicitly grants them the permission. Confirm which is correct. This affects the intro framing.
+4. UI label verification. Labels used in the draft (Account, Subscription, Overview, Cancel Subscription, Yes, cancel my subscription) come straight from the ticket text. Verify casing and spelling against the
+production UI before publishing.
+5. Screenshots missing. Source provides none. Adjacent organization pages are heavy on inline screenshots. Capture before publish: Account in left nav, Subscription > Overview, Cancel Subscription button, confirmation
+modal with end-date message.
+6. Post-cancel state undefined. What does Overview show after cancellation? Is there a "Reactivate" path before the end date arrives? Either fold into the cancel section or add an "After cancellation" subsection.
+7. Back-xref deferred. The existing roles/user-roles-and-permissions.adoc § Subscriptions entry should add a back-xref to this new page once it's merged. Separate edit — flagged, not made here.
+8. Nav grouping (future consideration). If more billing/subscription pages are added later, consider promoting this to a "Billing" or "Account" sub-section in the org nav rather than a flat top-level entry. Not a
+blocker for v1.
