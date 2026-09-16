@@ -1,0 +1,26 @@
+== Appium automation
+
+- `queryAppState` on iOS 12, 13, and 14 now returns `4` for a foreground application. Previously, it returned `1` (installed, not running) while the application was visibly interactive, so scripts that gated on foreground state could stall.
+
+[NOTE]
+====
+On iOS 12, 13, and 14, `queryAppState` continues to return `1` for a backgrounded application, rather than `2` or `3`. This is a platform limitation: iOS below 15 does not expose backgrounded application state to on-device automation. Confirm background transitions by locating an element rather than by reading application state.
+====
+
+_Applies to automation on iOS 12, 13, and 14._
+
+// Source: KOB-54992 | Bug | Component: deviceControl.
+//
+// REVIEWER NOTE: Related to KOB-54814, the iOS agent Swift port. That change introduced
+// the regression addressed here. When both partials land on the same release page,
+// confirm the entries do not restate the same fix from different angles.
+//
+// REVIEWER NOTE: The QA verdict was PARTIAL. The foreground read is fixed; the residual
+// background-read behavior on iOS 12 to 14 was confirmed by the SME as a platform limit
+// (iOS below 15 does not push application state to on-device automation) rather than an
+// incomplete fix. The NOTE box records that limitation. If the docs team prefers to move
+// the limitation to a supported-platforms or troubleshooting page and out of the release
+// note, remove the NOTE block.
+//
+// REVIEWER NOTE: A separately-filed landscape element-rect issue (KOB-55061) surfaced
+// during this ticket's QA. It is not part of this fix and is not included here.
