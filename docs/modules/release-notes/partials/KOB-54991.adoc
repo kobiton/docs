@@ -1,0 +1,21 @@
+== Device passcode
+
+- In a manual session on a passcode-enabled iOS device, pressing *Power* to sleep the device and pressing it again to wake now auto-fills the passcode and returns the device to the Home screen, as documented. Previously, the device stayed on the lock screen and the session raised `Failed to unlock passcode!` about 15 to 18 seconds after the wake. While the device stayed locked, lockdown-backed operations, including application install, failed with `PasswordProtected` until a manual unlock or reboot.
+
+_Applies to organizations in PIN passcode mode._
+
+// Source: KOB-54991 | Bug | Component: Passcode.
+//
+// STAGED. This ticket was at Wait For Deployment at drafting time. Hold this partial off
+// any dated release page until deployment is confirmed and the fix reaches production.
+//
+// REVIEWER NOTE: The defect is pre-existing rather than a KOB-54814 regression. Reproduced
+// on 3 of 3 iOS devices (17.5.1, 15.7.1, 18.7) on both the current agent and the
+// pre-Swift-port build. QA verified the fix on 2026-09-16 across five sessions on the
+// same three devices from the KOB-54991-power-wake-unlock branch.
+//
+// REVIEWER NOTE: Two adjacent behaviours flagged in the same ticket are out of scope for
+// this fix and remain: the Set path logs "Passcode not detected after 10s. Proceeding
+// anyway." before reporting success, so applied-passcode confirmation is missing; and
+// the disabled Next button in PIN mode is already recorded in the passcode enablement
+// guide's Known Limitations. Track separately if either becomes a fix.
