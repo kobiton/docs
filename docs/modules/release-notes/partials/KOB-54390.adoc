@@ -1,0 +1,20 @@
+== App Repository
+
+- Apps whose latest version is still processing, or whose most recent upload failed to parse, now return normally from the App Repository REST APIs and the MCP `getApp` tool. `GET /v2/apps/{id}`, `GET /v1/apps/{id}`, and the MCP `getApp` tool return the app with no latest version. Previously, these requests returned HTTP 500.
+- Uploading a valid build to such an app now parses successfully and becomes the app's latest version. Previously, the valid upload was marked as a parse failure, and the app could not recover from a broken first upload.
+- Starting an automation session with `app: kobiton-store:<id>` on such an app returns "App <id> has no ready version to install," instead of the earlier "App ID <id> not found."
+
+// Source: KOB-54390 | Bug | Components: Apps Repo, MCP server.
+// The Release Notes field on the ticket was populated by engineering; this partial follows
+// that copy with minor style edits.
+//
+// REVIEWER NOTE: Owned by the DLM team, not Phoenix. Captured on this pass because no
+// partial existed and the fix is user-facing across multiple surfaces (v1/v2 REST APIs,
+// MCP tool, automation session error). Retag onto the appropriate release page with the
+// rest of the DLM content.
+//
+// REVIEWER NOTE: The engineering release-note field also mentions an MCP error-envelope
+// normalization ("MCP tool errors now always carry the upstream HTTP status in
+// `details.error.code`"). That change supports the MCP usage dashboard rather than the
+// customer's direct interaction with tools, and it was dropped from this partial per the
+// "no routine MCP tool tweaks" guideline. Add it back if the docs team wants it.
