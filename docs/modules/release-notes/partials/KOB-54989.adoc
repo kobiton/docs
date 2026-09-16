@@ -1,0 +1,16 @@
+== Biometric authentication
+
+- Biometric authentication in a manual session now completes within milliseconds on iOS 15 through 27. Previously, on the new deviceControl build, `Pass` and `Fail` responses timed out after approximately 60 seconds on every attempt, and the application under test remained in its waiting state indefinitely.
+
+_Applies to manual sessions using applications that embed `KobitonLAContext.framework`._
+
+// Source: KOB-54989 | Bug | Component: deviceControl.
+//
+// REVIEWER NOTE: Related to KOB-54814, the iOS agent Swift port, which introduced the
+// regression addressed here. When both partials land on the same release page, confirm
+// the entries do not restate the same fix from different angles.
+//
+// REVIEWER NOTE: QA verified across 12 devices spanning iOS 15.7.1 to 27.0 with three
+// biometric test applications. Screen streaming and orientation events were also checked
+// because they share the same agent-side notification server that carried the fix, and
+// both behaved normally.
