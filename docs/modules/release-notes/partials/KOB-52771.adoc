@@ -1,0 +1,29 @@
+== Analytics reports
+
+- A new *Device Inventory* report is available under *Analytics Reports* in the Portal. The report lists every device connected to the organization, with one row per device.
+- Columns include *Device Name*, *OS*, *Version*, *UDID*, *Manufacturer*, *Device Model*, *Serial Number*, *IMEI*, *Mobile Number*, *Passcode*, *Status*, and *Assigned Team*.
+- Filter results by *Status*, *OS*, *Version*, *Device Name*, *Manufacturer*, or *Device Model*. *Version* narrows to the selected OS, and *Device Model* narrows to the selected Manufacturer.
+- Search for a team, or any other column value, from the table's search box.
+
+[NOTE]
+====
+*IMEI* and *Mobile Number* populate only for cellular devices; Wi-Fi-only devices show these columns blank. *IMEI* is a restricted device property and can be blank even on a cellular device.
+====
+
+_Available to organization admins in every organization._
+
+// Source: KOB-52771 | Story | Component: Reporting.
+//
+// REVIEWER NOTE: Live at https://portal.kobiton.com/predefined-reports/6. Visible to org
+// admins only; not shown to standard members.
+//
+// REVIEWER NOTE: Team is filtered via the table's search box rather than a per-column
+// dropdown, because a device can belong to multiple teams (listed together in one cell)
+// and a per-team dropdown filter would either miss matches or duplicate rows. The search
+// box matches across all columns, not the Assigned Team column only. Same approach as
+// the Retained Devices report (KOB-54713).
+//
+// REVIEWER NOTE: Owned by the DLM team, not Phoenix. Captured on this pass because no
+// partial existed and the report is user-facing; retag onto the appropriate release page
+// with the rest of the DLM content. Consider consolidating with the Retained Devices
+// partial (KOB-54713) if both land on the same release page.
