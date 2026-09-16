@@ -1,0 +1,25 @@
+== Analytics reports
+
+- A new *Retained Devices* report is available under *Analytics Reports* in the Portal. The report lists retained devices, who retained them, how long each device has been retained, and the last time each device was used.
+- Columns include *Device Model*, *OS*, *State*, *Retained By*, *Retaining User's Team/Group*, *Retain Start*, *Retain End*, *Last Session*, *Last Used*, and *UDID*.
+- Filter results by *Retained by email* or *UDID*, and search for a team from the table's search box.
+- Results sort by *Last Used*, with the longest-idle devices at the top.
+
+_Available to organization admins in every organization._
+
+// Source: KOB-54713 | Story | Component: Reporting.
+//
+// REVIEWER NOTE: Live at https://portal.kobiton.com/predefined-reports/7. Visible to org
+// admins only; not shown to standard members.
+//
+// REVIEWER NOTE: The "Retaining User's Team/Group" column shows every group the retaining
+// user belongs to, rather than the device's own team. This is intentional and matches the
+// approach used in the Device Inventory report (KOB-52771).
+//
+// REVIEWER NOTE: Team is filtered via the table's search box rather than a dropdown. The
+// docs team decides whether to surface that detail in the release note or defer to
+// product help.
+//
+// REVIEWER NOTE: Owned by the DLM team, not Phoenix. Captured on this pass because no
+// partial existed and the report is user-facing; retag onto the appropriate release page
+// with the rest of the DLM content.
