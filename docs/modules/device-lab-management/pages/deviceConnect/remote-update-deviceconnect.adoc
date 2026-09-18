@@ -26,9 +26,7 @@ Environments that include a Dell server require a manual upgrade coordinated wit
 
 A manual update can be performed when an update is available for one or more Mac mini hosts.
 
-When a notification banner appears in the Kobiton Portal, at least one Mac mini host in the organization is eligible for an update.
-
-image:new-version-available.png[width=1000,alt="The banner about new version of deviceConnect"]
+To check whether an update is available, open the *Device Management* tab in *Settings* and review the *deviceConnect* version listed for each Mac mini host.
 
 === To perform a manual update
 
@@ -72,6 +70,5 @@ image:device-management-new-version-upgrade-manual.png[width=800,alt="The New ve
 * Mac mini hosts are expected to run *deviceConnect* within one major version of the current release.
 ** For example, if the current release is *4.22*, supported versions include *4.21 and later*.
 * Versions outside this range may not be fully tested or supported, and compatibility with newer Portal features is not guaranteed.
-* When a *deviceConnect* version is no longer supported, devices hosted on that version may be taken offline to prevent compatibility or stability issues.
-** When this occurs, the message “*Kobiton upgrade required*” appears in the *Message* section of the *Device Management* page.
-* Update *deviceConnect* manually to restore device availability.
+* Devices are not taken offline because of the *deviceConnect* version running on their host. A host running an older version keeps its devices available for sessions.
+* To stay within the supported range, leave automatic updates enabled, or update manually from *Device Management*.
