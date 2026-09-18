@@ -1,0 +1,55 @@
+// Release-note partial for KOB-55065. Drafted by Robot Ranch (Town Crier).
+// Draft for docs-team review. Not included on a release page yet.
+//
+// Target release: cloud 2026.09.16 (Jira fixVersion 2026.09.16, deployed to
+// kobiton-prod-blue on 2026-09-16). No all-releases page exists for that date yet,
+// so this partial is staged rather than wired into kobiton-four-latest.adoc. Add an
+// include::release-notes:partial$KOB-55065.adoc[] to the page for the release that
+// ships the fix, or merge the bullets into that page's existing Device Management
+// section and drop the heading below to avoid a duplicate heading.
+
+== Device Management
+
+- The *Settings* window on *Settings > Device Management* now lists the same host machines as the Device Management page. Searching the window by host machine name or by IP address returns the same host machines that a search on the page returns. Previously the window could also list host machines that the page did not show, including several rows carrying the same host machine name and the same IP address.
+
+- Settings saved in the window now apply to a host machine shown on the page. Each of the extra rows held its own *Max Parallel Tests* value and virtualUSB setting, so a change could previously be saved against a row that matched no host machine visible on the page, with nothing on screen to indicate which row took effect.
+
+- The *All Machines* row reports the combined state of the host machines listed in the window. Previously it read *Mixed* when the extra rows held different values.
+
+- The change applies to both the *virtualUSB* tab and the *Max Parallel Tests* tab.
+
+- A host machine appears in the *Settings* window only while at least one of its devices is visible on the Device Management page. A host machine whose devices are all hidden no longer appears in either place. Unhide one of its devices to configure the host machine again.
+
+// REVIEWER NOTE: availability. The *Settings* window is gated per organization in the
+// source evidence, and the ticket reports it as enabled for the affected organization
+// rather than generally available. Confirm the rollout state before publishing, and add
+// an availability line if access conditions apply. If the window is not generally
+// available, consider holding these bullets until it ships broadly.
+//
+// REVIEWER NOTE: terminology. The source evidence states that a host machine whose
+// devices are all hidden leaves both surfaces, and that unhiding one device restores it.
+// It does not say which hiding mechanism applies. Confirm whether this means devices
+// hidden through *Tidy up*, devices hidden by the *View* filters, or both, then align the
+// last bullet with xref:device-lab-management:tidy-up-devices.adoc[] if Tidy up is the
+// mechanism.
+//
+// REVIEWER NOTE: the source evidence states that the fix changes what the window lists
+// and leaves Max Parallel Tests data and business logic unchanged. It does not say what
+// happens to a value that was saved against one of the extra rows. Confirm whether admins
+// need to re-check their saved limits after the release, and add a bullet if they do.
+//
+// REVIEWER NOTE: scope. The fix is Portal-only. The source evidence records that the
+// underlying machines endpoint still returns the extra rows to API-key callers. That
+// endpoint is not covered by the public API reference, so the limitation is omitted here.
+// Route it to api-docs if the endpoint becomes publicly documented.
+//
+// REVIEWER NOTE: docs drift, not addressed by this partial. Two published pages still
+// describe a per-machine *Settings* button on each host machine card:
+//   - device-lab-management:device-management-page.adoc (Host machine details)
+//   - device-lab-management:deviceConnect/control-host-capacity.adoc (Set the Max Parallel Tests)
+// KOB-55065 states that button was removed by KOB-52819 and replaced by the single
+// *Settings* window that KOB-52820 added. Both of those tickets are still In Review in
+// Jira, so the replacement surface is not confirmed released and was not documented here.
+// Track the page updates against those tickets once they reach Released.
+
+// Source: KOB-55065
