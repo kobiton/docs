@@ -1,20 +1,20 @@
-= Configure your personal computer for Standalone Portal
-:navtitle: Configure personal computer for Standalone Portal
+= Configure your computer for Standalone Portal
+:navtitle: Configure computer for Standalone Portal
 :tabs-sync-option:
 
-Configure your personal computer to trust a Standalone/On-Prem Portal that uses a self-signed SSL certificate. Trusting the certificate is required to access the Portal Web and to use virtualUSB.
+Configure your computer to trust Standalone Portal when it uses a self-signed SSL certificate. Trust the certificate before you sign in to Kobiton Portal or use virtualUSB.
 
 [#_before_you_start]
 == Before you start
 
 You'll need to complete the following:
 
-* xref:debugging:set-up-virtualusb.adoc[Set up virtualUSB] on your personal computer.
+* xref:debugging:set-up-virtualusb.adoc[Set up virtualUSB] on your computer.
 
-== Trust self-signed SSL certificate (Standalone/On-Prem only)
+== Trust self-signed SSL certificate (Standalone only)
 
-These steps are only necessary if the Standalone/On-Prem Portal uses a self-signed SSL certificate. Import the certificate on each end-user computer that runs virtualUSB.
+Import the certificate on each computer that runs virtualUSB.
 
-include::partial$trust-self-signed-ssl-cert.adoc[]
+include::debugging:partial$trust-self-signed-ssl-cert.adoc[]
 
-After importing the certificate, restart the virtualUSB application before authenticating with the Portal again.
+After importing the certificate, restart virtualUSB, then sign in to Kobiton Portal.
