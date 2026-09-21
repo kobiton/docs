@@ -14,7 +14,7 @@ Audio injection simulates incoming audio only. It does not capture microphone in
 
 * xref:automation-testing:capabilities/available-capabilities.adoc#_bluetooth[`kobiton:bluetooth`] capability enabled on the session
 * Audio file hosted at a direct download URL the device can reach at runtime
-* Device in a valid state to receive audio: connected call if applicable, unmuted, not in airplane mode
+* Device in a valid state to receive audio: call or audio-receiving state active if applicable, unmuted, not in airplane mode
 
 === Audio file requirements
 
@@ -151,20 +151,6 @@ try {
     }
 }
 ----
-
-=== Validate device state before injection
-
-Before starting injection, confirm:
-
-* Bluetooth is enabled on the device.
-* The call or audio-receiving state is active.
-* The device is not muted.
-* Airplane mode is disabled.
-
-== Limitations
-
-* Audio injection simulates incoming audio only. It does not capture live microphone input.
-* Audio files are downloaded at runtime. Slow networks can delay playback start.
 
 == Related documentation
 
