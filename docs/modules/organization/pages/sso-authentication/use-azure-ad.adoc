@@ -1,7 +1,22 @@
-= Use Azure AD for SSO authentication
-:navtitle: Use Azure AD
+= Use Microsoft Entra ID for SSO authentication
+:navtitle: Use Entra ID (formerly Azure AD)
 
-Learn how to use link:https://azure.microsoft.com/solutions/active-directory-sso/[Azure Active Directory (Azure AD)] for Single Sign-On (SSO) authentication with SAML 2.0 so members of your organization can sign in to Kobiton using their Microsoft credentials.
+Learn how to integrate Kobiton Single Sign-On (SSO) with Microsoft Entra ID. After completing the configuration, you can:
+
+* Control in Microsoft Entra ID who has access to Kobiton Single Sign-On.
+* Enable users to sign in to Kobiton automatically using their Microsoft Entra accounts.
+* Manage your accounts in one central location.
+
+== Prerequisites
+
+The scenario outlined in this article assumes you have the following:
+
+* A Microsoft Entra user account with an active subscription. If you don't already have one, you can link:https://azure.microsoft.com/pricing/purchase-options/azure-account?cid=msft_learn_29260c13-c56b-30d7-9ea1-85d1031e2166[Create an account for free,window=read-later].
+* One of the following roles:
+** link:https://learn.microsoft.com/en-us/entra/identity/role-based-access-control/permissions-reference#application-administrator[Application Administrator,window=read-later]
+** link:https://learn.microsoft.com/en-us/entra/identity/role-based-access-control/permissions-reference#cloud-application-administrator[Cloud Application Administrator,window=read-later]
+** link:https://learn.microsoft.com/en-us/entra/fundamentals/users-default-permissions#owned-enterprise-applications[Application Owner,window=read-later].
+* Kobiton single sign-on (SSO) enabled subscription.
 
 [#_get_kobiton_parameters]
 == Get Kobiton parameters
@@ -10,15 +25,21 @@ include::partial$sso-authentication/get-kobiton-parameters.adoc[]
 
 == Create IdP application
 
-In Azure DP, open your default directory, select *Enterprise Application*, then *New Application*.
+Sign in to the Microsoft Entra admin center as a user with at least the link:https://learn.microsoft.com/en-us/entra/identity/role-based-access-control/permissions-reference#cloud-application-administrator[Cloud Application Administrator,window=read-later] role.
 
-image:organization:azure-select-enterprise-application-context.png[width=1000,alt="Select Enterprise Application, then New Application"]
+Browse to *Entra ID > Enterprise apps > New application*.
 
-From *Add your own app*, choose *Non-gallery application*, then enter a name for your application in the search bar and select *Add*.
+//image:organization:azure-select-enterprise-application-context.png[width=1000,alt="Select Enterprise Application, then New Application"]
 
-image:organization:azure-select-non-gallery-app-context.png[width=1000,alt="Choose Non-gallery application option"]
+Choose *Create your own application*.
 
-Select *Assign users and groups* and add test user for your application.
+Enter a name for the application, then choose the option *Integrate any other application you don't find in the gallery (Non-gallery)*
+
+Select *Create*.
+
+//image:organization:azure-select-non-gallery-app-context.png[width=1000,alt="Choose Non-gallery application option"]
+
+In the application *Overview* page, select *Assign users and groups* and add or assign users for your application.
 
 image:organization:azure-select-assign-users-groups-context.png[width=1000,alt="Assign users and group option in Getting Started"]
 
@@ -26,9 +47,11 @@ You'll *set up single sign on* in the next section.
 
 == Map parameters
 
-Now that your IdP application is initially created, you'll need to create Azure AD parameters mapped to Kobiton and download your Base64 certificate. Select *Set up single sign on* to get started.
+Now that you’ve created the application, configure the Microsoft Entra ID settings required for Kobiton and download the Base64 certificate. To get started, select *Set up single sign-on*.
 
 image:organization:azure-select-setup-single-sign-on-context.png[width=1000,alt="Select Setup Single Sign On option in Getting Started"]
+
+Choose *SAML* as the single sign-on method.
 
 In step 1, *Basic SAML Configuration*, use your xref:_get_kobiton_parameters[Kobiton SSO parameters from earlier] to fill out the following fields:
 
@@ -38,13 +61,13 @@ In step 1, *Basic SAML Configuration*, use your xref:_get_kobiton_parameters[Kob
 
 image:organization:azure-fill-id-reply-url-relay-state-context.png[width=1000,alt="Fill out Identifier, Reply URL, Relay State from Kobiton SSO parameters"]
 
-In step 2, *User Attributes & Claims*, create the following parameters:
+In step 2, *User Attributes & Claims*, remove all the default claims *except* _Unique User Identifier_, then create the following claims:
 
 Parameter 1::
 * *Name:* `email`
 * *Namespace:* _Leave blank_
-* *Name format:* Basic
-* *Value:* `user.email`
+* *Name format:* Default
+* *Value:* `user.mail`
 Parameter 2::
 * *Name:* `firstName`
 * *Namespace:* _Leave blank_
@@ -60,11 +83,6 @@ Parameter 4::
 * *Namespace:* _Leave blank_
 * *Name format:* Basic
 * *Value:* `user.telephonenumber`
-Parameter 5::
-* *Name:* Unique User Identifier
-* *Namespace:* _Leave blank_
-* *Name format:* Basic
-* *Value:* `user.userprincipalname`
 
 image:organization:azure-fill-attributes-and-claim.png[width=1000,alt="Fill out Attributes & Claim"]
 
@@ -74,19 +92,21 @@ In step 3, *SAML Signing Certificate*, download *Certificate (Base64)*.
 
 image:organization:azure-saml-signing-certificate-context.png[width=1000,alt="Download Certificate (Base64)"]
 
+Rename the extension of the downloaded certificate from `.cer` to `.pem`
+
 In step 4, *Set up Kobiton Azure Local*, copy the following values and save them to a note:
 
 * *Login URL*
-* *Azure AD Identifier*
+* *Microsoft Entra Identifier*
 * *Logout URL*
 
-image:organization:azure-set-up-kobiton-azure-local-context.png[width=1000,alt="Set up Kobiton Azure Local"]
+//image:organization:azure-set-up-kobiton-azure-local-context.png[width=1000,alt="Set up Kobiton Azure Local"]
 
 == Add IdP parameters and certificate to Kobiton
 
 include::partial$sso-authentication/add-idp-parameters-and-certificate-to-kobiton.adoc[]
 
-include::partial$sso-authentication/sso-provider-url-mappings.adoc[tag=azure]
+include::partial$sso-authentication/sso-provider-url-mappings.adoc[tag=entra]
 
 == Verify and save configuration
 
