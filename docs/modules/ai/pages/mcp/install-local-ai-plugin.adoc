@@ -1,7 +1,8 @@
 = Install and configure local Kobiton AI plugin
 :navtitle: Install and configure local Kobiton AI plugin
+:tabs-sync-option:
 
-Install the local Kobiton AI plugin to use it with a Standalone or Cloud with custom domain environment.
+Install the local Kobiton AI plugin for Standalone (on-premises) deployments and for Cloud with a custom domain.
 
 [NOTE]
 This guide does not apply to Claude Code or Claude Desktop.
@@ -136,7 +137,7 @@ For all files above, replace the default value of `url` with the custom MCP serv
 
 == Install local plugin
 
-Run the commands in the table below in a command-line tool on your machine according to the AI platform. Replace `/path/to/automate` with the actual path to the `automate` or `automate-main` folder.
+Run the install command for your platform in a command-line tool. Replace `/path/to/automate` with the actual path to the `automate` or `automate-main` folder.
 
 [cols="1,2",options="header"]
 |===
@@ -188,6 +189,14 @@ Verify the URL of `kobiton` under *Configured MCP servers*
 Verify the URL of `kobiton`
 
 |===
+
+== Trust self-signed SSL certificate (Standalone only)
+
+Import the certificate on each computer that runs the AI assistance tool.
+
+include::debugging:partial$trust-self-signed-ssl-cert.adoc[]
+
+After importing the certificate, restart the AI assistance tool before authenticating with the MCP server.
 
 == Authenticate and use the plugin
 
