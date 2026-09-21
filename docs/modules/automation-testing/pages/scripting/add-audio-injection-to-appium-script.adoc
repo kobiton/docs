@@ -104,6 +104,13 @@ Audio playback begins immediately after the start command and continues asynchro
 
 === Poll for playback completion
 
+// REVIEWER QUESTION: What are all possible return values from `kobiton:pollAudioInjection`?
+// The sample below assumes the status string contains "playing" while active, but the
+// full set of return values (for example: "completed", "stopped", "error", "idle") is
+// not documented. If the contract is intentionally just "contains playing = active,"
+// we should say so explicitly on the page. Flagging for confirmation from automation
+// engineering before publish.
+
 Fixed waits based on audio length work but can drift out of sync with actual playback. Poll `kobiton:pollAudioInjection` to detect completion dynamically.
 
 .Fixed wait (JavaScript)
