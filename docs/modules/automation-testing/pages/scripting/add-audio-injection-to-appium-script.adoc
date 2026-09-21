@@ -1,7 +1,7 @@
 = Add audio injection to Appium script
 :navtitle: Add audio injection to Appium script
 
-Audio injection provides deterministic audio input during automated test sessions on iOS and Android devices. Use it to validate application behavior that depends on audio input, such as calls, voice input, and audio routing, without manual device interaction.
+Audio injection provides deterministic audio input during automated test sessions on iOS and Android devices. Use it to validate application behavior involving calls, voice input, or audio routing without manual device interaction.
 
 Audio injection simulates incoming audio only. It does not capture microphone input from the test environment.
 
@@ -10,11 +10,11 @@ Audio injection simulates incoming audio only. It does not capture microphone in
 * iOS (XCUITest automation engine)
 * Android (UiAutomator2 automation engine)
 
-== Before you start
+== Prerequisites
 
-* Enable Bluetooth on the device by setting the xref:automation-testing:capabilities/available-capabilities.adoc#_bluetooth[`kobiton:bluetooth`] capability.
-* Host the audio file at a direct download URL the device can reach at runtime.
-* Confirm the device is in a valid state to receive audio: connected call if applicable, unmuted, not in airplane mode.
+* xref:automation-testing:capabilities/available-capabilities.adoc#_bluetooth[`kobiton:bluetooth`] capability enabled on the session
+* Audio file hosted at a direct download URL the device can reach at runtime
+* Device in a valid state to receive audio: connected call if applicable, unmuted, not in airplane mode
 
 === Audio file requirements
 
@@ -33,7 +33,6 @@ Use reliable, publicly accessible hosting so the runtime download does not delay
 
 Add the `kobiton:bluetooth` capability to your test configuration. This capability enables Bluetooth on the device during the session and is required for all audio injection commands.
 
-.Example (JavaScript)
 [source,javascript]
 ----
 capabilities: {
@@ -44,7 +43,7 @@ capabilities: {
 }
 ----
 
-== Kobiton audio injection commands
+== Audio injection commands
 
 Control audio injection through the `driver.execute()` method with Kobiton-specific command keys.
 
@@ -56,11 +55,10 @@ Control audio injection through the `driver.execute()` method with Kobiton-speci
 | `kobiton:stopAudioInjection` | Terminates audio playback and releases resources. | None.
 |===
 
-== Add audio injection to your script
+== Example: full audio injection workflow
 
-The following example shows a full workflow: enable Bluetooth at session start, perform test actions, then start, poll, and stop injection.
+A full workflow enables Bluetooth at session start, performs a test action, then starts, polls, and stops injection.
 
-.Example (JavaScript)
 [source,javascript]
 ----
 // Enable Bluetooth in capabilities
@@ -98,7 +96,7 @@ await driver.execute('kobiton:stopAudioInjection');
 await driver.deleteSession();
 ----
 
-Audio playback begins immediately after the start command and continues asynchronously while test execution proceeds.
+Playback begins immediately and runs asynchronously while the test continues.
 
 == Best practices
 
@@ -113,13 +111,13 @@ Audio playback begins immediately after the start command and continues asynchro
 
 Fixed waits based on audio length work but can drift out of sync with actual playback. Poll `kobiton:pollAudioInjection` to detect completion dynamically.
 
-.Fixed wait (JavaScript)
+.Fixed wait
 [source,javascript]
 ----
 await new Promise((resolve) => setTimeout(resolve, audioLength * 1000));
 ----
 
-.Poll for completion (JavaScript)
+.Poll for completion
 [source,javascript]
 ----
 const startTime = Date.now();
@@ -137,7 +135,6 @@ while (Date.now() - startTime < maxWaitTime) {
 
 Stop audio injection and close the session in a `finally` block so failed tests do not leave audio routing active.
 
-.Example (JavaScript)
 [source,javascript]
 ----
 try {
@@ -168,7 +165,6 @@ Before starting injection, confirm:
 
 * Audio injection simulates incoming audio only. It does not capture live microphone input.
 * Audio files are downloaded at runtime. Slow networks can delay playback start.
-* Audio routing behavior differs between iOS and Android and may require platform-specific handling.
 
 == Related documentation
 
