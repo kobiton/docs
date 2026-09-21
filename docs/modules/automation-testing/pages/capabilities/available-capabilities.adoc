@@ -33,6 +33,7 @@ Capabilities with the `kobiton:` prefix cannot be used without the prefix.
 .Kobiton capability index
 * <<_app_install,kobiton:app-install>>
 * <<_baselineSessionId,kobiton:baselineSessionId>>
+* <<_bluetooth,kobiton:bluetooth>>
 * <<_kobitoncapturescreenshots,kobiton:captureScreenshot>>
 * <<_kobitondevicegroup,kobiton:deviceGroup>>
 * <<_kobitondevicetags,kobiton:deviceTags>>
@@ -86,6 +87,21 @@ Select a baseline session to use for xref:_flexCorrect[].
 [source,java]
 ----
 capabilities.setCapability("kobiton:baselineSessionId", 0000011);
+----
+
+[#_bluetooth]
+=== `kobiton:bluetooth`
+
+Enables Bluetooth functionality on the device during the session. Required for xref:automation-testing:scripting/add-audio-injection-to-appium-script.adoc[audio injection in automated sessions,window=read-later].
+
+* *Type:* `boolean`
+* *Required capabilities:* None
+* *Optional capabilities:* None
+
+.Example
+[source,java]
+----
+capabilities.setCapability("kobiton:bluetooth", true);
 ----
 
 === `kobiton:captureScreenshots`
