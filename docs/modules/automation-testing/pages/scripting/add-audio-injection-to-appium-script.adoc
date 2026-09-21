@@ -1,0 +1,148 @@
+= Add audio injection to Appium script
+:navtitle: Add audio injection to Appium script
+
+Audio injection provides deterministic audio input during automated test sessions on iOS and Android devices. Use it to validate application behavior that depends on audio input, such as calls, voice input, and audio routing, without manual device interaction.
+
+Audio injection simulates incoming audio only. It does not capture microphone input from the test environment.
+
+== Supported platforms
+
+* iOS (XCUITest automation engine)
+* Android (UiAutomator2 automation engine)
+
+== Before you start
+
+* Enable Bluetooth audio routing for the session.
+* Host the audio file at a direct download URL the device can reach at runtime.
+* Confirm the device is in a valid state to receive audio: connected call if applicable, unmuted, not in airplane mode.
+
+=== Audio file requirements
+
+|===
+| Requirement | Value
+
+| Container | WAV (16-bit), MP3, or OGG
+| Sample rate | 8 kHz
+| Channels | mono
+| Max file size | 30 MB
+|===
+
+Use reliable, publicly accessible hosting so the runtime download does not delay test execution.
+
+== Enable Bluetooth audio routing
+
+Add the `kobiton:bluetooth` capability to your test configuration. This capability enables audio routing on the device and is required for all audio injection commands.
+
+[source,java]
+----
+capabilities.setCapability("kobiton:bluetooth", true);
+----
+
+== Kobiton audio injection commands
+
+Control audio injection through the `executeScript()` method with Kobiton-specific command keys.
+
+[options="header"]
+|===
+| Command | Description | Parameters
+| `kobiton:startaudioinjection` | Begins playback of the specified audio file. | `url`: direct download URL for the audio file.
+| `kobiton:pollaudioinjection` | Returns the current playback status. | None.
+| `kobiton:stopaudioinjection` | Terminates audio playback and releases resources. | None.
+|===
+
+== Add audio injection to your script
+
+The following example shows a full workflow: enable Bluetooth audio at session start, perform test actions, then start, poll, and stop injection.
+
+[source,java]
+----
+// Enable Bluetooth audio
+DesiredCapabilities capabilities = new DesiredCapabilities();
+capabilities.setCapability("kobiton:bluetooth", true);
+
+// Initialize driver
+IOSDriver driver = new IOSDriver(new URL(kobitonServerUrl), capabilities);
+
+// Perform test actions (for example, initiate a call)
+driver.findElement(AppiumBy.accessibilityId("Keypad")).click();
+
+// Start audio injection
+Map<String, Object> audioParams = new HashMap<>();
+audioParams.put("url", "https://example.com/audio.mp3");
+driver.executeScript("kobiton:startaudioinjection", audioParams);
+
+// Optional: poll playback status
+Object status = driver.executeScript("kobiton:pollaudioinjection");
+
+// Stop audio injection
+driver.executeScript("kobiton:stopaudioinjection");
+
+// Cleanup
+driver.quit();
+----
+
+Audio playback begins immediately after the start command and continues asynchronously while test execution proceeds.
+
+== Best practices
+
+=== Poll for playback completion
+
+Fixed waits based on audio length work but can drift out of sync with actual playback. Poll `kobiton:pollaudioinjection` to detect completion dynamically.
+
+Fixed wait:
+
+[source,java]
+----
+Thread.sleep(audioLength * 1000);
+----
+
+Poll for completion:
+
+[source,java]
+----
+while (System.currentTimeMillis() - startTime < maxWaitTime) {
+    Object status = driver.executeScript("kobiton:pollaudioinjection");
+    if (status == null || !status.toString().contains("playing")) {
+        break;
+    }
+    Thread.sleep(1000);
+}
+----
+
+=== Clean up resources on failure
+
+Stop audio injection and close the session in a `finally` block so failed tests do not leave audio routing active.
+
+[source,java]
+----
+finally {
+    try {
+        driver.executeScript("kobiton:stopaudioinjection");
+    } catch (Exception ignored) {}
+
+    if (driver != null) {
+        driver.quit();
+    }
+}
+----
+
+=== Validate device state before injection
+
+Before starting injection, confirm:
+
+* Bluetooth audio is enabled.
+* The call or audio-receiving state is active.
+* The device is not muted.
+* Airplane mode is disabled.
+
+== Limitations
+
+* Audio injection simulates incoming audio only. It does not capture live microphone input.
+* Audio files are downloaded at runtime. Slow networks can delay playback start.
+* Audio routing behavior differs between iOS and Android and may require platform-specific handling.
+
+== Related documentation
+
+* xref:manual-testing:inject-audio.adoc[Inject audio during a manual session]
+* https://www.youtube.com/watch?v=uQ5hmIXeVfg[Video demo]
+* https://github.com/kobiton/samples/tree/master/audio[Audio injection code samples on GitHub]
