@@ -1,0 +1,43 @@
+= Add accessibility validation to Appium script
+:navtitle: Add accessibility validation to Appium script
+
+Accessibility validation flags issues like touch target size, color contrast, and content labeling on the screens your Appium automation session visits. Results appear in Session Explorer after the session completes.
+
+By default, Appium automation sessions return no accessibility validation results. Add the required capabilities to your script to run validation during the session.
+
+== Prerequisites
+
+* Accessibility validation is included in your Kobiton subscription.
+* Your script uses an Appium automation session.
+
+== Required capabilities
+
+Add both capabilities to your Appium session. When either is omitted, no accessibility results are recorded.
+
+[cols="1,2"]
+|===
+| Capability | Value
+
+| xref:automation-testing:capabilities/available-capabilities.adoc#_accessibilityValidation[`kobiton:accessibilityValidation`]
+| `true`
+
+| xref:automation-testing:capabilities/available-capabilities.adoc#_scriptlessCapture[`kobiton:scriptlessCapture`]
+| `true`
+|===
+
+.Example
+[source,java]
+----
+capabilities.setCapability("kobiton:accessibilityValidation", true);
+capabilities.setCapability("kobiton:scriptlessCapture", true);
+----
+
+== Behavior to expect
+
+* Expect additional runtime overhead per session.
+* Accessibility results are still being processed after the session ends. Allow several minutes before treating counts as final.
+
+== Related documentation
+
+* xref:session-explorer:validations/validate-accessibility.adoc[]
+* xref:automation-testing:capabilities/available-capabilities.adoc[]
