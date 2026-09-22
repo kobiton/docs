@@ -51,9 +51,24 @@ Control audio injection through the `driver.execute()` method with Kobiton-speci
 |===
 | Command | Description | Parameters
 | `kobiton:startAudioInjection` | Begins playback of the specified audio file. | `url`: direct download URL for the audio file.
-| `kobiton:pollAudioInjection` | Returns the current playback status. | None.
+| `kobiton:pollAudioInjection` | Returns the current injection state and the result of the poll operation. | None.
 | `kobiton:stopAudioInjection` | Terminates audio playback and releases resources. | None.
 |===
+
+=== `kobiton:pollAudioInjection` return payload
+
+Each poll returns an object with a `state` string and an `operationResult` wrapper:
+
+[source,json]
+----
+{
+  "state": "INJECT_START",
+  "operationResult": { "success": true }
+}
+----
+
+* `state` is `INJECT_START` while injection is active and `INJECT_END` after playback finishes.
+* `operationResult.success` is a boolean indicating whether the poll itself succeeded.
 
 == Example: full audio injection workflow
 
@@ -102,14 +117,7 @@ Playback begins immediately and runs asynchronously while the test continues.
 
 === Poll for playback completion
 
-// REVIEWER QUESTION: What are all possible return values from `kobiton:pollAudioInjection`?
-// The sample below assumes the status string contains "playing" while active, but the
-// full set of return values (for example: "completed", "stopped", "error", "idle") is
-// not documented. If the contract is intentionally just "contains playing = active,"
-// we should say so explicitly on the page. Flagging for confirmation from automation
-// engineering before publish.
-
-Fixed waits based on audio length work but can drift out of sync with actual playback. Poll `kobiton:pollAudioInjection` to detect completion dynamically.
+Fixed waits based on audio length work but can drift out of sync with actual playback. Poll `kobiton:pollAudioInjection` and break when `state` becomes `INJECT_END`.
 
 .Fixed wait
 [source,javascript]
@@ -124,7 +132,7 @@ const startTime = Date.now();
 
 while (Date.now() - startTime < maxWaitTime) {
     const status = await driver.execute('kobiton:pollAudioInjection');
-    if (status == null || !String(status).includes('playing')) {
+    if (status?.state === 'INJECT_END') {
         break;
     }
     await new Promise((resolve) => setTimeout(resolve, 1000));
