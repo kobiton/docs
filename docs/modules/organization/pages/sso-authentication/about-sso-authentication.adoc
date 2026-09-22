@@ -1,22 +1,20 @@
-= About Single Sign-On (SSO) authentication
-:navtitle: About Single Sign-On (SSO) authentication
+= Sign in with Enterprise SSO
+:navtitle: Sign in with Enterprise SSO
 
-== What is Single Sign-On?
+Enterprise SSO lets users of participating organizations sign in to Kobiton Portal through their corporate identity provider (IdP). After the first successful sign-in, your email address is recognized on subsequent visits and the sign-in flow skips directly to the Enterprise SSO step.
 
-Single Sign-On, often referred to as SSO, is an authentication method that enables a user to access multiple software systems with a single ID and password. By implementing SSO, you can enhance security, reduce potential risks, and make user management more straightforward. Essentially, it requires your users to remember just one set of login details to interact with an array of software tools. There are various SSO solutions available for IT teams to adopt. One of these options, which Kobiton now supports, is SAML.
+== Prerequisites
 
-== SSO and SAML
+* Your organization uses Enterprise SSO with Kobiton.
+* Your organization administrator has provisioned your account.
 
-Security Assertion Markup Language (SAML) is an open-standard protocol that supports SSO functionality for a group of users. SAML works by verifying a user's identity and sharing that information securely with the service provider. The user needs to input their credentials only once, with SAML managing the rest. This approach offers an SSO-like user experience while minimizing the risk of security breaches.
+== Sign in for the first time
 
-== SSO with Kobiton
+. Open the https://portal.kobiton.com/login[Kobiton Portal sign-in page].
+. Enter your corporate email address and select *Continue*.
+. Select *Continue with Enterprise SSO*.
+. Complete sign-in on your organization's IdP screen.
 
-Currently, Kobiton supports the SAML 2.0 protocol for SSO. Here's what you need to get started:
+== Related guides
 
-*** xref:organization:sso-authentication/use-azure-ad.adoc[]
-*** xref:organization:sso-authentication/use-google-workspace.adoc[]
-*** xref:organization:sso-authentication/use-okta.adoc[]
-*** xref:organization:sso-authentication/use-onelogin.adoc[]
-
-[NOTE]
-Use identity providers at your own risk.
+* xref:organization:sign-in-to-portal.adoc[]
