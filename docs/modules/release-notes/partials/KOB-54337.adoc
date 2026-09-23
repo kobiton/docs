@@ -1,0 +1,38 @@
+// Virtual Devices list shows the configured emulator name.
+// Target section on the release page: == Portal
+// Draft staged by Robot Ranch. Not yet included in a release page.
+
+- The *Virtual Devices* tab in *Device List* now shows each Android emulator under its configured device name. Previously, every emulator on a host appeared under a shared model string such as `sdk_gphone64_arm64`, so you could not tell emulators on the same host apart.
+- The *Search devices* box matches an emulator by its configured name.
+- The *Device Model* column continues to show the emulator model string.
+
+// Source: KOB-54337
+
+// REVIEWER NOTE: evidence basis
+// Drafted from Jira only: the ticket description, the root-cause field, and the 2026-09-11 test
+// sign-off comment. Jira status at draft time is Wait For Deployment.
+//
+// REVIEWER NOTE: release window and availability
+// The ticket carries no fixVersion and no release label, so the release window and the
+// deviceConnect component version that carries this change are both unconfirmed. Confirm the
+// shipped version before including this partial in a release page, and add an Availability line
+// if hosts need a specific deviceConnect build to pick the change up.
+//
+// REVIEWER NOTE: emulator-entry precedent
+// The 2026-08-07 page records a manager decision to remove KOB-54332, an Android emulator fix,
+// on the grounds that fixes for surfaces with no active customer usage are not advertised and
+// emulator usage is not widespread. This ticket is flagged in Jira for a customer-facing release
+// note, and the 2026-09-11 page already references the Virtual Devices tab publicly, so the entry
+// is drafted here. Confirm it still matches current guidance on publishing emulator changes
+// before it ships.
+//
+// REVIEWER NOTE: verification limits
+// QA verified the naming fix across ten emulators on Portal, deviceConnect Console, and the v1
+// device list, including service restarts and emulator relaunch. Two cases did not close: the
+// device label on a completed manual session depends on a separate fix that was absent from the
+// verified build, and the behavior for an emulator that reports no configured name and for a
+// HarmonyOS emulator was not exercised. None of those are claimed above.
+//
+// REVIEWER NOTE: out of scope
+// Device bundles cannot target a virtual device yet, and the v2 device endpoints were not
+// checked. Both are tracked separately and are not part of this entry.
