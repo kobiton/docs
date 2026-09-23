@@ -1,0 +1,22 @@
+== Session validations in the Kobiton AI plugin
+
+- The Kobiton AI plugin adds a `listAccessibilityValidations` MCP tool. Ask your AI assistant for a session's accessibility findings and it returns them one page at a time, with a screenshot link for each finding that has one.
+- `limit` sets the number of findings per call. It defaults to 10 and is capped at 20. `offset` skips findings you already read. Every response reports `total_items`, so you can tell how many findings the session recorded.
+- A session that recorded no accessibility findings returns an empty result instead of an error.
+- Kobiton API v2 adds a matching paged endpoint, `GET /v2/validations/accessibility`. It takes `sessionId`, an optional `commandId`, `page`, and `rowsPerPage`, and returns the standard v2 list envelope. `GET /v2/validations` is unchanged.
+
+// REVIEWER NOTE: Bounded to KOB-55158. Six sibling tickets in the same epic (KOB-55159
+// to KOB-55163, KOB-55186) shipped equivalent tools for crash, response time, blocker,
+// element selection, flex correct, and an accessibility summary, and KOB-55187 added a
+// type filter and an include parameter to this tool. Their partials should be merged with
+// this one into a single validations entry on the release page rather than published as
+// seven separate sections.
+//
+// REVIEWER NOTE: No release date is asserted here. The ticket reached Released on
+// 2026-09-23, after the 2026-09-18 page was cut. Place this partial on the next dated
+// release page.
+//
+// REVIEWER NOTE: The automate plugin version that carries the new tool is not in the Jira
+// evidence. Confirm it before publishing if the release page names a plugin version.
+
+// Source: KOB-55158

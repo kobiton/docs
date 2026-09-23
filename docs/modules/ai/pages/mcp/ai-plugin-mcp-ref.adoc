@@ -5,9 +5,19 @@ The Kobiton `automate` plugin connects AI coding assistants to Kobiton. Supporte
 
 This reference covers `automate` plugin version 1.9.0. For newer changes, see the https://github.com/kobiton/automate[automate GitHub repo,window=read-later].
 
+// REVIEWER NOTE: KOB-55158 ships listAccessibilityValidations in the automate tool
+// catalog, but the Jira evidence does not name the plugin version that carries it.
+// Confirm the version and bump 1.9.0 before publishing.
+
 == MCP tools
 
-The plugin exposes 32 MCP tools across 5 domains.
+The plugin exposes MCP tools across six domains.
+
+// REVIEWER NOTE: The tool count was dropped from this sentence. KOB-55158 documents
+// listAccessibilityValidations only. Sibling tickets KOB-55159 to KOB-55163 and KOB-55186
+// shipped in the same epic and add further validation tools that are not documented here,
+// so any fixed total stated now would be wrong. Restore a count once the full validations
+// set is documented.
 
 === Devices
 
@@ -74,6 +84,26 @@ Devices returned with `is_cloud: true` have restricted shell-command access in C
 |`startNativeSession`
 |Start a native automation session with XCUITest, UIAutomator, or GameDriver. Upload the app and the test runner to Kobiton Store first, then pass their `kobiton-store:` identifiers. This books a device and starts a billable session.
 |===
+
+=== Validations
+
+[cols="1,3",options="header"]
+|===
+|Tool |Description
+
+|`listAccessibilityValidations`
+|List the accessibility findings recorded during a session, one page at a time. Returns `session_id`, `limit`, `offset`, `page`, `total_pages`, `total_items`, and `items`.
+|===
+
+`listAccessibilityValidations` requires `sessionId`. `limit` sets the number of findings per call, defaults to `10`, and is capped at `20`. A higher value returns 20 findings. `offset` skips findings you already read and defaults to `0`. The order of findings stays stable across pages, so paging with `offset` returns each finding once.
+
+Each finding carries a presigned `screenshot_url` when a screenshot exists.
+
+A session that recorded no accessibility findings returns `total_items: 0` and an empty `items` array rather than an error. A session that does not exist, or that your organization cannot access, returns a tool error describing the problem.
+
+// REVIEWER NOTE: The Jira evidence states that findings have the same shape as the
+// accessibility entries returned by GET /v2/validations, but does not list the fields.
+// The per-finding field list is deliberately omitted rather than guessed.
 
 === Apps
 
@@ -412,5 +442,7 @@ Show running sessions
 Get details for session 12345
 Start a UIAutomator session on a Pixel 8 with my uploaded app and test runner
 Download logs from the last failed session
+List the accessibility findings for session 12345
+Show the next page of accessibility findings for session 12345
 Stop session 12345
 ....
