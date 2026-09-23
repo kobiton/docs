@@ -1,0 +1,30 @@
+== Android device initialization
+
+- Android 11 and later devices now initialize and come online as expected. Previously, initialization on an affected device could fail and retry about every 30 seconds, leaving the device unavailable for sessions. No configuration change is required.
+
+// Drafted by Robot Ranch Wild West (Town Crier). Review before placing on a release page.
+//
+// REVIEWER NOTE: Jira status at draft time was Wait For Deployment, which the Kobiton Jira
+// workflow defines as merged but not yet deployed. Confirm the fix is live in production
+// before including this partial on a published release page.
+//
+// REVIEWER NOTE: QA verdict was PASS. The fix was verified on four Android 11+ devices
+// spanning Android 11 through Android 16, and three pre-Android 11 devices were checked for
+// regression with no adverse effect.
+//
+// REVIEWER NOTE: Whether the failure occurred depended on the layout of a given agent build,
+// so not every Android 11+ device was affected. The wording says "could fail" rather than
+// "failed" for that reason. Reword if the docs team prefers a flatter statement.
+//
+// REVIEWER NOTE: Deployment scope is not stated in the source evidence. Confirm whether this
+// fix reaches cloud devices, Standalone device labs, or both, and add an availability line if
+// the distinction matters to readers.
+//
+// REVIEWER NOTE: No component version is confirmed for this change. The source evidence
+// carries only a pre-release build identifier. Add the shipped deviceConnect version to the
+// release page's Component versions section.
+//
+// REVIEWER NOTE: The heading above is a placeholder area name. Merge this bullet into an
+// existing area on the target release page if one already covers Android device readiness.
+
+// Source: KOB-55087
