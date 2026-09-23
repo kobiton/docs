@@ -1,0 +1,21 @@
+== Device passcode
+
+- Devices now have a passcode set before they return to *Available*. Previously, in organizations that use a cleanup policy with passcode enabled, a device could return to *Available* after cleanup without a passcode, and the next session started on an unlocked device.
+- On devices enrolled in an MDM that requires a passcode, those sessions started with the MDM passcode prompt. Sessions on affected devices now start as expected.
+
+// REVIEWER NOTE: QA verified the fix across iOS 17.5.1 through iOS 26.5.2 and Android 13 and
+// 14, over two rounds. In the second round the device came online with the passcode already
+// set.
+//
+// REVIEWER NOTE: The ticket has no fixVersion and no release label in the source evidence, so
+// the target weekly release page is not confirmed. Confirm placement before publishing.
+//
+// REVIEWER NOTE: The ticket also flags an internal Support Notes communication alongside the
+// customer-facing release note. That internal note is out of scope for this repository and is
+// not drafted here.
+//
+// REVIEWER NOTE: The same source bundle records a separate passcode-set failure that the
+// ticket describes as a distinct hardening item with its own build. It is not part of this fix
+// and is deliberately excluded from this note.
+
+// Source: KOB-55182
