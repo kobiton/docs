@@ -7,7 +7,7 @@ This reference covers `automate` plugin version 1.9.0. For newer changes, see th
 
 == MCP tools
 
-The plugin exposes 32 MCP tools across 5 domains.
+The plugin exposes 39 MCP tools across 5 domains.
 
 === Devices
 
@@ -73,7 +73,38 @@ Devices returned with `is_cloud: true` have restricted shell-command access in C
 
 |`startNativeSession`
 |Start a native automation session with XCUITest, UIAutomator, or GameDriver. Upload the app and the test runner to Kobiton Store first, then pass their `kobiton-store:` identifiers. This books a device and starts a billable session.
+
+|`listAccessibilityValidations`
+|List a session's accessibility findings. Filter by finding type with `type`, which accepts `TOUCH_TARGET_SIZE`, `COLOR_CONTRAST`, and `CONTENT_LABELING`.
+
+|`getAccessibilityValidationsSummary`
+|Get a session's accessibility counts by finding type and issue name, with the number of steps scanned and the time of the latest finding. The summary carries no findings.
+
+|`listCrashValidations`
+|List a session's crash findings.
+
+|`listResponseTimeValidations`
+|List a session's response time findings.
+
+|`listBlockerValidations`
+|List a session's blocker findings.
+
+|`listElementSelectionValidations`
+|List a session's element selection findings.
+
+|`listFlexCorrects`
+|List a session's Flex Correct findings.
 |===
+
+The validation tools read the findings that Session Explorer shows in *Test Result Analysis*. See xref:session-explorer:analytics/review-test-result-analysis.adoc[Review test result analysis] and xref:session-explorer:validations/validate-accessibility.adoc[Validate accessibility].
+
+Each `list` tool takes `sessionId`, `limit`, and `offset`. `limit` defaults to 10 and is clamped to 20, so a single call never returns more than 20 findings. Responses return `items` alongside `page`, `total_pages`, and `total_items`, so an assistant pages through a large session one validation type at a time instead of pulling every finding into context.
+
+A session with no findings of the requested type returns `total_items: 0` and an empty `items` array, not an error. An unknown or inaccessible session returns a tool error.
+
+`listAccessibilityValidations` returns lean items by default. Use the `include` parameter to add the element, metadata, screen, and screenshot URL fields.
+
+Ask for validations in natural language. The assistant selects the tool from the tool descriptions, so requests such as "did the app crash" or "show accessibility issues" route to the matching tool.
 
 === Apps
 
@@ -403,6 +434,16 @@ List my Android test cases
 Create a test run for smoke-add-to-cart on 3 Android devices
 Watch test run 8891 and tell me if anything blocks
 Stop test run 8891
+....
+
+=== Session validations
+
+....
+Did the app crash in session 12345
+Show accessibility issues for session 12345
+Summarize the accessibility findings for session 12345
+Show color contrast findings for session 12345 with screenshots
+List slow responses in session 12345
 ....
 
 === Session management

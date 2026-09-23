@@ -1,0 +1,30 @@
+== AI plugin and MCP
+
+- AI assistants connected to the Kobiton MCP server can now read a test session's validations one type at a time. Seven new tools cover accessibility, crash, response time, blocker, element selection, and Flex Correct findings: `listAccessibilityValidations`, `listCrashValidations`, `listResponseTimeValidations`, `listBlockerValidations`, `listElementSelectionValidations`, `listFlexCorrects`, and `getAccessibilityValidationsSummary`.
+- Each list tool returns at most 20 findings per call, with `page`, `total_pages`, and `total_items` counts. An assistant pages through a large session instead of pulling every finding into context at once.
+- `getAccessibilityValidationsSummary` returns a session's accessibility counts by finding type and issue name, with the number of steps scanned and the time of the latest finding. It returns no findings.
+- `listAccessibilityValidations` filters by finding type: `TOUCH_TARGET_SIZE`, `COLOR_CONTRAST`, or `CONTENT_LABELING`. Items are lean by default. Request the element, metadata, screen, and screenshot URL fields through the `include` parameter.
+- New paged REST endpoints back the tools: `GET /v2/validations/accessibility`, `/crash`, `/response-time`, `/blocker`, `/element-selection`, `/flex-correct`, and `GET /v2/validations/accessibility/summary`. The existing `GET /v2/validations` used by Kobiton Portal is unchanged.
+
+// REVIEWER NOTE: Drafted from the Jira release-note field, which is the most recent source
+// on this ticket. The ticket description and the implementation blueprint (Revision 1,
+// 2026-09-18) describe six list tools only. The release-note field adds
+// getAccessibilityValidationsSummary, the `type` filter, and the `include` parameter.
+// Confirm the summary tool and the accessibility filters shipped before publishing.
+//
+// REVIEWER NOTE: The source evidence gives two different totals for the published tool
+// catalog after this change. Neither total accounts for the summary tool. The AI plugin
+// reference page count was raised from 32 to 39 by counting the tool rows on that page
+// after all seven tools were added. Confirm against the published catalog.
+//
+// REVIEWER NOTE: The endpoint bullet is included because these are customer-callable v2
+// endpoints named in the engineering release note. The 2026-09-18 page dropped a similar
+// API bullet for an endpoint judged internal. Remove this bullet if the docs team applies
+// the same judgment here. No page exists for these endpoints in the api-reference module,
+// which is still a stub.
+//
+// REVIEWER NOTE: Release target is fixVersion 2026.09.23. No all-releases/2026-09-23.adoc
+// page exists yet, so this partial is not included anywhere. Wire it in when that page is
+// created.
+
+// Source: KOB-55095
