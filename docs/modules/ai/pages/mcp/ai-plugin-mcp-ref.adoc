@@ -5,9 +5,16 @@ The Kobiton `automate` plugin connects AI coding assistants to Kobiton. Supporte
 
 This reference covers `automate` plugin version 1.9.0. For newer changes, see the https://github.com/kobiton/automate[automate GitHub repo,window=read-later].
 
+// REVIEWER NOTE: The plugin version above still reads 1.9.0. KOB-55161 does not state which
+// `automate` release ships `listBlockerValidations`. Confirm the version before publishing.
+
 == MCP tools
 
-The plugin exposes 32 MCP tools across 5 domains.
+The plugin exposes 33 MCP tools across 5 domains.
+
+// REVIEWER NOTE: Count raised from 32 to 33 for `listBlockerValidations` alone. KOB-55161 is
+// EPA 4 of 6 under Epic KOB-55095, which adds one paged list tool per validation type.
+// Re-count once the sibling EPAs are documented.
 
 === Devices
 
@@ -68,12 +75,20 @@ Devices returned with `is_cloud: true` have restricted shell-command access in C
 |`getUserInputEvents`
 |Get the touch and swipe gestures performed in device-only live view during a session.
 
+|`listBlockerValidations`
+|List the blocked steps from a session's revisit executions, newest first. Requires `sessionId`. Page the results with `limit`, which defaults to 10 and is capped at 20, and `offset`, which defaults to 0.
+
 |`terminateSession`
 |Stop a running test session.
 
 |`startNativeSession`
 |Start a native automation session with XCUITest, UIAutomator, or GameDriver. Upload the app and the test runner to Kobiton Store first, then pass their `kobiton-store:` identifiers. This books a device and starts a billable session.
 |===
+
+`listBlockerValidations` returns the total number of blocked steps recorded for the session alongside the requested page, so you can tell a partial page from a complete list. A session with no blocked steps returns a total of `0` and an empty item list rather than an error. For the blocked steps themselves and how to correct them in Kobiton Portal, see xref:test-management:remediations.adoc[Remediations].
+
+// REVIEWER NOTE: The tool wraps a paged v2 validations endpoint added in the same ticket. The
+// endpoint is not named here because the api-reference module has no published page for it.
 
 === Apps
 
@@ -410,6 +425,7 @@ Stop test run 8891
 ....
 Show running sessions
 Get details for session 12345
+Show the blocked steps in session 12345
 Start a UIAutomator session on a Pixel 8 with my uploaded app and test runner
 Download logs from the last failed session
 Stop session 12345

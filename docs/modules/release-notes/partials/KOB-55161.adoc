@@ -1,0 +1,21 @@
+== AI plugin and MCP tools
+
+- The Kobiton `automate` plugin adds the `listBlockerValidations` MCP tool, which lists the blocked steps from a session's revisit executions, newest first.
+- Results are paged. `limit` defaults to 10 and is capped at 20, and `offset` sets where the page starts. Each response reports the total number of blocked steps recorded for the session.
+- A session with no blocked steps returns an empty result instead of an error.
+
+// REVIEWER NOTE: Drafted from Jira only. KOB-55161 is EPA 4 of 6 under Epic KOB-55095, which
+// adds one paged list tool per validation type. If sibling EPAs publish in the same release,
+// merge these bullets into one "per-type validation tools" entry rather than shipping one
+// bullet set per tool.
+//
+// REVIEWER NOTE: The ticket also adds the paged endpoint behind this tool. The endpoint is not
+// named here, following the KOB-54990 precedent on the 2026-09-18 page: endpoints with no page
+// in the api-reference module are left out of customer-facing notes. Add it back once
+// api-reference carries a published v2 validations page.
+//
+// REVIEWER NOTE: Availability is omitted. The ticket records no feature flag, no entitlement,
+// and no phased rollout. Confirm which `automate` plugin version ships the tool before
+// publishing, and add an availability line if the tool requires a plugin upgrade.
+
+// Source: KOB-55161
