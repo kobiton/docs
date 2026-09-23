@@ -1,0 +1,51 @@
+== New OS support
+
+NOTE: Before upgrading Mac mini hosts to a new OS version, ensure that all connected iOS and iPadOS devices are running supported OS versions and that a compatible version of Xcode is installed. For details on which macOS and Xcode versions are required, see Apple’s https://developer.apple.com/support/xcode/[compatibility information,window=read-later].
+
+This release adds support for the following:
+
+* macOS 27 for deviceConnect host
+
+iOS and iPadOS devices attached to a Mac mini host running macOS 27 come online and run manual and automated sessions. Devices attached to hosts on earlier supported macOS versions are unaffected.
+
+// REVIEWER NOTE: Framed as host OS support, following the "New OS support" precedent used for
+// macOS 26 Tahoe on the 4.23 and 4.23S pages. The underlying change is a CoreDevice/RSD tunnel
+// discovery fix. Those mechanics are deliberately excluded per the post-merge manager decision
+// recorded on the 2026-08-07 page for KOB-54391 ("CoreDevice tunnel framing is internal
+// engineering"), and per the KOB-54594 treatment on the 2026-08-21 page, where the bullet was
+// rewritten to the user-visible outcome instead of internal mechanics.
+//
+// REVIEWER NOTE: The macOS 27 marketing name is not stated anywhere in the Jira evidence. The
+// existing precedent bullet names the release ("macOS 26 Tahoe"). Add the name before publishing,
+// or keep the version number only.
+//
+// REVIEWER NOTE: Confirm macOS 27 is generally available and not still in beta before publishing.
+// The Jira evidence records the tested host as macOS 27.0 (26A428) with Xcode 27.0 (27A266a) and
+// does not say whether that is a public release. A linked ticket (KOB-53655) refers to "Xcode 27
+// beta". Kobiton has previously told customers not to upgrade Mac mini hosts to an unsupported
+// macOS (4.15 and 4.15S pages), so announcing support early carries real risk.
+//
+// REVIEWER NOTE: Supported-platforms drift, not resolved in this PR. Two pages still describe the
+// older support boundary and need a product owner decision before they change:
+//   - supported-platforms/pages/desktop-software.adoc lists macOS Tahoe as the newest supported
+//     version, and lists Xcode `16.0` through `26.5`. Testing for this ticket ran on Xcode 27.0,
+//     but this ticket does not authorize a change to the official Xcode support range.
+//   - device-lab-management/pages/deviceConnect/hardware-requirements-for-deviceconnect.adoc says
+//     "macOS Sonoma 14 or later (including Tahoe)".
+// Publishing this entry while those pages are unchanged leaves the docs contradicting themselves.
+//
+// REVIEWER NOTE: The source ticket is an umbrella for macOS 27 work and states that further
+// macOS 27 breakage "lands here or as linked bugs". Confirm no open macOS 27 blockers remain
+// before publishing. The QA comment lists KOB-55146 as out of scope of its own verification.
+//
+// REVIEWER NOTE: QA recorded the new socket sample at 167 ms per call at 157 established TCP
+// connections and 214 ms at 189, against roughly 14 ms expected. QA logged this as information
+// only and passed the ticket. No customer-visible latency claim is made here.
+//
+// REVIEWER NOTE: The ticket description asserts "no user-facing changes", scoped to behaviour,
+// configuration and API "on a supported macOS". The Documentation flagged field on the ticket
+// nonetheless requests a customer-facing release email. Host OS support is the user-visible fact
+// and is what this entry documents. Drop the entry if the product owner reads the ticket's
+// "no user-facing changes" line as covering the support matrix too.
+
+// Source: KOB-55157
