@@ -5,9 +5,19 @@ The Kobiton `automate` plugin connects AI coding assistants to Kobiton. Supporte
 
 This reference covers `automate` plugin version 1.9.0. For newer changes, see the https://github.com/kobiton/automate[automate GitHub repo,window=read-later].
 
+// REVIEWER NOTE: The version pin above is unchanged from the previous revision. The Jira
+// evidence for KOB-55159 confirms the `listCrashValidations` catalog entry shipped, but does
+// not name the `automate` plugin version that carries it. Confirm the shipped version and
+// bump the pin before publishing.
+//
+// REVIEWER NOTE: The tool count was raised from 32 to 33 for `listCrashValidations` only.
+// The sibling ticket KOB-55158 (`listAccessibilityValidations`) is also in Released status
+// and has no row on this page. It is out of scope for this PR. If that tool also shipped,
+// the count needs a further increment and a second Sessions row.
+
 == MCP tools
 
-The plugin exposes 32 MCP tools across 5 domains.
+The plugin exposes 33 MCP tools across 5 domains.
 
 === Devices
 
@@ -68,12 +78,26 @@ Devices returned with `is_cloud: true` have restricted shell-command access in C
 |`getUserInputEvents`
 |Get the touch and swipe gestures performed in device-only live view during a session.
 
+|`listCrashValidations`
+|List the crashes detected in a session, one page at a time. Returns the crash time, app package name, command ID, and download URLs for the crash log and screenshot.
+
 |`terminateSession`
 |Stop a running test session.
 
 |`startNativeSession`
 |Start a native automation session with XCUITest, UIAutomator, or GameDriver. Upload the app and the test runner to Kobiton Store first, then pass their `kobiton-store:` identifiers. This books a device and starts a billable session.
 |===
+
+`listCrashValidations` pages through a session's crashes with `limit` and `offset`. `limit` defaults to 10, and a value above 20 is reduced to 20. `offset` defaults to 0. The response carries `session_id`, `limit`, `offset`, `page`, `total_pages`, `total_items`, and `items`.
+
+A session with no detected crashes returns `total_items: 0` and an empty `items` array rather than an error.
+
+The crashes returned match the *Crash* validation shown in Session Explorer for the same session. See xref:session-explorer:analytics/review-crash-logs.adoc[Review crash logs].
+
+// REVIEWER NOTE: `commandId` is accepted by the backing endpoint as an optional filter. It is
+// not documented here because the Jira evidence does not state whether the MCP tool exposes
+// it. The tool signature in the evidence lists `sessionId`, `limit`, and `offset` only.
+// Confirm with engineering and add a filter sentence if the tool accepts it.
 
 === Apps
 
