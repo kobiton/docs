@@ -7,7 +7,7 @@ This reference covers `automate` plugin version 1.9.0. For newer changes, see th
 
 == MCP tools
 
-The plugin exposes 32 MCP tools across 5 domains.
+The plugin exposes MCP tools across 5 domains.
 
 === Devices
 
@@ -68,12 +68,19 @@ Devices returned with `is_cloud: true` have restricted shell-command access in C
 |`getUserInputEvents`
 |Get the touch and swipe gestures performed in device-only live view during a session.
 
+|`getAccessibilityValidationsSummary`
+|Get aggregate counts of a session's accessibility issues without returning the issues themselves. Returns the total issue count, the number of commands scanned, the time of the most recent validation, and counts broken down by issue type and by issue name.
+
 |`terminateSession`
 |Stop a running test session.
 
 |`startNativeSession`
 |Start a native automation session with XCUITest, UIAutomator, or GameDriver. Upload the app and the test runner to Kobiton Store first, then pass their `kobiton-store:` identifiers. This books a device and starts a billable session.
 |===
+
+`getAccessibilityValidationsSummary` requires a session ID and returns counts only. One session can hold tens of thousands of accessibility issues, so read the summary to size the results before retrieving the issues themselves. A session with no accessibility issues returns a total of `0` with empty breakdowns rather than an error.
+
+For the accessibility issue types Kobiton reports, see xref:session-explorer:validations/validate-accessibility.adoc[Validate accessibility].
 
 === Apps
 
@@ -412,5 +419,6 @@ Show running sessions
 Get details for session 12345
 Start a UIAutomator session on a Pixel 8 with my uploaded app and test runner
 Download logs from the last failed session
+Summarize the accessibility issues for session 12345
 Stop session 12345
 ....

@@ -1,0 +1,23 @@
+== AI plugin and MCP tools
+
+- The `automate` plugin adds the `getAccessibilityValidationsSummary` MCP tool. Pass a session ID to get counts of that session's accessibility issues, broken down by issue type and by issue name, together with the number of commands scanned and the time of the most recent validation.
+- The summary returns counts only, so an AI assistant can size a session's accessibility results before retrieving the issues themselves. A single session can hold tens of thousands of issues.
+- A session with no accessibility issues returns a total of `0` with empty breakdowns rather than an error.
+
+// REVIEWER NOTE: The same change also ships the REST endpoint
+// GET /v2/validations/accessibility/summary (sessionId required). It is not in this
+// partial because the api-reference module has no page for the /v2/validations routes,
+// following the precedent set on the 2026-09-18 page, where an endpoint with no
+// api-reference page was dropped before publication. Add a bullet for the endpoint if
+// the docs team confirms /v2/validations is a publicly documented API.
+//
+// REVIEWER NOTE: Source ticket is EPA 7 of 8 under Epic KOB-55095, which ships a set of
+// session validation MCP tools. Only this ticket's tool is covered here. Consider
+// grouping the epic's tools into one release-note entry once the sibling tickets are
+// processed.
+//
+// REVIEWER NOTE: The engineering Release Notes field (customfield_10344) was empty on the
+// source ticket. This entry is drafted from the ticket description and acceptance
+// criteria.
+
+// Source: KOB-55186
