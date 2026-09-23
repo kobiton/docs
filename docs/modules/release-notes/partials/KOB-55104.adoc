@@ -1,0 +1,46 @@
+== App installation
+
+- Installing an app during a session no longer leaves a full-size copy of that app in temporary storage on the host machine. Previously, every install wrote a copy that was never removed, so installing a series of different apps consumed host disk space until deviceConnect restarted. Once temporary storage filled, later installs failed with `Failed to install the application on the device` and `No space left on device`.
+- Installing an iOS app no longer expands the entire `.ipa` on the host machine to read the app's metadata.
+- Installing an app from the Apps repository now uses no additional temporary storage on the host machine. Install behavior is otherwise unchanged on iOS and Android.
+
+[NOTE]
+====
+Copies left in temporary storage by earlier releases are removed when deviceConnect restarts.
+====
+
+[NOTE]
+====
+On iOS, the first install of an app processed by the Kobiton re-signing service still uses temporary storage while re-signing runs. This release does not change that.
+====
+
+// REVIEWER NOTE: The ticket is at Wait For Deployment. The fix is merged but not yet
+// deployed, and the ticket carries no fix version or release label. Hold this partial out
+// of a published release page until the deploy lands and the deviceConnect component
+// version for that release is confirmed.
+//
+// REVIEWER NOTE: The ticket summary names iOS only, but QA confirmed the leftover-copy
+// defect on Android as well, with .apk and .aab installs both leaving full-size copies
+// before the fix. The first bullet is therefore written platform-neutral, and only the
+// metadata bullet is scoped to iOS.
+//
+// REVIEWER NOTE: The engineering impact field states the change was not reproduced against
+// a device. The later QA comment supersedes that, with four scenarios passed across three
+// iOS devices and one Android device. No unresolved contradiction remains.
+//
+// REVIEWER NOTE: The "removed when deviceConnect restarts" NOTE follows from the ticket
+// stating that copies persist until deviceConnect restarts, and from QA observing a
+// restart clear the accumulated leftovers. Confirm with engineering that an upgrade
+// restart is the intended way for customers to reclaim that space before publishing.
+//
+// REVIEWER NOTE: The re-signing NOTE is included because it is residual user-visible
+// behavior that this fix does not address. QA recorded an approximate multiple of the app
+// size for that temporary usage; the figure is left out here as a reference measurement
+// rather than a confirmed published limit. Add it if the docs team wants a number.
+//
+// REVIEWER NOTE: QA also recorded that apps of several GB fail during signing before the
+// install path is reached, so the largest app verified was 550 MB. Not documented as a
+// product limit here, because the evidence is a test-scope note rather than a confirmed
+// constraint. Open question for engineering.
+
+// Source: KOB-55104
