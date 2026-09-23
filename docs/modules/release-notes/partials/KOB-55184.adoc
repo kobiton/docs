@@ -1,0 +1,38 @@
+== virtualUSB
+
+- On Linux, `vusb status` reported `"version": "0.0.0-test"` instead of the version of the installed build. It now reports the installed build version, matching `vusb --version` and the installed `kobiton-vusb` package. Connecting to, serving, and disconnecting from devices were not affected.
+
+[NOTE]
+====
+Upgrade `kobiton-vusb` to a build from this release or later to pick up the corrected version. Earlier Linux packages continue to report `0.0.0-test`.
+====
+
+// REVIEWER NOTE: Linux virtualUSB has no coverage anywhere in this repo. There is no Linux
+// setup guide, no Linux entry in supported-platforms, no Linux tab in
+// debugging/set-up-virtualusb.adoc (macOS and Windows only), and no mention of the
+// kobiton-vusb package. Publishing this note would be the first public reference to a Linux
+// virtualUSB package. Confirm with product whether Linux virtualUSB is generally available
+// before publishing. If it is not, hold this entry. If it is, the gap is larger than this
+// release note and warrants its own docs task.
+//
+// REVIEWER NOTE: `vusb --version` is not documented in
+// debugging/virtualusb-cli-commands.adoc, which covers help, login, logout, connect,
+// disconnect, status, export-logs, and setup-adb. The reference is accurate per the Jira
+// evidence, but either add the flag to that page or drop it from this bullet.
+//
+// REVIEWER NOTE: The `vusb status` example on debugging/virtualusb-cli-commands.adoc still
+// shows an old-format version string ("4.0.10924.1230.KOB-31816-vucli@1cb4dae"). Not caused
+// by this ticket, but a reader comparing that example against current output will see a
+// different shape. Worth a separate refresh.
+//
+// REVIEWER NOTE: The root cause is a CI build-configuration issue and no product code
+// changed. That detail is intentionally excluded as internal. The ticket also records a
+// version correction to the `dcb` binary on the same host; excluded here because dcb is an
+// admin and infrastructure surface rather than an end-user one. Add it to an admin-facing
+// note if the docs team wants it covered.
+//
+// REVIEWER NOTE: Jira marks this ticket for both "Release Email" and "Support Notes
+// (internal)". Only the customer-facing half is handled here. The internal support note is
+// out of scope for this repo and needs separate routing.
+
+// Source: KOB-55184
