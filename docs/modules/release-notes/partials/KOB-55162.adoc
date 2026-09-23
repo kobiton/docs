@@ -1,0 +1,26 @@
+== Kobiton MCP server
+
+- New: the `automate` MCP plugin adds a `listElementSelectionValidations` tool that returns a session's element-selection validations one page at a time. Each validation covers a test step whose target element resolved to a different element than expected, and carries the test step version's screens, target element, action type, and action data.
+- The tool takes a required `sessionId`. `limit` defaults to 10 and is clamped to 20, and `offset` defaults to 0 and maps to a 1-indexed page. A session with no element-selection validations returns `total_items: 0` and an empty `items` array rather than an error.
+- New: `GET /v2/validations/element-selection` returns the same validations through the v2 list envelope, filtered by a required `sessionId` and an optional `commandId`. `GET /v2/validations` is unchanged.
+
+// REVIEWER NOTE: Placement pending. This partial is not yet included on a weekly release
+// page because the source evidence gives no release label or ship date. The ticket states
+// only that the release is shared with the parent epic. Add the include to the correct
+// weekly page at publication time.
+//
+// REVIEWER NOTE: The `automate` plugin version that ships this tool is not stated in the
+// source evidence. The tool reference page (ai:mcp/ai-plugin-mcp-ref.adoc) is still pinned
+// to "automate plugin version 1.9.0" and the pin was left unchanged. Update the pin before
+// publishing if the shipping version is known.
+//
+// REVIEWER NOTE: This ticket is one item in a larger per-type validation set. A sibling
+// tool for accessibility validations (KOB-55158) is also in a released state but is not
+// documented, and it is out of scope for this ticket's evidence. If the docs team wants the
+// set documented together, the remaining tools need their own evidence pass.
+//
+// REVIEWER NOTE: The API bullet is kept because the endpoint is a public v2 endpoint, which
+// matches the precedent set by the 2026-09-18 page. The api-reference module carries no page
+// for /v2/validations, so no API reference file was created or modified on this pass.
+
+// Source: KOB-55162

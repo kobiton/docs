@@ -7,7 +7,7 @@ This reference covers `automate` plugin version 1.9.0. For newer changes, see th
 
 == MCP tools
 
-The plugin exposes 32 MCP tools across 5 domains.
+The plugin exposes 33 MCP tools across 5 domains.
 
 === Devices
 
@@ -68,12 +68,17 @@ Devices returned with `is_cloud: true` have restricted shell-command access in C
 |`getUserInputEvents`
 |Get the touch and swipe gestures performed in device-only live view during a session.
 
+|`listElementSelectionValidations`
+|List the element-selection validations recorded for a session. Each validation covers a test step whose target element resolved to a different element than expected, and carries the test step version's screens, target element, action type, and action data.
+
 |`terminateSession`
 |Stop a running test session.
 
 |`startNativeSession`
 |Start a native automation session with XCUITest, UIAutomator, or GameDriver. Upload the app and the test runner to Kobiton Store first, then pass their `kobiton-store:` identifiers. This books a device and starts a billable session.
 |===
+
+`listElementSelectionValidations` takes a required `sessionId` and returns one page at a time. `limit` defaults to 10 and is clamped to 20. `offset` defaults to 0 and maps to a 1-indexed page. The response carries `session_id`, `limit`, `offset`, `page`, `total_pages`, `total_items`, and `items`. A session with no element-selection validations returns `total_items: 0` and an empty `items` array rather than an error.
 
 === Apps
 
