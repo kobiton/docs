@@ -1,0 +1,28 @@
+== Kobiton AI plugin
+
+- The `listFlexCorrects` MCP tool returns the `flexCorrect` corrections recorded on an automation session. Each item reports the corrected element, the baseline device capabilities, and the matching test step.
+- Results are paged. `limit` defaults to 10 and is capped at 20, `offset` starts at 0, and the response reports `total_items` and `total_pages` alongside the requested page. A session with no corrections returns an empty result rather than an error.
+- The `GET /v2/validations/flex-correct` endpoint returns the same corrections as a paged list, using `sessionId`, an optional `commandId`, `page`, and `rowsPerPage`. `GET /v2/validations` is unchanged.
+
+// REVIEWER NOTE: Draft partial. Not yet placed on a release page. No release date or Phoenix
+// release label is assigned, because the Jira evidence for KOB-55163 records the release as
+// shared with Epic KOB-55095 without naming a build.
+//
+// REVIEWER NOTE: The `GET /v2/validations/flex-correct` bullet is the open decision on this
+// partial. The 2026-09-18 page dropped an API bullet on the grounds that the endpoint had no
+// page in the api-reference module. The api-reference module is still a placeholder, so the
+// same reasoning would drop this bullet. It is kept here because the v2 API is a customer-facing
+// surface and the endpoint is the only way to reach these corrections outside the MCP tool.
+// Drop the bullet if the v2 validations endpoints are not part of the published API surface.
+//
+// REVIEWER NOTE: KOB-55163 is EPA 6 of 6 under Epic KOB-55095, which adds per-type session
+// validation tools backed by paged v2 APIs. The other five EPAs are also Released. Only
+// KOB-55163 evidence was in scope for this run, so this partial covers the flexCorrect tool
+// only. Consider merging the epic's tools into one release-note section once the sibling
+// tickets are processed.
+//
+// REVIEWER NOTE: The engineering release-communication field on KOB-55163 also requests
+// internal support notes for the ML Support team. Those are internal-only and are deliberately
+// not drafted into this repo.
+
+// Source: KOB-55163

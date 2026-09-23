@@ -7,7 +7,13 @@ This reference covers `automate` plugin version 1.9.0. For newer changes, see th
 
 == MCP tools
 
-The plugin exposes 32 MCP tools across 5 domains.
+The plugin exposes MCP tools across five domains: devices, sessions, apps, test management, and account.
+
+// REVIEWER NOTE: This line previously read "32 MCP tools across 5 domains." The count was
+// removed rather than incremented to 33. KOB-55163 confirms one new tool (`listFlexCorrects`),
+// but it is EPA 6 of 6 under Epic KOB-55095, and the other five EPAs in that epic are also
+// Released and are not reflected on this page. Restore an exact count once the shipped
+// `automate` plugin tool inventory is confirmed.
 
 === Devices
 
@@ -68,12 +74,32 @@ Devices returned with `is_cloud: true` have restricted shell-command access in C
 |`getUserInputEvents`
 |Get the touch and swipe gestures performed in device-only live view during a session.
 
+|`listFlexCorrects`
+|List the element corrections `flexCorrect` applied during an automation session, one page at a time. Each item reports the corrected element, the baseline device capabilities, and the matching test step.
+
 |`terminateSession`
 |Stop a running test session.
 
 |`startNativeSession`
 |Start a native automation session with XCUITest, UIAutomator, or GameDriver. Upload the app and the test runner to Kobiton Store first, then pass their `kobiton-store:` identifiers. This books a device and starts a billable session.
 |===
+
+`listFlexCorrects` pages through the xref:automation-testing:capabilities/add-flexcorrect.adoc[flexCorrect] corrections recorded on one session. `limit` defaults to 10 and is capped at 20. `offset` starts at 0. The response reports `total_items` and `total_pages` alongside the requested page. A session with no corrections returns `total_items: 0` and an empty `items` array.
+
+// REVIEWER NOTE: The page header states that this reference covers `automate` plugin version
+// 1.9.0. KOB-55163 does not name the plugin version that ships `listFlexCorrects`. Confirm the
+// version and update the header line if the tool landed after 1.9.0.
+//
+// REVIEWER NOTE: `listFlexCorrects` is placed in Sessions because KOB-55163 records the tool as
+// a `tools/sessions.yaml` entry in the `automate` repo. Move it if the plugin groups the
+// validation tools under their own domain.
+//
+// REVIEWER NOTE: KOB-55163 also adds the REST endpoint `GET /v2/validations/flex-correct`
+// (`sessionId`, optional `commandId`, `page`, `rowsPerPage`). It is not documented here because
+// this page covers plugin tools, and the api-reference module is still a placeholder with no
+// confirmed framework.
+
+// Source: KOB-55163
 
 === Apps
 
