@@ -1,0 +1,24 @@
+== Kobiton MCP server
+
+- New: the `automate` MCP plugin adds a `listResponseTimeValidations` tool that returns a session's response time validations. Each entry covers one command that ran slower than its target response time and reports the command id, the actual response time in milliseconds, and the target response time in milliseconds.
+- Results are paged. `limit` defaults to 10 and accepts a maximum of 20, and `offset` defaults to 0. Each response carries the page number, the total page count, and the total item count alongside the returned items.
+- A session with no commands over the target returns a total of 0 items and an empty list rather than an error.
+
+// REVIEWER NOTE: The source evidence is the Jira ticket only. Neither the `automate` plugin
+// version nor the release date that carries this tool is stated in the ticket. Confirm both
+// before placing this partial on a dated release page.
+//
+// REVIEWER NOTE: The ticket also adds a paged REST endpoint that backs the tool. The
+// endpoint is not listed here because the api-reference module has no page for the session
+// validations API. This follows the precedent set on the 2026-09-18 page, where the passcode
+// verify endpoint was dropped for the same reason. Add a bullet if the docs team publishes
+// the endpoint.
+//
+// REVIEWER NOTE: This ticket is one item under a larger epic that adds per-type validation
+// tools. Sibling tools are out of scope here and need their own entries.
+//
+// REVIEWER NOTE: The ticket does not state whether the tool requires a Network Payload
+// Capture session, so no cross-reference to the Response time analysis page is included.
+// Confirm the session prerequisite and add the link if it applies.
+
+// Source: KOB-55160

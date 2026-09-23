@@ -5,9 +5,13 @@ The Kobiton `automate` plugin connects AI coding assistants to Kobiton. Supporte
 
 This reference covers `automate` plugin version 1.9.0. For newer changes, see the https://github.com/kobiton/automate[automate GitHub repo,window=read-later].
 
+// REVIEWER NOTE: the version above is unchanged. The source evidence for KOB-55160 does
+// not state which `automate` plugin version carries `listResponseTimeValidations`. Confirm
+// the version before publishing.
+
 == MCP tools
 
-The plugin exposes 32 MCP tools across 5 domains.
+The plugin exposes 33 MCP tools across 5 domains.
 
 === Devices
 
@@ -73,7 +77,14 @@ Devices returned with `is_cloud: true` have restricted shell-command access in C
 
 |`startNativeSession`
 |Start a native automation session with XCUITest, UIAutomator, or GameDriver. Upload the app and the test runner to Kobiton Store first, then pass their `kobiton-store:` identifiers. This books a device and starts a billable session.
+
+|`listResponseTimeValidations`
+|List a session's response time validations. Each entry covers one command that ran slower than its target response time and reports `command_id`, `actual_response_time_in_ms`, and `target_response_time_in_ms`.
 |===
+
+`listResponseTimeValidations` pages its results. `limit` defaults to 10 and accepts a maximum of 20. `offset` defaults to 0. Each response carries `session_id`, the `limit` and `offset` applied, and the `page`, `total_pages`, and `total_items` values for the matching set.
+
+A session with no commands over the target returns `total_items: 0` and an empty `items` array rather than an error. A session id that does not exist returns an error.
 
 === Apps
 
