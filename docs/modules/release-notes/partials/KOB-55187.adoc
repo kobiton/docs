@@ -1,0 +1,47 @@
+== AI plugin and MCP
+
+- The MCP tool `listAccessibilityValidations` and the REST endpoint `GET /v2/validations/accessibility` accept a `type` filter that narrows results to one accessibility finding type: `TOUCH_TARGET_SIZE`, `COLOR_CONTRAST`, or `CONTENT_LABELING`. Paging reflects the filter, so `total_items` matches that type's count in the accessibility summary.
+- Accessibility findings are lean by default. Each item carries `id`, `command_id`, `type`, `issue_name`, and `standard`. Add the heavier fields with the `include` parameter, which accepts `element`, `metadata`, `screen`, and `screenshot_url`.
+- Kobiton generates a screenshot URL only when `include` requests `screenshot_url`.
+- An unrecognized `type` or `include` value returns HTTP 400 and names the accepted values.
+- `GET /v2/validations`, used by Kobiton Portal, is unchanged and returns the full field set.
+
+// REVIEWER NOTE: Overlaps the KOB-55095 partial. KOB-55187 is EPA 8 of 8 under Epic
+// KOB-55095 and ships in the same release, and the epic partial already states the `type`
+// filter and the lean-by-default `include` behavior in one bullet. Fold this partial into
+// the KOB-55095 entry at roll-up rather than publishing both. The detail this partial adds
+// over the epic bullet is the lean field list, the 400 behavior, and the conditional
+// screenshot URL. Keep whichever level of detail the docs team wants on the release page.
+//
+// REVIEWER NOTE: Resolves an open question left on the KOB-55095 partial. That note asked
+// for confirmation that the accessibility `type` filter and the `include` parameter
+// shipped. This ticket is the work that shipped them, it is in Released status, and its
+// pull request is merged.
+//
+// REVIEWER NOTE: The lean default is a breaking change to the paged endpoint, deliberately
+// taken before the endpoint reached production. `listAccessibilityValidations` and
+// `GET /v2/validations/accessibility` are introduced by KOB-55158 in this same release, so
+// no customer observed the earlier full-by-default shape. The change is written here as
+// the shipped behavior rather than as a behavior change, and no upgrade or migration note
+// is warranted. Reinstate a breaking-change callout only if the endpoint is confirmed to
+// have reached production before this release.
+//
+// REVIEWER NOTE: Response-size measurements from the ticket were left out of the customer
+// text. Measured per item on a sandbox database, the heavy fields average about 614
+// characters for `element`, 198 for `screen`, 127 for `metadata`, and about 500 for the
+// presigned `screenshot_url`, against roughly 90 characters of core fields. The ticket
+// records the resulting reduction as an uninstrumented qualitative target, not a measured
+// production result, so it is not stated as a customer-facing claim.
+//
+// REVIEWER NOTE: The endpoint bullets are included for consistency with the KOB-55095
+// partial, which also names the v2 validation endpoints. The 2026-09-18 page dropped a
+// similar API bullet for an endpoint judged internal. These endpoints are customer
+// callable, but the api-reference module is still a stub with no page for them. Drop the
+// endpoint references if the docs team prefers to name only the MCP tool until the API
+// reference framework lands.
+//
+// REVIEWER NOTE: Release target is the same release as Epic KOB-55095. No
+// all-releases page exists for it yet, so this partial is not included anywhere. Wire it
+// in when that page is created.
+
+// Source: KOB-55187
