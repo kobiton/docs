@@ -10,13 +10,15 @@
 
 // REVIEWER NOTE: evidence basis
 // Drafted from Jira only: the ticket description, the root-cause field, and the 2026-09-11 test
-// sign-off comment. Jira status at draft time is Wait For Deployment.
+// sign-off comment. Jira status at draft time was Wait For Deployment; refreshed 2026-09-24
+// after the ticket moved to Released.
 //
 // REVIEWER NOTE: release window and availability
-// The ticket carries no fixVersion and no release label, so the release window and the
-// deviceConnect component version that carries this change are both unconfirmed. Confirm the
-// shipped version before including this partial in a release page, and add an Availability line
-// if hosts need a specific deviceConnect build to pick the change up.
+// The ticket still carries no fixVersion and no release label. A bulk "Released with the
+// following builds" comment lists deviceConnect 2609.240307.0 (release label 2609.24), but it
+// notes that not all listed builds apply to every ticket. The fix was verified on a deviceConnect
+// build, so hosts likely need that build or later. Confirm the carrying deviceConnect version and
+// the target release page before including this partial, and add an Availability line if needed.
 //
 // REVIEWER NOTE: emulator-entry precedent
 // The 2026-08-07 page records a manager decision to remove KOB-54332, an Android emulator fix,
