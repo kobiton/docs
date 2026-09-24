@@ -11,13 +11,12 @@ Copies left in temporary storage by earlier releases are removed when deviceConn
 
 [NOTE]
 ====
-On iOS, the first install of an app processed by the Kobiton re-signing service still uses temporary storage while re-signing runs. This release does not change that.
+On iOS, the first install of an app that Kobiton re-signs still uses temporary storage while re-signing runs. This release does not change that.
 ====
 
-// REVIEWER NOTE: The ticket is at Wait For Deployment. The fix is merged but not yet
-// deployed, and the ticket carries no fix version or release label. Hold this partial out
-// of a published release page until the deploy lands and the deviceConnect component
-// version for that release is confirmed.
+// REVIEWER NOTE: The ticket is now in Released status in Jira. It still carries no fix
+// version or release label, so confirm the release page, date, and deviceConnect
+// component version before including this partial on a published release page.
 //
 // REVIEWER NOTE: The ticket summary names iOS only, but QA confirmed the leftover-copy
 // defect on Android as well, with .apk and .aab installs both leaving full-size copies
