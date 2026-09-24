@@ -110,7 +110,7 @@ Cloud release notes are typically published weekly and summarize changes since t
 
 == deviceConnect
 
-- Fixed iOS 17.4 and later devices resetting their connection after deviceConnect mounts the Developer Disk Image (DDI). Devices now stay connected through the mount.
+- iOS 17.4 and later devices now stay connected when deviceConnect mounts the Developer Disk Image (DDI). Previously, the mount could reset the device connection.
 
 // REVIEWER NOTE:
 // KOB-54815 | Team: Phoenix | Component: deviceConnect | Status: Released
@@ -291,7 +291,7 @@ On iOS, the first install of an app that Kobiton re-signs still uses temporary s
 
 == iOS device connectivity
 
-- Fixed an issue where iOS 17 and later devices on macOS hosts in Standard mode stayed offline after a restart. This happened when deviceConnect enabled Developer Mode on the device, when the device was rebooted, or when the device cable was reconnected. Previously, the device remained offline until deviceConnect was restarted. Lightning mode hosts were not affected.
+- iOS 17 and later devices on macOS hosts in Standard mode now come back online after deviceConnect enables Developer Mode, after a device reboot, or after a cable reconnect. Previously, the device stayed offline until deviceConnect was restarted. Lightning mode hosts were not affected.
 
 // REVIEWER NOTE: Scope comes from the ticket's impact field: macOS hosts with iOS 17 and later
 // devices only. Engineering confirmed on the ticket that Lightning mode hosts do not use the
@@ -328,7 +328,7 @@ On iOS, the first install of an app that Kobiton re-signs still uses temporary s
 
 == Device passcode
 
-- Fixed devices becoming available without a passcode after a session ended. On organizations that use passcode mode with a cleanup policy, cleanup removed the device passcode after Kobiton had set it, so the next session started on an unlocked device. On devices managed by a mobile device management (MDM) solution, that session opened to an MDM prompt requiring a passcode. Kobiton now sets the passcode after cleanup completes, so the device has a passcode before it becomes available.
+- The device passcode is now set after the cleanup policy runs, so devices become available with a passcode after a session ends. Previously, cleanup removed the passcode after it was set, so the next session started on an unlocked device. Devices managed by a mobile device management (MDM) solution then opened to an MDM prompt requiring a passcode.
 
 _Applies to organizations that use passcode mode with a cleanup policy._
 
@@ -366,7 +366,7 @@ _Applies to organizations that use passcode mode with a cleanup policy._
 // Source: KOB-55053 from PR #632
 // https://github.com/kobiton/docs/pull/632
 
-- Fixed an issue where an iPad with a device passcode could return to *Available* without its passcode after the device language was changed during a session. The passcode is now set again before the device is available to users. Mobile device management (MDM) tools no longer flag these iPads as having no passcode after a language change.
+- iPad passcodes now persist through a device language change during a session. Previously, an iPad could return to *Available* without its passcode, and mobile device management (MDM) tools would flag it as having no passcode.
 
 // Source: KOB-55053
 
@@ -401,7 +401,7 @@ _Applies to organizations that use passcode mode with a cleanup policy._
 
 === Analytics reports
 
-- Fixed an issue where analytics reports showed fewer retained devices than were actually retained. A device is now counted for each hour it was retained, including retains that have since ended or expired.
+- Analytics reports now count a device for each hour it was retained, including retains that have since ended or expired. Previously, reports could show fewer retained devices than were actually retained.
 
 // REVIEWER NOTE: Source is KOB-55244 (Bug, status Wait For Deployment, Jira release channel
 // "Release Email (customer-facing release notes)"). No fix version or release label is set, so
