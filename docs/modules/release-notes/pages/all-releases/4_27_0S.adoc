@@ -20,69 +20,23 @@ _September 23, 2026_
 
 == What's new in 4.27.0S
 
-Standalone 4.27.0S moves configuration and user data to new paths, replaces the `k4s-*` service commands with kobiCTL equivalents, and raises the minimum kobiCTL version. Review these changes before you update.
+Standalone 4.27.0S changes configuration paths, service commands, and the required kobiCTL version. Review these changes before you update.
+
+*Highlights*
+
+- Requires kobiCTL 1.9.0 or later. One kobiCTL package now covers both Ubuntu 22.04 and Ubuntu 24.04.
+- Configuration files, including `infra.env`, `kobiton.license`, and the SSL certificate and key, move from `/ml/var/kobiton-op/config/` to `/etc/kobiton/`. Update any script or runbook that writes to the old path.
+- Portal user data moves from `/ml/var/kobiton-op/persistence` to `/var/lib/kobiton`.
+- `sudo kobictl restart all` replaces `sudo k4s-restart all`.
+- `kobictl list` replaces `k4s-version`. It reports installed Kobiton versions only, not the installer, K3s, Cilium, Istio, or Flux versions.
+
+*Update requirements*
+
+- Updating from 4.26.7S or earlier on Ubuntu 22.04: the update pauses for a reboot. Reboot, then run the same command again.
+- Updating from 4.26.9S or earlier with Kobiton data on a dedicated filesystem, including RAID-configured servers: the update pauses for a data migration. Follow the manual runbook shipped with the release.
 
 // Source: admin-docs repo, src/content/docs/standalone/update/whats-new-4-27-0s.md ("What's new in 4.27.0S").
-// Links to admin-docs.kobiton.com are omitted: that site requires sign-in and this repo does not link to it.
-
-=== Required kobiCTL version
-
-4.27.0S requires kobiCTL 1.9.0 or later. Running an earlier version fails with a version incompatibility error.
-
-Earlier releases required a different kobiCTL version for each base Ubuntu version. 4.27.0S uses one kobiCTL package for both Ubuntu 22.04 and Ubuntu 24.04.
-
-=== File locations
-
-[cols="1,1,1",options="header"]
-|===
-|Holds |Earlier releases |4.27.0S
-
-|Configuration files
-|`/ml/var/kobiton-op/config/`
-|`/etc/kobiton/`
-
-|Portal user data
-|`/ml/var/kobiton-op/persistence`
-|`/var/lib/kobiton`
-|===
-
-The configuration directory holds `infra.env`, `kobiton.license`, and the SSL certificate and key. Update any script or runbook that writes to the old paths.
-
-On servers that use a RAID 5 array, the user data path is the array's mount target.
-
-=== Commands
-
-[cols="1,1,1",options="header"]
-|===
-|Task |Earlier releases |4.27.0S
-
-|Restart Portal services
-|`sudo k4s-restart all`
-|`sudo kobictl restart all`
-
-|Check the active Portal version
-|`k4s-version`
-|`kobictl list`
-|===
-
-`kobictl list` reports the installed Kobiton versions and marks the active one. It does not report the installer, K3s, Cilium, Istio, and Flux versions that `k4s-version` included.
-
-=== Update requirements
-
-Two conditions stop the update partway. Each prints a message explaining what to do before the update can resume.
-
-[cols="1,2,1",options="header"]
-|===
-|Condition |Applies when |Action
-
-|Reboot to complete the migration
-|Updating from 4.26.7S or earlier on Ubuntu 22.04
-|Reboot, then run the same command again.
-
-|Persistence data migration
-|Updating from 4.26.9S or earlier with Kobiton data on a dedicated filesystem, including RAID-configured servers
-|Follow the manual runbook shipped with the release.
-|===
+// Links to admin-docs intentionally omitted at review.
 
 == New features and major changes
 
