@@ -1,0 +1,26 @@
+// Release-note partial: KOB-54935 (the virtualUSB retain window only).
+// Requires docs-team review before publishing.
+// Suggested placement: virtualUSB, with the rest of KOB-54935's release note.
+
+== virtualUSB
+
+- The organization-level retain duration no longer applies to virtualUSB sessions. Every organization now uses the same window: a virtualUSB session ends after one hour without a check-in from the virtualUSB client.
+- The client checks in every 10 minutes while it is connected, so a session in use is not affected. The hour counts only after the client stops checking in, for example when the host computer sleeps or loses its network connection.
+
+// REVIEWER NOTE: Hold until KOB-54935 is deployed to prod. The change ships with the
+// virtualUSB session redesign (kobiton/api#5107, kobiton/hub#1422), which is still in review.
+//
+// REVIEWER NOTE: Before KOB-54935, api sent the organization setting
+// `deviceRetainDurationInSeconds` to deviceConnect as the virtualUSB client's inactive timeout.
+// Unset, zero or negative meant 1 hour. hub now ends the session on one global window,
+// KOBITON_VIRTUAL_USB_IDLE_TIMEOUT_IN_MS (default 1 hour). The setting has no Portal UI.
+//
+// REVIEWER NOTE: Prod check on 2026-09-24: only two organizations have the setting, both
+// internal Kobiton orgs, both at -1 (the 1-hour default). ATT prod has none. Uber, ING,
+// Medidata and standalone deployments could not be checked. If none of those has a custom
+// value, no customer's window changes and this entry can be dropped.
+//
+// REVIEWER NOTE: A dedicated virtualUSB idle-timeout setting is a planned follow-up. Confirm
+// PO sign-off on the interim global window before publishing.
+
+// Source: KOB-54935
