@@ -7,8 +7,8 @@
 // plugin (MCP Test Runs limitations).
 // Scope: items released after 4.26.4S (2026-06-15), cut off at gigacap 2609.14,
 // deviceConnect 2609.11, and Portal 2609.18. The Cloud pages end at Portal 2609.16 and
-// deviceConnect 2609.10. Jira tickets shipped between those builds and the cutoff were reviewed
-// at review and none were added (including the Device Utilization report, KOB-54817).
+// deviceConnect 2609.10. Jira tickets shipped between those builds and the cutoff were reviewed;
+// only the Device Utilization report (KOB-54817) was added.
 //
 // Excluded as already shipped in 4.26S or 4.26.4S: device-only view, guiding AI-driven sessions
 // from device-only view, `am start` ADB fix, app versions with missing binary files, app-signing
@@ -68,12 +68,14 @@ This release also adds the following reports:
 - *Parallel Sessions over time*: tracks concurrent session counts across a time range.
 - *Device Inventory*: lists every device connected to the organization. Filter by *Status*, *OS*, *Version*, *Device Name*, *Manufacturer*, or *Device Model*. *IMEI* and *Mobile Number* populate only for cellular devices.
 - *Retained Devices*: lists retained devices, who retained them, how long each device has been retained, and when each device was last used. Results sort by *Last Used*, with the longest-idle devices at the top.
+- *Device Utilization*: shows sessions, testing minutes, and unique users for each device over a selected date range. Filter by date range, team, or public or private devices. Results sort by *Sessions*, with the most-used devices at the top.
 
 *Availability*
 
-*Device Inventory* and *Retained Devices* are available under *Analytics Reports* to Org Admins only. The table search box matches literal text; wildcards are not supported.
+*Device Inventory*, *Retained Devices*, and *Device Utilization* are available under *Analytics Reports* to Org Admins only. The table search box matches literal text; wildcards are not supported.
 
 // Source: 4_28.adoc, 2026-08-28.adoc (KOB-54356), 2026-09-18.adoc (KOB-52771, KOB-54713)
+// Device Utilization: KOB-54817 (added at PR review; shipped between Portal 2609.16 and the 2609.18 cutoff).
 
 === Convert automation and mixed sessions into Test Cases
 
