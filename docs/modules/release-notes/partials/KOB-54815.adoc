@@ -1,0 +1,24 @@
+== deviceConnect
+
+- Fixed iOS 17.4 and later devices resetting their connection after deviceConnect mounts the Developer Disk Image (DDI). Devices now stay connected through the mount.
+
+// REVIEWER NOTE:
+// KOB-54815 | Team: Phoenix | Component: deviceConnect | Status: Released
+// Released in dC build 2609.240307.0 (bulk release comment; confirm this build carries the change).
+// Source: Jira description, test-notes field, and QA sign-off comments. Release Email flag is set
+// on the ticket. QA verified on both host modes (devices attached directly to the Mac, and GEM):
+// same number of DDI mounts before and after, post-mount resets went to zero, devices reached
+// online status. macOS 27 verified for the GEM path only.
+// Intentionally omitted (not supported by evidence or not customer-facing):
+// - Tunnel implementation details. A previous CoreDevice tunnel entry was removed at review as
+//   internal engineering framing; this entry states only the observable connection behavior.
+// - Throughput improvement: the ticket expects it, but QA recorded only a baseline, with no
+//   after-change measurement.
+// - Xcode / devicectl coexistence: stated as intent; no QA scenario confirms it.
+// - Root requirement removal: engineering says this is one step in a larger project; root is
+//   still required, so do not claim it.
+// - New trace switches and settings: engineering asked that users not change internal configuration.
+// - Internal Support Notes output (also requested on the ticket) is internal only.
+// OPEN: Confirm Deployment placement (Cloud page, Standalone page, or both).
+// OPEN: KOB-55146 (macOS 27, directly attached devices) is still unsettled. Do not imply
+//   macOS 27 coverage beyond the mount behavior above.
