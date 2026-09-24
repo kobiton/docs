@@ -1,21 +1,36 @@
 == Device passcode
 
-- Devices now have a passcode set before they return to *Available*. Previously, in organizations that use a cleanup policy with passcode enabled, a device could return to *Available* after cleanup without a passcode, and the next session started on an unlocked device.
-- On devices enrolled in an MDM that requires a passcode, those sessions started with the MDM passcode prompt. Sessions on affected devices now start as expected.
+- Fixed devices becoming available without a passcode after a session ended. On organizations that use passcode mode with a cleanup policy, cleanup removed the device passcode after Kobiton had set it, so the next session started on an unlocked device. On devices managed by a mobile device management (MDM) solution, that session opened to an MDM prompt requiring a passcode. Kobiton now sets the passcode after cleanup completes, so the device has a passcode before it becomes available.
 
-// REVIEWER NOTE: QA verified the fix across iOS 17.5.1 through iOS 26.5.2 and Android 13 and
-// 14, over two rounds. In the second round the device came online with the passcode already
-// set.
-//
-// REVIEWER NOTE: The ticket has no fixVersion and no release label in the source evidence, so
-// the target weekly release page is not confirmed. Confirm placement before publishing.
-//
-// REVIEWER NOTE: The ticket also flags an internal Support Notes communication alongside the
-// customer-facing release note. That internal note is out of scope for this repository and is
-// not drafted here.
-//
-// REVIEWER NOTE: The same source bundle records a separate passcode-set failure that the
-// ticket describes as a distinct hardening item with its own build. It is not part of this fix
-// and is deliberately excluded from this note.
+_Applies to organizations that use passcode mode with a cleanup policy._
 
-// Source: KOB-55182
+// Source: KOB-55182 | Bug | Component: deviceConnect.
+//
+// REVIEWER NOTE: staged as a partial, and no page includes it yet, so nothing renders. The
+// ticket is Released. The release comment lists deviceConnect 2609.240307.0 (label 2609.24),
+// but it is a bulk update that notes not all builds may apply to this ticket. Confirm the
+// build, include this partial on the matching weekly Cloud page, add deviceConnect 2609.24 to
+// that page's Component versions list if confirmed, and delete this note.
+//
+// REVIEWER NOTE: the availability line is deliberately generic. The source evidence says the
+// issue hits "orgs that run a cleanup policy with passcode enabled" and does not name passcode
+// mode numbers. The cleanup-configurations page runs "Remove device passcode" only for passcode
+// mode 1 or 2, so the affected modes are likely 1 and 2. Confirm and tighten the line.
+//
+// REVIEWER NOTE: the bullet does not name platforms. The reported case was iOS; QA verified the
+// fix on iOS 17.5.1 through 26.5.2 and Android 13 and 14. Add a platform scope only if SME
+// confirms the defect affected both platforms before the fix.
+//
+// REVIEWER NOTE: the ticket description frames the defect as "availability announced before the
+// passcode-set step," while the engineering root-cause field says cleanup removed a passcode that
+// had already been set. Both describe the same visible result. The bullet follows the
+// engineering root-cause field, which describes the shipped fix. Confirm with SME.
+//
+// REVIEWER NOTE: a separate passcode-set hardening for slow iOS Settings launches is mentioned in
+// the ticket as out of scope for this fix. It is not included here.
+//
+// REVIEWER NOTE: the ticket also requests an internal Support Notes communication. That note is
+// out of scope for this repository and is not drafted here.
+//
+// Sanitized for public release notes: the reporting customer, device identifiers, session links,
+// log timelines, internal service names, test accounts, and build URLs were removed.
