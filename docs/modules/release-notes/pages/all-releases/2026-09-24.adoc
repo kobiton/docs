@@ -117,41 +117,13 @@ iOS and iPadOS devices attached to a Mac mini host running macOS 27 come online 
 // Source: KOB-54817
 // Source: KOB-55244
 
-// Source: KOB-55193 from PR #631
-// https://github.com/kobiton/docs/pull/631
 // Source: KOB-55177 from PR #635
 // https://github.com/kobiton/docs/pull/635
 
 == iOS device connectivity
 
-- iOS 17 and later devices on macOS hosts in Standard mode now come back online after deviceConnect enables Developer Mode, after a device reboot, or after a cable reconnect. Previously, the device stayed offline until deviceConnect was restarted. Lightning mode hosts were not affected.
 - Sessions on iOS and iPadOS 27.2 devices connected directly to a Mac host now connect to the device's services. Previously, these sessions could fail to start. Devices running iOS 17 through 26, and devices connected through the GEM, are unaffected.
 
-// REVIEWER NOTE (KOB-55193): Scope comes from the ticket's impact field: macOS hosts with iOS 17
-// and later devices only. Engineering confirmed on the ticket that Lightning mode hosts do not use
-// the affected connection path, so the bullet is limited to Standard mode. Windows and Linux hosts,
-// Android devices, and iOS 16 and earlier are stated as untouched, so the bullet names only the
-// affected combination. QA's passing round confirms iOS 16 and Android devices on the same hosts
-// were unaffected.
-//
-// REVIEWER NOTE (KOB-55193): The fix that shipped is broader than the fix first described on the
-// ticket. After the first QA round failed, engineering merged a follow-up change that puts the
-// newer macOS tunnel path behind a host configuration setting and turns it off by default. The
-// passing QA round ran with that setting off. The setting is admin-level host configuration, and
-// engineering opened a separate ticket (KOB-55246) to fix and re-enable the path. It is
-// deliberately not documented here or in admin docs. Confirm with engineering before documenting it.
-//
-// REVIEWER NOTE (KOB-55193 BLOCKER): The ticket states this defect was introduced by KOB-54815.
-// KOB-54815 also ships on this same release page (see == deviceConnect below), so customers may
-// never have seen this defect. Decide whether to drop this bullet before publishing.
-//
-// REVIEWER NOTE (KOB-55193): The passing QA round also covered recovery after a USB hub loses
-// power, after moving a device to another hub, and after the Mac host reboots. Those are test
-// results, not reported customer symptoms, so they are not listed as fixed behavior.
-//
-// REVIEWER NOTE (KOB-55193): The Documentation Required field also lists internal Support Notes
-// for the ML Support team. That output is internal only and is deliberately not part of this partial.
-//
 // REVIEWER NOTE (KOB-55177): "Devices connected through the GEM" maps the ticket's "forwarded
 // usbmuxd / Proxy tunnel" path to customer terminology. Confirm with the SME that this mapping is
 // accurate, and whether the fix applies to Cloud, Standalone, or both deployments.
@@ -162,7 +134,6 @@ iOS and iPadOS devices attached to a Mac mini host running macOS 27 come online 
 // REVIEWER NOTE (KOB-55177): The Supported OS versions page already lists iOS & iPadOS 27, so no
 // product-doc update is included with this change.
 
-// Source: KOB-55193
 // Source: KOB-55177
 
 // Source: KOB-54815 from PR #624
