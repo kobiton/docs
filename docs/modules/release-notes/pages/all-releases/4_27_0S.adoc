@@ -18,7 +18,7 @@
 // Excluded at review: deviceConnect version enforcement removal (KOB-48664, KOB-54056);
 // deviceConnect Console sign-in (KOB-54439), an environment issue rather than a shipped fix.
 
-_September 23, 2026_
+_September 25, 2026_
 
 == What's new in 4.27.0S
 
@@ -26,10 +26,10 @@ Standalone 4.27.0S changes configuration and user data paths, service commands, 
 
 *Highlights*
 
-- 4.27.0S requires kobiCTL 1.9.0 or later. One kobiCTL package now covers both Ubuntu 22.04 and Ubuntu 24.04.
+- 4.27.0S requires kobiCTL 1.9.0 or later. The same kobiCTL package works on both Ubuntu 22.04 and Ubuntu 24.04. Earlier releases required a separate kobiCTL version for each Ubuntu version.
 - Configuration files, including `infra.env`, `kobiton.license`, and the SSL certificate and key, move from `/ml/var/kobiton-op/config/` to `/etc/kobiton/`.
 - Portal user data moves from `/ml/var/kobiton-op/persistence` to `/var/lib/kobiton`.
-- Update any script or runbook that writes to the old configuration or user data paths.
+- If any of your scripts or runbooks write to the old configuration or user data paths, update them to use the new paths.
 - `sudo kobictl restart all` replaces `sudo k4s-restart all`.
 - `kobictl list` replaces `k4s-version`. It lists installed Kobiton versions and marks the active one. It does not report the installer, K3s, Cilium, Istio, or Flux versions.
 
@@ -41,7 +41,7 @@ Standalone 4.27.0S changes configuration and user data paths, service commands, 
 // Source: admin-docs repo, src/content/docs/standalone/update/whats-new-4-27-0s.md ("What's new in 4.27.0S").
 // Links to admin-docs intentionally omitted at review.
 
-== New features and major changes
+== New features
 
 === Portal Auto Logout
 
@@ -102,7 +102,7 @@ Claude can now create Test Runs from saved Scriptless Test Cases and monitor eac
 - Run a single Scriptless Test Case, several at once, or a full Test Suite. Pin each selection to a specific Test Case version for reproducible runs.
 - Ask Claude for a status check while a Test Run is in progress, or end the run early.
 
-*Known limitations*
+*Limitations and considerations*
 
 - If a private certificate authority issues the Portal's SSL certificate, trust the root certificate on each computer that runs Claude Code. For steps, see xref:ai:mcp/claude-code.adoc#_trust_self_signed_ssl_certificate_standalone_only[Trust self-signed SSL certificate]. Even with the certificate trusted, monitoring fails with `unable to get local issuer certificate`. Claude can resolve this by rerunning the monitor with `NODE_OPTIONS=--use-system-ca`. The option requires Node.js 22.15 or later, or 23.8 or later. If Claude does not apply the option on its own, ask Claude to use it.
 - Live Remediation is not yet supported on Standalone deployments.
@@ -113,6 +113,8 @@ Claude can now create Test Runs from saved Scriptless Test Cases and monitor eac
 // NODE_OPTIONS workaround: in the field test, Claude applied it to the monitor's poller command on its
 // own after the certificate error. Reworded at review to let Claude apply it instead of instructing
 // users to set it manually.
+
+== Updates
 
 === Centralized host machine settings in Device Management
 
@@ -148,11 +150,11 @@ When standard video recording encounters an issue during an iOS session, the ses
 
 - Basic Appium now enables all plugins by default. Previously, plugins had to be enabled per test.
 - Added support for Flutter Appium Driver sessions on iOS 17 and later.
-- Fixed Basic Appium sessions without an app failing every command with `Unsupported URI`.
-- Fixed iOS Safari `driver.get()` failing with `Page.navigate not found` on iOS 26.4.2 and iOS 26.5.
-- Fixed `SessionNotCreatedException (kAXErrorIPCTimeout)` and app launches taking more than two minutes when starting an XIUM automation session.
-- Fixed XIUM Android tests using `UiScrollable.scrollIntoView` returning `NoSuchElementException` without scrolling.
-- Fixed XIUM not dismissing the iOS notification permission alert after Accept Alert.
+- Basic Appium sessions without an app now accept commands. Previously, every command failed with `Unsupported URI`.
+- `driver.get()` in iOS Safari now navigates on iOS 26.4.2 and iOS 26.5. Previously, it failed with `Page.navigate not found`.
+- XIUM automation sessions now start and launch the app in the expected time. Previously, session creation could fail with `SessionNotCreatedException (kAXErrorIPCTimeout)`, or the app launch could take more than two minutes.
+- In XIUM Android tests, `UiScrollable.scrollIntoView` now scrolls to the target element and returns it, matching Basic Appium 2. Previously, it returned `NoSuchElementException` without scrolling.
+- XIUM now dismisses the iOS notification permission alert after Accept Alert.
 - When a session is terminated, active client requests now include the termination reason in the response.
 - Cached element references now resolve correctly when the underlying view is rebuilt with an element that still matches the original locator. On Android, the session re-runs the original search and clicks the rebuilt element, or returns `stale element reference` if the element is gone. On iOS, the session returns `stale element reference` when the element cannot be tapped. Android caches up to 50 element references, and each reference expires 2 minutes after it is issued.
 - On iOS 18, the *Shared All Contacts* screen and its *Select Contacts* and *Share All N Contacts* buttons now appear in the element tree and can be targeted by `accessibility id`. Because the screen is a view rather than an alert, `autoAcceptAlerts` and alert-accept commands do not apply. Include an explicit tap step in your tests.
@@ -169,11 +171,11 @@ NOTE: On iOS 12, 13, and 14, `queryAppState` continues to return `1` for a backg
 
 === Appium script generation
 
-- Fixed generated Appium script projects failing on Standalone deployments that use a self-signed SSL certificate.
+- Generated Appium script projects now run on Standalone deployments that use a self-signed SSL certificate.
 ** Python REST calls for device lookup, app download URL, and OTP now honor the same trust-all-certificates setting that the proxy uses.
 ** The C# template exposes `Config.TrustAllCerts` and a `Config.CreateHttpClient()` helper. See the README in the generated C# project for Standalone run instructions.
 ** Node and Java keep their existing documented workarounds.
-- Fixed generated Python Appium tests failing at the first UI transition because `element.click()` sent an empty request body.
+- Generated Python Appium tests now continue past the first UI transition. Previously, `element.click()` sent an empty request body and the test failed.
 
 // Source: 4_28.adoc
 
@@ -181,9 +183,9 @@ NOTE: On iOS 12, 13, and 14, `queryAppState` continues to return `1` for a backg
 
 - New endpoint to fetch a single app version by ID: `GET /v2/apps/{appId}/versions?app_version_id=<id>`.
 - `DELETE /v2/reservations/terminate` now accepts an optional set of device UDIDs alongside `reservation_ids`, so you can end a reservation for specific devices. UDIDs with no active reservation are reported in the response's `failed` list. Requests that pass only `reservation_ids` are unchanged.
-- Fixed *Terminate By UDID* on the Reservations API reporting successfully terminated UDIDs in the `failed` list.
+- *Terminate By UDID* on the Reservations API no longer lists successfully terminated UDIDs in the `failed` list.
 - The installed-applications API response now includes `app_version_id`. The value matches `kobiton-store:v` from Appium scripts, so you can compare installed apps against the intended version in the App Repository.
-- Fixed `GET /v2/apps/{appId}` omitting `latest_version` when the request sets `includeAllAppVersions=true`. `latest_version` skips versions that are still importing or parsing.
+- `GET /v2/apps/{appId}` now returns `latest_version` when the request sets `includeAllAppVersions=true`. `latest_version` skips versions that are still importing or parsing.
 - Added a login endpoint, `POST /v2/users/login`, that returns a JSON Web Token (JWT) along with `grpc_server_url` and other user information. `POST /v1/users/info` remains available.
 - API v2 now returns database errors when the host is low on disk space.
 
@@ -192,12 +194,12 @@ NOTE: On iOS 12, 13, and 14, `queryAppState` continues to return `1` for a backg
 === App Repository and app installation
 
 - Optimized iOS app transfer for iOS 17 and later, reducing install time by up to 50% for some applications.
-- Fixed intermittent iOS app install failures.
-- Fixed the App Repository page hanging, or showing all apps as missing, when an app had no live versions.
+- iOS app installs no longer fail intermittently.
+- The App Repository page now loads normally when an app has no live versions. Previously, it could hang or show all apps as missing.
 - Apps whose latest version is still processing, or whose most recent upload failed to parse, now return normally from `GET /v2/apps/{id}`, `GET /v1/apps/{id}`, and the MCP `getApp` tool. Previously, these requests returned HTTP 500.
 - Uploading a valid build to an app whose previous upload failed to parse now succeeds, and the build becomes the app's latest version.
 - Starting an automation session with `app: kobiton-store:<id>` on an app with no ready version now returns `App <id> has no ready version to install` instead of `App ID <id> not found`.
-- Fixed Android Image Injection failing with `Please Ensure Your Application Integrates Kobiton SDK` after the instrumented install reported success.
+- Android Image Injection now proceeds after a successful instrumented install. Previously, it could fail with `Please Ensure Your Application Integrates Kobiton SDK`.
 
 // Source: 4_28.adoc, 2026-08-21.adoc, 2026-09-18.adoc (KOB-54390)
 
@@ -205,10 +207,10 @@ NOTE: On iOS 12, 13, and 14, `queryAppState` continues to return `1` for a backg
 
 - New: create a user with `kobiton org user create`. Required: `--email` and `--username`. Choose `--password` or `--enable-sso`. Optional: `--first-name` and `--last-name`. To keep the password out of shell history, set it in the `KOBITON_NEW_USER_PASSWORD` environment variable. The caller's role must have the `org_management.modify` permission.
 - The CLI now retries transient connection failures automatically.
-- Fixed CLI sessions failing intermittently with `[MH-400] Failed to book device`.
-- Fixed the CLI writing the pre-signed upload URL and the session token to client-visible output.
+- CLI sessions now start reliably. Previously, they could fail intermittently with `[MH-400] Failed to book device`.
+- The CLI no longer writes the pre-signed upload URL or the session token to client-visible output.
 - Improved CLI session handling to prevent stale sessions from persisting.
-- Fixed an issue where the CLI failed to install apps on Standalone deployments.
+- Installing apps with the Kobiton CLI on Standalone deployments now works as expected.
 
 // Source: 4_28.adoc, 2026-07-24.adoc, 2026-08-14.adoc, 2026-08-21.adoc, 2026-07-31.adoc (KOB-54281)
 // KOB-54281 bullet confirmed as written at review.
@@ -223,10 +225,10 @@ NOTE: On iOS 12, 13, and 14, `queryAppState` continues to return `1` for a backg
 === Device passcode
 
 - Passcode configuration now takes effect the first time a device connects. Previously, it applied only after a deviceConnect service restart.
-- Fixed a passcode requirement that prevented XCTest from being enabled on iOS devices.
-- Fixed iPad passcode automation failing to complete.
-- Fixed passcode automation missing the first digit of the passcode.
-- Fixed some iOS devices failing to start sessions with a passcode-related initialization error.
+- XCTest can now be enabled on iOS devices without the passcode requirement blocking it.
+- Passcode automation now completes on iPad.
+- Passcode automation now enters every digit of the passcode. Previously, it could miss the first digit.
+- iOS devices affected by a passcode-related initialization error now start sessions normally.
 - Generated device passcodes now avoid additional patterns that MDM passcode policies may reject. Existing passcodes are not reissued.
 
 // Source: 2026-07-31.adoc, 2026-08-07.adoc, 2026-08-14.adoc, 2026-08-21.adoc, 2026-09-18.adoc (KOB-54990)
@@ -235,15 +237,15 @@ NOTE: On iOS 12, 13, and 14, `queryAppState` continues to return `1` for a backg
 === deviceConnect Console
 
 - Bluetooth server errors now appear in the deviceConnect Console.
-- Fixed the *System* page returning *Internal Server Error* when loading the device list.
+- The *System* page now loads the device list. Previously, it returned *Internal Server Error*.
 
 // Source: 2026-07-24.adoc (KOB-53978), 2026-08-07.adoc (KOB-54424)
 
 === Manual sessions
 
 - VoiceOver (iOS) and TalkBack (Android) audio now plays as soon as a session starts and after an app install. Previously, audio stayed silent until the screen was tapped.
-- Fixed biometric authentication requests timing out after about 60 seconds in manual sessions. Requests now return without delay on iOS 15 through 27, so the application under test receives the *Pass* or *Fail* response.
-- Fixed missing or incomplete command latency data for manual sessions with multiple reconnects.
+- Biometric authentication requests in manual sessions now return without delay on iOS 15 through 27, so the application under test receives the *Pass* or *Fail* response. Previously, requests timed out after about 60 seconds.
+- Command latency data is now complete for manual sessions with multiple reconnects.
 
 // Source: 4_28.adoc, 2026-08-07.adoc (KOB-52004), 2026-09-18.adoc (KOB-54989)
 
@@ -263,30 +265,30 @@ NOTE: On iOS 12, 13, and 14, `queryAppState` continues to return `1` for a backg
 
 === Portal and SSO
 
-- Fixed teams not appearing immediately after SSO sign-in.
+- Teams now appear immediately after SSO sign-in, without a page refresh.
 - When you open the Portal from a direct URL, all features included in your subscription now appear on the first page load.
 - The *CLI for Mac*, *CLI for Windows*, and *CLI for Linux* links under *Downloads* now resolve to the most recently published CLI build.
-- Fixed the *Convert to Test Case* flow hanging or producing incomplete steps for automation sessions that interact with WebView elements.
+- The *Convert to Test Case* flow now completes with all steps for automation sessions that interact with WebView elements. Previously, it could hang or produce incomplete steps.
 
 // Source: 4_28.adoc, 2026-09-11.adoc
 
 === Reports
 
-- Fixed *Usage Report* summary cards showing value rows cut off.
+- *Usage Report* summary cards now show their values in full.
 
 // Source: 2026-07-31.adoc (KOB-53958)
 
 === Scriptless Test Runs
 
-- Fixed Scriptless Test Cases that use only the Home screen failing when run.
-- Fixed Scriptless Test Runs failing with `Device retry exceeded` on organizations with parallel testing enabled. Test Runs now wait for a parallel test slot.
-- Fixed Scriptless Test Runs failing with `User not found` for users signed in through SSO, Google, or GitHub.
+- Scriptless Test Cases that use only the Home screen now launch the Home screen and run.
+- On organizations with parallel testing enabled, Scriptless Test Runs now wait for a parallel test slot instead of failing with `Device retry exceeded`.
+- Scriptless Test Runs now start for users signed in through SSO, Google, or GitHub. Previously, they failed with `User not found`.
 
 // Source: 4_28.adoc
 
 === Standalone deployment
 
-- Fixed an issue where users could not sign in to Kibana.
+- Users can now sign in to Kibana.
 
 // Source: 2026-08-21.adoc (KOB-54549, deferred to the next Standalone release)
 // KOB-54549 confirmed accurate and customer-facing at review.
