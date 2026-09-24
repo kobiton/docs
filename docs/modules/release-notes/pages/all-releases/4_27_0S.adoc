@@ -10,8 +10,7 @@
 // Excluded as already shipped in 4.26S or 4.26.4S: device-only view, guiding AI-driven sessions
 // from device-only view, `am start` ADB fix, app versions with missing binary files, app-signing
 // error messages, OS build number in the device modal, CLI `test --stream` signed-app retrieval.
-// Excluded as Cloud-only: MCP create and monitor Test Runs ("Not yet available for Standalone"),
-// ADB shell on Public Cloud devices, CLI sessions on Public Cloud devices, CLI public-device
+// Excluded as Cloud-only: ADB shell on Public Cloud devices, CLI sessions on Public Cloud devices, CLI public-device
 // usage minutes, devices staying unavailable after an abnormal CLI session end (KOB-54584).
 // Excluded at review: deviceConnect version enforcement removal (KOB-48664, KOB-54056);
 // deviceConnect Console sign-in (KOB-54439), an environment issue rather than a shipped fix.
@@ -89,6 +88,27 @@ Completed automation sessions can now be converted into Test Cases, as manual se
 - Test Cases converted from automation sessions display descriptive step names such as `Tap` and `Press Back`. Scriptless Test Runs display the corresponding automation commands, such as `/click` and `/back`.
 
 // Source: 4_28.adoc, 2026-07-31.adoc (KOB-43481), 2026-08-07.adoc (KOB-53798)
+
+=== Kobiton MCP: create and monitor Test Runs from Claude
+
+Claude can now create Test Runs from saved Scriptless Test Cases and monitor each run through to completion with the `monitorTestRun` MCP tool (beta). Claude reports blocked runs as blocked instead of treating them as passed.
+
+*Highlights*
+
+- Start a Test Run conversationally. Accept the defaults or customize them, then confirm a summary before the run starts.
+- Run a single Scriptless Test Case, several at once, or a full Test Suite. Pin each selection to a specific Test Case version for reproducible runs.
+- Ask Claude for a status check while a Test Run is in progress, or end the run early.
+
+*Known limitations*
+
+- If a private certificate authority issues the Portal's SSL certificate, monitoring fails with `unable to get local issuer certificate`. Trust the certificate on each computer that runs Claude Code, then set `NODE_OPTIONS=--use-system-ca` before starting Claude Code. The `--use-system-ca` option requires Node.js 22.15 or later, or 23.8 or later. For steps to trust the root certificate, see xref:ai:mcp/claude-code.adoc#_trust_self_signed_ssl_certificate_standalone_only[Trust self-signed SSL certificate].
+- Live Remediation is not yet supported on Standalone deployments.
+
+// Source: 4_28.adoc (feature description) and claude-standalone/automate-plugin-field-report.md
+// (2026-09-24 Standalone field test of automate plugin v1.9.0: create-test-run and monitor-test-run
+// passed with workarounds). Caveats limited at review to the private-CA workaround and Live Remediation.
+// REVIEWER NOTE: the field report applied NODE_OPTIONS to the monitor's poller command. Confirm that
+// setting it in the shell that starts Claude Code reaches the poller before publishing.
 
 === Centralized host machine settings in Device Management
 
@@ -229,12 +249,13 @@ NOTE: On iOS 12, 13, and 14, `queryAppState` continues to return `1` for a backg
 - The `run-interactive-session` skill now runs on Windows (x64) and Linux (x64) in addition to macOS. Apple Silicon Macs use a native build and no longer require Rosetta 2.
 - Skills that cannot run on the current host now fail immediately and name the missing requirement, such as local file access, a local binary, or a specific platform.
 - The `getCredential` tool now returns your username, API key, and Portal URL under both API key and OAuth authentication.
+- The `listTestRuns` tool now declares the sort keys it accepts, `CREATED_AT` and `NAME`, and requests that use the earlier lowercase spelling succeed.
+- The new `listTeams` tool returns the teams you belong to, so organization members can look up a team ID for Test Management list calls. Previously, these calls failed with `Team id is required`.
+- The `teamId` descriptions on the Test Case, Test Suite, and Test Run tools now state the team scoping rules. Org Admins who omit `teamId` receive organization-level items only. Organization members pass a `teamId`. No list call returns items from more than one team.
 
 // Source: 4_28.adoc, 2026-07-24.adoc, 2026-07-31.adoc, 2026-08-14.adoc, 2026-09-11.adoc
 // MCP /v2/apps upload endpoint change (4_28.adoc) removed at style review: no user-facing impact.
-// REVIEWER NOTE: the 2026-09-11 Test Management tool changes (listTestRuns sort keys, listTeams,
-// teamId scoping) are not included because MCP Test Runs are not yet available for Standalone.
-// Add them if they apply.
+// Test Management tool bullets from 2026-09-11.adoc added once MCP Test Runs were confirmed on Standalone.
 
 === Portal and SSO
 
