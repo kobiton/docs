@@ -1,0 +1,29 @@
+== Bug fixes and improvements
+
+=== Reporting
+
+- Fixed an issue where predefined reports were not available after installing or upgrading to Kobiton Standalone 4.27.0S. Report setup now completes during installation and upgrade, and the reports are listed and render in the Portal.
+- Fixed an issue where report dashboard setup did not complete on Standalone deployments that use a hostname, rather than an IP address, for the Portal URL.
+
+_Applies to Kobiton Standalone deployments._
+
+// Source: KOB-55156 | Bug | Component: Standalone | Status: Released.
+//
+// REVIEWER NOTE: Both defects were verified fixed on a hostname-configured 4.27.0S install
+// on 2026-09-23 (verification comment on the ticket). The Jira ticket has no Fix Version.
+// Confirm which Standalone release page this entry belongs on (a 4.27.0S respin or a later
+// Standalone release) before publishing.
+//
+// REVIEWER NOTE: Jira lists the provisioned reports by internal ID (device-inventory,
+// device-utilization, parallel-sessions, retained-devices, sessions-per-day) plus four
+// dashboards (usage report, SLA, system latency, device summary). The entry keeps the
+// report list generic because the Portal display names for all nine are not confirmed in
+// the ticket. Add names only after confirming them in the Portal.
+//
+// REVIEWER NOTE: The underlying reporting engine name is omitted on purpose. Earlier
+// release notes treated its provisioning as internal ops. Install-level details (job names,
+// image tags, cluster DNS behavior, verification commands) are internal and excluded.
+//
+// REVIEWER NOTE: No workaround is documented in the ticket for customers already on the
+// affected 4.27.0S build. Confirm with engineering whether affected Standalone customers
+// need to reinstall or upgrade to pick up the fix, and whether that belongs in enablement.
