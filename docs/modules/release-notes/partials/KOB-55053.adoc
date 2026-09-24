@@ -1,0 +1,29 @@
+// iPad passcode is set again after a device language change.
+// Target section on the release page: == Device passcode (or the page's device fixes section)
+// Draft staged by Robot Ranch. Not yet included in a release page.
+
+- Fixed an issue where an iPad with a device passcode could return to *Available* without its passcode after the device language was changed during a session. The passcode is now set again before the device is available to users. Mobile device management (MDM) tools no longer flag these iPads as having no passcode after a language change.
+
+// Source: KOB-55053
+
+// REVIEWER NOTE: evidence basis
+// Drafted from Jira only: the ticket description, the customer impact and root cause fields,
+// the test sign-off comment, and the release comment. Jira status at draft time is Released.
+// The ticket requests a customer-facing release note.
+//
+// REVIEWER NOTE: affected scope
+// The description says the issue reproduced consistently on iPadOS 18.x and 26.x. The customer
+// impact and root cause fields narrow it to some iPadOS builds where the on-screen keyboard
+// flickers while the passcode screen is open. The entry says "could" and names no iPadOS
+// version for that reason. iPhone is not affected. Confirm with the SME whether a version
+// range should be stated.
+//
+// REVIEWER NOTE: release window
+// The ticket has no fixVersion. The release comment is a bulk update that lists a deviceConnect
+// build dated 2609.24 and notes that not all builds may apply to each ticket. Confirm the
+// shipped deviceConnect version before including this partial in a release page.
+//
+// REVIEWER NOTE: relationship to passcode mode
+// The ticket says "passcode configured" and does not name a passcode mode. The supported
+// platforms page states passcode mode is not supported on iOS/iPadOS 26.0 to 26.2. Confirm
+// whether this entry should reference passcode mode and whether that limitation affects scope.
