@@ -1,0 +1,261 @@
+= Kobiton 4.27.0S Release Notes
+:navtitle: Kobiton 4.27.0S release notes
+
+// DRAFT for KOB-54436. Drafted by Ledger (docs-workflow:docs-writer) from existing Cloud release
+// notes only: 4_28.adoc (2026-07-17) and the weekly Cloud pages 2026-07-24 through 2026-09-18.
+// Scope: items released after 4.26.4S (2026-06-15), cut off at gigacap 2609.14,
+// deviceConnect 2609.11, and Portal 2609.18. The existing Cloud pages end at Portal 2609.16 and
+// deviceConnect 2609.10, so anything shipped between those builds and the cutoff is not covered.
+// Per the ticket, Jira was not searched for newer items.
+//
+// Excluded as already shipped in 4.26S or 4.26.4S: device-only view, guiding AI-driven sessions
+// from device-only view, `am start` ADB fix, app versions with missing binary files, app-signing
+// error messages, OS build number in the device modal, CLI `test --stream` signed-app retrieval.
+// Excluded as Cloud-only: MCP create and monitor Test Runs ("Not yet available for Standalone"),
+// ADB shell on Public Cloud devices, CLI sessions on Public Cloud devices, CLI public-device
+// usage minutes, devices staying unavailable after an abnormal CLI session end (KOB-54584).
+// Excluded at review: deviceConnect version enforcement removal (KOB-48664, KOB-54056);
+// deviceConnect Console sign-in (KOB-54439), an environment issue rather than a shipped fix.
+
+// REVIEWER NOTE: release date not set. Replace before publishing.
+_<Month DD, 2026>_
+
+== New features and major changes
+
+=== Portal Auto Logout
+
+Org Admins can now sign users out of the Portal automatically after a set duration.
+
+*Highlights*
+
+- Turn on Auto Logout under *Account > Settings > Other Settings*. Scroll to the *Auto Logout* setting and select the checkbox.
+- When the checkbox is selected, a *Log users out after* field appears. Enter a whole number and select *Hour(s)* or *Day(s)*.
+- The minimum timeout is 1 hour. Clear the checkbox to turn Auto Logout off.
+- When the configured duration elapses, users are redirected to the sign-in page with the message "Your session has expired. Please log in again." No warning or "stay logged in" prompt appears before sign-out.
+- If a user has an ongoing manual session when the timer expires, sign-out is deferred until that session ends.
+- After signing in again, users return to the page they were on before the session expired.
+- Kobiton enforces session expiry independently of your identity provider or SSO.
+
+// Source: 4_28.adoc
+
+=== New reporting experience
+
+Reports now include built-in filtering and exporting. Download a report as a CSV or PNG file. All existing reports use the new experience.
+
+This release also adds the following reports:
+
+- *Parallel Sessions over time*: tracks concurrent session counts across a time range.
+- *Device Inventory*: lists every device connected to the organization. Filter by *Status*, *OS*, *Version*, *Device Name*, *Manufacturer*, or *Device Model*. *IMEI* and *Mobile Number* populate only for cellular devices.
+- *Retained Devices*: lists retained devices, who retained them, how long each device has been retained, and when each device was last used. Results sort by *Last Used*, with the longest-idle devices at the top.
+
+*Availability*
+
+*Device Inventory* and *Retained Devices* are available under *Analytics Reports* to Org Admins only. The table search box matches literal text; wildcards are not supported.
+
+// Source: 4_28.adoc, 2026-08-28.adoc (KOB-54356), 2026-09-18.adoc (KOB-52771, KOB-54713)
+
+=== Convert automation and mixed sessions into Test Cases
+
+Completed automation sessions can now be converted into Test Cases, as manual sessions can. Completed sessions that combine manual and Appium automation steps can also be converted.
+
+*Highlights*
+
+- Convert from Session Explorer with the *Convert to Test Case* action, from the *+New Test Case* pop-up on the Test Cases list page, or from the API.
+- The `kobiton:scriptlessCapture` desired capability is no longer required to convert a session. Setting it in your script is optional but gives more complete data capture.
+- All Appium automation sessions are convertible. Scriptless Test Run sessions and other automation types (Basic Appium 2, native XCUI, native UIAutomator/Espresso, Gaming, GameDriver, Emulator Automation) are not convertible. The UI flags sessions that cannot be converted.
+- A session must be complete before it can be converted.
+- In the *+New Test Case* pop-up, search for eligible sessions by keyword, for example `type:appium` or `type:mixed`.
+- Test Cases converted from mixed sessions keep the original step order, tag each step as manual or automation, and show *Mixed* as the *Source type*. Their Test Runs execute the steps in sequence and skip, with a reason, any step that cannot be performed.
+- Appium script generation is not available for Test Cases converted from mixed sessions.
+- Test Cases converted from automation sessions display descriptive step names such as `Tap` and `Press Back`. Scriptless Test Runs display the corresponding automation commands, such as `/click` and `/back`.
+
+// Source: 4_28.adoc, 2026-07-31.adoc (KOB-43481), 2026-08-07.adoc (KOB-53798)
+
+=== Centralized host machine settings in Device Management
+
+Org Admins can now configure settings for every host machine from one *Settings* dialog at the top of *Device Management*. The per-machine *Settings* button has been removed from host machine rows.
+
+*Highlights*
+
+- The *Max Parallel Tests* tab sets a capacity limit of *Unlimited* or a custom value between 1 and 999 for each host machine. An *All Machines* row applies one setting to every machine.
+- Search *Device Management* by full or partial host machine IP address. Wildcards are supported.
+- All host machines are expanded by default. Use *Collapse all* and *Expand all* under the *View* menu. Each host machine remembers its collapsed or expanded state in your browser.
+- *Device Management* now shows the deviceConnect version for every host machine. Previously, some host machines showed `N/A`.
+
+// Source: 4_28.adoc, 2026-08-21.adoc (KOB-54259), 2026-09-18.adoc (KOB-52659)
+// virtualUSB tab and badge (KOB-52659) excluded at review: not yet available on Standalone.
+
+=== API key visibility
+
+- API keys on *Settings > API Keys* are hidden by default. Select the eye icon next to a key to show or hide its value. Each key is controlled independently, and all keys return to hidden when you leave the page.
+- The *Copy* action copies the key value whether the key is hidden or shown.
+- A new *Created* column shows the date each key was generated.
+
+// Source: 2026-09-11.adoc (KOB-54909)
+
+=== Session recording fallback for iOS
+
+When standard video recording encounters an issue during an iOS session, the session now uses screenshots to create a recording. Previously, affected sessions could end without a recording. The fallback recording has a lower frame rate than standard video recording. Reboot the device to restore standard video recording and Lightning mode.
+
+// Source: 2026-09-18.adoc (KOB-54825, gigacap 2609.14)
+
+== Bug fixes and improvements
+
+=== Appium and automation
+
+- Basic Appium now enables all plugins by default. Previously, plugins had to be enabled per test.
+- Added support for Flutter Appium Driver sessions on iOS 17 and later.
+- Fixed Basic Appium sessions without an app failing every command with `Unsupported URI`.
+- Fixed iOS Safari `driver.get()` failing with `Page.navigate not found` on iOS 26.4.2 and iOS 26.5.
+- Fixed `SessionNotCreatedException (kAXErrorIPCTimeout)` and app launches taking more than two minutes when starting an XIUM automation session.
+- Fixed XIUM Android tests using `UiScrollable.scrollIntoView` returning `NoSuchElementException` without scrolling.
+- Fixed XIUM not dismissing the iOS notification permission alert after Accept Alert.
+- When a session is terminated, active client requests now include the termination reason in the response.
+- Cached element references now resolve correctly when the underlying view is rebuilt with an element that still matches the original locator. On Android, the session re-runs the original search and clicks the rebuilt element, or returns `stale element reference` if the element is gone. On iOS, the session returns `stale element reference` when the element cannot be tapped. Android caches up to 50 element references, and each reference expires 2 minutes after it is issued.
+- On iOS 18, the *Shared All Contacts* screen and its *Select Contacts* and *Share All N Contacts* buttons now appear in the element tree and can be targeted by `accessibility id`. Because the screen is a view rather than an alert, `autoAcceptAlerts` and alert-accept commands do not apply. Include an explicit tap step in your tests.
+- `queryAppState` on iOS 12, 13, and 14 now returns `4` for a foreground application. Previously, it returned `1`.
++
+NOTE: On iOS 12, 13, and 14, `queryAppState` continues to return `1` for a backgrounded application. iOS versions earlier than 15 do not expose background application state to on-device automation. Confirm background transitions by locating an element instead.
+- Xiaomi devices now stay awake for the duration of long automation runs.
+- Appium AI now sends full-resolution screenshots to the LLM by default.
+
+// Source: 2026-07-24.adoc, 2026-08-14.adoc, 2026-08-21.adoc, 2026-08-28.adoc, 2026-09-11.adoc, 2026-09-18.adoc
+// The Appium AI bullet comes from a reviewer note on 2026-08-28.adoc, where it was removed from
+// Cloud because only Standalone and Hybrid customers can edit dc.ini. Kept for Standalone at review;
+// the dc.ini opt-out sentence was dropped at review as unnecessary.
+
+=== Appium script generation
+
+- Fixed generated Appium script projects failing on Standalone deployments that use a self-signed SSL certificate.
+** Python REST calls for device lookup, app download URL, and OTP now honor the same trust-all-certificates setting that the proxy uses.
+** The C# template exposes `Config.TrustAllCerts` and a `Config.CreateHttpClient()` helper. See the README in the generated C# project for Standalone run instructions.
+** Node and Java keep their existing documented workarounds.
+- Fixed generated Python Appium tests failing at the first UI transition because `element.click()` sent an empty request body.
+
+// Source: 4_28.adoc
+
+=== API
+
+- New endpoint to fetch a single app version by ID: `GET /v2/apps/{appId}/versions?app_version_id=<id>`.
+- `DELETE /v2/reservations/terminate` now accepts an optional set of device UDIDs alongside `reservation_ids`, so you can end a reservation for specific devices. UDIDs with no active reservation are reported in the response's `failed` list. Requests that pass only `reservation_ids` are unchanged.
+- Fixed *Terminate By UDID* on the Reservations API reporting successfully terminated UDIDs in the `failed` list.
+- The installed-applications API response now includes `app_version_id`. The value matches `kobiton-store:v` from Appium scripts, so you can compare installed apps against the intended version in the App Repository.
+- Fixed `GET /v2/apps/{appId}` omitting `latest_version` when the request sets `includeAllAppVersions=true`. `latest_version` skips versions that are still importing or parsing.
+- Added a login endpoint, `POST /v2/users/login`, that returns a JSON Web Token (JWT) along with `grpc_server_url` and other user information. `POST /v1/users/info` remains available.
+- API v2 now returns database errors when the host is low on disk space.
+
+// Source: 4_28.adoc, 2026-07-24.adoc, 2026-08-21.adoc, 2026-08-28.adoc
+
+=== App Repository and app installation
+
+- Optimized iOS app transfer for iOS 17 and later, reducing install time by up to 50% for some applications.
+- Fixed intermittent iOS app install failures.
+- Fixed the App Repository page hanging, or showing all apps as missing, when an app had no live versions.
+- Apps whose latest version is still processing, or whose most recent upload failed to parse, now return normally from `GET /v2/apps/{id}`, `GET /v1/apps/{id}`, and the MCP `getApp` tool. Previously, these requests returned HTTP 500.
+- Uploading a valid build to an app whose previous upload failed to parse now succeeds, and the build becomes the app's latest version.
+- Starting an automation session with `app: kobiton-store:<id>` on an app with no ready version now returns `App <id> has no ready version to install` instead of `App ID <id> not found`.
+- Fixed Android Image Injection failing with `Please Ensure Your Application Integrates Kobiton SDK` after the instrumented install reported success.
+
+// Source: 4_28.adoc, 2026-08-21.adoc, 2026-09-18.adoc (KOB-54390)
+
+=== Kobiton CLI
+
+- New: create a user with `kobiton org user create`. Required: `--email` and `--username`. Choose `--password` or `--enable-sso`. Optional: `--first-name` and `--last-name`. To keep the password out of shell history, set it in the `KOBITON_NEW_USER_PASSWORD` environment variable. The caller's role must have the `org_management.modify` permission.
+- The CLI now retries transient connection failures automatically.
+- Fixed CLI sessions failing intermittently with `[MH-400] Failed to book device`.
+- Fixed the CLI writing the pre-signed upload URL and the session token to client-visible output.
+- Improved handling of CLI sessions to prevent stale CLI sessions from persisting.
+- Fixed an issue where the CLI failed to install apps on Standalone deployments.
+
+// Source: 4_28.adoc, 2026-07-24.adoc, 2026-08-14.adoc, 2026-08-21.adoc, 2026-07-31.adoc (KOB-54281)
+// KOB-54281 bullet confirmed as written at review.
+
+=== Device details
+
+- The *Apps* tab of the device modal now shows *Installed* when any version of the app is installed, and names the installed build. Previously, it reported the status of the newest version in the App Repository.
+- When the installed build cannot be matched to a version in the App Repository, no version is marked *Installed*.
+
+// Source: 2026-08-07.adoc (KOB-54289)
+
+=== Device passcode
+
+- Passcode configuration now takes effect the first time a device connects. Previously, it applied only after a deviceConnect service restart.
+- Fixed a passcode requirement that prevented XCTest from being enabled on iOS devices.
+- Fixed iPad passcode automation failing to complete.
+- Fixed passcode automation missing the first digit of the passcode.
+- Fixed some iOS devices failing to start sessions with a passcode-related initialization error.
+- Generated device passcodes now avoid additional patterns that MDM passcode policies may reject. Existing passcodes are not reissued.
+
+// Source: 2026-07-31.adoc, 2026-08-07.adoc, 2026-08-14.adoc, 2026-08-21.adoc, 2026-09-18.adoc (KOB-54990)
+// Kobiton Support reissue path intentionally omitted at review.
+
+=== deviceConnect Console
+
+- Bluetooth server errors now appear in the deviceConnect Console.
+- Fixed the *System* page returning *Internal Server Error* when loading the device list.
+
+// Source: 2026-07-24.adoc (KOB-53978), 2026-08-07.adoc (KOB-54424)
+
+=== Manual sessions
+
+- VoiceOver (iOS) and TalkBack (Android) audio now plays as soon as a session starts and after an app install. Previously, audio stayed silent until the screen was tapped.
+- Fixed biometric authentication requests timing out after about 60 seconds in manual sessions. Requests now return without delay on iOS 15 through 27, so the application under test receives the *Pass* or *Fail* response.
+- Fixed missing or incomplete command latency data for manual sessions with multiple reconnects.
+
+// Source: 4_28.adoc, 2026-08-07.adoc (KOB-52004), 2026-09-18.adoc (KOB-54989)
+
+=== Kobiton MCP server and plugin
+
+- The Kobiton MCP plugin includes a guided setup for first-time users.
+- The `run-interactive-session` skill now runs on Windows (x64) and Linux (x64) in addition to macOS. Apple Silicon Macs use a native build and no longer require Rosetta 2.
+- Skills that cannot run on the current host now fail immediately and name the missing requirement, such as local file access, a local binary, or a specific platform.
+- The `getCredential` tool now returns your username, API key, and Portal URL under both API key and OAuth authentication.
+
+// Source: 4_28.adoc, 2026-07-24.adoc, 2026-07-31.adoc, 2026-08-14.adoc, 2026-09-11.adoc
+// MCP /v2/apps upload endpoint change (4_28.adoc) removed at style review: no user-facing impact.
+// REVIEWER NOTE: the 2026-09-11 Test Management tool changes (listTestRuns sort keys, listTeams,
+// teamId scoping) are not included because MCP Test Runs are not yet available for Standalone.
+// Add them if they apply.
+
+=== Portal and SSO
+
+- Fixed teams not appearing immediately after SSO sign-in.
+- When you open the Portal from a direct URL, all features included in your subscription now appear on the first page load.
+- The *CLI for Mac*, *CLI for Windows*, and *CLI for Linux* links under *Downloads* now resolve to the most recently published CLI build.
+- Fixed the *Convert to Test Case* flow hanging or producing incomplete steps for automation sessions that interact with WebView elements.
+
+// Source: 4_28.adoc, 2026-09-11.adoc
+
+=== Reports
+
+- Fixed *Usage Report* summary cards showing value rows cut off.
+
+// Source: 2026-07-31.adoc (KOB-53958)
+
+=== Scriptless Test Runs
+
+- Fixed Scriptless Test Cases that use only the Home screen failing when run.
+- Fixed Scriptless Test Runs failing with `Device retry exceeded` on organizations with parallel testing enabled. Test Runs now wait for a parallel test slot.
+- Fixed Scriptless Test Runs failing with `User not found` for users signed in through SSO, Google, or GitHub.
+
+// Source: 4_28.adoc
+
+=== Standalone deployment
+
+- Fixed Kibana sign-in on Updater-based deployments.
+
+// Source: 2026-08-21.adoc (KOB-54549, deferred to the next Standalone release)
+// KOB-54549 confirmed accurate and customer-facing at review.
+
+[NOTE]
+====
+Kobiton platform components now use date-based versioning, with versions identified by the build date in YYMM.DD format. The Standalone release keeps its own release number, so it no longer matches the Portal version number.
+
+This release corresponds to the following component versions:
+
+* Portal 2609.18
+* deviceConnect 2609.11
+* deviceShare 2608.31
+* Gigacap 2609.14 with Android Debug Bridge (ADB) 36.0.2
+====
+
