@@ -2,11 +2,12 @@
 
 - Android 11 and later devices now initialize and come online as expected. Previously, initialization on an affected device could fail and retry about every 30 seconds, leaving the device unavailable for sessions. No configuration change is required.
 
-// Drafted by Robot Ranch Wild West (Town Crier). Review before placing on a release page.
+// Drafted by Robot Ranch Wild West (Town Crier). Updated after the ticket reached Released.
+// Review before placing on a release page.
 //
-// REVIEWER NOTE: Jira status at draft time was Wait For Deployment, which the Kobiton Jira
-// workflow defines as merged but not yet deployed. Confirm the fix is live in production
-// before including this partial on a published release page.
+// REVIEWER NOTE: Jira status is now Released (updated 2026-09-24). The earlier draft was
+// written at Wait For Deployment; the production-deployment question is resolved by the
+// Released status.
 //
 // REVIEWER NOTE: QA verdict was PASS. The fix was verified on four Android 11+ devices
 // spanning Android 11 through Android 16, and three pre-Android 11 devices were checked for
@@ -20,9 +21,10 @@
 // fix reaches cloud devices, Standalone device labs, or both, and add an availability line if
 // the distinction matters to readers.
 //
-// REVIEWER NOTE: No component version is confirmed for this change. The source evidence
-// carries only a pre-release build identifier. Add the shipped deviceConnect version to the
-// release page's Component versions section.
+// REVIEWER NOTE: The release comment on the ticket lists deviceConnect build 2609.240307.0
+// (release label 2609.24), but it is a bulk update that notes not all listed builds may apply
+// to this ticket. Confirm the shipped deviceConnect version before adding it to the release
+// page's Component versions section.
 //
 // REVIEWER NOTE: The heading above is a placeholder area name. Merge this bullet into an
 // existing area on the target release page if one already covers Android device readiness.
