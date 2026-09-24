@@ -22,11 +22,11 @@ _September 25, 2026_
 
 == What's new in 4.27.0S
 
-Standalone 4.27.0S changes configuration and user data paths, service commands, and the required kobiCTL version. Review these changes before you update.
+Standalone 4.27.0S changes configuration and user data paths, service commands, and the required kobictl version. Review these changes before you update.
 
 *Highlights*
 
-- 4.27.0S requires kobiCTL 1.9.0 or later. The same kobiCTL package works on both Ubuntu 22.04 and Ubuntu 24.04. Earlier releases required a separate kobiCTL version for each Ubuntu version.
+- 4.27.0S requires kobictl 1.9.0 or later. The same kobictl package works on both Ubuntu 22.04 and Ubuntu 24.04. Earlier releases required a separate kobictl version for each Ubuntu version.
 - Configuration files, including `infra.env`, `kobiton.license`, and the SSL certificate and key, move from `/ml/var/kobiton-op/config/` to `/etc/kobiton/`.
 - Portal user data moves from `/ml/var/kobiton-op/persistence` to `/var/lib/kobiton`.
 - If any of your scripts or runbooks write to the old configuration or user data paths, update them to use the new paths.
@@ -36,12 +36,30 @@ Standalone 4.27.0S changes configuration and user data paths, service commands, 
 *Update requirements*
 
 - Updating from 4.26.7S or earlier on Ubuntu 22.04: the update pauses for a reboot. Reboot, then run the update command again.
-- Updating from 4.26.9S or earlier with Kobiton data on a dedicated filesystem, including RAID-configured servers: the update pauses for a data migration. Follow the manual runbook shipped with the release.
+- Updating from 4.26.9S or earlier with Kobiton data on a dedicated filesystem, including RAID-configured servers: the update pauses for a data migration. Follow the migration runbook that the installer prints before running the update command again.
+
+Please contact Kobiton Support to schedule an assisted upgrade for this release.
 
 // Source: admin-docs repo, src/content/docs/standalone/update/whats-new-4-27-0s.md ("What's new in 4.27.0S").
 // Links to admin-docs intentionally omitted at review.
+// "Migration runbook that the installer prints" reworded at review (Erin) from "manual runbook
+// shipped with the release": the installer prints the on-disk path when it pauses.
+// Assisted-upgrade line added at review (Erin).
 
 == New features
+
+=== Support for iOS 27, macOS 27, and Xcode 27
+
+This release supports iOS 27.
+
+*Highlights*
+
+- Verified with macOS 26.5.1 and Xcode 26.5.
+- Verified with macOS 27 and Xcode 27.
+- Device lab administrators will receive separate guidance on upgrading a device lab to macOS 27 or Xcode 27.
+- For questions, contact Kobiton Support.
+
+// Source: PR review (Erin).
 
 === Portal Auto Logout
 
@@ -274,12 +292,6 @@ NOTE: On iOS 12, 13, and 14, `queryAppState` continues to return `1` for a backg
 
 // Source: 4_28.adoc, 2026-09-11.adoc
 
-=== Reports
-
-- *Usage Report* summary cards now show their values in full.
-
-// Source: 2026-07-31.adoc (KOB-53958)
-
 === Scriptless Test Runs
 
 - Scriptless Test Cases that use only the Home screen now launch the Home screen and run.
@@ -297,7 +309,7 @@ NOTE: On iOS 12, 13, and 14, `queryAppState` continues to return `1` for a backg
 
 [NOTE]
 ====
-Kobiton platform components now use date-based versioning, with versions identified by the build date in YYMM.DD format. The Standalone release keeps its own release number, so it no longer matches the Portal version number.
+Kobiton platform components now use date-based versioning, with versions identified by the build date in YYMM.DD format. This Standalone release uses a separate version number from the Portal version.
 
 This release corresponds to the following component versions:
 
