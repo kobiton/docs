@@ -5,321 +5,17 @@
 Cloud release notes are typically published weekly and summarize changes since the previous publication. Kobiton uses date-based release versioning, with releases identified by the build date in YYMM.DD format. Version information for individual software components is available in the Component versions section.
 ====
 
-// Source: KOB-55040 from PR #628
-// https://github.com/kobiton/docs/pull/628
-
-== Web context recovery for iOS sessions
-
-- iOS sessions now refresh the device web inspector connection as the session starts. A device that has stopped reporting web contexts recovers on its next session, with no manual step on the device.
-- This applies to every iOS session that reads a web context, including `appium:autoWebview` setup, Safari automation, and the web portion of the view tree capture.
-- Previously, once a device entered this state, every later session on that device failed at setup with `Unable to find any web views`, and rebooting the device was the only way to clear it.
-- A connection that breaks during a session stays unavailable for the rest of that session. The next session on that device starts with a working connection.
-- Android sessions are unchanged.
-
-// REVIEWER NOTE: Scope check before publishing. The Jira summary is worded as "restore
-// automated Safari launch to a URL," which Apple removed some years ago. That capability
-// was not restored. The shipped change is web inspector connection recovery at session
-// start. Do not let the release-page heading or wording promise automated Safari
-// navigation to a URL.
-//
-// REVIEWER NOTE: This is a recovery improvement, not a root-cause fix. Engineering can
-// reproduce the state on demand by toggling Safari web inspector off and back on, but the
-// original trigger on the reporting device is still unknown and the investigation is open.
-// The customer-visible improvement is "the next session recovers by itself," not "devices
-// no longer lose web contexts."
-//
-// REVIEWER NOTE: Terminology check. The source describes the third affected path as "the
-// web part of the view tree capture." Confirm the customer-facing name for that surface
-// before publishing, and replace the phrase if docs already use a different term.
-//
-// REVIEWER NOTE: Possible user-facing side effect, not published above because the source
-// does not state an impact. Each iOS session now pays one web inspector reconnect at
-// startup, and a session that requests a web context very early absorbs that reconnect
-// inside its own timeout. Confirm with engineering whether any guidance on
-// `appium:autoWebviewTimeout` is warranted. Add a bullet only if the answer is yes.
-//
-// REVIEWER NOTE: Adjacent page worth a look, not changed in this PR. The cleanup policy
-// reference states that resetting device settings "turns on Web Inspector for Safari."
-// The source evidence does not connect cleanup policy to the lost web context state, so
-// nothing was asserted. Revisit if the root-cause investigation lands on that path.
-
-// Source: KOB-55040
-
-// Source: KOB-54991 from PR #623
-// https://github.com/kobiton/docs/pull/623
-
-== Device passcode
-
-- In manual sessions on iOS devices with a custom numeric passcode, selecting *Power* to lock the screen and selecting it again now unlocks the device automatically. Previously, the device stayed on the lock screen, app installation and other device operations failed, and users had to enter the passcode on the physical device.
-- Devices with a 4-digit, 6-digit, or custom alphanumeric passcode continue to unlock automatically.
-- On iOS 15.4.1 and 16.7.10, device preparation no longer stalls. Setting a device passcode no longer relaunches the *Settings* app repeatedly, and on-device automation no longer restarts in a loop.
-
-// REVIEWER NOTE: Applies to organizations with passcode mode enabled. The ticket describes
-// the organization as being in "PIN passcode mode". Confirm whether this maps to passcode
-// mode 1 (as in the 4.14 and 2026-09-18 notes) before naming a mode number in the entry.
-//
-// REVIEWER NOTE: The ticket description reports the failure across all three devices tested,
-// while the engineering root-cause field narrows the failing case to custom numeric passcodes
-// only. The QA test plan agrees with the narrower scope, so the entry is scoped to custom
-// numeric passcodes. Confirm with engineering whether Kobiton-generated PINs are custom
-// numeric in practice (the reproduction used an 8-digit passcode), which would make this the
-// common case for PIN mode organizations.
-//
-// REVIEWER NOTE: The third bullet comes from two additional defects found during testing and
-// recorded in the engineering root-cause and customer-impact fields. Its user-visible effect
-// is stated only briefly in Jira. Drop the bullet if the docs team treats it as too internal.
-//
-// REVIEWER NOTE: Existing public docs do not describe auto-unlock after Power. The
-// manual-testing device-controls page (Power section) only says Power locks the screen, so no
-// public page update is included. The expected auto-unlock behavior is documented in the
-// admin guide "Enable passcode for Kobiton 4+ devices", which is outside this repository.
-// That page's Known Limitations section also describes a disabled Next button in PIN mode.
-// Check whether the admin page needs a matching update.
-//
-// REVIEWER NOTE: Terminology. "Custom numeric passcode" follows the iOS passcode-type label.
-// Public docs do not currently name passcode types. Confirm the wording the docs team wants.
-//
-// REVIEWER NOTE: Out of scope. The ticket also records that setting a device passcode reports
-// success without confirming the passcode was applied. The evidence does not say this was
-// addressed, so it is not covered here.
-
-// Source: KOB-54991
-
-// Source: KOB-54815 from PR #624
-// https://github.com/kobiton/docs/pull/624
-
-== deviceConnect
-
-- iOS 17.4 and later devices now stay connected when deviceConnect mounts the Developer Disk Image (DDI). Previously, the mount could reset the device connection.
-
-// REVIEWER NOTE: Intentionally omitted (not supported by evidence or not customer-facing):
-// - Tunnel implementation details. A previous CoreDevice tunnel entry was removed at review as
-//   internal engineering framing; this entry states only the observable connection behavior.
-// - Throughput improvement: the ticket expects it, but QA recorded only a baseline, with no
-//   after-change measurement.
-// - Xcode / devicectl coexistence: stated as intent; no QA scenario confirms it.
-// - Root requirement removal: engineering says this is one step in a larger project; root is
-//   still required, so do not claim it.
-// - New trace switches and settings: engineering asked that users not change internal configuration.
-// - Internal Support Notes output (also requested on the ticket) is internal only.
-//
-// OPEN: KOB-55146 (macOS 27, directly attached devices) is still unsettled. Do not imply
-//   macOS 27 coverage beyond the mount behavior above.
-
-// Source: KOB-55104 from PR #629
-// https://github.com/kobiton/docs/pull/629
-
-== App installation
-
-- Installing an app during a session no longer leaves a full-size copy of that app in temporary storage on the host machine. Previously, every install wrote a copy that was never removed, so installing a series of different apps consumed host disk space until deviceConnect restarted. Once temporary storage filled, later installs failed with `Failed to install the application on the device` and `No space left on device`.
-- Installing an iOS app no longer expands the entire `.ipa` on the host machine to read the app's metadata.
-- Installing an app from the Apps repository now uses no additional temporary storage on the host machine. Install behavior is otherwise unchanged on iOS and Android.
-
-[NOTE]
-====
-Copies left in temporary storage by earlier releases are removed when deviceConnect restarts.
-====
-
-[NOTE]
-====
-On iOS, the first install of an app that Kobiton re-signs still uses temporary storage while re-signing runs. This release does not change that.
-====
-
-// REVIEWER NOTE: The ticket summary names iOS only, but QA confirmed the leftover-copy
-// defect on Android as well, with .apk and .aab installs both leaving full-size copies
-// before the fix. The first bullet is therefore written platform-neutral, and only the
-// metadata bullet is scoped to iOS.
-//
-// REVIEWER NOTE: The "removed when deviceConnect restarts" NOTE follows from the ticket
-// stating that copies persist until deviceConnect restarts, and from QA observing a
-// restart clear the accumulated leftovers. Confirm with engineering that an upgrade
-// restart is the intended way for customers to reclaim that space before publishing.
-//
-// REVIEWER NOTE: The re-signing NOTE is included because it is residual user-visible
-// behavior that this fix does not address. QA recorded an approximate multiple of the app
-// size for that temporary usage; the figure is left out here as a reference measurement
-// rather than a confirmed published limit. Add it if the docs team wants a number.
-//
-// REVIEWER NOTE: QA also recorded that apps of several GB fail during signing before the
-// install path is reached, so the largest app verified was 550 MB. Not documented as a
-// product limit here, because the evidence is a test-scope note rather than a confirmed
-// constraint. Open question for engineering.
-
-// Source: KOB-55104
-
-// Source: KOB-54337 from PR #620
-// https://github.com/kobiton/docs/pull/620
-
-- The *Virtual Devices* tab in *Device List* now shows each Android emulator under its configured device name. Previously, every emulator on a host appeared under a shared model string such as `sdk_gphone64_arm64`, so you could not tell emulators on the same host apart.
-- The *Search devices* box matches an emulator by its configured name.
-- The *Device Model* column continues to show the emulator model string.
-
-// Source: KOB-54337
-
-// REVIEWER NOTE: emulator-entry precedent
-// The 2026-08-07 page records a manager decision to remove KOB-54332, an Android emulator fix,
-// on the grounds that fixes for surfaces with no active customer usage are not advertised and
-// emulator usage is not widespread. This ticket is flagged in Jira for a customer-facing release
-// note, and the 2026-09-11 page already references the Virtual Devices tab publicly, so the entry
-// is drafted here. Confirm it still matches current guidance on publishing emulator changes
-// before it ships.
-//
-// REVIEWER NOTE: verification limits
-// QA verified the naming fix across ten emulators on Portal, deviceConnect Console, and the v1
-// device list, including service restarts and emulator relaunch. Two cases did not close: the
-// device label on a completed manual session depends on a separate fix that was absent from the
-// verified build, and the behavior for an emulator that reports no configured name and for a
-// HarmonyOS emulator was not exercised. None of those are claimed above.
-//
-// REVIEWER NOTE: out of scope
-// Device bundles cannot target a virtual device yet, and the v2 device endpoints were not
-// checked. Both are tracked separately and are not part of this entry.
-
-// Source: KOB-55087 from PR #622
-// https://github.com/kobiton/docs/pull/622
-
-== Android device initialization
-
-- Android 11 and later devices now initialize and come online as expected. Previously, initialization on an affected device could fail and retry about every 30 seconds, leaving the device unavailable for sessions. No configuration change is required.
-
-// Source: KOB-55087
-
-// Source: KOB-55177 from PR #635
-// https://github.com/kobiton/docs/pull/635
-
-- Sessions on iOS and iPadOS 27.2 devices connected directly to a Mac host now connect to the device's services. Previously, the device could refuse these connections, which prevented the session from starting. Devices running iOS 17 through 26, and devices connected through the GEM, are unaffected.
-
-// REVIEWER NOTE: QA could NOT reproduce the refused-connection failure on pre-fix builds, so
-// the "could refuse these connections" wording reflects the ticket description, not a failure
-// observed in the lab. Consider softening to a reliability statement if the SME prefers.
-//
-// "Devices connected through the GEM" maps the ticket's "forwarded usbmuxd / Proxy tunnel" path
-// to customer terminology. Confirm with the SME that this mapping is accurate, and whether the
-// fix applies to Cloud, Standalone, or both deployments.
-//
-// "Sessions" is generalized from the QA scenarios (manual session, app install, Appium session).
-// The ticket names only "a CoreDevice session". Confirm wording.
-//
-// The Supported OS versions page already lists iOS & iPadOS 27, so no product-doc update is
-// included with this change.
-// Source: KOB-55177
-
-// Source: KOB-55193 from PR #631
-// https://github.com/kobiton/docs/pull/631
-
-== iOS device connectivity
-
-- iOS 17 and later devices on macOS hosts in Standard mode now come back online after deviceConnect enables Developer Mode, after a device reboot, or after a cable reconnect. Previously, the device stayed offline until deviceConnect was restarted. Lightning mode hosts were not affected.
-
-// REVIEWER NOTE: Scope comes from the ticket's impact field: macOS hosts with iOS 17 and later
-// devices only. Engineering confirmed on the ticket that Lightning mode hosts do not use the
-// affected connection path, so the bullet is limited to Standard mode. Windows and Linux hosts, Android devices, and iOS 16 and earlier are stated as
-// untouched, so the bullet names only the affected combination. QA's passing round confirms
-// iOS 16 and Android devices on the same hosts were unaffected.
-//
-// REVIEWER NOTE: The fix that shipped is broader than the fix first described on the ticket.
-// After the first QA round failed, engineering merged a follow-up change that puts the newer
-// macOS tunnel path behind a host configuration setting and turns it off by default. The
-// passing QA round ran with that setting off. The setting is admin-level host configuration,
-// and engineering opened a separate ticket (KOB-55246) to fix and re-enable the path. It is deliberately
-// not documented here or in admin docs. Confirm with engineering before documenting it.
-//
-// REVIEWER NOTE (BLOCKER): The ticket states this defect was introduced by KOB-54815. Confirm that
-// KOB-54815 reached customers in an earlier release. If both changes ship in the same
-// release, customers never saw this defect and this bullet can be dropped.
-//
-// REVIEWER NOTE: The passing QA round also covered recovery after a USB hub loses power,
-// after moving a device to another hub, and after the Mac host reboots. Those are test
-// results, not reported customer symptoms, so they are not listed as fixed behavior.
-//
-// REVIEWER NOTE: The Documentation Required field also lists internal Support Notes for the
-// ML Support team. That output is internal only and is deliberately not part of this partial.
-
-// Source: KOB-55193
-
-// Source: KOB-55182 from PR #625
-// https://github.com/kobiton/docs/pull/625
-
-== Device passcode
-
-- The device passcode is now set after the cleanup policy runs, so devices become available with a passcode after a session ends. Previously, cleanup removed the passcode after it was set, so the next session started on an unlocked device. Devices managed by a mobile device management (MDM) solution then opened to an MDM prompt requiring a passcode.
-
-_Applies to organizations that use passcode mode with a cleanup policy._
-
-// REVIEWER NOTE: the availability line is deliberately generic. The source evidence says the
-// issue hits "orgs that run a cleanup policy with passcode enabled" and does not name passcode
-// mode numbers. The cleanup-configurations page runs "Remove device passcode" only for passcode
-// mode 1 or 2, so the affected modes are likely 1 and 2. Confirm and tighten the line.
-//
-// REVIEWER NOTE: the bullet does not name platforms. The reported case was iOS; QA verified the
-// fix on iOS 17.5.1 through 26.5.2 and Android 13 and 14. Add a platform scope only if SME
-// confirms the defect affected both platforms before the fix.
-//
-// REVIEWER NOTE: the ticket description frames the defect as "availability announced before the
-// passcode-set step," while the engineering root-cause field says cleanup removed a passcode that
-// had already been set. Both describe the same visible result. The bullet follows the
-// engineering root-cause field, which describes the shipped fix. Confirm with SME.
-//
-// REVIEWER NOTE: a separate passcode-set hardening for slow iOS Settings launches is mentioned in
-// the ticket as out of scope for this fix. It is not included here.
-//
-// REVIEWER NOTE: the ticket also requests an internal Support Notes communication. That note is
-// out of scope for this repository and is not drafted here.
-
-// Source: KOB-55053 from PR #632
-// https://github.com/kobiton/docs/pull/632
-
-- iPad passcodes now persist through a device language change during a session. Previously, an iPad could return to *Available* without its passcode, and mobile device management (MDM) tools would flag it as having no passcode.
-
-// Source: KOB-55053
-
-// REVIEWER NOTE: affected scope
-// The description says the issue reproduced consistently on iPadOS 18.x and 26.x. The customer
-// impact and root cause fields narrow it to some iPadOS builds where the on-screen keyboard
-// flickers while the passcode screen is open. The entry says "could" and names no iPadOS
-// version for that reason. iPhone is not affected. Confirm with the SME whether a version
-// range should be stated.
-//
-// REVIEWER NOTE: relationship to passcode mode
-// The ticket says "passcode configured" and does not name a passcode mode. The supported
-// platforms page states passcode mode is not supported on iOS/iPadOS 26.0 to 26.2. Confirm
-// whether this entry should reference passcode mode and whether that limitation affects scope.
-
-// Source: KOB-55244 from PR #633
-// https://github.com/kobiton/docs/pull/633
-
-=== Analytics reports
-
-- Analytics reports now count a device for each hour it was retained, including retains that have since ended or expired. Previously, reports could show fewer retained devices than were actually retained.
-
-// REVIEWER NOTE: The ticket names the Parallel Sessions and Retained Devices reports as affected.
-// Confirm which report(s) display this retained device count before naming a specific report here.
-// A related report update (KOB-55190) is still open.
-//
-// REVIEWER NOTE: A Jira test comment found a second issue where a retained device that has never
-// run a session still showed a count of 0. The comment proposes a combined fix, but the ticket does
-// not confirm that the second fix shipped under this ticket. The entry above covers only the
-// confirmed fix. Confirm scope with engineering before broadening it.
-//
-// REVIEWER NOTE: Confirm whether previously reported hours were corrected. Do not add a claim about
-// historical data unless engineering confirms it.
-//
-// REVIEWER NOTE: Jira comment notes a separate, unfixed limitation: very short sessions or retains
-// (under about one minute) may not be counted. Not included here; decide whether it belongs in
-// known issues.
-
 // Source: KOB-55157 from PR #626
 // https://github.com/kobiton/docs/pull/626
 
-== New OS support
+== Support for macOS 27
 
-NOTE: Before upgrading Mac mini hosts to a new OS version, ensure that all connected iOS and iPadOS devices are running supported OS versions and that a compatible version of Xcode is installed. For details on which macOS and Xcode versions are required, see Apple’s https://developer.apple.com/support/xcode/[compatibility information,window=read-later].
+[NOTE]
+====
+Before upgrading Mac mini hosts to a new OS version, confirm every connected iOS or iPadOS device runs a supported OS version and that a compatible Xcode is installed. For macOS and Xcode compatibility, see Apple's https://developer.apple.com/support/xcode/[compatibility information,window=read-later].
+====
 
-This release adds support for the following:
-
-* macOS 27 for deviceConnect host
-
-iOS and iPadOS devices attached to a Mac mini host running macOS 27 come online and run manual and automated sessions. Devices attached to hosts on earlier supported macOS versions are unaffected.
+iOS and iPadOS devices attached to a Mac mini host running macOS 27 come online and run manual and automated sessions. Earlier supported macOS versions are unaffected.
 
 // REVIEWER NOTE: Framed as host OS support, following the "New OS support" precedent used for
 // macOS 26 Tahoe on the 4.23 and 4.23S pages. The underlying change is a CoreDevice/RSD tunnel
@@ -370,7 +66,7 @@ iOS and iPadOS devices attached to a Mac mini host running macOS 27 come online 
 
 - AI assistants connected to the Kobiton MCP server can now read a test session's validations one type at a time. Seven new tools cover accessibility, crash, response time, blocker, element selection, and Flex Correct findings: `listAccessibilityValidations`, `listCrashValidations`, `listResponseTimeValidations`, `listBlockerValidations`, `listElementSelectionValidations`, `listFlexCorrects`, and `getAccessibilityValidationsSummary`.
 - Each list tool returns at most 20 findings per call, with `page`, `total_pages`, and `total_items` counts. An assistant pages through a large session instead of pulling every finding into context at once.
-- `getAccessibilityValidationsSummary` returns a session's accessibility counts by finding type and issue name, with the number of steps scanned and the time of the latest finding. It returns no findings.
+- `getAccessibilityValidationsSummary` returns a session's accessibility counts by finding type and issue name, with the number of steps scanned and the time of the latest finding, but not the findings themselves.
 - `listAccessibilityValidations` filters by finding type: `TOUCH_TARGET_SIZE`, `COLOR_CONTRAST`, or `CONTENT_LABELING`. Items are lean by default. Request the element, metadata, screen, and screenshot URL fields through the `include` parameter.
 - New paged REST endpoints back the tools: `GET /v2/validations/accessibility`, `/crash`, `/response-time`, `/blocker`, `/element-selection`, `/flex-correct`, and `GET /v2/validations/accessibility/summary`. The existing `GET /v2/validations` used by Kobiton Portal is unchanged.
 
@@ -389,20 +85,271 @@ iOS and iPadOS devices attached to a Mac mini host running macOS 27 come online 
 
 // Source: KOB-54817 from PR #605
 // https://github.com/kobiton/docs/pull/605
+// Source: KOB-55244 from PR #633
+// https://github.com/kobiton/docs/pull/633
 
 == Reporting
 
-- New: the *Device Utilization* report shows device usage by sessions, testing minutes, and unique users for a date range you select. Organization admins open it from *Reports*, under the *Device* category.
+- The *Device Utilization* report shows device usage by sessions, testing minutes, and unique users for a date range you select. Organization admins open it from *Reports*, under the *Device* category.
 - The report lists device name, custom device name, manufacturer, OS, version, UDID, team, and public or private device type alongside the usage counts, sorted so the most-used devices appear first.
-- Filter the report by date range and by public or private devices, and narrow it to a team through the table search box.
+- Filter the report by date range and by public or private devices. Use the table search box to filter by team.
+- Analytics reports now count every hour a device was retained, including retains that have since ended or expired. Previously, reports could show fewer retained devices than were actually retained.
 
-// REVIEWER NOTE: the *Public/Private* filter label is taken from the originating ticket.
-// Replace it with the shipped control label if one differs.
+// REVIEWER NOTE (KOB-54817): the *Public/Private* filter label is taken from the originating
+// ticket. Replace it with the shipped control label if one differs.
+//
+// REVIEWER NOTE (KOB-55244): The ticket names the Parallel Sessions and Retained Devices reports
+// as affected. Confirm which report(s) display this retained device count before naming a specific
+// report here. A related report update (KOB-55190) is still open.
+//
+// REVIEWER NOTE (KOB-55244): A Jira test comment found a second issue where a retained device that
+// has never run a session still showed a count of 0. The comment proposes a combined fix, but the
+// ticket does not confirm that the second fix shipped under this ticket. The entry above covers
+// only the confirmed fix. Confirm scope with engineering before broadening it.
+//
+// REVIEWER NOTE (KOB-55244): Confirm whether previously reported hours were corrected. Do not add
+// a claim about historical data unless engineering confirms it.
+//
+// REVIEWER NOTE (KOB-55244): Jira comment notes a separate, unfixed limitation: very short sessions
+// or retains (under about one minute) may not be counted. Not included here; decide whether it
+// belongs in known issues.
 
 // Source: KOB-54817
+// Source: KOB-55244
 
-// Source: Unknown ticket from PR #595
-// https://github.com/kobiton/docs/pull/595
+// Source: KOB-55193 from PR #631
+// https://github.com/kobiton/docs/pull/631
+// Source: KOB-55177 from PR #635
+// https://github.com/kobiton/docs/pull/635
+
+== iOS device connectivity
+
+- iOS 17 and later devices on macOS hosts in Standard mode now come back online after deviceConnect enables Developer Mode, after a device reboot, or after a cable reconnect. Previously, the device stayed offline until deviceConnect was restarted. Lightning mode hosts were not affected.
+- Sessions on iOS and iPadOS 27.2 devices connected directly to a Mac host now connect to the device's services. Previously, these sessions could fail to start. Devices running iOS 17 through 26, and devices connected through the GEM, are unaffected.
+
+// REVIEWER NOTE (KOB-55193): Scope comes from the ticket's impact field: macOS hosts with iOS 17
+// and later devices only. Engineering confirmed on the ticket that Lightning mode hosts do not use
+// the affected connection path, so the bullet is limited to Standard mode. Windows and Linux hosts,
+// Android devices, and iOS 16 and earlier are stated as untouched, so the bullet names only the
+// affected combination. QA's passing round confirms iOS 16 and Android devices on the same hosts
+// were unaffected.
+//
+// REVIEWER NOTE (KOB-55193): The fix that shipped is broader than the fix first described on the
+// ticket. After the first QA round failed, engineering merged a follow-up change that puts the
+// newer macOS tunnel path behind a host configuration setting and turns it off by default. The
+// passing QA round ran with that setting off. The setting is admin-level host configuration, and
+// engineering opened a separate ticket (KOB-55246) to fix and re-enable the path. It is
+// deliberately not documented here or in admin docs. Confirm with engineering before documenting it.
+//
+// REVIEWER NOTE (KOB-55193 BLOCKER): The ticket states this defect was introduced by KOB-54815.
+// KOB-54815 also ships on this same release page (see == deviceConnect below), so customers may
+// never have seen this defect. Decide whether to drop this bullet before publishing.
+//
+// REVIEWER NOTE (KOB-55193): The passing QA round also covered recovery after a USB hub loses
+// power, after moving a device to another hub, and after the Mac host reboots. Those are test
+// results, not reported customer symptoms, so they are not listed as fixed behavior.
+//
+// REVIEWER NOTE (KOB-55193): The Documentation Required field also lists internal Support Notes
+// for the ML Support team. That output is internal only and is deliberately not part of this partial.
+//
+// REVIEWER NOTE (KOB-55177): "Devices connected through the GEM" maps the ticket's "forwarded
+// usbmuxd / Proxy tunnel" path to customer terminology. Confirm with the SME that this mapping is
+// accurate, and whether the fix applies to Cloud, Standalone, or both deployments.
+//
+// REVIEWER NOTE (KOB-55177): "Sessions" is generalized from the QA scenarios (manual session, app
+// install, Appium session). The ticket names only "a CoreDevice session". Confirm wording.
+//
+// REVIEWER NOTE (KOB-55177): The Supported OS versions page already lists iOS & iPadOS 27, so no
+// product-doc update is included with this change.
+
+// Source: KOB-55193
+// Source: KOB-55177
+
+// Source: KOB-54815 from PR #624
+// https://github.com/kobiton/docs/pull/624
+
+== deviceConnect
+
+- iOS 17.4 and later devices now stay connected when deviceConnect mounts the Developer Disk Image (DDI). Previously, the mount could reset the device connection.
+
+// REVIEWER NOTE: Intentionally omitted (not supported by evidence or not customer-facing):
+// - Tunnel implementation details. A previous CoreDevice tunnel entry was removed at review as
+//   internal engineering framing; this entry states only the observable connection behavior.
+// - Throughput improvement: the ticket expects it, but QA recorded only a baseline, with no
+//   after-change measurement.
+// - Xcode / devicectl coexistence: stated as intent; no QA scenario confirms it.
+// - Root requirement removal: engineering says this is one step in a larger project; root is
+//   still required, so do not claim it.
+// - New trace switches and settings: engineering asked that users not change internal configuration.
+// - Internal Support Notes output (also requested on the ticket) is internal only.
+//
+// OPEN: KOB-55146 (macOS 27, directly attached devices) is still unsettled. Do not imply
+//   macOS 27 coverage beyond the mount behavior above.
+
+// Source: KOB-54815
+
+// Source: KOB-55104 from PR #629
+// https://github.com/kobiton/docs/pull/629
+
+== App installation
+
+- Installing an app during a session no longer leaves a full-size copy of that app in temporary storage on the host machine. Previously, every install added a copy that was never reclaimed until deviceConnect restarted.
+- Once temporary storage filled, installs on the affected host would fail with `Failed to install the application on the device` and `No space left on device`.
+- Installing an iOS app no longer expands the entire `.ipa` on the host machine to read the app's metadata.
+- Installing an app from the Apps repository now uses no additional temporary storage on the host machine. Install behavior is otherwise unchanged on iOS and Android.
+- Copies left in temporary storage by earlier releases are removed when deviceConnect restarts.
+
+[NOTE]
+====
+On iOS, the first install of a re-signed app still uses temporary storage while re-signing runs. This release does not change that.
+====
+
+// REVIEWER NOTE: The ticket summary names iOS only, but QA confirmed the leftover-copy
+// defect on Android as well, with .apk and .aab installs both leaving full-size copies
+// before the fix. The first bullet is therefore written platform-neutral, and only the
+// metadata bullet is scoped to iOS.
+//
+// REVIEWER NOTE: The "removed when deviceConnect restarts" bullet follows from the ticket
+// stating that copies persist until deviceConnect restarts, and from QA observing a
+// restart clear the accumulated leftovers. Confirm with engineering that an upgrade
+// restart is the intended way for customers to reclaim that space before publishing.
+//
+// REVIEWER NOTE: The re-signing NOTE is included because it is residual user-visible
+// behavior that this fix does not address. QA recorded an approximate multiple of the app
+// size for that temporary usage; the figure is left out here as a reference measurement
+// rather than a confirmed published limit. Add it if the docs team wants a number.
+//
+// REVIEWER NOTE: QA also recorded that apps of several GB fail during signing before the
+// install path is reached, so the largest app verified was 550 MB. Not documented as a
+// product limit here, because the evidence is a test-scope note rather than a confirmed
+// constraint. Open question for engineering.
+
+// Source: KOB-55104
+
+// Source: KOB-54991 from PR #623
+// https://github.com/kobiton/docs/pull/623
+// Source: KOB-55182 from PR #625
+// https://github.com/kobiton/docs/pull/625
+// Source: KOB-55053 from PR #632
+// https://github.com/kobiton/docs/pull/632
+
+== Device passcode
+
+_Applies to organizations with passcode mode enabled._
+
+- In manual sessions on iOS devices with a custom numeric passcode, selecting *Power* to lock the screen and selecting it again now unlocks the device automatically. Previously, the device stayed on the lock screen, app installation and other device operations failed, and users had to enter the passcode on the physical device.
+- Devices with a 4-digit, 6-digit, or custom alphanumeric passcode continue to unlock automatically.
+- On iOS 15.4.1 and 16.7.10, device preparation no longer stalls. Setting a device passcode no longer relaunches the *Settings* app repeatedly, and on-device automation no longer restarts in a loop.
+- The device passcode is now set after the cleanup policy runs, so devices become available with a passcode after a session ends. Previously, cleanup removed the passcode after it was set, so the next session started on an unlocked device. Devices managed by a mobile device management (MDM) solution then opened to an MDM prompt requiring a passcode.
+- iPad passcodes now persist through a device language change during a session. Previously, an iPad could return to *Available* without its passcode, and mobile device management (MDM) tools would flag it as having no passcode.
+
+// REVIEWER NOTE (KOB-54991): Applies to organizations with passcode mode enabled. The ticket
+// describes the organization as being in "PIN passcode mode". Confirm whether this maps to passcode
+// mode 1 (as in the 4.14 and 2026-09-18 notes) before naming a mode number in the entry.
+//
+// REVIEWER NOTE (KOB-54991): The ticket description reports the failure across all three devices
+// tested, while the engineering root-cause field narrows the failing case to custom numeric
+// passcodes only. The QA test plan agrees with the narrower scope, so the entry is scoped to custom
+// numeric passcodes. Confirm with engineering whether Kobiton-generated PINs are custom numeric
+// in practice (the reproduction used an 8-digit passcode), which would make this the common case
+// for PIN mode organizations.
+//
+// REVIEWER NOTE (KOB-54991): The third bullet comes from two additional defects found during
+// testing and recorded in the engineering root-cause and customer-impact fields. Its user-visible
+// effect is stated only briefly in Jira. Drop the bullet if the docs team treats it as too internal.
+//
+// REVIEWER NOTE (KOB-54991): Existing public docs do not describe auto-unlock after Power. The
+// manual-testing device-controls page (Power section) only says Power locks the screen, so no
+// public page update is included. The expected auto-unlock behavior is documented in the
+// admin guide "Enable passcode for Kobiton 4+ devices", which is outside this repository.
+// That page's Known Limitations section also describes a disabled Next button in PIN mode.
+// Check whether the admin page needs a matching update.
+//
+// REVIEWER NOTE (KOB-54991): Terminology. "Custom numeric passcode" follows the iOS passcode-type
+// label. Public docs do not currently name passcode types. Confirm the wording the docs team wants.
+//
+// REVIEWER NOTE (KOB-54991): Out of scope. The ticket also records that setting a device passcode
+// reports success without confirming the passcode was applied. The evidence does not say this was
+// addressed, so it is not covered here.
+//
+// REVIEWER NOTE (KOB-55182): The cleanup-policy bullet does not name platforms. The reported case
+// was iOS; QA verified the fix on iOS 17.5.1 through 26.5.2 and Android 13 and 14. Add a platform
+// scope only if SME confirms the defect affected both platforms before the fix.
+//
+// REVIEWER NOTE (KOB-55182): The ticket description frames the defect as "availability announced
+// before the passcode-set step," while the engineering root-cause field says cleanup removed a
+// passcode that had already been set. Both describe the same visible result. The bullet follows the
+// engineering root-cause field, which describes the shipped fix. Confirm with SME.
+//
+// REVIEWER NOTE (KOB-55182): A separate passcode-set hardening for slow iOS Settings launches is
+// mentioned in the ticket as out of scope for this fix. It is not included here.
+//
+// REVIEWER NOTE (KOB-55182): The ticket also requests an internal Support Notes communication.
+// That note is out of scope for this repository and is not drafted here.
+//
+// REVIEWER NOTE (KOB-55053): The description says the language-change issue reproduced consistently
+// on iPadOS 18.x and 26.x. The customer impact and root cause fields narrow it to some iPadOS
+// builds where the on-screen keyboard flickers while the passcode screen is open. The entry says
+// "could" and names no iPadOS version for that reason. iPhone is not affected. Confirm with the
+// SME whether a version range should be stated.
+//
+// REVIEWER NOTE (KOB-55053): The ticket says "passcode configured" and does not name a passcode
+// mode. The supported platforms page states passcode mode is not supported on iOS/iPadOS 26.0 to
+// 26.2. Confirm whether this entry should reference passcode mode and whether that limitation
+// affects scope.
+
+// Source: KOB-54991
+// Source: KOB-55182
+// Source: KOB-55053
+
+// Source: KOB-55040 from PR #628
+// https://github.com/kobiton/docs/pull/628
+
+== Web context recovery for iOS sessions
+
+- iOS sessions now refresh the device web inspector connection as the session starts. A device that has stopped reporting web contexts recovers on its next session, with no manual step on the device.
+- This applies to every iOS session that reads a web context, including `appium:autoWebview` setup, Safari automation, and the web portion of the view tree capture.
+- Previously, once a device entered this state, every later session on that device failed at setup with `Unable to find any web views`, and rebooting the device was the only way to clear it.
+- A connection that breaks during a session stays unavailable for the rest of that session. The next session on that device starts with a working connection.
+- Android sessions are unchanged.
+
+// REVIEWER NOTE: Scope check before publishing. The Jira summary is worded as "restore
+// automated Safari launch to a URL," which Apple removed some years ago. That capability
+// was not restored. The shipped change is web inspector connection recovery at session
+// start. Do not let the release-page heading or wording promise automated Safari
+// navigation to a URL.
+//
+// REVIEWER NOTE: This is a recovery improvement, not a root-cause fix. Engineering can
+// reproduce the state on demand by toggling Safari web inspector off and back on, but the
+// original trigger on the reporting device is still unknown and the investigation is open.
+// The customer-visible improvement is "the next session recovers by itself," not "devices
+// no longer lose web contexts."
+//
+// REVIEWER NOTE: Terminology check. The source describes the third affected path as "the
+// web part of the view tree capture." Confirm the customer-facing name for that surface
+// before publishing, and replace the phrase if docs already use a different term.
+//
+// REVIEWER NOTE: Possible user-facing side effect, not published above because the source
+// does not state an impact. Each iOS session now pays one web inspector reconnect at
+// startup, and a session that requests a web context very early absorbs that reconnect
+// inside its own timeout. Confirm with engineering whether any guidance on
+// `appium:autoWebviewTimeout` is warranted. Add a bullet only if the answer is yes.
+//
+// REVIEWER NOTE: Adjacent page worth a look, not changed in this PR. The cleanup policy
+// reference states that resetting device settings "turns on Web Inspector for Safari."
+// The source evidence does not connect cleanup policy to the lost web context state, so
+// nothing was asserted. Revisit if the root-cause investigation lands on that path.
+
+// Source: KOB-55040
+
+// Source: KOB-55087 from PR #622
+// https://github.com/kobiton/docs/pull/622
+
+== Android device initialization
+
+- Android 11 and later devices now initialize and come online. Previously, initialization on an affected device could fail and retry about every 30 seconds, leaving the device unavailable for sessions.
+
+// Source: KOB-55087
 
 == Component versions
 
