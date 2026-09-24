@@ -1,0 +1,36 @@
+// Release-note partial for KOB-55193.
+// Drafted by Robot Ranch from Jira evidence. Not reviewed, not published.
+
+== iOS device connectivity
+
+- Fixed an issue where iOS 17 and later devices on macOS hosts in Standard mode stayed offline after a restart. This happened when deviceConnect enabled Developer Mode on the device, when the device was rebooted, or when the device cable was reconnected. Previously, the device remained offline until deviceConnect was restarted. Lightning mode hosts were not affected.
+
+// REVIEWER NOTE: Scope comes from the ticket's impact field: macOS hosts with iOS 17 and later
+// devices only. Engineering confirmed on the ticket that Lightning mode hosts do not use the
+// affected connection path, so the bullet is limited to Standard mode. Windows and Linux hosts, Android devices, and iOS 16 and earlier are stated as
+// untouched, so the bullet names only the affected combination. QA's passing round confirms
+// iOS 16 and Android devices on the same hosts were unaffected.
+//
+// REVIEWER NOTE: The fix that shipped is broader than the fix first described on the ticket.
+// After the first QA round failed, engineering merged a follow-up change that puts the newer
+// macOS tunnel path behind a host configuration setting and turns it off by default. The
+// passing QA round ran with that setting off. The setting is admin-level host configuration,
+// and engineering opened a separate ticket (KOB-55246) to fix and re-enable the path. It is deliberately
+// not documented here or in admin docs. Confirm with engineering before documenting it.
+//
+// REVIEWER NOTE (BLOCKER): The ticket states this defect was introduced by KOB-54815. Confirm that
+// KOB-54815 reached customers in an earlier release. If both changes ship in the same
+// release, customers never saw this defect and this bullet can be dropped.
+//
+// REVIEWER NOTE: The passing QA round also covered recovery after a USB hub loses power,
+// after moving a device to another hub, and after the Mac host reboots. Those are test
+// results, not reported customer symptoms, so they are not listed as fixed behavior.
+//
+// REVIEWER NOTE: The release comment lists a deviceConnect build dated September 24, 2026
+// (release label 2609.24) and notes it is a bulk update that may not apply to every ticket.
+// The ticket has no fixVersion. This partial is not included on any release page yet. Confirm the target release page, and whether this also belongs on a Standalone page.
+//
+// REVIEWER NOTE: The Documentation Required field also lists internal Support Notes for the
+// ML Support team. That output is internal only and is deliberately not part of this partial.
+
+// Source: KOB-55193
