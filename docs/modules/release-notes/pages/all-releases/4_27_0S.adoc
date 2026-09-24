@@ -1,11 +1,14 @@
 = Kobiton 4.27.0S Release Notes
 :navtitle: Kobiton 4.27.0S release notes
 
-// KOB-54436. Compiled from existing Cloud release notes only: 4_28.adoc (2026-07-17) and the weekly Cloud pages 2026-07-24 through 2026-09-18.
+// KOB-54436. Sources: the Cloud release notes 4_28.adoc (2026-07-17) and the weekly Cloud pages
+// 2026-07-24 through 2026-09-18; the admin-docs page standalone/update/whats-new-4-27-0s.md
+// ("What's new in 4.27.0S" section); and the 2026-09-24 Standalone field report for the automate
+// plugin (MCP Test Runs limitations).
 // Scope: items released after 4.26.4S (2026-06-15), cut off at gigacap 2609.14,
-// deviceConnect 2609.11, and Portal 2609.18. The existing Cloud pages end at Portal 2609.16 and
-// deviceConnect 2609.10, so anything shipped between those builds and the cutoff is not covered.
-// Per the ticket, Jira was not searched for newer items.
+// deviceConnect 2609.11, and Portal 2609.18. The Cloud pages end at Portal 2609.16 and
+// deviceConnect 2609.10. Jira tickets shipped between those builds and the cutoff were reviewed
+// at review and none were added (including the Device Utilization report, KOB-54817).
 //
 // Excluded as already shipped in 4.26S or 4.26.4S: device-only view, guiding AI-driven sessions
 // from device-only view, `am start` ADB fix, app versions with missing binary files, app-signing
@@ -23,7 +26,7 @@ Standalone 4.27.0S changes configuration and user data paths, service commands, 
 
 *Highlights*
 
-- Requires kobiCTL 1.9.0 or later. One kobiCTL package now covers both Ubuntu 22.04 and Ubuntu 24.04.
+- 4.27.0S requires kobiCTL 1.9.0 or later. One kobiCTL package now covers both Ubuntu 22.04 and Ubuntu 24.04.
 - Configuration files, including `infra.env`, `kobiton.license`, and the SSL certificate and key, move from `/ml/var/kobiton-op/config/` to `/etc/kobiton/`.
 - Portal user data moves from `/ml/var/kobiton-op/persistence` to `/var/lib/kobiton`.
 - Update any script or runbook that writes to the old configuration or user data paths.
@@ -46,10 +49,10 @@ Org Admins can now sign users out of the Portal automatically after a set durati
 
 *Highlights*
 
-- Turn on Auto Logout under *Account > Settings > Other Settings*. Scroll to the *Auto Logout* setting and select the checkbox.
+- To turn on Auto Logout, select the *Auto Logout* checkbox under *Account > Settings > Other Settings*.
 - When the checkbox is selected, a *Log users out after* field appears. Enter a whole number and select *Hour(s)* or *Day(s)*.
 - The minimum timeout is 1 hour. Clear the checkbox to turn Auto Logout off.
-- When the configured duration elapses, users are redirected to the sign-in page with the message "Your session has expired. Please log in again." No warning or "stay logged in" prompt appears before sign-out.
+- When the configured duration elapses, the Portal redirects users to the sign-in page with the message "Your session has expired. Please log in again." No warning or "stay logged in" prompt appears before sign-out.
 - If a user has an ongoing manual session when the timer expires, sign-out is deferred until that session ends.
 - After signing in again, users return to the page they were on before the session expired.
 - Kobiton enforces session expiry independently of your identity provider or SSO.
@@ -127,7 +130,7 @@ Org Admins can now configure settings for every host machine from one *Settings*
 
 === API key visibility
 
-- API keys on *Settings > API Keys* are hidden by default. Select the eye icon next to a key to show or hide its value. Each key is controlled independently, and all keys return to hidden when you leave the page.
+- API keys on *Settings > API Keys* are hidden by default. Select the eye icon next to a key to show or hide its value. Show or hide each key independently. All keys are hidden again when you leave the page.
 - The *Copy* action copies the key value whether the key is hidden or shown.
 - A new *Created* column shows the date each key was generated.
 
@@ -204,7 +207,7 @@ NOTE: On iOS 12, 13, and 14, `queryAppState` continues to return `1` for a backg
 - The CLI now retries transient connection failures automatically.
 - Fixed CLI sessions failing intermittently with `[MH-400] Failed to book device`.
 - Fixed the CLI writing the pre-signed upload URL and the session token to client-visible output.
-- Improved handling of CLI sessions to prevent stale CLI sessions from persisting.
+- Improved CLI session handling to prevent stale sessions from persisting.
 - Fixed an issue where the CLI failed to install apps on Standalone deployments.
 
 // Source: 4_28.adoc, 2026-07-24.adoc, 2026-08-14.adoc, 2026-08-21.adoc, 2026-07-31.adoc (KOB-54281)
