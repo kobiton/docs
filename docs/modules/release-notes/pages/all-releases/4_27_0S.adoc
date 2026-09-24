@@ -101,14 +101,15 @@ Claude can now create Test Runs from saved Scriptless Test Cases and monitor eac
 
 *Known limitations*
 
-- If a private certificate authority issues the Portal's SSL certificate, monitoring fails with `unable to get local issuer certificate`. Trust the certificate on each computer that runs Claude Code, then set `NODE_OPTIONS=--use-system-ca` before starting Claude Code. The `--use-system-ca` option requires Node.js 22.15 or later, or 23.8 or later. For steps to trust the root certificate, see xref:ai:mcp/claude-code.adoc#_trust_self_signed_ssl_certificate_standalone_only[Trust self-signed SSL certificate].
+- If a private certificate authority issues the Portal's SSL certificate, trust the root certificate on each computer that runs Claude Code. For steps, see xref:ai:mcp/claude-code.adoc#_trust_self_signed_ssl_certificate_standalone_only[Trust self-signed SSL certificate]. Even with the certificate trusted, monitoring fails with `unable to get local issuer certificate`. Claude can resolve this by rerunning the monitor with `NODE_OPTIONS=--use-system-ca`. The option requires Node.js 22.15 or later, or 23.8 or later. If Claude does not apply the option on its own, ask Claude to use it.
 - Live Remediation is not yet supported on Standalone deployments.
 
 // Source: 4_28.adoc (feature description) and claude-standalone/automate-plugin-field-report.md
 // (2026-09-24 Standalone field test of automate plugin v1.9.0: create-test-run and monitor-test-run
 // passed with workarounds). Caveats limited at review to the private-CA workaround and Live Remediation.
-// REVIEWER NOTE: the field report applied NODE_OPTIONS to the monitor's poller command. Confirm that
-// setting it in the shell that starts Claude Code reaches the poller before publishing.
+// NODE_OPTIONS workaround: in the field test, Claude applied it to the monitor's poller command on its
+// own after the certificate error. Reworded at review to let Claude apply it instead of instructing
+// users to set it manually.
 
 === Centralized host machine settings in Device Management
 
