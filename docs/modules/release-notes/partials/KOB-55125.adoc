@@ -3,56 +3,57 @@
 
 == Foldable devices in manual sessions
 
-- The live screen view and screenshots now follow the active screen when an Android foldable device changes posture during a manual session. Touch input and rotation stay aligned with the screen in each posture.
-- Screenshots keep the aspect ratio of the screen that is active when the screenshot is taken, and are never enlarged beyond the device's native resolution.
-- Screenshots stay correct after you close and reopen the *Screenshots* panel during a session.
-- *Lightning Mode* keeps a stable stream across repeated rotation on phones and tablets.
+- On an Android foldable device that folds like a book, such as the Galaxy Z Fold3 5G, the device screen in a manual session now follows the device when it folds or unfolds. The stream switches between the cover screen and the inner screen, keeps the correct aspect ratio, and the *Speedometer* resolution updates to match.
+- Taps land on the element you select after each fold, unfold, and screen rotation.
+- *Take Screenshot* captures the screen that is active at the time of capture, at that screen's aspect ratio.
 
 [NOTE]
 ====
-Foldable behavior is confirmed on the Galaxy Z Fold3 5G. On the Galaxy Z Flip3 5G, the screen view does not resize when the device is closed, and the video can stay black after the device is opened again until you turn *Lightning Mode* off. Kobiton tracks both behaviors separately.
+Clamshell foldable devices, such as the Galaxy Z Flip3 5G, are not yet supported. On these devices, the stream does not switch to the cover screen when the device closes, and the stream can stay black after the device opens again. To restore the stream, turn *Lightning Mode* off.
 ====
 
-// REVIEWER NOTE: Scope of the claim. The engineering Release Notes field was narrowed
-// during review, from "screenshot viewer and lightning mode support devices that alter
-// resolution mid-session" to foldables specifically. QA measured the wider mid-session
-// resolution-change case as still broken, and root-caused it to two pre-existing defects
-// that predate this work (open since 2022 and 2025). Do not widen this note back out to
-// "devices that alter resolution mid-session."
+// REVIEWER NOTE: Updated after the ticket moved to Released. This revision narrows the
+// entry to foldable posture changes only and corrects the follow-up ticket reference.
 //
-// REVIEWER NOTE: No Portal control ships with this change. The ticket adds foldable
-// posture get and set to an internal session API, and the Jira Testing Notes state the
-// Portal button and the public API are not yet implemented. The wording above therefore
-// describes how the viewer reacts to a posture change and deliberately does not tell a
-// user how to trigger one. Confirm with the product owner whether a customer can change
-// posture on a private or local device through the manual-session adb shell
-// (`cmd device_state state <id>`). The Jira evidence does not state this as a supported
-// customer path, so it is left out. If it is supported, this partial should gain a short
-// procedure and the manual-session adb page should be updated.
+// REVIEWER NOTE: Scope of the claim. The engineering Release Notes field now reads
+// "screenshot viewer and lightning mode support added for foldables". It was narrowed
+// during review from a wider claim about any device that changes resolution mid-session.
+// QA measured that wider case (Android Screen resolution, iOS Display Zoom) as still
+// broken in Lightning Mode and traced it to pre-existing defects KOB-25233 and KOB-50319.
+// Do not widen this entry back out.
 //
-// REVIEWER NOTE: Device generalization. Coverage was 12 devices, but only two foldables:
-// the Galaxy Z Fold3 5G (passes in full) and the Galaxy Z Flip3 5G (the limitation in the
-// NOTE). Both models are listed on the supported mobile devices page. Confirm with
-// engineering whether the Fold3 result generalizes to other large-screen foldables, and
-// whether the Flip3 limitation generalizes to clamshell foldables. If it does, replace the
-// model names with device-family wording.
+// REVIEWER NOTE: The previous draft also carried three capture bullets (no upscaling
+// beyond native resolution, screenshots after reopening the Screenshots panel, Lightning
+// Mode stability across rotation). QA exercised those paths and they passed, but the
+// narrowed Release Notes field does not claim them and the evidence does not show a prior
+// customer-visible defect. They were removed. Restore them in a separate section if the
+// docs team wants them.
 //
-// REVIEWER NOTE: The clamshell findings are filed as KOB-55167 and KOB-55174. Ticket IDs
-// are kept out of the published wording. Decide whether the NOTE stays here or moves to a
-// known-issues or supported-platforms page once those two tickets are triaged.
+// REVIEWER NOTE: Device generalization. QA verified posture changes on the Galaxy Z Fold3
+// 5G only (Android 15), with Lightning Mode on. Posture changes in screenshot mode
+// (Lightning Mode off) on a foldable were not called out, so this entry does not claim
+// them. Confirm with engineering whether the Fold3 result covers other book-style
+// foldables, or name only the Fold3.
 //
-// REVIEWER NOTE: Terminology. This partial uses *Lightning Mode*, matching the UI label on
-// the manual-session device controls page. Other pages, including the device metadata
-// page, use "Lightning mode". Align to one form during review.
+// REVIEWER NOTE: The clamshell NOTE reflects the scope decision on the ticket: device-
+// specific problems move to follow-up tickets. The Flip3 findings are filed as KOB-55194.
+// The Lightning Mode off workaround comes from QA's reproduction. Ticket IDs stay out of
+// the published wording. Remove or update the NOTE when KOB-55194 ships.
 //
-// REVIEWER NOTE: Release placement. The ticket carries no fix version and no release
-// label. Current-release relevance rests on the Jira status of Wait For Deployment and the
-// populated Release Notes field. Confirm the target release page before including this
-// partial.
+// REVIEWER NOTE: No Portal control ships with this change. The posture get and set added
+// by this ticket are on an internal session API, and the Jira Testing Notes state the
+// Portal button and public API are not yet implemented. The entry describes how the
+// device screen reacts to a posture change and deliberately does not tell a user how to
+// trigger one. Confirm with the product owner whether a customer can change posture
+// through the manual-session adb shell (`cmd device_state state <id>`). If that is a
+// supported path, add a short procedure and update the manual-session adb page.
 //
-// REVIEWER NOTE: The second and third bullets come from PR #443's wider rework of
-// screen-capture sizing, which QA exercised on phones, tablets and a low-resolution
-// device. They are user-visible and are kept, but they are not foldable-specific. Move
-// them to their own section if the release page separates capture fixes from foldables.
+// REVIEWER NOTE: Terminology. This partial uses *Lightning Mode* and *Take Screenshot*,
+// matching the UI labels on the manual-session device controls page. Other pages use
+// "Lightning mode". Align to one form during review.
+//
+// REVIEWER NOTE: Release placement. The ticket carries no fix version. A bulk release
+// comment lists deviceConnect 2609.24 and gigacap 2609.22 and says not all builds may
+// apply to this ticket. Confirm the target release page and component versions.
 
 // Source: KOB-55125
