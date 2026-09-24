@@ -62,7 +62,7 @@ iOS and iPadOS devices attached to a Mac mini host running macOS 27 come online 
 // Source: KOB-55095 from PR #611
 // https://github.com/kobiton/docs/pull/611
 
-== AI plugin and MCP
+== Session validations in the Kobiton MCP server
 
 - AI assistants connected to the Kobiton MCP server can now read a test session's validations one type at a time. Seven new tools cover accessibility, crash, response time, blocker, element selection, and Flex Correct findings: `listAccessibilityValidations`, `listCrashValidations`, `listResponseTimeValidations`, `listBlockerValidations`, `listElementSelectionValidations`, `listFlexCorrects`, and `getAccessibilityValidationsSummary`.
 - Each list tool returns at most 20 findings per call, with `page`, `total_pages`, and `total_items` counts. An assistant pages through a large session instead of pulling every finding into context at once.
@@ -119,11 +119,28 @@ iOS and iPadOS devices attached to a Mac mini host running macOS 27 come online 
 
 // Source: KOB-55177 from PR #635
 // https://github.com/kobiton/docs/pull/635
+// Source: KOB-54815 from PR #624
+// https://github.com/kobiton/docs/pull/624
 
 == iOS device connectivity
 
+- iOS 17.4 and later devices now stay connected when deviceConnect mounts the Developer Disk Image (DDI). Previously, the mount could reset the device connection.
 - Sessions on iOS and iPadOS 27.2 devices connected directly to a Mac host now connect to the device's services. Previously, these sessions could fail to start. Devices running iOS 17 through 26, and devices connected through the GEM, are unaffected.
 
+// REVIEWER NOTE (KOB-54815): Intentionally omitted (not supported by evidence or not customer-facing):
+// - Tunnel implementation details. A previous CoreDevice tunnel entry was removed at review as
+//   internal engineering framing; this entry states only the observable connection behavior.
+// - Throughput improvement: the ticket expects it, but QA recorded only a baseline, with no
+//   after-change measurement.
+// - Xcode / devicectl coexistence: stated as intent; no QA scenario confirms it.
+// - Root requirement removal: engineering says this is one step in a larger project; root is
+//   still required, so do not claim it.
+// - New trace switches and settings: engineering asked that users not change internal configuration.
+// - Internal Support Notes output (also requested on the ticket) is internal only.
+//
+// OPEN (KOB-54815): KOB-55146 (macOS 27, directly attached devices) is still unsettled. Do not
+//   imply macOS 27 coverage beyond the mount behavior above.
+//
 // REVIEWER NOTE (KOB-55177): "Devices connected through the GEM" maps the ticket's "forwarded
 // usbmuxd / Proxy tunnel" path to customer terminology. Confirm with the SME that this mapping is
 // accurate, and whether the fix applies to Cloud, Standalone, or both deployments.
@@ -135,28 +152,6 @@ iOS and iPadOS devices attached to a Mac mini host running macOS 27 come online 
 // product-doc update is included with this change.
 
 // Source: KOB-55177
-
-// Source: KOB-54815 from PR #624
-// https://github.com/kobiton/docs/pull/624
-
-== deviceConnect
-
-- iOS 17.4 and later devices now stay connected when deviceConnect mounts the Developer Disk Image (DDI). Previously, the mount could reset the device connection.
-
-// REVIEWER NOTE: Intentionally omitted (not supported by evidence or not customer-facing):
-// - Tunnel implementation details. A previous CoreDevice tunnel entry was removed at review as
-//   internal engineering framing; this entry states only the observable connection behavior.
-// - Throughput improvement: the ticket expects it, but QA recorded only a baseline, with no
-//   after-change measurement.
-// - Xcode / devicectl coexistence: stated as intent; no QA scenario confirms it.
-// - Root requirement removal: engineering says this is one step in a larger project; root is
-//   still required, so do not claim it.
-// - New trace switches and settings: engineering asked that users not change internal configuration.
-// - Internal Support Notes output (also requested on the ticket) is internal only.
-//
-// OPEN: KOB-55146 (macOS 27, directly attached devices) is still unsettled. Do not imply
-//   macOS 27 coverage beyond the mount behavior above.
-
 // Source: KOB-54815
 
 // Source: KOB-55104 from PR #629
@@ -324,7 +319,6 @@ _Applies to organizations with passcode mode enabled._
 
 == Component versions
 
-This release includes the following component versions:
-
+* Portal 2609.23
 * deviceConnect 2609.24
 * Gigacap 2609.22
