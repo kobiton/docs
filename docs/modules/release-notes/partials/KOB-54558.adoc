@@ -1,0 +1,21 @@
+// Release-note partial for KOB-54558 (Standalone, bug fix).
+// Source: Jira KOB-54558 (Released). Verified by QA on 4.27.0S.
+//
+// REVIEWER NOTE: fixVersion is empty on the ticket. Confirm which Standalone release ships
+// `kobictl run mtbf-report` before including this partial in a release page, and place it
+// under that release's "Bug fixes and improvements" section.
+// REVIEWER NOTE: the ticket does not expand "MTBF". Left as the acronym. Confirm the
+// customer-facing name if an expansion is wanted.
+
+=== Standalone
+
+- Fixed an issue where the scripts for generating an MTBF report manually were missing after upgrading a Standalone deployment from 4.26.x. You can now generate an MTBF report for a custom date range with a `kobictl` command:
++
+[source,shell]
+----
+sudo kobictl run mtbf-report <ORG_ID|all> <START_DATE> <END_DATE>
+----
++
+Replace `<ORG_ID|all>` with a numeric organization ID, or `all` for every active organization. Enter `<START_DATE>` and `<END_DATE>` in `YYYY-MM-DD` format. The end date can't be earlier than the start date. Run `sudo kobictl run` to list the available scripts.
++
+The `run-mtbf-report.sh` and `calculate-quarter-dates.sh` scripts are no longer included. Use the `kobictl` command instead. Scheduled quarterly MTBF reports are not affected.
