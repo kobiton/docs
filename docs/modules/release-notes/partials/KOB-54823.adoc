@@ -1,0 +1,40 @@
+== iOS UI hierarchy
+
+- Fixed an issue where an iOS session could keep reading the UI hierarchy of an app that was no longer in the foreground. After the foreground app changed, element searches could run against the previous app, or against the home screen or app switcher, while a different app was on screen, and the outdated hierarchy could persist for the rest of the session. The UI hierarchy now reflects the app in the foreground.
+
+// Drafted by Robot Ranch (Town Crier). Not yet included on a release page.
+// Review before placing on a release page.
+//
+// REVIEWER NOTE: evidence basis
+// Drafted from Jira only: the ticket description (impact, root cause, fix), the customer
+// impact and root cause fields, the comments, and the release comment. Jira status at
+// draft time is Released. The ticket's release channel field requests a customer-facing
+// release note (Release Email).
+//
+// REVIEWER NOTE: affected scope
+// The ticket states any iOS session that reads the UI hierarchy was exposed, not only
+// network payload capture, and that the issue is not specific to one iOS version. It
+// reproduced on iOS 18.7.8 and occurred far more often on iOS 26.x. The entry names no
+// iOS version for that reason. Confirm with the SME whether to name affected surfaces
+// explicitly (for example, Appium element lookups or Inspector in manual sessions); the
+// ticket says "UI automation" and "view tree" without naming a customer-facing surface.
+//
+// REVIEWER NOTE: QA outcome is mixed
+// Test comments record scenarios 04 (iPad windowed apps, no application node in the tree),
+// 05, and 07 (Settings automation not finding a row during network payload capture setup)
+// as FAILED. Engineering attributes 07 to a separate fix (KOB-55248, not Released at draft
+// time) and follow-up tickets were requested for the remaining failures. The entry
+// therefore does not claim that network payload capture setup on iOS or iPad windowed
+// apps is fixed. Confirm the entry is still appropriate given the open follow-ups.
+//
+// REVIEWER NOTE: release window
+// The ticket has no fixVersion. The release comment is a bulk update listing deviceConnect
+// build 2609.240307.0 (release label 2609.24) and notes that not all builds may apply to
+// each ticket. Confirm the shipped deviceConnect version before including this partial on
+// a release page.
+//
+// REVIEWER NOTE: support notes
+// The release channel field also requests internal Support Notes. Those are out of scope
+// for public docs and are routed to internal enablement, not this partial.
+
+// Source: KOB-54823
