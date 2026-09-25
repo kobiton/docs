@@ -3,32 +3,24 @@
 
 The usage report measures component usage across all user test sessions. For more information, see xref:reporting:usage-report/use-the-report.adoc[].
 
-image:reporting:columns-usage-report-context.png[width=1000,alt="Columns in Usage report"]
-
 == Report fields
 
-=== Component
+=== Components
 
 The type of component being measured for usage. For more information, see xref:_component_types[].
 
-=== Sessions
+=== Quantity
 
-The number of sessions using this component.
+The volume recorded for the component. The unit varies by component: sessions, downloads, corrections, or issues and the screens they were found on.
 
 === Minutes
 
-The number of minutes this component was used across all sessions.
-
-=== Evaluations
-
-The number of evaluations across all screens used in a session. (Only used by certain components).
-
-=== Detections
-
-The number of detections, remediations, and corrections across all sessions. (Only used by certain components).
+The number of minutes this component was used across all sessions. Only session-based components report minutes.
 
 [#_component_types]
 == Component types
+
+Components appear in the report in the order below.
 
 === Manual
 
@@ -38,38 +30,70 @@ xref:manual-testing:index.adoc[Manual test sessions].
 
 xref:automation-testing:index.adoc[Automation test sessions].
 
-=== Mixed sessions
+=== Mixed
 
 xref:manual-testing:start-a-mixed-session.adoc[Mixed test sessions].
 
-=== Scriptless on Manual
-
-xref:_scriptless-automation:index.adoc[Scriptless test sessions] that use a manual test session as the base.
-
-=== Scriptless on Automation
-
-xref:_scriptless-automation:index.adoc[Scriptless test sessions] that use an automation test session as the base.
-
 === Test Case
 
-xref:_test-management:index.adoc[Test cases].
+xref:test-management:test-cases.adoc[Test Cases].
 
-=== Text Validation
+=== Test Suite
 
-xref:_test-management:validation/text-validation.adoc[Text validation] within a Scriptless session.
+xref:test-management:test-suites.adoc[Test Suites].
 
-=== Color Validation
+=== Test Run
 
-xref:_test-management:validation/color-text-validation.adoc[Color text validation] within a Scriptless session.
+xref:test-management:test-runs.adoc[Test Runs].
 
-=== Font Size (WBI)
+=== Revisit Execution
 
-xref:session-explorer:validations/validate-accessibility.adoc[Font size validation] in Session Explorer.
+Revisit sessions executed as part of a xref:test-management:test-runs.adoc[Test Run].
+
+=== FlexCorrect
+
+xref:automation-testing:capabilities/add-flexcorrect.adoc[flexCorrect] corrections applied during an automation session.
+
+=== Crash Validation
+
+Crash findings detected by the xref:test-management:test-runs.adoc#_automatic_validations[automatic validations] that run during a Test Run.
 
 === Accessibility Validation
 
-xref:session-explorer:validations/validate-accessibility.adoc[Accessibility validation] in Session Explorer.
+xref:session-explorer:validations/validate-accessibility.adoc[Accessibility validation] issues and the screens they were found on. The next three components break this total down by issue type.
 
-=== flexCorrect
+=== Touch Target Size
 
-xref:automation-testing:capabilities/add-flexcorrect.adoc[flexCorrect] in an automation session.
+xref:session-explorer:validations/validate-accessibility.adoc#_touch_target_size[Touch target size] issues.
+
+=== Color Contrast
+
+xref:session-explorer:validations/validate-accessibility.adoc#_color_contrast[Color contrast] issues.
+
+=== Content Labeling
+
+xref:session-explorer:validations/validate-accessibility.adoc#_content_labeling[Content labeling] issues.
+
+=== Response Time Validation
+
+xref:session-explorer:analytics/review-network-payload-data.adoc#_review_response_times[Response time] findings and the screens they were found on.
+
+=== Export Appium Script
+
+Appium scripts exported from a Test Case. For more information, see xref:test-management:generate-appium.adoc[]. The next four components break this total down by xref:test-management:generate-appium.adoc#_supported_languages_and_frameworks[language and framework].
+
+=== Java TestNG
+
+Scripts exported as Java with the TestNG framework.
+
+=== Java JUnit
+
+Scripts exported as Java with the JUnit framework.
+
+=== Node.js Mocha
+
+Scripts exported as Node.js with the Mocha framework.
+
+=== C# NUnit
+
+Scripts exported as C# with the NUnit framework.

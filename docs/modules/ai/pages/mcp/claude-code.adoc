@@ -1,5 +1,6 @@
 = Kobiton for Claude Code
 :navtitle: Claude Code
+:tabs-sync-option:
 
 Kobiton for Claude Code connects Claude Code to the Kobiton mobile testing platform. You can manage devices, upload apps, run automation tests, and review results using natural language commands without switching between the terminal, the Kobiton portal, and local test scripts.
 
@@ -121,7 +122,15 @@ Once you have obtained the custom URL, create a `.mcp.json` file in your project
 
 Replace `\https://api-custom-domain.kobiton.com/mcp` with the actual URL of your Kobiton MCP server.
 
-After creating the file, continue with either OAuth or API key authentication.
+After creating the file, continue with either OAuth or API key authentication. If your Standalone (on-premises) Portal uses a self-signed SSL certificate, trust the certificate first.
+
+=== Trust self-signed SSL certificate (Standalone only)
+
+Import the certificate on each computer that runs Claude Code.
+
+include::debugging:partial$trust-self-signed-ssl-cert.adoc[]
+
+After importing the certificate, restart Claude Code before authenticating with the MCP server.
 
 [[oauth-authentication]]
 === OAuth authentication (recommended)
