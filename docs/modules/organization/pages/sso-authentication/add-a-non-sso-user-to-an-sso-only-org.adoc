@@ -10,6 +10,7 @@ When *Enforce users to login to Kobiton only through SSO* is enabled:
 * Every user signs in through SSO unless they are on the non-SSO users list.
 * Kobiton removes each user's stored password. Users on the non-SSO users list keep their email-and-password sign-in.
 * Kobiton turns off the *+Invite* button on *Org Management > Users* while enforcement is on.
+* Any API request to link:https://api.kobiton.com/v2/docs#tag/OrganizationAPI/operation/OrganizationAPI_CreateOrgMember[create new member,window=read-later] returns response `400` with the message _Cannot invite new user because the organization enforces its users to login/signup to Kobiton only through SSO_
 
 If you turn off SSO enforcement later, users whose passwords were removed must reset their password through *Forgot password* before signing in with email and password.
 
