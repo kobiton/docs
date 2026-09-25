@@ -1,0 +1,50 @@
+= Configure Portal auto logout
+:navtitle: Auto logout
+
+**Auto Logout** is an organization-wide setting that forces Portal users to sign in again after a configurable duration. Org Admins turn on **Auto Logout** and choose how long users can stay signed in before the Portal ends the session.
+
+Auto Logout is off by default.
+
+== Before you begin
+
+* You must have the Org Admin role.
+
+== Turn on Auto Logout
+
+include::profile:partial$open-settings.adoc[]
+
+Select *Other Settings*, then locate the *Auto Logout* section.
+
+. Select the *Auto Logout* checkbox. The *Log users out after* field appears.
+. In *Log users out after*, enter a whole positive number. The field does not accept decimals, negatives, or partial time values.
+. Choose *Hour(s)* or *Day(s)*. The minimum duration is 1 hour.
+
+image:auto-logout-setting.png[width=800,alt="The Auto Logout setting in Other Settings, with the checkbox selected and the Log users out after field visible."]
+
+== Turn off Auto Logout
+
+To turn off Auto Logout, clear the *Auto Logout* checkbox on the Other Settings page.
+
+== How the timer is measured
+
+The Auto Logout timer begins when the user signs in to the Portal. Activity within the Portal does not reset or extend the timer.
+
+== When a session expires
+
+When the timer expires, the Portal redirects the user to the sign-in page with the message "Your session has expired. Please log in again." No warning modal appears before expiry.
+
+image:auto-logout-expiry-message.png[width=800,alt="The Portal sign-in page with the expired-session message."]
+
+After the user signs in again, the Portal returns them to the page they were on before their session ended.
+
+== How Auto Logout interacts with in-progress sessions
+
+During a _manual session_, a user tests a device through the Portal UI (selects a device, uploads an app, and interacts with the device in the Portal). During a _mixed session_, a user watches an automation session run in real time.
+
+If the Auto Logout timer expires while a user has an active manual or mixed session, the Portal defers the logout until that session ends. The user finishes the session normally, and the Portal logs them out afterward.
+
+Automation, CLI, scriptless, and other non-UI sessions continue running uninterrupted. The user is still logged out of the Portal.
+
+== How Auto Logout interacts with SSO and identity providers
+
+Kobiton enforces Auto Logout independently of your identity provider. Single logout (SLO) is not required. Auto Logout works on both SSO-enabled and non-SSO organizations.
