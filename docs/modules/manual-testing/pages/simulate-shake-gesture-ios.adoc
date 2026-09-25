@@ -1,0 +1,27 @@
+= Simulate a shake gesture on iOS
+:navtitle: Simulate a shake gesture on iOS
+
+Simulate a shake gesture on an iOS device during a Kobiton manual session by using AssistiveTouch — an iOS accessibility feature that adds an on-screen menu button for triggering device actions.
+
+== Enable AssistiveTouch
+
+. On the iOS device, open *Settings*.
+. Select *Accessibility → Touch → AssistiveTouch*.
+. Turn on *AssistiveTouch*.
+
+The AssistiveTouch menu button appears on the screen.
+
+The default Kobiton xref:devices:local-devices/cleanup-policy/manage-device-cleanup-policies.adoc[device cleanup policy] turns off AssistiveTouch between sessions. Re-enable AssistiveTouch at the start of each manual session.
+
+== Simulate the gesture
+
+. Tap the *AssistiveTouch* menu button.
+. Tap *Device*.
+. Tap *More*.
+. Tap *Shake*.
++
+image:manual-testing:assistive-touch-shake-context.png[width=300,alt="The Shake option in the AssistiveTouch More menu"]
+
+== Customize AssistiveTouch for faster access
+
+To trigger Shake without opening the AssistiveTouch menu each time, customize AssistiveTouch in *Settings → Accessibility → Touch → AssistiveTouch*. You can add *Shake* to the top-level menu or assign it to a single-tap, double-tap, or long-press action on the menu button.

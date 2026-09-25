@@ -6,12 +6,15 @@ Learn how to start debugging using the virtualUSB desktop app so you can debug d
 [NOTE]
 You can also start a debug session using the xref:debugging:virtualusb-cli-commands.adoc[virtualUSB command-line interface tool].
 
+[NOTE]
+To install apps, use the Kobiton link:https://api.kobiton.com/v2/docs#tag/DeviceAPI/operation/DeviceAPI_InstallDeviceAppVersion[API endpoint,window=read-later] or xref:kobiton-cli:cli-commands.adoc#_app_install[CLI command,window=read-later] instead of a virtualUSB connection. The API and CLI handle larger apps more reliably.
+
 == Before you start
 
 You'll need to complete the following:
 
-* xref:debugging:set-up-virtualusb.adoc[] on your personal computer.
-* xref:debugging:local-devices/configure-your-personal-computer.adoc[Configure your personal computer] (for *Standalone/On-Prem with self-signed SSL certificate only*).
+* xref:debugging:set-up-virtualusb.adoc[] on your computer.
+* xref:debugging:local-devices/configure-your-personal-computer.adoc[Configure your computer] (Standalone with a self-signed SSL certificate only).
 
 == Start a virtualUSB session
 
