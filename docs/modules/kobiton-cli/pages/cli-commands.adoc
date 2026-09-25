@@ -397,6 +397,7 @@ Path syntax:
 
 For how iOS app containers and file sharing work — including the `UIFileSharingEnabled` requirement and per-app examples — see xref:ios-file-sharing.adoc[Access app files on iOS devices].
 
+[#file-list]
 === `file list`
 
 List files at a path on the device.
@@ -604,7 +605,7 @@ kobiton device adb-shell [OPTIONS] [ARGS]...
 |===
 | Argument | Description
 
-| `[ARGS]...` | Arguments to pass (before or after `--`). If not provided, launches an interactive adb shell.
+| `[ARGS]...` | Arguments to pass (before or after `--`). If not provided, launches an interactive adb shell. The interactive shell is unavailable on public cloud and trial devices.
 |===
 
 Accepts all <<global-options,global options>>.
@@ -613,23 +614,57 @@ Accepts all <<global-options,global options>>.
 
 * `-a <SESSION_TOKEN>` or `KOBITON_SESSION_TOKEN` environment variable
 
+[#adb-shell-restricted-sessions]
+[IMPORTANT]
+====
+*Public cloud and trial devices run a restricted shell.*
+
+Commands are checked against a deny-by-default whitelist before they reach the device, and the interactive shell is unavailable, so every invocation must name a command to run. Private cloud and Standalone deployments with dedicated devices are not restricted.
+
+A restricted session rejects control characters and these shell metacharacters anywhere in the input:
+
+----
+& ; | $ ` ( ) > < \ " ' * ? ~ { } # !
+----
+
+Pipes, redirection, command and variable substitution, backgrounding, globbing, and quoting are therefore unavailable on the device. Arguments cannot contain whitespace, and a command line cannot exceed 1024 characters. Individual commands further restrict which arguments and file paths they accept, so a whitelisted command can still reject an argument.
+
+Run `kobiton device adb-shell --help` for the current list of allowed commands, permitted directories, and per-command restrictions.
+====
+
 .Example
 [source,shell]
 ----
-# Run a simple adb shell command
-kobiton device adb-shell ls
+# Read a device property
+kobiton device adb-shell getprop ro.build.version.sdk
 
-# Run an adb shell command with extra arguments (pass after --)
-kobiton device adb-shell -- ls --color=auto
-
-# Quote characters that the local shell would interpret, such as a pipe
-kobiton device adb-shell "dumpsys window displays | grep -E 'mCurrentFocus|mFocusedApp'"
+# Pass arguments after -- so the CLI does not read them as its own options
+kobiton device adb-shell -- logcat -d -t 200
 ----
 
-.Output
+Both examples run on a restricted session.
+
+To list files on a device, use <<file-list,`kobiton file list`>>. A restricted session confines `adb-shell ls` to the permitted directories, so `ls -l /sdcard` is rejected while `ls -l /sdcard/Download/` is accepted.
+
+.Filter command output
+A restricted session rejects the pipe character, so filter locally and send only the command to the device:
+
+[source,shell]
+----
+kobiton device adb-shell dumpsys window displays | grep -E 'mCurrentFocus|mFocusedApp'
+----
+
+.Output (both forms)
 ----
 mCurrentFocus=Window{272f9b1 u0 com.example.app/MainActivity}
 mFocusedApp=ActivityRecord{3d12396 u0 com.example.app/.MainActivity t2823}
+----
+
+On a dedicated device, quote the whole expression instead. The pipe then runs on the device, so less output crosses the network:
+
+[source,shell]
+----
+kobiton device adb-shell "dumpsys window displays | grep -E 'mCurrentFocus|mFocusedApp'"
 ----
 
 === `device forward`
@@ -1071,8 +1106,13 @@ kobiton test run [OPTIONS] --app <APP> --runner <TEST_RUNNER> <FRAMEWORK>
 |===
 | Argument | Description
 
-| `<FRAMEWORK>` | Framework to test with. Must be either `uiautomator2` or `xcuitest`.
+| `<FRAMEWORK>` | Framework to test with. Either `uiautomator` or `xcuitest`. Use `uiautomator` for both UIAutomator and Espresso test runners. Kobiton reports the resulting session with this value in uppercase, such as `UIAUTOMATOR`.
 |===
+
+[NOTE]
+====
+`<FRAMEWORK>` is not the Appium `automationName` capability. An Appium session sets `appium:automationName` to `UiAutomator2`; `test run` takes `uiautomator`.
+====
 
 .Options
 [cols="1,1,3",options="header"]
@@ -1100,7 +1140,9 @@ Plus all <<global-options,global options>>.
 
 *Requires:*
 
-* `--app <APP>` and `--runner <TEST_RUNNER>`, each a Kobiton App Repo ID (`kobiton-store:<APP_ID>` or `kobiton-store:v<APP_VERSION_ID>`) or a direct URL. Local path is not supported.
+* `--app <APP>` and `--runner <TEST_RUNNER>`, each a Kobiton App Repo ID or a direct URL. Local path is not supported. An App Repo ID takes one of two forms:
+** `kobiton-store:<APP_ID>` runs the most recently uploaded version of that app, such as `kobiton-store:662537`.
+** `kobiton-store:v<APP_VERSION_ID>` pins an exact version, such as `kobiton-store:v762538`. Pin the version when a run must stay reproducible, since a later upload changes what the bare App ID resolves to. `kobiton app upload` prints both the App ID and the Version ID.
 * Either `-u <UDID>` or `-d <DEVICE_NAME>` for any framework.
 * Either `-t <TESTS>` or `--plan <TEST_PLAN>` for XCUITest. `<TEST_PLAN>` must be a direct URL.
 * `<FRAMEWORK>`
