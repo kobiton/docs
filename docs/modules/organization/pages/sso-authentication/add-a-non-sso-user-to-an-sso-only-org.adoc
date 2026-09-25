@@ -1,38 +1,47 @@
 = Add a non-SSO user to an SSO-only org
 :navtitle: Add a non-SSO user to an SSO-only org
 
-When your organization enforces SSO, every user signs in through your identity provider. To keep one or more trusted accounts on email-and-password sign-in (sometimes called a service account), add them to the non-SSO users list in your SSO settings.
+When an organization enforces SSO, every user signs in through the identity provider. To keep specific accounts, such as service accounts, on email-and-password sign-in, add them to the non-SSO users list in the SSO settings.
 
 == How SSO enforcement affects user access
 
 When *Enforce users to login to Kobiton only through SSO* is enabled:
 
 * Every user signs in through SSO unless they are on the non-SSO users list.
-* Kobiton removes each user's stored password. Users on the non-SSO users list keep their email-and-password sign-in.
-* Kobiton turns off the *+Invite* button on *Org Management > Users* while enforcement is on.
-* Any API request to link:https://api.kobiton.com/v2/docs#tag/OrganizationAPI/operation/OrganizationAPI_CreateOrgMember[create new member,window=read-later] returns response `400` with the message _Cannot invite new user because the organization enforces its users to login/signup to Kobiton only through SSO_
+* Kobiton removes every user's stored password, including the passwords of users later added to the non-SSO users list.
+* Kobiton turns off the *+Invite* button on *Org Management > Users*.
+* The link:https://api.kobiton.com/v2/docs#tag/OrganizationAPI/operation/OrganizationAPI_CreateOrgMember[Create org member API,window=read-later] returns a `400` error with the message `Cannot invite new user because the organization enforces its users to login/signup to Kobiton only through SSO`.
 
-If you turn off SSO enforcement later, users whose passwords were removed must reset their password through *Forgot password* before signing in with email and password.
+If SSO enforcement is turned off later, users whose passwords were removed must reset their password through *Forgot Password?* before signing in with email and password.
 
 == Add an existing user to the non-SSO users list
 
-. Sign in to Kobiton Portal as an org admin.
-. Go to *Account > Settings > SSO settings* and scroll to *Verify Configuration* (panel 4).
+[IMPORTANT]
+====
+Keep at least one org admin on the non-SSO users list. If SSO becomes unavailable, users on this list are the only accounts that can still sign in to Kobiton Portal.
+====
+
+. Sign in to Kobiton Portal with an account that has the `org_setting.modify_sso_setting` permission.
+. Select the profile picture and choose *Settings*, then choose *SSO Settings*.
+. Scroll to *Verify Configuration* (panel 4).
 . Under *Choose users who are allowed to login without SSO*, add the user in the *Add Users..* field.
 +
-image:organization:sso-choose-non-sso-users.png[width=500, alt="The list of users that are exempted from the enforcement list when SSO enforcement is enabled"]
-. Save your changes.
+image:organization:sso-choose-non-sso-users.png[width=500, alt="The Choose users who are allowed to login without SSO field in the Verify Configuration panel"]
+. Select *Save*.
 
-== Reset password for non-SSO user and sign in
+== Reset the password and sign in
+
+A user added to the non-SSO users list must reset their password before their first email-and-password sign-in. The non-SSO user completes these steps.
 
 . Open Kobiton Portal.
-. Enter username or email of the non-SSO user.
-. Select *Forgot Password?*.
-. Enter username or email again.
-. Kobiton sends a forgot password email to the email inbox.
-. Open the link in the email to reset the password.
-. Sign in to Kobiton Portal using the new password.
+. Enter your username or email, and then select *Forgot Password?*.
+. Enter your username or email again.
++
+Kobiton sends a password reset email to the address on the account.
+. Open the link in the email and set a new password.
+. Sign in to Kobiton Portal with the new password.
 
 == Related guides
 
+* xref:organization:sso-authentication/sso-enforcement-guide.adoc[]
 * xref:organization:sso-authentication/about-sso-authentication.adoc[]
