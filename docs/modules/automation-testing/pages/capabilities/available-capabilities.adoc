@@ -31,6 +31,7 @@ capabilities.setCapability("kobiton:sessionName", "Login test");
 Capabilities with the `kobiton:` prefix cannot be used without the prefix.
 
 .Kobiton capability index
+* <<_accessibilityValidation,kobiton:accessibilityValidation>>
 * <<_app_install,kobiton:app-install>>
 * <<_baselineSessionId,kobiton:baselineSessionId>>
 * <<_kobitoncapturescreenshots,kobiton:captureScreenshot>>
@@ -44,6 +45,7 @@ Capabilities with the `kobiton:` prefix cannot be used without the prefix.
 * <<_passcodeKey,kobiton:passcodeKey>>
 * <<_passcodeType,kobiton:passcodeType>>
 * <<_runtime,kobiton:runtime>>
+* <<_scriptlessCapture,kobiton:scriptlessCapture>>
 * <<_kobitonsessiondescription,kobiton:sessionDescription>>
 * <<_kobitonsessionname,kobiton:sessionName>>
 * <<_kobtionsessiontags,kobiton:sessionTags>>
@@ -52,6 +54,21 @@ Capabilities with the `kobiton:` prefix cannot be used without the prefix.
 * <<_web_find,kobiton:web-find>>
 * <<_work_app,kobiton:workApp>>
 * <<_xpath2,kobiton:xpath2>>
+
+[#_accessibilityValidation]
+=== `kobiton:accessibilityValidation`
+
+Runs accessibility validation during an Appium automation session. See xref:automation-testing:scripting/add-accessibility-validation-to-appium-script.adoc[] for setup.
+
+* *Type:* `boolean`
+* *Required capabilities:* xref:_scriptlessCapture[`kobiton:scriptlessCapture`] set to `true`
+* *Optional capabilities:* None
+
+.Example
+[source,java]
+----
+capabilities.setCapability("kobiton:accessibilityValidation", true);
+----
 
 [#_app_install]
 === `kobiton:app-install`
@@ -285,6 +302,21 @@ Configure the automation runtime that executes the test. Values are `xium` (Xium
 [source,java]
 ----
 capabilities.setCapability("kobiton:runtime", "appium");
+----
+
+[#_scriptlessCapture]
+=== `kobiton:scriptlessCapture`
+
+Captures full session data during an Appium automation session. Required when running xref:_accessibilityValidation[`kobiton:accessibilityValidation`].
+
+* *Type:* `boolean`
+* *Required capabilities:* None
+* *Optional capabilities:* None
+
+.Example
+[source,java]
+----
+capabilities.setCapability("kobiton:scriptlessCapture", true);
 ----
 
 === `kobiton:sessionDescription`
