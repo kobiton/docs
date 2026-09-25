@@ -1,0 +1,20 @@
+== API v2
+
+- Fixed device lookups by UDID for virtual devices. `GET /v2/devices/udid/{udid}` now returns device information for Android emulators and iOS simulators that your organization can use. Previously, the request returned `404` for an online virtual device.
+- `GET /v1/devices/{udid}` also returns these virtual devices. Previously, it returned `500`.
+- Lookups for physical devices and unknown UDIDs are unchanged. Organizations without access to virtual devices continue to receive `404` for virtual device UDIDs.
+
+// Source: KOB-54451 | Bug | Component: API v2 | Fix version: 2026.09.25
+//
+// REVIEWER NOTE: Wording is based on the ticket's release summary and customer-facing change
+// fields. The ticket marks this change for the customer-facing release email.
+//
+// REVIEWER NOTE: The ticket says the v1 endpoint is not a maintenance priority while the
+// Portal moves to v2. Confirm whether v1 behavior belongs in public release notes, or drop
+// the second bullet.
+//
+// REVIEWER NOTE: The public API reference module is a placeholder. If the v2 device lookup
+// endpoint is documented elsewhere, confirm whether its reference entry needs a note that
+// virtual device UDIDs are supported.
+//
+// REVIEWER NOTE: Retag onto the release page that covers the 2026.09.25 Cloud release.
