@@ -1,0 +1,103 @@
+= Kobiton for Google Antigravity
+:navtitle: Antigravity
+
+Kobiton for Google Antigravity connects Antigravity 2.0 Chat to the Kobiton mobile testing platform through a remote MCP server. After configuration, you can manage devices, run tests, and review session results using natural language in Antigravity Chat. You do not need to open the Antigravity IDE to complete this setup.
+
+For a full list of available tools and capabilities, see the xref:mcp/ai-plugin-mcp-ref.adoc[Kobiton AI plugin and tools reference,window=read-later].
+
+For the Gemini CLI integration, see xref:mcp/gemini.adoc[Kobiton for Gemini CLI].
+
+== Before you begin
+
+To connect Antigravity Chat to Kobiton, you need:
+
+- An active Kobiton account with access to the devices or apps you plan to use
+- Antigravity Chat installed and signed in
+- Outbound HTTPS access to `api.kobiton.com` and a default browser Antigravity can launch
+
+== Register the Kobiton MCP server
+
+. From the Antigravity Chat home screen, select **Settings** in the lower-left corner.
++
+image::ai:settings.png[width=600, alt="Settings entry on the Antigravity Chat home screen"]
+
+. In **Settings**, select **Customizations**. Scroll to the **Installed MCP Servers** section at the bottom of the page.
+
+. Under **Installed MCP Servers**, select **Open MCP Config**. Antigravity opens the global `mcp_config.json` file.
+
+. Add the following Kobiton entry and save the file:
++
+[source,json]
+----
+{
+  "mcpServers": {
+    "kobiton": {
+      "serverUrl": "https://api.kobiton.com/mcp"
+    }
+  }
+}
+----
++
+If other MCP servers already exist in `mcp_config.json`, merge the `kobiton` object into the existing `mcpServers` object. Do not overwrite other entries. Keep the file as valid JSON with no comments or trailing commas.
+
+. Close Antigravity Chat completely, then reopen it to load the updated configuration.
+
+. Return to **Settings > Customizations**. Kobiton now appears under **Installed MCP Servers**. Select **Authenticate** next to the Kobiton server.
++
+image::ai:customizations.png[width=600, alt="Kobiton MCP server row on the Customizations page"]
+
+== Authenticate with Kobiton
+
+. Antigravity opens a browser-based OAuth flow. Sign in with your Kobiton credentials or another sign-in method available to your Kobiton account.
+
+. After authentication succeeds, the browser displays an Antigravity authorization code. Select **Copy to Clipboard**.
+
+. Return to **Settings > Customizations**. Paste the copied code into the field displayed for the Kobiton MCP server, then select **Submit**. Antigravity connects the server automatically after successful authentication.
+
+[IMPORTANT]
+====
+Treat the authorization code as a secret credential. It grants access to your Kobiton account through Antigravity. Do not paste it into chat, tickets, documentation, or shared screenshots.
+====
+
+== Verify the connection
+
+. In **Installed MCP Servers**, confirm the Kobiton entry is enabled and shows any of the following: a connected status, a tool count, or a **Sign out** option.
+
+. Start a new Antigravity Chat conversation and run a read-only validation prompt, for example:
++
+....
+What private Android devices do I have access to?
+....
++
+image::ai:validation-response.png[width=600, alt="Antigravity Chat returning device information from Kobiton"]
+
+Additional prompts to confirm the connection:
+
+....
+Show available Android devices.
+Find an available iPhone running iOS 18 or later.
+Show my currently running Kobiton sessions.
+Get the results and artifacts from my most recent failed session.
+....
+
+== Support status
+
+This integration follows Antigravity's standards-based remote MCP support. UI labels and behavior may change as either product evolves.
+
+== Troubleshooting
+
+=== Kobiton does not appear after saving `mcp_config.json`
+
+Validate the JSON, then close and reopen Antigravity Chat completely. Use the refresh control in **Installed MCP Servers** to re-scan the configuration.
+
+=== `Unauthorized` or `MCP Error` appears
+
+The server definition loaded but OAuth did not complete. Select **Authenticate**, finish the browser flow, paste the authorization code, and select **Submit**.
+
+=== The browser does not open
+
+Retry **Authenticate**. Confirm Antigravity can launch your default browser, and verify that `https://api.kobiton.com/mcp` is reachable from your network.
+
+=== Authentication succeeds but tools are unavailable
+
+Confirm the Kobiton server toggle is enabled in **Installed MCP Servers**. Refresh the MCP list or restart Antigravity Chat.

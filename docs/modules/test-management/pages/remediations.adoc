@@ -125,11 +125,18 @@ After a Test Run completes with a blocker caused by a pop-up, open the Blocker R
 . Enter hint text from the pop-up. The text must appear on the pop-up screen.
 . Select *Highlight Text Area* to verify the hint text against the screenshot.
 +
-Matched text is highlighted on the screenshot. If no match is found, adjust the hint text and try again.
+Matched text is highlighted on the screenshot. If no match is found, an error appears. Adjust the hint text and try again.
 
 . Under *Choose the element to dismiss this pop-up*, search the view tree by path, label, or another attribute.
 . Select the dismiss element.
 . Select *Save as Optional*.
+
+The pop-up is marked as optional, and subsequent revisits dismiss it using the element you selected.
+
+[NOTE]
+====
+If the blocker is not caused by a pop-up, use the *Element Selection* tab for standard remediation. For more information, see <<_submit_a_remediation,Submit a remediation>>.
+====
 
 == After remediation
 

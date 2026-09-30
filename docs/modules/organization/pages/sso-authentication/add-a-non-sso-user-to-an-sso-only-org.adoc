@@ -1,0 +1,47 @@
+= Add a non-SSO user to an SSO-only org
+:navtitle: Add a non-SSO user to an SSO-only org
+
+When an organization enforces SSO, every user signs in through the identity provider. To keep specific accounts, such as service accounts, on email-and-password sign-in, add them to the non-SSO users list in the SSO settings.
+
+== How SSO enforcement affects user access
+
+When *Enforce users to login to Kobiton only through SSO* is enabled:
+
+* Every user signs in through SSO unless they are on the non-SSO users list.
+* Kobiton removes every user's stored password, including the passwords of users later added to the non-SSO users list.
+* Kobiton turns off the *Invite* button on *Org Management > Users*.
+* The link:https://api.kobiton.com/v2/docs#tag/OrganizationAPI/operation/OrganizationAPI_CreateOrgMember[Create org member API,window=read-later] returns a `400` error with the message `Cannot invite new user because the organization enforces its users to login/signup to Kobiton only through SSO`.
+
+If SSO enforcement is turned off later, users whose passwords were removed must reset their password through *Forgot Password?* before signing in with email and password.
+
+== Add an existing user to the non-SSO users list
+
+[IMPORTANT]
+====
+Keep at least one org admin on the non-SSO users list. If SSO becomes unavailable, users on this list are the only accounts that can still sign in to Kobiton Portal.
+====
+
+. Sign in to Kobiton Portal with an account that has the `org_setting.modify_sso_setting` permission.
+. Select the profile picture and choose *Settings*, then choose *SSO Settings*.
+. Scroll to *Verify Configuration* (panel 4).
+. Under *Choose users who are allowed to login without SSO*, add the user in the *Add Users..* field.
++
+image:organization:sso-choose-non-sso-users.png[width=500, alt="The Choose users who are allowed to login without SSO field in the Verify Configuration panel"]
+. Select *Save*.
+
+== Reset the password and sign in
+
+A user added to the non-SSO users list must reset their password before their first email-and-password sign-in. The non-SSO user completes these steps.
+
+. Open Kobiton Portal.
+. Enter the username or email, and then select *Forgot Password?*.
+. Enter the username or email again.
++
+Kobiton sends a password reset email to the address on the account.
+. Open the link in the email and set a new password.
+. Sign in to Kobiton Portal with the new password.
+
+== Related guides
+
+* xref:organization:sso-authentication/sso-enforcement-guide.adoc[]
+* xref:organization:sso-authentication/about-sso-authentication.adoc[]
