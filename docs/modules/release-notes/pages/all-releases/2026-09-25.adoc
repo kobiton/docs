@@ -1,0 +1,128 @@
+= Cloud September 25, 2026
+
+[NOTE]
+====
+Cloud release notes are typically published weekly and summarize changes since the previous publication. Kobiton uses date-based release versioning, with releases identified by the build date in YYMM.DD format. Version information for individual software components is available in the Component versions section.
+====
+
+// Source: KOB-55177 from PR #635
+// https://github.com/kobiton/docs/pull/635
+
+== iOS and iPadOS 27.2 support
+
+Added support for devices running iOS and iPadOS 27.2.
+
+// Source: KOB-55177
+
+// Source: KOB-55095 from PR #611
+// https://github.com/kobiton/docs/pull/611
+
+== Session validations in the Kobiton MCP server
+
+- AI assistants connected to the Kobiton MCP server can now read a test session's validations one type at a time. Seven new tools cover accessibility, crash, response time, blocker, element selection, and flexCorrect findings: `listAccessibilityValidations`, `listCrashValidations`, `listResponseTimeValidations`, `listBlockerValidations`, `listElementSelectionValidations`, `listFlexCorrects`, and `getAccessibilityValidationsSummary`.
+- Each list tool returns at most 20 findings per call, with `page`, `total_pages`, and `total_items` counts. An assistant pages through a large session instead of pulling every finding into context at once.
+- `getAccessibilityValidationsSummary` returns a session's accessibility counts by finding type and issue name, with the number of steps scanned and the time of the latest finding, but not the findings themselves.
+- `listAccessibilityValidations` filters by finding type: `TOUCH_TARGET_SIZE`, `COLOR_CONTRAST`, or `CONTENT_LABELING`. Items are lean by default. Request the element, metadata, screen, and screenshot URL fields through the `include` parameter.
+- New paged REST endpoints back the tools: `GET /v2/validations/accessibility`, `/crash`, `/response-time`, `/blocker`, `/element-selection`, `/flex-correct`, and `GET /v2/validations/accessibility/summary`. The existing `GET /v2/validations` used by Kobiton Portal is unchanged.
+
+// REVIEWER NOTE: The source evidence gives two different totals for the published tool
+// catalog after this change. Neither total accounts for the summary tool. The AI plugin
+// reference page count was raised from 32 to 39 by counting the tool rows on that page
+// after all seven tools were added. Confirm against the published catalog.
+//
+// REVIEWER NOTE: The endpoint bullet is included because these are customer-callable v2
+// endpoints named in the engineering release note. The 2026-09-18 page dropped a similar
+// API bullet for an endpoint judged internal. Remove this bullet if the docs team applies
+// the same judgment here. No page exists for these endpoints in the api-reference module,
+// which is still a stub.
+
+// Source: KOB-55095
+
+// Source: KOB-54817 from PR #605
+// https://github.com/kobiton/docs/pull/605
+// Source: KOB-55244 from PR #633
+// https://github.com/kobiton/docs/pull/633
+
+== Analytics reports
+
+=== New report: Device Utilization
+
+- Available under *Reports* in the Portal to Org Admins only, in the *Device* category.
+- Shows device usage by sessions, testing minutes, and unique users for a date range you select.
+- Lists device name, custom device name, manufacturer, OS, version, UDID, team, and public or private device type alongside the usage counts, sorted so the most-used devices appear first.
+- Filter by date range and by public or private devices. Use the table's search box to filter by team.
+
+// REVIEWER NOTE (KOB-54817): the *Public/Private* filter label is taken from the originating
+// ticket. Replace it with the shipped control label if one differs.
+
+// Source: KOB-54817
+
+=== Retained device counts
+
+- The *Parallel Sessions* and *Retained Devices* reports now count every hour a device was retained, including retains that have since ended or expired. Previously, these reports could show fewer retained devices than were actually retained.
+
+// REVIEWER NOTE (KOB-55244): A Jira test comment found a second issue where a retained device that
+// has never run a session still showed a count of 0. The comment proposes a combined fix, but the
+// ticket does not confirm that the second fix shipped under this ticket. The entry above covers
+// only the confirmed fix. Confirm scope with engineering before broadening it.
+//
+// REVIEWER NOTE (KOB-55244): Confirm whether previously reported hours were corrected. Do not add
+// a claim about historical data unless engineering confirms it.
+
+// Source: KOB-55244
+
+// Source: KOB-55104 from PR #629
+// https://github.com/kobiton/docs/pull/629
+
+== App installation
+
+Improved app installation to reduce temporary storage usage on host machines. App installs no longer leave unnecessary files in temporary storage, helping prevent installation failures caused by insufficient disk space. This improvement applies to iOS and Android app installations, including apps installed from the Apps repository.
+
+// Source: KOB-55104
+
+// Source: KOB-54991 from PR #623
+// https://github.com/kobiton/docs/pull/623
+// Source: KOB-55182 from PR #625
+// https://github.com/kobiton/docs/pull/625
+// Source: KOB-55053 from PR #632
+// https://github.com/kobiton/docs/pull/632
+
+== Device passcode
+
+Applies to organizations with passcode mode enabled.
+
+Improved passcode handling on iOS and iPadOS devices:
+
+- Devices with custom numeric passcodes now unlock automatically when using Power to lock and unlock the screen during a manual session. Previously, users could be required to enter the passcode on the physical device.
+- Improved passcode handling after session cleanup so devices remain protected by a passcode and compliant with MDM passcode requirements between sessions.
+- iPad passcodes now persist when the device language is changed during a session. Previously, the passcode could be removed after a language change.
+
+// Source: KOB-54991
+// Source: KOB-55182
+// Source: KOB-55053
+
+// Source: KOB-55040 from PR #628
+// https://github.com/kobiton/docs/pull/628
+
+== Web context recovery for iOS sessions
+
+Improved web context recovery for iOS sessions. Devices that stop reporting web contexts now recover automatically when the next session starts, eliminating the need to reboot the device.
+
+This applies to Safari automation, Appium autoWebview, and other session operations that use web contexts. If the connection is lost during an active session, it is restored when the next session starts.
+
+// Source: KOB-55040
+
+// Source: KOB-55087 from PR #622
+// https://github.com/kobiton/docs/pull/622
+
+== Android device initialization
+
+Fixed an issue where devices running Android 11 and later could fail to initialize and remain unavailable for sessions.
+
+// Source: KOB-55087
+
+== Component versions
+
+* Portal 2609.23
+* deviceConnect 2609.24
+* Gigacap 2609.22

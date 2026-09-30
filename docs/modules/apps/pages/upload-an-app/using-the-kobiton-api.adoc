@@ -186,3 +186,33 @@ The response has 2 parameters:
 
 [NOTE]
 If you receive `error 404` with the message `App version ID ... doesn't exist`, the application version might be made inaccessible to your account. Contact an admin for access.
+
+[#_identify_builds_by_branch_or_commit]
+== Identify builds by branch or commit
+
+To distinguish builds from different branches or commits, encode that information in the `file_name` at upload, then filter by name at retrieval using the `keyword` query parameter.
+
+Use a consistent naming convention that includes the branch and commit, for example `{AppName}-{branch}-{commit}`. Apply that name when you generate the upload URL:
+
+[source,shell]
+----
+curl -X POST https://api.kobiton.com/v2/apps/upload-url \
+  -H 'Authorization: Basic ${yourBase64String}' \
+  -H 'Content-Type: application/json' \
+  -d '{ "file_name": "MyApp-main-a4b8479.apk" }'
+----
+
+Use the same `file_name` when you xref:_create_app_or_app_version[create the app record].
+
+At retrieval time, use the `keyword` query parameter on `GET /v2/apps` to filter by any substring of the file name:
+
+[source,shell]
+----
+# main-branch builds
+curl -X GET 'https://api.kobiton.com/v2/apps?keyword=MyApp-main' \
+  -H 'Authorization: Basic ${yourBase64String}'
+
+# builds from a specific commit
+curl -X GET 'https://api.kobiton.com/v2/apps?keyword=a4b8479' \
+  -H 'Authorization: Basic ${yourBase64String}'
+----

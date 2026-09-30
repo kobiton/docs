@@ -55,6 +55,16 @@ image:automation-testing:launch-mixed-session-session-list-right-click.png[width
 
 Now you can view your script running on the device and fix issues in realtime.
 
+== Convert a mixed session to a Test Case
+
+A completed mixed session can be converted into a single Test Case. The Test Case keeps the manual steps and the automation steps in the order they were recorded, so the combined flow can be rerun without recreating the session.
+
+Convert a mixed session from Session Explorer or from the *+New Test Case* pop-up on the Test Cases list page. The session must be complete before it can be converted.
+
+A Revisit of the converted Test Case replays each step through the execution path that matches its source, manual or automation, and reports per-step results. Steps with no replayable equivalent, such as an unsupported Appium endpoint, are skipped with a reason and the run continues.
+
+For the full conversion procedure, see xref:test-management:test-cases.adoc#_convert_to_test_case[Convert a session to a Test Case].
+
 == Limitations/Notes
 
 * In a mixed session, both the Manual and Automation session must be initiated by the same user.
@@ -63,9 +73,11 @@ Now you can view your script running on the device and fix issues in realtime.
 
 include::automation-testing:partial$mixed-sessions-basic-appium-limitations.adoc[]
 
-* Session Explorer is not available for Mixed Sessions; i.e. it's not possible to view detailed steps and screenshots for Mixed Sessions.
+* Session Explorer supports converting a completed mixed session to a Test Case. Viewing detailed steps and screenshots for a mixed session in Session Explorer is not supported.
 
-* Mixed sessions cannot be turned into test cases. They cannot be used for our AI functionality: Scriptless, generating Appium Scripts, self-healing xref:automation-testing:capabilities/add-flexcorrect.adoc[self-healing].
+* Appium script generation is not available for Test Cases converted from mixed sessions.
+
+* Mixed sessions cannot use xref:automation-testing:capabilities/add-flexcorrect.adoc[self-healing].
 
 * When you have a mixed Session on a Public Device, you will be charged minutes for the total time usage on the device; you will not be double-charged for an automation and a manual session.
 
