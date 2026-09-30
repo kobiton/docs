@@ -51,7 +51,7 @@ Swipe event:
 
 `xNorm`, `yNorm`, `xNorm2`, and `yNorm2` are normalized 0..1 against the canvas bounds. On a swipe, `xNorm` and `yNorm` are the start point, `xNorm2` and `yNorm2` are the end point, and `durationMs` is the swipe duration in milliseconds. `timestamp` marks when the event occurred and can be reused as the next call's `sinceTimestamp` to poll for newer events.
 
-// TODO: add a full end-to-end example (sample call + sample response). Pending SME confirmation on timestamp format and error-response shape. See KOB-54072 open questions.
+// TODO: add a full end-to-end example (sample call with sample response). Pending SME confirmation on timestamp format and error-response shape. See KOB-54072 open questions.
 
 == Scope
 
@@ -75,7 +75,7 @@ Capture is active only in the `?view=device-only` view. See xref:automation-test
 Each session's event buffer:
 
 * Up to 200 events.
-* Events older than 5 minutes are dropped.
+* Events older than five minutes are dropped.
 * When the buffer overflows, the oldest events are dropped first.
 
 == Polling
