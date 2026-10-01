@@ -16,7 +16,7 @@ The plugin exposes 39 MCP tools across 5 domains.
 |Tool |Description
 
 |`listDevices`
-|List available devices, filtered by platform, availability, device group, name, UDID, or group ID. Returns device name, UDID, platform, OS version, availability, and an `is_cloud` flag.
+|List available devices, filtered by platform, availability, device group, name, UDID, group ID, or virtualUSB readiness. Returns device name, UDID, platform, OS version, availability, and an `is_cloud` flag.
 
 |`getDeviceStatus`
 |Get the real-time status of one device, including availability, current session, battery level, and connection state.
@@ -49,6 +49,23 @@ A value without wildcards matches the exact full name only, so `Galaxy` on its o
 When every device list in the response is empty, `listDevices` returns an `applied_filters` object that echoes the filter values it used. Check it to tell a filter that matched no devices apart from an organization that has no devices to list.
 
 Devices returned with `is_cloud: true` have restricted shell-command access in CLI sessions. Devices returned with `is_cloud: false` are unrestricted.
+
+Pass `virtualUsb: true` to `listDevices` to check which private devices are ready for a xref:debugging:virtualusb-cli-commands.adoc#_connect[`vusb connect`] session. A device is ready when its host machine has virtualUSB enabled and its routing is reachable. virtualUSB is available on private devices only.
+
+With `virtualUsb: true`, `listDevices` applies these rules:
+
+* `listDevices` returns private devices only. Omit `deviceGroup` or set it to `PRIVATE`. A `deviceGroup` of `CLOUD` or `ALL` returns an error stating that virtualUSB is offered on private devices only.
+* Each device includes a `virtual_usb_ready` field.
+* Without `udid`, the response lists only devices with `virtual_usb_ready: true`. The result limit applies after not-ready devices are removed.
+* With `udid`, the response returns the matching device whether or not it is ready. A device with `virtual_usb_ready: false` also includes a `virtual_usb_reason` field.
+* When `udid` matches none of your private devices, the device list is empty and a top-level `virtual_usb_reason` states that the device was not found. An unknown UDID, a public device, and a device you cannot access all return this result.
+* The response always includes `applied_filters`, with `virtualUsb: true`, whether or not any devices are returned.
+
+`virtual_usb_ready: false` means the host machine has virtualUSB disabled, or has virtualUSB enabled but its routing is not reachable yet. The response does not distinguish between the two. Check the host machine's virtualUSB settings in *Device Management* in Kobiton Portal.
+
+Readiness does not reflect the organization's virtualUSB subscription. `vusb connect` reports subscription status when it runs.
+
+Without `virtualUsb`, the response does not include `virtual_usb_ready` or `virtual_usb_reason`.
 
 === Sessions
 

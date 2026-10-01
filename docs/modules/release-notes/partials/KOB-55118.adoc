@@ -1,0 +1,15 @@
+// Source: KOB-55118
+
+== virtualUSB readiness in the Kobiton MCP server
+
+- AI assistants connected to the Kobiton MCP server can now check which private devices are ready for virtualUSB before running `vusb connect`. Pass `virtualUsb: true` to `listDevices` to list only private devices whose host machine has virtualUSB enabled and reachable.
+- Each device returned with `virtualUsb: true` includes a `virtual_usb_ready` field. Pass `udid` with `virtualUsb: true` to check a specific device. A device that is not ready includes a `virtual_usb_reason` that points to the host machine settings in *Device Management*.
+- A UDID that matches none of your private devices returns an empty list with a `virtual_usb_reason` explaining that the device was not found.
+- virtualUSB is available on private devices only. Requests that combine `virtualUsb: true` with a `deviceGroup` of `CLOUD` or `ALL` return an error.
+- Calls to `listDevices` without `virtualUsb` are unchanged.
+
+For details, see xref:ai:mcp/ai-plugin-mcp-ref.adoc#_devices[Kobiton AI plugin and tools reference].
+
+// REVIEWER NOTE: The source evidence does not state the release date or the automate
+// plugin version that carries the new `virtualUsb` argument. Assign this partial to the
+// matching Cloud release page and confirm the plugin version before publishing.
