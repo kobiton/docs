@@ -12,7 +12,7 @@ Cloud release notes are typically published weekly and summarize changes since t
 // Source: KOB-55335 from PR #666
 // https://github.com/kobiton/docs/pull/666
 
-== Developer Disk Image mounting on newer iOS devices
+== Support for newer iOS devices
 
 - deviceConnect can now mount the Developer Disk Image (DDI) on devices running iOS 26.4 and later when the personalized DDI from Xcode does not cover the device model. In that case, deviceConnect installs the DDI from the Xcode bundle already on the host. No additional download is required.
 - Devices that the personalized DDI covers continue to mount it as before.
@@ -252,7 +252,7 @@ Connecting a device through virtualUSB now starts a virtualUSB session instead o
 // Source: KOB-55247 from PR #662
 // https://github.com/kobiton/docs/pull/662
 
-== Appium automation
+== iOS system alerts in automation sessions
 
 - Fixed an issue on iOS and iPadOS devices where automation sessions could not find, read, or tap elements on system alerts, such as the alert that asks you to turn on Location Services. Finding a system alert button, reading its `displayed` and `enabled` properties, and clicking it now work as expected. Previously, these commands could fail with a `No active application elements` error.
 
@@ -294,7 +294,7 @@ Update the virtualUSB app to get these fixes. After the update, a device that wa
 // Source: KOB-54722 from PR #653
 // https://github.com/kobiton/docs/pull/653
 
-== Reports
+== Report access by role
 
 - Access to the *Usage Report* and *Service Level Availability* reports is now determined by organization role. Users with the ADMIN role can view both reports. Users with the MEMBER role cannot view them, regardless of email domain.
 - Viewing Service Level Availability data now requires the organization management permission.
@@ -357,7 +357,7 @@ Applies to the virtualUSB desktop app on macOS.
 // Source: KOB-55245 from PR #651
 // https://github.com/kobiton/docs/pull/651
 
-== iOS device passcode and health checks
+== iOS passcode checks
 
 Applies to organizations with passcode mode enabled.
 
@@ -423,7 +423,7 @@ Applies to organizations with passcode mode enabled.
 // Source: KOB-54691 from PR #647
 // https://github.com/kobiton/docs/pull/647
 
-== Updated Java stack for exported Appium scripts
+== Java 17 for exported scripts
 
 Java (TestNG and JUnit) Appium scripts exported from Kobiton now target a current Java stack. Exported projects build on JDK 17 and work as modules in existing frameworks that use current Appium and Selenium versions.
 
@@ -459,7 +459,7 @@ For requirements, see xref:automation-testing:scripting/auto-generate-an-appium-
 // Source: KOB-55195 from PR #646
 // https://github.com/kobiton/docs/pull/646
 
-== Minimum supported iOS version is now iOS 15
+== Minimum iOS version raised to 15
 
 Kobiton supports devices running iOS and iPadOS 15 and later. Support for iOS 12, 13, and 14 has ended.
 
@@ -483,7 +483,7 @@ Kobiton supports devices running iOS and iPadOS 15 and later. Support for iOS 12
 // Source: KOB-55058 from PR #645
 // https://github.com/kobiton/docs/pull/645
 
-== deviceConnect
+== License validation for deviceConnect
 
 - *deviceConnect* now requires the `License.Valid=true` setting in the `dc.ini` file on each host. The setting defaults to `false`.
 ** New installations: add `License.Valid=true` to `dc.ini`, then restart *deviceConnect*. If the setting is missing or set to `false`, *deviceConnect* does not initialize.
@@ -494,7 +494,7 @@ Kobiton supports devices running iOS and iPadOS 15 and later. Support for iOS 12
 // Source: KOB-54450 from PR #650
 // https://github.com/kobiton/docs/pull/650
 
-== API v2
+== Virtual device visibility in the API
 
 - `GET /v2/devices` now returns virtual devices, such as Android emulators and iOS simulators, in a new `virtual_devices` list. Previously, the response included only private and cloud devices, so virtual devices were available only through `GET /v1/devices`. The same filters and team scoping that apply to `private_devices` also apply to `virtual_devices`. The list is empty for accounts without access to virtual devices. Existing response fields are unchanged.
 - Fixed device lookups by UDID for virtual devices. `GET /v2/devices/udid/{udid}` now returns device information for Android emulators and iOS simulators that your organization can use. Previously, the request returned `404` for an online virtual device.
