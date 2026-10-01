@@ -1,22 +1,53 @@
-= About Single Sign-On (SSO) authentication
-:navtitle: About Single Sign-On (SSO) authentication
+= Sign in with Enterprise SSO
+:navtitle: Sign in with Enterprise SSO
 
-== What is Single Sign-On?
+Enterprise SSO lets users of participating organizations sign in to Kobiton Portal through their corporate identity provider (IdP). After the first successful sign-in, your email address is recognized on subsequent visits and the sign-in flow skips directly to the Enterprise SSO step.
 
-Single Sign-On, often referred to as SSO, is an authentication method that enables a user to access multiple software systems with a single ID and password. By implementing SSO, you can enhance security, reduce potential risks, and make user management more straightforward. Essentially, it requires your users to remember just one set of login details to interact with an array of software tools. There are various SSO solutions available for IT teams to adopt. One of these options, which Kobiton now supports, is SAML.
+== Prerequisites
 
-== SSO and SAML
+* Your organization uses Enterprise SSO with Kobiton.
+* Your organization administrator has provisioned your account.
 
-Security Assertion Markup Language (SAML) is an open-standard protocol that supports SSO functionality for a group of users. SAML works by verifying a user's identity and sharing that information securely with the service provider. The user needs to input their credentials only once, with SAML managing the rest. This approach offers an SSO-like user experience while minimizing the risk of security breaches.
+== Sign in for the first time
 
-== SSO with Kobiton
+. Open the https://portal.kobiton.com/login[Kobiton Portal sign-in page].
+. Enter your corporate email address and select *Continue*.
+. Select *Continue with Enterprise SSO*.
+. Complete sign-in on your organization's IdP screen.
 
-Currently, Kobiton supports the SAML 2.0 protocol for SSO. Here's what you need to get started:
+// TUNG — Flow 2 reviewer questions
+//
+// Second Enterprise SSO scenario: user was NOT provisioned in Kobiton
+// Portal by an admin. They were added only to their IdP group that
+// grants Kobiton access, so Kobiton has no email record for them yet.
+//
+// UI flow observed on portal.kobiton.com/login (2026-09-22):
+//   1. On the sign-in page, below the email/username field and the
+//      "Don't have an account?" text, select "Join your company with SSO"
+//      (clickable link).
+//   2. On the "Log In To Your Account" screen, enter the company name
+//      in the text box.
+//   3. Select "Continue with SSO".
+//   4. Complete sign-in on the org's IdP screen.
+//
+// Open questions before we can draft this section:
+//   - What value should a user type into the "company name" text box?
+//     Hypothesis: the Kobiton "Domain name" value referenced in
+//     use-google-workspace.adoc (mapped to Google's Start URL field).
+//     Tiffany tried her org's Domain name and hit a Microsoft "tenant
+//     ID not found" error, so the value or format may be more nuanced.
+//   - Where does an admin see this value in the SSO Settings UI so
+//     they can communicate it to end users? get-kobiton-parameters.adoc
+//     does not list it.
+//   - Does Flow 2 require SSO enforcement to be turned on, or does it
+//     also work when SSO is configured but not enforced?
+//   - After the first successful Flow 2 sign-in, does Kobiton auto-
+//     create the user (per the JIT behavior in the 4.13 release notes)
+//     and route subsequent sign-ins through Flow 1?
+//
+// Once answered, the "Sign in for the first time" heading above will
+// be restructured to distinguish the two scenarios.
 
-*** xref:organization:sso-authentication/use-azure-ad.adoc[]
-*** xref:organization:sso-authentication/use-google-workspace.adoc[]
-*** xref:organization:sso-authentication/use-okta.adoc[]
-*** xref:organization:sso-authentication/use-onelogin.adoc[]
+== Related guides
 
-[NOTE]
-Use identity providers at your own risk.
+* xref:organization:sign-in-to-portal.adoc[]
