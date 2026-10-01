@@ -228,7 +228,7 @@ Set `X-AI-Tool-Name` to attribute your calls explicitly. The Codex CLI and Curso
 
 == Skills
 
-The plugin ships five guided skills.
+The plugin ships six guided skills.
 
 IMPORTANT: Using these skills in Claude Desktop requires a Claude Code subscription.
 
@@ -250,7 +250,15 @@ IMPORTANT: Using these skills in Claude Desktop requires a Claude Code subscript
 
 |`monitor-test-run`
 |Watch a running test run and report state changes. Surfaces the live remediation URL when an execution is blocked, and reports a blocked execution as blocked rather than passed.
+
+|`debug-device-over-vusb`
+|Debug your app on a private Kobiton device over virtualUSB from a plain-language request. Installs the supported virtualUSB client when needed, connects the device, installs your build, reproduces the problem, captures device logs, and disconnects the device when done. See <<_debug_over_virtualusb>>.
 |===
+
+// REVIEWER NOTE: Skill name. The blueprint listed the name as an open question
+// (`debug-virtual-usb-session` or `debug-device-over-vusb`). Later Jira fields (test selection,
+// impact analysis) use `debug-device-over-vusb`. Confirm against the published automate 1.13.0
+// skill folder before publishing.
 
 === Choose a skill
 
@@ -272,6 +280,9 @@ IMPORTANT: Using these skills in Claude Desktop requires a Claude Code subscript
 
 |Follow a running test run and catch blockers
 |`monitor-test-run`
+
+|Debug your app on a private device over virtualUSB
+|`debug-device-over-vusb`
 |===
 
 === Skill requirements by host
@@ -311,6 +322,12 @@ Skills differ in what they need from the host running them. Check the requiremen
 |Yes
 |macOS only
 |No
+
+|`debug-device-over-vusb`
+|Yes
+|Yes
+|macOS or Windows
+|No
 |===
 
 `create-test-run` is the only skill that runs with nothing but an authenticated MCP connection. If you opt into monitoring, it hands off to `monitor-test-run`, which needs local file access and the credentials file. On a host without those, create the run and note its ID instead of watching it.
@@ -324,6 +341,79 @@ All MCP tools and the `run-automation-suite` skill work on every platform your h
 The `run-interactive-session` skill ships a CLI binary built for macOS as a single-architecture x86_64 executable. It runs natively on Intel Macs and under Rosetta 2 on Apple Silicon. No Linux or Windows build ships. On those platforms, use `run-automation-suite` or `drive-automation-session`, or call the MCP tools directly.
 ====
 
+== Debug over virtualUSB
+
+The `debug-device-over-vusb` skill connects a private Kobiton device to your computer over virtualUSB, then works through a debugging request you describe in plain language. The skill calls the virtualUSB CLI directly. It requires `automate` plugin version 1.13.0 or later.
+
+=== Requirements
+
+* An organization subscription that includes virtualUSB.
+* A private device on a host machine with virtualUSB enabled. Public devices are not supported.
+* macOS or Windows. Linux is not supported.
+* Kobiton credentials in `~/.kobiton/.credentials`. Run `/automate:setup` to create the file.
+
+=== virtualUSB client setup
+
+Each plugin version pins one virtualUSB client version. Before connecting, the skill checks the client on your computer against that version.
+
+[cols="1,3",options="header"]
+|===
+|Platform |Behavior
+
+|macOS
+|Downloads the pinned client, verifies its checksum, and unpacks it into `~/.kobiton/vusb/<version>/`. If the installed client in *Applications* already matches the pinned version, the skill uses it and downloads nothing. If a different version is already installed, the skill stops and reports it instead of installing a second copy.
+
+|Windows
+|Downloads the pinned `.msi` installer and verifies its checksum, then lists the steps to finish setup: run the installer, then run `vusb setup-adb` in a terminal with administrator privileges. Run the skill again after setup completes.
+|===
+
+The skill reports one of these outcomes: `installed`, `updated`, `no action needed`, `handed off to human`, or `redirected (limitation)`. Running the check again at the pinned version downloads nothing. A failed checksum or a missing download is reported, and any working client already on your computer stays in place. If the pinned version is no longer available, the skill asks you to update the `automate` plugin to the latest version.
+
+The skill does not perform steps that need administrator approval. On macOS, the first `vusb connect`, and the first connect after each client version change, displays a prompt to install the virtualUSB daemon. Approve the prompt on the computer itself. The prompt does not appear in an SSH session. See xref:debugging:virtualusb-cli-commands.adoc#_connect[virtualUSB CLI commands].
+
+=== Debugging flow
+
+. The skill finds online private devices that are ready for virtualUSB. When more than one device matches, the skill asks you to confirm the device.
+. The skill checks the device and platform against known virtualUSB limitations before connecting. If a limitation applies, the skill explains it and does not connect.
+. The skill signs in to virtualUSB with your plugin credentials, connects the device, and confirms the connection with `vusb status` and `adb devices` or the Xcode device list.
+. The skill installs your build, reproduces the problem you described, captures device logs, such as `adb logcat` output, and reports the results in plain language.
+. The skill disconnects the device with `vusb disconnect`, including when an earlier step fails, and confirms the device is back online.
+
+The skill does not call `reserveDevice` or `terminateReservation`.
+
+=== Limitations
+
+The skill stops before connecting when any of these apply:
+
+* iOS 17.0 through 17.3.
+* An iOS device on Windows.
+* Linux.
+* A public device.
+* A Kobiton CLI session already running on the device.
+* A request that needs `adb reverse`.
+
+For more virtualUSB considerations, see xref:debugging:start-debugging.adoc#_considerations[Start debugging].
+
+=== Troubleshooting
+
+The skill returns a plain-language message and a next step for these failures:
+
+* Not signed in to virtualUSB.
+* virtualUSB is not included in the organization subscription.
+* A VPN or proxy blocks the connection to the host machine.
+* Another user holds the device.
+* The installed virtualUSB client version is incompatible.
+* An iOS device was requested on Windows.
+
+// REVIEWER NOTE: Limitations and error cases come from the KOB-55165 description (B.2, B.6),
+// which cites the Confluence page "Limitations of virtualUSB". The Jira field says to re-verify
+// the error-message mapping after KOB-54935 and KOB-55180; both show Released in the evidence.
+// Confirm the skill's current messages match this list.
+//
+// REVIEWER NOTE: The blueprint also lists virtualUSB 1 and 2 coexistence and API-key-only sign-in
+// as gated limitations (D15). They are omitted here because the ticket description does not
+// describe them in customer terms. Add them if the SME confirms the wording.
+
 == Commands
 
 [cols="1,3",options="header"]
@@ -334,8 +424,12 @@ The `run-interactive-session` skill ships a CLI binary built for macOS as a sing
 |Fetch credentials from the authenticated MCP server and write them to `~/.kobiton/.credentials`. Also installs the `~/.kobiton/bin/kobiton` CLI wrapper used by `run-interactive-session`.
 
 |`/automate:doctor`
-|Read-only diagnostic for the CLI installation, credentials file, active profile, and required fields. Prints remediation hints for any failures.
+|Read-only diagnostic for the CLI installation, credentials file, active profile, and required fields. Also reports the pinned and installed virtualUSB client versions. Prints remediation hints for any failures.
 |===
+
+// REVIEWER NOTE: The ticket description asks doctor to report pinned, installed, and
+// latest-available virtualUSB versions. The blueprint (D17) leaves the latest-available probe as
+// an open question. Only pinned and installed are stated here. Confirm before adding "latest".
 
 On Cursor CLI and Cursor IDE, plugin commands register without a namespace prefix, so these appear as `/setup` and `/doctor`. Select the entry with the Kobiton description to tell them apart from Cursor's built-in commands.
 
@@ -424,6 +518,16 @@ Swipe down to refresh
 Pull /sdcard/Download/report.txt from the device
 Run adb shell pm list packages on the current device
 ....
+
+=== Debugging over virtualUSB
+
+....
+Debug the login crash in my app on a private Android device over virtualUSB
+Install build.apk on my private Pixel over virtualUSB, reproduce the checkout freeze, and show the logs
+....
+
+// REVIEWER NOTE: Example prompts are illustrative. The source evidence describes plain-language
+// requests but does not supply sample prompts.
 
 === Test cases and test runs
 
