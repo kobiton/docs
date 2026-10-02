@@ -1,0 +1,11 @@
+// REVIEWER NOTE:
+// KOB-55058 | Component: deviceConnect (Phoenix) | Jira status: Released | Release Email selected; Release Notes field populated.
+// No fixVersion set. Confirm the target release page before publishing.
+// Audience: applies to hosts where the customer manages dc.ini (Standalone and Hybrid, verify). Do not place on a Cloud-only page without confirmation.
+// Open question from the ticket: whether License.Valid needs an Admin docs entry is undecided. No product doc drafted.
+
+== deviceConnect
+
+- *deviceConnect* now requires the `License.Valid=true` setting in the `dc.ini` file on each host. The setting defaults to `false`.
+** New installations: add `License.Valid=true` to `dc.ini`, then restart *deviceConnect*. If the setting is missing or set to `false`, *deviceConnect* does not initialize.
+** Existing hosts: hosts that already have `License.Valid=true` in `dc.ini` continue to work after the update. No action is required.
