@@ -40,21 +40,23 @@ The restriction applies wherever you reach the shell on a public device:
 
 You can run most `adb` commands on private and local devices--as long as they don't harm the device or alter systems in real-time.
 
-These are the type of commands we *don't* allow:
+The following commands are blocked entirely:
 
-* `kobiton/i`
-* `logcat/i`
-* `monkey/i`
-* `top/i`
-* `com.domobile.applock/i`
-* `com.domobile.applockwatcher/i`
-* `com.sp.protector.free/i`
-* `com.manageengine.mdm.android/i`
-* `com.manageengine.mdm.samsung.knox/i`
-* `com.manageengine.mdm.samsung/i`
-* `com.manageengine.admp/i`
-* `com.android.systemui/i`
-* `com.android.settings/i`
-* `com.android.vending/i`
-* `com.google.android.webview/i`
-* `monkey -p com.myAppPackage -v 10000 -s 100`
+* `kobiton`
+* `logcat`
+* `monkey`
+* `top`
+
+Destructive operations against the following protected packages are blocked. This includes `pm uninstall`, `pm clear`, and `am force-stop`. You can still launch these packages with `am start`, `am start-activity`, `am start-service`, or `am start-foreground-service`.
+
+* `com.domobile.applock`
+* `com.domobile.applockwatcher`
+* `com.sp.protector.free`
+* `com.manageengine.mdm.android`
+* `com.manageengine.mdm.samsung.knox`
+* `com.manageengine.mdm.samsung`
+* `com.manageengine.admp`
+* `com.android.systemui`
+* `com.android.settings`
+* `com.android.vending`
+* `com.google.android.webview`
