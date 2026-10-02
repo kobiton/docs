@@ -1,0 +1,22 @@
+// Release-note partial for KOB-55311.
+// Review heading placement, release date, and entry grouping before publishing.
+
+== virtualUSB
+
+- On macOS, virtualUSB now pairs unpaired iOS 17.4 and later devices with the Mac automatically when they connect. Paired devices are available in Xcode, including Xcode 27.
+- While a device pairs, the *Connection Status* column displays *Pairing...*, then *Connected*. If pairing does not complete, it displays *Pairing failed*.
+- The *Pairing* toggle is removed from the device list. To pair a device again, disconnect it, select *Clear Pairing Data*, and connect it again.
+- Automatic pairing requires Xcode on the Mac.
+
+// REVIEWER NOTE: Released in virtualUSB build 2610.21341.0. Confirm the target release-notes
+// page and whether to list the virtualUSB version under Component versions.
+
+// HOLD CHECK: The parent epic KOB-46544 (virtualUSB 2, iOS 17.4+ support for the macOS
+// client) was still in progress in the Jira evidence for this run. Earlier release-note pages held
+// virtualUSB 2 entries until cleared for publication. Confirm with product that iOS 17.4+ support
+// in virtualUSB is cleared for public docs before merging. A Jira field on KOB-55311 reads
+// "Internal" and its field name is not in the evidence export; confirm it does not mark the ticket
+// as internal-only. Multi-device issues found during QA are tracked separately in KOB-55354 and
+// are not documented here.
+
+// Source: KOB-55311

@@ -40,6 +40,44 @@ image:virtualusb-connected-device.png[width=1000,alt="A Connected device in virt
 
 Repeat this step to connect to additional devices.
 
+// HOLD CHECK: The parent epic KOB-46544 (virtualUSB 2, iOS 17.4+ support for the macOS
+// client) was still in progress in the Jira evidence for this run. Earlier release-note pages held
+// virtualUSB 2 entries until cleared for publication. Confirm with product that iOS 17.4+ support
+// in virtualUSB is cleared for public docs before merging. A Jira field on KOB-55311 reads
+// "Internal" and its field name is not in the evidence export; confirm it does not mark the ticket
+// as internal-only. Multi-device issues found during QA are tracked separately in KOB-55354 and
+// are not documented here.
+
+[#_automatic_pairing]
+=== Automatic pairing for iOS 17.4 and later devices
+
+On macOS, virtualUSB pairs an unpaired iOS 17.4 or later device with the Mac automatically when the device connects. No manual pairing step is required.
+
+* While the device pairs, the *Connection Status* column displays *Pairing...*.
+* After pairing completes, the *Connection Status* column displays *Connected*, and the device is available in Xcode, including Xcode 27.
+* If pairing does not complete, the *Connection Status* column displays *Pairing failed*.
+
+A device that is already paired connects directly and displays *Connected*.
+
+Automatic pairing requires Xcode on the Mac. Without Xcode, pairing fails and the device displays *Pairing failed*.
+
+// REVIEWER NOTE: Confirm the minimum Xcode version required for automatic pairing.
+// The source states only that Xcode (xcrun devicectl) must be installed on the Mac.
+
+=== Pair a device again
+
+To pair a device that virtualUSB has already marked as paired:
+
+. Disconnect the device.
+. Select *Clear Pairing Data* from the virtualUSB menu.
+. Connect the device again.
+
+*Clear Pairing Data* skips devices that are connected. Disconnect the device before using it.
+
+// REVIEWER NOTE: Confirm the exact menu path for Clear Pairing Data. The source says
+// only "menu Clear Pairing Data". Consider adding a screenshot of the menu and of the
+// Pairing... status.
+
 == Check connected devices
 
 [tabs]
@@ -138,6 +176,14 @@ image:virtualusb-save-logs-popup.png[width=400,alt="The time period dropdown in 
 
 * In the zip file exported using the *save log* feature, the created and modified date time of some of the files and folders are displayed incorrectly as _January 1, 1980 at 12:00 AM_.
 
-* *iOS 17 and above devices* are not supported.
+* On macOS, *iOS 17.4 and later devices* pair automatically when connected. See <<_automatic_pairing,Automatic pairing for iOS 17.4 and later devices>>.
+
+// REVIEWER NOTE: The previous text here stated "iOS 17 and above devices are not supported."
+// KOB-55311 confirms iOS 17.4 and later devices connect and are usable from Xcode on macOS.
+// Confirm the support status of iOS 17.0 to 17.3.1 devices before publishing.
+
+* If two unpaired iOS devices with the same display name connect at the same time, virtualUSB cannot tell them apart before pairing and displays *Pairing failed* instead of pairing the wrong device.
+
+* The virtualUSB CLI does not report pairing status. `vusb connect` reports the device as connected before pairing starts and does not report pairing failures.
 
 * iOS device support for *virtualUSB on Windows* is not available.
