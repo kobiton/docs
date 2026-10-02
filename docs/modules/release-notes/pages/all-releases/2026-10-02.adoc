@@ -167,11 +167,9 @@ Kobiton supports devices running iOS and iPadOS 15 and later. Support for iOS 12
 // Source: KOB-55058 from PR #645
 // https://github.com/kobiton/docs/pull/645
 
-== License validation for deviceConnect
+== License configuration for new deviceConnect deployments
 
-- *deviceConnect* now requires the `License.Valid=true` setting in the `dc.ini` file on each host. The setting defaults to `false`.
-** New installations: add `License.Valid=true` to `dc.ini`, then restart *deviceConnect*. If the setting is missing or set to `false`, *deviceConnect* does not initialize.
-** Existing hosts: hosts that already have `License.Valid=true` in `dc.ini` continue to work after the update. No action is required.
+- Starting with *deviceConnect* 2610.1, new deployments require an additional license configuration step before *deviceConnect* can initialize. Existing deployments require no changes.
 
 // Source: KOB-54451 from PR #643
 // https://github.com/kobiton/docs/pull/643
