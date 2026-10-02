@@ -16,40 +16,6 @@ Cloud release notes are typically published weekly and summarize changes since t
 
 - *Appium Inspector* in Session Explorer now shows the correct XML hierarchy for each step of iPad automation sessions started without an app, such as a web session in Safari — matching the behavior on iPhone and Android. Previously, these sessions showed the same hierarchy for every step.
 
-// REVIEWER NOTE:
-// KOB-54432 | Type: Bug | Components: Device Inspector, Portal | Priority: High | Jira status: Wait For Deployment
-// Current-release evidence: Jira status matches the trigger status, the Jira "Release notes"
-// field is populated with customer-facing text, and "Release Email" is selected. Fix Version is
-// empty, so confirm the release this entry belongs to before publishing.
-//
-// Wording follows the Jira "Release notes" field. The field says "the Session Explorer Inspector";
-// this entry uses *Appium Inspector*, the label used on the existing Session Explorer page
-// (session-explorer/pages/analytics/reinspect-appium-elements.adoc). Confirm the shipped label.
-//
-// "such as a web session in Safari" is an example added for clarity. The Jira field says
-// "sessions that ran without an app (browser sessions)" and does not name a browser. Confirm
-// Safari is the right example, or replace it with "a browser session".
-//
-// The Jira field names the session type as "Xium/Appium sessions started without an app
-// capability". This entry says "automation session" to cover both. Confirm that wording.
-//
-// Omitted from the public entry on purpose:
-// - The Jira field says the `kobiton:turnOffScreenshotAndXmlPump` capability still disables capture
-//   on request. No page in this repo documents that capability. Add it back only if the docs team
-//   wants to publish it, and consider documenting the capability on its own page first.
-// - The Jira field lists the iPad models used for verification. Those are test devices, not a
-//   limit on which iPads the fix applies to.
-//
-// No product-doc update is included. The Session Explorer Appium Inspector page does not
-// mention an iPad limitation, so no existing text needs to change.
-//
-// The Jira "Release notes" field also selects "Support Notes" (internal). Route any support-facing
-// detail through the internal support channel, not this public entry.
-//
-// A separate Jira field on the ticket reads "Internal"; its field name is not present in the
-// evidence export. Confirm it does not mark the ticket as internal-only before publishing.
-// Source: KOB-54432
-
 // Source: KOB-55247 from PR #662
 // https://github.com/kobiton/docs/pull/662
 
@@ -60,16 +26,6 @@ Cloud release notes are typically published weekly and summarize changes since t
 // REVIEWER NOTE (KOB-55247): The Jira impact field describes the fix as covering alerts and
 // popups drawn by the iOS system on iPhone and iPad. QA verified the Location Services alert
 // only. Confirm that the general "system alerts" wording is acceptable.
-//
-// REVIEWER NOTE (KOB-55247): Jira status is Wait For Deployment and QA passed on a prerelease
-// deviceConnect build. No fix version is set. Confirm the target release page and deviceConnect
-// version before publishing.
-//
-// REVIEWER NOTE (KOB-55247): The ticket was reported as a regression in previously working
-// scripts. The start date of the regression is not stated in customer-facing terms, so it is
-// left out. Add it only if the docs team wants to acknowledge the regression window.
-
-// Source: KOB-55247
 
 // Source: KOB-54722 from PR #653
 // https://github.com/kobiton/docs/pull/653
@@ -102,8 +58,6 @@ Applies to organizations with passcode mode enabled.
 // iOS. The "Turn off passcode" section of the iOS device preparation page does not mention this.
 // Decide whether that page, or the admin docs, need a follow-up update.
 
-// Source: KOB-55245
-
 // Source: KOB-54691 from PR #647
 // https://github.com/kobiton/docs/pull/647
 
@@ -121,24 +75,11 @@ Java (TestNG and JUnit) Appium scripts exported from Kobiton now build on JDK 17
 
 For requirements, see xref:automation-testing:scripting/auto-generate-an-appium-script.adoc#_java_project_requirements[Java project requirements].
 
-// REVIEWER NOTE: Source is KOB-54691 (status Released, fixVersion 2026.09.29, component
-// Scriptless Automation). Jira comment confirms deployment to US cloud production. No
-// all-releases page exists for this release yet, so this partial is not included anywhere.
-// Wire it in when that page is created. Confirm Standalone availability separately.
+// REVIEWER NOTE (KOB-54691): The design blueprint on the ticket named java-client 9.5.0, but
+// the later impact analysis and the release note field both state 10.1.1. Confirm the shipped
+// version before publishing.
 //
-// REVIEWER NOTE: Wording follows the ticket's customer-facing release note field. The design
-// blueprint on the ticket named java-client 9.5.0, but the later impact analysis and the release
-// note field both state 10.1.1. Confirm the shipped version before publishing.
-//
-// REVIEWER NOTE: The impact analysis lists generated-code behavior changes that are not included
-// above: a swipe without a duration now defaults to 800 ms, set-location keeps decimal
-// coordinates, and element lookups always restore the implicit wait. Decide whether any of these
-// belong in the customer text.
-//
-// REVIEWER NOTE: Customer names, internal repository names, and CVE identifiers from the ticket
-// are intentionally excluded.
-
-// Source: KOB-54691
+// REVIEWER NOTE (KOB-54691): Confirm Standalone availability separately.
 
 // Source: KOB-55195 from PR #646
 // https://github.com/kobiton/docs/pull/646
@@ -153,16 +94,13 @@ Kobiton supports devices running iOS and iPadOS 15 and later. Support for iOS 12
 - Devices running iOS 15 through iOS 27 continue to support manual and automation sessions.
 - After a deviceConnect upgrade, devices running iOS 15 or later come back online automatically.
 
-// Source: KOB-55195
+// REVIEWER NOTE (KOB-55195): The Jira summary says "Maintenance mode for iOS 12, 13 and 14 support",
+// but the description, customer-impact field, and QA results all describe iOS 12-14 devices as
+// rejected at connection and unusable. This entry documents the verified behavior (rejected).
+// Confirm the intended customer-facing wording with Product before publishing.
 //
-// REVIEWER NOTE: The Jira summary says "Maintenance mode for iOS 12, 13 and 14 support",
-// but the description, customer-impact field, and QA results all describe iOS 12-14
-// devices as rejected at connection and unusable. This entry documents the verified
-// behavior (rejected). Confirm the intended customer-facing wording with Product before
-// publishing.
-//
-// REVIEWER NOTE: The Supported OS versions page and the Prepare an iOS device page are
-// updated in the same branch.
+// REVIEWER NOTE (KOB-55195): The Supported OS versions page and the Prepare an iOS device page
+// are updated in the same branch.
 
 // Source: KOB-55058 from PR #645
 // https://github.com/kobiton/docs/pull/645
@@ -183,45 +121,24 @@ Kobiton supports devices running iOS and iPadOS 15 and later. Support for iOS 12
 - `GET /v1/devices/{udid}` also returns these virtual devices. Previously, it returned `500`.
 - Lookups for physical devices and unknown UDIDs are unchanged. Organizations without access to virtual devices continue to receive `404` for virtual device UDIDs.
 
-// Source: KOB-54451 | Bug | Component: API v2 | Fix version: 2026.09.25
-//
-// REVIEWER NOTE (KOB-54451): Wording is based on the ticket's release summary and customer-facing change
-// fields. The ticket marks this change for the customer-facing release email.
-//
-// REVIEWER NOTE (KOB-54451): The ticket says the v1 endpoint is not a maintenance priority while the
-// Portal moves to v2. Confirm whether v1 behavior belongs in public release notes, or drop
+// REVIEWER NOTE (KOB-54451): The ticket says the v1 endpoint is not a maintenance priority while
+// the Portal moves to v2. Confirm whether v1 behavior belongs in public release notes, or drop
 // the second bullet.
 //
-// REVIEWER NOTE (KOB-54451): The public API reference module is a placeholder. If the v2 device lookup
-// endpoint is documented elsewhere, confirm whether its reference entry needs a note that
+// REVIEWER NOTE (KOB-54451): The public API reference module is a placeholder. If the v2 device
+// lookup endpoint is documented elsewhere, confirm whether its reference entry needs a note that
 // virtual device UDIDs are supported.
 //
-// REVIEWER NOTE (KOB-54451): Retag onto the release page that covers the 2026.09.25 Cloud release.
+// REVIEWER NOTE (KOB-54450): The Jira "Release notes" field names "Android emulators and iOS
+// simulators". The ticket description and reproduction cover only an Android emulator. QA notes
+// list an online iOS simulator and an online Android emulator as verified. Keep "iOS simulators"
+// only if SME confirms.
 //
-// --- KOB-54450 reviewer notes (merged entry) ---
-// REVIEWER NOTE (KOB-54450):
-// KOB-54450 | Type: Bug | Component: API v2 | Priority: Medium | Jira status: Wait For Deployment
-// Current-release evidence: Jira status matches the trigger status, the Jira "Release notes"
-// field is populated with customer-facing text, and "Release Email" is selected. Fix Version is
-// empty, so confirm the release this entry belongs to before publishing.
-//
-// REVIEWER NOTE (KOB-54450): The Jira "Release notes" field names "Android emulators and iOS simulators". The ticket
-// description and reproduction cover only an Android emulator. QA notes list an online iOS
-// simulator and an online Android emulator as verified. Keep "iOS simulators" only if SME confirms.
-//
-// REVIEWER NOTE (KOB-54450): "Accounts without access to virtual devices" follows the Jira "Release notes" field wording.
-// Confirm whether "organizations" is the more accurate customer term.
-//
-// REVIEWER NOTE (KOB-54450): The published API reference is maintained outside this repo. Engineering notes say it documents
-// `virtual_devices` once the API reference deploys, which is scheduled after the API change reaches
-// production. Confirm the API reference is live before publishing this entry. The api-reference
-// module in this repo is a stub, so no product-doc update is included with this change.
-//
-// REVIEWER NOTE (KOB-54450): The Jira "Release notes" field also selects "Support Notes" (internal). Route any support-facing
-// detail through the internal support channel, not this public entry.
-//
-// REVIEWER NOTE (KOB-54450): A separate Jira field on the ticket reads "Internal"; its field name is not present in the
-// evidence export. Confirm it does not mark the ticket as internal-only before publishing.
+// REVIEWER NOTE (KOB-54450): The published API reference is maintained outside this repo.
+// Engineering notes say it documents `virtual_devices` once the API reference deploys, which is
+// scheduled after the API change reaches production. Confirm the API reference is live before
+// publishing this entry. The api-reference module in this repo is a stub, so no product-doc update
+// is included with this change.
 
 // Source: Unknown ticket from PR #595
 // https://github.com/kobiton/docs/pull/595
