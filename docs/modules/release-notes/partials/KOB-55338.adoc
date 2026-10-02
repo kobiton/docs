@@ -1,0 +1,32 @@
+// KOB-55338. Source: Jira KOB-55338 (status Wait For Deployment; Release Notes field includes
+// "Release Email"). Standalone only.
+// Needs confirmation before publishing:
+// - First Standalone release that ships `kobictl run backup` and `kobictl run restore`. Jira has no
+//   fix version, so no release number is stated here.
+// - Whether backup from 4.26.x primary servers is supported. Jira marks this as pending review, so
+//   this entry omits it.
+// - Whether the operator procedure is published in admin docs, and where to link it.
+// Omitted on purpose: retention of older backups (older backups restore the most recent file
+// storage, not a point-in-time copy; Jira marks this as undecided), switching devices and users to
+// the standby server, and backup encryption at rest (open questions in Jira).
+
+=== Back up and restore Standalone data to a standby server
+
+Standalone deployments can now back up Kobiton data from the primary server and restore it onto a standby server. The standby server can then take over if the primary server fails.
+
+*Highlights*
+
+- `sudo kobictl run backup` backs up Kobiton databases, search data, and stored files such as session videos, screenshots, and apps. Kobiton keeps running during the backup.
+- Backups go to a standby server over SSH with key-based authentication, or to a locally mounted path such as a USB disk or NAS share.
+- Repeat backups transfer only new or changed data.
+- Backup checks free disk space before it starts. A failed backup leaves the previous complete backup intact.
+- `sudo kobictl run restore <backup-path>` runs on the standby server and replaces all Kobiton data on that server with the backup. A restore can't be undone, so run it only on a standby server.
+- Restore checks the Kobiton version of the standby server before it stops any services. To restore onto a standby server that runs a newer Kobiton version, add `--allow-newer`. Restore then applies the newer version's database updates.
+- If a restore fails partway, Kobiton stays stopped instead of running on partially restored data. Run `sudo kobictl run restore --resume-services` to start Kobiton again.
+- The license and SSL certificate aren't part of the backup. Install them on the standby server.
+
+Replace `<backup-path>` with the path to the backup on the standby server.
+
+*Availability*
+
+Standalone deployments only. The standby server must run 4.27.0S or later. Backups and restores run only when started manually. Scheduled backups aren't supported.
