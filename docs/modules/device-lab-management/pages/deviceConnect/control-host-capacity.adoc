@@ -108,9 +108,19 @@ In the Device Details, both the *Launch* and *Retain* buttons are disabled.
 
 image:device-details-disabled-lauch-retain.png[width=600,alt="The disabled Launch and Retain button in Device Details"]
 
-If a session is initiated through the Portal, API, or automation while the host is at capacity, the following error is returned:
+If a session is initiated through the Portal, API, automation, or virtualUSB while the host is at capacity, the following error is returned:
 
 _Host has reached its configured capacity. Please try again later._
+
+In virtualUSB, the *Connect* button remains enabled for devices on a host at capacity. Selecting *Connect* returns the error above in both the virtualUSB desktop app and the virtualUSB CLI. Connect again after a session on the host ends.
+
+// Source: KOB-55180
+// REVIEWER NOTE: QA verified the capacity message in the virtualUSB desktop app (macOS)
+// and CLI, and in virtualUSB 1 on Windows. The message is the same whether the slot is
+// held by a manual, retained, or CLI session.
+// REVIEWER NOTE: The ticket states the Connect button staying enabled at capacity was not
+// addressed by this fix. Confirm this is still current before publishing, and remove the
+// sentence if a later client release disables Connect.
 
 Capacity limits apply *only* to new sessions.
 

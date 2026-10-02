@@ -1,0 +1,22 @@
+== virtualUSB
+
+- When you connect to a device on a host machine that has reached its *Max Parallel Tests* limit, the virtualUSB desktop app and the virtualUSB CLI now show _Host has reached its configured capacity. Please try again later._ This matches the message shown in the Portal. Previously, virtualUSB showed a generic session failure that did not mention host capacity.
+
+// REVIEWER NOTE: Per the ticket, the generic message was a regression on the redesigned
+// virtualUSB session path (KOB-54935), and both changes shipped to production together on
+// 2026-09-27. Customers on the previous production path already saw the capacity message.
+// If KOB-54935 gets its own release-note entry on the same page, consider folding this
+// item into it or dropping the "Previously" sentence.
+//
+// REVIEWER NOTE: The *Connect* button still stays enabled when the host is at capacity.
+// That client-side behavior was out of scope for this fix and is not claimed here.
+//
+// REVIEWER NOTE: The ticket also notes that Portal booking error toasts no longer begin
+// with a "Failed to book <device>." prefix, and that subscription (entitlement) errors now
+// also reach the virtualUSB client verbatim. Neither is included because the exact
+// customer-facing text is not in the ticket. Add them if the docs team wants them.
+//
+// REVIEWER NOTE: Fix version 2026.09.27. Place this partial on the release page for that
+// deploy cycle.
+
+// Source: KOB-55180
