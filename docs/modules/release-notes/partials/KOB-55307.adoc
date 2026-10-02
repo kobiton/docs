@@ -1,0 +1,10 @@
+// Source: KOB-55307
+// Drafted by Robot Ranch (Town Crier) from the Jira Release Notes field. Docs-team review required before publishing.
+// REVIEWER NOTE: the source does not state the plugin version that includes this change. Confirm whether to name it.
+
+== Kobiton MCP server
+
+- `/automate:setup` now writes your Kobiton credentials without your API key passing through the AI assistant. A local setup script fetches the key directly from Kobiton, and the conversation shows only a one-time setup token and the last 4 characters of the key.
+- Setup uses a dedicated API key named `kobiton-mcp-<assistant>`, for example `kobiton-mcp-claude`. The first setup creates the key, and later setups reuse it. Your other API keys are not changed.
+- Older plugin versions ask you to update the plugin before setup runs. Existing credentials files keep working.
+- If you shared the transcript of a setup run from an older plugin version, rotate that API key in *Settings > API Keys*.
