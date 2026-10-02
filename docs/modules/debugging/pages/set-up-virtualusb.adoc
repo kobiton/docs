@@ -14,9 +14,9 @@ You'll need a personal computer with the following system specifications:
 macOS::
 +
 
-* MacOS Monterey 12 or later.
+* macOS Monterey 12 or later.
 
-* Xcode 13 or higher (be sure to select a version that works with the iOS versions to be tested)
+* Xcode 13 or later. Use a version that supports the iOS versions you test. Devices running iOS 17.4 or later also require Xcode for automatic pairing. For supported iOS versions, see xref:debugging:start-debugging.adoc#_considerations[Considerations in Start debugging,window=read-later].
 
 Windows::
 
@@ -25,7 +25,7 @@ Windows::
 ======
 
 [IMPORTANT]
-For both MacOS and Windows, administrative privilege is required to set up and use virtualUSB.
+For both macOS and Windows, administrative privilege is required to set up and use virtualUSB.
 
 For your organization's private or local devices, an organization admin must also xref:device-lab-management:deviceConnect/enable-virtualusb-for-host-machines.adoc[enable virtualUSB on the devices' host machines,window=read-later].
 
@@ -62,7 +62,7 @@ Replace `C:\path\to\Android\Sdk` with the actual location of SDK installation di
 --
 ======
 
-== For MacOS only: Prepare debug symbols for iOS devices
+== For macOS only: Prepare debug symbols for iOS devices
 
 If your network has a low bandwidth, fetching debug symbol files for Xcode via virtualUSB can be slow and unreliable. In such cases, you'll need to manually prepare the debug symbols, which are specific to the device’s iOS version. If needed, contact our Support team and request the debug symbols for your devices. Then, copy the debug symbols to your local Mac folder:
 [source]
@@ -87,7 +87,7 @@ Contact Kobiton Support for the latest download links if you have trouble findin
 
 [tabs]
 ======
-MacOS::
+macOS::
 +
 --
 [WARNING]
@@ -95,7 +95,7 @@ Do not install virtualUSB on a Mac that has an existing deviceConnect installati
 
 Open the downloaded *virtualUSB.pkg* file to begin the installation. Select *Continue* and follow the on-screen guide to install.
 
-image:install-virtualusb-macos.png[width=600,alt="The virtualUSB installation screen on MacOS"]
+image:install-virtualusb-macos.png[width=600,alt="The virtualUSB installation screen on macOS"]
 
 After the installation completes, go to the *Applications* folder in Finder, and open *virtualUSB*:
 

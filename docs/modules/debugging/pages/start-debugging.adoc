@@ -188,11 +188,11 @@ image:virtualusb-save-logs-popup.png[width=400,alt="The time period dropdown in 
 // (#652), KOB-55354 (#660), and KOB-55318 (#668). The parent epic KOB-46544 was In Progress
 // when those drafts were written, and earlier weekly pages held virtualUSB 2 entries for a
 // future release. Publish this change only in the same release as those entries.
-// The iOS 17.0 through 17.3 bullet is inferred: the previous text excluded all of iOS 17 and
-// later, and the sources add support only from 17.4. Confirm with product.
+// The iOS 17.0 through 17.3 bullet matches the virtualUSB test plan's iOS support matrix
+// (17.0 to 17.3 unsupported; older iOS uses the classic path; 17.4 or later uses Core Device).
 // The iOS 16 or earlier bullet restates the previous text (only iOS 17 and later were excluded)
 // and #652 ("iOS versions earlier than 17.4 connect without a pairing step").
-// set-up-virtualusb.adoc still lists "Xcode 13 or higher"; confirm the minimum Xcode version
-// for iOS 17.4 or later pairing.
+// set-up-virtualusb.adoc keeps Xcode 13 as the floor and does not name a minimum Xcode version
+// for iOS 17.4 or later pairing; no source states one. Add it if engineering confirms a version.
 
 * iOS device support for *virtualUSB on Windows* is not available.
