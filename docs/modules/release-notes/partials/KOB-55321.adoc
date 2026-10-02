@@ -1,0 +1,20 @@
+// Source: KOB-55321
+// Release-note partial. Draft for docs-team review; not approved for publication.
+
+=== Analytics reports
+
+- Fixed an issue where exporting the *Device Utilization*, *Parallel Sessions*, and *Sessions per Day* reports as CSV or PNG returned no data. The CSV showed an export error in place of the report data.
+- CSV exports of *Parallel Sessions* and *Sessions per Day* list one row per day in date order. CSV exports of *Device Utilization* sort by *Sessions*, with the most-used devices at the top.
+- PNG exports of *Parallel Sessions* and *Sessions per Day* now include the report's chart as a bar chart. Previously, the PNG showed only the report title for these reports.
+- Exports use the date range selected for the report, or the report's saved date range when none is selected.
+
+// REVIEWER NOTE: Report names are taken from the source ticket. The 4.27.0S release notes
+// list "Parallel Sessions over time". Confirm the report names shown in the Portal and
+// align the wording.
+//
+// REVIEWER NOTE: The source ticket reproduced the issue on Standalone 4.27.0S and verified
+// the fix on Cloud. Confirm whether a Standalone release note is also needed.
+//
+// REVIEWER NOTE: "the date range selected for the report" is inferred from "the export's
+// date range" in the source. Confirm that the export uses the date range selected in the
+// report filter.
