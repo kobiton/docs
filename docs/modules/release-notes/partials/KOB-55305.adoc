@@ -1,0 +1,23 @@
+// Source: KOB-55305
+
+== virtualUSB host diagnostics in the Kobiton MCP server
+
+- Organization admins can now ask an AI assistant connected to the Kobiton MCP server why a private device is not ready for virtualUSB. The new read-only `listHostingMachines` tool reports the virtualUSB status of the host machines behind your organization's private devices, with a specific cause and a next step.
+- The tool reports whether virtualUSB is turned off on the host machine, no network route is configured, Kobiton-managed routing is still provisioning or failed to provision, or your organization does not have the virtualUSB add-on.
+- Pass a device UDID to check only that device's host machine.
+- The tool never changes machine settings and does not return IP addresses or MAC addresses.
+- Organization members who call the tool receive the error `You don't have permission to do this action.` Ask an organization admin to check the host machine on the *Device Management* page in Kobiton Portal.
+
+// REVIEWER NOTE (KOB-55305): Jira status is Released. Fix Version is empty, so confirm the
+// release page this entry belongs to.
+//
+// REVIEWER NOTE (KOB-55305): Sibling tickets under the same epic ship the `listDevices`
+// `virtualUsb` filter (KOB-55118), the `debug-device-over-vusb` skill (KOB-55165), and
+// `configureHostingMachine` (KOB-55306). This entry covers only `listHostingMachines`. Decide
+// whether to merge these into one virtualUSB and MCP entry when the release page is assembled.
+//
+// REVIEWER NOTE (KOB-55305): The ticket also adds an optional `deviceUdid` query parameter to
+// `GET /v2/machines`. It is left out because the api-reference module has no page for this
+// endpoint. Add a bullet if the docs team treats it as customer-facing.
+
+// Source: KOB-55305
