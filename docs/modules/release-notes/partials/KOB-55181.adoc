@@ -1,0 +1,28 @@
+== virtualUSB
+
+- On Windows, libimobiledevice and go-ios now work with iOS and iPadOS devices connected through virtualUSB 2. Previously, these tools listed connected device UDIDs, but commands that open a session with the device, such as `ideviceinfo` and `ios info`, failed with an SSL or pair record error. Running `idevicepair` did not resolve the failure.
+
+// REVIEWER NOTE: Scope is limited to Windows, matching the ticket's reported impact. QA also
+// passed on macOS and Linux virtualUSB 2 clients, and the engineering comment says pairing
+// behaves better on both Windows and macOS. Broaden the entry only if the docs team confirms
+// a user-visible change on macOS or Linux.
+//
+// REVIEWER NOTE: Public docs do not currently use the name "virtualUSB 2". Confirm the
+// customer-facing name for this client before publishing.
+//
+// REVIEWER NOTE: The fix requires both an updated virtualUSB client and an updated
+// deviceConnect build. The release comment lists both builds, but notes that it was a bulk
+// update. Confirm the component versions on the release page before publishing, and confirm
+// whether the fix applies to Cloud, Standalone, or both deployments.
+//
+// REVIEWER NOTE: The Jira "Release notes" field selects both the customer-facing release email
+// and internal support notes. A separate Jira field reads "Internal", but the export does not
+// include its field name. Confirm it does not mark the ticket as internal-only.
+//
+// REVIEWER NOTE: The debugging module still states that iOS device support for virtualUSB on
+// Windows is not available and that iOS 17 and above is not supported
+// (debugging:start-debugging.adoc, Considerations). This ticket shows iOS 16 through 27
+// devices working through virtualUSB 2 on Windows. That page is not changed here. Confirm
+// current virtualUSB 2 platform support with the product owner and update it separately.
+
+// Source: KOB-55181
