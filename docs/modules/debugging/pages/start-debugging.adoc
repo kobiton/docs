@@ -176,9 +176,13 @@ image:virtualusb-save-logs-popup.png[width=400,alt="The time period dropdown in 
 
 * In the zip file exported using the *save log* feature, the created and modified date time of some of the files and folders are displayed incorrectly as _January 1, 1980 at 12:00 AM_.
 
-* On macOS, devices running *iOS 17.4 or later* are supported. virtualUSB pairs these devices with the Mac automatically when they connect, which requires Xcode on the Mac.
+* iOS support on macOS:
 
-* Devices running *iOS 17.0 through 17.3* are not supported.
+** *iOS 16 or earlier*: supported. These devices connect without a pairing step. See xref:supported-platforms:mobile-operating-systems-and-devices.adoc[Supported OS versions,window=read-later] for the minimum iOS version.
+
+** *iOS 17.0 through 17.3*: not supported.
+
+** *iOS 17.4 or later*: supported. virtualUSB pairs these devices with the Mac automatically when they connect, which requires Xcode on the Mac.
 
 // REVIEWER NOTE: iOS 17.4 or later support comes from the release-note drafts for KOB-55311
 // (#652), KOB-55354 (#660), and KOB-55318 (#668). The parent epic KOB-46544 was In Progress
@@ -186,6 +190,8 @@ image:virtualusb-save-logs-popup.png[width=400,alt="The time period dropdown in 
 // future release. Publish this change only in the same release as those entries.
 // The iOS 17.0 through 17.3 bullet is inferred: the previous text excluded all of iOS 17 and
 // later, and the sources add support only from 17.4. Confirm with product.
+// The iOS 16 or earlier bullet restates the previous text (only iOS 17 and later were excluded)
+// and #652 ("iOS versions earlier than 17.4 connect without a pairing step").
 // set-up-virtualusb.adoc still lists "Xcode 13 or higher"; confirm the minimum Xcode version
 // for iOS 17.4 or later pairing.
 
