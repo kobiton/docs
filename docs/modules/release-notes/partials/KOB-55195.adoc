@@ -1,0 +1,34 @@
+// Source: KOB-55195
+
+== Minimum supported iOS and iPadOS version is now 15
+
+Kobiton now supports devices running iOS and iPadOS 15 and later. Devices running iOS or iPadOS 12, 13, or 14 are no longer supported.
+
+- Devices running iOS or iPadOS 12, 13, or 14 are rejected when they connect to deviceConnect. In *Device Management*, these devices show as offline with the message `UnsupportedOSVersionError`, and they can't be launched.
+- The deviceConnect console shows `Operating system version 15.0 or later required.` for these devices.
+- To keep using a device on one of these versions, update it to iOS or iPadOS 15 or later.
+
+For the full list of supported versions, see xref:supported-platforms:mobile-operating-systems-and-devices.adoc[Supported OS versions].
+
+// REVIEWER NOTE: The update guidance in the third bullet is inferred from the new minimum
+// version. Jira does not state a customer-facing workaround. Confirm or remove.
+//
+// REVIEWER NOTE: QA observed that a macOS 27 host needs either Xcode 15.4 or the iOS 15.x
+// and 16.x developer disk images copied into Xcode 27 to host iOS 15 and 16 devices. Without
+// one, the device shows "Unable to locate Xcode compatibility for iOS <version>." Confirm with
+// engineering whether this host requirement should be published for customer-hosted
+// deployments, and where (release note, xcode-compat partial, or host setup docs).
+//
+// REVIEWER NOTE: The Jira summary says "Maintenance mode for iOS 12, 13 and 14 support",
+// but the description, customer-impact field, and QA results all describe these devices as
+// rejected at connection and unusable. This entry documents the verified behavior. Confirm
+// the customer-facing wording with Product before publishing.
+//
+// REVIEWER NOTE: Confirm whether this entry applies to Cloud, Standalone, and customer-hosted
+// deployments, and whether Standalone customers need advance notice.
+//
+// REVIEWER NOTE: Jira does not list a fix version. The final comment cites deviceConnect
+// build 2610.11132.0 as a bulk release update and notes not all builds may apply. Confirm
+// which Cloud release date page this entry belongs on.
+
+// Source: KOB-55195
