@@ -1,33 +1,18 @@
 = Configure Mac mini hosts for Hybrid or Standalone
 :navtitle: Configure Mac mini hosts for Hybrid or Standalone
 
-Learn how to configure the Mac mini hosts so Hybrid and Standalone/On-Prem users can debug with your organization's devices using virtualUSB.
+For Hybrid and Standalone/On-Prem deployments, organization admins enable virtualUSB for each Mac mini host from Device Management in Kobiton Portal. Editing the `dc.ini` file on the Mac mini host is no longer required.
 
-== Before you start
+== Requirements
 
-You'll need to verify your system administrator privileges for your Kobiton Mac mini hosts.
+* An account with the *ADMIN* predefined role
 
+== Enable virtualUSB on the Mac mini hosts
 
-== Modify `dc.ini` on the Mac mini host
+For each Mac mini host, follow the steps in xref:device-lab-management:deviceConnect/enable-virtualusb-for-host-machines.adoc#_enable_virtualusb_on_a_host_machine[Enable virtualUSB on a host machine,window=read-later]. Set the network routing for your deployment:
 
-[NOTE]
-The `dc.ini` file needs to be modified for _each Mac mini host_ before virtualUSB can be used.
+* *Hybrid*: select a *Network Routing* option. See xref:device-lab-management:deviceConnect/enable-virtualusb-for-host-machines.adoc#_network_routing_options[Network routing options,window=read-later].
 
-On the Mac mini host, edit the `dc.ini` file located under `/usr/local/deviceconnect` and add the following environment variables:
+* *Standalone/On-Prem*: enter the IP address that end users' machines use to reach the Mac mini host in *Connection Address*. The *Network Routing* column is not shown.
 
-[source,plaintext]
-----
-GatewayPublicAddress=<ip-address> # Set to the Mac mini host's private or public IP address.
-ExternalAirstreamTlsPort=<port-number> # Set to 10161 or public port.
-----
-
-.Example
-[source,shell]
-----
-GatewayPublicAddress=192.168.36.36
-ExternalAirstreamTlsPort=10161
-----
-
-Save the file, then xref:device-lab-management:deviceConnect/restart-deviceconnect-services.adoc[restart deviceConnect services,window=read-later] to apply the changes.
-
-Now users in your organization can use virtualUSB for private or local devices hosted on the Hybrid or Standalone/On-Prem Mac mini hosts.
+After you save, users in your organization can use virtualUSB for private or local devices on those Mac mini hosts.
