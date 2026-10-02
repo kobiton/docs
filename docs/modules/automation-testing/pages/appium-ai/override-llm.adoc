@@ -60,6 +60,16 @@ If a capability is omitted, the session uses the default value configured by you
 | `LlmClient.VisionModel`
 | `gpt-5.2`
 
+| `kobiton:llmTextExtraBody`
+| Optional. JSON object passed verbatim into the request body for text model calls. Use to send model-specific parameters such as `temperature`.
+| `LlmClient.TextExtraBody`
+| (none)
+
+| `kobiton:llmVisionExtraBody`
+| Optional. JSON object passed verbatim into the request body for vision model calls. Use to send model-specific parameters such as `temperature`.
+| `LlmClient.VisionExtraBody`
+| (none)
+
 | `kobiton:locatorStrategy`
 | Locator strategy used to resolve natural language locators. Pass `visionvirtual` per session for canvas-based apps. Accepts `uitree` and `visionvirtual`.
 | `NaturalLanguageLocator.LocatorStrategy`
