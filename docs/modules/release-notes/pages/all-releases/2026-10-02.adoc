@@ -145,7 +145,7 @@ For requirements, see xref:automation-testing:scripting/auto-generate-an-appium-
 
 == Minimum iOS version raised to 15
 
-Kobiton supports devices running iOS and iPadOS 15 and later. Support for iOS 12, 13, and 14 has ended.
+Kobiton supports devices running iOS and iPadOS 15 and later. Support for iOS 12, 13, and 14 has been deprecated.
 
 *Highlights*
 
@@ -230,3 +230,23 @@ Kobiton supports devices running iOS and iPadOS 15 and later. Support for iOS 12
 
 
 == Component versions
+
+* Portal 2609.30
+* deviceConnect 2610.1
+* Gigacap 2609.28
+
+// REVIEWER NOTE: Portal version is tentative. Last confirmed Portal build (via KOB-55058's
+// 2026-09-28 QA env comment) is 2609.23 — the same number that shipped on last week's
+// release page (2026-09-25). 2609.30 is inferred from KOB-54722's "Deployed to US
+// Production (kobiton-prod-blue) via PR #883" comment dated 2026-09-30; the IT Integration
+// bot's Portal deploy comments do not include the Portal build URL, so this number has not
+// been verified against a build artifact. Confirm with the Portal release team before publishing.
+//
+// REVIEWER NOTE: deviceConnect 2610.1 and Gigacap 2609.28 are confirmed from KOB-55058's
+// 2026-10-02 bulk release comment (Tri Truong):
+// - dC: 2610.11132.0+master.f77c241
+// - gigacap: 2609.282207.0+fde59ef-1
+//
+// REVIEWER NOTE: Kobiton CLI was intentionally omitted from the 2026-09-25 page (no new
+// build that cycle). Confirm whether a new CLI build shipped this cycle before publishing;
+// add a bullet if so.
