@@ -1,0 +1,5 @@
+=== iOS and deviceConnect
+
+- Added a fallback for mounting the Developer Disk Image (DDI) on devices running iOS 26.4 or later when the personalized DDI does not cover the device model. deviceConnect installs the DDI from the Xcode files already on the Mac mini host, so no additional download is required. Devices that the personalized DDI covers continue to mount it as before.
+- Device health messages now include the reason Apple returns when it refuses a DDI signing request.
+- Reduced repeated retries when a device health check keeps failing. After three consecutive failures, deviceConnect waits 30 seconds before checking the device again.
