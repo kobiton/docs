@@ -1,0 +1,17 @@
+== iOS device health checks and passcode mode
+
+- When the XCTest runner fails to start on an iOS device, the device health check now reports the runner error, such as `Failed to load the test bundle`. Previously, deviceConnect attempted to clear the device passcode first, and a passcode error such as `Missing organization certificate` replaced the runner error.
+- deviceConnect no longer removes a device passcode when a runner failure is unrelated to the passcode. The device keeps its passcode.
+- In organizations that use passcode mode, deviceConnect no longer sets a passcode on an iOS device that is not supervised by the organization. The device health check fails with `Cannot set passcode: the device is not supervised by this organization.`, and the device stays unavailable until it is supervised or passcode mode is turned off. A session that requests a passcode on such a device fails at setup.
+
+// REVIEWER NOTE: Devices that use Bluetooth keyboard access are not affected by the
+// supervision check, per the Jira release-note field. Confirm with the SME whether this
+// exception belongs in the public entry.
+//
+// REVIEWER NOTE: Confirm the customer-facing wording for "a session that requests a
+// passcode". The source does not state which session setting or capability requests it.
+//
+// REVIEWER NOTE: Ships in deviceConnect 2610.1 (build 2610.11132.0), listed in the Jira
+// release comment as a bulk update. Confirm the component version before publishing.
+
+// Source: KOB-55245
