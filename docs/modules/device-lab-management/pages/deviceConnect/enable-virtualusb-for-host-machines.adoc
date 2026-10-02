@@ -18,7 +18,7 @@ The *virtualUSB* tab appears only for organizations subscribed to virtualUSB. Or
 
 * An account with the *ADMIN* predefined role
 * A host machine already connected to the organization
-* For self-managed routing, an IP address for the host machine that is reachable from end users' machines
+* For self-managed routing or a Standalone deployment, an IP address for the host machine that is reachable from end users' machines
 
 == Network routing options
 
@@ -26,7 +26,7 @@ Network routing determines the address that virtualUSB connections use to reach 
 
 *Managed by Kobiton*:: Kobiton configures and maintains the routing. No address is entered, and the *Connection Address* column reads *Auto-configured by Kobiton*. This option is available only when the organization has a Kobiton-managed virtual network configured. When it is not configured, the option is unavailable. Contact Kobiton Support to have it set up.
 
-*Self-managed*:: You supply the address. Enter the IP address that end users' machines use to reach the host machine. Kobiton does not verify reachability, so confirm the address works from an end user's network before saving.
+*Self-managed*:: Enter the IP address that end users' machines use to reach the host machine. Kobiton does not verify reachability, so confirm the address works from an end user's network before saving.
 
 On Standalone deployments, the *Network Routing* column is not shown. Every enabled host machine requires a *Connection Address*.
 
@@ -46,17 +46,19 @@ On Standalone deployments, the *Network Routing* column is not shown. Every enab
 
 . Turn on the toggle in the *Enabled* column for the host machine.
 
-. Set *Network Routing* for the machine:
+. Set the routing for the machine:
 +
 * For *Managed by Kobiton*, no further input is required.
 +
 * For *Self-managed*, enter the IP address in *Connection Address*. The field is pre-filled with the machine's current IP address. A connection address is required, and *Save* is blocked with an inline message if the field is empty.
++
+* On Standalone deployments, where the *Network Routing* column is not shown, enter the IP address in *Connection Address*.
 
 . Repeat for any other host machines. Changes across both tabs are saved together.
 
 . Select *Save*.
 
-Closing or cancelling the dialog with unsaved changes prompts you to confirm before the changes are discarded.
+Closing or canceling the dialog with unsaved changes prompts you to confirm before the changes are discarded.
 
 // REVIEWER NOTE: screenshots are still needed for this procedure. Source evidence for this
 // draft is a set of pre-release design mockups, which are not suitable for publication.
