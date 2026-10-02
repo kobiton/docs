@@ -203,7 +203,7 @@ Reuse the `team_id` returned on a listed item when you compose suites and runs. 
 |Tool |Description
 
 |`getCredential`
-|Return your username, API key (existing or newly generated), and portal URL. Backs the `/automate:setup` command, so no manual file editing is required.
+|Return your username, portal URL, and a one-time setup token. The tool never returns your API key. Backs the `/automate:setup` command, which redeems the token locally, so no manual file editing is required.
 
 |`getOrgSettings`
 |Return your organization's settings, including the live remediation flag that determines what happens when a test run execution hits a blocker.
@@ -331,7 +331,7 @@ The `run-interactive-session` skill ships a CLI binary built for macOS as a sing
 |Command |Description
 
 |`/automate:setup`
-|Fetch credentials from the authenticated MCP server and write them to `~/.kobiton/.credentials`. Also installs the `~/.kobiton/bin/kobiton` CLI wrapper used by `run-interactive-session`.
+|Write your Kobiton credentials to `~/.kobiton/.credentials` without your API key passing through the AI assistant. A local setup script fetches the key directly from Kobiton, and the conversation shows only a one-time setup token and the last 4 characters of the key. Also installs the `~/.kobiton/bin/kobiton` CLI wrapper used by `run-interactive-session`.
 
 |`/automate:doctor`
 |Read-only diagnostic for the CLI installation, credentials file, active profile, and required fields. Prints remediation hints for any failures.
@@ -346,6 +346,17 @@ On Cursor CLI and Cursor IDE, plugin commands register without a namespace prefi
 * On *GitHub Copilot CLI* and *Gemini CLI*, the symlink is not recreated automatically. Run `/automate:setup` once after install to create the wrapper, and run it again if the symlink goes missing.
 
 * On *Cursor CLI*, the symlink is not recreated automatically. Run `/setup` once after install to create the wrapper, and run it again if the symlink goes missing.
+====
+
+=== Setup API key
+
+Setup uses a dedicated API key named `kobiton-mcp-<assistant>`, for example `kobiton-mcp-claude`. The first setup creates the key, and later setups reuse it. Your other API keys are not changed.
+
+Older plugin versions stop at the start of setup and ask you to update the plugin. Update the plugin, then run setup again. An existing `~/.kobiton/.credentials` file keeps working without running setup again.
+
+[IMPORTANT]
+====
+Setup runs from older plugin versions recorded the full API key in the session transcript. If you shared the transcript of one of those setup runs, rotate that API key in *Settings > API Keys*.
 ====
 
 == Test execution
