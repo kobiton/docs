@@ -14,14 +14,14 @@ Cloud release notes are typically published weekly and summarize changes since t
 
 == Appium Inspector
 
-- *Appium Inspector* in Session Explorer now shows the correct XML hierarchy for each step of iPad automation sessions started without an app, such as a web session in Safari — matching the behavior on iPhone and Android. Previously, these sessions showed the same hierarchy for every step.
+- *Appium Inspector* in Session Explorer now shows the correct XML hierarchy for each step of iPad automation sessions started without an app, such as a web session in Safari. This matches the behavior on iPhone and Android. Previously, these sessions showed the same hierarchy for every step.
 
 // Source: KOB-55247 from PR #662
 // https://github.com/kobiton/docs/pull/662
 
 == iOS system alerts in automation sessions
 
-- Automation sessions on iOS and iPadOS can now interact with system alerts, such as the alert that asks you to turn on Location Services. Finding a system alert button, reading its `displayed` and `enabled` properties, and clicking it now work as expected. Previously, these commands could fail with a `No active application elements` error.
+- Automation sessions on iOS and iPadOS can now interact with system alerts, such as the alert that asks you to turn on Location Services. Scripts can locate the alert button, read its `displayed` and `enabled` properties, and click it. Previously, these commands could fail with a `No active application elements` error.
 
 // REVIEWER NOTE (KOB-55247): The Jira impact field describes the fix as covering alerts and
 // popups drawn by the iOS system on iPhone and iPad. QA verified the Location Services alert
@@ -63,7 +63,7 @@ Applies to organizations with passcode mode enabled.
 
 == Java 17 for exported scripts
 
-- Java Appium scripts exported from Kobiton now use Java 17 and updated Appium and Selenium dependencies for compatibility with current Java frameworks.
+- Java Appium scripts exported from Kobiton now use Java 17, Appium Java client 10.x, and Selenium 4 for compatibility with current Java frameworks.
 - JDK 17 or later is required to build and run newly exported Java projects. Projects exported before this release are unchanged.
 
 // REVIEWER NOTE (KOB-54691): Confirm Standalone availability separately.
@@ -73,11 +73,11 @@ Applies to organizations with passcode mode enabled.
 
 == Minimum iOS version raised to 15
 
-Kobiton supports devices running iOS and iPadOS 15 and later. Support for iOS 12, 13, and 14 has been deprecated.
+Supported devices now run iOS and iPadOS 15 or later. Support for iOS 12, 13, and 14 has been deprecated.
 
 *Highlights*
 
-- Kobiton now rejects devices running iOS 12, 13, or 14 at connection, instead of failing partway through a session. These devices show `UnsupportedOSVersionError` in *Device Management* and can't be used for manual or automation sessions.
+- Devices running iOS 12, 13, or 14 are now rejected at connection, instead of failing partway through a session. These devices show `UnsupportedOSVersionError` in *Device Management* and can't be used for manual or automation sessions.
 - Devices running iOS 15 through iOS 27 continue to support manual and automation sessions.
 - After a deviceConnect upgrade, devices running iOS 15 or later come back online automatically.
 
