@@ -1,0 +1,23 @@
+== Device passcode
+
+- Fixed an issue where Kobiton did not set the device passcode on iOS 27 and iPadOS 27 devices in organizations that use passcode mode. Affected iPads entered an error state and were unavailable for sessions. Affected iPhones stayed available, but the device did not hold the passcode shown in the Portal. Kobiton now sets the passcode on iOS 27 and iPadOS 27 devices, and the passcode on the device matches the one shown in the Portal.
+
+// REVIEWER NOTE: QA verified the passcode on iOS 27.0 and iPadOS 27.0 and 27.2, plus
+// regression checks on iOS 16 and 18 and iPadOS 15 and 18. QA also confirmed that the
+// passcode is re-applied after a device language change and after a reboot or service
+// restart. Those checks were not stated as prior customer-facing failures, so they are
+// not called out above.
+//
+// REVIEWER NOTE: The source ticket describes the organization setting as passcode mode
+// "PIN". Existing docs refer to "passcode mode 1 or 2". Confirm which numbered mode PIN
+// maps to before naming a specific mode here.
+//
+// REVIEWER NOTE: The fix ships in deviceConnect. The release comment lists deviceConnect
+// build 2610.11132.0 as a bulk update and notes that not every build applies to every
+// ticket. Confirm the deviceConnect version before adding it to Component versions.
+// Standalone device labs need that deviceConnect version or later.
+//
+// REVIEWER NOTE: Out of scope for this fix, tracked separately: Bluetooth passcode unlock
+// and deviceConnect on macOS 15 and macOS 26 (KOB-55337).
+
+// Source: KOB-55316
