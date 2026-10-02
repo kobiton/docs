@@ -25,29 +25,44 @@ For this reason, capacity limits are generally required only when more than 26 d
 
 == Set the Max Parallel Tests
 
-To configure a capacity limit for a host machine:
+Capacity limits for every host machine are configured from one dialog in Device Management.
 
-. Sign in to the Kobiton Portal using an account with the *ADMIN* predefined role.
+. Sign in to Kobiton Portal using an account with the *ADMIN* predefined role.
 
 . Select your profile picture, then choose *Settings*.
 
 . Open *Device Management*.
 
-. Select *Settings* for the target host machine.
-+
-image:host-machine-capacity-settings.png[width=1000,alt="The Settings option of a host machine in Device Management"]
+. Select *Settings* at the top of the screen.
 
-. In the pop-up, choose one of the following options:
+. Open the *Max Parallel Tests* tab.
+
+. Find the host machine you want to configure. Search by machine name or IP address.
+
+. In the machine's row, choose one of the following options:
 
 * *Unlimited* (default): no limit for the host machine.
 
-* *Set custom limit*: set a limit between 1 and 999.
+* *Custom limit*: set a limit between 1 and 999. Enter the value in the input next to the option.
 +
 The recommended value is *26*.
-+
-image:host-machine-set-capacity.png[width=500,alt="The available options for setting capacity limit of a host machine"]
+
+. To apply the same setting to every host machine at once, use the *All Machines* row at the top of the list. Changing an individual machine afterward sets the *All Machines* row to *Mixed*.
 
 . Select *Save*.
+
+A machine that is offline when you save is not updated. The dialog stays open and reports which machines were rejected.
+
+// REVIEWER NOTE: screenshots for this procedure were removed because they show the previous
+// per-machine Settings button and per-machine pop-up, which no longer exist. Replace with
+// captures of the Settings dialog on the Max Parallel Tests tab. The unused image files
+// host-machine-capacity-settings.png and host-machine-set-capacity.png are left in place
+// pending that replacement.
+
+// REVIEWER NOTE: the custom-limit option label is inconsistent across the source evidence
+// ("Set custom limit" in the previous per-machine modal, "Custom limit" in the dialog
+// specification, "Custom" in the design mockups). This draft uses "Custom limit".
+// Confirm the shipped label.
 
 == How the capacity limit affects sessions
 
