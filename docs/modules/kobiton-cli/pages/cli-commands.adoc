@@ -481,6 +481,17 @@ kobiton file push foo.dat @com.company.app:Documents/foo.dat
 Pushed 505031 bytes to /data/local/tmp/foo.dat
 ----
 
+[IMPORTANT]
+====
+*A refused push fails with a non-zero exit code.*
+
+A device can refuse the destination path. Public cloud and trial devices run a restricted session that limits writes to the permitted directories, and any device refuses a write to a path it does not permit. When a push is refused, nothing is written to the device. See <<adb-shell-restricted-sessions,restricted sessions>>.
+
+A refused push reports the reason and exits with a non-zero status. A successful push is unaffected and exits `0`.
+
+Earlier CLI versions reported a refused push as `Pushed 505031 bytes` and exited `0`. Update to the latest CLI version before relying on the exit code in a CI/CD pipeline. See xref:set-up-cli.adoc[].
+====
+
 === `file pull`
 
 Pull a file or directory from the device to a local path.
