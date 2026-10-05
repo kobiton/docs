@@ -80,6 +80,9 @@ Devices returned with `is_cloud: true` have restricted shell-command access in C
 |`getAccessibilityValidationsSummary`
 |Get a session's accessibility counts by finding type and issue name, with the number of steps scanned and the time of the latest finding. The summary carries no findings.
 
+|`getUserInputEvents`
+|Get canvas touch and swipe events captured during a live device-only session. See xref:mcp/get-user-input-events.adoc[].
+
 |`listCrashValidations`
 |List a session's crash findings.
 
@@ -94,7 +97,6 @@ Devices returned with `is_cloud: true` have restricted shell-command access in C
 
 |`listFlexCorrects`
 |List a session's Flex Correct findings.
-|===
 
 The validation tools read the findings that Session Explorer shows in *Test Result Analysis*. See xref:session-explorer:analytics/review-test-result-analysis.adoc[Review test result analysis] and xref:session-explorer:validations/validate-accessibility.adoc[Validate accessibility].
 
