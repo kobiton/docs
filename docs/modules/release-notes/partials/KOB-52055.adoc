@@ -1,0 +1,25 @@
+// Source: KOB-52055
+// Release-note partial drafted by Robot Ranch. Requires docs-team review before publication.
+
+== Bluetooth Bridge: static IP address setup without a monitor
+
+- Added an option to assign a static IP address to a new Raspberry Pi host without connecting a monitor. Starting with the 4.24 Bluetooth Bridge system images, after you flash the image to an SD card, mount the SD card on your computer and edit the `network-config` file before you start the Raspberry Pi host. The `network-config` file uses the netplan format. The current static IP setup method continues to work. Keep a monitor available in case the network configuration does not apply.
+
+// REVIEWER NOTE (KOB-52055): The full setup procedure belongs in the admin docs. A Jira
+// comment links an admin-docs PR for this change. No public product-doc page was changed.
+// Add a link to the admin guide once the target page is published, if appropriate.
+//
+// REVIEWER NOTE (KOB-52055): Jira has no fix version, release label, or Release Notes field
+// value. The only current-release signal is the Wait For Deployment status. Confirm the
+// target publication (Cloud weekly page versus Standalone/Hybrid page).
+//
+// REVIEWER NOTE (KOB-52055): An unnamed Jira custom field on the ticket is set to "Internal".
+// The evidence package does not resolve the field name. Confirm that this value does not mean
+// the change is excluded from public release notes.
+//
+// REVIEWER NOTE (KOB-52055): "4.24" is the Bluetooth Bridge image version stated in Jira.
+// Kobiton releases now use date-based versioning. Confirm how the image version is shown
+// to customers on the downloads page.
+//
+// REVIEWER NOTE (KOB-52055): The ticket says the netplan file follows "the same formatting
+// as GEM". That term is not explained in the ticket and is omitted.
