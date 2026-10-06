@@ -259,132 +259,6 @@ Enabling this capability significantly reduces session performance.
 capabilities.setCapability("kobiton:includeVisible", true);
 ----
 
-=== `kobiton:llmApiFormat`
-
-API protocol format for the LLM endpoint. The value must match the provider used by `kobiton:llmBaseUrl`. Accepts `OpenAiResponses`, `OpenAiChatCompletions`, `AnthropicMessages`, `KobitonChatCompletions`, `OllamaChat`, `AzureOpenAiV1ChatCompletions`, or `AzureOpenAiChatCompletions`. Default is `OpenAiResponses`.
-
-* *Type:* `string`
-* *Required capabilities:* None
-* *Optional capabilities:* None
-
-.Example
-[source,java]
-----
-capabilities.setCapability("kobiton:llmApiFormat", "AnthropicMessages");
-----
-
-=== `kobiton:llmApiKey`
-
-LLM provider API key. A session that sets `kobiton:llmBaseUrl` must also set this capability. The default server-side key is not sent to a session-specified endpoint.
-
-* *Type:* `string`
-* *Required capabilities:* None
-* *Optional capabilities:* None
-
-.Example
-[source,java]
-----
-capabilities.setCapability("kobiton:llmApiKey", "<your-api-key>");
-----
-
-=== `kobiton:llmApiVersion`
-
-API version string for Azure OpenAI endpoints. Required when `kobiton:llmApiFormat` is set to an Azure value. Default is `2024-02-01`.
-
-* *Type:* `string`
-* *Required capabilities:* None
-* *Optional capabilities:* None
-
-.Example
-[source,java]
-----
-capabilities.setCapability("kobiton:llmApiVersion", "2024-02-01");
-----
-
-=== `kobiton:llmBaseUrl`
-
-LLM provider base URL. Default is `https://api.openai.com/v1`. See xref:automation-testing:appium-ai/override-llm.adoc[Override Appium AI settings per session] for provider-specific endpoint values.
-
-* *Type:* `string`
-* *Required capabilities:* `kobiton:llmApiKey`
-* *Optional capabilities:* `kobiton:llmApiFormat`, `kobiton:llmTextModel`, `kobiton:llmVisionModel`
-
-.Example
-[source,java]
-----
-capabilities.setCapability("kobiton:llmBaseUrl", "https://api.anthropic.com/v1");
-----
-
-=== `kobiton:llmTextExtraBody`
-
-JSON object passed verbatim into the request body for text model calls. Use to send model-specific parameters such as `temperature`. Leave unset unless the model requires it.
-
-* *Type:* `string`
-* *Required capabilities:* None
-* *Optional capabilities:* None
-
-.Example
-[source,java]
-----
-capabilities.setCapability("kobiton:llmTextExtraBody", "{\"temperature\": 0}");
-----
-
-=== `kobiton:llmTextModel`
-
-Model used for UI tree-based operations (XPath/CSS generation). For Azure, pass the deployment name. Default is `gpt-5.6-terra`.
-
-* *Type:* `string`
-* *Required capabilities:* None
-* *Optional capabilities:* None
-
-.Example
-[source,java]
-----
-capabilities.setCapability("kobiton:llmTextModel", "claude-opus-4-8");
-----
-
-=== `kobiton:llmVisionExtraBody`
-
-JSON object passed verbatim into the request body for vision model calls. Use to send model-specific parameters such as `temperature`. Leave unset unless the model requires it.
-
-* *Type:* `string`
-* *Required capabilities:* None
-* *Optional capabilities:* None
-
-.Example
-[source,java]
-----
-capabilities.setCapability("kobiton:llmVisionExtraBody", "{\"temperature\": 0}");
-----
-
-=== `kobiton:llmVisionModel`
-
-Model used for vision-based operations (screenshot analysis). Must accept image input. For Azure, pass the deployment name. Default is `gpt-5.6-terra`.
-
-* *Type:* `string`
-* *Required capabilities:* None
-* *Optional capabilities:* None
-
-.Example
-[source,java]
-----
-capabilities.setCapability("kobiton:llmVisionModel", "claude-opus-4-8");
-----
-
-=== `kobiton:locatorStrategy`
-
-Locator strategy used to resolve natural language locators. Accepts `uitree` and `visionvirtual`. Pass `visionvirtual` for canvas-based apps. Default is `uitree`. See xref:automation-testing:appium-ai/overview-appium-ai.adoc[Appium AI: Natural language locators] for guidance on choosing a strategy.
-
-* *Type:* `string`
-* *Required capabilities:* None
-* *Optional capabilities:* None
-
-.Example
-[source,java]
-----
-capabilities.setCapability("kobiton:locatorStrategy", "visionvirtual");
-----
-
 [#_passcodeKey]
 === `kobiton:passcodeKey`
 
@@ -513,20 +387,6 @@ The network payload capture configuration to use during the test session. See xr
 capabilities.setCapability("useConfiguration", "kobiton");
 ----
 
-=== `kobiton:visionCoordSpace`
-
-Coordinate convention the vision model returns. Accepts `Pixel` or `Normalized` (0–1000). Default is `Pixel`, which is correct for GPT-5.6, Claude Opus 4.8, and the Kobiton-hosted qwen25-vl-7b. Set `Normalized` only for a model that returns 0–1000 coordinates, such as the Qwen3 family.
-
-* *Type:* `string`
-* *Required capabilities:* None
-* *Optional capabilities:* None
-
-.Example
-[source,java]
-----
-capabilities.setCapability("kobiton:visionCoordSpace", "Pixel");
-----
-
 [#_waitForIdle]
 === `kobiton:waitForIdle`
 
@@ -582,6 +442,173 @@ Enable XPath 2.0 searches on all supported device platforms. Default is `false`.
 
 ----
 capabilities.setCapability("kobiton:xpath2", true);
+----
+
+[discrete]
+=== Appium AI capabilities
+
+These capabilities override the Appium AI configuration on a per-session basis. For the system-level configuration, see xref:automation-testing:appium-ai/override-llm.adoc[Override Appium AI settings per session].
+
+.Appium AI capability index
+* <<_llmApiFormat,kobiton:llmApiFormat>>
+* <<_llmApiKey,kobiton:llmApiKey>>
+* <<_llmApiVersion,kobiton:llmApiVersion>>
+* <<_llmBaseUrl,kobiton:llmBaseUrl>>
+* <<_llmTextExtraBody,kobiton:llmTextExtraBody>>
+* <<_llmTextModel,kobiton:llmTextModel>>
+* <<_llmVisionExtraBody,kobiton:llmVisionExtraBody>>
+* <<_llmVisionModel,kobiton:llmVisionModel>>
+* <<_locatorStrategy,kobiton:locatorStrategy>>
+* <<_visionCoordSpace,kobiton:visionCoordSpace>>
+
+[#_llmApiFormat]
+=== `kobiton:llmApiFormat`
+
+API protocol format for the LLM endpoint. The value must match the provider used by `kobiton:llmBaseUrl`. Accepts `OpenAiResponses`, `OpenAiChatCompletions`, `AnthropicMessages`, `KobitonChatCompletions`, `OllamaChat`, `AzureOpenAiV1ChatCompletions`, or `AzureOpenAiChatCompletions`. Default is `OpenAiResponses`.
+
+* *Type:* `string`
+* *Required capabilities:* None
+* *Optional capabilities:* None
+
+.Example
+[source,java]
+----
+capabilities.setCapability("kobiton:llmApiFormat", "AnthropicMessages");
+----
+
+[#_llmApiKey]
+=== `kobiton:llmApiKey`
+
+LLM provider API key. A session that sets `kobiton:llmBaseUrl` must also set this capability. The default server-side key is not sent to a session-specified endpoint.
+
+* *Type:* `string`
+* *Required capabilities:* None
+* *Optional capabilities:* None
+
+.Example
+[source,java]
+----
+capabilities.setCapability("kobiton:llmApiKey", "<your-api-key>");
+----
+
+[#_llmApiVersion]
+=== `kobiton:llmApiVersion`
+
+API version string for Azure OpenAI endpoints. Required when `kobiton:llmApiFormat` is set to an Azure value. Default is `2024-02-01`.
+
+* *Type:* `string`
+* *Required capabilities:* None
+* *Optional capabilities:* None
+
+.Example
+[source,java]
+----
+capabilities.setCapability("kobiton:llmApiVersion", "2024-02-01");
+----
+
+[#_llmBaseUrl]
+=== `kobiton:llmBaseUrl`
+
+LLM provider base URL. Default is `https://api.openai.com/v1`. See xref:automation-testing:appium-ai/override-llm.adoc[Override Appium AI settings per session] for provider-specific endpoint values.
+
+* *Type:* `string`
+* *Required capabilities:* `kobiton:llmApiKey`
+* *Optional capabilities:* `kobiton:llmApiFormat`, `kobiton:llmTextModel`, `kobiton:llmVisionModel`
+
+.Example
+[source,java]
+----
+capabilities.setCapability("kobiton:llmBaseUrl", "https://api.anthropic.com/v1");
+----
+
+[#_llmTextExtraBody]
+=== `kobiton:llmTextExtraBody`
+
+JSON object passed verbatim into the request body for text model calls. Use to send model-specific parameters such as `temperature`. Leave unset unless the model requires it.
+
+* *Type:* `string`
+* *Required capabilities:* None
+* *Optional capabilities:* None
+
+.Example
+[source,java]
+----
+capabilities.setCapability("kobiton:llmTextExtraBody", "{\"temperature\": 0}");
+----
+
+[#_llmTextModel]
+=== `kobiton:llmTextModel`
+
+Model used for UI tree-based operations (XPath/CSS generation). For Azure, pass the deployment name. Default is `gpt-5.6-terra`.
+
+* *Type:* `string`
+* *Required capabilities:* None
+* *Optional capabilities:* None
+
+.Example
+[source,java]
+----
+capabilities.setCapability("kobiton:llmTextModel", "claude-opus-4-8");
+----
+
+[#_llmVisionExtraBody]
+=== `kobiton:llmVisionExtraBody`
+
+JSON object passed verbatim into the request body for vision model calls. Use to send model-specific parameters such as `temperature`. Leave unset unless the model requires it.
+
+* *Type:* `string`
+* *Required capabilities:* None
+* *Optional capabilities:* None
+
+.Example
+[source,java]
+----
+capabilities.setCapability("kobiton:llmVisionExtraBody", "{\"temperature\": 0}");
+----
+
+[#_llmVisionModel]
+=== `kobiton:llmVisionModel`
+
+Model used for vision-based operations (screenshot analysis). Must accept image input. For Azure, pass the deployment name. Default is `gpt-5.6-terra`.
+
+* *Type:* `string`
+* *Required capabilities:* None
+* *Optional capabilities:* None
+
+.Example
+[source,java]
+----
+capabilities.setCapability("kobiton:llmVisionModel", "claude-opus-4-8");
+----
+
+[#_locatorStrategy]
+=== `kobiton:locatorStrategy`
+
+Locator strategy used to resolve natural language locators. Accepts `uitree` and `visionvirtual`. Pass `visionvirtual` for canvas-based apps. Default is `uitree`. See xref:automation-testing:appium-ai/overview-appium-ai.adoc[Appium AI: Natural language locators] for guidance on choosing a strategy.
+
+* *Type:* `string`
+* *Required capabilities:* None
+* *Optional capabilities:* None
+
+.Example
+[source,java]
+----
+capabilities.setCapability("kobiton:locatorStrategy", "visionvirtual");
+----
+
+[#_visionCoordSpace]
+=== `kobiton:visionCoordSpace`
+
+Coordinate convention the vision model returns. Accepts `Pixel` or `Normalized` (0–1000). Default is `Pixel`, which is correct for GPT-5.6, Claude Opus 4.8, and the Kobiton-hosted qwen25-vl-7b. Set `Normalized` only for a model that returns 0–1000 coordinates, such as the Qwen3 family.
+
+* *Type:* `string`
+* *Required capabilities:* None
+* *Optional capabilities:* None
+
+.Example
+[source,java]
+----
+capabilities.setCapability("kobiton:visionCoordSpace", "Pixel");
 ----
 
 == Appium Capabilities
