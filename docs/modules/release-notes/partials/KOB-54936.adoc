@@ -1,0 +1,30 @@
+== AYA
+
+- Fixed an issue where AYA could report that a flow did not exist for an app, even though the flow was captured for that app. When asked how many steps a flow has, AYA now answers with the flow's captured step count.
+- Fixed an issue where AYA could retract a correct step count later in the same conversation and apologize for an answer that was accurate.
+
+// REVIEWER NOTE: Confirm the public product name before publishing. The Jira ticket and
+// component use "AYA" (component description: "Ask you app, App Crawler"). No page in the
+// docs repo mentions AYA yet, so there is no existing term to align with.
+//
+// REVIEWER NOTE: The parent epic is titled "AYA Phase 1 - Silent launch." The ticket's
+// release-note channel field selects "Release Email (customer-facing release notes)," but
+// confirm with product that AYA fixes are announced publicly during a silent launch. Drop
+// this partial if AYA is not yet announced.
+//
+// REVIEWER NOTE: Verification on the test environment passed 5/5 for two apps, including a
+// follow-up turn with no retraction. A comment from 2026-09-22 reported the denial on a
+// second app before the fix; the 2026-10-06 verification covers both apps.
+//
+// REVIEWER NOTE: Candidate bullet held back pending product confirmation. The fix also
+// changes cross-conversation memory: AYA no longer draws on its own answers from other
+// conversations (only the questions asked there). Jira states that continuity of the form
+// "same answer as before" across conversations is intentionally reduced, while memory
+// within a conversation is unaffected. Add a bullet if this behavior is publicly described.
+//
+// REVIEWER NOTE: Known, not blocking (from verification): when per-step detail does not fit,
+// answers say the detail is trimmed and point to the flow picker. Questions about
+// simplifying a flow may get a single-screen critique rather than a flow-level answer.
+// Not included because the flow picker UI label is unconfirmed.
+
+// Source: KOB-54936
