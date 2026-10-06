@@ -72,6 +72,13 @@ Filters the list by device name, device UDID, OS, status, location, or host mach
 
 See xref:device-lab-management:search-host-machines.adoc[].
 
+=== Settings
+
+Opens the **Settings** window for configuring host machine settings, such as **Max Parallel Tests**. **Settings** is available to all organizations. See xref:device-lab-management:deviceConnect/control-host-capacity.adoc[].
+
+// REVIEWER NOTE (KOB-52819): Confirm the position of the Settings button among the page controls and
+// update device-management-page-overview.png, which predates the Settings button and the virtualUSB badge.
+
 == Host machine details
 
 Each host machine appears as a card with the devices connected to it listed underneath.
@@ -88,6 +95,10 @@ image::device-lab-management:device-management-edit-location.png[width=400,alt="
 
 * The number of Android and iOS devices connected to the host machine, with the number of those devices that are currently offline. These counts reflect the current filter and search.
 
+// REVIEWER NOTE (KOB-52819): Confirm availability for Standalone. The 4.27.0S release notes exclude the
+// virtualUSB badge as not yet available on Standalone.
+* A **virtualUSB** badge, when virtualUSB is enabled on the host machine. The badge appears only for organizations subscribed to virtualUSB.
+
 The card provides the following actions:
 
 **Save Logs (3 days)**::
@@ -95,9 +106,6 @@ Saves the deviceConnect logs from the last three days. Select the dropdown icon,
 
 **Restart services**::
 Restarts the deviceConnect services on the host machine. See xref:device-lab-management:deviceConnect/restart-deviceconnect-services.adoc[].
-
-**Settings**::
-Opens the **Settings** window, where **Max Parallel Tests** limits the number of parallel sessions the host machine accepts. See xref:device-lab-management:deviceConnect/control-host-capacity.adoc[].
 
 Expand or collapse icon::
 Shows or hides the device table for that host machine.
