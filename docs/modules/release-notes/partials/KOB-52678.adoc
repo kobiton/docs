@@ -1,0 +1,34 @@
+// Source: KOB-52678
+// Release-note partial drafted by Robot Ranch. Requires docs-team review before publication.
+
+== Device Management
+
+- The `GET /v2/machines` API now returns each host machine's `max_parallel_tests` setting as an object with `mode` and `limit` fields. `mode` is `unlimited` or `custom`. For `custom`, `limit` is the configured limit. For `unlimited`, `limit` is `null`.
+- The `PATCH /v2/machines` API accepts the same `mode` and `limit` fields to set a host machine to `unlimited` or to a `custom` limit between 1 and 999. A `custom` request with a missing, zero, or negative `limit` returns HTTP 400, and no settings are saved.
+- Existing `PATCH /v2/machines` requests that send `limit` without `mode` continue to work. A `null` `limit` sets the host machine to unlimited.
+
+// REVIEWER NOTE (KOB-52678): The 2026-09-18 Cloud page already credits KOB-52678 under the
+// KOB-52659 Device Management entry, but only describes the Portal *Settings* dialog. These
+// bullets cover the API contract change only. Decide whether to append them to the
+// 2026-09-18 Device Management section or publish them on the next Cloud page. Jira states
+// the change has been live in production since 2026-09-14.
+//
+// REVIEWER NOTE (KOB-52678): Jira does not state what `max_parallel_tests` looked like in the
+// `GET /v2/machines` response before this change. If it was a plain number, this is a
+// response-shape change for existing API integrations and may need a breaking-change callout.
+// Confirm with engineering before publishing.
+//
+// REVIEWER NOTE (KOB-52678): Jira names the GET response field `max_parallel_tests` but does
+// not name the PATCH request key for the new shape (the original spec used `maxParallelTests`).
+// Confirm the exact PATCH request key and per-machine request structure.
+//
+// REVIEWER NOTE (KOB-52678): Jira is inconsistent about offline host machines in a PATCH
+// request: one field says they are "skipped, not failed" and another says "offline-machine
+// rejection, per-item failed grouping". Offline behavior is omitted until confirmed.
+//
+// REVIEWER NOTE (KOB-52678): The ticket lists the `device_management_settings` feature flag as
+// OFF by default. Confirm the flag is enabled for all customers, or that it does not gate the
+// `/v2/machines` API shape, before publishing.
+//
+// REVIEWER NOTE (KOB-52678): The api-reference module has no `/v2/machines` page. If API
+// reference content is added later, document the `max_parallel_tests` object there.
