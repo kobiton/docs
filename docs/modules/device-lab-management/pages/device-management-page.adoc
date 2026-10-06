@@ -28,6 +28,19 @@ Displays the default location assigned to your organization. New host machines i
 
 The field is read-only. To change the default location for your organization, contact https://support.kobiton.com/hc/en-us/requests/new[Kobiton Support].
 
+=== Settings
+
+Opens the **Settings** dialog, which applies to every host machine in the organization. Changes in both tabs are saved together.
+
+**virtualUSB**::
+Enables virtualUSB on specific host machines and sets how virtualUSB connections are routed to each one. Available only to organizations whose plan includes virtualUSB. See xref:device-lab-management:enable-virtualusb-on-host-machines.adoc[].
+
+**Max Parallel Tests**::
+Limits the number of parallel sessions each host machine accepts. See xref:device-lab-management:deviceConnect/control-host-capacity.adoc[].
+
+// REVIEWER NOTE: The Settings dialog replaces the per-machine Settings window (KOB-52820). Confirm
+// the Settings button placement and add a screenshot (KOB-52819).
+
 === Tidy up
 
 Opens the **Remove unused devices** window, where you can hide offline or unplugged devices from the device list. Hidden devices stay hidden until they are reconnected.
@@ -96,9 +109,6 @@ Saves the deviceConnect logs from the last three days. Select the dropdown icon,
 **Restart services**::
 Restarts the deviceConnect services on the host machine. See xref:device-lab-management:deviceConnect/restart-deviceconnect-services.adoc[].
 
-**Settings**::
-Opens the **Settings** window, where **Max Parallel Tests** limits the number of parallel sessions the host machine accepts. See xref:device-lab-management:deviceConnect/control-host-capacity.adoc[].
-
 Expand or collapse icon::
 Shows or hides the device table for that host machine.
 
@@ -148,6 +158,8 @@ Restarts the device.
 * xref:device-lab-management:search-host-machines.adoc[]
 
 * xref:device-lab-management:tidy-up-devices.adoc[]
+
+* xref:device-lab-management:enable-virtualusb-on-host-machines.adoc[]
 
 * xref:device-lab-management:deviceConnect/control-host-capacity.adoc[]
 

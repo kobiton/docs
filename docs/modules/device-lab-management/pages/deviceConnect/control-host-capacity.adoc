@@ -25,29 +25,49 @@ For this reason, capacity limits are generally required only when more than 26 d
 
 == Set the Max Parallel Tests
 
-To configure a capacity limit for a host machine:
+Set capacity limits in the *Max Parallel Tests* tab of the *Settings* dialog in *Device Management*. The tab lists every host machine in the organization, so you can set limits for one machine, several machines, or all machines in one save.
 
-. Sign in to the Kobiton Portal using an account with the *ADMIN* predefined role.
+. Sign in to Kobiton Portal using an account with the *ADMIN* predefined role.
 
 . Select your profile picture, then choose *Settings*.
 
 . Open *Device Management*.
 
-. Select *Settings* for the target host machine.
+. Select *Settings* at the top of the page.
 +
-image:host-machine-capacity-settings.png[width=1000,alt="The Settings option of a host machine in Device Management"]
+// REVIEWER NOTE: Replace the retired per-machine screenshots (host-machine-capacity-settings.png,
+// host-machine-set-capacity.png) with captures of the new Settings dialog. Confirm the Settings
+// button placement. Source: KOB-52820; button placement is delivered by KOB-52819.
 
-. In the pop-up, choose one of the following options:
+. Select the *Max Parallel Tests* tab.
++
+Organizations without virtualUSB see only this tab.
+
+. To find a host machine, enter its name or IP address in the search field.
+
+. Set the limit for each host machine:
 
 * *Unlimited* (default): no limit for the host machine.
 
-* *Set custom limit*: set a limit between 1 and 999.
+* *Custom limit*: enter a limit between 1 and 999 in the field that appears.
 +
 The recommended value is *26*.
+
+. To apply one limit to every host machine, use the *All machines* row at the top of the list:
+
+* Select *Unlimited* to remove the limit from every host machine.
+
+* Select *Custom limit*, then enter a value to apply it to every host machine.
 +
-image:host-machine-set-capacity.png[width=500,alt="The available options for setting capacity limit of a host machine"]
+When host machines have different limits, the *All machines* row shows *Mixed*. If you change an individual host machine after setting *All machines*, the row returns to *Mixed*.
 
 . Select *Save*.
++
+*Save* is blocked until every *Custom limit* has a value. A message appears next to each missing value.
+
+Save applies all changes made in the *Settings* dialog. If the save fails, an error message appears, the dialog stays open, and your changes are kept so you can try again.
+
+To close the dialog without saving, select *Cancel* or the close icon, then confirm *You have unsaved changes. Leave anyway?*
 
 == How the capacity limit affects sessions
 

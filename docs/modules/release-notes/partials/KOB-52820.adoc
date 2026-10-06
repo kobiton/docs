@@ -1,0 +1,23 @@
+// Release-note partial for KOB-52820.
+// REVIEWER NOTE: The Cloud September 18, 2026 release notes already announce this change under
+// "Device Management" (sourced from parent epic KOB-52659). Use this partial only if a separate
+// entry is still needed, or to reconcile wording with the published entry. Do not publish both.
+
+== Device Management
+
+=== Unified Settings dialog for host machines
+
+Configure virtualUSB and Max Parallel Tests for every host machine from one *Settings* dialog in *Device Management*. The dialog replaces the per-machine *Settings* window.
+
+*Highlights*
+
+- The *Max Parallel Tests* tab sets a limit of *Unlimited* or a custom value between 1 and 999 for each host machine. The *All machines* row applies one setting to every host machine at once.
+- Organizations whose plan includes virtualUSB also see a *virtualUSB* tab. Enable virtualUSB on specific host machines and set how connections are routed: *Managed by Kobiton* for Kobiton-hosted machines, or *Self-managed* with an editable IP address for machines hosted by your organization.
+- Search by host machine name or IP address in both tabs. In the *virtualUSB* tab, select *Show enabled only* to list only enabled host machines.
+- One *Save* applies changes from both tabs. If a save fails, the dialog stays open and keeps your changes. Closing the dialog with unsaved changes asks for confirmation.
+
+*Availability*
+
+Organization admins with the *ADMIN* predefined role. The *virtualUSB* tab requires a plan that includes virtualUSB.
+
+// Source: KOB-52820
