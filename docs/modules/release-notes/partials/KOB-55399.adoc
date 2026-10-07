@@ -1,0 +1,14 @@
+// KOB-55399. Robot Ranch draft for docs-team review. Not approved for publication.
+// Sources: Jira KOB-55399 description, implementation summary, impact summary, test results,
+// and QA comments (2026-10-03). Jira Release Notes field includes "Release Email".
+// Target: next Standalone release notes, under "Bug fixes and improvements" > "Standalone deployment".
+//
+// REVIEWER NOTE: Jira has no fix version. QA verified on package 4.27.1S. Confirm which Standalone
+// release ships this before including the partial in a release page.
+// REVIEWER NOTE: Jira also says the check runs at the end of a restore. Restore comes from a separate
+// ticket (KOB-55338), so it is omitted here until that release is confirmed.
+
+=== Standalone deployment
+
+- Added `sudo kobictl fix consul-server-metadata`. It repairs an unreadable Consul server metadata file that stops Consul from starting with `error reading server metadata: unexpected end of JSON input`. The fix prints the file size and contents, removes only that file, and restarts Consul. Other Consul data is kept. If the file is valid or missing, the command makes no changes.
+- `sudo kobictl restart` now runs the same check automatically after each restart.
