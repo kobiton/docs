@@ -1,0 +1,19 @@
+== virtualUSB
+
+- Fixed an issue where virtualUSB clients earlier than version 4.20.0 could not release a connected device from the command line. Running `vusb disconnect --udid <device-udid>`, or stopping `vusb connect` with Ctrl+C, now ends the virtualUSB session and releases the device. This applies to devices connected from the virtualUSB command-line interface (CLI) or the desktop app. No client update is required.
+
+// REVIEWER NOTE (KOB-55147): The fix is server-side only. It does not restore the *Disconnect*
+// button in the desktop app of affected clients. That button still shows *Connect* and stays
+// disabled for a connected device. Engineering does not plan a client update for these versions.
+// Confirm whether to add public guidance, for example to upgrade to the current virtualUSB client
+// or to end the session from the Portal, before publishing.
+//
+// REVIEWER NOTE (KOB-55147): Verified on macOS with virtualUSB 4.19.0. Windows was not verified.
+//
+// REVIEWER NOTE (KOB-55147): Expected behavior, not a regression: pressing Ctrl+C on `vusb connect`
+// after the session has already ended still prints "Device access ticket is not found".
+//
+// REVIEWER NOTE (KOB-55147): Jira fix version 2026.10.07. Jira reports deployment to US production.
+// Confirm Standalone availability separately.
+
+// Source: KOB-55147
