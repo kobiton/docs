@@ -5,6 +5,325 @@
 Cloud release notes are typically published weekly and summarize changes since the previous publication. Kobiton uses date-based release versioning, with releases identified by the build date in YYMM.DD format. Version information for individual software components is available in the Component versions section.
 ====
 
+// Source: KOB-55147 from PR #697
+// https://github.com/kobiton/docs/pull/697
+
+== virtualUSB
+
+- Fixed an issue where virtualUSB clients earlier than version 4.20.0 could not release a connected device from the command line. Running `vusb disconnect --udid <device-udid>`, or stopping `vusb connect` with Ctrl+C, now ends the virtualUSB session and releases the device. This applies to devices connected from the virtualUSB command-line interface (CLI) or the desktop app. No client update is required.
+
+// REVIEWER NOTE (KOB-55147): The fix is server-side only. It does not restore the *Disconnect*
+// button in the desktop app of affected clients. That button still shows *Connect* and stays
+// disabled for a connected device. Engineering does not plan a client update for these versions.
+// Confirm whether to add public guidance, for example to upgrade to the current virtualUSB client
+// or to end the session from the Portal, before publishing.
+//
+// REVIEWER NOTE (KOB-55147): Verified on macOS with virtualUSB 4.19.0. Windows was not verified.
+//
+// REVIEWER NOTE (KOB-55147): Expected behavior, not a regression: pressing Ctrl+C on `vusb connect`
+// after the session has already ended still prints "Device access ticket is not found".
+//
+// REVIEWER NOTE (KOB-55147): Jira fix version 2026.10.07. Jira reports deployment to US production.
+// Confirm Standalone availability separately.
+
+// Source: KOB-55147
+
+// Source: KOB-54041 from PR #689
+// https://github.com/kobiton/docs/pull/689
+
+== virtualUSB
+
+- Saving host machine settings in *Device Management* no longer disables virtualUSB on host machines with routing managed by Kobiton. Previously, after a save, the *Connect* button could become unavailable in the virtualUSB app, and the virtualUSB CLI rejected connections with "This device does not support virtualUsb feature yet."
+- Host machines that were set up for virtualUSB before host machine settings moved to *Device Management* now show as self-managed and continue to connect.
+
+// REVIEWER NOTE: "Routing managed by Kobiton" is the public label used on the 2026-09-18
+// release page for the virtualUSB tab. The Jira evidence describes the affected machines in
+// internal routing terms; confirm with engineering that the two are the same before
+// publishing.
+//
+// REVIEWER NOTE: The Jira summary and description describe the bug as all earlier-configured
+// virtualUSB machines failing after the virtualUSB 2 backend release. The resolution field
+// describes the root cause as host machine settings saves clearing connection details. Both
+// produce the same customer symptom. Confirm the framing before publishing.
+//
+// REVIEWER NOTE: The fix is live in production since 2026-09-14 per the Jira resolution
+// field. Assign this partial to the matching Cloud release page; no release date is set here.
+//
+// REVIEWER NOTE: The ticket's database-level workaround is operator-only and was omitted.
+
+// Source: KOB-54041
+
+// Source: KOB-55165 from PR #657
+// https://github.com/kobiton/docs/pull/657
+
+== Kobiton AI plugin: debug over virtualUSB
+
+The `automate` plugin adds the `debug-device-over-vusb` skill. Describe a problem in plain language, and the skill debugs your app on a private Kobiton device over virtualUSB.
+
+*Highlights*
+
+- Installs the supported virtualUSB client before connecting. On macOS, the skill downloads, verifies, and unpacks the client. On Windows, the skill downloads and verifies the installer, then lists the remaining setup steps.
+- Selects an online private device that is ready for virtualUSB, and asks you to confirm when more than one device matches.
+- Checks known virtualUSB limitations before connecting, such as iOS 17.0 through 17.3 and iOS devices on Windows.
+- Installs your build, reproduces the problem, captures device logs, and reports the results.
+- Always disconnects the device when the session ends, including after a failure.
+- `/automate:doctor` reports the pinned and installed virtualUSB client versions.
+
+*Availability*
+
+Requires `automate` plugin version 1.13.0 or later, an organization subscription that includes virtualUSB, and macOS or Windows. Linux and public devices are not supported.
+
+For details, see xref:ai:mcp/ai-plugin-mcp-ref.adoc#_debug_over_virtualusb[Debug over virtualUSB].
+
+// REVIEWER NOTE: Confirm the published skill name (`debug-device-over-vusb`) and that automate
+// 1.13.0 is published. The Jira fixVersion field is empty, so place this partial on the release
+// page that matches the actual ship date.
+
+// Source: KOB-55165
+
+// Source: KOB-55306 from PR #656
+// https://github.com/kobiton/docs/pull/656
+
+== Host machine configuration in the Kobiton MCP server
+
+- Organization admins can now configure a host machine from an AI assistant connected to the Kobiton MCP server. The new `configureHostingMachine` tool turns virtualUSB on or off, sets routing to managed by Kobiton or self-managed, and sets max parallel tests to unlimited or a custom value from 1 to 999.
+- The tool applies all requested settings in one save, making the same change as the *Settings* dialog in *Device Management*. A request that matches the current configuration makes no change.
+- The tool returns the machine's updated state. The response never includes the machine's IP address.
+- `listHostingMachines` results now include each machine's max parallel tests setting.
+- Turning virtualUSB off on a machine routed by Kobiton, or moving it to self-managed routing, ends the active virtualUSB sessions on its devices, as it does in Kobiton Portal.
+- When a host machine reports `DISABLED` or `NO_NETWORK_ROUTE`, the `debug-device-over-vusb` skill offers an organization admin the option to enable virtualUSB and set routing, and asks before making the change. The skill never turns virtualUSB off or changes max parallel tests.
+
+// REVIEWER NOTE: The new optional machineId filter on GET /v2/machines is omitted. It backs
+// the tool, and the api-reference module has no page for this endpoint. Add a bullet if the
+// docs team treats it as a customer-facing API change.
+//
+// REVIEWER NOTE: The debug-device-over-vusb skill is not yet listed in the Skills section of
+// the AI plugin reference page. Confirm its public name before publishing this bullet.
+//
+// REVIEWER NOTE: This partial is not included in a dated release page yet. Include it in the
+// release page that matches the production deploy date.
+
+// Source: KOB-55305 from PR #655
+// https://github.com/kobiton/docs/pull/655
+
+== virtualUSB host diagnostics in the Kobiton MCP server
+
+- Organization admins can now ask an AI assistant connected to the Kobiton MCP server why a private device is not ready for virtualUSB. The new read-only `listHostingMachines` tool reports the virtualUSB status of the host machines behind your organization's private devices, with a specific cause and a next step.
+- The tool reports whether virtualUSB is turned off on the host machine, no network route is configured, Kobiton-managed routing is still provisioning or failed to provision, or your organization does not have the virtualUSB add-on.
+- Pass a device UDID to check only that device's host machine.
+- The tool never changes machine settings and does not return IP addresses or MAC addresses.
+- Organization members who call the tool receive the error `You don't have permission to do this action.` Ask an organization admin to check the host machine on the *Device Management* page in Kobiton Portal.
+
+// REVIEWER NOTE (KOB-55305): Jira status is Released. Fix Version is empty, so confirm the
+// release page this entry belongs to.
+//
+// REVIEWER NOTE (KOB-55305): Sibling tickets under the same epic ship the `listDevices`
+// `virtualUsb` filter (KOB-55118), the `debug-device-over-vusb` skill (KOB-55165), and
+// `configureHostingMachine` (KOB-55306). This entry covers only `listHostingMachines`. Decide
+// whether to merge these into one virtualUSB and MCP entry when the release page is assembled.
+//
+// REVIEWER NOTE (KOB-55305): The ticket also adds an optional `deviceUdid` query parameter to
+// `GET /v2/machines`. It is left out because the api-reference module has no page for this
+// endpoint. Add a bullet if the docs team treats it as customer-facing.
+
+// Source: KOB-55305
+
+// Source: KOB-52930 from PR #649
+// https://github.com/kobiton/docs/pull/649
+
+== virtualUSB
+
+- Fixed an issue where the virtualUSB desktop app showed an enabled *Disconnect* button for a device retained in the Kobiton Portal. Selecting it returned an error instead of disconnecting the device.
+- A device retained or used in the Kobiton Portal now shows *Connect*. The button is enabled when you hold the device and disabled when another user holds it.
+- *Disconnect* now appears only for devices connected through virtualUSB on your computer, including devices connected with the virtualUSB CLI.
+- To connect a device you already hold in the Kobiton Portal, release it in the Portal first, then select *Connect* in virtualUSB.
+
+// REVIEWER NOTE: Released with virtualUSB build 2610.21341.0 (release label 2610.2).
+// The release comment is a bulk update; confirm this build carries the fix. The Jira
+// fixVersion is 2026 Q2 - 4.27, but a later comment says the fix was not complete in that
+// version and the passing build was cut in September 2026. Confirm the target release page.
+//
+// REVIEWER NOTE: Jira calls the client "virtualUSB 2". Public docs use "virtualUSB" with no
+// version number. This draft follows the public docs.
+//
+// REVIEWER NOTE: Verified on the macOS client. QA notes the change is shared UI code
+// with no platform branch, but no Windows build was tested. Confirm platform scope.
+//
+// REVIEWER NOTE: Selecting Connect on a device you already hold in the Portal still
+// fails with "Failed to retain device". Direct connection to a Portal-held device is
+// tracked separately and is not part of this entry.
+
+// Source: KOB-52930
+
+// Source: KOB-55396 from PR #679
+// https://github.com/kobiton/docs/pull/679
+
+== virtualUSB
+
+- Fixed an issue on macOS where iOS 17.4 and later devices failed to pair in the virtualUSB desktop app once about six devices were connected on the same Mac. Affected devices showed *Pairing failed* and did not appear in Xcode.
+- Fixed an issue on macOS where iOS 17.4 and later devices connected with separate `vusb connect` commands stopped appearing in Xcode once about four devices were connected on the same Mac.
+
+// REVIEWER NOTE: The device counts are approximate. The point where pairing failed in the
+// desktop app varied with device name length, so the entry does not state an exact limit.
+// QA verified up to ten devices in the desktop app plus three with `vusb connect` on one
+// Mac. No supported device count is stated in the source, so none is published here.
+//
+// REVIEWER NOTE: The ticket's test plan expected faster `vusb connect` connections, but the
+// sign-off does not record connection times. The speed improvement is left out until
+// confirmed. Mixed desktop app and CLI use on one Mac passed QA but is not called out as a
+// separate fix because the ticket's observed behavior does not describe it.
+//
+// REVIEWER NOTE: Confirm which virtualUSB build carries this fix before placing the entry.
+// The Jira release comment lists virtualUSB 2610.21341.0 as part of a bulk update and notes
+// that not every listed build applies to every ticket. An earlier engineering comment says
+// the fix shipped in a consolidated branch build that would likely merge into the primary
+// release. Consider grouping with other virtualUSB partials on the same page.
+//
+// REVIEWER NOTE: Scope is the macOS virtualUSB client only. Android devices, iOS 17.3 and
+// earlier, and the Windows and Linux clients are not affected.
+//
+// REVIEWER NOTE: debugging:start-debugging.adoc still lists "iOS 17 and above devices are
+// not supported" under Considerations. That appears out of date relative to this and related
+// virtualUSB tickets. Not changed here; flag for a separate review.
+
+// Source: KOB-55396
+
+// Source: KOB-55183 from PR #680
+// https://github.com/kobiton/docs/pull/680
+
+== virtualUSB
+
+=== Fixed: Linux log export now includes the device connection log
+
+- On Linux, `vusb export-logs` now includes the virtualUSB device connection log for the requested number of days. Previously, the exported archive contained only the virtualUSB configuration and CLI log, so it could not be used to troubleshoot device connection problems.
+- The archive also includes the system journal entries for the device connection service, so exported archives are larger than before.
+- Rotated device connection logs are included.
+- Logs written before you install this update are not included in the export.
+- To include the system journal entries, run `vusb export-logs` as a user in the `adm` or `systemd-journal` group. For other users, the journal file in the archive is empty, but the device connection log is still included.
+- virtualUSB on macOS and Windows is unchanged.
+
+// REVIEWER NOTE: Public virtualUSB docs (Set up virtualUSB, virtualUSB CLI commands) list
+// macOS and Windows only. Confirm that the Linux virtualUSB client is generally available
+// to customers before publishing this entry, or hold it until Linux client docs exist.
+//
+// REVIEWER NOTE: "Device connection log" and "device connection service" are placeholder
+// customer-facing names for the deviceBridge (dcb) component. Public docs do not name this
+// component except in the macOS uninstall command. Confirm preferred terminology.
+//
+// REVIEWER NOTE: Jira has no fix version or release date. Confirm which Cloud release page
+// this partial belongs to.
+//
+// REVIEWER NOTE: The update also makes the Linux client's log folder readable by all local
+// users, matching macOS. This was left out of public wording as an implementation detail.
+// Confirm with the SME whether customers need to be told.
+//
+// REVIEWER NOTE: The update restarts the device connection service and changes where it
+// writes its log. Confirm whether customers need any upgrade guidance beyond this entry.
+
+// Source: KOB-55354 from PR #660
+// https://github.com/kobiton/docs/pull/660
+
+== virtualUSB
+
+- Fixed an issue where only the most recently paired iOS device connected to Xcode when more than one iOS 17.4 or later device was used through virtualUSB on the same Mac. Previously, after connecting a second device, reconnecting the first device left it stuck while connecting, and it never appeared in Xcode.
+- Fixed an issue where a device that was no longer paired with the Mac never connected.
+- virtualUSB no longer shows a device as *Connected* while it is still waiting for the Mac to connect.
+
+The fix applies to the virtualUSB macOS app and requires updated virtualUSB and deviceConnect versions. After the update, one previously paired device on each Mac may need to be unpaired once.
+
+// REVIEWER NOTE:
+// KOB-55354 | Released builds (bulk update, per ticket comment): virtualUSB 2610.21341.0, deviceConnect 2610.11132.0.
+// Confirm which release page this partial is included on (Cloud weekly and/or Standalone).
+// Confirm where users unpair the device (Xcode or the virtualUSB app) and whether a short procedure is needed.
+// Confirm which status virtualUSB now shows while waiting for the Mac to connect.
+// Not included: CLI device-count limit and tunnel wait times found during QA. Engineering is moving these to a new ticket.
+
+// Source: KOB-55318 from PR #668
+// https://github.com/kobiton/docs/pull/668
+
+== virtualUSB
+
+- virtualUSB on Mac now generates its own pairing information for each connected iOS 17.4 or later device. A device paired through virtualUSB before this release may not pair again. To pair it, click *Clear Pairing Data* in the virtualUSB app, then connect the device again.
+
+// REVIEWER NOTE: The ticket's Impact Analysis and Release Notes fields say this change
+// "removes the limit on the number of usable devices in virtualUSB." That claim is
+// intentionally omitted. The QA verdict recorded on the ticket is FAILED: on two Macs, only
+// six devices paired from one Mac, and the seventh stayed on "Pairing..." then showed
+// "Pairing failed." The evidence does not show this was resolved before release. A related
+// ticket (KOB-55396) tracks devices that stop pairing past a handful per Mac. Add the
+// device-limit claim back only after engineering confirms the shipped behavior.
+//
+// REVIEWER NOTE: Confirm the exact button label. The engineering release-note field says
+// 'Clear pairing data'; the QA comment says "Clear Pairing Data". The draft uses the QA
+// spelling.
+//
+// REVIEWER NOTE: Scope to Mac and iOS 17.4 or later comes from the parent epic
+// ("virtualUSB 2: support for iOS 17.4+ (MacOS Client)") and the QA notes (Windows and Linux
+// clients, Android, usbmux iOS devices, and virtualUSB 1 do not use the changed pairing
+// advert). Confirm before publishing.
+//
+// REVIEWER NOTE: Released virtualUSB build per the release comment: 2610.21341.0 (release
+// label 2610.2). The release comment is a bulk update, so confirm this build carries the
+// change before adding it to Component versions.
+
+// Source: KOB-55318
+
+// Source: KOB-55371 from PR #675
+// https://github.com/kobiton/docs/pull/675
+
+== virtualUSB 2 downloads
+
+Portal downloads now deliver the official virtualUSB 2 installers from the Kobiton public download site, and add Linux installers.
+
+- *virtualUSB for Mac* and *virtualUSB for Windows* now download the latest virtualUSB 2 installer. Downloading does not require an additional sign-in.
+- New *virtualUSB for Linux (Debian-based)* and *virtualUSB for Linux (Red Hat-based)* entries appear at the end of the Downloads list.
+- The Downloads list now stays within the screen on smaller windows and supports keyboard navigation.
+- Standalone installations include the same virtualUSB 2 installers for all four platforms.
+
+// REVIEWER NOTE: Jira field wording conflicts on the Linux labels. The Release Notes and
+// Impact Analysis fields use "virtualUSB for Linux (Debian-based)" and "virtualUSB for Linux
+// (Red Hat-based)"; the Implementation Plan uses "virtualUSB (Debian-based OS) for Linux"
+// and "virtualUSB (RedHat-based OS) for Linux". Confirm the shipped labels in the Portal.
+//
+// REVIEWER NOTE: Ticket is in Wait For Deployment with no fix version. Confirm the cloud
+// release date before publishing. Testing notes state that sandbox Mac/Windows links depend
+// on a separate configuration rollout.
+//
+// REVIEWER NOTE: Confirm which Standalone release ships the bundled virtualUSB 2 installers.
+// Move the Standalone bullet to the Standalone release notes if it does not apply to Cloud.
+
+// Source: KOB-55371
+
+// Source: KOB-54596 from PR #658
+// https://github.com/kobiton/docs/pull/658
+
+== Debug on private devices over virtualUSB with AI assistants
+
+AI assistants connected to the Kobiton MCP server can now debug an app on a private Kobiton device connected to your computer over virtualUSB. Organization admins can also check and change a host machine's virtualUSB settings without leaving the conversation.
+
+*Highlights*
+
+- `listDevices` accepts a new `virtualUsb` filter that returns the private devices ready for virtualUSB. When you name a device that is not ready, the response explains why.
+- New `listHostingMachines` tool, for organization admins: shows each host machine's virtualUSB status, the next step when virtualUSB is not ready, and its max parallel tests. Filter by device or by machine.
+- New `configureHostingMachine` tool, for organization admins: enables or disables virtualUSB, chooses routing, and sets max parallel tests. The change matches the same settings in *Device Management*, including ending active virtualUSB sessions when virtualUSB is turned off.
+- New `debug-device-over-vusb` skill in the `automate` plugin 1.13.0: installs the pinned virtualUSB client, connects the device so it appears in `adb` or Xcode, runs the install, reproduce, and capture-logs loop, and always disconnects the device at the end.
+
+*Availability*
+
+- The skill runs on macOS and Windows. Linux is not supported.
+- virtualUSB works with private devices only.
+
+For details, see xref:ai:mcp/ai-plugin-mcp-ref.adoc[].
+
+// REVIEWER NOTE (KOB-54596): The impact analysis also lists optional `deviceUdid` and
+// `machineId` query parameters on `GET /v2/machines`, and `title` and `annotations` now served
+// by `tools/list`. They are left out pending a decision on API reference coverage.
+//
+// REVIEWER NOTE (KOB-54596): Confirm whether a virtualUSB subscription is required. The
+// 2026-09-18 notes state the *virtualUSB* tab appears for subscribed organizations.
+
+// Source: KOB-54596
+
 // Source: KOB-55365 from PR #703
 // https://github.com/kobiton/docs/pull/703
 
@@ -109,29 +428,6 @@ Cloud release notes are typically published weekly and summarize changes since t
 // REVIEWER NOTE (KOB-55444): Jira does not state how a failed DDI mount appears to users, such as the
 // device going offline or being unavailable for sessions. Confirm the user-visible symptom before publishing.
 // REVIEWER NOTE (KOB-55444): Confirm Standalone availability separately.
-
-// Source: KOB-55147 from PR #697
-// https://github.com/kobiton/docs/pull/697
-
-== virtualUSB
-
-- Fixed an issue where virtualUSB clients earlier than version 4.20.0 could not release a connected device from the command line. Running `vusb disconnect --udid <device-udid>`, or stopping `vusb connect` with Ctrl+C, now ends the virtualUSB session and releases the device. This applies to devices connected from the virtualUSB command-line interface (CLI) or the desktop app. No client update is required.
-
-// REVIEWER NOTE (KOB-55147): The fix is server-side only. It does not restore the *Disconnect*
-// button in the desktop app of affected clients. That button still shows *Connect* and stays
-// disabled for a connected device. Engineering does not plan a client update for these versions.
-// Confirm whether to add public guidance, for example to upgrade to the current virtualUSB client
-// or to end the session from the Portal, before publishing.
-//
-// REVIEWER NOTE (KOB-55147): Verified on macOS with virtualUSB 4.19.0. Windows was not verified.
-//
-// REVIEWER NOTE (KOB-55147): Expected behavior, not a regression: pressing Ctrl+C on `vusb connect`
-// after the session has already ended still prints "Device access ticket is not found".
-//
-// REVIEWER NOTE (KOB-55147): Jira fix version 2026.10.07. Jira reports deployment to US production.
-// Confirm Standalone availability separately.
-
-// Source: KOB-55147
 
 // Source: KOB-55394 from PR #696
 // https://github.com/kobiton/docs/pull/696
@@ -241,10 +537,13 @@ The following are not yet supported for virtual devices:
 
 // Source: KOB-52820 from PR #693
 // https://github.com/kobiton/docs/pull/693
+
 // Source: KOB-52679 from PR #692
 // https://github.com/kobiton/docs/pull/692
+
 // Source: KOB-52819 from PR #691
 // https://github.com/kobiton/docs/pull/691
+
 // Source: KOB-52678 from PR #690
 // https://github.com/kobiton/docs/pull/690
 
@@ -311,31 +610,6 @@ Organization admins with the *ADMIN* predefined role. The *virtualUSB* tab requi
 // REVIEWER NOTE (KOB-52678): The api-reference module has no `/v2/machines` page. If API
 // reference content is added later, document the `max_parallel_tests` object there.
 
-// Source: KOB-54041 from PR #689
-// https://github.com/kobiton/docs/pull/689
-
-== virtualUSB
-
-- Saving host machine settings in *Device Management* no longer disables virtualUSB on host machines with routing managed by Kobiton. Previously, after a save, the *Connect* button could become unavailable in the virtualUSB app, and the virtualUSB CLI rejected connections with "This device does not support virtualUsb feature yet."
-- Host machines that were set up for virtualUSB before host machine settings moved to *Device Management* now show as self-managed and continue to connect.
-
-// REVIEWER NOTE: "Routing managed by Kobiton" is the public label used on the 2026-09-18
-// release page for the virtualUSB tab. The Jira evidence describes the affected machines in
-// internal routing terms; confirm with engineering that the two are the same before
-// publishing.
-//
-// REVIEWER NOTE: The Jira summary and description describe the bug as all earlier-configured
-// virtualUSB machines failing after the virtualUSB 2 backend release. The resolution field
-// describes the root cause as host machine settings saves clearing connection details. Both
-// produce the same customer symptom. Confirm the framing before publishing.
-//
-// REVIEWER NOTE: The fix is live in production since 2026-09-14 per the Jira resolution
-// field. Assign this partial to the matching Cloud release page; no release date is set here.
-//
-// REVIEWER NOTE: The ticket's database-level workaround is operator-only and was omitted.
-
-// Source: KOB-54041
-
 // Source: KOB-52055 from PR #684
 // https://github.com/kobiton/docs/pull/684
 
@@ -361,81 +635,6 @@ Organization admins with the *ADMIN* predefined role. The *virtualUSB* tab requi
 //
 // REVIEWER NOTE (KOB-52055): The ticket says the netplan file follows "the same formatting
 // as GEM". That term is not explained in the ticket and is omitted.
-
-// Source: KOB-55165 from PR #657
-// https://github.com/kobiton/docs/pull/657
-
-== Kobiton AI plugin: debug over virtualUSB
-
-The `automate` plugin adds the `debug-device-over-vusb` skill. Describe a problem in plain language, and the skill debugs your app on a private Kobiton device over virtualUSB.
-
-*Highlights*
-
-- Installs the supported virtualUSB client before connecting. On macOS, the skill downloads, verifies, and unpacks the client. On Windows, the skill downloads and verifies the installer, then lists the remaining setup steps.
-- Selects an online private device that is ready for virtualUSB, and asks you to confirm when more than one device matches.
-- Checks known virtualUSB limitations before connecting, such as iOS 17.0 through 17.3 and iOS devices on Windows.
-- Installs your build, reproduces the problem, captures device logs, and reports the results.
-- Always disconnects the device when the session ends, including after a failure.
-- `/automate:doctor` reports the pinned and installed virtualUSB client versions.
-
-*Availability*
-
-Requires `automate` plugin version 1.13.0 or later, an organization subscription that includes virtualUSB, and macOS or Windows. Linux and public devices are not supported.
-
-For details, see xref:ai:mcp/ai-plugin-mcp-ref.adoc#_debug_over_virtualusb[Debug over virtualUSB].
-
-// REVIEWER NOTE: Confirm the published skill name (`debug-device-over-vusb`) and that automate
-// 1.13.0 is published. The Jira fixVersion field is empty, so place this partial on the release
-// page that matches the actual ship date.
-
-// Source: KOB-55165
-
-// Source: KOB-55306 from PR #656
-// https://github.com/kobiton/docs/pull/656
-
-== Host machine configuration in the Kobiton MCP server
-
-- Organization admins can now configure a host machine from an AI assistant connected to the Kobiton MCP server. The new `configureHostingMachine` tool turns virtualUSB on or off, sets routing to managed by Kobiton or self-managed, and sets max parallel tests to unlimited or a custom value from 1 to 999.
-- The tool applies all requested settings in one save, making the same change as the *Settings* dialog in *Device Management*. A request that matches the current configuration makes no change.
-- The tool returns the machine's updated state. The response never includes the machine's IP address.
-- `listHostingMachines` results now include each machine's max parallel tests setting.
-- Turning virtualUSB off on a machine routed by Kobiton, or moving it to self-managed routing, ends the active virtualUSB sessions on its devices, as it does in Kobiton Portal.
-- When a host machine reports `DISABLED` or `NO_NETWORK_ROUTE`, the `debug-device-over-vusb` skill offers an organization admin the option to enable virtualUSB and set routing, and asks before making the change. The skill never turns virtualUSB off or changes max parallel tests.
-
-// REVIEWER NOTE: The new optional machineId filter on GET /v2/machines is omitted. It backs
-// the tool, and the api-reference module has no page for this endpoint. Add a bullet if the
-// docs team treats it as a customer-facing API change.
-//
-// REVIEWER NOTE: The debug-device-over-vusb skill is not yet listed in the Skills section of
-// the AI plugin reference page. Confirm its public name before publishing this bullet.
-//
-// REVIEWER NOTE: This partial is not included in a dated release page yet. Include it in the
-// release page that matches the production deploy date.
-
-// Source: KOB-55305 from PR #655
-// https://github.com/kobiton/docs/pull/655
-
-== virtualUSB host diagnostics in the Kobiton MCP server
-
-- Organization admins can now ask an AI assistant connected to the Kobiton MCP server why a private device is not ready for virtualUSB. The new read-only `listHostingMachines` tool reports the virtualUSB status of the host machines behind your organization's private devices, with a specific cause and a next step.
-- The tool reports whether virtualUSB is turned off on the host machine, no network route is configured, Kobiton-managed routing is still provisioning or failed to provision, or your organization does not have the virtualUSB add-on.
-- Pass a device UDID to check only that device's host machine.
-- The tool never changes machine settings and does not return IP addresses or MAC addresses.
-- Organization members who call the tool receive the error `You don't have permission to do this action.` Ask an organization admin to check the host machine on the *Device Management* page in Kobiton Portal.
-
-// REVIEWER NOTE (KOB-55305): Jira status is Released. Fix Version is empty, so confirm the
-// release page this entry belongs to.
-//
-// REVIEWER NOTE (KOB-55305): Sibling tickets under the same epic ship the `listDevices`
-// `virtualUsb` filter (KOB-55118), the `debug-device-over-vusb` skill (KOB-55165), and
-// `configureHostingMachine` (KOB-55306). This entry covers only `listHostingMachines`. Decide
-// whether to merge these into one virtualUSB and MCP entry when the release page is assembled.
-//
-// REVIEWER NOTE (KOB-55305): The ticket also adds an optional `deviceUdid` query parameter to
-// `GET /v2/machines`. It is left out because the api-reference module has no page for this
-// endpoint. Add a bullet if the docs team treats it as customer-facing.
-
-// Source: KOB-55305
 
 // Source: KOB-55188 from PR #683
 // https://github.com/kobiton/docs/pull/683
@@ -555,98 +754,6 @@ For details, see xref:ai:mcp/ai-plugin-mcp-ref.adoc#_debug_over_virtualusb[Debug
 
 // Source: KOB-55245
 
-// Source: KOB-52930 from PR #649
-// https://github.com/kobiton/docs/pull/649
-
-== virtualUSB
-
-- Fixed an issue where the virtualUSB desktop app showed an enabled *Disconnect* button for a device retained in the Kobiton Portal. Selecting it returned an error instead of disconnecting the device.
-- A device retained or used in the Kobiton Portal now shows *Connect*. The button is enabled when you hold the device and disabled when another user holds it.
-- *Disconnect* now appears only for devices connected through virtualUSB on your computer, including devices connected with the virtualUSB CLI.
-- To connect a device you already hold in the Kobiton Portal, release it in the Portal first, then select *Connect* in virtualUSB.
-
-// REVIEWER NOTE: Released with virtualUSB build 2610.21341.0 (release label 2610.2).
-// The release comment is a bulk update; confirm this build carries the fix. The Jira
-// fixVersion is 2026 Q2 - 4.27, but a later comment says the fix was not complete in that
-// version and the passing build was cut in September 2026. Confirm the target release page.
-//
-// REVIEWER NOTE: Jira calls the client "virtualUSB 2". Public docs use "virtualUSB" with no
-// version number. This draft follows the public docs.
-//
-// REVIEWER NOTE: Verified on the macOS client. QA notes the change is shared UI code
-// with no platform branch, but no Windows build was tested. Confirm platform scope.
-//
-// REVIEWER NOTE: Selecting Connect on a device you already hold in the Portal still
-// fails with "Failed to retain device". Direct connection to a Portal-held device is
-// tracked separately and is not part of this entry.
-
-// Source: KOB-52930
-
-// Source: KOB-55396 from PR #679
-// https://github.com/kobiton/docs/pull/679
-
-== virtualUSB
-
-- Fixed an issue on macOS where iOS 17.4 and later devices failed to pair in the virtualUSB desktop app once about six devices were connected on the same Mac. Affected devices showed *Pairing failed* and did not appear in Xcode.
-- Fixed an issue on macOS where iOS 17.4 and later devices connected with separate `vusb connect` commands stopped appearing in Xcode once about four devices were connected on the same Mac.
-
-// REVIEWER NOTE: The device counts are approximate. The point where pairing failed in the
-// desktop app varied with device name length, so the entry does not state an exact limit.
-// QA verified up to ten devices in the desktop app plus three with `vusb connect` on one
-// Mac. No supported device count is stated in the source, so none is published here.
-//
-// REVIEWER NOTE: The ticket's test plan expected faster `vusb connect` connections, but the
-// sign-off does not record connection times. The speed improvement is left out until
-// confirmed. Mixed desktop app and CLI use on one Mac passed QA but is not called out as a
-// separate fix because the ticket's observed behavior does not describe it.
-//
-// REVIEWER NOTE: Confirm which virtualUSB build carries this fix before placing the entry.
-// The Jira release comment lists virtualUSB 2610.21341.0 as part of a bulk update and notes
-// that not every listed build applies to every ticket. An earlier engineering comment says
-// the fix shipped in a consolidated branch build that would likely merge into the primary
-// release. Consider grouping with other virtualUSB partials on the same page.
-//
-// REVIEWER NOTE: Scope is the macOS virtualUSB client only. Android devices, iOS 17.3 and
-// earlier, and the Windows and Linux clients are not affected.
-//
-// REVIEWER NOTE: debugging:start-debugging.adoc still lists "iOS 17 and above devices are
-// not supported" under Considerations. That appears out of date relative to this and related
-// virtualUSB tickets. Not changed here; flag for a separate review.
-
-// Source: KOB-55396
-
-// Source: KOB-55183 from PR #680
-// https://github.com/kobiton/docs/pull/680
-
-== virtualUSB
-
-=== Fixed: Linux log export now includes the device connection log
-
-- On Linux, `vusb export-logs` now includes the virtualUSB device connection log for the requested number of days. Previously, the exported archive contained only the virtualUSB configuration and CLI log, so it could not be used to troubleshoot device connection problems.
-- The archive also includes the system journal entries for the device connection service, so exported archives are larger than before.
-- Rotated device connection logs are included.
-- Logs written before you install this update are not included in the export.
-- To include the system journal entries, run `vusb export-logs` as a user in the `adm` or `systemd-journal` group. For other users, the journal file in the archive is empty, but the device connection log is still included.
-- virtualUSB on macOS and Windows is unchanged.
-
-// REVIEWER NOTE: Public virtualUSB docs (Set up virtualUSB, virtualUSB CLI commands) list
-// macOS and Windows only. Confirm that the Linux virtualUSB client is generally available
-// to customers before publishing this entry, or hold it until Linux client docs exist.
-//
-// REVIEWER NOTE: "Device connection log" and "device connection service" are placeholder
-// customer-facing names for the deviceBridge (dcb) component. Public docs do not name this
-// component except in the macOS uninstall command. Confirm preferred terminology.
-//
-// REVIEWER NOTE: Jira has no fix version or release date. Confirm which Cloud release page
-// this partial belongs to.
-//
-// REVIEWER NOTE: The update also makes the Linux client's log folder readable by all local
-// users, matching macOS. This was left out of public wording as an implementation detail.
-// Confirm with the SME whether customers need to be told.
-//
-// REVIEWER NOTE: The update restarts the device connection service and changes where it
-// writes its log. Confirm whether customers need any upgrade guidance beyond this entry.
-
 // Source: KOB-55369 from PR #674
 // https://github.com/kobiton/docs/pull/674
 
@@ -672,54 +779,6 @@ For details, see xref:ai:mcp/ai-plugin-mcp-ref.adoc#_debug_over_virtualusb[Debug
 
 // Source: KOB-55369
 
-// Source: KOB-55354 from PR #660
-// https://github.com/kobiton/docs/pull/660
-
-== virtualUSB
-
-- Fixed an issue where only the most recently paired iOS device connected to Xcode when more than one iOS 17.4 or later device was used through virtualUSB on the same Mac. Previously, after connecting a second device, reconnecting the first device left it stuck while connecting, and it never appeared in Xcode.
-- Fixed an issue where a device that was no longer paired with the Mac never connected.
-- virtualUSB no longer shows a device as *Connected* while it is still waiting for the Mac to connect.
-
-The fix applies to the virtualUSB macOS app and requires updated virtualUSB and deviceConnect versions. After the update, one previously paired device on each Mac may need to be unpaired once.
-
-// REVIEWER NOTE:
-// KOB-55354 | Released builds (bulk update, per ticket comment): virtualUSB 2610.21341.0, deviceConnect 2610.11132.0.
-// Confirm which release page this partial is included on (Cloud weekly and/or Standalone).
-// Confirm where users unpair the device (Xcode or the virtualUSB app) and whether a short procedure is needed.
-// Confirm which status virtualUSB now shows while waiting for the Mac to connect.
-// Not included: CLI device-count limit and tunnel wait times found during QA. Engineering is moving these to a new ticket.
-
-// Source: KOB-55318 from PR #668
-// https://github.com/kobiton/docs/pull/668
-
-== virtualUSB
-
-- virtualUSB on Mac now generates its own pairing information for each connected iOS 17.4 or later device. A device paired through virtualUSB before this release may not pair again. To pair it, click *Clear Pairing Data* in the virtualUSB app, then connect the device again.
-
-// REVIEWER NOTE: The ticket's Impact Analysis and Release Notes fields say this change
-// "removes the limit on the number of usable devices in virtualUSB." That claim is
-// intentionally omitted. The QA verdict recorded on the ticket is FAILED: on two Macs, only
-// six devices paired from one Mac, and the seventh stayed on "Pairing..." then showed
-// "Pairing failed." The evidence does not show this was resolved before release. A related
-// ticket (KOB-55396) tracks devices that stop pairing past a handful per Mac. Add the
-// device-limit claim back only after engineering confirms the shipped behavior.
-//
-// REVIEWER NOTE: Confirm the exact button label. The engineering release-note field says
-// 'Clear pairing data'; the QA comment says "Clear Pairing Data". The draft uses the QA
-// spelling.
-//
-// REVIEWER NOTE: Scope to Mac and iOS 17.4 or later comes from the parent epic
-// ("virtualUSB 2: support for iOS 17.4+ (MacOS Client)") and the QA notes (Windows and Linux
-// clients, Android, usbmux iOS devices, and virtualUSB 1 do not use the changed pairing
-// advert). Confirm before publishing.
-//
-// REVIEWER NOTE: Released virtualUSB build per the release comment: 2610.21341.0 (release
-// label 2610.2). The release comment is a bulk update, so confirm this build carries the
-// change before adding it to Component versions.
-
-// Source: KOB-55318
-
 // Source: KOB-55321 from PR #678
 // https://github.com/kobiton/docs/pull/678
 
@@ -740,62 +799,5 @@ The fix applies to the virtualUSB macOS app and requires updated virtualUSB and 
 // REVIEWER NOTE: "the date range selected for the report" is inferred from "the export's
 // date range" in the source. Confirm that the export uses the date range selected in the
 // report filter.
-
-// Source: KOB-55371 from PR #675
-// https://github.com/kobiton/docs/pull/675
-
-== virtualUSB 2 downloads
-
-Portal downloads now deliver the official virtualUSB 2 installers from the Kobiton public download site, and add Linux installers.
-
-- *virtualUSB for Mac* and *virtualUSB for Windows* now download the latest virtualUSB 2 installer. Downloading does not require an additional sign-in.
-- New *virtualUSB for Linux (Debian-based)* and *virtualUSB for Linux (Red Hat-based)* entries appear at the end of the Downloads list.
-- The Downloads list now stays within the screen on smaller windows and supports keyboard navigation.
-- Standalone installations include the same virtualUSB 2 installers for all four platforms.
-
-// REVIEWER NOTE: Jira field wording conflicts on the Linux labels. The Release Notes and
-// Impact Analysis fields use "virtualUSB for Linux (Debian-based)" and "virtualUSB for Linux
-// (Red Hat-based)"; the Implementation Plan uses "virtualUSB (Debian-based OS) for Linux"
-// and "virtualUSB (RedHat-based OS) for Linux". Confirm the shipped labels in the Portal.
-//
-// REVIEWER NOTE: Ticket is in Wait For Deployment with no fix version. Confirm the cloud
-// release date before publishing. Testing notes state that sandbox Mac/Windows links depend
-// on a separate configuration rollout.
-//
-// REVIEWER NOTE: Confirm which Standalone release ships the bundled virtualUSB 2 installers.
-// Move the Standalone bullet to the Standalone release notes if it does not apply to Cloud.
-
-// Source: KOB-55371
-
-// Source: KOB-54596 from PR #658
-// https://github.com/kobiton/docs/pull/658
-
-== Debug on private devices over virtualUSB with AI assistants
-
-AI assistants connected to the Kobiton MCP server can now debug an app on a private Kobiton device connected to your computer over virtualUSB. Organization admins can also check and change a host machine's virtualUSB settings without leaving the conversation.
-
-*Highlights*
-
-- `listDevices` accepts a new `virtualUsb` filter that returns the private devices ready for virtualUSB. When you name a device that is not ready, the response explains why.
-- New `listHostingMachines` tool, for organization admins: shows each host machine's virtualUSB status, the next step when virtualUSB is not ready, and its max parallel tests. Filter by device or by machine.
-- New `configureHostingMachine` tool, for organization admins: enables or disables virtualUSB, chooses routing, and sets max parallel tests. The change matches the same settings in *Device Management*, including ending active virtualUSB sessions when virtualUSB is turned off.
-- New `debug-device-over-vusb` skill in the `automate` plugin 1.13.0: installs the pinned virtualUSB client, connects the device so it appears in `adb` or Xcode, runs the install, reproduce, and capture-logs loop, and always disconnects the device at the end.
-
-*Availability*
-
-- The skill runs on macOS and Windows. Linux is not supported.
-- virtualUSB works with private devices only.
-
-For details, see xref:ai:mcp/ai-plugin-mcp-ref.adoc[].
-
-// REVIEWER NOTE (KOB-54596): The impact analysis also lists optional `deviceUdid` and
-// `machineId` query parameters on `GET /v2/machines`, and `title` and `annotations` now served
-// by `tools/list`. They are left out pending a decision on API reference coverage.
-//
-// REVIEWER NOTE (KOB-54596): Confirm whether a virtualUSB subscription is required. The
-// 2026-09-18 notes state the *virtualUSB* tab appears for subscribed organizations.
-
-// Source: KOB-54596
-
 
 == Component versions
