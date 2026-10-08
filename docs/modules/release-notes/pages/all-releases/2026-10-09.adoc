@@ -341,44 +341,12 @@ For details, see xref:ai:mcp/ai-plugin-mcp-ref.adoc[].
 
 // Source: KOB-54596
 
-// Source: KOB-55365 from PR #703
-// https://github.com/kobiton/docs/pull/703
-
-== iOS app installation
-
-- Fixed an issue where installing an iOS app built with an App Store distribution profile failed with an incorrect `AD-403` error asking for a development build. When an installation fails, the error reported by the device now appears instead, such as a code signature verification failure. This applies whether *App signing using Kobiton Certificate (iOS)* is turned on or off for the organization.
-
-// REVIEWER NOTE: The entry does not state that App Store builds now install successfully.
-// The fix removes an incorrect pre-check and error message. With re-signing turned off, QA
-// observed that a non-Kobiton app now returns the device's code signature verification error
-// instead of the previous message. Whether a given App Store build installs depends on the
-// device and signing, not on this change.
-//
-// REVIEWER NOTE: Internal component names from the ticket are left out. A previous release
-// note (2026-08-28) dropped an entry because that component name is not known to end users.
-// "App signing using Kobiton Certificate (iOS)" is the setting label documented in
-// organization:other-settings.adoc.
-//
-// REVIEWER NOTE: Ticket is in Wait For Deployment with no fix version. The Release Notes
-// field selects "Release Email". An assignee comment states these changes are for DLM
-// components only. Confirm the deployment vehicle (Cloud, Standalone, or both) and the
-// release date before placing the entry.
-//
-// REVIEWER NOTE: QA verified API installs, Portal manual session installs, and the Appium
-// `app` capability on iOS. Other install paths, such as the Kobiton CLI, were tested on
-// Android only as regression coverage.
-//
-// REVIEWER NOTE: No existing product docs page mentions AD-403 or rejects App Store builds,
-// so no product-doc update is included.
-
-// Source: KOB-55365
-
 // Source: KOB-55153 from PR #702
 // https://github.com/kobiton/docs/pull/702
 
 == Manual sessions
 
-- If the live device screen stream stops briefly during a manual session, the session now tries to restore the full video stream automatically. Previously, the session switched to a lower frame rate screenshot mode and stayed there for the rest of the session, so the device screen felt laggy.
+- Manual sessions now attempt to restore the full video stream after a brief interruption to the live device screen. Previously, the session dropped to lower-quality screenshots for the rest of the session.
 
 // REVIEWER NOTE (KOB-55153): QA confirmed recovery on iOS and Android in a test environment.
 // QA did not test recovery after a stall caused by a slow network connection. The Jira comments
@@ -415,71 +383,42 @@ For details, see xref:ai:mcp/ai-plugin-mcp-ref.adoc[].
 // REVIEWER NOTE: The ticket calls this the "session quality panel". Confirm that it is the
 // panel the docs call *Speedometer* (manual-testing/pages/device-controls.adoc).
 
+// Source: KOB-55394 from PR #696
+// https://github.com/kobiton/docs/pull/696
 // Source: KOB-54485 from PR #700
 // https://github.com/kobiton/docs/pull/700
 
-- New: Xium sessions on Android devices now support the `waitForIdleTimeout` setting, which controls how long the session waits for the app screen to become idle before each UiAutomator element search. Set it to `0` with the `appium:waitForIdleTimeout` capability or the Appium Settings API to find elements in apps that redraw continuously, where `-android uiautomator` locators such as `new UiSelector().resourceId("...")` previously returned `no such element`. The default stays at 10 seconds, so sessions that do not set the value behave as before. The setting is ignored on iOS.
+== Appium automation
 
-// REVIEWER NOTE:
-// KOB-54485 | Jira status: Wait For Deployment | Component: XIUM | Type: Bug
-// No fixVersion is set on the ticket. Confirm the target release page and Component
-// versions (deviceConnect build) before placement.
-// Verified on a lab build per the ticket's latest comment.
+- Appium automation sessions on Android now support the `waitForIdleTimeout` setting, which controls how long the session waits for the app screen to become idle when finding elements.
+- Appium automation sessions now support the Appium `mobile: setText` command on Android and iOS devices. Previously, scripts that called `mobile: setText` failed with the error `Mobile command 'mobile: setText' is not implemented`. Other text input commands, such as typing a value into an element, sending keys, and clearing a field, work as before.
+
+// REVIEWER NOTE (KOB-54485): Jira status: Wait For Deployment. No fixVersion is set on the
+// ticket. Confirm the target release page and Component versions (deviceConnect build) before
+// placement. Verified on a lab build per the ticket's latest comment.
 // The ticket also adds the dc.ini key WebDriverSession.UiAutomatorTimeoutMs for local-device
 // hosts. Held out of the public bullet pending a decision on whether host-level dc.ini
 // settings belong in public release notes.
-// Source: KOB-54485
-
-// Source: KOB-55444 from PR #699
-// https://github.com/kobiton/docs/pull/699
-
-== iOS device connection
-
-- deviceConnect now reliably mounts the Developer Disk Image (DDI) on newer iOS devices, such as iPhone 18 models running iOS 26.4 and later. Previously, the DDI mount could fail intermittently, or fail when a DDI was already mounted on the device.
-
-// REVIEWER NOTE (KOB-55444): The Jira impact field scopes this fix to iOS 26.4 and later devices whose
-// hardware is newer than the installed DDI, such as the iPhone 18 series. Confirm "newer iOS devices" is
-// acceptable public wording, or replace it with an explicit device list.
-// REVIEWER NOTE (KOB-55444): QA could not reproduce the "DDI already mounted" case on an iPhone 18 device.
-// The engineer accepted this branch based on their own verification. Confirm before keeping that clause.
-// REVIEWER NOTE (KOB-55444): Jira does not state how a failed DDI mount appears to users, such as the
-// device going offline or being unavailable for sessions. Confirm the user-visible symptom before publishing.
-// REVIEWER NOTE (KOB-55444): Confirm Standalone availability separately.
-
-// Source: KOB-55394 from PR #696
-// https://github.com/kobiton/docs/pull/696
-
-== Appium automation
-
-- XIUM now supports the Appium `mobile: setText` command on Android and iOS devices. Previously, scripts that called `mobile: setText` failed with the error `Mobile command 'mobile: setText' is not implemented`. Other text input commands, such as typing a value into an element, sending keys, and clearing a field, work as before.
-
-// REVIEWER NOTE: The ticket description expects `mobile: setText` to honor the `replace`
-// argument (clear the field first), as UiAutomator2 does. The Release Notes and Impact
-// Analysis fields do not confirm `replace` handling, so this entry does not describe
+//
+// REVIEWER NOTE (KOB-55394): The ticket description expects `mobile: setText` to honor the
+// `replace` argument (clear the field first), as UiAutomator2 does. The Release Notes and
+// Impact Analysis fields do not confirm `replace` handling, so this entry does not describe
 // argument behavior. Confirm with engineering before adding it.
 //
-// REVIEWER NOTE: Ticket is in Wait For Deployment with no fix version. QA verified the fix on
-// a deviceConnect 2610.6 master build. Confirm the cloud release page this entry belongs on,
-// and confirm availability for Kobiton Standalone.
+// REVIEWER NOTE (KOB-55394): Ticket is in Wait For Deployment with no fix version. QA verified
+// the fix on a deviceConnect 2610.6 master build. Confirm the cloud release page this entry
+// belongs on, and confirm availability for Kobiton Standalone.
 //
-// REVIEWER NOTE: Product naming varies across the docs ("XIUM" on the client libraries page
-// and recent release notes, "Xium" on the Turbo Test Execution page and in Jira). This entry
-// uses "XIUM". Align with the docs team's preferred form. Consider grouping with other
-// Appium automation entries on the same release page.
-//
-// REVIEWER NOTE: No existing product page lists the mobile commands XIUM supports, so no
-// product-doc update is included with this change.
-
-// Source: KOB-55394
+// REVIEWER NOTE (KOB-55394): No existing product page lists the mobile commands supported, so
+// no product-doc update is included with this change.
 
 // Source: KOB-55175 from PR #695
 // https://github.com/kobiton/docs/pull/695
 
 == iOS Simulator builds in the app repository
 
-- The app repository now accepts iOS Simulator builds (`.app` bundles). Compress the `.app` bundle to a `.zip` file, then upload it from the app repository, API v2, or the Kobiton CLI. A `.app` file that is a `.zip` archive is also accepted.
+- The app repository now accepts iOS Simulator builds.
 - Simulator apps show the Apple watermark and support the same app repository actions as other iOS apps, including search, versioning, download, and removal.
-- If you select an uncompressed `.app` in the app repository, a message asks you to compress it first.
 
 // REVIEWER NOTE (KOB-55175): The Jira Release Notes field says simulator builds "can be installed on
 // simulator devices." The ticket lists installing and launching on simulators as out of scope and
