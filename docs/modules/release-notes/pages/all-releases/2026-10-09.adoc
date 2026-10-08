@@ -381,7 +381,6 @@ Configure Max Parallel Tests for every host machine from one *Settings* dialog i
 
 - The *Max Parallel Tests* tab sets a limit of *Unlimited* or a custom value between 1 and 999 for each host machine. The *All machines* row applies one setting to every host machine at once.
 - Search by host machine name or IP address.
-- If a save fails, the dialog stays open and keeps your changes. Closing the dialog with unsaved changes asks for confirmation.
 - The `GET /v2/machines` API now returns each host machine's `max_parallel_tests` setting.
 
 Available to organization admins with the *ADMIN* predefined role.
@@ -391,28 +390,15 @@ Available to organization admins with the *ADMIN* predefined role.
 
 == SSO-only sign-in improvements
 
-Kobiton Portal now directs users with SSO Only enabled to their organization's SSO sign-in after they enter their email address or username, even when SSO is not enforced organization-wide. Password-based sign-in options are no longer displayed for these users.
-
-// Source: KOB-55153 from PR #702
-// https://github.com/kobiton/docs/pull/702
-
-== Manual sessions
-
-- Manual sessions now attempt to restore the full video stream after a brief interruption to the live device screen. Previously, the session dropped to lower-quality screenshots for the rest of the session.
-
-// REVIEWER NOTE (KOB-55153): QA confirmed recovery on iOS and Android in a test environment.
-// QA did not test recovery after a stall caused by a slow network connection. The Jira comments
-// say this case also depends on a device host software update. Confirm that the host update
-// ships with this release before you publish without qualification, or narrow the wording.
-// REVIEWER NOTE (KOB-55153): No fix version is set in Jira. Confirm the target release date.
+Kobiton Portal now directs users with *SSO Only* enabled to their organization's SSO sign-in after they enter their email address or username, even when SSO is not enforced organization-wide. Password-based sign-in options are no longer displayed for these users.
 
 // Source: KOB-55251 from PR #701
 // https://github.com/kobiton/docs/pull/701
 
 == Lightning Mode
 
-- When a switch to Lightning Mode fails, the error message now names the likely cause when it can be determined. For example, when the video server does not respond, the message reads "Failed to switch to lightning mode. The video server did not respond. Try again." Failures without a known cause still show "Failed to switch to lightning mode. Network Error."
-- Fixed an issue where *Latency* and *Resolution* could be blank in the *Speedometer* during a Lightning Mode session. Previously, *Latency* was often blank, and *Resolution* stayed blank after Lightning Mode was turned off and on.
+- When a switch to Lightning Mode fails, the error message now names the likely cause when it can be determined. For example, when the video server does not respond, the message reads "Failed to switch to lightning mode. The video server did not respond. Try again."
+- *Latency* and *Resolution* now show in the *Speedometer* during a Lightning Mode session.
 
 // Source: KOB-55251
 //
@@ -442,8 +428,8 @@ Kobiton Portal now directs users with SSO Only enabled to their organization's S
 
 == Appium automation
 
-- Appium automation sessions on Android now support the `waitForIdleTimeout` setting, which controls how long the session waits for the app screen to become idle when finding elements.
-- Appium automation sessions now support the Appium `mobile: setText` command on Android and iOS devices.
+- Android sessions now support the `waitForIdleTimeout` setting, which controls how long the session waits for the app screen to become idle when finding elements.
+- The Appium `mobile: setText` command is now supported on Android and iOS devices.
 
 // REVIEWER NOTE (KOB-54485): Jira status: Wait For Deployment. No fixVersion is set on the
 // ticket. Confirm the target release page and Component versions (deviceConnect build) before
@@ -464,6 +450,46 @@ Kobiton Portal now directs users with SSO Only enabled to their organization's S
 // REVIEWER NOTE (KOB-55394): No existing product page lists the mobile commands supported, so
 // no product-doc update is included with this change.
 
+// Source: KOB-55307 from PR #676
+// https://github.com/kobiton/docs/pull/676
+
+== Kobiton MCP server API key
+
+- `/automate:setup` now writes your Kobiton credentials without your API key passing through the AI assistant.
+- If you shared the conversation from a setup run in an older plugin version, rotate that API key in *Kobiton Portal > Settings > API Keys*.
+
+// Source: KOB-55245 from PR #651
+// https://github.com/kobiton/docs/pull/651
+
+== iOS passcode management
+
+- deviceConnect preserves a device's passcode when troubleshooting issues unrelated to the passcode.
+- In organizations that use passcode mode, deviceConnect sets a passcode only on iOS devices that are supervised by the organization.
+
+// Source: KOB-55245
+
+// Source: KOB-55321 from PR #678
+// https://github.com/kobiton/docs/pull/678
+
+== Analytics reports
+
+- CSV exports of *Parallel Sessions* and *Sessions per Day* list one row per day in chronological order.
+- *Device Utilization* exports are sorted by *Sessions*, with the most-used devices listed first.
+- PNG exports of *Parallel Sessions* and *Sessions per Day* now include the report's chart as a bar chart.
+
+// Source: KOB-55153 from PR #702
+// https://github.com/kobiton/docs/pull/702
+
+== Manual sessions
+
+- Manual sessions now attempt to restore the full video stream after a brief interruption to the live device screen. Previously, the session dropped to lower-quality screenshots for the rest of the session.
+
+// REVIEWER NOTE (KOB-55153): QA confirmed recovery on iOS and Android in a test environment.
+// QA did not test recovery after a stall caused by a slow network connection. The Jira comments
+// say this case also depends on a device host software update. Confirm that the host update
+// ships with this release before you publish without qualification, or narrow the wording.
+// REVIEWER NOTE (KOB-55153): No fix version is set in Jira. Confirm the target release date.
+
 // Source: KOB-50523 from PR #694
 // https://github.com/kobiton/docs/pull/694
 
@@ -480,31 +506,5 @@ Kobiton Portal now directs users with SSO Only enabled to their organization's S
 == Bluetooth Bridge: static IP address setup without a monitor
 
 - Added an option to assign a static IP address to a new Raspberry Pi host without connecting a monitor.
-
-// Source: KOB-55307 from PR #676
-// https://github.com/kobiton/docs/pull/676
-
-== Secure API key setup for the Kobiton MCP server
-
-- `/automate:setup` now writes your Kobiton credentials without your API key passing through the AI assistant.
-- If you shared the conversation from a setup run in an older plugin version, rotate that API key in *Kobiton Portal > Settings > API Keys*.
-
-// Source: KOB-55245 from PR #651
-// https://github.com/kobiton/docs/pull/651
-
-== iOS passcode management
-
-- deviceConnect no longer removes a device's passcode in response to issues that are unrelated to the passcode. The device keeps its passcode.
-- In organizations that use passcode mode, deviceConnect no longer sets a passcode on an iOS device that is not supervised by the organization.
-
-// Source: KOB-55245
-
-// Source: KOB-55321 from PR #678
-// https://github.com/kobiton/docs/pull/678
-
-== Analytics reports
-
-- CSV exports of *Parallel Sessions* and *Sessions per Day* list one row per day in date order. CSV exports of *Device Utilization* sort by *Sessions*, with the most-used devices at the top.
-- PNG exports of *Parallel Sessions* and *Sessions per Day* now include the report's chart as a bar chart.
 
 == Component versions
