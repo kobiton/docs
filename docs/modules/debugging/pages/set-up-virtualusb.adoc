@@ -27,6 +27,10 @@ Windows::
 [IMPORTANT]
 For both MacOS and Windows, administrative privilege is required to set up and use virtualUSB.
 
+// REVIEWER NOTE: KOB-55371 adds Linux installers (Debian-based and Red Hat-based) to the Portal
+// Downloads list. The ticket does not include Linux system requirements, privilege requirements,
+// or installation steps. Add a Linux tab here and under "Install virtualUSB" once SME-confirmed.
+
 == Android requirements
 
 To connect to Android devices via virtualUSB, you must install Android Debug Bridge (`adb`) from the https://developer.android.com/tools/releases/platform-tools#downloads[Android SDK Platform-Tools,window=read-later] package. If you don't already have `adb` on your workstation, download it from Android or install an IDE like Android Studio.
@@ -72,11 +76,27 @@ If you have installed virtualUSB previously, we recommend uninstalling the old v
 
 == Download virtualUSB
 
-For *Cloud and Hybrid* customers, select the *Download* button on the navigation bar of the Kobiton Portal, then download the appropriate virtualUSB package.
+For *Cloud and Hybrid* customers, select the *Download* button on the navigation bar of the Kobiton Portal, then select the virtualUSB installer for your operating system:
+
+* *virtualUSB for Mac*
+* *virtualUSB for Windows*
+* *virtualUSB for Linux (Debian-based)*
+* *virtualUSB for Linux (Red Hat-based)*
+
+Each entry downloads the latest virtualUSB 2 installer from Kobiton's public download site. No additional sign-in is required.
 
 image:debugging:download-virtualusb-closeup.png[width=500,alt="Download virtual USB from Kobiton portal"]
 
-For *Standalone/On-Prem* customers, the latest virtualUSB package download links are provided together with other Standalone update packages.
+// REVIEWER NOTE: Confirm the Portal label for the control that opens the Downloads list.
+// Jira describes a sidebar Downloads popover; this page says "Download button on the navigation bar".
+// REVIEWER NOTE: Screenshot predates KOB-55371 and does not show the two Linux entries.
+// Replace with a capture of the current Downloads list.
+
+For *Standalone/On-Prem* customers, Standalone installations include the virtualUSB 2 installers for macOS, Windows, Debian-based Linux, and Red Hat-based Linux.
+
+// REVIEWER NOTE: KOB-55371 states that Standalone installations bundle the same four installers.
+// Confirm whether Standalone users download them from the Portal Downloads list, and whether
+// separate download links are still provided with Standalone update packages.
 
 [NOTE]
 Contact Kobiton Support for the latest download links if you have trouble finding them.
@@ -91,7 +111,7 @@ MacOS::
 [WARNING]
 Do not install virtualUSB on a Mac that has an existing deviceConnect installation.
 
-Open the downloaded *virtualUSB.pkg* file to begin the installation. Select *Continue* and follow the on-screen guide to install.
+Open the downloaded `.pkg` file to begin the installation. Select *Continue* and follow the on-screen guide to install.
 
 image:install-virtualusb-macos.png[width=600,alt="The virtualUSB installation screen on MacOS"]
 
@@ -115,7 +135,7 @@ image:virtualusb-license-agreement.png[width=600,alt="The virtualUSB License agr
 Windows::
 +
 --
-Open the downloaded virtualUSB.msi file. When the virtualUSB Setup Wizard starts, select Next, then follow the on-screen guide to install.
+Open the downloaded `.msi` file. When the virtualUSB Setup Wizard starts, select Next, then follow the on-screen guide to install.
 
 image:install-virtualusb-windows.png[width=600,alt="The virtualUSB installationw wizard start screen on Windows"]
 
