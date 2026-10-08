@@ -28,6 +28,19 @@ Cloud release notes are typically published weekly and summarize changes since t
 
 // Source: KOB-55147
 
+// Source: KOB-52820 from PR #693
+// https://github.com/kobiton/docs/pull/693
+
+== virtualUSB settings in Device Management
+
+Manage virtualUSB on each host machine from the *Settings* dialog in *Device Management*. The dialog includes a *virtualUSB* tab for organizations whose plan includes virtualUSB.
+
+- Enable virtualUSB on specific host machines and set how connections are routed: *Managed by Kobiton* for Kobiton-hosted machines, or *Self-managed* with an editable IP address for machines hosted by your organization.
+- Host machines with virtualUSB enabled show a *virtualUSB* badge on their row in *Device Management*.
+- Search by host machine name or IP address, or select *Show enabled only* to list only enabled host machines.
+
+Available to organization admins with the *ADMIN* predefined role. Requires a plan that includes virtualUSB.
+
 // Source: KOB-52679 from PR #692
 // https://github.com/kobiton/docs/pull/692
 
@@ -391,7 +404,7 @@ For details, see xref:ai:mcp/ai-plugin-mcp-ref.adoc[].
 == Appium automation
 
 - Appium automation sessions on Android now support the `waitForIdleTimeout` setting, which controls how long the session waits for the app screen to become idle when finding elements.
-- Appium automation sessions now support the Appium `mobile: setText` command on Android and iOS devices. Previously, scripts that called `mobile: setText` failed with the error `Mobile command 'mobile: setText' is not implemented`. Other text input commands, such as typing a value into an element, sending keys, and clearing a field, work as before.
+- Appium automation sessions now support the Appium `mobile: setText` command on Android and iOS devices.
 
 // REVIEWER NOTE (KOB-54485): Jira status: Wait For Deployment. No fixVersion is set on the
 // ticket. Confirm the target release page and Component versions (deviceConnect build) before
@@ -430,43 +443,17 @@ For details, see xref:ai:mcp/ai-plugin-mcp-ref.adoc[].
 // Source: KOB-54642 from PR #681
 // https://github.com/kobiton/docs/pull/681
 
-== Kobiton API
+== Expanded API support for virtual devices
 
-- Fixed an issue where Kobiton API endpoints rejected Android emulators and iOS simulators, or left them out of results. Users with access to virtual devices can now use the API to:
-** Install an app on a virtual device, directly or in a session. This includes `kobiton app install` in Kobiton CLI.
-** Mark a virtual device as a favorite.
-** Assign and remove tags on a virtual device, and find virtual devices in tag listings.
-** Rename a virtual device and restore its original name.
-** Find virtual devices in the available devices list and reserve them.
-** Convert an automation session that ran on a virtual device into a test case.
-- Kobiton does not re-sign apps installed on an iOS simulator. Install a simulator build of the app. Device builds (`.ipa` files) do not install on simulators.
-- Users without access to virtual devices now receive `403` with the message `You don't have permission to use virtual devices.` instead of `400` when they install an app on, favorite, or convert a session from a virtual device.
+Kobiton API now supports additional operations for Android emulators and iOS simulators, including:
 
-The following are not yet supported for virtual devices:
+- Installing applications and reserving virtual devices.
+- Managing favorites, tags, and device names.
+- Converting automation sessions on virtual devices into test cases.
 
-- Running a test run created on a virtual device. The API accepts the test run, but it does not run on the virtual device.
-- Using these controls in Kobiton Portal.
+The Kobiton CLI also supports installing applications on virtual devices.
 
-// REVIEWER NOTE: "Users with access to virtual devices" stands in for the ticket's
-// "virtual-device entitlement." The public page manual-testing:start-a-virtual-session.adoc
-// says an organization admin enables virtual devices. Confirm the entitlement and the admin
-// enablement are the same thing before linking the two.
-//
-// REVIEWER NOTE: The ticket covers both Android emulators and iOS simulators. The existing
-// virtual device page describes an Android system image only and says virtual devices are
-// available for Cloud and Hybrid deployments, not Standalone. Confirm iOS simulator
-// availability and which release page (Cloud weekly and/or Standalone) includes this partial.
-//
-// REVIEWER NOTE: The ticket also lists a passcode lookup that now works for virtual devices.
-// It is not in the ticket's customer-facing release-note field, so it is left out here.
-//
-// REVIEWER NOTE: API reference pages are a separate surface (api-docs) and are not changed
-// in this draft. The ticket states the available devices endpoint description in the API
-// reference was updated to include virtual devices. Confirm the published API reference
-// reflects the endpoint changes.
-//
-// REVIEWER NOTE: Test-run execution on virtual devices, Portal controls, and related follow-up
-// work are tracked as separate tickets. Remove the matching limitation when each ships.
+// REVIEWER NOTE (KOB-54642): Pending confirmation of iOS simulator availability and deployment scope.
 
 // Source: KOB-54642
 
@@ -475,24 +462,7 @@ The following are not yet supported for virtual devices:
 
 == Device cleanup on iOS and iPadOS
 
-- Device cleanup on iOS and iPadOS now resets settings such as time zone, language, and HTTP proxy on devices with the newer Settings layout. Previously, layout changes in newer iOS and iPadOS releases could cause these cleanup steps to fail with an `Error while cleaning up device, cleanup steps failed` message.
-
-// REVIEWER NOTE (KOB-50523): The Jira root cause field also says the Safari Clear History sheet
-// changed on iOS 17 and later. The Jira impact field lists only the Settings-driven steps (time
-// zone, language, HTTP proxy) as changed. Confirm with engineering whether clearing Safari data,
-// resetting display zoom, and setting Auto-Lock are also fixed before naming them here.
-//
-// REVIEWER NOTE (KOB-50523): The cleanup configurations page lists a known limitation: "Timezone
-// may not reset correctly if the device's current timezone differs from the one set during initial
-// device setup." The Jira evidence does not say whether this fix resolves that limitation. Confirm
-// before changing that page.
-//
-// REVIEWER NOTE (KOB-50523): No fix version is set in Jira. Current-release inclusion is based on
-// the Jira status (Wait For Deployment) only. Confirm the target release date and deviceConnect
-// build before publishing.
-
-// Source: KOB-52820 from PR #693
-// https://github.com/kobiton/docs/pull/693
+- Device cleanup on iOS and iPadOS now resets settings such as time zone, language, and HTTP proxy on devices running iOS 16 or iPadOS 16 and later.
 
 // Source: KOB-52819 from PR #691
 // https://github.com/kobiton/docs/pull/691
@@ -502,52 +472,14 @@ The following are not yet supported for virtual devices:
 
 == Device Management
 
-=== Unified Settings dialog for host machines
-
-Configure virtualUSB and Max Parallel Tests for every host machine from one *Settings* dialog in *Device Management*. A single *Settings* button at the top of the page opens the dialog for all organizations, replacing the per-machine *Settings* button that used to appear on each host machine row. For organizations subscribed to virtualUSB, host machines with virtualUSB enabled show a *virtualUSB* badge on their row.
-
-*Highlights*
+Configure Max Parallel Tests for every host machine from one *Settings* dialog in *Device Management*. A single *Settings* button at the top of the page opens the dialog for all organizations, replacing the per-machine *Settings* button that used to appear on each host machine row.
 
 - The *Max Parallel Tests* tab sets a limit of *Unlimited* or a custom value between 1 and 999 for each host machine. The *All machines* row applies one setting to every host machine at once.
-- Organizations whose plan includes virtualUSB also see a *virtualUSB* tab. Enable virtualUSB on specific host machines and set how connections are routed: *Managed by Kobiton* for Kobiton-hosted machines, or *Self-managed* with an editable IP address for machines hosted by your organization.
-- Search by host machine name or IP address in both tabs. In the *virtualUSB* tab, select *Show enabled only* to list only enabled host machines.
-- One *Save* applies changes from both tabs. If a save fails, the dialog stays open and keeps your changes. Closing the dialog with unsaved changes asks for confirmation.
+- Search by host machine name or IP address.
+- If a save fails, the dialog stays open and keeps your changes. Closing the dialog with unsaved changes asks for confirmation.
+- The `GET /v2/machines` API now returns each host machine's `max_parallel_tests` setting.
 
-*Availability*
-
-Organization admins with the *ADMIN* predefined role. The *virtualUSB* tab requires a plan that includes virtualUSB.
-
-=== Device Management API: `max_parallel_tests`
-
-- The `GET /v2/machines` API now returns each host machine's `max_parallel_tests` setting as an object with `mode` and `limit` fields. `mode` is `unlimited` or `custom`. For `custom`, `limit` is the configured limit. For `unlimited`, `limit` is `null`.
-- The `PATCH /v2/machines` API accepts the same `mode` and `limit` fields to set a host machine to `unlimited` or to a `custom` limit between 1 and 999. A `custom` request with a missing, zero, or negative `limit` returns HTTP 400, and no settings are saved.
-- Existing `PATCH /v2/machines` requests that send `limit` without `mode` continue to work. A `null` `limit` sets the host machine to unlimited.
-
-// REVIEWER NOTE (KOB-52678): The 2026-09-18 Cloud page already credits KOB-52678 under the
-// KOB-52659 Device Management entry, but only describes the Portal *Settings* dialog. These
-// bullets cover the API contract change only. Decide whether to append them to the
-// 2026-09-18 Device Management section or publish them on the next Cloud page. Jira states
-// the change has been live in production since 2026-09-14.
-//
-// REVIEWER NOTE (KOB-52678): Jira does not state what `max_parallel_tests` looked like in the
-// `GET /v2/machines` response before this change. If it was a plain number, this is a
-// response-shape change for existing API integrations and may need a breaking-change callout.
-// Confirm with engineering before publishing.
-//
-// REVIEWER NOTE (KOB-52678): Jira names the GET response field `max_parallel_tests` but does
-// not name the PATCH request key for the new shape (the original spec used `maxParallelTests`).
-// Confirm the exact PATCH request key and per-machine request structure.
-//
-// REVIEWER NOTE (KOB-52678): Jira is inconsistent about offline host machines in a PATCH
-// request: one field says they are "skipped, not failed" and another says "offline-machine
-// rejection, per-item failed grouping". Offline behavior is omitted until confirmed.
-//
-// REVIEWER NOTE (KOB-52678): The ticket lists the `device_management_settings` feature flag as
-// OFF by default. Confirm the flag is enabled for all customers, or that it does not gate the
-// `/v2/machines` API shape, before publishing.
-//
-// REVIEWER NOTE (KOB-52678): The api-reference module has no `/v2/machines` page. If API
-// reference content is added later, document the `max_parallel_tests` object there.
+Available to organization admins with the *ADMIN* predefined role.
 
 // Source: KOB-52055 from PR #684
 // https://github.com/kobiton/docs/pull/684
