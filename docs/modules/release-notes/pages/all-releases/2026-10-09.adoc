@@ -427,35 +427,21 @@ For details, see xref:ai:mcp/ai-plugin-mcp-ref.adoc[].
 
 // Source: KOB-55175 from PR #695
 // https://github.com/kobiton/docs/pull/695
-
-== iOS Simulator builds in the app repository
-
-- The app repository now accepts iOS Simulator builds.
-- Simulator apps show the Apple watermark and support the same app repository actions as other iOS apps, including search, versioning, download, and removal.
-
-// REVIEWER NOTE (KOB-55175): The Jira Release Notes field says simulator builds "can be installed on
-// simulator devices." The ticket lists installing and launching on simulators as out of scope and
-// covered by other tickets under the iOS Simulator epic. Confirm install availability before adding
-// that claim.
-// REVIEWER NOTE (KOB-55175): Jira has no fix version or release label. Assign this partial to the
-// correct release page when the deployment date is confirmed.
-
 // Source: KOB-54642 from PR #681
 // https://github.com/kobiton/docs/pull/681
+// Source: KOB-55188 from PR #683
+// https://github.com/kobiton/docs/pull/683
 
-== Expanded API support for virtual devices
+== Emulators and simulators
 
-Kobiton API now supports additional operations for Android emulators and iOS simulators, including:
+Virtual devices (Android emulators and iOS simulators) now work across more Kobiton surfaces.
 
-- Installing applications and reserving virtual devices.
-- Managing favorites, tags, and device names.
-- Converting automation sessions on virtual devices into test cases.
-
-The Kobiton CLI also supports installing applications on virtual devices.
+- The app repository now accepts iOS Simulator builds. Simulator apps show the Apple watermark and support the same app repository actions as other iOS apps, including search, versioning, download, and removal.
+- The Kobiton API now supports additional operations on virtual devices, including installing applications, reserving devices, managing favorites, tags, and device names, and converting automation sessions into test cases.
+- The Kobiton CLI supports installing applications on virtual devices.
+- Device Bundles can include emulators and simulators. The device list in *Org Management > Device Bundles* now shows virtual devices with the *Type* `Virtual`. Bundles that include a virtual device show that device, including when you start a test run from the bundle.
 
 // REVIEWER NOTE (KOB-54642): Pending confirmation of iOS simulator availability and deployment scope.
-
-// Source: KOB-54642
 
 // Source: KOB-50523 from PR #694
 // https://github.com/kobiton/docs/pull/694
@@ -486,67 +472,7 @@ Available to organization admins with the *ADMIN* predefined role.
 
 == Bluetooth Bridge: static IP address setup without a monitor
 
-- Added an option to assign a static IP address to a new Raspberry Pi host without connecting a monitor. Starting with the 4.24 Bluetooth Bridge system images, after you flash the image to an SD card, mount the SD card on your computer and edit the `network-config` file before you start the Raspberry Pi host. The `network-config` file uses the netplan format. The current static IP setup method continues to work. Keep a monitor available in case the network configuration does not apply.
-
-// REVIEWER NOTE (KOB-52055): The full setup procedure belongs in the admin docs. A Jira
-// comment links an admin-docs PR for this change. No public product-doc page was changed.
-// Add a link to the admin guide once the target page is published, if appropriate.
-//
-// REVIEWER NOTE (KOB-52055): Jira has no fix version, release label, or Release Notes field
-// value. The only current-release signal is the Wait For Deployment status. Confirm the
-// target publication (Cloud weekly page versus Standalone/Hybrid page).
-//
-// REVIEWER NOTE (KOB-52055): An unnamed Jira custom field on the ticket is set to "Internal".
-// The evidence package does not resolve the field name. Confirm that this value does not mean
-// the change is excluded from public release notes.
-//
-// REVIEWER NOTE (KOB-52055): "4.24" is the Bluetooth Bridge image version stated in Jira.
-// Kobiton releases now use date-based versioning. Confirm how the image version is shown
-// to customers on the downloads page.
-//
-// REVIEWER NOTE (KOB-52055): The ticket says the netplan file follows "the same formatting
-// as GEM". That term is not explained in the ticket and is omitted.
-
-// Source: KOB-55188 from PR #683
-// https://github.com/kobiton/docs/pull/683
-
-- Fixed an issue where emulators and simulators could not be added to a device bundle because the device list in *Org Management > Device Bundles* did not show them. When you create or edit a bundle, the device list now includes the emulators and simulators your organization can use, with the *Type* `Virtual`, and counts them in your selection.
-- A bundle that includes an emulator or simulator now shows that device, including when you start a test run from the bundle.
-- Known limitation: A test run started from a bundle that includes an emulator or simulator is created, but it doesn't run on the virtual device yet.
-
-// REVIEWER NOTE:
-// KOB-55188 | Type: Bug | Components: Emulator/Simulator, Scriptless Automation | Priority: High | Jira status: Wait For Deployment
-// Current-release evidence: Jira status matches the trigger status, the Jira "Release notes"
-// field is populated with customer-facing text, and "Release Email" is selected. Fix Version is
-// empty, so confirm the release this entry belongs to before publishing.
-//
-// Wording follows the Jira "Release notes" field. The field uses "Organization > Device Bundles";
-// this entry uses "Org Management > Device Bundles" to match the existing Device Bundles pages.
-// Confirm the current navigation label in Kobiton Portal.
-//
-// "Your organization can use" follows the Jira wording ("the emulators and simulators you can
-// use"). Engineering notes say the list is limited to virtual devices the account is entitled to.
-// Align this term with the KOB-54642 and KOB-54450 entries.
-//
-// Known limitation: the follow-up work is tracked in KOB-55358 (ticket ID removed from the public
-// wording). Confirm with product that this limitation should be published.
-//
-// Test notes describe an accepted limitation: an iOS simulator with the same name and OS version
-// as a physical device appears as one row and resolves to the physical device. Confirm whether
-// customers need this as a known limitation.
-//
-// The same branch updates the Create a device bundle page. Existing screenshots on that page do
-// not show virtual devices; no screenshot change is included.
-//
-// The Jira "Release notes" field also selects "Support Notes" (internal). Route any support-facing
-// detail through the internal support channel, not this public entry.
-//
-// A separate Jira field on the ticket reads "Internal"; its field name is not present in the
-// evidence export. Confirm it does not mark the ticket as internal-only before publishing.
-//
-// Omitted on purpose: API endpoint names, device-resolution order, and test details. These are
-// engineering notes, not customer-facing release-note content.
-// Source: KOB-55188
+- Added an option to assign a static IP address to a new Raspberry Pi host without connecting a monitor.
 
 // Source: KOB-52796 from PR #682
 // https://github.com/kobiton/docs/pull/682
