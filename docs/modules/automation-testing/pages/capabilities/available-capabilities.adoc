@@ -462,6 +462,7 @@ For Basic Appium 2 sessions, follow the https://appium.io/docs/en/2.0/guides/mig
 * <<platformname,platformName>>
 * <<udid,udid>>
 * <<username,username>>
+* <<_waitForIdleTimeout,waitForIdleTimeout>>
 
 [#_accessKey]
 === `accessKey`
@@ -624,3 +625,42 @@ The Kobiton xref:profile:manage-your-profile.adoc[username,window=read-later] us
 ----
 capabilities.setCapability("appium:username", "johndoe");
 ----
+
+[#_waitForIdleTimeout]
+=== `waitForIdleTimeout`
+
+[NOTE]
+This capability is only available in Xium sessions on Android devices. On iOS devices, the setting is ignored.
+
+The maximum time, in milliseconds, that the session waits for the app screen to become idle before each UiAutomator element search. Default is `10000`.
+
+Set to `0` to skip the idle wait. Use this value for apps that redraw continuously, such as apps with ongoing animations, where the screen never becomes idle and `-android uiautomator` locators return `no such element`.
+
+* *Type:* `integer`
+* *Required capabilities:* None
+* *Optional capabilities:* None
+
+.Example
+[source,java]
+----
+capabilities.setCapability("appium:waitForIdleTimeout", 0);
+----
+
+You can also change this value during the session with the Appium Settings API. The new value applies to later element searches in the same session. When the session ends, the value returns to the default.
+
+.Example
+[source,java]
+----
+driver.setSetting("waitForIdleTimeout", 0);
+----
+
+To restore the default behavior, remove the capability or the `setSetting` call from the test script.
+
+// REVIEWER NOTE (KOB-54485):
+// Source: Jira Change description and verification steps. Scope is Android Xium sessions only;
+// default 10000 ms is unchanged for sessions that do not set the value.
+// Type `integer` is inferred from the millisecond values in the ticket (0, 10000). Confirm.
+// The ticket also adds a deviceConnect host setting under [set] in dc.ini,
+// `WebDriverSession.UiAutomatorTimeoutMs` (default 10000), that extends the UiAutomator
+// search time for slower devices. It is not documented here. Confirm whether it should be
+// documented for local-device hosts, and on which page.
