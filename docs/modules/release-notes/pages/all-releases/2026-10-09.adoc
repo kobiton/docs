@@ -477,124 +477,34 @@ Available to organization admins with the *ADMIN* predefined role.
 // Source: KOB-52796 from PR #682
 // https://github.com/kobiton/docs/pull/682
 
-== Single Sign-On (SSO) sign-in
+== SSO-only sign-in improvements
 
-- Fixed an issue where Kobiton Portal showed the username and password sign-in page to users with *SSO Only* turned on when the organization did not enforce SSO for all users. After these users enter their email address or username, Kobiton Portal now directs them to sign in through SSO. The password field and *Forgot Password?* are not available to them.
-
-// REVIEWER NOTE (KOB-52796): The SSO button label is omitted on purpose. The ticket
-// description uses "Continue with Single Sign-on" and the verification comment uses
-// "Continue with SSO". Confirm the shipped label before adding it.
-//
-// REVIEWER NOTE (KOB-52796): The verification comment also describes sign-in for users
-// without *SSO Only* (the enterprise SSO option goes straight to the identity provider).
-// That behavior is outside this ticket's stated scope and is not included. Confirm whether
-// it shipped in this change or in a related ticket before adding it.
-//
-// REVIEWER NOTE (KOB-52796): Jira fix version is 2026.09.25. This entry does not appear on
-// the September 25 or October 2 pages. Confirm the target publication.
-//
-// REVIEWER NOTE (KOB-52796): The same branch updates the sign-in page and the SSO
-// enforcement guide to state that individual SSO enforcement applies whether or not
-// organization-wide SSO enforcement is turned on.
+Kobiton Portal now directs users with SSO Only enabled to their organization's SSO sign-in after they enter their email address or username, even when SSO is not enforced organization-wide. Password-based sign-in options are no longer displayed for these users.
 
 // Source: KOB-55307 from PR #676
 // https://github.com/kobiton/docs/pull/676
 
-- `/automate:setup` now writes your Kobiton credentials without your API key passing through the AI assistant. A local setup script fetches the key directly from Kobiton, and the conversation shows only a one-time setup token and the last 4 characters of the key.
-- Setup uses a dedicated API key named `kobiton-mcp-<assistant>`, for example `kobiton-mcp-claude`. The first setup creates the key, and later setups reuse it. Your other API keys are not changed.
-- Older plugin versions ask you to update the plugin before setup runs. Existing credentials files keep working.
-- If you shared the conversation from a setup run in an older plugin version, rotate that API key in *Kobiton Portal > Settings > API Keys*.
+== Secure API key setup for the Kobiton MCP server
 
-// REVIEWER NOTE:
-// KOB-55307 | Type: Bug | Components: MCP server, Plugin | Labels: automate-plugin, security
-// Jira status: Released | Fix Version: 2026.10.05
-// Wording follows the Jira "Release notes" field, adjusted for style ("Kobiton Portal > Settings >
-// API Keys" matches the path used on the AI host setup pages; "conversation" replaces "transcript"
-// for consistency with the first bullet).
-//
-// Plugin version: the Jira "Release notes" field does not name the plugin version that contains
-// this change. Engineering notes on the ticket reference a new plugin minor version. Confirm
-// whether to name it here and on the plugin reference page, which still states it covers 1.9.0.
-//
-// Cursor CLI and Cursor IDE expose this command as `/setup`. The plugin reference page explains
-// this; confirm whether the entry should mention it.
-//
-// Rotation: no page in this repo documents how to rotate or delete an API key. The Manage your
-// API credentials page covers get, create, and rename only. Confirm the rotation steps customers
-// should follow, or link to an existing procedure.
-//
-// Engineering notes say the dedicated key counts toward the account's API key limit. No page in
-// this repo documents that limit, so it is omitted here. Confirm whether to publish it.
-//
-// Omitted on purpose: implementation details of the token exchange, server routes, rate limits,
-// and test results. These are not customer-facing.
-// Source: KOB-55307
+- `/automate:setup` now writes your Kobiton credentials without your API key passing through the AI assistant.
+- If you shared the conversation from a setup run in an older plugin version, rotate that API key in *Kobiton Portal > Settings > API Keys*.
 
 // Source: KOB-55245 from PR #651
 // https://github.com/kobiton/docs/pull/651
 
-== iOS device health checks and passcode mode
+== iOS passcode management
 
-- When the XCTest runner fails to start on an iOS device, the device health check now reports the runner error, such as `Failed to load the test bundle`. Previously, deviceConnect attempted to clear the device passcode first, and a passcode error such as `Missing organization certificate` replaced the runner error.
-- deviceConnect no longer removes a device passcode when a runner failure is unrelated to the passcode. The device keeps its passcode.
-- In organizations that use passcode mode, deviceConnect no longer sets a passcode on an iOS device that is not supervised by the organization. The device health check fails with `Cannot set passcode: the device is not supervised by this organization.`, and the device stays unavailable until it is supervised or passcode mode is turned off. A session that requests a passcode on such a device fails at setup.
-
-// REVIEWER NOTE: Devices that use Bluetooth keyboard access are not affected by the
-// supervision check, per the Jira release-note field. Confirm with the SME whether this
-// exception belongs in the public entry.
-//
-// REVIEWER NOTE: Confirm the customer-facing wording for "a session that requests a
-// passcode". The source does not state which session setting or capability requests it.
-//
-// REVIEWER NOTE: Ships in deviceConnect 2610.1 (build 2610.11132.0), listed in the Jira
-// release comment as a bulk update. Confirm the component version before publishing.
+- deviceConnect no longer removes a device's passcode in response to issues that are unrelated to the passcode. The device keeps its passcode.
+- In organizations that use passcode mode, deviceConnect no longer sets a passcode on an iOS device that is not supervised by the organization.
 
 // Source: KOB-55245
-
-// Source: KOB-55369 from PR #674
-// https://github.com/kobiton/docs/pull/674
-
-== deviceConnect
-
-- Fixed an issue where deviceConnect on macOS listed a device that did not exist when the host used a Cambrionix PowerPad15S hub and a HarmonyOS `hdc` server was running on the host. The extra device used the hub's USB-serial control port as its identifier, such as `/dev/cu.usbserial-<hub-serial>`, and appeared in the device lists in deviceConnect and Kobiton Portal as *Online* with a connectivity error. The hub, its ports, and the devices connected to it continue to work as before.
-
-// REVIEWER NOTE: Public docs do not mention HarmonyOS, and the QA verification on the ticket
-// states that HarmonyOS is not officially supported. The entry names the HarmonyOS `hdc` server
-// only because it is the trigger condition. Confirm with product that naming HarmonyOS here is
-// acceptable. If not, describe the trigger as "when HarmonyOS developer tools were running on
-// the host" or remove the trigger sentence.
-//
-// REVIEWER NOTE: The engineering fix note also says HarmonyOS devices attached over a serial
-// (UART) connection are no longer listed, and that deviceConnect never supported them. This
-// entry leaves that out because the docs do not describe HarmonyOS support. Add it only if
-// product wants it public.
-//
-// REVIEWER NOTE: The Jira release comment lists deviceConnect build 2610.11132.0 (a bulk update
-// that notes not every build applies to every ticket). QA verified the fix on that same build.
-// Jira has no fix version. Confirm the release page this entry belongs on, and confirm
-// availability for Kobiton Standalone.
-
-// Source: KOB-55369
 
 // Source: KOB-55321 from PR #678
 // https://github.com/kobiton/docs/pull/678
 
-=== Analytics reports
+== Analytics reports
 
-- Fixed an issue where exporting the *Device Utilization*, *Parallel Sessions*, and *Sessions per Day* reports as CSV or PNG returned no data. The CSV showed an export error in place of the report data.
 - CSV exports of *Parallel Sessions* and *Sessions per Day* list one row per day in date order. CSV exports of *Device Utilization* sort by *Sessions*, with the most-used devices at the top.
-- PNG exports of *Parallel Sessions* and *Sessions per Day* now include the report's chart as a bar chart. Previously, the PNG showed only the report title for these reports.
-- Exports use the date range selected for the report, or the report's saved date range when none is selected.
-
-// REVIEWER NOTE: Report names are taken from the source ticket. The 4.27.0S release notes
-// list "Parallel Sessions over time". Confirm the report names shown in the Portal and
-// align the wording.
-//
-// REVIEWER NOTE: The source ticket reproduced the issue on Standalone 4.27.0S and verified
-// the fix on Cloud. Confirm whether a Standalone release note is also needed.
-//
-// REVIEWER NOTE: "the date range selected for the report" is inferred from "the export's
-// date range" in the source. Confirm that the export uses the date range selected in the
-// report filter.
+- PNG exports of *Parallel Sessions* and *Sessions per Day* now include the report's chart as a bar chart.
 
 == Component versions
