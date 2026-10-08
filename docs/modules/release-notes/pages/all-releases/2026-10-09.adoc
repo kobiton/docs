@@ -354,6 +354,45 @@ For details, see xref:ai:mcp/ai-plugin-mcp-ref.adoc[].
 
 // Source: KOB-54596
 
+// Source: KOB-55175 from PR #695
+// https://github.com/kobiton/docs/pull/695
+// Source: KOB-54642 from PR #681
+// https://github.com/kobiton/docs/pull/681
+// Source: KOB-55188 from PR #683
+// https://github.com/kobiton/docs/pull/683
+
+== Emulators and simulators
+
+Virtual devices (Android emulators and iOS simulators) now work across more Kobiton surfaces.
+
+- The app repository now accepts iOS Simulator builds. Simulator apps show the Apple watermark and support the same app repository actions as other iOS apps, including search, versioning, download, and removal.
+- The Kobiton API now supports additional operations on virtual devices, including installing applications, reserving devices, managing favorites, tags, and device names, and converting automation sessions into test cases.
+- The Kobiton CLI supports installing applications on virtual devices.
+- Device Bundles can include emulators and simulators. The device list in *Org Management > Device Bundles* now shows virtual devices with the *Type* `Virtual`. Bundles that include a virtual device show that device, including when you start a test run from the bundle.
+
+// REVIEWER NOTE (KOB-54642): Pending confirmation of iOS simulator availability and deployment scope.
+
+// Source: KOB-52678 from PR #690
+// https://github.com/kobiton/docs/pull/690
+
+== Device Management
+
+Configure Max Parallel Tests for every host machine from one *Settings* dialog in *Device Management*. A single *Settings* button at the top of the page opens the dialog for all organizations, replacing the per-machine *Settings* button that used to appear on each host machine row.
+
+- The *Max Parallel Tests* tab sets a limit of *Unlimited* or a custom value between 1 and 999 for each host machine. The *All machines* row applies one setting to every host machine at once.
+- Search by host machine name or IP address.
+- If a save fails, the dialog stays open and keeps your changes. Closing the dialog with unsaved changes asks for confirmation.
+- The `GET /v2/machines` API now returns each host machine's `max_parallel_tests` setting.
+
+Available to organization admins with the *ADMIN* predefined role.
+
+// Source: KOB-52796 from PR #682
+// https://github.com/kobiton/docs/pull/682
+
+== SSO-only sign-in improvements
+
+Kobiton Portal now directs users with SSO Only enabled to their organization's SSO sign-in after they enter their email address or username, even when SSO is not enforced organization-wide. Password-based sign-in options are no longer displayed for these users.
+
 // Source: KOB-55153 from PR #702
 // https://github.com/kobiton/docs/pull/702
 
@@ -425,24 +464,6 @@ For details, see xref:ai:mcp/ai-plugin-mcp-ref.adoc[].
 // REVIEWER NOTE (KOB-55394): No existing product page lists the mobile commands supported, so
 // no product-doc update is included with this change.
 
-// Source: KOB-55175 from PR #695
-// https://github.com/kobiton/docs/pull/695
-// Source: KOB-54642 from PR #681
-// https://github.com/kobiton/docs/pull/681
-// Source: KOB-55188 from PR #683
-// https://github.com/kobiton/docs/pull/683
-
-== Emulators and simulators
-
-Virtual devices (Android emulators and iOS simulators) now work across more Kobiton surfaces.
-
-- The app repository now accepts iOS Simulator builds. Simulator apps show the Apple watermark and support the same app repository actions as other iOS apps, including search, versioning, download, and removal.
-- The Kobiton API now supports additional operations on virtual devices, including installing applications, reserving devices, managing favorites, tags, and device names, and converting automation sessions into test cases.
-- The Kobiton CLI supports installing applications on virtual devices.
-- Device Bundles can include emulators and simulators. The device list in *Org Management > Device Bundles* now shows virtual devices with the *Type* `Virtual`. Bundles that include a virtual device show that device, including when you start a test run from the bundle.
-
-// REVIEWER NOTE (KOB-54642): Pending confirmation of iOS simulator availability and deployment scope.
-
 // Source: KOB-50523 from PR #694
 // https://github.com/kobiton/docs/pull/694
 
@@ -453,33 +474,12 @@ Virtual devices (Android emulators and iOS simulators) now work across more Kobi
 // Source: KOB-52819 from PR #691
 // https://github.com/kobiton/docs/pull/691
 
-// Source: KOB-52678 from PR #690
-// https://github.com/kobiton/docs/pull/690
-
-== Device Management
-
-Configure Max Parallel Tests for every host machine from one *Settings* dialog in *Device Management*. A single *Settings* button at the top of the page opens the dialog for all organizations, replacing the per-machine *Settings* button that used to appear on each host machine row.
-
-- The *Max Parallel Tests* tab sets a limit of *Unlimited* or a custom value between 1 and 999 for each host machine. The *All machines* row applies one setting to every host machine at once.
-- Search by host machine name or IP address.
-- If a save fails, the dialog stays open and keeps your changes. Closing the dialog with unsaved changes asks for confirmation.
-- The `GET /v2/machines` API now returns each host machine's `max_parallel_tests` setting.
-
-Available to organization admins with the *ADMIN* predefined role.
-
 // Source: KOB-52055 from PR #684
 // https://github.com/kobiton/docs/pull/684
 
 == Bluetooth Bridge: static IP address setup without a monitor
 
 - Added an option to assign a static IP address to a new Raspberry Pi host without connecting a monitor.
-
-// Source: KOB-52796 from PR #682
-// https://github.com/kobiton/docs/pull/682
-
-== SSO-only sign-in improvements
-
-Kobiton Portal now directs users with SSO Only enabled to their organization's SSO sign-in after they enter their email address or username, even when SSO is not enforced organization-wide. Password-based sign-in options are no longer displayed for these users.
 
 // Source: KOB-55307 from PR #676
 // https://github.com/kobiton/docs/pull/676
