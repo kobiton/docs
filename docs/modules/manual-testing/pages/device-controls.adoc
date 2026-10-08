@@ -167,6 +167,22 @@ To increase the device screen to 30 frames per second (FPS), enable *Lightning M
 [NOTE]
 Lightning mode is only available for link:https://kobiton.com/pricing/[certain plans].
 
+=== Lightning Mode diagnostics
+
+If your organization turns on xref:organization:other-settings.adoc#_other_settings[_Show option to launch device with WebRTC debug panel_], a *Diagnostics* switch appears under *Lightning Mode* on devices that support Lightning Mode.
+
+Turn on *Diagnostics* to open the *Lightning Mode Diagnostics* panel. The panel logs connection details that help troubleshoot Lightning Mode, and its stats line shows the network path the connection uses.
+
+The panel logs only while it is open. To log a connection, turn *Lightning Mode* off and on while the panel is open.
+
+To close the panel, select *Close*. This also turns off *Diagnostics*.
+
+// REVIEWER NOTE (KOB-55251): Confirm the switch location. Jira describes it as under
+// Lightning Mode in the "session quality panel"; this draft assumes that is the Speedometer
+// panel because the same panel shows Latency and Resolution. A screenshot is not included.
+// REVIEWER NOTE: The panel also shows the network addresses used by the connection, which can
+// include private IP addresses. Decide whether org admins need a note about this.
+
 == Screenshots
 
 To take a screenshot of the current screen, select *Take Screenshot* to take a screenshot. The total number of screenshots will be displayed on the *Screenshots* icon.
