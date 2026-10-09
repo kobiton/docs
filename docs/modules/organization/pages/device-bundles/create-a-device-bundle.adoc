@@ -8,17 +8,13 @@ Device bundles are operating system (OS) specific so Android and iOS devices can
 
 == Virtual devices in bundles
 
-A device bundle can include xref:manual-testing:start-a-virtual-session.adoc[virtual devices], such as Android emulators and iOS simulators, that are available to your organization. In the device list, virtual devices appear after physical devices and show *Virtual* in the *Type* column. Selected virtual devices count toward the bundle's device selection.
+A device bundle can include xref:manual-testing:start-a-virtual-session.adoc[virtual devices], such as Android emulators and iOS simulators, available to your organization.
 
-Limitations:
+In the device list, virtual devices appear after physical devices and display *Virtual* in the *Type* column. Selected virtual devices count toward the bundle's device selection.
 
-* Test runs don't run on virtual devices yet. A test run started from a bundle runs only on the bundle's physical devices.
-* If a virtual device has the same name and OS version as a physical device, the bundle uses the physical device.
+When starting a test run from a device bundle, only physical devices are used.
 
-// REVIEWER NOTE (KOB-55188): The Jira release-note field also states that selecting an emulator
-// or simulator from the bundle when starting a test run returns an error. The Jira impact field
-// says bundle runs on emulators are created but don't execute. Confirm the actual behavior before
-// adding it here. Test-run support for virtual devices is tracked separately.
+If a virtual device and a physical device have the same name and OS version, the bundle uses the physical device.
 
 == Create a new bundle
 
