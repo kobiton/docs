@@ -462,6 +462,7 @@ For Basic Appium 2 sessions, follow the https://appium.io/docs/en/2.0/guides/mig
 * <<platformname,platformName>>
 * <<udid,udid>>
 * <<username,username>>
+* <<_waitForIdleTimeout,waitForIdleTimeout>>
 
 [#_accessKey]
 === `accessKey`
@@ -624,3 +625,33 @@ The Kobiton xref:profile:manage-your-profile.adoc[username,window=read-later] us
 ----
 capabilities.setCapability("appium:username", "johndoe");
 ----
+
+[#_waitForIdleTimeout]
+=== `waitForIdleTimeout`
+
+[NOTE]
+This capability is only available in automation sessions on Android devices. On iOS devices, the setting is ignored.
+
+The maximum time, in milliseconds, that the session waits for the app screen to become idle before each UiAutomator element search. Default is `10000`.
+
+Set to `0` to skip the idle wait. Use this value for apps that redraw continuously, such as apps with ongoing animations, where the screen never becomes idle and `-android uiautomator` locators return `no such element`.
+
+* *Type:* `integer`
+* *Required capabilities:* None
+* *Optional capabilities:* None
+
+.Example
+[source,java]
+----
+capabilities.setCapability("appium:waitForIdleTimeout", 0);
+----
+
+You can also change this value during the session with the Appium Settings API. The new value applies to later element searches in the same session. When the session ends, the value returns to the default.
+
+.Example
+[source,java]
+----
+driver.setSetting("waitForIdleTimeout", 0);
+----
+
+To restore the default behavior, remove the capability or the `setSetting` call from the test script.
