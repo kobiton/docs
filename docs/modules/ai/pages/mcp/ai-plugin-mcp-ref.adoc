@@ -3,11 +3,11 @@
 
 The Kobiton `automate` plugin connects AI coding assistants to Kobiton. Supported hosts are Claude Code, Claude Desktop, GitHub Copilot CLI, Gemini CLI, Codex CLI, Cursor CLI, and Cursor IDE. The plugin ships MCP tools, skills, and commands covering device management, app uploads, test case and test suite management, test execution, and session review.
 
-This reference covers `automate` plugin version 1.9.0. For newer changes, see the https://github.com/kobiton/automate[automate GitHub repo,window=read-later].
+This reference covers `automate` plugin version 1.13.0. For newer changes, see the https://github.com/kobiton/automate[automate GitHub repo,window=read-later].
 
 == MCP tools
 
-The plugin exposes 40 MCP tools across 5 domains.
+The plugin exposes 41 MCP tools across 5 domains.
 
 === Devices
 
@@ -16,7 +16,7 @@ The plugin exposes 40 MCP tools across 5 domains.
 |Tool |Description
 
 |`listDevices`
-|List available devices, filtered by platform, availability, device group, name, UDID, or group ID. Returns device name, UDID, platform, OS version, availability, and an `is_cloud` flag.
+|List available devices, filtered by platform, availability, device group, name, UDID, or group ID. Returns device name, UDID, platform, OS version, availability, and an `is_cloud` flag. Pass `virtualUsb: true` to list the private devices that are ready for virtualUSB.
 
 |`getDeviceStatus`
 |Get the real-time status of one device, including availability, current session, battery level, and connection state.
@@ -27,12 +27,11 @@ The plugin exposes 40 MCP tools across 5 domains.
 |`terminateReservation`
 |Release a reserved device by terminating its reservation.
 
-|`configureHostingMachine`
-|Configure virtualUSB and max parallel tests on one host machine in a single save. Available to organization admins. Returns the machine's updated state.
-
 |`listHostingMachines`
-|Organization admins only. List the host machines behind your organization's private devices, with the virtualUSB status of each. Pass `udid` to return only the host machine of one private device. Read-only: the tool never changes machine settings.
+|Organization admins only. List host machines with each machine's virtualUSB status, the next step when virtualUSB is not ready, and its max parallel tests. Filter by device UDID or machine ID.
 
+|`configureHostingMachine`
+|Organization admins only. Enable or disable virtualUSB, choose routing, and set max parallel tests on one host machine. Makes the same change as *Device Management* in Kobiton Portal.
 |===
 
 `listDevices` matches `deviceName` case-insensitively against the full device name. Use `*` wildcards for partial matches.
@@ -57,73 +56,7 @@ When every device list in the response is empty, `listDevices` returns an `appli
 
 Devices returned with `is_cloud: true` have restricted shell-command access in CLI sessions. Devices returned with `is_cloud: false` are unrestricted.
 
-
-`configureHostingMachine` takes a `machineId` from `listHostingMachines` and at least one of these sections:
-
-[cols="1,3",options="header"]
-|===
-|Section |Fields
-
-|`virtualUsb`
-|`enabled`, `networkRouting`, and `ipAddress`. `networkRouting` accepts `KOBITON` for routing managed by Kobiton, or `SELF_MANAGED`.
-
-|`maxParallelTests`
-|`mode` and `limit`. `mode` accepts `UNLIMITED` or `CUSTOM`. `limit` accepts a value from 1 to 999.
-|===
-
-The tool rejects these requests before it makes any change:
-
-- No section is sent.
-- `enabled: true` is sent without `networkRouting`.
-- `SELF_MANAGED` is sent without `ipAddress`.
-- `ipAddress` is sent with `KOBITON`.
-- `networkRouting` or `ipAddress` is sent with `enabled: false`.
-- `CUSTOM` is sent without `limit`.
-- `limit` is sent with `UNLIMITED`.
-- `limit` is outside 1 to 999.
-
-A request that matches the machine's current configuration makes no change and returns `changed: false`. Otherwise, the tool returns `changed: true` and the machine in the same shape `listHostingMachines` returns, including `max_parallel_tests`. The response never includes the machine's IP address.
-
-The tool makes the same change as the *Settings* dialog in *Device Management* in Kobiton Portal. Errors from Kobiton are returned unchanged. These include a caller who is not an organization admin, an organization without the virtualUSB add-on, routing managed by Kobiton that is not available, an invalid IP address, an invalid limit, and an unknown machine.
-
-[WARNING]
-====
-Turning virtualUSB off on a machine routed by Kobiton, or moving it to self-managed routing, ends the active virtualUSB sessions on its devices, as it does in Kobiton Portal.
-
-Turning virtualUSB off on a self-managed machine does not yet disconnect connected clients.
-====
-=======
-Call `listHostingMachines` to find the cause when a private device is not ready for virtualUSB. For each host machine, the tool returns whether virtualUSB is enabled, the network routing type, whether an IP address is configured, and the provisioning status. A `virtual_usb_status` object summarizes the result with a `state`, a `message` that explains the state, and a `next_step`.
-
-[cols="1,3",options="header"]
-|===
-|`state` |Meaning
-
-|`DISABLED`
-|virtualUSB is turned off on the host machine.
-
-|`NO_NETWORK_ROUTE`
-|No network route is configured for the host machine.
-
-|`ROUTING_PROVISIONING`
-|Kobiton-managed routing for the host machine is still provisioning.
-
-|`ROUTING_PROVISIONING_FAILED`
-|Kobiton-managed routing for the host machine failed to provision.
-
-|`CONFIGURED`
-|virtualUSB is configured on the host machine.
-|===
-
-The response also includes:
-
-* `sku_active`, which shows whether your organization has the virtualUSB add-on, and a `sku_note` when it does not.
-* `applied_filters`, which echoes the filter values the tool used.
-* A `reason` when no host machine matches. When you pass `udid`, the reason names the device.
-
-`host_name` is `null` for Kobiton-hosted machines. The tool does not return IP addresses or MAC addresses.
-
-An organization member who calls `listHostingMachines` receives the error `You don't have permission to do this action.` Ask an organization admin to check the host machine on the xref:device-lab-management:device-management-page.adoc[Device Management page].
+For the `virtualUsb` filter on `listDevices`, the admin-only `listHostingMachines` and `configureHostingMachine` tools, and their response fields, see xref:mcp/virtualusb-mcp-tools.adoc[virtualUSB MCP tools]. For the same settings in Kobiton Portal, see xref:device-lab-management:device-management-page.adoc[].
 
 === Sessions
 
@@ -327,7 +260,7 @@ IMPORTANT: Using these skills in Claude Desktop requires a Claude Code subscript
 |Watch a running test run and report state changes. Surfaces the live remediation URL when an execution is blocked, and reports a blocked execution as blocked rather than passed.
 
 |`debug-device-over-vusb`
-|Debug your app on a private Kobiton device over virtualUSB from a plain-language request. Installs the supported virtualUSB client when needed, connects the device, installs your build, reproduces the problem, captures device logs, and disconnects the device when done. See <<_debug_over_virtualusb>>.
+|Debug an app on a private Kobiton device connected to your computer over virtualUSB. Installs the pinned virtualUSB client, connects the device so it appears in `adb` or Xcode, runs the install, reproduce, and capture-logs loop, and always disconnects the device at the end. See xref:mcp/debug-over-virtualusb.adoc[Debug over virtualUSB].
 |===
 
 === Choose a skill
@@ -351,7 +284,7 @@ IMPORTANT: Using these skills in Claude Desktop requires a Claude Code subscript
 |Follow a running test run and catch blockers
 |`monitor-test-run`
 
-|Debug your app on a private device over virtualUSB
+|Debug your app on a private device with your local `adb` or Xcode
 |`debug-device-over-vusb`
 |===
 
@@ -403,6 +336,8 @@ Skills differ in what they need from the host running them. Check the requiremen
 `create-test-run` is the only skill that runs with nothing but an authenticated MCP connection. If you opt into monitoring, it hands off to `monitor-test-run`, which needs local file access and the credentials file. On a host without those, create the run and note its ID instead of watching it.
 
 `monitor-test-run` reports progress best when the host streams output from a background command. Without that, it falls back to a foreground loop rather than refusing to run.
+
+For `debug-device-over-vusb` requirements, client setup, flow, and troubleshooting, see xref:mcp/debug-over-virtualusb.adoc[Debug over virtualUSB].
 
 [NOTE]
 ====
@@ -543,6 +478,15 @@ List my Android test cases
 Create a test run for smoke-add-to-cart on 3 Android devices
 Watch test run 8891 and tell me if anything blocks
 Stop test run 8891
+....
+
+=== Debugging over virtualUSB
+
+....
+Which of my private devices are ready for virtualUSB
+Is device <udid> ready for virtualUSB
+Show virtualUSB status for my host machines
+Connect a private Pixel over virtualUSB, install app-debug.apk, reproduce the crash on launch, and show me the logs
 ....
 
 === Session validations
