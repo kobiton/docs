@@ -1,0 +1,35 @@
+// Release-note partial drafted by Robot Ranch (Town Crier).
+// Draft for docs-team review. Not approved for publication.
+
+== List installed apps on a device with the API
+
+Two new API endpoints return the apps installed on a private device, including apps that were not installed from the App Repository.
+
+- `GET /v2/devices/{deviceId}/installed-apps` and `GET /v2/devices/udid/{udid}/installed-apps` return every app on the device, including apps installed through mobile device management (MDM), apps installed manually, and system apps.
+- Each app includes its bundle ID, name, version, and build version as reported by the device. On Android, app names are empty.
+- Add `includeKobitonAppVersionId=true` to return the App Repository `app_version_id` for apps that match an app version in your App Repository.
+- The `type` parameter accepts `user`, `system`, `all`, `filesharing`, `enabled`, and `disabled`. In this release, every app is returned regardless of `type`. The `type_applied` response field reports the filter that was applied.
+- If the device is offline or does not respond, the endpoints return an error that describes the problem.
+- `GET /v2/devices/{deviceId}/apps` is unchanged and continues to return only apps in your App Repository.
+
+// REVIEWER NOTE: The published API reference is maintained outside this repo. Confirm the
+// reference documents both endpoints and their parameters before publishing this entry. The
+// api-reference module in this repo is a stub, so no product-doc update is included.
+//
+// REVIEWER NOTE: Confirm the UDID route (`/v2/devices/udid/{udid}/installed-apps`) shipped in this
+// release. It appears in the Jira Release Notes field, but the engineering design and test-selection
+// notes describe only the numeric device ID route.
+//
+// REVIEWER NOTE: `type` filtering depends on a separate device-side update that is not part of
+// this ticket. Confirm the "In this release" wording, and whether to state that `user` becomes the
+// default once filtering takes effect.
+//
+// REVIEWER NOTE: Confirm the public wording for device scope. Engineering notes say public cloud
+// devices return "No device found". Also confirm whether to publish the specific HTTP status codes
+// for offline (400), unreachable (502), and timed-out (504) devices.
+//
+// REVIEWER NOTE: The Jira team field on this ticket is not the Phoenix team. Captured because
+// the ticket is in Wait For Deployment, the Release Notes field is populated, and the change is
+// user-facing.
+
+// Source: KOB-55366
