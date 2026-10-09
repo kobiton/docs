@@ -122,7 +122,19 @@ image:virtualusb-save-logs-popup.png[width=400,alt="The time period dropdown in 
 
 * Admins are able to cancel a device retained for virtualUSB. Once cancelled, the device will be released, meaning that device is no longer connected with user's workstation. However, the user will see the Connection status as *Error* and the button stays at *Disconnect*. To re-connect to this device, the user needs to disconnect and then connect again.
 
-* After clicking the *Connect* button, users may occasionally see the connection status change to *Offline* or *Error* before showing *Connected*.
+* The available actions depend on whether a device is connected through virtualUSB or retained in Kobiton Portal:
+
+** For devices connected through virtualUSB, *Disconnect* is available. This includes devices connected using the virtualUSB CLI.
+
+** For devices retained in Kobiton Portal, *Connect* appears instead. If you retained the device or are using it in a manual session, release it in Kobiton Portal before connecting through virtualUSB.
+
+** If another user retained the device or is using it in a manual session, *Connect* is unavailable.
+
+* Device retention in Kobiton Portal takes precedence over virtualUSB connections. Actions in virtualUSB do not release devices retained in Kobiton Portal.
+
+** No virtualUSB action cancels a retention made in the Kobiton Portal.
+
+* After selecting *Connect*, users may occasionally see the connection status change to *Offline* or *Error* before showing *Connected*.
 
 * If a user right-clicks on any part of the virtualUSB app and selects *Reload*, the user will be directed back to the login page and must sign in again.
 
