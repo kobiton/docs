@@ -76,10 +76,24 @@ For *Cloud and Hybrid* customers, select the *Download* button on the navigation
 
 image:debugging:download-virtualusb-closeup.png[width=500,alt="Download virtual USB from Kobiton portal"]
 
-For *Standalone/On-Prem* customers, the latest virtualUSB package download links are provided together with other Standalone update packages.
+For *Standalone/On-Prem* customers, select the *Download* button on the navigation bar of the Kobiton Portal, then download the appropriate virtualUSB package. The package source depends on whether the Standalone server can reach the internet:
+
+* With internet access, the download link serves the latest public virtualUSB build.
+* Without internet access, such as in an air-gapped deployment, the download link automatically serves the virtualUSB package included with your Standalone installation. No extra step is required.
+
+If no download source is available, the Portal shows an error message instead of starting the download.
+
+// Source: KOB-53082.
+// REVIEWER NOTE (KOB-53082): Confirm the Standalone Portal uses the same *Download* button
+// label as Cloud. The CLI setup page calls it the "Downloads icon in the left navigation".
+// REVIEWER NOTE (KOB-53082): Confirm the exact error message text before publishing. Jira
+// describes it as a "Download failed" message; QA notes reference "The installer could not be reached".
+// REVIEWER NOTE (KOB-53082): Jira states virtualUSB for Linux (Debian-based and Red Hat-based)
+// is now included in the Standalone package. This page does not document Linux setup yet.
+// Confirm whether Linux install guidance is needed in a separate update.
 
 [NOTE]
-Contact Kobiton Support for the latest download links if you have trouble finding them.
+Contact Kobiton Support if you have trouble downloading virtualUSB.
 
 == Install virtualUSB
 
