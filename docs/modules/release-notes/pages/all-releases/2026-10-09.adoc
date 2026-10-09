@@ -21,6 +21,19 @@ Organization admins can enable and configure virtualUSB for individual host mach
 - Host machines with virtualUSB enabled display a *virtualUSB* badge next to their name.
 - Search for host machines by name or IP address, or select *Show enabled only* to display enabled machines.
 
+=== AI-assisted debugging with virtualUSB
+
+The Kobiton MCP server supports AI-assisted debugging on private devices through virtualUSB. Using the `debug-device-over-vusb` skill in the `automate` plugin, you can describe an issue in natural language and have your AI assistant connect to a device, install your app, reproduce the issue, and collect device logs.
+
+Organization admins can also manage virtualUSB through an AI assistant connected to the Kobiton MCP server:
+
+- Use `listHostingMachines` to check host machine availability and identify configuration issues.
+- Use `configureHostingMachine` to enable virtualUSB, configure connection routing, and manage maximum parallel tests.
+
+AI-assisted debugging with virtualUSB requires `automate` plugin version 1.13.0 or later and supports macOS and Windows.
+
+For details, see xref:ai:mcp/ai-plugin-mcp-ref.adoc#_debug_over_virtualusb[Debug over virtualUSB].
+
 // --- virtualUSB compilation notes (temporary; strip before shipping) ---
 
 // Moved from 2026-09-18 (originally under KOB-52659 / Device Management).
