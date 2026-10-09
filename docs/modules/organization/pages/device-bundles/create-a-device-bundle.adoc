@@ -6,6 +6,16 @@ Learn how to create a new device bundle so users in your organization can run xr
 [NOTE]
 Device bundles are operating system (OS) specific so Android and iOS devices cannot be bundled together.
 
+== Virtual devices in bundles
+
+A device bundle can include xref:manual-testing:start-a-virtual-session.adoc[virtual devices], such as Android emulators and iOS simulators, available to your organization.
+
+In the device list, virtual devices appear after physical devices and display *Virtual* in the *Type* column. Selected virtual devices count toward the bundle's device selection.
+
+When starting a test run from a device bundle, only physical devices are used.
+
+If a virtual device and a physical device have the same name and OS version, the bundle uses the physical device.
+
 == Create a new bundle
 
 In *Org Management*, select *Device Bundles*.

@@ -3,11 +3,11 @@
 
 The Kobiton `automate` plugin connects AI coding assistants to Kobiton. Supported hosts are Claude Code, Claude Desktop, GitHub Copilot CLI, Gemini CLI, Codex CLI, Cursor CLI, and Cursor IDE. The plugin ships MCP tools, skills, and commands covering device management, app uploads, test case and test suite management, test execution, and session review.
 
-This reference covers `automate` plugin version 1.9.0. For newer changes, see the https://github.com/kobiton/automate[automate GitHub repo,window=read-later].
+This reference covers `automate` plugin version 1.13.0. For newer changes, see the https://github.com/kobiton/automate[automate GitHub repo,window=read-later].
 
 == MCP tools
 
-The plugin exposes 39 MCP tools across 5 domains.
+The plugin exposes 41 MCP tools across 5 domains.
 
 === Devices
 
@@ -16,7 +16,7 @@ The plugin exposes 39 MCP tools across 5 domains.
 |Tool |Description
 
 |`listDevices`
-|List available devices, filtered by platform, availability, device group, name, UDID, or group ID. Returns device name, UDID, platform, OS version, availability, and an `is_cloud` flag.
+|List available devices, filtered by platform, availability, device group, name, UDID, or group ID. Returns device name, UDID, platform, OS version, availability, and an `is_cloud` flag. Pass `virtualUsb: true` to list the private devices that are ready for virtualUSB.
 
 |`getDeviceStatus`
 |Get the real-time status of one device, including availability, current session, battery level, and connection state.
@@ -26,6 +26,12 @@ The plugin exposes 39 MCP tools across 5 domains.
 
 |`terminateReservation`
 |Release a reserved device by terminating its reservation.
+
+|`listHostingMachines`
+|Organization admins only. List host machines with each machine's virtualUSB status, the next step when virtualUSB is not ready, and its max parallel tests. Filter by device UDID or machine ID.
+
+|`configureHostingMachine`
+|Organization admins only. Enable or disable virtualUSB, choose routing, and set max parallel tests on one host machine. Makes the same change as *Device Management* in Kobiton Portal.
 |===
 
 `listDevices` matches `deviceName` case-insensitively against the full device name. Use `*` wildcards for partial matches.
@@ -49,6 +55,8 @@ A value without wildcards matches the exact full name only, so `Galaxy` on its o
 When every device list in the response is empty, `listDevices` returns an `applied_filters` object that echoes the filter values it used. Check it to tell a filter that matched no devices apart from an organization that has no devices to list.
 
 Devices returned with `is_cloud: true` have restricted shell-command access in CLI sessions. Devices returned with `is_cloud: false` are unrestricted.
+
+For the `virtualUsb` filter on `listDevices`, the admin-only `listHostingMachines` and `configureHostingMachine` tools, and their response fields, see xref:mcp/virtualusb-mcp-tools.adoc[virtualUSB MCP tools]. For the same settings in Kobiton Portal, see xref:device-lab-management:device-management-page.adoc[].
 
 === Sessions
 
@@ -203,7 +211,7 @@ Reuse the `team_id` returned on a listed item when you compose suites and runs. 
 |Tool |Description
 
 |`getCredential`
-|Return your username, API key (existing or newly generated), and portal URL. Backs the `/automate:setup` command, so no manual file editing is required.
+|Return your username, portal URL, and a one-time setup token. The tool does not return your API key. Backs the `/automate:setup` command, so no manual file editing is required.
 
 |`getOrgSettings`
 |Return your organization's settings, including the live remediation flag that determines what happens when a test run execution hits a blocker.
@@ -228,7 +236,7 @@ Set `X-AI-Tool-Name` to attribute your calls explicitly. The Codex CLI and Curso
 
 == Skills
 
-The plugin ships five guided skills.
+The plugin ships six guided skills.
 
 IMPORTANT: Using these skills in Claude Desktop requires a Claude Code subscription.
 
@@ -250,6 +258,9 @@ IMPORTANT: Using these skills in Claude Desktop requires a Claude Code subscript
 
 |`monitor-test-run`
 |Watch a running test run and report state changes. Surfaces the live remediation URL when an execution is blocked, and reports a blocked execution as blocked rather than passed.
+
+|`debug-device-over-vusb`
+|Debug an app on a private Kobiton device connected to your computer over virtualUSB. Installs the pinned virtualUSB client, connects the device so it appears in `adb` or Xcode, runs the install, reproduce, and capture-logs loop, and always disconnects the device at the end. See xref:mcp/debug-over-virtualusb.adoc[Debug over virtualUSB].
 |===
 
 === Choose a skill
@@ -272,6 +283,9 @@ IMPORTANT: Using these skills in Claude Desktop requires a Claude Code subscript
 
 |Follow a running test run and catch blockers
 |`monitor-test-run`
+
+|Debug your app on a private device with your local `adb` or Xcode
+|`debug-device-over-vusb`
 |===
 
 === Skill requirements by host
@@ -311,11 +325,19 @@ Skills differ in what they need from the host running them. Check the requiremen
 |Yes
 |macOS only
 |No
+
+|`debug-device-over-vusb`
+|Yes
+|Yes
+|macOS or Windows
+|No
 |===
 
 `create-test-run` is the only skill that runs with nothing but an authenticated MCP connection. If you opt into monitoring, it hands off to `monitor-test-run`, which needs local file access and the credentials file. On a host without those, create the run and note its ID instead of watching it.
 
 `monitor-test-run` reports progress best when the host streams output from a background command. Without that, it falls back to a foreground loop rather than refusing to run.
+
+For `debug-device-over-vusb` requirements, client setup, flow, and troubleshooting, see xref:mcp/debug-over-virtualusb.adoc[Debug over virtualUSB].
 
 [NOTE]
 ====
@@ -331,10 +353,10 @@ The `run-interactive-session` skill ships a CLI binary built for macOS as a sing
 |Command |Description
 
 |`/automate:setup`
-|Fetch credentials from the authenticated MCP server and write them to `~/.kobiton/.credentials`. Also installs the `~/.kobiton/bin/kobiton` CLI wrapper used by `run-interactive-session`.
+|Write your Kobiton credentials to `~/.kobiton/.credentials` without your API key passing through the AI assistant. See <<setup-credentials,Setup and your API key>>. Also installs the `~/.kobiton/bin/kobiton` CLI wrapper used by `run-interactive-session`.
 
 |`/automate:doctor`
-|Read-only diagnostic for the CLI installation, credentials file, active profile, and required fields. Prints remediation hints for any failures.
+|Read-only diagnostic for the CLI installation, credentials file, active profile, and required fields. Also reports the pinned and installed virtualUSB client versions. Prints remediation hints for any failures.
 |===
 
 On Cursor CLI and Cursor IDE, plugin commands register without a namespace prefix, so these appear as `/setup` and `/doctor`. Select the entry with the Kobiton description to tell them apart from Cursor's built-in commands.
@@ -346,6 +368,21 @@ On Cursor CLI and Cursor IDE, plugin commands register without a namespace prefi
 * On *GitHub Copilot CLI* and *Gemini CLI*, the symlink is not recreated automatically. Run `/automate:setup` once after install to create the wrapper, and run it again if the symlink goes missing.
 
 * On *Cursor CLI*, the symlink is not recreated automatically. Run `/setup` once after install to create the wrapper, and run it again if the symlink goes missing.
+====
+
+// Source: KOB-55307. Robot Ranch (Ledger) draft for docs-team review.
+[#setup-credentials]
+=== Setup and your API key
+
+A local setup script fetches your API key directly from Kobiton and writes it to `~/.kobiton/.credentials`. The AI assistant conversation shows only a one-time setup token and the last 4 characters of the key.
+
+Setup uses a dedicated API key named `kobiton-mcp-<assistant>`, for example `kobiton-mcp-claude`. The first setup creates the key, and later setups reuse it. Your other API keys are not changed.
+
+Older plugin versions stop before setup runs and ask you to update the plugin. Update the plugin, then run setup again. An existing `~/.kobiton/.credentials` file keeps working without running setup again.
+
+[IMPORTANT]
+====
+Setup in older plugin versions recorded the full API key in the AI assistant conversation. If you shared the conversation from one of those setup runs, rotate that API key in *Kobiton Portal > Settings > API Keys*. See xref:profile:manage-your-api-credentials.adoc[Manage your API credentials].
 ====
 
 == Test execution
@@ -425,6 +462,13 @@ Pull /sdcard/Download/report.txt from the device
 Run adb shell pm list packages on the current device
 ....
 
+=== Debugging over virtualUSB
+
+....
+Debug the login crash in my app on a private Android device over virtualUSB
+Install build.apk on my private Pixel over virtualUSB, reproduce the checkout freeze, and show the logs
+....
+
 === Test cases and test runs
 
 ....
@@ -434,6 +478,15 @@ List my Android test cases
 Create a test run for smoke-add-to-cart on 3 Android devices
 Watch test run 8891 and tell me if anything blocks
 Stop test run 8891
+....
+
+=== Debugging over virtualUSB
+
+....
+Which of my private devices are ready for virtualUSB
+Is device <udid> ready for virtualUSB
+Show virtualUSB status for my host machines
+Connect a private Pixel over virtualUSB, install app-debug.apk, reproduce the crash on launch, and show me the logs
 ....
 
 === Session validations
