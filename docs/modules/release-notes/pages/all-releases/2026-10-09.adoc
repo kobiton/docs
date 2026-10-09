@@ -11,9 +11,14 @@ virtualUSB lets you connect private Kobiton devices to your local development en
 
 virtualUSB requires a subscription plan that includes the feature.
 
+// Source: KOB-55371 from PR #675
+
 === Download virtualUSB
 
 Download virtualUSB from the *Downloads* tab in Kobiton Portal. Installers are available for macOS, Windows, and Linux (Debian-based and Red Hat-based distributions).
+
+// Source: KOB-52820 from PR #693
+// Source: KOB-52679 from PR #692
 
 === Configure virtualUSB in Device Management
 
@@ -22,6 +27,11 @@ Organization admins can enable and configure virtualUSB for individual host mach
 - Choose *Managed by Kobiton* for automatic connection routing, or *Self-managed* to specify the host machine's IP address.
 - Host machines with virtualUSB enabled display a *virtualUSB* badge next to their name.
 - Search for host machines by name or IP address, or select *Show enabled only* to display enabled machines.
+
+// Source: KOB-55165 from PR #657
+// Source: KOB-55306 from PR #656
+// Source: KOB-55305 from PR #655
+// Source: KOB-54596 from PR #658
 
 === AI-assisted debugging with virtualUSB
 
@@ -35,179 +45,6 @@ Organization admins can also manage virtualUSB through an AI assistant connected
 AI-assisted debugging with virtualUSB requires `automate` plugin version 1.13.0 or later and supports macOS and Windows.
 
 For details, see xref:ai:mcp/ai-plugin-mcp-ref.adoc#_debug_over_virtualusb[Debug over virtualUSB].
-
-// --- virtualUSB compilation notes (temporary; strip before shipping) ---
-
-// Moved from 2026-09-18 (originally under KOB-52659 / Device Management).
-// virtualUSB was not yet shipped on 2026-09-18, so these user-facing bullets
-// belong with the virtualUSB feature release. Dedupe against KOB-52820 below
-// during the drafting pass.
-
-== Portal: virtualUSB tab and badge (moved from 2026-09-18)
-
-- Organizations subscribed to virtualUSB also see a *virtualUSB* tab. Enable virtualUSB per host machine, choose whether routing is managed by Kobiton or self-managed, and set the connection address. Enabling virtualUSB no longer requires a request to Kobiton Support.
-- Host machines with virtualUSB enabled now show a *virtualUSB* badge on their row in *Device Management*.
-
-// Source: KOB-52820 from PR #693
-// https://github.com/kobiton/docs/pull/693
-
-== virtualUSB settings in Device Management
-
-Manage virtualUSB on each host machine from the *Settings* dialog in *Device Management*. The dialog includes a *virtualUSB* tab for organizations whose plan includes virtualUSB.
-
-- Enable virtualUSB on specific host machines and set how connections are routed: *Managed by Kobiton* for Kobiton-hosted machines, or *Self-managed* with an editable IP address for machines hosted by your organization.
-- Host machines with virtualUSB enabled show a *virtualUSB* badge on their row in *Device Management*.
-- Search by host machine name or IP address, or select *Show enabled only* to list only enabled host machines.
-
-Available to organization admins with the *ADMIN* predefined role. Requires a plan that includes virtualUSB.
-
-// Source: KOB-52679 from PR #692
-// https://github.com/kobiton/docs/pull/692
-
-== Automatic routing for Kobiton-managed virtualUSB
-
-- Host machines that use *Managed by Kobiton* routing for virtualUSB now have network routing set up automatically when virtualUSB is enabled. Routing is removed when virtualUSB is turned off or the host machine changes to self-managed routing. No IP address management is required.
-- If routing setup fails, virtualUSB turns off on the host machine and the machine shows a failed status. Enable virtualUSB again to retry.
-- *Managed by Kobiton* appears as a routing option only when Kobiton-managed routing is available for the organization.
-- Host machines that use self-managed routing are not affected.
-
-// REVIEWER NOTE (KOB-52679): The Cloud September 18, 2026 release notes already announce the virtualUSB
-// tab and the routing choice under KOB-52659 (cites KOB-52679). Merge this entry into that
-// section or publish it as a follow-up, so the routing choice is not announced twice.
-//
-// REVIEWER NOTE (KOB-52679): Confirm the deployment types this applies to and the UI labels for the
-// self-managed option and the failed status.
-
-// Source: KOB-55165 from PR #657
-// https://github.com/kobiton/docs/pull/657
-
-== Kobiton AI plugin: debug over virtualUSB
-
-The `automate` plugin adds the `debug-device-over-vusb` skill. Describe a problem in plain language, and the skill debugs your app on a private Kobiton device over virtualUSB.
-
-*Highlights*
-
-- Installs the supported virtualUSB client before connecting. On macOS, the skill downloads, verifies, and unpacks the client. On Windows, the skill downloads and verifies the installer, then lists the remaining setup steps.
-- Selects an online private device that is ready for virtualUSB, and asks you to confirm when more than one device matches.
-- Checks known virtualUSB limitations before connecting, such as iOS 17.0 through 17.3 and iOS devices on Windows.
-- Installs your build, reproduces the problem, captures device logs, and reports the results.
-- Always disconnects the device when the session ends, including after a failure.
-- `/automate:doctor` reports the pinned and installed virtualUSB client versions.
-
-*Availability*
-
-Requires `automate` plugin version 1.13.0 or later, an organization subscription that includes virtualUSB, and macOS or Windows. Linux and public devices are not supported.
-
-For details, see xref:ai:mcp/ai-plugin-mcp-ref.adoc#_debug_over_virtualusb[Debug over virtualUSB].
-
-// REVIEWER NOTE: Confirm the published skill name (`debug-device-over-vusb`) and that automate
-// 1.13.0 is published. The Jira fixVersion field is empty, so place this partial on the release
-// page that matches the actual ship date.
-
-// Source: KOB-55165
-
-// Source: KOB-55306 from PR #656
-// https://github.com/kobiton/docs/pull/656
-
-== Host machine configuration in the Kobiton MCP server
-
-- Organization admins can now configure a host machine from an AI assistant connected to the Kobiton MCP server. The new `configureHostingMachine` tool turns virtualUSB on or off, sets routing to managed by Kobiton or self-managed, and sets max parallel tests to unlimited or a custom value from 1 to 999.
-- The tool applies all requested settings in one save, making the same change as the *Settings* dialog in *Device Management*. A request that matches the current configuration makes no change.
-- The tool returns the machine's updated state. The response never includes the machine's IP address.
-- `listHostingMachines` results now include each machine's max parallel tests setting.
-- Turning virtualUSB off on a machine routed by Kobiton, or moving it to self-managed routing, ends the active virtualUSB sessions on its devices, as it does in Kobiton Portal.
-- When a host machine reports `DISABLED` or `NO_NETWORK_ROUTE`, the `debug-device-over-vusb` skill offers an organization admin the option to enable virtualUSB and set routing, and asks before making the change. The skill never turns virtualUSB off or changes max parallel tests.
-
-// REVIEWER NOTE: The new optional machineId filter on GET /v2/machines is omitted. It backs
-// the tool, and the api-reference module has no page for this endpoint. Add a bullet if the
-// docs team treats it as a customer-facing API change.
-//
-// REVIEWER NOTE: The debug-device-over-vusb skill is not yet listed in the Skills section of
-// the AI plugin reference page. Confirm its public name before publishing this bullet.
-//
-// REVIEWER NOTE: This partial is not included in a dated release page yet. Include it in the
-// release page that matches the production deploy date.
-
-// Source: KOB-55305 from PR #655
-// https://github.com/kobiton/docs/pull/655
-
-== virtualUSB host diagnostics in the Kobiton MCP server
-
-- Organization admins can now ask an AI assistant connected to the Kobiton MCP server why a private device is not ready for virtualUSB. The new read-only `listHostingMachines` tool reports the virtualUSB status of the host machines behind your organization's private devices, with a specific cause and a next step.
-- The tool reports whether virtualUSB is turned off on the host machine, no network route is configured, Kobiton-managed routing is still provisioning or failed to provision, or your organization does not have the virtualUSB add-on.
-- Pass a device UDID to check only that device's host machine.
-- The tool never changes machine settings and does not return IP addresses or MAC addresses.
-- Organization members who call the tool receive the error `You don't have permission to do this action.` Ask an organization admin to check the host machine on the *Device Management* page in Kobiton Portal.
-
-// REVIEWER NOTE (KOB-55305): Jira status is Released. Fix Version is empty, so confirm the
-// release page this entry belongs to.
-//
-// REVIEWER NOTE (KOB-55305): Sibling tickets under the same epic ship the `listDevices`
-// `virtualUsb` filter (KOB-55118), the `debug-device-over-vusb` skill (KOB-55165), and
-// `configureHostingMachine` (KOB-55306). This entry covers only `listHostingMachines`. Decide
-// whether to merge these into one virtualUSB and MCP entry when the release page is assembled.
-//
-// REVIEWER NOTE (KOB-55305): The ticket also adds an optional `deviceUdid` query parameter to
-// `GET /v2/machines`. It is left out because the api-reference module has no page for this
-// endpoint. Add a bullet if the docs team treats it as customer-facing.
-
-// Source: KOB-55305
-
-// Source: KOB-55371 from PR #675
-// https://github.com/kobiton/docs/pull/675
-
-== virtualUSB 2 downloads
-
-Portal downloads now deliver the official virtualUSB 2 installers from the Kobiton public download site, and add Linux installers.
-
-- *virtualUSB for Mac* and *virtualUSB for Windows* now download the latest virtualUSB 2 installer. Downloading does not require an additional sign-in.
-- New *virtualUSB for Linux (Debian-based)* and *virtualUSB for Linux (Red Hat-based)* entries appear at the end of the Downloads list.
-- The Downloads list now stays within the screen on smaller windows and supports keyboard navigation.
-- Standalone installations include the same virtualUSB 2 installers for all four platforms.
-
-// REVIEWER NOTE: Jira field wording conflicts on the Linux labels. The Release Notes and
-// Impact Analysis fields use "virtualUSB for Linux (Debian-based)" and "virtualUSB for Linux
-// (Red Hat-based)"; the Implementation Plan uses "virtualUSB (Debian-based OS) for Linux"
-// and "virtualUSB (RedHat-based OS) for Linux". Confirm the shipped labels in the Portal.
-//
-// REVIEWER NOTE: Ticket is in Wait For Deployment with no fix version. Confirm the cloud
-// release date before publishing. Testing notes state that sandbox Mac/Windows links depend
-// on a separate configuration rollout.
-//
-// REVIEWER NOTE: Confirm which Standalone release ships the bundled virtualUSB 2 installers.
-// Move the Standalone bullet to the Standalone release notes if it does not apply to Cloud.
-
-// Source: KOB-55371
-
-// Source: KOB-54596 from PR #658
-// https://github.com/kobiton/docs/pull/658
-
-== Debug on private devices over virtualUSB with AI assistants
-
-AI assistants connected to the Kobiton MCP server can now debug an app on a private Kobiton device connected to your computer over virtualUSB. Organization admins can also check and change a host machine's virtualUSB settings without leaving the conversation.
-
-*Highlights*
-
-- `listDevices` accepts a new `virtualUsb` filter that returns the private devices ready for virtualUSB. When you name a device that is not ready, the response explains why.
-- New `listHostingMachines` tool, for organization admins: shows each host machine's virtualUSB status, the next step when virtualUSB is not ready, and its max parallel tests. Filter by device or by machine.
-- New `configureHostingMachine` tool, for organization admins: enables or disables virtualUSB, chooses routing, and sets max parallel tests. The change matches the same settings in *Device Management*, including ending active virtualUSB sessions when virtualUSB is turned off.
-- New `debug-device-over-vusb` skill in the `automate` plugin 1.13.0: installs the pinned virtualUSB client, connects the device so it appears in `adb` or Xcode, runs the install, reproduce, and capture-logs loop, and always disconnects the device at the end.
-
-*Availability*
-
-- The skill runs on macOS and Windows. Linux is not supported.
-- virtualUSB works with private devices only.
-
-For details, see xref:ai:mcp/ai-plugin-mcp-ref.adoc[].
-
-// REVIEWER NOTE (KOB-54596): The impact analysis also lists optional `deviceUdid` and
-// `machineId` query parameters on `GET /v2/machines`, and `title` and `annotations` now served
-// by `tools/list`. They are left out pending a decision on API reference coverage.
-//
-// REVIEWER NOTE (KOB-54596): Confirm whether a virtualUSB subscription is required. The
-// 2026-09-18 notes state the *virtualUSB* tab appears for subscribed organizations.
-
-// Source: KOB-54596
 
 // Source: KOB-55175 from PR #695
 // https://github.com/kobiton/docs/pull/695
