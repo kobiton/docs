@@ -1,0 +1,12 @@
+// Source: KOB-55188
+// Fix version: 2026.10.09
+
+== Virtual devices in device bundles
+
+- You can now add virtual devices, such as Android emulators and iOS simulators, to a device bundle. When you create or edit a bundle, the device list includes the virtual devices available to your organization, with *Virtual* in the *Type* column. Previously, virtual devices didn't appear in the device list and couldn't be bundled.
+- Bundles that include a virtual device now show that device, including when you start a test run from the bundle.
+- Known limitation: test runs don't run on virtual devices yet. A test run started from a bundle runs only on the bundle's physical devices.
+
+// REVIEWER NOTE (KOB-55188): The Jira release-note field also says selecting an emulator or
+// simulator from the bundle returns an error. The Jira impact field says such runs are created
+// but don't execute. Confirm the user-visible behavior before adding it to the limitation.
