@@ -1,0 +1,210 @@
+= Cloud October 9, 2026
+
+[NOTE]
+====
+Cloud release notes are typically published weekly and summarize changes since the previous publication. Kobiton uses date-based release versioning, with releases identified by the build date in YYMM.DD format. Version information for individual software components is available in the Component versions section.
+====
+
+== virtualUSB
+
+virtualUSB lets you connect private Kobiton devices to your local development environment for debugging and testing. Connected devices are accessible through local development tools, including Android Debug Bridge (ADB) and Xcode.
+
+virtualUSB requires a subscription plan that includes the feature.
+
+// Source: KOB-55371 from PR #675
+
+=== Download virtualUSB
+
+Download virtualUSB from the *Downloads* tab in Kobiton Portal. Installers are available for macOS, Windows, and Linux (Debian-based and Red Hat-based distributions).
+
+// Source: KOB-52820 from PR #693
+// Source: KOB-52679 from PR #692
+
+=== Configure virtualUSB in Device Management
+
+Organization admins can enable and configure virtualUSB for individual host machines from the *Settings* dialog in *Device Management* in Kobiton Portal.
+
+- Choose *Managed by Kobiton* for automatic connection routing, or *Self-managed* to specify the host machine's IP address.
+- Host machines with virtualUSB enabled display a *virtualUSB* badge next to their name.
+- Search for host machines by name or IP address, or select *Show enabled only* to display enabled machines.
+
+// Source: KOB-55165 from PR #657
+// Source: KOB-55306 from PR #656
+// Source: KOB-55305 from PR #655
+// Source: KOB-54596 from PR #658
+
+=== AI-assisted debugging with virtualUSB
+
+The Kobiton MCP server supports AI-assisted debugging on private devices through virtualUSB. Using the debug-device-over-vusb skill in the Kobiton automate plugin, you can describe an issue in natural language and have your AI assistant connect to a device, install your app, reproduce the issue, and collect device logs.
+
+Organization admins can also manage virtualUSB through an AI assistant connected to the Kobiton MCP server:
+
+- Use `listHostingMachines` to check host machine availability and identify configuration issues.
+- Use `configureHostingMachine` to enable virtualUSB, configure connection routing, and manage maximum parallel tests.
+
+AI-assisted debugging with virtualUSB requires `automate` plugin version 1.13.0 or later and supports macOS and Windows.
+
+For details, see xref:ai:mcp/ai-plugin-mcp-ref.adoc#_debug_over_virtualusb[Debug over virtualUSB].
+
+// Source: KOB-55175 from PR #695
+// https://github.com/kobiton/docs/pull/695
+// Source: KOB-54642 from PR #681
+// https://github.com/kobiton/docs/pull/681
+// Source: KOB-55188 from PR #683
+// https://github.com/kobiton/docs/pull/683
+
+== Emulators and simulators
+
+Virtual devices (Android emulators and iOS simulators) now work across more Kobiton surfaces.
+
+- The app repository now accepts iOS Simulator builds. Simulator apps show the Apple watermark and support the same app repository actions as other iOS apps, including search, versioning, download, and removal.
+- The Kobiton API now supports additional operations on virtual devices, including installing applications, reserving devices, managing favorites, tags, and device names, and converting automation sessions into test cases.
+- The Kobiton CLI supports installing applications on virtual devices.
+- Device Bundles can include emulators and simulators. The device list in *Org Management > Device Bundles* now shows virtual devices with the *Type* `Virtual`. Bundles that include a virtual device show that device, including when you start a test run from the bundle.
+
+// REVIEWER NOTE (KOB-54642): Pending confirmation of iOS simulator availability and deployment scope.
+
+// Source: KOB-52678 from PR #690
+// https://github.com/kobiton/docs/pull/690
+
+== Device Management
+
+Configure Max Parallel Tests for every host machine from one *Settings* dialog in *Device Management*. A single *Settings* button at the top of the page opens the dialog for all organizations, replacing the per-machine *Settings* button that used to appear on each host machine row.
+
+- The *Max Parallel Tests* tab sets a limit of *Unlimited* or a custom value between 1 and 999 for each host machine. The *All machines* row applies one setting to every host machine at once.
+- Search by host machine name or IP address.
+- The `GET /v2/machines` API now returns each host machine's `max_parallel_tests` setting.
+
+Available to organization admins with the *ADMIN* predefined role.
+
+// Source: KOB-52796 from PR #682
+// https://github.com/kobiton/docs/pull/682
+
+== SSO-only sign-in improvements
+
+Kobiton Portal now directs users with *SSO Only* enabled to their organization's SSO sign-in after they enter their email address or username, even when SSO is not enforced organization-wide. Password-based sign-in options are no longer displayed for these users.
+
+// Source: KOB-55251 from PR #701
+// https://github.com/kobiton/docs/pull/701
+
+== Lightning Mode
+
+- When a switch to Lightning Mode fails, the error message now names the likely cause when it can be determined. For example, when the video server does not respond, the message reads "Failed to switch to lightning mode. The video server did not respond. Try again."
+- *Latency* and *Resolution* now show in the *Speedometer* during a Lightning Mode session.
+
+// Source: KOB-55251
+//
+// REVIEWER NOTE: Scope is limited to the changes the ticket lists as visible to all users.
+// The ticket's main change, a per-session relay override passed in the launch URL, is a
+// hidden proof-of-concept test feature and is intentionally excluded.
+//
+// REVIEWER NOTE: The ticket also adds a *Diagnostics* switch under *Lightning Mode* that opens
+// a "Lightning Mode Diagnostics" panel, shown only when the organization setting
+// "Show option to launch device with WebRTC debug panel" is on. Excluded pending confirmation
+// that this panel is meant for customers. If confirmed, consider a targeted update to
+// organization/pages/other-settings.adoc.
+//
+// REVIEWER NOTE: The ticket defines five failure messages. QA confirmed only "The video server
+// did not respond. Try again." In QA, the "Your network may be blocking the connection
+// (firewall, VPN or proxy)." message did not appear when UDP was blocked by the client
+// firewall (Network Error showed instead). The "no video arrived" and "could not be set up"
+// messages were not testable from the UI. Only the confirmed message is named above.
+//
+// REVIEWER NOTE: The ticket calls this the "session quality panel". Confirm that it is the
+// panel the docs call *Speedometer* (manual-testing/pages/device-controls.adoc).
+
+// Source: KOB-55394 from PR #696
+// https://github.com/kobiton/docs/pull/696
+// Source: KOB-54485 from PR #700
+// https://github.com/kobiton/docs/pull/700
+
+== Appium automation
+
+- Android sessions now support the `waitForIdleTimeout` setting, which controls how long the session waits for the app screen to become idle when finding elements.
+- The Appium `mobile: setText` command is now supported on Android and iOS devices.
+
+// REVIEWER NOTE (KOB-54485): Jira status: Wait For Deployment. No fixVersion is set on the
+// ticket. Confirm the target release page and Component versions (deviceConnect build) before
+// placement. Verified on a lab build per the ticket's latest comment.
+// The ticket also adds the dc.ini key WebDriverSession.UiAutomatorTimeoutMs for local-device
+// hosts. Held out of the public bullet pending a decision on whether host-level dc.ini
+// settings belong in public release notes.
+//
+// REVIEWER NOTE (KOB-55394): The ticket description expects `mobile: setText` to honor the
+// `replace` argument (clear the field first), as UiAutomator2 does. The Release Notes and
+// Impact Analysis fields do not confirm `replace` handling, so this entry does not describe
+// argument behavior. Confirm with engineering before adding it.
+//
+// REVIEWER NOTE (KOB-55394): Ticket is in Wait For Deployment with no fix version. QA verified
+// the fix on a deviceConnect 2610.6 master build. Confirm the cloud release page this entry
+// belongs on, and confirm availability for Kobiton Standalone.
+//
+// REVIEWER NOTE (KOB-55394): No existing product page lists the mobile commands supported, so
+// no product-doc update is included with this change.
+
+// Source: KOB-55307 from PR #676
+// https://github.com/kobiton/docs/pull/676
+
+== Kobiton MCP server API key
+
+- `/automate:setup` now writes your Kobiton credentials without your API key passing through the AI assistant.
+- If you shared the conversation from a setup run in an older plugin version, rotate that API key in *Kobiton Portal > Settings > API Keys*.
+
+// Source: KOB-55245 from PR #651
+// https://github.com/kobiton/docs/pull/651
+
+== iOS passcode management
+
+- deviceConnect preserves a device's passcode when troubleshooting issues unrelated to the passcode.
+- In organizations that use passcode mode, deviceConnect sets a passcode only on iOS devices that are supervised by the organization.
+
+// Source: KOB-55245
+
+// Source: KOB-55321 from PR #678
+// https://github.com/kobiton/docs/pull/678
+
+== Analytics reports
+
+- CSV exports of *Parallel Sessions* and *Sessions per Day* list one row per day in chronological order.
+- *Device Utilization* exports are sorted by *Sessions*, with the most-used devices listed first.
+- PNG exports of *Parallel Sessions* and *Sessions per Day* now include the report's chart as a bar chart.
+
+// Source: KOB-55153 from PR #702
+// https://github.com/kobiton/docs/pull/702
+
+== Manual sessions
+
+- Manual sessions now attempt to restore the full video stream after a brief interruption to the live device screen. Previously, the session dropped to lower-quality screenshots for the rest of the session.
+
+// REVIEWER NOTE (KOB-55153): QA confirmed recovery on iOS and Android in a test environment.
+// QA did not test recovery after a stall caused by a slow network connection. The Jira comments
+// say this case also depends on a device host software update. Confirm that the host update
+// ships with this release before you publish without qualification, or narrow the wording.
+// REVIEWER NOTE (KOB-55153): No fix version is set in Jira. Confirm the target release date.
+
+// Source: KOB-50523 from PR #694
+// https://github.com/kobiton/docs/pull/694
+
+== Device cleanup on iOS and iPadOS
+
+- Device cleanup on iOS and iPadOS now resets settings such as time zone, language, and HTTP proxy on devices running iOS 16 or iPadOS 16 and later.
+
+// Source: KOB-52819 from PR #691
+// https://github.com/kobiton/docs/pull/691
+
+// Source: KOB-52055 from PR #684
+// https://github.com/kobiton/docs/pull/684
+
+== Bluetooth Bridge: static IP address setup without a monitor
+
+- Added an option to assign a static IP address to a new Raspberry Pi host without connecting a monitor.
+
+== Component versions
+
+* Portal 2610.8
+* deviceConnect 2610.6
+* Gigacap 2609.28
+// REVIEWER NOTE: virtualUSB added here for the feature release. No version
+// number surfaced in the source tickets. Confirm with manager whether
+// virtualUSB has a tracked version to list, and fill it in or remove the bullet.
+* virtualUSB
