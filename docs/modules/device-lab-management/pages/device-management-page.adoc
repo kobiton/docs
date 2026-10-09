@@ -47,6 +47,17 @@ Opens the **Remove unused devices** window, where you can hide offline or unplug
 
 See xref:device-lab-management:tidy-up-devices.adoc[].
 
+=== Settings
+
+Opens the **Settings** dialog, which configures every host machine in the organization from one place. Changes across both tabs are saved together.
+
+* **Max Parallel Tests**: limits the number of parallel sessions each host machine accepts. See xref:device-lab-management:deviceConnect/control-host-capacity.adoc[].
+
+* **virtualUSB**: enables virtualUSB and sets the network routing for each host machine. This tab appears only for organizations subscribed to virtualUSB. See xref:device-lab-management:deviceConnect/enable-virtualusb-for-host-machines.adoc[].
+
+// REVIEWER NOTE: device-management-page-overview.png may still show the previous per-machine
+// Settings button on the host machine card. Recapture it if so.
+
 === View
 
 Filters the device list and controls how host machines are displayed. Unlike **Tidy up**, these options change only what is displayed in your browser.
@@ -100,6 +111,8 @@ The card displays:
 image::device-lab-management:device-management-edit-location.png[width=400,alt="The Edit Location window for a host machine"]
 
 * The number of Android and iOS devices connected to the host machine, with the number of those devices that are currently offline. These counts reflect the current filter and search.
+
+* A purple **virtualUSB** badge when virtualUSB is enabled on the host machine. See xref:device-lab-management:deviceConnect/enable-virtualusb-for-host-machines.adoc[].
 
 The card provides the following actions:
 
@@ -162,6 +175,8 @@ Restarts the device.
 * xref:device-lab-management:enable-virtualusb-on-host-machines.adoc[]
 
 * xref:device-lab-management:deviceConnect/control-host-capacity.adoc[]
+
+* xref:device-lab-management:deviceConnect/enable-virtualusb-for-host-machines.adoc[]
 
 * xref:device-lab-management:deviceConnect/retrieve-deviceconnect-logs.adoc[]
 

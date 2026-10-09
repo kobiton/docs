@@ -69,6 +69,14 @@ Save applies all changes made in the *Settings* dialog. If the save fails, an er
 
 To close the dialog without saving, select *Cancel* or the close icon, then confirm *You have unsaved changes. Leave anyway?*
 
+A machine that is offline when you save is not updated. The dialog stays open and reports which machines were rejected.
+
+// REVIEWER NOTE: screenshots for this procedure were removed because they show the previous
+// per-machine Settings button and per-machine pop-up, which no longer exist. Replace with
+// captures of the Settings dialog on the Max Parallel Tests tab. The unused image files
+// host-machine-capacity-settings.png and host-machine-set-capacity.png are left in place
+// pending that replacement.
+
 == How the capacity limit affects sessions
 
 Once a capacity limit is set, the total number of parallel sessions on the host is restricted to the configured value.
@@ -113,9 +121,11 @@ In the Device Details, both the *Launch* and *Retain* buttons are disabled.
 
 image:device-details-disabled-lauch-retain.png[width=600,alt="The disabled Launch and Retain button in Device Details"]
 
-If a session is initiated through the Portal, API, or automation while the host is at capacity, the following error is returned:
+Starting a session through Kobiton Portal, the API, automation, or virtualUSB while the host is at capacity returns the following error:
 
 _Host has reached its configured capacity. Please try again later._
+
+In virtualUSB, the *Connect* button remains enabled for devices on a host at capacity. Selecting *Connect* returns the error above in both the virtualUSB desktop app and the virtualUSB CLI. Connect again after a session on the host ends.
 
 Capacity limits apply *only* to new sessions.
 
