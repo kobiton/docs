@@ -28,11 +28,35 @@ Displays the default location assigned to your organization. New host machines i
 
 The field is read-only. To change the default location for your organization, contact https://support.kobiton.com/hc/en-us/requests/new[Kobiton Support].
 
+=== Settings
+
+Opens the **Settings** dialog, which applies to every host machine in the organization. Changes in both tabs are saved together.
+
+**virtualUSB**::
+Enables virtualUSB on specific host machines and sets how virtualUSB connections are routed to each one. Available only to organizations whose plan includes virtualUSB. See xref:device-lab-management:enable-virtualusb-on-host-machines.adoc[].
+
+**Max Parallel Tests**::
+Limits the number of parallel sessions each host machine accepts. See xref:device-lab-management:deviceConnect/control-host-capacity.adoc[].
+
+// REVIEWER NOTE: The Settings dialog replaces the per-machine Settings window (KOB-52820). Confirm
+// the Settings button placement and add a screenshot (KOB-52819).
+
 === Tidy up
 
 Opens the **Remove unused devices** window, where you can hide offline or unplugged devices from the device list. Hidden devices stay hidden until they are reconnected.
 
 See xref:device-lab-management:tidy-up-devices.adoc[].
+
+=== Settings
+
+Opens the **Settings** dialog, which configures every host machine in the organization from one place. Changes across both tabs are saved together.
+
+* **Max Parallel Tests**: limits the number of parallel sessions each host machine accepts. See xref:device-lab-management:deviceConnect/control-host-capacity.adoc[].
+
+* **virtualUSB**: enables virtualUSB and sets the network routing for each host machine. This tab appears only for organizations subscribed to virtualUSB. See xref:device-lab-management:deviceConnect/enable-virtualusb-for-host-machines.adoc[].
+
+// REVIEWER NOTE: device-management-page-overview.png may still show the previous per-machine
+// Settings button on the host machine card. Recapture it if so.
 
 === View
 
@@ -88,6 +112,8 @@ image::device-lab-management:device-management-edit-location.png[width=400,alt="
 
 * The number of Android and iOS devices connected to the host machine, with the number of those devices that are currently offline. These counts reflect the current filter and search.
 
+* A purple **virtualUSB** badge when virtualUSB is enabled on the host machine. See xref:device-lab-management:deviceConnect/enable-virtualusb-for-host-machines.adoc[].
+
 The card provides the following actions:
 
 **Save Logs (3 days)**::
@@ -95,9 +121,6 @@ Saves the deviceConnect logs from the last three days. Select the dropdown icon,
 
 **Restart services**::
 Restarts the deviceConnect services on the host machine. See xref:device-lab-management:deviceConnect/restart-deviceconnect-services.adoc[].
-
-**Settings**::
-Opens the **Settings** window, where **Max Parallel Tests** limits the number of parallel sessions the host machine accepts. See xref:device-lab-management:deviceConnect/control-host-capacity.adoc[].
 
 Expand or collapse icon::
 Shows or hides the device table for that host machine.
@@ -149,7 +172,11 @@ Restarts the device.
 
 * xref:device-lab-management:tidy-up-devices.adoc[]
 
+* xref:device-lab-management:enable-virtualusb-on-host-machines.adoc[]
+
 * xref:device-lab-management:deviceConnect/control-host-capacity.adoc[]
+
+* xref:device-lab-management:deviceConnect/enable-virtualusb-for-host-machines.adoc[]
 
 * xref:device-lab-management:deviceConnect/retrieve-deviceconnect-logs.adoc[]
 

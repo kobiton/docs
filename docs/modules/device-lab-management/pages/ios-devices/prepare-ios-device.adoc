@@ -108,8 +108,15 @@ image:ios-settings-context-app-store.png[width=240,alt="The App Store option in 
 Setting a passcode on a device prevents Kobiton software from controlling it.
 
 To use passcode on the device, contact Kobiton support to enable passcode mode for your organization.
-
 ====
+
+In passcode mode, deviceConnect sets a passcode only on iOS devices supervised by your organization. Devices that use Bluetooth keyboard access are exempt from the supervision requirement.
+
+An iOS device that requires supervision but is not supervised by your organization fails its health check with `Cannot set passcode: the device is not supervised by this organization.` The device remains unavailable until it is xref:devices:local-devices/network-payload-capture/configure-an-ios-device.adoc#supervise_device[supervised] or passcode mode is turned off.
+
+// REVIEWER NOTE (KOB-55245): Per Jira, devices that use Bluetooth keyboard access are exempt
+// from the supervision check. Confirm with the SME whether to state this exception here.
+// Also confirm that the linked supervision procedure is the right one for passcode mode.
 
 In the *Settings* app, select *Face ID & Passcode* or *Touch ID & Passcode*.
 

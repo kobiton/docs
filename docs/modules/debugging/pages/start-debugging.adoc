@@ -15,6 +15,7 @@ You'll need to complete the following:
 
 * xref:debugging:set-up-virtualusb.adoc[] on your computer.
 * xref:debugging:local-devices/configure-your-personal-computer.adoc[Configure your computer] (Standalone with a self-signed SSL certificate only).
+* Ask an organization admin to xref:device-lab-management:deviceConnect/enable-virtualusb-for-host-machines.adoc[enable virtualUSB on the device's host machine,window=read-later] (private or local devices only).
 
 == Start a virtualUSB session
 
@@ -32,7 +33,9 @@ image:debugging:connect-device-context.png[width=1000,alt="A context to connect 
 
 Once connected:
 
-* The device status changes to *Retained*. This status persists for 24 hours unless the device is disconnected sooner.
+* A virtualUSB session starts and appears in the xref:session-explorer:search-for-a-session.adoc[Session List,window=read-later].
+
+* The device status changes to *Utilizing*.
 
 * The *Connection Status* column displays the value *Connected*.
 
@@ -77,13 +80,25 @@ iOS/iPadOS devices cannot be seen in Finder but can still be accessed by Xcode n
 
 ====
 
-== Observe mobile screen in a virtualUSB session
+== View a virtualUSB session in Kobiton Portal
 
-To observe what is happening on the device screen while connected to a device via virtualUSB:
+virtualUSB sessions are listed in the xref:session-explorer:search-for-a-session.adoc[Session List,window=read-later] and can be filtered by session type. Opening a virtualUSB session shows the session overview only. Video, device logs, and Session Explorer are not available for virtualUSB sessions.
+
+// REVIEWER NOTE: Confirm the exact type label shown in the Session List filter and
+// the `type:` value for virtualUSB sessions. Jira test notes list a known issue with the
+// lowercase `type:virtual_usb` suggestion.
+
+== Combine virtualUSB with a manual or Appium session
+
+The user who connected a device through virtualUSB can also run a manual session or an Appium script on the same device. The sessions combine into one mixed session. The order does not matter: connect virtualUSB first and then start a manual or Appium session, or connect virtualUSB to a device already in your manual or Appium session.
+
+Other users cannot start a session on a device connected through virtualUSB, and cannot connect virtualUSB to a device in another user's session.
+
+To observe what is happening on the device screen while connected to a device through virtualUSB:
 
 . Sign in to the Kobiton Portal.
 
-. Find the device and launch a xref:manual-testing:start-a-manual-session.adoc[manual session] with a virtualUSB connected device.
+. Find the device and launch a xref:manual-testing:start-a-manual-session.adoc[manual session] on the virtualUSB-connected device.
 
 [TIP]
 Copy the device UDID from virtualUSB and paste it in the search bar of the Kobiton Portal Device List.
@@ -108,6 +123,23 @@ image:virtualusb-disconnect-device.png[width=800,alt="The disconnect button next
 
 Confirm the action by selecting *Disconnect* in the pop-up.
 
+Any of the following ends the virtualUSB session:
+
+* Disconnecting the device in virtualUSB.
+* Quitting the virtualUSB app.
+* Terminating the session from Kobiton Portal.
+
+When no other session is running on the device, the device status returns to *Online*.
+
+If the session is part of a mixed session, ending the virtualUSB session does not end the other sessions on the device. The mixed session ends when no session remains on the device.
+
+If virtualUSB stops sending keep-alive signals, the session ends automatically after an idle period.
+
+// REVIEWER NOTE: Jira states sessions end after the "idle window" when keep-alives stop,
+// and references a 10-minute client keep-alive. Confirm the customer-facing idle period
+// before stating a duration. Also confirm which role permission is required to terminate
+// a virtualUSB session from the Portal; the ticket lists this as an open design question.
+
 == Save log
 
 To save a log of activities in virtualUSB, select the *Save Logs* icon:
@@ -120,9 +152,23 @@ image:virtualusb-save-logs-popup.png[width=400,alt="The time period dropdown in 
 
 == Considerations
 
-* Admins are able to cancel a device retained for virtualUSB. Once cancelled, the device will be released, meaning that device is no longer connected with user's workstation. However, the user will see the Connection status as *Error* and the button stays at *Disconnect*. To re-connect to this device, the user needs to disconnect and then connect again.
+* A CLI session can start on a device already connected through virtualUSB, but the two remain separate sessions instead of one mixed session. Connecting virtualUSB to a device already in a CLI session is not supported.
 
-* After clicking the *Connect* button, users may occasionally see the connection status change to *Offline* or *Error* before showing *Connected*.
+* Sessions that included virtualUSB cannot be converted to Test Cases.
+
+* The available actions depend on whether a device is connected through virtualUSB or retained in Kobiton Portal:
+
+** For devices connected through virtualUSB, *Disconnect* is available. This includes devices connected using the virtualUSB CLI.
+
+** For devices retained in Kobiton Portal, *Connect* appears instead. If you retained the device or are using it in a manual session, release it in Kobiton Portal before connecting through virtualUSB.
+
+** If another user retained the device or is using it in a manual session, *Connect* is unavailable.
+
+* Device retention in Kobiton Portal takes precedence over virtualUSB connections. Actions in virtualUSB do not release devices retained in Kobiton Portal.
+
+** No virtualUSB action cancels a retention made in the Kobiton Portal.
+
+* After selecting *Connect*, users may occasionally see the connection status change to *Offline* or *Error* before showing *Connected*.
 
 * If a user right-clicks on any part of the virtualUSB app and selects *Reload*, the user will be directed back to the login page and must sign in again.
 
@@ -134,10 +180,31 @@ image:virtualusb-save-logs-popup.png[width=400,alt="The time period dropdown in 
 
 ** The device status will be back to *Retained* until timed out.
 
+// REVIEWER NOTE: virtualUSB no longer retains the device, so this bullet is likely stale.
+// Jira does not describe device-restart behavior under the new session model. Confirm the
+// current behavior with engineering and update or remove this bullet before publishing.
+
 * The connection status of the devices may not sync between virtualUSB with UI and virtualUSB command-line interface (CLI). It is recommended to use only 1 interface of virtualUSB when connecting and disconnecting devices on 1 machine.
 
 * In the zip file exported using the *save log* feature, the created and modified date time of some of the files and folders are displayed incorrectly as _January 1, 1980 at 12:00 AM_.
 
-* *iOS 17 and above devices* are not supported.
+* iOS support on macOS:
+
+** *iOS 16 or earlier*: supported. These devices connect without a pairing step. See xref:supported-platforms:mobile-operating-systems-and-devices.adoc[Supported OS versions,window=read-later] for the minimum iOS version.
+
+** *iOS 17.0 through 17.3*: not supported.
+
+** *iOS 17.4 or later*: supported. virtualUSB pairs these devices with the Mac automatically when they connect, which requires Xcode on the Mac.
+
+// REVIEWER NOTE: iOS 17.4 or later support comes from the release-note drafts for KOB-55311
+// (#652), KOB-55354 (#660), and KOB-55318 (#668). The parent epic KOB-46544 was In Progress
+// when those drafts were written, and earlier weekly pages held virtualUSB 2 entries for a
+// future release. Publish this change only in the same release as those entries.
+// The iOS 17.0 through 17.3 bullet matches the virtualUSB test plan's iOS support matrix
+// (17.0 to 17.3 unsupported; older iOS uses the classic path; 17.4 or later uses Core Device).
+// The iOS 16 or earlier bullet restates the previous text (only iOS 17 and later were excluded)
+// and #652 ("iOS versions earlier than 17.4 connect without a pairing step").
+// set-up-virtualusb.adoc keeps Xcode 13 as the floor and does not name a minimum Xcode version
+// for iOS 17.4 or later pairing; no source states one. Add it if engineering confirms a version.
 
 * iOS device support for *virtualUSB on Windows* is not available.
