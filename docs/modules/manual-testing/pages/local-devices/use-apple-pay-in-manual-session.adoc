@@ -31,12 +31,13 @@ Tap *Confirm Pay*.
 
 image::bypass-apple-pay-manual-session-assistive-touch-confirm-pay.PNG[width=500,alt="The Confirm Pay option in Assistive touch expanded menu"]
 
-Tap the black space and enter the passcode using your keyboard. Contact the Kobiton Support, if needed, to retrieve the passcode set on the device.
+When the passcode screen appears, a numeric keypad overlay appears on the session stream. Tap the digits on the overlay, or select *Passcode helper* on the session toolbar and then *Auto-fill passcode*. For details, see xref:manual-testing:enter-ios-device-passcode.adoc[].
 
 image::bypass-apple-pay-manual-session-enter-passcode-empty.PNG[width=500,alt="The passcode input screen"]
 
-After inputting the whole passcode, press the *backspace* or *delete* key on your keyboard once, then input the last digit of the passcode. Tap the *Done* button when it is enabled:
-
-image::bypass-apple-pay-manual-session-enter-passcode-empty.PNG[width=500,alt="The passcode input screen filled in"]
+// REVIEWER NOTE (KOB-53003): This replaces the previous keyboard workaround (tap the black space,
+// type the passcode, press backspace, retype the last digit). The Jira source does not state whether
+// the keyboard workaround still works. Confirm before removing it permanently, and replace the
+// screenshot above with one that shows the keypad overlay.
 
 The payment is confirmed.
