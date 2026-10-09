@@ -630,7 +630,7 @@ capabilities.setCapability("appium:username", "johndoe");
 === `waitForIdleTimeout`
 
 [NOTE]
-This capability is only available in Xium sessions on Android devices. On iOS devices, the setting is ignored.
+This capability is only available in automation sessions on Android devices. On iOS devices, the setting is ignored.
 
 The maximum time, in milliseconds, that the session waits for the app screen to become idle before each UiAutomator element search. Default is `10000`.
 
@@ -655,12 +655,3 @@ driver.setSetting("waitForIdleTimeout", 0);
 ----
 
 To restore the default behavior, remove the capability or the `setSetting` call from the test script.
-
-// REVIEWER NOTE (KOB-54485):
-// Source: Jira Change description and verification steps. Scope is Android Xium sessions only;
-// default 10000 ms is unchanged for sessions that do not set the value.
-// Type `integer` is inferred from the millisecond values in the ticket (0, 10000). Confirm.
-// The ticket also adds a deviceConnect host setting under [set] in dc.ini,
-// `WebDriverSession.UiAutomatorTimeoutMs` (default 10000), that extends the UiAutomator
-// search time for slower devices. It is not documented here. Confirm whether it should be
-// documented for local-device hosts, and on which page.
