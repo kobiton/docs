@@ -60,7 +60,7 @@ ensureFileExists(latestFile, "Latest release file");
 
 const visibleDate = formatPublicationDate(publicationDate);
 
-const title = `= Kobiton Cloud ${visibleDate} release notes`;
+const title = `= Cloud ${visibleDate}`;
 
 const preamble = [
   "[NOTE]",
@@ -109,9 +109,9 @@ const finalReleaseContent = [
   "",
   preamble,
   "",
-  componentVersionsSection,
-  "",
   releaseContent.trimEnd(),
+  "",
+  componentVersionsSection,
   "",
 ].join("\n");
 
