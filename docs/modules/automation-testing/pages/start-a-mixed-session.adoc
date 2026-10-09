@@ -79,6 +79,8 @@ include::automation-testing:partial$mixed-sessions-basic-appium-limitations.adoc
 
 * Mixed sessions cannot use xref:automation-testing:capabilities/add-flexcorrect.adoc[self-healing].
 
+* A mixed session can also include a xref:debugging:start-debugging.adoc#_combine_virtualusb_with_a_manual_or_appium_session[virtualUSB session] started by the same user. Mixed sessions that included virtualUSB cannot be converted to Test Cases.
+
 * When you have a mixed Session on a Public Device, you will be charged minutes for the total time usage on the device; you will not be double-charged for an automation and a manual session.
 
 * A mixed session counts as 1 parallel test session, even though it includes both a manual and an automation session.
