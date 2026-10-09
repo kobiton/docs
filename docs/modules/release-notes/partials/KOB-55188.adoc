@@ -4,7 +4,7 @@
 
 - Fixed an issue where emulators and simulators could not be added to a device bundle because the device list in *Org Management > Device Bundles* did not show them. When you create or edit a bundle, the device list now includes the emulators and simulators your organization can use, with the *Type* `Virtual`, and counts them in your selection.
 - A bundle that includes an emulator or simulator now shows that device, including when you start a test run from the bundle.
-- Known limitation: A test run started from a bundle that includes an emulator or simulator is created, but it doesn't run on the virtual device yet.
+- Known limitation: Test runs don't use emulators or simulators yet. A test run started from a bundle runs on the bundle's physical devices only, and selecting an emulator or simulator from the bundle returns an error.
 
 // REVIEWER NOTE:
 // KOB-55188 | Type: Bug | Components: Emulator/Simulator, Scriptless Automation | Priority: High | Jira status: Wait For Deployment

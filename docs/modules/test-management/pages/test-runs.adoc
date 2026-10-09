@@ -44,7 +44,7 @@ Two options exist for selecting target devices, and they are mutually exclusive.
 *Device Bundle* runs the test on a pre-built group of devices. The *NOVA Recommended Devices* bundle is created by the system and is available by default. Custom bundles can be created from the device bundles area. Select *Customize* on a bundle to choose which devices in the bundle the test should target.
 
 [NOTE]
-A test run started from a bundle that includes an emulator or simulator is created, but the emulator or simulator part doesn't run yet. Its executions stay pending, without a device, until the test run times out or is terminated. Physical devices in the same bundle run normally.
+Test runs don't use emulators or simulators yet. A test run started from a bundle runs on the bundle's physical devices only, and its emulators and simulators are not selected by default. Selecting one returns an error.
 
 *Individual Devices* allows selecting specific devices from a dropdown. Only online public and private devices assigned to the current Team appear in the list. Offline devices are not selectable.
 
