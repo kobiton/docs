@@ -303,7 +303,7 @@ Set `X-AI-Tool-Name` to attribute your calls explicitly. The Codex CLI and Curso
 
 == Skills
 
-The plugin ships five guided skills.
+The plugin ships six guided skills.
 
 IMPORTANT: Using these skills in Claude Desktop requires a Claude Code subscription.
 
@@ -325,6 +325,9 @@ IMPORTANT: Using these skills in Claude Desktop requires a Claude Code subscript
 
 |`monitor-test-run`
 |Watch a running test run and report state changes. Surfaces the live remediation URL when an execution is blocked, and reports a blocked execution as blocked rather than passed.
+
+|`debug-device-over-vusb`
+|Debug your app on a private Kobiton device over virtualUSB from a plain-language request. Installs the supported virtualUSB client when needed, connects the device, installs your build, reproduces the problem, captures device logs, and disconnects the device when done. See <<_debug_over_virtualusb>>.
 |===
 
 === Choose a skill
@@ -347,6 +350,9 @@ IMPORTANT: Using these skills in Claude Desktop requires a Claude Code subscript
 
 |Follow a running test run and catch blockers
 |`monitor-test-run`
+
+|Debug your app on a private device over virtualUSB
+|`debug-device-over-vusb`
 |===
 
 === Skill requirements by host
@@ -386,6 +392,12 @@ Skills differ in what they need from the host running them. Check the requiremen
 |Yes
 |macOS only
 |No
+
+|`debug-device-over-vusb`
+|Yes
+|Yes
+|macOS or Windows
+|No
 |===
 
 `create-test-run` is the only skill that runs with nothing but an authenticated MCP connection. If you opt into monitoring, it hands off to `monitor-test-run`, which needs local file access and the credentials file. On a host without those, create the run and note its ID instead of watching it.
@@ -409,7 +421,7 @@ The `run-interactive-session` skill ships a CLI binary built for macOS as a sing
 |Fetch credentials from the authenticated MCP server and write them to `~/.kobiton/.credentials`. Also installs the `~/.kobiton/bin/kobiton` CLI wrapper used by `run-interactive-session`.
 
 |`/automate:doctor`
-|Read-only diagnostic for the CLI installation, credentials file, active profile, and required fields. Prints remediation hints for any failures.
+|Read-only diagnostic for the CLI installation, credentials file, active profile, and required fields. Also reports the pinned and installed virtualUSB client versions. Prints remediation hints for any failures.
 |===
 
 On Cursor CLI and Cursor IDE, plugin commands register without a namespace prefix, so these appear as `/setup` and `/doctor`. Select the entry with the Kobiton description to tell them apart from Cursor's built-in commands.
@@ -498,6 +510,13 @@ Type "hello" in the search field
 Swipe down to refresh
 Pull /sdcard/Download/report.txt from the device
 Run adb shell pm list packages on the current device
+....
+
+=== Debugging over virtualUSB
+
+....
+Debug the login crash in my app on a private Android device over virtualUSB
+Install build.apk on my private Pixel over virtualUSB, reproduce the checkout freeze, and show the logs
 ....
 
 === Test cases and test runs
