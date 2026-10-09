@@ -3,19 +3,11 @@
 
 The Kobiton `automate` plugin connects AI coding assistants to Kobiton. Supported hosts are Claude Code, Claude Desktop, GitHub Copilot CLI, Gemini CLI, Codex CLI, Cursor CLI, and Cursor IDE. The plugin ships MCP tools, skills, and commands covering device management, app uploads, test case and test suite management, test execution, and session review.
 
-This reference covers `automate` plugin version 1.9.0. For newer changes, see the https://github.com/kobiton/automate[automate GitHub repo,window=read-later].
+This reference covers `automate` plugin version 1.13.0. For newer changes, see the https://github.com/kobiton/automate[automate GitHub repo,window=read-later].
 
 == MCP tools
 
-// REVIEWER NOTE (KOB-54596): The new virtualUSB skill ships in `automate` plugin 1.13.0.
-// The version statement above still reads 1.9.0 because this draft only verifies the
-// KOB-54596 changes. Raise it to 1.13.0 only after confirming the rest of the page is current.
-
 The plugin exposes 41 MCP tools across 5 domains.
-
-// REVIEWER NOTE (KOB-54596): The 39 to 41 count comes from the Jira impact analysis.
-// `listHostingMachines` and `configureHostingMachine` are placed under Devices here.
-// Confirm the domain grouping against the published tool catalog.
 
 === Devices
 
@@ -64,38 +56,7 @@ When every device list in the response is empty, `listDevices` returns an `appli
 
 Devices returned with `is_cloud: true` have restricted shell-command access in CLI sessions. Devices returned with `is_cloud: false` are unrestricted.
 
-virtualUSB is available on private devices only. When `virtualUsb` is `true`, `listDevices` behaves as follows:
-
-* Leave `deviceGroup` unset or set it to `PRIVATE`. Any other device group returns an error before any devices are listed.
-* Each returned device carries `virtual_usb_ready`. A device that is not ready also carries `virtual_usb_reason`, which points to the host machine settings in *Device Management*.
-* Without `udid`, only ready devices are returned.
-* With `udid`, the named device is returned whether or not it is ready. If the UDID is not among your private devices, the response returns an empty `private_devices` list and a top-level `virtual_usb_reason`.
-* `applied_filters` is always returned, including when devices are found.
-
-Calls that omit `virtualUsb` return the same results as before.
-
-`listHostingMachines` and `configureHostingMachine` require the organization admin role. Other users receive a permission error.
-
-`listHostingMachines` follows the visibility rules of *Device Management*:
-
-* Host machines whose devices are all hidden are left out.
-* A `udid` lookup returns the device's `udid`, `state`, `is_online`, and `is_hidden`, with a reason when the device is hidden or unplugged.
-* Results are paged. Pass the returned `next_after_id` as `afterId` to fetch the next page. `total_machines` reports the full count.
-* IP and MAC addresses are never returned.
-
-`configureHostingMachine` applies only the settings you send. If every setting already matches, it returns `changed: false` and makes no change. Otherwise, it returns `changed: true` and the updated machine.
-
-IMPORTANT: Disabling virtualUSB on a machine routed by Kobiton, or moving a machine off Kobiton-managed routing, ends that machine's active virtualUSB sessions. This matches the behavior in *Device Management*. Your AI assistant asks for confirmation before it makes this change.
-
-For the same settings in Kobiton Portal, see xref:device-lab-management:device-management-page.adoc[] and xref:device-lab-management:deviceConnect/control-host-capacity.adoc[].
-
-// REVIEWER NOTE (KOB-54596): Jira names the routing choice but does not list the accepted
-// routing values or say whether the tool sets the self-managed connection address that
-// Portal exposes. Confirm before adding parameter-level detail.
-//
-// REVIEWER NOTE (KOB-54596): The confirmation sentence is based on the impact analysis:
-// "the tool description and the skill require an explicit user confirmation." Confirm the
-// wording against the shipped tool description.
+For the `virtualUsb` filter on `listDevices`, the admin-only `listHostingMachines` and `configureHostingMachine` tools, and their response fields, see xref:mcp/virtualusb-mcp-tools.adoc[virtualUSB MCP tools]. For the same settings in Kobiton Portal, see xref:device-lab-management:device-management-page.adoc[].
 
 === Sessions
 
@@ -299,7 +260,7 @@ IMPORTANT: Using these skills in Claude Desktop requires a Claude Code subscript
 |Watch a running test run and report state changes. Surfaces the live remediation URL when an execution is blocked, and reports a blocked execution as blocked rather than passed.
 
 |`debug-device-over-vusb`
-|Debug an app on a private Kobiton device connected to your computer over virtualUSB. Installs the pinned virtualUSB client, connects the device so it appears in `adb` or Xcode, runs the install, reproduce, and capture-logs loop, and always disconnects the device at the end.
+|Debug an app on a private Kobiton device connected to your computer over virtualUSB. Installs the pinned virtualUSB client, connects the device so it appears in `adb` or Xcode, runs the install, reproduce, and capture-logs loop, and always disconnects the device at the end. See xref:mcp/debug-over-virtualusb.adoc[Debug over virtualUSB].
 |===
 
 === Choose a skill
@@ -376,34 +337,7 @@ Skills differ in what they need from the host running them. Check the requiremen
 
 `monitor-test-run` reports progress best when the host streams output from a background command. Without that, it falls back to a foreground loop rather than refusing to run.
 
-`debug-device-over-vusb` requirements:
-
-* A private device on a host machine with virtualUSB enabled. Public devices are not supported. To check or enable virtualUSB on a host machine, see xref:device-lab-management:device-management-page.adoc[].
-* The credentials file written by `/automate:setup`. The skill signs in to the virtualUSB client with these credentials, so your API key does not appear in the conversation.
-* macOS or Windows.
-
-Before connecting, the skill checks for the pinned virtualUSB client version:
-
-macOS::
-The skill downloads the pinned client, verifies its checksum, and runs it from a local cache. If virtualUSB is already installed at the pinned version, the skill uses it. If a different version is installed, the skill stops and gives you instructions instead of replacing it.
-
-Windows::
-The skill downloads and verifies the pinned installer, then hands it to you to install. Installing the virtualUSB client on Windows requires a privileged step that the skill does not perform.
-
-Linux::
-Not supported. The skill stops and explains the limitation.
-
-Debugging iOS devices from Windows is not supported.
-
-// REVIEWER NOTE (KOB-54596): The blueprint lists more limitations checked before connect
-// (iOS 17.0 to 17.3, a device already in a CLI session, `adb reverse`, API-key-only sign-in).
-// That list is sourced from an internal page. Confirm against the skill's shipped
-// `references/limitations.md` before adding these to public docs.
-//
-// REVIEWER NOTE (KOB-54596): The Jira description says the agent reserves the device. The
-// approved blueprint and the scope comment say the skill never calls `reserveDevice` and
-// always releases through `vusb disconnect`. This draft does not describe reservation
-// behavior. Confirm what device status users see during a skill session.
+For `debug-device-over-vusb` requirements, client setup, flow, and troubleshooting, see xref:mcp/debug-over-virtualusb.adoc[Debug over virtualUSB].
 
 [NOTE]
 ====
