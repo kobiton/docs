@@ -7,7 +7,7 @@ This reference covers `automate` plugin version 1.9.0. For newer changes, see th
 
 == MCP tools
 
-The plugin exposes 39 MCP tools across 5 domains.
+The plugin exposes 40 MCP tools across 5 domains.
 
 === Devices
 
@@ -29,6 +29,10 @@ The plugin exposes 39 MCP tools across 5 domains.
 
 |`configureHostingMachine`
 |Configure virtualUSB and max parallel tests on one host machine in a single save. Available to organization admins. Returns the machine's updated state.
+
+|`listHostingMachines`
+|Organization admins only. List the host machines behind your organization's private devices, with the virtualUSB status of each. Pass `udid` to return only the host machine of one private device. Read-only: the tool never changes machine settings.
+
 |===
 
 `listDevices` matches `deviceName` case-insensitively against the full device name. Use `*` wildcards for partial matches.
@@ -52,6 +56,7 @@ A value without wildcards matches the exact full name only, so `Galaxy` on its o
 When every device list in the response is empty, `listDevices` returns an `applied_filters` object that echoes the filter values it used. Check it to tell a filter that matched no devices apart from an organization that has no devices to list.
 
 Devices returned with `is_cloud: true` have restricted shell-command access in CLI sessions. Devices returned with `is_cloud: false` are unrestricted.
+
 
 `configureHostingMachine` takes a `machineId` from `listHostingMachines` and at least one of these sections:
 
@@ -87,6 +92,38 @@ Turning virtualUSB off on a machine routed by Kobiton, or moving it to self-mana
 
 Turning virtualUSB off on a self-managed machine does not yet disconnect connected clients.
 ====
+=======
+Call `listHostingMachines` to find the cause when a private device is not ready for virtualUSB. For each host machine, the tool returns whether virtualUSB is enabled, the network routing type, whether an IP address is configured, and the provisioning status. A `virtual_usb_status` object summarizes the result with a `state`, a `message` that explains the state, and a `next_step`.
+
+[cols="1,3",options="header"]
+|===
+|`state` |Meaning
+
+|`DISABLED`
+|virtualUSB is turned off on the host machine.
+
+|`NO_NETWORK_ROUTE`
+|No network route is configured for the host machine.
+
+|`ROUTING_PROVISIONING`
+|Kobiton-managed routing for the host machine is still provisioning.
+
+|`ROUTING_PROVISIONING_FAILED`
+|Kobiton-managed routing for the host machine failed to provision.
+
+|`CONFIGURED`
+|virtualUSB is configured on the host machine.
+|===
+
+The response also includes:
+
+* `sku_active`, which shows whether your organization has the virtualUSB add-on, and a `sku_note` when it does not.
+* `applied_filters`, which echoes the filter values the tool used.
+* A `reason` when no host machine matches. When you pass `udid`, the reason names the device.
+
+`host_name` is `null` for Kobiton-hosted machines. The tool does not return IP addresses or MAC addresses.
+
+An organization member who calls `listHostingMachines` receives the error `You don't have permission to do this action.` Ask an organization admin to check the host machine on the xref:device-lab-management:device-management-page.adoc[Device Management page].
 
 === Sessions
 
