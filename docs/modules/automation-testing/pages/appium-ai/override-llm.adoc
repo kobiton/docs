@@ -16,7 +16,7 @@ Use this to:
 
 == Prerequisites
 
-- An administrator has enabled the Appium AI feature by configuring the `dc.ini` file on each Mac mini in the environment.
+- Appium AI is turned on in the `dc.ini` file on the host running the session and, if your organization has saved Appium AI settings, in your organization settings. See xref:appium-ai/configure-appium-ai-for-your-organization.adoc[Configure Appium AI for your organization].
 
 - You have an API key or reachable local endpoint for the LLM provider you want to use.
 
@@ -24,7 +24,7 @@ Use this to:
 
 Capability names and values are case-insensitive.
 
-If a capability is omitted, the session uses the default value configured by your Kobiton admin.
+If a capability is omitted, the session uses the value from your organization settings. If your organization settings do not set a value, the session uses the `dc.ini` value on the host, then the Kobiton default.
 
 [cols="2,4,2,2", options="header"]
 |===
@@ -36,7 +36,7 @@ If a capability is omitted, the session uses the default value configured by you
 | `https://api.openai.com/v1`
 
 | `kobiton:llmApiKey`
-| LLM provider API key. Required in either `dc.ini` or capabilities.
+| LLM provider API key. Required in your organization settings, `dc.ini`, or capabilities. Required in capabilities when you pass `kobiton:llmBaseUrl`.
 | `LlmClient.ApiKey`
 | (none)
 
@@ -134,6 +134,7 @@ Local endpoints are resolved from the host running the Appium session. For examp
 == Notes
 
 - Capabilities apply only to the session that passed them; other sessions continue to use the defaults.
+- If you pass `kobiton:llmBaseUrl`, also pass `kobiton:llmApiKey`. Appium AI does not send an API key from your organization settings or `dc.ini` to a base URL set in the session.
 - `kobiton:llmApiFormat` must match the provider used by `kobiton:llmBaseUrl`.
 - Vision-based features require a model that accepts image input such as screenshots.
 - Pass `kobiton:locatorStrategy` per session instead of changing the `dc.ini` default. A `dc.ini` default of `visionvirtual` applies to every session on that host, including sessions that test apps exposing a view hierarchy.
