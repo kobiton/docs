@@ -1,0 +1,97 @@
+= virtualUSB MCP tools
+:navtitle: virtualUSB MCP tools
+
+The Kobiton MCP server exposes three tools for working with virtualUSB from an AI assistant: a `virtualUsb` filter on `listDevices`, and two admin-only tools `listHostingMachines` and `configureHostingMachine`. These tools match the Portal settings in xref:device-lab-management:device-management-page.adoc[].
+
+For the short catalog entries, see xref:mcp/ai-plugin-mcp-ref.adoc[Kobiton AI plugin and tools reference].
+
+== listDevices with the virtualUsb filter
+
+virtualUSB is available on private devices only. When `virtualUsb` is `true`, `listDevices` behaves as follows:
+
+* Leave `deviceGroup` unset or set it to `PRIVATE`. Any other device group returns an error before any devices are listed.
+* Each returned device carries `virtual_usb_ready`. A device that is not ready also carries `virtual_usb_reason`, which points to the host machine settings in *Device Management*.
+* Without `udid`, only ready devices are returned.
+* With `udid`, the named device is returned whether or not it is ready. If the UDID is not among your private devices, the response returns an empty `private_devices` list and a top-level `virtual_usb_reason`.
+* `applied_filters` is always returned, including when devices are found.
+
+Calls that omit `virtualUsb` return the same results as before.
+
+== listHostingMachines
+
+`listHostingMachines` and `configureHostingMachine` require the organization admin role. An organization member who calls either tool receives the error `You don't have permission to do this action.` Ask an organization admin to check the host machine on the xref:device-lab-management:device-management-page.adoc[Device Management page].
+
+Call `listHostingMachines` to find the cause when a private device is not ready for virtualUSB. For each host machine, the tool returns whether virtualUSB is enabled, the network routing type, whether an IP address is configured, and the provisioning status. A `virtual_usb_status` object summarizes the result with a `state`, a `message` that explains the state, and a `next_step`.
+
+[cols="1,3",options="header"]
+|===
+|`state` |Meaning
+
+|`DISABLED`
+|virtualUSB is turned off on the host machine.
+
+|`NO_NETWORK_ROUTE`
+|No network route is configured for the host machine.
+
+|`ROUTING_PROVISIONING`
+|Kobiton-managed routing for the host machine is still provisioning.
+
+|`ROUTING_PROVISIONING_FAILED`
+|Kobiton-managed routing for the host machine failed to provision.
+
+|`CONFIGURED`
+|virtualUSB is configured on the host machine.
+|===
+
+The response also includes:
+
+* `sku_active`, which shows whether your organization has the virtualUSB add-on, and a `sku_note` when it does not.
+* `applied_filters`, which echoes the filter values the tool used.
+* A `reason` when no host machine matches. When you pass `udid`, the reason names the device.
+
+`host_name` is `null` for Kobiton-hosted machines. The tool does not return IP addresses or MAC addresses.
+
+`listHostingMachines` follows the visibility rules of *Device Management*:
+
+* Host machines whose devices are all hidden are left out.
+* A `udid` lookup returns the device's `udid`, `state`, `is_online`, and `is_hidden`, with a reason when the device is hidden or unplugged.
+* Results are paged. Pass the returned `next_after_id` as `afterId` to fetch the next page. `total_machines` reports the full count.
+
+== configureHostingMachine
+
+`configureHostingMachine` takes a `machineId` from `listHostingMachines` and at least one of these sections:
+
+[cols="1,3",options="header"]
+|===
+|Section |Fields
+
+|`virtualUsb`
+|`enabled`, `networkRouting`, and `ipAddress`. `networkRouting` accepts `KOBITON` for routing managed by Kobiton, or `SELF_MANAGED`.
+
+|`maxParallelTests`
+|`mode` and `limit`. `mode` accepts `UNLIMITED` or `CUSTOM`. `limit` accepts a value from 1 to 999.
+|===
+
+The tool rejects these requests before it makes any change:
+
+- No section is sent.
+- `enabled: true` is sent without `networkRouting`.
+- `SELF_MANAGED` is sent without `ipAddress`.
+- `ipAddress` is sent with `KOBITON`.
+- `networkRouting` or `ipAddress` is sent with `enabled: false`.
+- `CUSTOM` is sent without `limit`.
+- `limit` is sent with `UNLIMITED`.
+- `limit` is outside 1 to 999.
+
+A request that matches the machine's current configuration makes no change and returns `changed: false`. Otherwise, the tool returns `changed: true` and the machine in the same shape `listHostingMachines` returns, including `max_parallel_tests`. The response never includes the machine's IP address.
+
+The tool makes the same change as the *Settings* dialog in *Device Management* in Kobiton Portal. Errors from Kobiton are returned unchanged. These include a caller who is not an organization admin, an organization without the virtualUSB add-on, routing managed by Kobiton that is not available, an invalid IP address, an invalid limit, and an unknown machine.
+
+[WARNING]
+====
+Turning virtualUSB off on a machine routed by Kobiton, or moving it to self-managed routing, ends the active virtualUSB sessions on its devices, as it does in Kobiton Portal.
+
+Turning virtualUSB off on a self-managed machine does not yet disconnect connected clients.
+====
+
+Your AI assistant asks for confirmation before it makes this change.

@@ -1,0 +1,60 @@
+= Debug over virtualUSB
+:navtitle: Debug over virtualUSB
+
+The `debug-device-over-vusb` skill connects a private Kobiton device to your computer over virtualUSB, then works through a debugging request you describe in plain language. The skill calls the virtualUSB CLI directly. It requires `automate` plugin version 1.13.0 or later.
+
+== Requirements
+
+* An organization subscription that includes virtualUSB.
+* A private device on a host machine with virtualUSB enabled. Public devices are not supported. To check or enable virtualUSB on a host machine, see xref:device-lab-management:device-management-page.adoc[].
+* The credentials file written by `/automate:setup`. The skill signs in to the virtualUSB client with these credentials, so your API key does not appear in the conversation.
+* macOS or Windows. Linux is not supported.
+
+== virtualUSB client setup
+
+Each plugin version pins one virtualUSB client version. Before connecting, the skill checks the client on your computer against that version.
+
+macOS::
+Downloads the pinned client, verifies its checksum, and runs it from a local cache. If virtualUSB is already installed at the pinned version, the skill uses it. If a different version is already installed, the skill stops and reports it instead of installing a second copy.
+
+Windows::
+Downloads the pinned installer and verifies its checksum, then hands it to you to install. Installing the virtualUSB client on Windows requires a privileged step that the skill does not perform. Run the skill again after setup completes.
+
+Linux::
+Not supported. The skill stops and explains the limitation.
+
+The skill does not perform steps that need administrator approval. On macOS, the first `vusb connect`, and the first connect after each client version change, displays a prompt to install the virtualUSB daemon. Approve the prompt on the computer itself. The prompt does not appear in an SSH session. See xref:debugging:virtualusb-cli-commands.adoc#_connect[virtualUSB CLI commands].
+
+== Debugging flow
+
+. The skill finds online private devices that are ready for virtualUSB. When more than one device matches, the skill asks you to confirm the device.
+. The skill checks the device and platform against known virtualUSB limitations before connecting. If a limitation applies, the skill explains it and does not connect.
+. The skill signs in to virtualUSB with your plugin credentials, connects the device, and confirms the connection with `vusb status` and `adb devices` or the Xcode device list.
+. The skill installs your build, reproduces the problem you described, captures device logs, such as `adb logcat` output, and reports the results in plain language.
+. The skill disconnects the device with `vusb disconnect`, including when an earlier step fails, and confirms the device is back online.
+
+The skill does not call `reserveDevice` or `terminateReservation`.
+
+== Limitations
+
+The skill stops before connecting when any of these apply:
+
+* iOS 17.0 through 17.3.
+* An iOS device on Windows.
+* Linux.
+* A public device.
+* A Kobiton CLI session already running on the device.
+* A request that needs `adb reverse`.
+
+For more virtualUSB considerations, see xref:debugging:start-debugging.adoc#_considerations[Start debugging].
+
+== Troubleshooting
+
+The skill returns a plain-language message and a next step for these failures:
+
+* Not signed in to virtualUSB.
+* virtualUSB is not included in the organization subscription.
+* A VPN or proxy blocks the connection to the host machine.
+* Another user holds the device.
+* The installed virtualUSB client version is incompatible.
+* An iOS device was requested on Windows.
