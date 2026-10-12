@@ -1,0 +1,7 @@
+// Source: KOB-55269. Robot Ranch (Town Crier) draft for docs-team review.
+// Components: MCP server. Automate plugin 1.15.0.
+// Release-readiness evidence: Jira status Wait For Deployment; Release Email option selected.
+
+== Kobiton MCP Plugin
+
+- The `drive-automation-session` and `run-interactive-session` skills now read a lean view of the UI tree on each step. The lean view keeps the elements a skill can target, such as elements with an ID, accessibility label, text, or clickable state, along with their bounds. This reduces the AI assistant context used on every step. Native Android and iOS screens now get this filtering in addition to webview screens. The full page source and screenshot remain available when a step needs them.
