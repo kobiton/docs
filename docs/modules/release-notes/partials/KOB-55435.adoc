@@ -1,0 +1,14 @@
+== Kobiton MCP server
+
+- The Kobiton MCP server's tool list now ships with each release. Every environment serves the tool definitions that were tested with its release, and the tools are available as soon as the server starts.
+- Removed the `uploadAppForRunner` and `listDeviceBundles` tools. Neither tool appeared in the server's tool list, and calls to them return a `Method not found` error.
+
+// REVIEWER NOTE: The Jira Release Notes field says these two tools "now return Method not found".
+// The ticket's codebase analysis says they were already absent from the tool list and already returned
+// `Method not found` before this change, so this entry avoids implying a new behavior. Confirm the wording,
+// or drop the second bullet if the docs team considers it a no-op for customers.
+// REVIEWER NOTE: The ticket requires the first release to serve the same tools and schemas as before.
+// The tools reference page (41 tools) needs no update. Decide whether the first bullet is visible enough
+// to customers to publish, or whether this entry belongs in internal notes only.
+
+// Source: KOB-55435
