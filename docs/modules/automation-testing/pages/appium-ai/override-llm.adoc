@@ -1,7 +1,7 @@
 = Override Appium AI settings per session
 :description: Use Appium desired capabilities to override the default Appium AI provider and locator settings for a session.
 
-Appium AI uses an LLM provider configured by your Kobiton administrator by default. You can override those settings for a single Appium session by passing `kobiton:*` desired capabilities.
+Appium AI uses the LLM provider settings configured for your organization by default. See xref:appium-ai/configure-appium-ai-org-settings.adoc[Configure Appium AI settings for your organization]. You can override those settings for a single Appium session by passing `kobiton:*` desired capabilities.
 
 `kobiton:locatorStrategy` selects how Appium AI resolves elements. It is not an
 LLM provider setting, but it is set the same way. See the
@@ -16,7 +16,8 @@ Use this to:
 
 == Prerequisites
 
-- An administrator has enabled the Appium AI feature by configuring the `dc.ini` file on each Mac mini in the environment.
+// KOB-54326: Organization-level settings in Portal replace dc.ini as the user-facing setup path. TODO(docs-review): confirm wording.
+- An administrator has turned on Appium AI for your organization.
 
 - You have an API key or reachable local endpoint for the LLM provider you want to use.
 
@@ -24,7 +25,7 @@ Use this to:
 
 Capability names and values are case-insensitive.
 
-If a capability is omitted, the session uses the default value configured by your Kobiton admin.
+If a capability is omitted, the session uses the value from your organization's Appium AI settings. If the organization does not set a value, the session uses the default value.
 
 [cols="2,4,2,2", options="header"]
 |===
