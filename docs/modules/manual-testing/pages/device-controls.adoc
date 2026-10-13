@@ -33,6 +33,37 @@ To rotate the device screen between portrait or landscape, select *Rotate Screen
 
 image:manual-testing:device-controls-context2.png[width=1000,alt="A manual session with a rotate screen"]
 
+[#_fold_or_unfold_device]
+== Fold or unfold device
+
+On foldable Android devices, such as Galaxy Z Fold and Pixel Fold, use the fold control to switch the device between its folded and unfolded postures. The control appears directly above *Rotate Screen* only when the session runs on a foldable device.
+
+The control shows the action it performs next:
+
+* When the device is unfolded, select *Fold device*.
+* When the device is folded, select *Unfold device*.
+
+The session starts in the device's physical posture. After each fold or unfold, the device screen and *Inspector* switch to the size and shape of the active screen. Each fold and unfold is recorded as a step in Session Explorer.
+
+On some Samsung devices, the cover screen shows the lock screen after a fold. To continue, swipe the device screen or select *Power*.
+
+[NOTE]
+====
+Flip-style foldable devices, such as Galaxy Z Flip, are not supported. The fold control can appear on these devices, but folding them locks the screen.
+====
+
+// REVIEWER NOTE (KOB-55167): A screenshot of the fold control is not included. Add one showing the
+// control above Rotate Screen in both states.
+// REVIEWER NOTE: Pixel Fold is named as supported in Jira, but QA verified only Galaxy Z Fold3. Confirm
+// before publishing Pixel Fold as supported.
+// REVIEWER NOTE: Jira testing notes say the cover-screen lock after a fold is a Samsung default. Confirm
+// the Power/swipe guidance is accurate for customers.
+// REVIEWER NOTE: Known issue KOB-55492 (open): a posture set from the toolbar is not reset when the
+// session ends, so the next session can start in that posture instead of the physical one. Decide
+// whether to document this as a known limitation until it is fixed.
+// REVIEWER NOTE: Per Jira, the control is hidden when the device is half-open. Decide whether this
+// needs customer-facing mention.
+
 == Volume
 
 To change the device volume, select *Volume Up* or *Volume Down*.

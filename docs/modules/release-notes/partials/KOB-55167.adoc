@@ -1,0 +1,19 @@
+// Release-note partial for KOB-55167.
+// Not published on its own. Include this file from the release page that carries the change.
+// Jira status: Released. Fix version 2026.10.13.
+
+== Fold and unfold foldable devices in manual sessions
+
+Manual sessions on foldable Android devices, such as Galaxy Z Fold and Pixel Fold, now include a fold control in the session toolbar.
+
+* The control appears above *Rotate Screen* on foldable devices and shows the action it performs next: *Fold device* or *Unfold device*.
+* The session starts in the device's physical posture.
+* After a fold or unfold, the device screen and *Inspector* switch to the size and shape of the active screen.
+* Folds and unfolds are recorded as steps in Session Explorer.
+
+Flip-style foldable devices, such as Galaxy Z Flip, are not supported.
+
+For details, see xref:manual-testing:device-controls.adoc#_fold_or_unfold_device[Device controls].
+
+// REVIEWER NOTE: Pixel Fold was not covered in QA (Galaxy Z Fold3 only). Confirm before publishing.
+// Source: KOB-55167 (Session Explorer steps delivered with KOB-55174)
