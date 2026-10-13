@@ -1,0 +1,14 @@
+== Reset stuck device states with the Kobiton API
+
+Org admins can now use the Kobiton API to reset devices whose state is stuck on the wrong value, such as a device that still shows as in use after its session has ended. Stuck devices no longer require a manual database change to return to service.
+
+The new `POST /v2/execute-admin-tasks` endpoint runs predefined admin tasks. The first available task, `RESET_DEVICE_STATE`, accepts a list of device UDIDs and resets the state of each device to the default state.
+
+* Returns the previous state and new state for each device, plus a summary of how many devices were reset, unchanged, or failed.
+* Processes each device independently. If one device fails, the other devices in the request are still processed.
+* Changes only the device state recorded in Kobiton. The task does not send commands to the device or its host machine, and it does not end sessions or cancel reservations.
+* Limits org admins to devices in their own organization. Available for Cloud and Standalone.
+
+After a reset, the device becomes available for sessions the next time its host machine reports on the device.
+
+// Source: KOB-55322
