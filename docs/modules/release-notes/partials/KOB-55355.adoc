@@ -1,0 +1,19 @@
+// Source: KOB-55355
+// Team: Phoenix | Component: deviceConnect (Appium, Manual Session) | Jira status at draft: Wait For Deployment
+// Release communication field: Release Email (customer-facing release notes)
+// Drafted by Robot Ranch Wild West (Town Crier). Requires docs-team review before publishing.
+
+== Inspector and element search on Android devices
+
+- Fixed an issue on Android 13 and later where the Inspector did not display the XML hierarchy for some screens that contain a web view. Element searches on these screens also failed in manual sessions and automation scripts. The Inspector now loads the full XML hierarchy for these screens, and scripts can find and interact with their elements.
+
+// REVIEWER NOTE (KOB-55355):
+// - QA verified the fix on a lab test environment with a prerelease deviceConnect build. Jira does not
+//   record a fix version or release date. Confirm the target release before publishing.
+// - The Jira test plan includes a regression check on native and React Native apps. The Jira comments
+//   do not record that result. Confirm the regression check passed.
+// - The deployment type in Jira is Cloud. Confirm whether Standalone customers need a deviceConnect
+//   update to get this fix and whether a Standalone release note is also needed.
+// - Engineering measured shorter load times for affected screens. Those measurements come from
+//   specific test apps and devices, so this entry intentionally makes no speed claims.
+// - Customer and app names in the ticket are intentionally excluded.
