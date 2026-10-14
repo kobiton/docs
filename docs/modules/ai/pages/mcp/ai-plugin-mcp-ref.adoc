@@ -348,21 +348,21 @@ The `run-interactive-session` skill ships a CLI binary built for macOS as a sing
 
 // Source: KOB-55269. Robot Ranch (Ledger) draft for docs-team review.
 // REVIEWER NOTE: Applies to automate plugin 1.15.0. The page header still states 1.13.0.
-[#lean-ui-tree]
-=== Lean UI tree in WebDriver skills
+[#filtered-ui-tree]
+=== Filtered UI tree in WebDriver skills
 
-The `drive-automation-session` and `run-interactive-session` skills read a lean view of the page source on each step instead of the full UI tree. This reduces the AI assistant context used by every observe step.
+The `drive-automation-session` and `run-interactive-session` skills give your AI assistant a filtered view of the screen's UI tree on each step instead of the full page source. This reduces how much of the page source your AI assistant reads on each step.
 
-The lean view keeps each element a skill can target, with its bounds:
+The filtered view keeps each element a skill can target, with its bounds:
 
 * Elements with an ID or resource ID
 * Elements with an accessibility label or content description
 * Elements with text
 * Clickable elements
 
-The lean view applies to native Android and iOS screens. On webview screens, the lean view is the stripped DOM.
+Filtering applies to native Android and iOS screens as well as webviews.
 
-The full page source and the screenshot remain available. The AI assistant reads them when the lean view is not enough to complete a step.
+The full page source and the screenshot remain available. Your AI assistant reads them when the filtered view isn't enough to complete a step.
 
 == Commands
 
