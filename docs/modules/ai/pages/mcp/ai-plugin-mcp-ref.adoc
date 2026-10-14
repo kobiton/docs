@@ -68,7 +68,7 @@ For the `virtualUsb` filter on `listDevices`, the admin-only `listHostingMachine
 |List test sessions, filtered by state, device, platform, and date range. Returns session ID, state, device information, duration, and timestamps.
 
 |`getSession`
-|Get session details, including commands, capabilities, and metadata.
+|Get session details, including commands, capabilities, and metadata. Returns a `scan_status` block that reports whether each validation scan has finished.
 
 |`getSessionArtifacts`
 |Get download URLs for a session's video, logs, screenshots, and reports.
@@ -86,10 +86,10 @@ For the `virtualUsb` filter on `listDevices`, the admin-only `listHostingMachine
 |List a session's accessibility findings. Filter by finding type with `type`, which accepts `TOUCH_TARGET_SIZE`, `COLOR_CONTRAST`, and `CONTENT_LABELING`.
 
 |`getAccessibilityValidationsSummary`
-|Get a session's accessibility counts by finding type and issue name, with the number of steps scanned and the time of the latest finding. The summary carries no findings.
+|Get a session's accessibility counts by finding type and issue name, with the number of steps scanned, the time of the latest finding, and a `scan_complete` flag. The summary carries no findings.
 
 |`listCrashValidations`
-|List a session's crash findings.
+|List a session's crash findings. Returns a `pending_count` of crash logs that are still being processed.
 
 |`listResponseTimeValidations`
 |List a session's response time findings.
@@ -108,11 +108,56 @@ The validation tools read the findings that Session Explorer shows in *Test Resu
 
 Each `list` tool takes `sessionId`, `limit`, and `offset`. `limit` defaults to 10 and is clamped to 20, so a single call never returns more than 20 findings. Responses return `items` alongside `page`, `total_pages`, and `total_items`, so an assistant pages through a large session one validation type at a time instead of pulling every finding into context.
 
-A session with no findings of the requested type returns `total_items: 0` and an empty `items` array, not an error. An unknown or inaccessible session returns a tool error.
+A session with no findings of the requested type returns `total_items: 0` and an empty `items` array, not an error. While a scan is still running, an empty result may be partial. See <<_scan_completeness>>. An unknown or inaccessible session returns a tool error.
 
 `listAccessibilityValidations` returns lean items by default. Use the `include` parameter to add the element, metadata, screen, and screenshot URL fields.
 
 Ask for validations in natural language. The assistant selects the tool from the tool descriptions, so requests such as "did the app crash" or "show accessibility issues" route to the matching tool.
+
+==== Scan completeness
+
+Validation scanning runs in the background after a session ends and can continue for more than ten minutes. Until a scan finishes, the `list` tools and `getAccessibilityValidationsSummary` can return partial results, including an empty `items` array for a session that later has findings.
+
+Call `getSession` and check `scan_status` before treating a result as final. `scan_status` has one entry for each scan type: `accessibility`, `crash`, `response_time`, and `flex_correct`. Each entry has one of these values:
+
+[cols="1,3",options="header"]
+|===
+|Value |Meaning
+
+|`complete`
+|The scan has finished. Results for that type are final.
+
+|`in_progress`
+|The scan is still running. Results for that type may be partial.
+
+|`not_applicable`
+|The session never had this scan, for example because the scan type is turned off or the session ran no commands.
+|===
+
+`getAccessibilityValidationsSummary` returns `scan_complete`, which matches `scan_status.accessibility`.
+
+`listCrashValidations` lists only crash logs that have finished processing. A `pending_count` greater than 0 means at least one crash log is still being processed, so an empty `items` array does not mean the app did not crash.
+
+For test runs, `getTestRun` returns `accessibility_scanning_status`, `crash_scanning_status`, and `network_payload_scanning_status` on each execution, alongside `is_processing`.
+
+// REVIEWER NOTE (KOB-55266): The Jira ticket does not list the values returned by the three
+// per-execution scanning status fields on `getTestRun`. Add the values if engineering confirms them.
+//
+// REVIEWER NOTE (KOB-55266): The ticket asked product to choose between listing in-progress crash
+// rows and returning `pending_count`. The implementation notes say `pending_count` shipped and
+// items stay limited to finished crash logs. Confirm with product before publishing.
+//
+// REVIEWER NOTE (KOB-55266): The tool descriptions changed in the `automate` plugin, but the ticket
+// does not name the plugin version. Update the "This reference covers `automate` plugin version"
+// line above if this release ships in a newer plugin version.
+//
+// REVIEWER NOTE (KOB-55266): `scan_status` has no entry for blocker or element selection findings,
+// although the ticket names those scans. Confirm how an assistant checks completeness for
+// `listBlockerValidations` and `listElementSelectionValidations`.
+//
+// REVIEWER NOTE (KOB-55266): The implementation notes change a helper that `listTestRuns` may also
+// use, but the ticket states the per-execution scanning statuses only for `getTestRun`. Not documented
+// for `listTestRuns`.
 
 === Apps
 
@@ -183,7 +228,7 @@ Reuse the `team_id` returned on a listed item when you compose suites and runs. 
 |List test runs, filtered by team, keyword, or platform. Sort the results with `sortBy`, which accepts the uppercase values `NAME` and `CREATED_AT`.
 
 |`getTestRun`
-|Get test run details, including its sessions.
+|Get test run details, including its sessions. Each execution carries `accessibility_scanning_status`, `crash_scanning_status`, and `network_payload_scanning_status` alongside `is_processing`.
 
 |`terminateTestRun`
 |Stop a running test run.
