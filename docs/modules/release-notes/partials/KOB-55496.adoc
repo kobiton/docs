@@ -1,0 +1,4 @@
+// Source: KOB-55496
+// Area: Session Explorer
+// Review: Confirm whether customers saw the "null" steps in production before this fix. If not, consider omitting this entry or rewording it.
+* Bug Fix: Fixed an issue where XCUITest sessions that ran tests showed Session Explorer steps labeled `null` with no screenshots. These sessions now open on *Overview*, and the *Explorer* tab shows "Explorer is not available for this session." Sessions with recorded steps are not affected.
