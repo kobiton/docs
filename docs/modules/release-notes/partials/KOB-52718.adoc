@@ -1,0 +1,13 @@
+// Source: KOB-52718
+// Release-note partial drafted by Robot Ranch. Requires docs-team review before publication.
+
+== Kobiton CLI: Session Explorer for CLI sessions
+
+- Added the `--capture` option to `kobiton session create`. List the session data to capture, such as `screenshots`, `view-trees`, `logs`, `metrics`, or `video`, and review it in Session Explorer. Capture is opt-in. CLI sessions created without `--capture` capture no session data and continue to open on Session Overview.
+
+// REVIEWER NOTE (KOB-52718): Jira status is Released, but the latest Jira comment states the
+// change is not fully deployed and lists three open pull requests (portal, API, and data
+// processing). The fix version is not marked released. Confirm deployment before publishing.
+//
+// REVIEWER NOTE (KOB-52718): Confirm the target publication (Cloud weekly page versus
+// Standalone/Hybrid page). Testing covered Cloud only; Standalone testing is planned separately.

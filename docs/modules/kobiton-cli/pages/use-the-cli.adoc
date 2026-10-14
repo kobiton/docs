@@ -92,9 +92,14 @@ For scripts or isolated commands, pass `--session-token` explicitly with each co
 
 == Known limitations
 
-* Session Explorer is not available when using Kobiton CLI.
+* Session Explorer is available only for CLI sessions created with the `--capture` option. Session Explorer shows only the data types listed in `--capture`. For details, see xref:cli-commands.adoc#session-create-capture[Capture session data].
 
-* Session video and logs are not available in Session Overview.
+* Only `kobiton webdriver` commands appear as steps in Session Explorer.
+
+// REVIEWER NOTE (KOB-52718): Removed "Session video and logs are not available in Session
+// Overview." Video and logs are now captured when requested with --capture. Confirm how the
+// View Device Logs button on Session Overview behaves for sessions without logs capture
+// before publishing (tracked as a separate defect fix).
 
 * Kobiton CLI does not support mixing manual and CLI testing sessions.
 

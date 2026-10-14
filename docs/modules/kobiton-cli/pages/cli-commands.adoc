@@ -922,6 +922,7 @@ kobiton session create [OPTIONS]
 | Option | Argument | Description
 
 | `-t`, `--timeout` | `<TIMEOUT>` | Inactivity timeout for this session, in minutes. Default/minimum is `10`, maximum is `120`. Can be refreshed with `session ping`.
+| `--capture` | `<KINDS>` | Comma-separated list of session data to capture for Session Explorer. See <<session-create-capture,Capture session data>>. Default: nothing is captured.
 |===
 
 Plus all <<global-options,global options>>.
@@ -941,6 +942,42 @@ kobiton session create -u 3e4e7fe7
 Session 8155111 created for device 3e4e7fe7.
 Session token eyJhbGciOiJ...
 ----
+
+[#session-create-capture]
+==== Capture session data
+
+Capture is opt-in. A CLI session created without `--capture` captures no session data, and Session Explorer is not available for that session.
+
+Add `--capture` with one or more of the following values to make the captured data available in Session Explorer:
+
+[cols="1,3",options="header"]
+|===
+| Value | Captured data
+
+| `screenshots` | A screenshot for each session step.
+| `view-trees` | The view hierarchy for each session step, shown in the *Inspector*.
+| `logs` | Device logs.
+| `metrics` | System metrics.
+| `video` | Session video.
+|===
+
+// REVIEWER NOTE (KOB-52718): Jira also lists foreground-apps, user-action, and wait-for-idle
+// as accepted values. Testing found that they produce no visible artifact for a CLI-only
+// session, and engineering described them as app change events (not yet shown in the portal),
+// device actions, and a capture-timing setting. Confirm whether to document them.
+// REVIEWER NOTE (KOB-52718): An "all" value was discussed in Jira as a follow-up and is not
+// confirmed as shipped. It is intentionally omitted.
+
+.Example
+[source,shell]
+----
+kobiton session create -u 3e4e7fe7 --capture screenshots,view-trees,logs
+----
+
+[NOTE]
+====
+If `view-trees` is not captured, session steps appear in Session Explorer only after the session ends.
+====
 
 === `session end`
 
