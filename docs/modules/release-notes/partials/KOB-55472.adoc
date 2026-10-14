@@ -1,0 +1,13 @@
+// Source: KOB-55472 (Bug, Released, no fix version set). Components: API v1, API v2, XCUITest.
+// Not published on its own. Include this file from the release page once the
+// release that carries the change and the deployment scope (Cloud, Standalone, or both) are confirmed.
+//
+// HOLD: confirm before publishing that customers could hit this issue in
+// production. Jira traces the root cause to a change that was still on a
+// feature branch, with the errors observed in test environments. If that
+// change never reached production, drop this entry or fold it into the
+// release note for the parent feature.
+
+=== Automation testing
+
+* *Session details for running XCUITest sessions:* Fixed an issue where session details failed to load while an XCUITest native framework session was still running. During the run, `+GET /v1/sessions/{id}+` and `+GET /v2/sessions/{id}+` returned an HTTP 500 error. Both now return the session at every stage of the run, including before its test report and video are available. Finished sessions with a recorded video keep their video link.
