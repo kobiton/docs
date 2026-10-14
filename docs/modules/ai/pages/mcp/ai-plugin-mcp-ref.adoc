@@ -74,7 +74,7 @@ For the `virtualUsb` filter on `listDevices`, the admin-only `listHostingMachine
 |Get download URLs for a session's video, logs, screenshots, and reports.
 
 |`getUserInputEvents`
-|Get the touch and swipe gestures performed in device-only live view during a session.
+|Get the touch and swipe gestures performed in device-only live view during a session. `limit` defaults to 10 and is clamped to the range 1 to 20.
 
 |`terminateSession`
 |Stop a running test session.
@@ -203,6 +203,10 @@ Reuse the `team_id` returned on a listed item when you compose suites and runs. 
 |`deleteTestSuite`
 |Delete a test suite. Member test cases are kept.
 |===
+
+`listTestCases`, `listTestSuites`, and `listTestRuns` take a `rowsPerPage` parameter that defaults to 10 and is clamped to the range 1 to 20, so a single call never returns more than 20 items. A larger value returns 20 items, and a value below 1 returns 1 item instead of an error. The `total_items` count in the response reflects every matching item, not only the current page.
+
+These page-size limits apply to the MCP tools only. The REST API and Kobiton Portal are unchanged.
 
 === Account
 
