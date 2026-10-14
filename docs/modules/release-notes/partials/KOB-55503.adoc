@@ -1,0 +1,13 @@
+== Accurate per-step device logs for Kobiton CLI sessions
+
+- Fixed an issue where per-step device logs for Kobiton CLI sessions appeared under the wrong step or were empty. Each step now shows the device log lines recorded since the previous step, and the first step shows the lines recorded before it.
+
+// Source: KOB-55503 (Jira, Released). Bug, components: Backend, CLI, Session Explorer.
+// REVIEWER NOTE (KOB-55503): xref:kobiton-cli:use-the-cli.adoc[] lists "Session Explorer is not available
+// when using Kobiton CLI" under Known limitations. This fix assumes CLI sessions show per-step device logs
+// in Session Explorer. That capability belongs to the parent epic (KOB-52221), which is still In Progress
+// in Jira. Confirm that per-step device logs for CLI sessions are available to customers before you publish,
+// and whether the Known limitations section needs an update under the parent epic.
+// REVIEWER NOTE (KOB-55503): Per the Jira test notes, sessions processed before the fix keep their
+// previous per-step split. Confirm whether to tell customers that only new CLI sessions are affected.
+// REVIEWER NOTE (KOB-55503): No fix version is set in Jira. Confirm which release page includes this entry.
