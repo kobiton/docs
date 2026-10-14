@@ -1,0 +1,21 @@
+// Source: KOB-55505
+// Release-note partial drafted by Robot Ranch. Requires docs-team review before publication.
+
+== Kobiton CLI: Screenshots in Session Explorer
+
+- Steps in CLI sessions that do not have their own screenshot now show the screenshot from the previous step, as automation sessions do. Previously, these steps showed "Screenshot Not Available". This applies in Session Explorer and in the session command APIs.
+- The XML hierarchy in *Appium Inspector* follows the same rule. *Appium Inspector* never pairs a screenshot with the XML hierarchy from an earlier step.
+
+// REVIEWER NOTE (KOB-55505): Depends on the CLI Session Explorer release note (KOB-52718,
+// branch docs-draft/KOB-52718). The current Kobiton CLI page still lists "Session Explorer is
+// not available when using Kobiton CLI." Publish this entry with, or after, that update.
+//
+// REVIEWER NOTE (KOB-55505): Jira says "Inspector view tree." Confirm that *Appium Inspector*
+// and "XML hierarchy" are the correct public terms for CLI sessions.
+//
+// REVIEWER NOTE (KOB-55505): Jira also states that, for automation sessions with a partial
+// capture (a screenshot without its view tree, or the reverse), each step now keeps its own
+// view tree. Complete captures are unchanged. Omitted here as an edge case; confirm whether to add it.
+//
+// REVIEWER NOTE (KOB-55505): Confirm the target publication (Cloud weekly page versus
+// Standalone/Hybrid page). Jira lists no fix version.
