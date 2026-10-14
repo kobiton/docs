@@ -1,0 +1,22 @@
+== Fewer duplicate steps in Kobiton CLI session timelines
+
+The Session Explorer timeline for Kobiton CLI sessions no longer shows an extra `POST /session` step for every `kobiton webdriver` call. The timeline now shows the session creation once, followed by one step for each call.
+
+* Repeated session creation requests are hidden from the timeline but remain in the session's command data.
+* A failed session creation request still appears as a step.
+* The device logs for each call include the log lines since the previous call.
+* CLI sessions recorded before this change display the same way.
+
+Automation and mixed sessions are not affected.
+
+// Source: KOB-55504
+// REVIEWER NOTE (KOB-55504): The Known limitations section of
+// kobiton-cli:use-the-cli.adoc states "Session Explorer is not available when using Kobiton CLI."
+// This entry describes the Session Explorer timeline for CLI sessions. Confirm that Session Explorer
+// is generally available for CLI sessions in the target release, and update or remove that limitation
+// in the same release. If CLI sessions in Session Explorer are not yet public, hold this entry.
+// REVIEWER NOTE (KOB-55504): No fix version is set in Jira. Confirm the target release page that
+// includes this partial.
+// REVIEWER NOTE (KOB-55504): Confirm the customer-visible surfaces for "the session's command data"
+// (for example, command counts and command lists from Kobiton API and Kobiton MCP server) before
+// naming them explicitly.
