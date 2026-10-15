@@ -1,19 +1,26 @@
 // Source: KOB-55355
-// Team: Phoenix | Component: deviceConnect (Appium, Manual Session) | Jira status at draft: Wait For Deployment
+// Team: Phoenix | Component: deviceConnect (Appium, Manual Session) | Jira status at draft: Released
 // Release communication field: Release Email (customer-facing release notes)
-// Drafted by Robot Ranch Wild West (Town Crier). Requires docs-team review before publishing.
+// Drafted by Robot Ranch (Town Crier). Requires docs-team review before publishing.
+// Suggested placement: "Improvements and fixes" section of the weekly Cloud release notes.
 
-== Inspector and element search on Android devices
+=== Inspector and element search
 
-- Fixed an issue on Android 13 and later where the Inspector did not display the XML hierarchy for some screens that contain a web view. Element searches on these screens also failed in manual sessions and automation scripts. The Inspector now loads the full XML hierarchy for these screens, and scripts can find and interact with their elements.
+- Fixed an issue on Android 13 and later where the Inspector did not display the XML hierarchy for some screens that contain a WebView. Element searches on these screens also failed in manual sessions and automation scripts. The Inspector now loads the full XML hierarchy for these screens, and scripts can find and interact with their elements.
 
 // REVIEWER NOTE (KOB-55355):
-// - QA verified the fix on a lab test environment with a prerelease deviceConnect build. Jira does not
-//   record a fix version or release date. Confirm the target release before publishing.
-// - The Jira test plan includes a regression check on native and React Native apps. The Jira comments
-//   do not record that result. Confirm the regression check passed.
+// - Jira status is now Released. The release comment lists deviceConnect 2610.150443.0, but it is a
+//   bulk update that says not every listed build applies to every ticket. Jira has no fix version.
+//   Confirm the deviceConnect build and release date before publishing.
+// - QA verified the fix on the affected screen. The Jira test plan also includes a regression check
+//   on native and React Native apps. Engineering's release-notes field reports the same element
+//   counts and similar read times on those apps, but QA comments do not record that check.
+//   Confirm the regression check passed.
 // - The deployment type in Jira is Cloud. Confirm whether Standalone customers need a deviceConnect
 //   update to get this fix and whether a Standalone release note is also needed.
 // - Engineering measured shorter load times for affected screens. Those measurements come from
 //   specific test apps and devices, so this entry intentionally makes no speed claims.
+// - "WebView" matches the term used on the Inspector page (manual-testing/device-information/inspector.adoc).
+// - Heading changed from level 2 to level 3 to match the area headings under "Improvements and fixes".
 // - Customer and app names in the ticket are intentionally excluded.
+// - No existing doc page needs an update. The Inspector page does not describe this limitation.
