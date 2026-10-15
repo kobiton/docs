@@ -78,6 +78,20 @@ Changes to organization settings apply to new sessions. Running sessions retain 
 
 For details, see xref:automation-testing:appium-ai/configure-appium-ai-org-settings.adoc[Configure Appium AI settings for your organization].
 
+// Source: KOB-54485 from PR #765
+
+== Configure UiAutomator idle wait in Android automation sessions
+
+Android Appium sessions now support the `waitForIdleTimeout` setting, which controls how long UiAutomator waits for an app to become idle before searching for elements.
+
+Set `appium:waitForIdleTimeout` when starting a session, or change the setting during a session using the Appium Settings API.
+
+Setting the timeout to `0` skips the idle wait, helping prevent element searches from failing in apps that continuously update their interface.
+
+The default remains 10 seconds when no value is specified.
+
+For details, see xref:automation-testing:capabilities/available-capabilities.adoc#_waitForIdleTimeout[waitForIdleTimeout].
+
 // Source: KOB-55167 from PR #715 (session toolbar fold control)
 // Source: KOB-55174 from PR #714 (Session Explorer fold/unfold steps; merged here)
 
@@ -136,6 +150,7 @@ Results include each application's bundle ID, name, version, and build version. 
 // Source: KOB-54432 from PR #713 (iPad Appium Inspector hierarchy)
 // Source: KOB-55355 from PR #728 (Inspector XML hierarchy on Android 13+ web views)
 // Source: KOB-55507 from PR #745 (Get Element Attribute returns null)
+// Source: KOB-55394 from PR #766 (mobile: setText now implemented)
 
 == Improved element inspection and interaction in Appium sessions
 
@@ -145,6 +160,7 @@ Several fixes improve how Appium sessions identify and interact with elements:
 * *iPad web sessions:* Appium Inspector now displays the correct XML hierarchy for each step of an iPad automation session started without an app, such as a Safari session.
 * *Android web views:* Fixed an issue on Android 13 and later where screens containing web views did not display their complete XML hierarchy, preventing element searches and interactions.
 * *Element attributes:* The WebDriver Get Element Attribute command now returns `null` when an element does not have the requested attribute, instead of returning an error.
+* *`mobile: setText` command:* Appium automation sessions now support the `mobile: setText` command on Android and iOS. Scripts calling this command set the element's text instead of failing with a "not implemented" error.
 
 // Source: KOB-55444 from PR #699
 // Source: KOB-50523 from PR #694
