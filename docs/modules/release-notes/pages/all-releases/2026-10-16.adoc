@@ -163,25 +163,25 @@ Results include each application's bundle ID, name, version, and build version. 
 // Source: KOB-55167 from PR #715 (session toolbar fold control)
 // Source: KOB-55174 from PR #714 (Session Explorer fold/unfold steps; merged here)
 
-== Fold and unfold foldable devices in manual sessions
+// EDITOR: Confirm Public Cloud availability.
+// EDITOR: Verify documentation links after the docs PR merges.
+// HOLD: Do not publish until availability is confirmed.
 
-Manual sessions on foldable Android devices, such as Galaxy Z Fold and Pixel Fold, now include a fold control in the session toolbar, and Session Explorer records each fold or unfold as a timeline step.
+== Fold and unfold Android devices during manual sessions
 
-*Session toolbar*
+Manual sessions on supported foldable Android devices now include controls for folding and unfolding the device. Session Explorer also records these actions, making it easier to review how an app behaves across different screen configurations.
 
-* The fold control appears above *Rotate Screen* on foldable devices and shows the action it performs next: *Fold device* or *Unfold device*.
-* The session starts in the device's physical posture.
-* After a fold or unfold, the device screen and *Inspector* switch to the size and shape of the active screen.
+=== Fold or unfold a device during a manual session
 
-*Session Explorer*
+Use the *Fold device* or *Unfold device* control on the session toolbar to change the device's posture. The session stream and *Inspector* adjust to the active screen.
 
-* Each fold or unfold appears on the timeline as a *FOLD DEVICE* or *UNFOLD DEVICE* step, with its own icon and screenshot.
-* Screenshots keep the screen size and shape of the posture the device was in, instead of being stretched or cropped.
-* Touch and swipe markers line up with the screenshot they belong to.
+=== Review fold and unfold actions in Session Explorer
 
-Flip-style foldable devices, such as Galaxy Z Flip, are not supported.
+Session Explorer records each fold or unfold action as a timeline step, including a screenshot of the device in its corresponding posture.
 
-For details, see xref:manual-testing:device-controls.adoc#_fold_or_unfold_device[Device controls] and xref:session-explorer:analytics/use-the-session-timeline.adoc#_review_fold_and_unfold_steps[Review fold and unfold steps].
+Screenshots retain the screen dimensions of the active posture, and touch and swipe markers remain aligned with the captured screen.
+
+This functionality supports book-style foldable devices, such as Galaxy Z Fold and Pixel Fold. Flip-style devices, such as Galaxy Z Flip, are not supported.
 
 // ======== iOS DEVICE RELIABILITY ========
 
