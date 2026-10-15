@@ -1,0 +1,12 @@
+// KOB-55347. Robot Ranch draft release-note partial. Requires docs-team review before publishing.
+// Source: Jira KOB-55347 (status: Wait For Deployment; Release Notes field populated;
+// Release Notes destination includes "Release Email").
+// Target release: Standalone only. No fix version is set in Jira. Confirm the Standalone release
+// before including this partial in a release page.
+// Suggested placement: "Bug fixes and improvements" > "Standalone deployment".
+
+=== Standalone deployment
+
+- On Standalone deployments with GPUs, Intelligent Quality Suite (IQS) AI services now keep GPU access after system package installs, such as a GigaCap install or upgrade. Previously, these services could switch to the CPU, and IQS element finding slowed down and timed out.
+- Installing or updating Standalone now stops with an error if a configured GPU ID does not match a GPU on the host. Previously, the install continued without reporting the problem.
+- After you update, the IQS AI services restart once to apply the new GPU configuration.
