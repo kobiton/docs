@@ -62,26 +62,6 @@ For details, see xref:manual-testing:install-an-app.adoc#_apps_listed_on_ios[App
 // Not included: the optional iosBuildType API query parameter (intentionally undocumented per the
 // ticket), and the deviceConnect simulator fixes (admin surface, not in this repo).
 
-// Source: KOB-55147 from PR #751
-// https://github.com/kobiton/docs/pull/751
-
-== Fixed device release in earlier virtualUSB versions
-
-- Fixed an issue where virtualUSB versions earlier than 4.20.0 failed to release a connected device. Running `vusb disconnect --udid <device-udid>`, or stopping `vusb connect` with Ctrl+C, reported `Device access ticket is not found`, and the virtualUSB session kept running in Kobiton Portal until it was terminated there. These commands now end the virtualUSB session and release the device, whether it was connected from the CLI or the virtualUSB app. No virtualUSB update is required.
-
-// REVIEWER NOTE (KOB-55147): QA verified the fix with virtualUSB 4.19.0 on macOS for devices
-// connected from the CLI and from the virtualUSB app. QA did not verify virtualUSB for Windows.
-// Confirm Windows behavior or narrow the wording to macOS before publishing.
-// REVIEWER NOTE (KOB-55147): The ticket also reports that the virtualUSB app showed a disabled
-// Connect button instead of Disconnect for a connected device. The verification notes do not
-// confirm that the in-app Disconnect button now works, so this entry describes release through
-// the CLI only, including for devices connected from the app.
-// Confirm with engineering before adding the app behavior.
-// REVIEWER NOTE (KOB-55147): Stopping `vusb connect` with Ctrl+C after the session has already
-// ended still prints "Device access ticket is not found". Jira marks this as expected behavior.
-// REVIEWER NOTE (KOB-55147): Jira fix version is 2026.10.07 and is not marked released.
-// Confirm the target publication date.
-
 // Source: KOB-55464 from PR #746
 // https://github.com/kobiton/docs/pull/746
 
@@ -619,6 +599,15 @@ For steps, see xref:manual-testing:local-devices/use-apple-pay-in-manual-session
 // whether the filter applies to Android devices and Cloud devices.
 // REVIEWER NOTE (KOB-53007): The Jira release-communication field also requests internal Support Notes.
 // No support-notes content exists in the evidence, and none is included here.
+
+// Source: KOB-55147 from PR #751
+// https://github.com/kobiton/docs/pull/751
+
+== Improved device disconnection for earlier virtualUSB versions
+
+Device disconnection now works correctly in virtualUSB versions earlier than 4.20.0. Disconnecting through the CLI or virtualUSB app ends the session and releases the device. No virtualUSB update is required.
+
+// EDITOR NOTE: virtualUSB 1 note, but user-facing behavior. Keep in the Cloud notes, or drop?
 
 == Wait For Deployment (10/15)
 
