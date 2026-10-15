@@ -1,0 +1,16 @@
+== Fixed device release in earlier virtualUSB versions
+
+- Fixed an issue where virtualUSB versions earlier than 4.20.0 failed to release a connected device. Running `vusb disconnect --udid <device-udid>`, or stopping `vusb connect` with Ctrl+C, reported `Device access ticket is not found`, and the virtualUSB session kept running in Kobiton Portal until it was terminated there. These commands now end the virtualUSB session and release the device, whether it was connected from the CLI or the virtualUSB app. No virtualUSB update is required.
+
+// REVIEWER NOTE (KOB-55147): QA verified the fix with virtualUSB 4.19.0 on macOS for devices
+// connected from the CLI and from the virtualUSB app. QA did not verify virtualUSB for Windows.
+// Confirm Windows behavior or narrow the wording to macOS before publishing.
+// REVIEWER NOTE (KOB-55147): The ticket also reports that the virtualUSB app showed a disabled
+// Connect button instead of Disconnect for a connected device. The verification notes do not
+// confirm that the in-app Disconnect button now works, so this entry describes release through
+// the CLI only, including for devices connected from the app.
+// Confirm with engineering before adding the app behavior.
+// REVIEWER NOTE (KOB-55147): Stopping `vusb connect` with Ctrl+C after the session has already
+// ended still prints "Device access ticket is not found". Jira marks this as expected behavior.
+// REVIEWER NOTE (KOB-55147): Jira fix version is 2026.10.07 and is not marked released.
+// Confirm the target publication date.
