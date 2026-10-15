@@ -367,30 +367,10 @@ For details, see xref:manual-testing:device-controls.adoc#_fold_or_unfold_device
 
 // ======== DEVICECONNECT ========
 
-// Source: KOB-55440 from PR #727
-// https://github.com/kobiton/docs/pull/727
-
-== deviceConnect Console
-
-- The device list and the device details page now show how many errors each device had in the last hour, for example *3 errors in the last hour*. An error is an unexpected USB disconnect or a device health check that changes from passing to failing. Devices with no errors in the last hour show no error count.
-- When a device has more than 10 errors in the last hour, the error count turns orange and links to troubleshooting guidance for offline devices. The warning clears when the hourly count drops to 10 or fewer.
-- Error counts reset to 0 when the deviceConnect service restarts.
-
-// REVIEWER NOTE (KOB-55440):
-// - Placement: a previous page notes that deviceConnect Console is a Standalone surface, while other
-//   Cloud pages include deviceConnect Console entries. Confirm whether this belongs on a Cloud page,
-//   a Standalone page, or both.
-// - The ticket's implementation summary also mentions a new "Errors In Last Hour" column in the
-//   device inventory CSV. That item was removed from the acceptance criteria and failed QA, so it is
-//   intentionally excluded here.
-// - The orange warning links to the offline devices guide on the gated admin docs site. QA did not
-//   verify the link target because it requires an admin docs account.
-// - Not verified by QA: health check pass-to-fail counting, and that disconnects during a
-//   Return-to-Service wipe are not counted. Engineering confirmed that the count resetting on a
-//   service restart is expected.
-// - Confirm whether the restart reset belongs in public release notes or only in support notes.
-
-// EDITOR NOTE: + Add entries that were removed from last week.
+// EDITOR NOTE: KOB-55440 (deviceConnect Console error counts) stripped — Hybrid/Standalone surface,
+// belongs in Standalone notes, not Cloud public notes.
+// EDITOR NOTE: A deviceConnect release lands this week after being delayed from last week. Check
+// whether any deviceConnect notes from last week's draft should be carried into this page.
 
 // ======== OTHER ========
 
