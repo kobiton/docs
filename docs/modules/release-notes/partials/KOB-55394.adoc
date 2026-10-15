@@ -1,0 +1,13 @@
+// Area: Appium automation
+// Source: KOB-55394
+
+- Xium now supports the Appium `mobile: setText` command on Android and iOS. Scripts that call `mobile: setText` set the text of the target element instead of failing with `Mobile command 'mobile: setText' is not implemented`. Typing, sending keys, and clearing a field keep their existing behavior.
+
+// REVIEWER NOTE:
+// KOB-55394 | Type: Bug | Component: deviceConnect, XIUM | Status: Released
+// Released in the deviceConnect bulk-update build noted on the ticket. Confirm the
+// release date and which dated Cloud release page this entry belongs on.
+// The ticket's expected behavior says `replace` should clear the field first, as
+// UiAutomator2 does, but the release evidence does not explicitly confirm `replace`
+// handling. It is left out of the bullet until engineering confirms it.
+// Product name casing varies across existing docs (Xium vs XIUM). This entry uses "Xium".
