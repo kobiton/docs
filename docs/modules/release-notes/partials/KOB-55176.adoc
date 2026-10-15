@@ -1,0 +1,18 @@
+== Install Apps lists only compatible builds on iOS
+
+*Install Apps* in a manual session now lists only the app builds that can install on the current iOS device.
+
+*Highlights*
+
+- On an iOS Simulator, only simulator builds (`.app`) are listed. On a real iOS device, simulator builds are hidden.
+- *Upload File* and *Install From URL* accept a `.app` compressed to a `.zip` file on iOS Simulators.
+- Android sessions are unchanged.
+
+For details, see xref:manual-testing:install-an-app.adoc#_apps_listed_on_ios[Apps listed on iOS].
+
+// REVIEWER NOTE:
+// KOB-55176 | Component: App Repo | fixVersion: 2026.10.15 | Jira status: Released
+// Drafted by Robot Ranch (Town Crier) from the Jira release-note field.
+// Builds on .app upload support in the app repository (KOB-55175).
+// Not included: the optional iosBuildType API query parameter (intentionally undocumented per the
+// ticket), and the deviceConnect simulator fixes (admin surface, not in this repo).
