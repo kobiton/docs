@@ -57,38 +57,37 @@ Session Explorer now displays app crashes and their crash logs for sessions on A
 
 // ======== MANUAL TESTING ENTRIES ========
 
-// Source: KOB-55419 from PR #753
-
-== Manual testing
-
-- Fixed an issue where app installation errors in manual sessions hid the error reported by the device. For some iOS and Android errors, Kobiton Portal replaced the device error with its own explanation, which could point to the wrong cause. The error message now shows the device error text after `Failed to install '<app>'.`, for example `ApplicationVerificationFailed`, `INSTALL_FAILED_VERSION_DOWNGRADE`, `INSTALL_FAILED_UPDATE_INCOMPATIBLE`, `INSTALL_FAILED_OLDER_SDK`, or `DeviceOSVersionTooLow`. When an install error includes a Kobiton error code, the code still appears at the start of the message.
-- iOS installs that fail signature verification now show the `ApplicationVerificationFailed` error instead of an AS-500 message stating that *App signing using Kobiton Certificate (iOS)* is disabled. This error means the app's own signature isn't valid on the device, for example, because the provisioning profile doesn't include the device UDID or the profile or certificate has expired.
-
-// Source: KOB-53003 from PR #709 (broader scope)
-// Source: KOB-53785 from PR #708 (earlier Apple Pay-scoped entry; merged here)
-
-== Passcode entry in iOS manual sessions
-
-Enter the device passcode on iOS system passcode screens during a manual session. These screens appear for Apple Pay, the Wallet *Add Card* flow, and the hidden apps folder. iOS hides the keypad from the session video stream, so Kobiton Portal displays a tappable overlay.
-
-* A numeric keypad overlay appears on the session stream when the passcode screen is detected. Tap the overlay to enter the passcode. Entry progress shows as dots, and the digits are never displayed.
-* Select *Auto-fill passcode* to enter the device's configured passcode.
-* Use the *Passcode helper* menu on the session toolbar to show or hide the keypad overlay and to auto-fill the passcode.
-* The passcode helper supports iPhone screen sizes, portrait and landscape orientation, and Display Zoom.
-
-Available in manual sessions only. For Apple Pay steps, see xref:manual-testing:local-devices/use-apple-pay-in-manual-session.adoc[Use Apple Pay on iOS devices].
-
-// Source: KOB-53003 from PR #709 (Passcode support on Devices page)
+// Source: KOB-53003 from PR #709 (passcode helper overlay + Devices page support)
+// Source: KOB-53785 from PR #708 (earlier Apple Pay-scoped passcode entry; merged here)
 // Source: KOB-53007 from PR #707 (earlier Passcode filter entry; merged here)
 
-== Passcode support on the Devices page
+== Passcode entry support for iOS manual sessions
 
-Identify devices ready for passcode entry on the Devices page.
+You can now enter device passcodes during iOS manual sessions, including passcode prompts for Apple Pay, Wallet, and the hidden apps folder.
 
-* Filter the device list by *Passcode*, with *Supported* or *Not Supported* values, in the device search bar alongside criteria such as Operating System and Audio.
-* A passcode icon next to the device name in card view and list view marks devices ready for passcode entry. Hover over the icon to show *Passcode enabled - required for Apple Pay*.
+=== Enter device passcodes during a manual session
 
-A device is *Supported* when your organization has passcode (PIN) mode turned on and the device has a passcode set.
+When an iOS passcode screen appears, Kobiton Portal displays an interactive keypad overlay. Enter the passcode using the overlay or select *Auto-fill passcode* to use the device's configured passcode.
+
+The *Passcode helper* menu on the session toolbar provides controls for showing or hiding the keypad and auto-filling the passcode.
+
+=== Find devices that support passcode entry
+
+The Devices page now includes a *Passcode* filter with *Supported* and *Not Supported* options.
+
+Supported devices also display a passcode icon in card and list views, making them easier to identify before starting a session.
+
+Passcode entry is supported when your organization has passcode (PIN) mode turned on and the device has a passcode configured.
+
+For Apple Pay instructions, see xref:manual-testing:local-devices/use-apple-pay-in-manual-session.adoc[Use Apple Pay on iOS devices].
+
+// Source: KOB-55419 from PR #753
+
+== Improved app installation error messages in manual sessions
+
+When an app installation fails during a manual session, Kobiton Portal now displays the error reported by the device instead of replacing it with a potentially misleading explanation.
+
+For example, iOS signature verification failures now display `ApplicationVerificationFailed` instead of an AS-500 error about Kobiton certificate signing. Installation errors that include a Kobiton error code continue to display that code.
 
 // ======== AUTOMATION TESTING ENTRIES ========
 
