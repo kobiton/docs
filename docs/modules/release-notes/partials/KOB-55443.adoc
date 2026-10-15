@@ -1,0 +1,15 @@
+== iOS simulators
+
+- Automation sessions that request Safari (`browserName: Safari`) on an iOS simulator are now refused at session start with the message `Web testing is not supported on iOS simulators. Please use a real iOS device.` Previously, these sessions failed with an internal error that did not state the cause. Web testing remains unsupported on iOS simulators. Run web tests on a real iOS device.
+
+// REVIEWER NOTE:
+// KOB-55443 | Team: Phoenix | Component: Emulator/Simulator | Jira status: Wait For Deployment
+// Release Notes field: Release Email (customer-facing). QA verification comment: TEST PASSED
+// on both runtimes, iPhone and iPad simulators, two Xcode versions. Message text is quoted
+// verbatim from the verified session-start reply.
+// OPEN QUESTION: the 2026-08-07 page records a manager decision not to advertise fixes for
+// simulator surfaces because simulators were not yet supported. iOS simulator support is still
+// an in-progress epic. Confirm iOS simulators are customer-available before publishing.
+// Intentionally omitted: the refused start still returns HTTP 500 and is still recorded as a
+// terminated session, so this entry does not claim a change to status codes or session records.
+// No fixVersion or release label is set on the ticket; confirm the target release page.
