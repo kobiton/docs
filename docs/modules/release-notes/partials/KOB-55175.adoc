@@ -1,0 +1,8 @@
+// Source: KOB-55175 (Story, Released, no fix version set in Jira)
+// Applies to: Kobiton Cloud. Confirm whether a Standalone release also includes this change.
+// Scope: Upload and App Repo management only. Installing and launching apps on iOS Simulator devices is tracked under separate tickets.
+
+=== App management
+
+* *iOS Simulator builds:* The app repository now accepts iOS Simulator builds (`.app` bundles). Compress the `.app` bundle to a `.zip` file, then upload it from the app repository, API v2, or the Kobiton CLI. A `.app` file that is a `.zip` archive is also accepted. Selecting an uncompressed `.app` in the app repository displays a message to compress it first.
+* *Simulator apps in the app repository:* Simulator apps display the Apple watermark and support search, versions, lock, delete, and download, the same as other iOS apps. Simulator builds can't be installed on real devices. For details, see xref:apps:supported-filetypes.adoc[].
