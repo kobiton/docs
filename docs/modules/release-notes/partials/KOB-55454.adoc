@@ -1,0 +1,23 @@
+== Cleanup on iOS Simulators
+
+Cleanup now erases an iOS Simulator and returns it to its default state, instead of running the individual cleanup configurations.
+
+*Highlights*
+
+- Apps installed during the session, app data, Safari history and tabs, and Settings changes are removed when cleanup runs.
+- The erase runs every time cleanup runs on a simulator, on any iOS version. The individual configurations in a cleanup policy don't apply to simulators. The _No Cleanup_ policy still skips cleanup.
+- Time zone and locale return to the simulator's defaults.
+- The simulator becomes available again without action on the host. Real iOS devices keep the cleanup configured in their policy.
+
+For details, see xref:devices:local-devices/cleanup-policy/cleanup-configurations.adoc#_ios_simulators[iOS Simulators].
+
+// Source: KOB-55454
+// REVIEWER NOTE (KOB-55454): Component: Cleanup Policy, deviceConnect, Emulator/Simulator.
+// Jira status is Wait For Deployment and no fix version is set. The ticket selects both
+// "Release Email" and "Support Notes" as release-note targets. Confirm the deviceConnect
+// release that includes this change before you publish.
+// REVIEWER NOTE (KOB-55454): Confirm that iOS Simulator support is available to customers in
+// this release. The parent simulator support epic is still in progress.
+// REVIEWER NOTE (KOB-55454): Not included: host configuration needed to enable simulators and
+// MDM behavior (admin surface), and the brief offline period QA observed after some erases
+// (documented on the cleanup configurations page instead).
