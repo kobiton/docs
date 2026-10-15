@@ -31,7 +31,7 @@ Linux::
 
 ** Red Hat Enterprise Linux (RHEL) 9 or later (Red Hat-based).
 
-* For iOS devices: `usbmuxd` from libimobiledevice. Ubuntu 22.04 and later include `usbmuxd` by default.
+* For iOS devices: `usbmuxd` from libimobiledevice. The supported distributions include `usbmuxd` by default.
 
 virtualUSB for Linux is a command-line tool only. There is no desktop app. For supported iOS versions, see xref:debugging:start-debugging.adoc#_considerations[Considerations in Start debugging,window=read-later].
 --
@@ -193,7 +193,7 @@ The installer adds `vusb` to the system `PATH`, so `vusb` runs from any director
 
 [source,shell]
 ----
-vusb help
+vusb --version
 ----
 --
 ======
