@@ -204,15 +204,16 @@ Flip-style foldable devices, such as Galaxy Z Flip, are not supported.
 
 For details, see xref:manual-testing:device-controls.adoc#_fold_or_unfold_device[Device controls] and xref:session-explorer:analytics/use-the-session-timeline.adoc#_review_fold_and_unfold_steps[Review fold and unfold steps].
 
-// ======== DEVICECONNECT ========
+// ======== iOS DEVICE RELIABILITY ========
 
 // EDITOR NOTE: KOB-55440 (deviceConnect Console error counts) stripped — Hybrid/Standalone surface,
 // belongs in Standalone notes, not Cloud public notes.
 //
-// EDITOR NOTE — CARRYOVER FROM LAST WEEK: The entries below (KOB-55444, KOB-50523, KOB-55245,
-// KOB-55369) are carried over from last week's draft. The deviceConnect release was delayed from
-// last week to this week, so these are candidates for inclusion in this week's publication.
-// Confirm with manager whether to incorporate all / some / none.
+// EDITOR NOTE — CARRYOVER FROM LAST WEEK: The entries below (KOB-55444, KOB-50523, KOB-55245)
+// are carried over from last week's draft. The deviceConnect release was delayed from last week
+// to this week, so these are candidates for inclusion in this week's publication. KOB-55369
+// (Cambrionix hub + HarmonyOS trigger) stripped — Hybrid/Standalone surface, Public Cloud
+// customers can't hit it. Confirm with manager whether to incorporate the remaining three.
 //
 // EDITOR NOTE — KOB-55247 ("iOS system alerts in automation sessions") was already published in
 // all-releases/2026-10-02.adoc. New Jira evidence flags a follow-up iOS 26 location permission
@@ -234,17 +235,10 @@ For details, see xref:manual-testing:device-controls.adoc#_fold_or_unfold_device
 
 // Source: KOB-55245 from PR #651
 
-== iOS device health checks and passcode mode
+== iOS device health checks
 
-- When the XCTest runner fails to start on an iOS device, the device health check now reports the runner error, such as `Failed to load the test bundle`. Previously, deviceConnect attempted to clear the device passcode first, and a passcode error such as `Missing organization certificate` replaced the runner error.
-- deviceConnect no longer removes a device passcode when a runner failure is unrelated to the passcode. The device keeps its passcode.
-- In organizations that use passcode mode, deviceConnect no longer sets a passcode on an iOS device that is not supervised by the organization. The device health check fails with `Cannot set passcode: the device is not supervised by this organization.`, and the device stays unavailable until it is supervised or passcode mode is turned off. A session that requests a passcode on such a device fails at setup.
-
-// Source: KOB-55369 from PR #674
-
-== deviceConnect
-
-- Fixed an issue where deviceConnect on macOS listed a device that did not exist when the host used a Cambrionix PowerPad15S hub and a HarmonyOS `hdc` server was running on the host. The extra device used the hub's USB-serial control port as its identifier, such as `/dev/cu.usbserial-<hub-serial>`, and appeared in the device lists in deviceConnect and Kobiton Portal as *Online* with a connectivity error. The hub, its ports, and the devices connected to it continue to work as before.
+- When the XCTest runner fails to start on an iOS device, the device health check now reports the runner error, such as `Failed to load the test bundle`. Previously, Kobiton attempted to clear the device passcode first, and a passcode error such as `Missing organization certificate` replaced the runner error.
+- The device passcode is no longer removed when a runner failure is unrelated to the passcode. The device keeps its passcode.
 
 == Wait For Deployment (10/15)
 
