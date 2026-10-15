@@ -1,0 +1,14 @@
+== iOS Simulators
+
+- Fixed an issue where Mac mini hosts with iOS Simulator support turned on showed a "deviceControl quit unexpectedly" dialog and saved a crash report each time a simulator started. Simulators still came online, and sessions were not affected.
+
+// REVIEWER NOTE:
+// KOB-55458 | Team: Phoenix | Component: Emulator/Simulator (deviceConnect) | Jira status: Wait For Deployment
+// Jira Release Notes field: "Release Email" and "Support Notes" are both selected.
+// Confirm before publishing:
+// - The 2026-08-07 page removed a simulator fix because simulators were not customer-supported at the time.
+//   Confirm that iOS Simulator support on hosts is now available to customers.
+// - QA passed on a deviceConnect feature-branch build. Confirm the fix ships in the deviceConnect build for this release.
+// - The host setting that turns on simulator support is not publicly documented, so this entry does not name it.
+// - The fix also changes how the host app starts on real devices. The ticket documents no user-visible
+//   real-device symptom, so this entry does not claim a real-device fix.
