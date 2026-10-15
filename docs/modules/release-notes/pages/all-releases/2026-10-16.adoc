@@ -202,20 +202,22 @@ A device is *Supported* when your organization has passcode (PIN) mode turned on
 
 // ======== AUTOMATION TESTING ENTRIES ========
 
-// Source: KOB-54326 from PR #722
+// Source: KOB-54326 from PR #722 (organization settings UI)
+// Source: KOB-55121 from PR #723 (session behavior; shipped with KOB-54326)
 // https://github.com/kobiton/docs/pull/722
+// https://github.com/kobiton/docs/pull/723
 
 == Appium AI organization settings
 
-Administrators can now configure Appium AI for the whole organization in Kobiton Portal. New Appium sessions use the organization's LLM provider and locator settings without requiring per-session configuration.
+Administrators can now configure Appium AI for the whole organization in Kobiton Portal. New Appium sessions use the organization's LLM provider and locator settings — endpoint, models, and API key — without extra capabilities in test scripts.
 
 *Highlights*
 
-* Turn Appium AI on or off for the organization.
+* Turn Appium AI on or off for the organization. When Appium AI is off, natural language finds fail with the error `LLM client is disabled for this organization`, and session capabilities cannot turn it back on.
 * Set the default LLM endpoint, API key, API format, text and vision models, extra request body, locator strategy, and coordinate space.
 * Require an API key whenever an LLM endpoint is set, except for the Ollama chat API format.
 * Apply saved settings to new sessions on every device host in the organization. Running sessions keep their current settings.
-* Override organization settings for a single session with `kobiton:*` desired capabilities.
+* Override organization settings for a single session with `kobiton:*` desired capabilities. Session capabilities take precedence field by field. Organizations without LLM settings continue to use the host defaults.
 
 For details, see xref:automation-testing:appium-ai/configure-appium-ai-org-settings.adoc[Configure Appium AI settings for your organization].
 
@@ -373,43 +375,6 @@ For details, see xref:manual-testing:device-controls.adoc#_fold_or_unfold_device
 // whether any deviceConnect notes from last week's draft should be carried into this page.
 
 == Wait For Deployment (10/15)
-
-// Source: KOB-55121 from PR #723
-// https://github.com/kobiton/docs/pull/723
-
-=== Appium AI
-
-- Appium AI now uses the LLM settings configured for your organization. Natural language finds use your organization's endpoint, models, and API key without host configuration changes or extra capabilities in test scripts. Session capabilities (`kobiton:llm*`) still take precedence, field by field. Organizations without LLM settings keep using the host defaults.
-- Organization admins can turn off Appium AI for their organization. When Appium AI is off, natural language finds fail with the error `LLM client is disabled for this organization`, and session capabilities cannot turn it back on.
-
-// REVIEWER NOTE:
-// KOB-55121 | Status: Wait For Deployment | Components: Appium, deviceConnect
-// Source: Jira Release Notes field, description (updated 2026-10-10), and acceptance criteria.
-// Release Notes field wording adjusted: "for all of the organization's hosts" replaced with
-// "for their organization". The 2026-10-10 description update states the organization layer is
-// the session user's organization, not the organization that owns the host.
-// "dc.ini" removed from public wording per the Cloud release-note rule (Cloud customers do not
-// configure dc.ini). Replaced with "host configuration" / "host defaults".
-// Verify before publishing: the organization settings UI (KOB-54326) ships in the same release,
-// and the exact Portal label for the Appium AI LLM settings.
-// Natural language locators are not available on Public Cloud devices; this entry applies to
-// private device deployments.
-
-// Source: KOB-53282 from PR #712
-// https://github.com/kobiton/docs/pull/712
-
-=== Appium AI organization settings
-
-Organizations can now turn Appium AI on or off and set a default LLM provider in Kobiton. Appium sessions started by members of the organization use these settings, so LLM provider details no longer need to be entered in `dc.ini` on each host.
-
-* Turn Appium AI on or off for the whole organization.
-* Set a default LLM provider base URL, API key, API format, models, and locator strategy.
-* Override any provider setting for a single session with `kobiton:*` capabilities.
-* Existing `dc.ini` configurations continue to work.
-
-Appium AI remains in Beta and is not available for Public Cloud devices.
-
-For details, see xref:automation-testing:appium-ai/configure-appium-ai-for-your-organization.adoc[Configure Appium AI for your organization].
 
 // Source: KOB-55461 from PR #725
 // https://github.com/kobiton/docs/pull/725
