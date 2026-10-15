@@ -127,83 +127,6 @@ Automation and mixed sessions are not affected.
 
 * Bug Fix: Fixed an issue where XCUITest sessions that ran tests showed Session Explorer steps labeled `null` with no screenshots. These sessions now open on *Overview*, and the *Explorer* tab shows "Explorer is not available for this session." Sessions with recorded steps are not affected.
 
-// ======== MANUAL TESTING ENTRIES ========
-
-// Source: KOB-55419 from PR #753
-// https://github.com/kobiton/docs/pull/753
-
-=== Manual testing
-
-- Fixed an issue where app installation errors in manual sessions hid the error reported by the device. For some iOS and Android errors, Kobiton Portal replaced the device error with its own explanation, which could point to the wrong cause. The error message now shows the device error text after `Failed to install '<app>'.`, for example `ApplicationVerificationFailed`, `INSTALL_FAILED_VERSION_DOWNGRADE`, `INSTALL_FAILED_UPDATE_INCOMPATIBLE`, `INSTALL_FAILED_OLDER_SDK`, or `DeviceOSVersionTooLow`. When an install error includes a Kobiton error code, the code still appears at the start of the message.
-- iOS installs that fail signature verification now show the `ApplicationVerificationFailed` error instead of an AS-500 message stating that *App signing using Kobiton Certificate (iOS)* is disabled. This error means the app's own signature isn't valid on the device, for example, because the provisioning profile doesn't include the device UDID or the profile or certificate has expired.
-
-// REVIEWER NOTE (KOB-55419): Successful installs and app install behavior are unchanged per Jira.
-// REVIEWER NOTE (KOB-55419): QA passed 13 of 14 cases. One case is inconclusive: an unparsable APK
-// showed "App was not installed because failed to parse app." instead of a raw device error.
-// This entry is scoped to the error groups listed in the ticket. Do not broaden it to "all install
-// errors" until engineering confirms that case.
-// REVIEWER NOTE (KOB-55419): Customer-specific context in the ticket is intentionally excluded.
-
-// Source: KOB-53003 from PR #709
-// https://github.com/kobiton/docs/pull/709
-
-== Passcode entry in iOS manual sessions
-
-Enter the device passcode on the iOS system passcode screen during a manual session. This screen appears for Apple Pay, the Wallet *Add Card* flow, and the hidden apps folder, and iOS hides its keypad from the session video stream.
-
-* A numeric keypad overlay appears on the session stream when the passcode screen is detected. Tap the overlay to enter the passcode.
-* Select *Auto-fill passcode* to enter the device's configured passcode.
-* Use the *Passcode helper* menu on the session toolbar to show or hide the keypad overlay and to auto-fill the passcode.
-
-== Passcode support on the Devices page
-
-* Filter the device list by *Passcode*, with *Supported* or *Not Supported* values, in the device search bar.
-* A passcode icon next to the device name in card view and list view marks devices ready for passcode entry. Hover over the icon to show *Passcode enabled - required for Apple Pay*.
-
-A device is supported when your organization has passcode (PIN) mode enabled and the device has a passcode set.
-
-// REVIEWER NOTE: Confirm availability (Private and Local devices only, or all iOS devices in passcode mode)
-// before publishing.
-
-// Source: KOB-53785 from PR #708
-// https://github.com/kobiton/docs/pull/708
-
-== Apple Pay passcode entry in manual sessions
-
-Enter the device passcode on the Apple Pay confirmation screen during manual sessions on iOS devices. iOS displays this screen as blank in the live stream.
-
-*Highlights*
-
-* Click *Passcode helper* to show the hidden passcode keypad as a tappable overlay on the device screen.
-* Taps on the overlay enter the passcode directly on the device. Entry progress shows as dots, and the digits are never displayed.
-* The passcode helper supports iPhone screen sizes, portrait and landscape orientation, and Display Zoom.
-
-*Availability*
-
-Available in manual sessions only.
-
-For steps, see xref:manual-testing:local-devices/use-apple-pay-in-manual-session.adoc[Use Apple Pay on iOS devices].
-
-// Source: KOB-53007 from PR #707
-// https://github.com/kobiton/docs/pull/707
-
-== Passcode filter on the Devices page
-
-- Filter the device list by passcode support. A new *Passcode* filter, with *Supported* and *Not Supported* values, is available in the device search bar alongside criteria such as Operating System and Audio.
-- A device shows as *Supported* when your organization has passcode (PIN) mode turned on and the device has a passcode set.
-
-// REVIEWER NOTE (KOB-53007): The Jira Release Notes field describes a Passcode filter. The ticket's
-// implementation plan describes a different change: a passcode icon with the tooltip "Passcode enabled
-// - required for Apple Pay" on device cards and list rows, shown regardless of the organization
-// passcode setting, with the filter descoped. Confirm which UI shipped before publishing. If the icon
-// shipped, add it here and to devices:device-metadata.adoc.
-// REVIEWER NOTE (KOB-53007): Apple Pay testing also requires AssistiveTouch setup. The entry does not
-// claim that Supported devices are ready for Apple Pay.
-// REVIEWER NOTE (KOB-53007): Apple Pay testing is limited to Private and Local iOS devices. Confirm
-// whether the filter applies to Android devices and Cloud devices.
-// REVIEWER NOTE (KOB-53007): The Jira release-communication field also requests internal Support Notes.
-// No support-notes content exists in the evidence, and none is included here.
-
 // Source: KOB-55400 from PR #724
 // https://github.com/kobiton/docs/pull/724
 
@@ -216,6 +139,66 @@ For steps, see xref:manual-testing:local-devices/use-apple-pay-in-manual-session
 // whether it needs a customer-facing mention.
 // REVIEWER NOTE (KOB-55400): Fix Version is empty in Jira. Confirm the target release before
 // including this partial in a dated release page.
+
+// ======== MANUAL TESTING ENTRIES ========
+
+// Source: KOB-55419 from PR #753
+// https://github.com/kobiton/docs/pull/753
+
+== Manual testing
+
+- Fixed an issue where app installation errors in manual sessions hid the error reported by the device. For some iOS and Android errors, Kobiton Portal replaced the device error with its own explanation, which could point to the wrong cause. The error message now shows the device error text after `Failed to install '<app>'.`, for example `ApplicationVerificationFailed`, `INSTALL_FAILED_VERSION_DOWNGRADE`, `INSTALL_FAILED_UPDATE_INCOMPATIBLE`, `INSTALL_FAILED_OLDER_SDK`, or `DeviceOSVersionTooLow`. When an install error includes a Kobiton error code, the code still appears at the start of the message.
+- iOS installs that fail signature verification now show the `ApplicationVerificationFailed` error instead of an AS-500 message stating that *App signing using Kobiton Certificate (iOS)* is disabled. This error means the app's own signature isn't valid on the device, for example, because the provisioning profile doesn't include the device UDID or the profile or certificate has expired.
+
+// REVIEWER NOTE (KOB-55419): Successful installs and app install behavior are unchanged per Jira.
+// REVIEWER NOTE (KOB-55419): QA passed 13 of 14 cases. One case is inconclusive: an unparsable APK
+// showed "App was not installed because failed to parse app." instead of a raw device error.
+// This entry is scoped to the error groups listed in the ticket. Do not broaden it to "all install
+// errors" until engineering confirms that case.
+// REVIEWER NOTE (KOB-55419): Customer-specific context in the ticket is intentionally excluded.
+
+// Source: KOB-53003 from PR #709 (broader scope)
+// Source: KOB-53785 from PR #708 (earlier Apple Pay-scoped entry; merged here)
+// https://github.com/kobiton/docs/pull/709
+// https://github.com/kobiton/docs/pull/708
+
+== Passcode entry in iOS manual sessions
+
+Enter the device passcode on iOS system passcode screens during a manual session. These screens appear for Apple Pay, the Wallet *Add Card* flow, and the hidden apps folder. iOS hides the keypad from the session video stream, so Kobiton Portal displays a tappable overlay.
+
+* A numeric keypad overlay appears on the session stream when the passcode screen is detected. Tap the overlay to enter the passcode. Entry progress shows as dots, and the digits are never displayed.
+* Select *Auto-fill passcode* to enter the device's configured passcode.
+* Use the *Passcode helper* menu on the session toolbar to show or hide the keypad overlay and to auto-fill the passcode.
+* The passcode helper supports iPhone screen sizes, portrait and landscape orientation, and Display Zoom.
+
+Available in manual sessions only. For Apple Pay steps, see xref:manual-testing:local-devices/use-apple-pay-in-manual-session.adoc[Use Apple Pay on iOS devices].
+
+// Source: KOB-53003 from PR #709 (Passcode support on Devices page)
+// Source: KOB-53007 from PR #707 (earlier Passcode filter entry; merged here)
+// https://github.com/kobiton/docs/pull/709
+// https://github.com/kobiton/docs/pull/707
+
+== Passcode support on the Devices page
+
+Identify devices ready for passcode entry on the Devices page.
+
+* Filter the device list by *Passcode*, with *Supported* or *Not Supported* values, in the device search bar alongside criteria such as Operating System and Audio.
+* A passcode icon next to the device name in card view and list view marks devices ready for passcode entry. Hover over the icon to show *Passcode enabled - required for Apple Pay*.
+
+A device is *Supported* when your organization has passcode (PIN) mode turned on and the device has a passcode set.
+
+// REVIEWER NOTE (KOB-53003): Confirm availability (Private and Local devices only, or all iOS devices in passcode mode) before publishing.
+// REVIEWER NOTE (KOB-53007): The Jira Release Notes field describes a Passcode filter. The ticket's
+// implementation plan describes a different change: a passcode icon with the tooltip "Passcode enabled
+// - required for Apple Pay" on device cards and list rows, shown regardless of the organization
+// passcode setting, with the filter descoped. Confirm which UI shipped before publishing. If the icon
+// shipped, add it here and to devices:device-metadata.adoc.
+// REVIEWER NOTE (KOB-53007): Apple Pay testing also requires AssistiveTouch setup. The entry does not
+// claim that Supported devices are ready for Apple Pay.
+// REVIEWER NOTE (KOB-53007): Apple Pay testing is limited to Private and Local iOS devices. Confirm
+// whether the filter applies to Android devices and Cloud devices.
+// REVIEWER NOTE (KOB-53007): The Jira release-communication field also requests internal Support Notes.
+// No support-notes content exists in the evidence, and none is included here.
 
 // ======== AUTOMATION TESTING ENTRIES ========
 
