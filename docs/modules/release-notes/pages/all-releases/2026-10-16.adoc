@@ -158,6 +158,24 @@ The new `GET /v2/devices/{deviceId}/installed-apps` and `GET /v2/devices/udid/{u
 
 Results include each application's bundle ID, name, version, and build version. An optional parameter also returns the Kobiton app repository version ID when a matching version exists.
 
+// ======== iOS DEVICE RELIABILITY ========
+
+// EDITOR NOTE - Three carryover candidates: KOB-55444, KOB-50523, and KOB-55245.
+
+// Source: KOB-55444 from PR #699
+// Source: KOB-50523 from PR #694
+// Source: KOB-55245 from PR #651
+
+== Improved reliability for iOS and iPadOS devices
+
+Several fixes improve device connections, cleanup, and health checks on iOS and iPadOS devices.
+
+* *Device connections:* Fixed intermittent Developer Disk Image (DDI) mounting failures on newer iOS devices, including iPhone 18 models running iOS 26.4 and later. This also resolves failures when a DDI is already mounted.
+
+* *Device cleanup:* Device cleanup now correctly resets settings such as time zone, language, and HTTP proxy on devices with newer iOS and iPadOS Settings layouts.
+
+* *Device health checks:* When an XCTest runner fails to start, the device health check now reports the underlying runner error instead of an unrelated passcode error. The device also retains its passcode when the failure is unrelated to passcode configuration.
+
 // ======== FOLDABLES (UNSURE IF INCLUDING) ========
 
 // Source: KOB-55167 from PR #715 (session toolbar fold control)
@@ -182,42 +200,6 @@ Session Explorer records each fold or unfold action as a timeline step, includin
 Screenshots retain the screen dimensions of the active posture, and touch and swipe markers remain aligned with the captured screen.
 
 This functionality supports book-style foldable devices, such as Galaxy Z Fold and Pixel Fold. Flip-style devices, such as Galaxy Z Flip, are not supported.
-
-// ======== iOS DEVICE RELIABILITY ========
-
-// EDITOR NOTE: KOB-55440 (deviceConnect Console error counts) stripped — Hybrid/Standalone surface,
-// belongs in Standalone notes, not Cloud public notes.
-//
-// EDITOR NOTE — CARRYOVER FROM LAST WEEK: The entries below (KOB-55444, KOB-50523, KOB-55245)
-// are carried over from last week's draft. The deviceConnect release was delayed from last week
-// to this week, so these are candidates for inclusion in this week's publication. KOB-55369
-// (Cambrionix hub + HarmonyOS trigger) stripped — Hybrid/Standalone surface, Public Cloud
-// customers can't hit it. Confirm with manager whether to incorporate the remaining three.
-//
-// EDITOR NOTE — KOB-55247 ("iOS system alerts in automation sessions") was already published in
-// all-releases/2026-10-02.adoc. New Jira evidence flags a follow-up iOS 26 location permission
-// alert case that may still fail. Per the frozen-page rule, no retroactive edit to 2026-10-02;
-// a correction or known-issue note would need to live on a later release page. Confirm with
-// manager whether to add a known issue here or wait for the follow-up fix to ship.
-
-// Source: KOB-55444 from PR #699
-
-== iOS device connection
-
-- deviceConnect now reliably mounts the Developer Disk Image (DDI) on newer iOS devices, such as iPhone 18 models running iOS 26.4 and later. Previously, the DDI mount could fail intermittently, or fail when a DDI was already mounted on the device.
-
-// Source: KOB-50523 from PR #694
-
-== Device cleanup on iOS and iPadOS
-
-- Device cleanup on iOS and iPadOS now resets settings such as time zone, language, and HTTP proxy on devices with the newer Settings layout. Previously, layout changes in newer iOS and iPadOS releases could cause these cleanup steps to fail with an `Error while cleaning up device, cleanup steps failed` message.
-
-// Source: KOB-55245 from PR #651
-
-== iOS device health checks
-
-- When the XCTest runner fails to start on an iOS device, the device health check now reports the runner error, such as `Failed to load the test bundle`. Previously, Kobiton attempted to clear the device passcode first, and a passcode error such as `Missing organization certificate` replaced the runner error.
-- The device passcode is no longer removed when a runner failure is unrelated to the passcode. The device keeps its passcode.
 
 // Source: KOB-55472 from PR #739
 
