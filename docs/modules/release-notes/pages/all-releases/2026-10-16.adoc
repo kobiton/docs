@@ -40,15 +40,14 @@ For sessions without captured device logs, *View Device Logs* and *Download all*
 
 // ======== SESSION EXPLORER ========
 
-// Source: KOB-55471 from PR #737
+// Source: KOB-55471 from PR #737 (sessions with no recorded steps)
+// Source: KOB-55496 from PR #744 (XCUITest null-labeled steps)
 
-== Session Explorer
+== Improved handling of sessions without recorded steps
 
-- Fixed an issue where sessions with no recorded steps opened on an empty Session Explorer. These sessions now open on *Session Overview*, and the *Explorer* tab shows _Explorer is not available for this session_. Sessions with recorded steps still open on Session Explorer.
+Sessions without recorded steps now open on Session Overview instead of an empty Session Explorer. The *Explorer* tab displays "Explorer is not available for this session."
 
-// Source: KOB-55496 from PR #744
-
-* Bug Fix: Fixed an issue where XCUITest sessions that ran tests showed Session Explorer steps labeled `null` with no screenshots. These sessions now open on *Overview*, and the *Explorer* tab shows "Explorer is not available for this session." Sessions with recorded steps are not affected.
+This also fixes an issue where XCUITest sessions displayed steps labeled `null` with no screenshots.
 
 // Source: KOB-55400 from PR #724
 
