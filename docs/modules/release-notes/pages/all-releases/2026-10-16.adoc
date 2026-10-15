@@ -11,43 +11,32 @@ Cloud release notes are typically published weekly and summarize changes since t
 
 // ======== KOBITON CLI ========
 
-// Source: KOB-52718 from PR #743
+// Source: KOB-52718 from PR #743 (--capture option)
+// Source: KOB-55503 from PR #738 (per-step device logs)
+// Source: KOB-55494 from PR #734 (View Device Logs disabled when no logs)
+// Source: KOB-55504 from PR #735 (no duplicate session-creation steps)
+// Source: KOB-55505 from PR #736 (screenshot carryover and Appium Inspector)
 
-== Kobiton CLI: Session Explorer for CLI sessions
+== Session Explorer support for Kobiton CLI sessions
 
-- Added the `--capture` option to `kobiton session create`. List the session data to capture, such as `screenshots`, `view-trees`, `logs`, `metrics`, or `video`, and review it in Session Explorer. Capture is opt-in. CLI sessions created without `--capture` capture no session data and continue to open on Session Overview.
+Kobiton CLI sessions now support capturing and reviewing session activity in Session Explorer. Captured data provides a more detailed view of commands, device logs, and screenshots throughout a session.
 
-// Source: KOB-55503 from PR #738
+=== Capture session data from the Kobiton CLI
 
-=== Accurate per-step device logs for Kobiton CLI sessions
+Use the new `--capture` option with `kobiton session create` to specify which session data to capture, including screenshots, view trees, device logs, metrics, and video.
 
-- Fixed an issue where per-step device logs for Kobiton CLI sessions appeared under the wrong step or were empty. Each step now shows the device log lines recorded since the previous step, and the first step shows the lines recorded before it.
+Session capture is optional. CLI sessions created without `--capture` continue to open on Session Overview, with Session Explorer unavailable.
 
-// Source: KOB-55494 from PR #734
+=== Review CLI session activity in Session Explorer
 
-=== Session Overview
+Session Explorer now provides a more accurate view of captured CLI session activity:
 
-- Fixed an issue where *View Device Logs* showed a `Failed to download log content` error for sessions that captured no device logs, such as Kobiton CLI sessions created without `logs` in the capture list. For these sessions, *View Device Logs* is now disabled, and its tooltip says "No device logs were captured for this session". *Download all* is also disabled when the session captured no logs at all. Sessions with device logs are unchanged.
+* *Session timeline:* The timeline shows session creation once, followed by a step for each `kobiton webdriver` call, without duplicate session creation steps.
+* *Device logs:* Each step displays the device logs recorded since the previous step, making it easier to associate log entries with the corresponding activity.
+* *Screenshots:* Steps without their own screenshot display the screenshot from the previous step instead of showing "Screenshot Not Available". This behavior also applies to session command APIs.
+* *Appium Inspector:* Screenshots and XML hierarchies follow the same display behavior, while remaining associated with the appropriate session steps.
 
-// Source: KOB-55504 from PR #735
-
-=== Fewer duplicate steps in Kobiton CLI session timelines
-
-The Session Explorer timeline for Kobiton CLI sessions no longer shows an extra `POST /session` step for every `kobiton webdriver` call. The timeline now shows the session creation once, followed by one step for each call.
-
-* Repeated session creation requests are hidden from the timeline but remain in the session's command data.
-* A failed session creation request still appears as a step.
-* The device logs for each call include the log lines since the previous call.
-* CLI sessions recorded before this change display the same way.
-
-Automation and mixed sessions are not affected.
-
-// Source: KOB-55505 from PR #736
-
-=== Kobiton CLI: Screenshots in Session Explorer
-
-- Steps in CLI sessions that do not have their own screenshot now show the screenshot from the previous step, as automation sessions do. Previously, these steps showed "Screenshot Not Available". This applies in Session Explorer and in the session command APIs.
-- The XML hierarchy in *Appium Inspector* follows the same rule. *Appium Inspector* never pairs a screenshot with the XML hierarchy from an earlier step.
+For sessions without captured device logs, *View Device Logs* and *Download all* are unavailable rather than displaying an error.
 
 // ======== SESSION EXPLORER ========
 
