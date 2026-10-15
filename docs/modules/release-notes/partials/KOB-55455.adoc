@@ -1,0 +1,24 @@
+// Source: KOB-55455
+// Release-note partial drafted by Robot Ranch. Requires docs-team review before publication.
+
+== iOS simulator session fixes
+
+- Fixed an issue where changing the device language in a manual session on an iOS 27 simulator ended the session about 60 seconds later. The viewer now shows *Device agent is recovered* after the language change, and you can continue testing in the new language.
+- The session can pause for up to 120 seconds while the device agent restarts after a language change. If the agent cannot restart on an iOS simulator, the session now ends after up to 120 seconds instead of 60 seconds. Real devices are unchanged.
+
+// REVIEWER NOTE (KOB-55455): Public docs describe virtual devices as Android emulators only
+// (manual-testing:start-a-virtual-session.adoc). No current page documents iOS simulators.
+// Confirm that iOS simulator support is public before you publish, and confirm the public term
+// ("iOS simulator" versus "virtual device").
+//
+// REVIEWER NOTE (KOB-55455): QA passed the language-change cases on iOS 27.0, 26.5, 18.6, and 16.4
+// simulators. In the QA notes, two iOS 27.0 simulators that changed language at the same time on a
+// heavily loaded host sometimes still ended after 120 seconds. QA linked this to host load. Omitted
+// here; confirm with engineering whether it needs a known-issue note.
+//
+// REVIEWER NOTE (KOB-55455): Jira status is Wait For Deployment and no fix version is set. The fix
+// ships in deviceConnect. Confirm the release that includes it and the target publication (Cloud
+// weekly page versus Standalone/Hybrid page) before you publish.
+//
+// REVIEWER NOTE (KOB-55455): The Jira release-note type includes both "Release Email" and
+// "Support Notes". Only the customer-facing part is drafted here.
