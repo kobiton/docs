@@ -1,0 +1,36 @@
+// KOB-55421. Robot Ranch draft release-note partial. Requires docs-team review before publishing.
+// Source: Jira KOB-55421 (Bug, status: Wait For Deployment; Release Notes field populated;
+// Release Notes destination includes "Release Email"; product: deviceConnect (Phoenix)).
+// No fix version is set in Jira. Confirm the target release before including this partial in a release page.
+// Applies to: manual sessions on iOS simulators. Real iOS devices are unchanged per Jira.
+// Suggested placement: "Bug fixes and improvements" > "Manual testing".
+
+=== Manual testing
+
+- Fixed an issue where *Set device timezone* failed on iOS simulators in manual sessions and showed `Cannot set the device time zone. Please try again.` You can now change the time zone of an iOS simulator from the session toolbar, and the simulator's status bar clock shows the new time zone.
+- Each time zone change on an iOS simulator pauses the simulator screen for several seconds and closes the app in the foreground. Relaunch the app to continue testing.
+- When the cleanup policy resets the time zone after a session, iOS simulators now return to the time zone of their host.
+
+// REVIEWER NOTE (KOB-55421): BLOCKER TO CONFIRM BEFORE PUBLISHING. iOS simulators are not yet
+// documented as a supported virtual device type. The "Start a virtual session" page describes
+// Android-based virtual devices only, the parent epic (Support iOS Simulators) is still in progress,
+// and the simulator user guide (KOB-55343) is not written yet. The 2026-08-07 release page records a
+// manager decision not to advertise fixes for simulator surfaces that customers do not use yet.
+// Jira explicitly selects "Release Email" as a destination for this ticket, so this partial is
+// drafted, but product must confirm that iOS simulators are customer-available before it ships.
+// If they are not, hold this entry until the simulator release.
+//
+// REVIEWER NOTE (KOB-55421): Jira gives the pause as "about 7-10 seconds". The entry says
+// "several seconds" because the figure comes from QA testing. Confirm whether to state the range.
+//
+// REVIEWER NOTE (KOB-55421): The toolbar label is *Set device timezone* on the Device controls page,
+// but Jira writes "Set device time zone". Confirm the current UI label.
+//
+// REVIEWER NOTE (KOB-55421): The cleanup bullet is based on the Jira Release Notes field ("in
+// cleanup's time zone reset") and the QA test note. The Cleanup configurations page currently says
+// cleanup resets the time zone "to the device's physical location". Confirm that "time zone of their
+// host" is the right public wording for simulators, or drop the bullet.
+//
+// REVIEWER NOTE (KOB-55421): Product docs follow-up. Jira expects simulator time zone behavior to
+// be covered in the simulator user guide (KOB-55343). The Device controls page was not changed in this
+// branch because iOS simulators are not yet publicly documented.
