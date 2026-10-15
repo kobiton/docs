@@ -144,29 +144,19 @@ For details, see xref:ai:mcp/ai-plugin-mcp-ref.adoc[Kobiton AI plugin and tools 
 
 == Reset stuck device states with the Kobiton API
 
-Org admins can now use the Kobiton API to reset devices whose state is stuck on the wrong value, such as a device that still shows as in use after its session has ended.
+Organization administrators can now use the `POST /v2/execute-admin-tasks` API to reset devices that remain in an incorrect state, such as a device that appears in use after its session has ended.
 
-The new `POST /v2/execute-admin-tasks` endpoint runs predefined admin tasks. The first available task, `RESET_DEVICE_STATE`, accepts a list of device UDIDs and resets the state of each device to the default state.
+The new `RESET_DEVICE_STATE` task resets the recorded state of one or more devices and returns the result for each device.
 
-* Returns the previous state and new state for each device, plus a summary of how many devices were reset, unchanged, or failed.
-* Processes each device independently. If one device fails, the other devices in the request are still processed.
-* Changes only the device state recorded in Kobiton. The task does not send commands to the device or its host machine, and it does not end sessions or cancel reservations.
-* Limits org admins to devices in their own organization. Available for Cloud and Standalone.
-
-After a reset, the device becomes available for sessions the next time its host machine reports on the device.
+The reset does not end active sessions or cancel reservations. Devices become available for new sessions when their host machine next reports their state.
 
 // Source: KOB-55366 from PR #710
 
-== List the apps installed on a device with the API
+== List installed apps on devices with the Kobiton API
 
-* New API endpoints return the apps installed on a private device, including apps installed outside your app repository, such as through MDM or manually:
-** `+GET /v2/devices/{deviceId}/installed-apps+`
-** `+GET /v2/devices/udid/{udid}/installed-apps+`
-* Each app in the response includes its bundle ID, name, version, and build version. On Android devices, the app name is empty.
-* To include the app repository version ID for apps that match a version in your app repository, add `includeKobitonAppVersionId=true` to the request.
-* The `type` parameter accepts `user`, `system`, `all`, `filesharing`, `enabled`, and `disabled`. Currently, the endpoints return every app on the device, including system apps, and the `type_applied` response field reports the filter that was applied.
-* If the device is offline or does not respond, the endpoints return an error that describes the problem.
-* `+GET /v2/devices/{deviceId}/apps+` is unchanged and continues to return only apps that are in your app repository.
+The new `GET /v2/devices/{deviceId}/installed-apps` and `GET /v2/devices/udid/{udid}/installed-apps` APIs return applications installed on a private device, including apps installed manually or through mobile device management (MDM).
+
+Results include each application's bundle ID, name, version, and build version. An optional parameter also returns the Kobiton app repository version ID when a matching version exists.
 
 // ======== FOLDABLES (UNSURE IF INCLUDING) ========
 
