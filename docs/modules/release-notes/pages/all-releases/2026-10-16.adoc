@@ -11,10 +11,24 @@ Cloud release notes are typically published weekly and summarize changes since t
 
 // ======== KOBITON CLI ========
 
+// Source: KOB-52718 from PR #743
+// https://github.com/kobiton/docs/pull/743
+
+== Kobiton CLI: Session Explorer for CLI sessions
+
+- Added the `--capture` option to `kobiton session create`. List the session data to capture, such as `screenshots`, `view-trees`, `logs`, `metrics`, or `video`, and review it in Session Explorer. Capture is opt-in. CLI sessions created without `--capture` capture no session data and continue to open on Session Overview.
+
+// REVIEWER NOTE (KOB-52718): Jira status is Released, but the latest Jira comment states the
+// change is not fully deployed and lists three open pull requests (portal, API, and data
+// processing). The fix version is not marked released. Confirm deployment before publishing.
+//
+// REVIEWER NOTE (KOB-52718): Confirm the target publication (Cloud weekly page versus
+// Standalone/Hybrid page). Testing covered Cloud only; Standalone testing is planned separately.
+
 // Source: KOB-55503 from PR #738
 // https://github.com/kobiton/docs/pull/738
 
-== Accurate per-step device logs for Kobiton CLI sessions
+=== Accurate per-step device logs for Kobiton CLI sessions
 
 - Fixed an issue where per-step device logs for Kobiton CLI sessions appeared under the wrong step or were empty. Each step now shows the device log lines recorded since the previous step, and the first step shows the lines recorded before it.
 
@@ -42,24 +56,10 @@ Cloud release notes are typically published weekly and summarize changes since t
 // REVIEWER NOTE (KOB-55494): Logs that were not captured cannot be recovered for existing sessions.
 // This entry describes the disabled controls only.
 
-// Source: KOB-52718 from PR #743
-// https://github.com/kobiton/docs/pull/743
-
-== Kobiton CLI: Session Explorer for CLI sessions
-
-- Added the `--capture` option to `kobiton session create`. List the session data to capture, such as `screenshots`, `view-trees`, `logs`, `metrics`, or `video`, and review it in Session Explorer. Capture is opt-in. CLI sessions created without `--capture` capture no session data and continue to open on Session Overview.
-
-// REVIEWER NOTE (KOB-52718): Jira status is Released, but the latest Jira comment states the
-// change is not fully deployed and lists three open pull requests (portal, API, and data
-// processing). The fix version is not marked released. Confirm deployment before publishing.
-//
-// REVIEWER NOTE (KOB-52718): Confirm the target publication (Cloud weekly page versus
-// Standalone/Hybrid page). Testing covered Cloud only; Standalone testing is planned separately.
-
 // Source: KOB-55504 from PR #735
 // https://github.com/kobiton/docs/pull/735
 
-== Fewer duplicate steps in Kobiton CLI session timelines
+=== Fewer duplicate steps in Kobiton CLI session timelines
 
 The Session Explorer timeline for Kobiton CLI sessions no longer shows an extra `POST /session` step for every `kobiton webdriver` call. The timeline now shows the session creation once, followed by one step for each call.
 
@@ -85,7 +85,7 @@ Automation and mixed sessions are not affected.
 // Source: KOB-55505 from PR #736
 // https://github.com/kobiton/docs/pull/736
 
-== Kobiton CLI: Screenshots in Session Explorer
+=== Kobiton CLI: Screenshots in Session Explorer
 
 - Steps in CLI sessions that do not have their own screenshot now show the screenshot from the previous step, as automation sessions do. Previously, these steps showed "Screenshot Not Available". This applies in Session Explorer and in the session command APIs.
 - The XML hierarchy in *Appium Inspector* follows the same rule. *Appium Inspector* never pairs a screenshot with the XML hierarchy from an earlier step.
@@ -103,6 +103,8 @@ Automation and mixed sessions are not affected.
 //
 // REVIEWER NOTE (KOB-55505): Confirm the target publication (Cloud weekly page versus
 // Standalone/Hybrid page). Jira lists no fix version.
+
+// ======== SESSION EXPLORER ========
 
 // Source: KOB-55471 from PR #737
 // https://github.com/kobiton/docs/pull/737
