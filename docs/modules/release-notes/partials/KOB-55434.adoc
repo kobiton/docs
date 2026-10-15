@@ -1,0 +1,18 @@
+== Appium automation fixes
+
+* Fixed an issue where Appium automation sessions on iOS simulators failed to start. When the `kobiton:runtime` capability was set to `appium`, the session request returned a `TaskCanceledException` error after about 3 minutes. Appium sessions on iOS simulators now start, and the simulator stays booted for the sessions that follow.
+
+// Source: KOB-55434
+// REVIEWER NOTE (KOB-55434): Jira status is Wait For Deployment, and the Jira release-notes selection
+// includes the customer-facing release email. No fix version is set. Confirm the deviceConnect release
+// that includes this fix before you publish.
+// REVIEWER NOTE (KOB-55434): The parent epic for iOS simulator support is still In Progress, and the
+// 2026-08-07 release notes record a decision not to advertise fixes for simulator surfaces without active
+// customer usage. Confirm that iOS simulator automation is available to customers in this release, or
+// hold this entry.
+// REVIEWER NOTE (KOB-55434): QA verified the fix on iPhone and iPad simulators on iOS 26.5 and iOS 27.0.
+// Not verified: Appium sessions on two simulators of one host at the same time, and the Appium runtime on
+// real iOS devices as a regression check.
+// REVIEWER NOTE (KOB-55434): The fix changes host port allocation so each simulator uses four ports from
+// 10300 instead of two. Confirm with engineering whether admins with host firewall rules need guidance in
+// the device lab management docs.
