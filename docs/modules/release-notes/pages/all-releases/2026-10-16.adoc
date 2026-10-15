@@ -43,7 +43,7 @@ For sessions without captured device logs, *View Device Logs* and *Download all*
 // Source: KOB-55471 from PR #737 (sessions with no recorded steps)
 // Source: KOB-55496 from PR #744 (XCUITest null-labeled steps)
 
-== Improved handling of sessions without recorded steps
+== Session Explorer: Improved handling of sessions without recorded steps
 
 Sessions without recorded steps now open on Session Overview instead of an empty Session Explorer. The *Explorer* tab displays "Explorer is not available for this session."
 
@@ -51,9 +51,9 @@ This also fixes an issue where XCUITest sessions displayed steps labeled `null` 
 
 // Source: KOB-55400 from PR #724
 
-== Crash logs
+== Restored crash reporting in Session Explorer
 
-- Session Explorer again shows app crashes and their crash logs for sessions on Android and iOS devices. This applies to manual, Appium, and API sessions. Previously, an app crash during a session was not captured, and no crash log was available for the session.
+Session Explorer now displays app crashes and their crash logs for sessions on Android and iOS devices, including manual, Appium, and API sessions. Previously, crashes that occurred during these sessions were not captured, leaving no crash logs available for review.
 
 // ======== MANUAL TESTING ENTRIES ========
 
