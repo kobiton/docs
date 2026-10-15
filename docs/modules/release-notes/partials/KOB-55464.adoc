@@ -1,0 +1,28 @@
+// Source: KOB-55464 (Bug, Released)
+// Release-note partial drafted by Robot Ranch. Requires docs-team review before publication.
+
+== Appium automation
+
+- Fixed an issue on iOS 26 where the buttons in an app's location permission alert, such as *Allow Once*, *Allow While Using App*, and *Don't Allow*, were sometimes missing from the page source during automation sessions. Scripts that tried to find these buttons could fail with a `no such element` error. Scripts can now find the buttons and tap them to accept or dismiss the alert.
+
+// REVIEWER NOTE (KOB-55464): Jira has no fix version or release label. The ticket is in
+// Released status and the Release Communication field includes "Release Email". Confirm the
+// target publication (Cloud weekly page versus a Standalone or Hybrid page). The fix is in the
+// deviceConnect iOS agent, so Standalone and Hybrid customers may need a host software update.
+//
+// REVIEWER NOTE (KOB-55464): This fix follows KOB-55247, which appears in the Cloud
+// October 2, 2026 release notes under "iOS system alerts in automation sessions". That entry
+// covers alerts the iOS system shows on its own, such as the Location Services alert. This
+// entry covers the app location permission alert. Consider placing the two entries together
+// or cross-checking that the earlier "system alerts" wording does not overstate coverage.
+//
+// REVIEWER NOTE (KOB-55464): The Jira summary names Xium. Prior release notes used both
+// "XIUM" and "automation sessions". Confirm the preferred customer-facing name.
+//
+// REVIEWER NOTE (KOB-55464): QA verified the fix in an automation session only. The evidence
+// does not cover manual sessions or the session inspector. Do not broaden the wording without
+// confirmation.
+//
+// REVIEWER NOTE (KOB-55464): An unnamed Jira custom field on the ticket is set to "Internal".
+// The evidence package does not resolve the field name. Confirm that this value does not mean
+// the change is excluded from public release notes.
