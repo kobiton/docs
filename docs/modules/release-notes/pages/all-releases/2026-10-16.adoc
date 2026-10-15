@@ -82,15 +82,6 @@ For details, see xref:manual-testing:install-an-app.adoc#_apps_listed_on_ios[App
 // REVIEWER NOTE (KOB-55147): Jira fix version is 2026.10.07 and is not marked released.
 // Confirm the target publication date.
 
-// Source: KOB-55347 from PR #749
-// https://github.com/kobiton/docs/pull/749
-
-=== Standalone deployment
-
-- On Standalone deployments with GPUs, Intelligent Quality Suite (IQS) AI services now keep GPU access after system package installs, such as a GigaCap install or upgrade. Previously, these services could switch to the CPU, and IQS element finding slowed down and timed out.
-- Installing or updating Standalone now stops with an error if a configured GPU ID does not match a GPU on the host. Previously, the install continued without reporting the problem.
-- After you update, the IQS AI services restart once to apply the new GPU configuration.
-
 // Source: KOB-55464 from PR #746
 // https://github.com/kobiton/docs/pull/746
 
@@ -218,13 +209,6 @@ Automation and mixed sessions are not affected.
 //
 // REVIEWER NOTE (KOB-52718): Confirm the target publication (Cloud weekly page versus
 // Standalone/Hybrid page). Testing covered Cloud only; Standalone testing is planned separately.
-
-// Source: KOB-52056 from PR #740
-// https://github.com/kobiton/docs/pull/740
-
-=== Manual testing
-
-* *Audio injection (Standalone):* Fixed an issue where uploading an audio file from the *Audio Injection* tab during a manual session failed with an `upload failed: undefined` error, which prevented the audio from being injected into the device.
 
 // Source: KOB-55457 from PR #741
 // https://github.com/kobiton/docs/pull/741
