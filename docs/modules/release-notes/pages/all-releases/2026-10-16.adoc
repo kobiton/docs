@@ -139,14 +139,13 @@ For details, see xref:automation-testing:appium-ai/configure-appium-ai-org-setti
 
 // Source: KOB-55265 from PR #721
 
-== Scan status and page limits in the Kobiton MCP server
+== Kobiton MCP server
 
-- `getSession` now returns `scan_status`, which reports whether each validation scan for the session is `complete`, `in_progress`, or `not_applicable`. An AI assistant can tell findings that are still arriving from final results.
-- `getAccessibilityValidationsSummary` now returns `scan_complete`, and `listCrashValidations` now returns `pending_count`, the number of crash logs still waiting to be processed.
-- `getTestRun` and `listTestRuns` now return the accessibility, crash, and network payload scanning status of each execution.
-- `listTestCases`, `listTestSuites`, and `listTestRuns` return at most 20 items per page, with a default of 10. `getUserInputEvents` now returns 10 events by default and at most 20 per call.
-- `listDevices` now reports how many devices matched in total for each device list, along with the `limit` it applied.
-- In the `automate` plugin 1.15.0, the `drive-automation-session` and `run-interactive-session` skills read a compact UI tree of the screen by default. The full page source is still available on request.
+AI assistants connected to the Kobiton MCP server can now tell whether a session's validation scans have finished. Previously, a scan that was still running returned the same empty result as a finished scan with no findings. The server now reports progress for accessibility, crash, response time, and network payload scans, along with a pending count for crash logs still being processed, so an assistant can distinguish results that are still arriving from final ones.
+
+Device list responses also signal when they are truncated. The server reports the total number of matching devices alongside the limit it applied, so an assistant can narrow its search by platform, device name, UDID, or device group when results don't fit.
+
+List endpoints now cap page sizes to keep responses within an AI assistant's context limits. Test cases, test suites, and test runs return at most 20 items per page with a default of 10, and user input events default to 10 per call. The full count stays available so an assistant can page through larger result sets.
 
 For details, see xref:ai:mcp/ai-plugin-mcp-ref.adoc[Kobiton AI plugin and tools reference].
 
