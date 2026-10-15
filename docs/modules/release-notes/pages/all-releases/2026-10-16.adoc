@@ -11,14 +11,6 @@ Cloud release notes are typically published weekly and summarize changes since t
 
 // ======== KOBITON CLI ========
 
-// Source: KOB-55441 from PR #759
-// https://github.com/kobiton/docs/pull/759
-
-=== Kobiton CLI
-
-* *iOS simulators:* `kobiton file list`, `kobiton file push`, `kobiton file pull`, and `kobiton device ps` now work on iOS simulators. Previously, `file list`, `file pull`, and `device ps` failed with a server error, and `file push` reported success without writing the file. The CLI now refuses paths outside the app's container on simulators.
-* *iOS devices and simulators:* `kobiton file push` now fails with a non-zero exit code when the target app is not installed or not accessible. Previously, the push printed `Pushed <n> bytes` and exited `0` even though no file was written.
-
 // Source: KOB-55503 from PR #738
 // https://github.com/kobiton/docs/pull/738
 
@@ -149,36 +141,6 @@ Automation and mixed sessions are not affected.
 // This entry is scoped to the error groups listed in the ticket. Do not broaden it to "all install
 // errors" until engineering confirms that case.
 // REVIEWER NOTE (KOB-55419): Customer-specific context in the ticket is intentionally excluded.
-
-// Source: KOB-55175 from PR #752
-// https://github.com/kobiton/docs/pull/752
-
-=== App management
-
-* *iOS Simulator builds:* The app repository now accepts iOS Simulator builds (`.app` bundles). Compress the `.app` bundle to a `.zip` file, then upload it from the app repository, API v2, or the Kobiton CLI. A `.app` file that is a `.zip` archive is also accepted. Selecting an uncompressed `.app` in the app repository displays a message to compress it first.
-* *Simulator apps in the app repository:* Simulator apps display the Apple watermark and support search, versions, lock, delete, and download, the same as other iOS apps. Simulator builds can't be installed on real devices. For details, see xref:apps:supported-filetypes.adoc[].
-
-// Source: KOB-55176 from PR #748
-// https://github.com/kobiton/docs/pull/748
-
-== Install Apps lists only compatible builds on iOS
-
-*Install Apps* in a manual session now lists only the app builds that can install on the current iOS device.
-
-*Highlights*
-
-- On an iOS Simulator, only simulator builds (`.app`) are listed. On a real iOS device, simulator builds are hidden.
-- *Upload File* and *Install From URL* accept a `.app` compressed to a `.zip` file on iOS Simulators.
-- Android sessions are unchanged.
-
-For details, see xref:manual-testing:install-an-app.adoc#_apps_listed_on_ios[Apps listed on iOS].
-
-// REVIEWER NOTE:
-// KOB-55176 | Component: App Repo | fixVersion: 2026.10.15 | Jira status: Released
-// Drafted by Robot Ranch (Town Crier) from the Jira release-note field.
-// Builds on .app upload support in the app repository (KOB-55175).
-// Not included: the optional iosBuildType API query parameter (intentionally undocumented per the
-// ticket), and the deviceConnect simulator fixes (admin surface, not in this repo).
 
 // Source: KOB-53003 from PR #709
 // https://github.com/kobiton/docs/pull/709
@@ -602,35 +564,6 @@ For details, see xref:session-explorer:analytics/use-the-session-timeline.adoc#_
 
 // Source: KOB-55457
 
-// ======== UNCATEGORIZED — ASK TIFFANY ========
-
-// Source: KOB-55461 from PR #725
-// https://github.com/kobiton/docs/pull/725
-
-== Turbo Test Execution test reports
-
-Fixed an issue where some Turbo Test Execution sessions completed successfully but did not show a *Test Report* in Kobiton Portal, and the session API did not return a test report download URL. Test reports for these sessions are now linked to the session when it starts and are available after the session completes.
-
-For details on downloading test reports, see xref:automation-testing:turbo-test-execution/run-appium-test.adoc#_download_test_report[Download test report].
-
-// Source: KOB-55461
-
-// Source: KOB-53282 from PR #712
-// https://github.com/kobiton/docs/pull/712
-
-=== Appium AI organization settings
-
-Organizations can now turn Appium AI on or off and set a default LLM provider in Kobiton. Appium sessions started by members of the organization use these settings, so LLM provider details no longer need to be entered in `dc.ini` on each host.
-
-* Turn Appium AI on or off for the whole organization.
-* Set a default LLM provider base URL, API key, API format, models, and locator strategy.
-* Override any provider setting for a single session with `kobiton:*` capabilities.
-* Existing `dc.ini` configurations continue to work.
-
-Appium AI remains in Beta and is not available for Public Cloud devices.
-
-For details, see xref:automation-testing:appium-ai/configure-appium-ai-for-your-organization.adoc[Configure Appium AI for your organization].
-
 // Source: KOB-55147 from PR #751
 // https://github.com/kobiton/docs/pull/751
 
@@ -844,8 +777,41 @@ For details, see xref:devices:local-devices/cleanup-policy/cleanup-configuration
 // be covered in the simulator user guide (KOB-55343). The Device controls page was not changed in this
 // branch because iOS simulators are not yet publicly documented.
 
+// Source: KOB-53282 from PR #712
+// https://github.com/kobiton/docs/pull/712
+
+=== Appium AI organization settings
+
+Organizations can now turn Appium AI on or off and set a default LLM provider in Kobiton. Appium sessions started by members of the organization use these settings, so LLM provider details no longer need to be entered in `dc.ini` on each host.
+
+* Turn Appium AI on or off for the whole organization.
+* Set a default LLM provider base URL, API key, API format, models, and locator strategy.
+* Override any provider setting for a single session with `kobiton:*` capabilities.
+* Existing `dc.ini` configurations continue to work.
+
+Appium AI remains in Beta and is not available for Public Cloud devices.
+
+For details, see xref:automation-testing:appium-ai/configure-appium-ai-for-your-organization.adoc[Configure Appium AI for your organization].
+
+// Source: KOB-55461 from PR #725
+// https://github.com/kobiton/docs/pull/725
+
+=== Turbo Test Execution test reports
+
+Fixed an issue where some Turbo Test Execution sessions completed successfully but did not show a *Test Report* in Kobiton Portal, and the session API did not return a test report download URL. Test reports for these sessions are now linked to the session when it starts and are available after the session completes.
+
+For details on downloading test reports, see xref:automation-testing:turbo-test-execution/run-appium-test.adoc#_download_test_report[Download test report].
+
+// Source: KOB-55441 from PR #759
+// https://github.com/kobiton/docs/pull/759
+
+=== Kobiton CLI
+
+* *iOS simulators:* `kobiton file list`, `kobiton file push`, `kobiton file pull`, and `kobiton device ps` now work on iOS simulators. Previously, `file list`, `file pull`, and `device ps` failed with a server error, and `file push` reported success without writing the file. The CLI now refuses paths outside the app's container on simulators.
+* *iOS devices and simulators:* `kobiton file push` now fails with a non-zero exit code when the target app is not installed or not accessible. Previously, the push printed `Pushed <n> bytes` and exited `0` even though no file was written.
+
 == Component versions
 
 * deviceConnect 2610.15
 * gigacap 2610.14
-* CLI 2610.6
+* Kobiton CLI 2610.6
