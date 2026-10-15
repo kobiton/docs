@@ -160,7 +160,7 @@ Several fixes improve how Appium sessions identify and interact with elements:
 * *iPad web sessions:* Appium Inspector now displays the correct XML hierarchy for each step of an iPad automation session started without an app, such as a Safari session.
 * *Android web views:* Fixed an issue on Android 13 and later where screens containing web views did not display their complete XML hierarchy, preventing element searches and interactions.
 * *Element attributes:* The WebDriver Get Element Attribute command now returns `null` when an element does not have the requested attribute, instead of returning an error.
-* *`mobile: setText` command:* Appium automation sessions now support the `mobile: setText` command on Android and iOS. Scripts calling this command set the element's text instead of failing with a "not implemented" error.
+* *Set element text:* Appium automation sessions now support the `mobile: setText` command on Android and iOS. Previously, using this command returned a "not implemented" error.
 
 // Source: KOB-55444 from PR #699
 // Source: KOB-50523 from PR #694
