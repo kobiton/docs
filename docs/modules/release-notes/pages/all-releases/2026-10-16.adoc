@@ -123,6 +123,12 @@ Several fixes improve how Appium sessions identify and interact with elements:
 * *Android web views:* Fixed an issue on Android 13 and later where screens containing web views did not display their complete XML hierarchy, preventing element searches and interactions.
 * *Element attributes:* The WebDriver Get Element Attribute command now returns `null` when an element does not have the requested attribute, instead of returning an error.
 
+// Source: KOB-55472 from PR #739
+
+== Improved access to running XCUITest session details
+
+The `GET /v1/sessions/{id}` and `GET /v2/sessions/{id}` APIs now return session details while XCUITest native framework sessions are running. Previously, these requests returned an HTTP 500 error before the session's test report and video became available.
+
 // ======== KOBITON MCP SERVER ========
 
 // Source: KOB-55265 from PR #721 (consolidated MCP changes)
@@ -200,12 +206,6 @@ Session Explorer records each fold or unfold action as a timeline step, includin
 Screenshots retain the screen dimensions of the active posture, and touch and swipe markers remain aligned with the captured screen.
 
 This functionality supports book-style foldable devices, such as Galaxy Z Fold and Pixel Fold. Flip-style devices, such as Galaxy Z Flip, are not supported.
-
-// Source: KOB-55472 from PR #739
-
-== Improved access to running XCUITest session details
-
-The `GET /v1/sessions/{id}` and `GET /v2/sessions/{id}` APIs now return session details while XCUITest native framework sessions are running. Previously, these requests returned an HTTP 500 error before the session's test report and video became available.
 
 == Wait For Deployment (10/15)
 
