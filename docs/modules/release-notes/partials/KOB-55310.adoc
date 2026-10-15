@@ -1,0 +1,18 @@
+// Source: KOB-55310 (Bug, Wait For Deployment, no fix version set in Jira)
+// Applies to: deviceConnect with iOS Simulator support. Confirm whether a Standalone release also includes this change.
+// Scope: `mobile: queryAppState` and `mobile: isAppInstalled` on iOS Simulators. Real iOS devices are unchanged.
+
+== Appium automation
+
+- On iOS Simulators, `mobile: queryAppState` and `mobile: isAppInstalled` now return the app state and installed status. Previously, both commands failed with a server error for every bundle ID, so scripts that waited for an app to reach the foreground, or checked whether an app was installed before installing it, stopped on simulators. Both commands now return the same values as on a real iOS device, including after `mobile: activateApp` and `mobile: terminateApp`.
+
+// REVIEWER NOTE:
+// KOB-55310 | Component: Emulator/Simulator | Product: deviceConnect (Phoenix) | Jira status: Wait For Deployment
+// Drafted by Robot Ranch (Town Crier). Release channel field in Jira includes the customer-facing release email.
+// QA verified only queryAppState and isAppInstalled on simulators, using built-in apps.
+// Not included: the Jira impact field also lists the installed apps list and uninstalling user apps
+// on simulators. QA did not verify these because apps can't yet be installed on a simulator in the
+// tested build. Add them only after QA confirms.
+// Confirm before publishing: the 2026-08-07 release notes removed a simulator fix because simulators
+// were not then a supported customer surface. Later drafts (KOB-55175, KOB-55176) document simulator
+// builds in the app repository. Confirm iOS Simulator support is customer-visible in this release.
