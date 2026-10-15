@@ -22,6 +22,20 @@ Windows::
 
 * Windows 10 or later.
 
+Linux::
++
+--
+* A 64-bit x86 (`x86_64`) computer running one of the following:
+
+** Ubuntu 22.04 or later (Debian-based).
+
+** Red Hat Enterprise Linux (RHEL) 9 or later (Red Hat-based).
+
+* For iOS devices: `usbmuxd` from libimobiledevice. Ubuntu 24.04 includes `usbmuxd` by default.
+
+virtualUSB for Linux is a command-line tool only. There is no desktop app. iOS 17.4 or later is supported.
+--
+
 ======
 
 [IMPORTANT]
@@ -59,6 +73,18 @@ set PATH=%PATH%;%ANDROID_HOME%\tools;%ANDROID_HOME%\platform-tools
 ----
 [NOTE]
 Replace `C:\path\to\Android\Sdk` with the actual location of SDK installation directory (the folder containing `platform-tools`).
+--
+
+Linux with Bash shell::
++
+--
+[source,shell]
+----
+export ANDROID_HOME=path/to/Android/sdk
+export PATH=$PATH:$ANDROID_HOME/tools:$ANDROID_HOME/tools/bin:$ANDROID_HOME/platform-tools
+----
+[NOTE]
+Replace `path/to/Android/sdk` with the path to the Android SDK folder that contains `platform-tools`. To keep these variables across sessions, add both lines to `~/.bashrc`.
 --
 ======
 
@@ -141,10 +167,44 @@ Upon the first time launching the app, you must agree to the License terms and s
 image:virtualusb-license-agreement.png[width=400,alt="The virtualUSB License agreement with the accept option checked"]
 
 --
+
+Linux::
++
+--
+Open a terminal in the folder that contains the downloaded installer, then install the package for your distribution:
+
+* Debian-based (Ubuntu):
++
+[source,shell]
+----
+sudo apt-get install ./<virtualusb-deb-file>
+----
+
+* Red Hat-based (RHEL):
++
+[source,shell]
+----
+sudo dnf install ./<virtualusb-rpm-file>
+----
++
+On Fedora, use `dnf5` instead of `dnf`.
+
+Replace `<virtualusb-deb-file>` or `<virtualusb-rpm-file>` with the file name of the installer you downloaded.
+
+The installer adds `vusb` to the system `PATH`, so `vusb` runs from any directory. To confirm the installation, run:
+
+[source,shell]
+----
+vusb help
+----
+--
 ======
 
 [#_launch_vusb_and_log_in]
 == Launch virtualUSB and log in
+
+[NOTE]
+On Linux, sign in with the xref:debugging:virtualusb-cli-commands.adoc#_login[`vusb login` command] instead of the desktop app. Use the values in the following tabs for the `--apibaseurl` and `--grpcbaseurl` flags if your organization uses a custom domain or Standalone/On-Prem.
 
 [tabs]
 ====

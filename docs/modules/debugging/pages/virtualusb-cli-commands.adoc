@@ -37,10 +37,16 @@ cd "C:\Program Files\virtualUSB"
 
 --
 
+Linux::
++
+--
+Skip this step. The installer adds `vusb` to the system `PATH`, so `vusb` runs from any directory.
+--
+
 ====
 
 [NOTE]
-* *All subsequent commands* assume that the current location is the virtualUSB CLI folder.
+* On macOS and Windows, *all subsequent commands* assume that the current location is the virtualUSB CLI folder.
 
 * Replace `vusb` with `./vusb` for MacOS for the subsequent commands.
 
@@ -206,3 +212,21 @@ vusb setup-adb
 == Considerations
 
 See xref:start-debugging.adoc#_considerations[this section,window=read-later] for considerations when using virtualUSB CLI.
+
+=== Linux
+
+* iOS 17.4 or later is supported.
+
+* iOS devices connected through virtualUSB work with `usbmuxd`-based tools such as go-ios, libimobiledevice, and pymobiledevice3.
+
+* If locally plugged-in iOS devices disappear from tools such as `idevice_id -l` or `ios list`, or `pymobiledevice3` commands fail with `KeyError: 'BUID'`, restart the services in this order:
++
+[source,shell]
+----
+sudo systemctl stop dcb
+sudo systemctl restart usbmuxd
+sudo systemctl start dcb
+----
++
+[IMPORTANT]
+Do not run `sudo systemctl restart dcb` by itself. It does not fix these issues and can hide locally plugged-in devices from iOS tools.
