@@ -28,11 +28,6 @@ Cloud release notes are typically published weekly and summarize changes since t
 // previous per-step split. Confirm whether to tell customers that only new CLI sessions are affected.
 // REVIEWER NOTE (KOB-55503): No fix version is set in Jira. Confirm which release page includes this entry.
 
-// Source: KOB-55496 from PR #744
-// https://github.com/kobiton/docs/pull/744
-
-* Bug Fix: Fixed an issue where XCUITest sessions that ran tests showed Session Explorer steps labeled `null` with no screenshots. These sessions now open on *Overview*, and the *Explorer* tab shows "Explorer is not available for this session." Sessions with recorded steps are not affected.
-
 // Source: KOB-52718 from PR #743
 // https://github.com/kobiton/docs/pull/743
 
@@ -124,6 +119,11 @@ Automation and mixed sessions are not affected.
 // CLI example and keep "sessions that captured no device logs".
 // REVIEWER NOTE (KOB-55494): Logs that were not captured cannot be recovered for existing sessions.
 // This entry describes the disabled controls only.
+
+// Source: KOB-55496 from PR #744
+// https://github.com/kobiton/docs/pull/744
+
+* Bug Fix: Fixed an issue where XCUITest sessions that ran tests showed Session Explorer steps labeled `null` with no screenshots. These sessions now open on *Overview*, and the *Explorer* tab shows "Explorer is not available for this session." Sessions with recorded steps are not affected.
 
 // ======== MANUAL TESTING ENTRIES ========
 
