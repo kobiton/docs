@@ -1,0 +1,17 @@
+// Source: KOB-55444 (Bug, deviceConnect)
+// Release-note partial drafted by Robot Ranch (Town Crier). Requires docs-team review before publication.
+// Released build in Jira: deviceConnect 2610.150443.0 (release label 2610.15). The Jira release comment is a
+// bulk update and says not all listed builds may apply to this ticket. No fix version is set.
+
+== iOS device connections
+
+- Fixed an issue where deviceConnect could intermittently fail to mount the Developer Disk Image (DDI) on newer iOS devices, such as iPhone 18 models running iOS 26.4 or later. DDI mounting on these devices also no longer fails when a disk image is already mounted on the device.
+
+// REVIEWER NOTE (KOB-55444): QA confirmed the intermittent-failure fix over repeated installs and confirmed that
+// manual, Appium, and Xium sessions work on an affected device. QA could not reproduce the "disk image already
+// mounted" state, so that case was verified by code review and unit tests only. Confirm that the second sentence
+// is acceptable before publishing, or remove it.
+// REVIEWER NOTE (KOB-55444): Jira does not describe the exact symptom users saw (for example, a device going
+// offline or failing to start a session). If engineering can confirm the visible symptom, consider naming it.
+// REVIEWER NOTE (KOB-55444): Confirm which release page this belongs in (Cloud, Standalone, or both).
+// deviceConnect fixes can apply to both.
