@@ -125,15 +125,16 @@ Several fixes improve how Appium sessions identify and interact with elements:
 
 // ======== KOBITON MCP SERVER ========
 
-// Source: KOB-55265 from PR #721
+// Source: KOB-55265 from PR #721 (consolidated MCP changes)
+// Source: KOB-55269 from PR #717 (automate plugin 1.15.0 compact UI tree)
 
-== Kobiton MCP server
+== Improved results and session visibility in the Kobiton MCP server
 
-AI assistants connected to the Kobiton MCP server can now tell whether a session's validation scans have finished. Previously, a scan that was still running returned the same empty result as a finished scan with no findings. The server now reports progress for accessibility, crash, response time, and network payload scans, along with a pending count for crash logs still being processed, so an assistant can distinguish results that are still arriving from final ones.
+The Kobiton MCP server now provides more information about validation progress and search results, along with improvements to interactive automation.
 
-Device list responses also signal when they are truncated. The server reports the total number of matching devices alongside the limit it applied, so an assistant can narrow its search by platform, device name, UDID, or device group when results don't fit.
-
-List endpoints now cap page sizes to keep responses within an AI assistant's context limits. Test cases, test suites, and test runs return at most 20 items per page with a default of 10, and user input events default to 10 per call. The full count stays available so an assistant can page through larger result sets.
+* *Validation progress:* AI assistants can distinguish between scans that are still processing and completed results, including accessibility, crash, response time, and network payload validations.
+* *Search results:* Device searches now report the total number of matching devices. Pagination limits also help manage results for test cases, test suites, test runs, and user input events.
+* *UI inspection:* The `automate` plugin 1.15.0 now uses a compact UI tree by default during interactive automation, with full page source available on request.
 
 For details, see xref:ai:mcp/ai-plugin-mcp-ref.adoc[Kobiton AI plugin and tools reference].
 
