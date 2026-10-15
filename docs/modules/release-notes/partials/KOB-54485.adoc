@@ -1,0 +1,15 @@
+== Control the UiAutomator idle wait in Xium sessions on Android
+
+- Xium sessions on Android devices now support `waitForIdleTimeout`. Set it with the `appium:waitForIdleTimeout` capability, or change it during the session with the Appium Settings API.
+- Set `waitForIdleTimeout` to `0` to skip the idle wait before each UiAutomator element search. This fixes `no such element` errors for `-android uiautomator` locators, such as `new UiSelector().resourceId("<resource-id>")`, in apps that redraw continuously and never become idle.
+- The default remains `10000` milliseconds, so sessions that do not set `waitForIdleTimeout` are not affected. On iOS devices, the setting is ignored.
+
+For details, see xref:automation-testing:capabilities/available-capabilities.adoc#_waitForIdleTimeout[`waitForIdleTimeout`].
+
+// Source: KOB-54485
+// REVIEWER NOTE (KOB-54485): Jira also adds a device host setting in dc.ini that extends the
+// UiAutomator element search time for slower devices. It is not included here because dc.ini
+// configuration belongs in admin docs. Confirm whether it needs an admin docs entry.
+// REVIEWER NOTE (KOB-54485): The Jira release comment lists deviceConnect 2610.150443.0 as a
+// bulk update and notes that not all builds may apply. Confirm the release that ships this change
+// and the release notes page this partial should be included in.
