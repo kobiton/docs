@@ -372,44 +372,6 @@ For details, see xref:manual-testing:device-controls.adoc#_fold_or_unfold_device
 // EDITOR NOTE: A deviceConnect release lands this week after being delayed from last week. Check
 // whether any deviceConnect notes from last week's draft should be carried into this page.
 
-// ======== OTHER ========
-
-// Source: KOB-55457 from PR #741
-// https://github.com/kobiton/docs/pull/741
-
-== Lightning Mode on Android
-
-- Fixed an issue where each failed attempt to start Lightning Mode on an Android device left an extra virtual display registered on the device. These virtual displays stayed on the device until the Kobiton agent on the device restarted, and repeated failures added more of them. Failed attempts now release their virtual display.
-
-// REVIEWER NOTE: This fix covers cleanup after a failed start only. It does not change
-// whether Lightning Mode can start on a device where the screen encoder fails. The
-// underlying encoder failure on the affected device model is tracked separately as
-// KOB-52316, which is still open. Do not describe this entry as restoring Lightning Mode.
-//
-// REVIEWER NOTE: The Jira ticket does not describe a customer-visible symptom of the
-// leftover virtual displays (for example, performance, memory, or app behavior on the
-// device). Confirm with engineering whether customers could notice the leak. If not,
-// consider moving this entry to support notes only. The ticket selects both
-// "Release Email" and "Support Notes" as release-note targets.
-//
-// REVIEWER NOTE: Confirm the customer-facing name for the on-device component. The ticket
-// calls it the "Android agent." This draft uses "the Kobiton agent on the device."
-//
-// REVIEWER NOTE: QA regression on the test environment passed: Lightning Mode turned on
-// in 3 sessions across iOS and Android, with video and screenshots captured. The fix was
-// not verified on the device model where the leak was found.
-
-// Source: KOB-55457
-
-// Source: KOB-55147 from PR #751
-// https://github.com/kobiton/docs/pull/751
-
-== Improved device disconnection for earlier virtualUSB versions
-
-Device disconnection now works correctly in virtualUSB versions earlier than 4.20.0. Disconnecting through the CLI or virtualUSB app ends the session and releases the device. No virtualUSB update is required.
-
-// EDITOR NOTE: virtualUSB 1 note, but user-facing behavior. Keep in the Cloud notes, or drop?
-
 == Wait For Deployment (10/15)
 
 // Source: KOB-55121 from PR #723
