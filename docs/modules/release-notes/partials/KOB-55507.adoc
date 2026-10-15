@@ -1,0 +1,19 @@
+// Source: KOB-55507
+// Release-note partial drafted by Robot Ranch. Requires docs-team review before publication.
+
+== Appium automation fixes
+
+- Fixed an issue in Android native app sessions where the WebDriver Get Element Attribute command returned an error when you requested an attribute the element doesn't have, such as `value`. The command now returns `null`, as the W3C WebDriver specification requires, and the session remains usable. Known attributes such as `text`, `enabled`, and `checked` still return their values, and a request for a stale element still returns an error.
+
+// REVIEWER NOTE (KOB-55507): Scope is Android native sessions only. QA also confirmed that
+// Android web (Chrome) sessions return `null` for an unknown attribute, but Jira limits this fix
+// to the native context, so web sessions are not called out here.
+//
+// REVIEWER NOTE (KOB-55507): iOS native sessions still return an error for an unknown attribute.
+// That case is tracked separately in KOB-55522 (not yet released). Keep the Android-only wording
+// unless the iOS fix ships in the same publication.
+//
+// REVIEWER NOTE (KOB-55507): Jira status is Released. The release comment lists deviceConnect
+// build 2610.150443.0 (release label 2610.15), but it is a bulk update that notes not every
+// build applies to every ticket, and no fix version is set. Confirm the target Cloud weekly
+// release page before publishing.
