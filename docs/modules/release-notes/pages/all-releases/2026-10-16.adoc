@@ -292,7 +292,7 @@ For details, see xref:ai:mcp/ai-plugin-mcp-ref.adoc[Kobiton AI plugin and tools 
 
 == Reset stuck device states with the Kobiton API
 
-Org admins can now use the Kobiton API to reset devices whose state is stuck on the wrong value, such as a device that still shows as in use after its session has ended. Stuck devices no longer require a manual database change to return to service.
+Org admins can now use the Kobiton API to reset devices whose state is stuck on the wrong value, such as a device that still shows as in use after its session has ended.
 
 The new `POST /v2/execute-admin-tasks` endpoint runs predefined admin tasks. The first available task, `RESET_DEVICE_STATE`, accepts a list of device UDIDs and resets the state of each device to the default state.
 
@@ -324,9 +324,6 @@ After a reset, the device becomes available for sessions the next time its host 
 // endpoints is live before publishing this entry. The api-reference module in this repo is a
 // stub, so no product-doc update is included with this change.
 //
-// REVIEWER NOTE (KOB-55366): Jira confirms deployment to US Production cloud. Confirm
-// availability for Private Cloud and Standalone deployments before publishing.
-//
 // REVIEWER NOTE (KOB-55366): The `type` values take effect only after a later deviceConnect
 // update labels each app. Until then, every app is returned and `type_applied` reports `all`.
 // The default value of `type` is `user`. Confirm whether to state the default here.
@@ -334,10 +331,6 @@ After a reset, the device becomes available for sessions the next time its host 
 // REVIEWER NOTE (KOB-55366): Confirm the public wording for device scope. Engineering notes say
 // public cloud devices return "No device found". Also confirm whether to publish the specific
 // HTTP status codes for offline (400), unreachable (502), and timed-out (504) devices.
-//
-// REVIEWER NOTE (KOB-55366): This replaces an earlier draft generated while the ticket was in
-// Wait For Deployment. The earlier question about the UDID route is resolved: Jira comments
-// confirm both the numeric device ID and UDID routes were implemented.
 
 // ======== FOLDABLES (UNSURE IF INCLUDING) ========
 
