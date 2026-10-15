@@ -188,7 +188,7 @@ image:virtualusb-save-logs-popup.png[width=400,alt="The time period dropdown in 
 
 * In the zip file exported using the *save log* feature, the created and modified date time of some of the files and folders are displayed incorrectly as _January 1, 1980 at 12:00 AM_.
 
-* iOS support on macOS:
+* iOS support on macOS and Linux:
 
 ** *iOS 12 through 14*: contact https://support.kobiton.com/hc/en-us/requests/new[Kobiton Support].
 
@@ -196,7 +196,7 @@ image:virtualusb-save-logs-popup.png[width=400,alt="The time period dropdown in 
 
 ** *iOS 17.0 through 17.3*: not supported.
 
-** *iOS 17.4 or later*: supported. virtualUSB pairs these devices with the Mac automatically when they connect, which requires Xcode on the Mac.
+** *iOS 17.4 or later*: supported. On macOS, virtualUSB pairs these devices with the Mac automatically when they connect, which requires Xcode on the Mac.
 
 // REVIEWER NOTE: The iOS ranges match the Cloud October 9, 2026 release note
 // (release-notes:all-releases/2026-10-09.adoc), taken from the reviewed virtualUSB release-note
@@ -205,3 +205,5 @@ image:virtualusb-save-logs-popup.png[width=400,alt="The time period dropdown in 
 // for iOS 17.4 or later pairing; no source states one. Add it if engineering confirms a version.
 
 * iOS device support for *virtualUSB on Windows* is not available.
+
+* virtualUSB on Linux is a command-line tool only. For other Linux considerations, see xref:debugging:virtualusb-cli-commands.adoc#_linux[Linux considerations in virtualUSB CLI commands,window=read-later].
