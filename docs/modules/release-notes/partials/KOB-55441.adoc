@@ -1,0 +1,14 @@
+// Source: KOB-55441 (Bug, Wait For Deployment, no fix version)
+// Applies to: Kobiton CLI with deviceConnect. Target release version needs confirmation.
+// REVIEWER NOTE:
+// - Confirm iOS simulators are customer-available before publishing the simulator bullet.
+//   Parent epic KOB-24024 (Support iOS Simulators) is still In Progress, and the 2026-08-07
+//   release notes removed a simulator fix because simulators were not supported at the time.
+// - Only behavior that passed QA under this ticket is included. A `..` push on real iOS devices
+//   and an intermittent push error on simulators moved to KOB-55509 and are excluded here.
+// - QA proposed closing this ticket in favor of KOB-55509. Confirm this ticket ships on its own.
+
+=== Kobiton CLI
+
+* *iOS simulators:* `kobiton file list`, `kobiton file push`, `kobiton file pull`, and `kobiton device ps` now work on iOS simulators. Previously, `file list`, `file pull`, and `device ps` failed with a server error, and `file push` reported success without writing the file. The CLI now refuses paths outside the app's container on simulators.
+* *iOS devices and simulators:* `kobiton file push` now fails with a non-zero exit code when the target app is not installed or not accessible. Previously, the push printed `Pushed <n> bytes` and exited `0` even though no file was written.
