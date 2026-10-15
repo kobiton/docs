@@ -1,0 +1,18 @@
+// KOB-55419. Robot Ranch draft release-note partial. Requires docs-team review before publishing.
+// Source: Jira KOB-55419 (Bug, status: Wait For Deployment; Release Notes field populated;
+// Release Notes destination includes "Release Email").
+// No fix version is set in Jira. Confirm the target release before including this partial in a release page.
+// Applies to: Kobiton Portal manual sessions. Confirm whether a Standalone release also includes this change.
+// Suggested placement: "Bug fixes and improvements" > "Manual testing".
+
+=== Manual testing
+
+- Fixed an issue where app installation errors in manual sessions hid the error reported by the device. For some iOS and Android errors, Kobiton Portal replaced the device error with its own explanation, which could point to the wrong cause. The error message now shows the device error text after `Failed to install '<app>'.`, for example `ApplicationVerificationFailed`, `INSTALL_FAILED_VERSION_DOWNGRADE`, `INSTALL_FAILED_UPDATE_INCOMPATIBLE`, `INSTALL_FAILED_OLDER_SDK`, or `DeviceOSVersionTooLow`. When an install error includes a Kobiton error code, the code still appears at the start of the message.
+- iOS installs that fail signature verification now show the `ApplicationVerificationFailed` error instead of an AS-500 message stating that *App signing using Kobiton Certificate (iOS)* is disabled. This error means the app's own signature isn't valid on the device, for example, because the provisioning profile doesn't include the device UDID or the profile or certificate has expired.
+
+// REVIEWER NOTE (KOB-55419): Successful installs and app install behavior are unchanged per Jira.
+// REVIEWER NOTE (KOB-55419): QA passed 13 of 14 cases. One case is inconclusive: an unparsable APK
+// showed "App was not installed because failed to parse app." instead of a raw device error.
+// This entry is scoped to the error groups listed in the ticket. Do not broaden it to "all install
+// errors" until engineering confirms that case.
+// REVIEWER NOTE (KOB-55419): Customer-specific context in the ticket is intentionally excluded.
