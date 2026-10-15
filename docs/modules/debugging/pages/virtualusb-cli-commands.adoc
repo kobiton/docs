@@ -218,15 +218,3 @@ See xref:start-debugging.adoc#_considerations[this section,window=read-later] fo
 * iOS 17.4 or later is supported.
 
 * iOS devices connected through virtualUSB work with `usbmuxd`-based tools such as go-ios, libimobiledevice, and pymobiledevice3.
-
-* If locally plugged-in iOS devices disappear from tools such as `idevice_id -l` or `ios list`, or `pymobiledevice3` commands fail with `KeyError: 'BUID'`, restart the services in this order:
-+
-[source,shell]
-----
-sudo systemctl stop dcb
-sudo systemctl restart usbmuxd
-sudo systemctl start dcb
-----
-+
-[IMPORTANT]
-Do not run `sudo systemctl restart dcb` by itself. It does not fix these issues and can hide locally plugged-in devices from iOS tools.
