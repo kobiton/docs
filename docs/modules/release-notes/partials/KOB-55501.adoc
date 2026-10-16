@@ -1,0 +1,20 @@
+== Improved session data reliability
+
+- Fixed an issue where a session could lose its test report, video, or log details, or fail to end correctly, when Kobiton services were briefly under heavy load.
+- While a session is running, the device log preview now shows only the first part of the device log. The full device log remains available after the session ends.
+
+// Source: KOB-55501 (Jira release-note and customer-impact fields)
+// REVIEWER NOTE (KOB-55501): Jira does not say where customers see the in-session device log
+// preview (for example, a session details API response or a Portal view). The Jira comments say the
+// live Device Log panel in manual sessions streams logs separately, but that check is listed as a
+// verification step, not a confirmed result. Confirm where the preview is visible, or remove the
+// second bullet if no customer-facing surface shows it.
+// REVIEWER NOTE (KOB-55501): The Jira release-note field also says running sessions put less load
+// on the database. This draft leaves that out because the evidence describes no visible effect for
+// customers. Add it back if product wants to mention it.
+// REVIEWER NOTE (KOB-55501): The Jira fix version is 2026.10.16, and it is not yet marked released in
+// Jira. Confirm which weekly Cloud release page includes this partial, and whether the change also
+// applies to Standalone deployments.
+// REVIEWER NOTE (KOB-55501): Jira also lists new optional server settings that have safe defaults.
+// They are operational settings, so this draft leaves them out. Confirm whether any Standalone
+// documentation should list them.
