@@ -234,6 +234,23 @@ An unrecognized value never fails a call. The call runs normally and Kobiton rec
 
 Set `X-AI-Tool-Name` to attribute your calls explicitly. The Codex CLI and Cursor CLI setup guides already include this header in their MCP configuration examples. See xref:mcp/install-local-ai-plugin.adoc[Install and configure local plugin] and xref:mcp/cursor-cli.adoc[Kobiton for Cursor CLI].
 
+== Call purpose (`userIntent`)
+
+Every MCP tool accepts an optional `userIntent` string argument with the description "A brief summary of why this call is being made."
+
+* A call without `userIntent` runs normally.
+* When a call includes `userIntent`, Kobiton records the value in the audit log exactly as sent, including an empty string.
+* When `userIntent` is present, it must be a string. A value of any other type, including `null`, fails the call.
+* Each tool still requires its own arguments, such as `appId` or `sessionId`.
+
+Starting with `automate` plugin version 1.16.0, the plugin asks the AI assistant to send `userIntent` only when the tool name and arguments don't show why a call is made, such as ending a session or deleting a test case.
+
+// REVIEWER NOTE (KOB-54317): Jira does not say where customers can view the audit log that
+// stores `userIntent`. Confirm the customer-facing name and location of the audit log, or
+// remove the audit log sentence.
+// REVIEWER NOTE (KOB-54317): The page intro says it covers plugin version 1.13.0. This section
+// describes 1.16.0 behavior. Confirm whether to update the intro version.
+
 == Skills
 
 The plugin ships six guided skills.
