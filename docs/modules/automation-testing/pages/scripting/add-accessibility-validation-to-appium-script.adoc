@@ -3,15 +3,11 @@
 
 Accessibility validation flags issues like touch target size, color contrast, and content labeling on the screens your Appium automation session visits. Results appear in Session Explorer after the session completes.
 
-By default, Appium automation sessions return no accessibility validation results. Add the required capabilities to your script to run validation during the session.
-
-== Prerequisites
-
-* Your script uses an Appium automation session.
+By default, Appium automation sessions don't run accessibility validation.
 
 == Required capabilities
 
-Add both capabilities to your Appium session. When either is omitted, no accessibility results are recorded.
+Set both capabilities to `true`. If either is missing, the session records no accessibility results.
 
 [cols="1,2"]
 |===
@@ -31,10 +27,10 @@ capabilities.setCapability("kobiton:accessibilityValidation", true);
 capabilities.setCapability("kobiton:scriptlessCapture", true);
 ----
 
-== Behavior to expect
+== Session behavior
 
-* Expect additional runtime overhead per session.
-* Accessibility results are still being processed after the session ends. Allow several minutes before treating counts as final.
+* Sessions with accessibility validation take longer to run.
+* Accessibility results continue processing after the session ends. Wait several minutes before treating issue counts as final.
 
 == Related documentation
 
