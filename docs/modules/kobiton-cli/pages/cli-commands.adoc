@@ -962,8 +962,15 @@ Add `--capture` with one or more of the following values. Separate values with c
 | `video` | Session video.
 | `foreground-apps` | Foreground app change events.
 | `user-action` | Each user action, added to the session timeline after the action completes.
-| `wait-for-idle` | Not a data type. Waits for the device to go idle after each user action before capturing.
+| `wait-for-idle` | Waits for the device to go idle after each user action before capturing data. Captures no data of its own.
 |===
+
+After the session ends, Session Explorer shows screenshots, view hierarchies, and metrics only for `kobiton webdriver get` and `kobiton webdriver post` commands. Other commands, such as `kobiton app install`, don't appear as steps.
+
+[NOTE]
+====
+If `view-trees` is not captured, session steps appear in Session Explorer only after the session ends.
+====
 
 // REVIEWER NOTE (KOB-52718): foreground-apps, user-action, and wait-for-idle are now listed in the
 // CLI help (kobiton session create --help). Earlier testing found that foreground-apps and
@@ -983,11 +990,6 @@ kobiton session create -u 3e4e7fe7 --capture screenshots,view-trees,logs
 ----
 kobiton session create -u 3e4e7fe7 --capture screenshots --capture video
 ----
-
-[NOTE]
-====
-If `view-trees` is not captured, session steps appear in Session Explorer only after the session ends.
-====
 
 === `session end`
 
