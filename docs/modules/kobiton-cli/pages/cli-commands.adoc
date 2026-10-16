@@ -1141,7 +1141,7 @@ kobiton session list [OPTIONS]
 | `--team` | `<TEAM>` | Filter by team ID.
 | `--user` | `<USER>` | Filter by user ID.
 | `--state` | `<STATE>` | Filter by session state, for example `START`, `COMPLETE`, `PASSED`, `FAILED`, `TIMEOUT`, `ERROR`, or `TERMINATED`.
-| `--type` | `<SESSION_TYPE>` | Filter by session type, for example `AUTO`, `MANUAL`, `SCRIPTLESS`, or `MIXED`.
+| `--type` | `<SESSION_TYPE>` | Filter by session type, for example `AUTO`, `MANUAL`, `SCRIPTLESS`, `MIXED`, or `CLI`.
 | `--platform` | `<PLATFORM>` | Filter by device platform, for example `Android` or `iOS`.
 | `--keyword` | `<KEYWORD>` | Filter by keyword, matching device name or platform version.
 |===
@@ -1151,12 +1151,15 @@ Plus all <<global-options,global options>>.
 .Example
 [source,shell]
 ----
-kobiton session list --from 2026-10-01 --platform Android --state COMPLETE --all
+kobiton session list --type CLI
 ----
 
-// REVIEWER NOTE (KOB-55553): Output not captured. Add an .Output block after running the command.
-// REVIEWER NOTE (KOB-55553): The CLI help lists example --type values (AUTO, MANUAL, SCRIPTLESS, MIXED).
-// Confirm whether CLI sessions have their own type value.
+.Output
+----
+ID, State, Type, Device, Platform, Created, Ended
+36, COMPLETE, CLI, 00008103-00115458****A01E, iOS 26.1, 2026-10-16T18:28:06.592Z, 2026-10-16T18:28:25.141Z
+35, COMPLETE, CLI, 00008103-00115458****A01E, iOS 26.1, 2026-10-16T18:27:04.672Z, 2026-10-16T18:27:27.383Z
+----
 
 === `session show`
 
