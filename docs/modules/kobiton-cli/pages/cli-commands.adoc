@@ -602,13 +602,14 @@ Display Name, UDID, Platform, List, Status, Host
 iPhone 12, 79de3c497b9f1****19040aeb44, iOS 18.1, Private, ACTIVATED, 192.168.50.86
 ----
 
-=== `device adb-shell`
+[#device-shell]
+=== `device shell`
 
-Run `adb shell` commands on an Android device.
+Run `adb shell` commands on an Android device. iOS devices have no shell.
 
 .Syntax
 ----
-kobiton device adb-shell [OPTIONS] [ARGS]...
+kobiton device shell [OPTIONS] [ARGS]...
 ----
 
 .Arguments
@@ -616,7 +617,7 @@ kobiton device adb-shell [OPTIONS] [ARGS]...
 |===
 | Argument | Description
 
-| `[ARGS]...` | Arguments to pass (before or after `--`). If not provided, launches an interactive adb shell. The interactive shell is unavailable on public cloud and trial devices.
+| `[ARGS]...` | Arguments to pass (before or after `--`). If not provided, opens an interactive shell. The interactive shell is unavailable on public cloud and trial devices.
 |===
 
 Accepts all <<global-options,global options>>.
@@ -640,29 +641,29 @@ A restricted session rejects control characters and these shell metacharacters a
 
 Pipes, redirection, command and variable substitution, backgrounding, globbing, and quoting are therefore unavailable on the device. Arguments cannot contain whitespace, and a command line cannot exceed 1024 characters. Individual commands further restrict which arguments and file paths they accept, so a whitelisted command can still reject an argument.
 
-Run `kobiton device adb-shell --help` for the current list of allowed commands, permitted directories, and per-command restrictions.
+Run `kobiton device shell --help` for the current list of allowed commands, permitted directories, and per-command restrictions.
 ====
 
 .Example
 [source,shell]
 ----
 # Read a device property
-kobiton device adb-shell getprop ro.build.version.sdk
+kobiton device shell getprop ro.build.version.sdk
 
 # Pass arguments after -- so the CLI does not read them as its own options
-kobiton device adb-shell -- logcat -d -t 200
+kobiton device shell -- logcat -d -t 200
 ----
 
 Both examples run on a restricted session.
 
-To list files on a device, use <<file-list,`kobiton file list`>>. A restricted session confines `adb-shell ls` to the permitted directories, so `ls -l /sdcard` is rejected while `ls -l /sdcard/Download/` is accepted.
+To list files on a device, use <<file-list,`kobiton file list`>>. A restricted session confines `shell ls` to the permitted directories, so `ls -l /sdcard` is rejected while `ls -l /sdcard/Download/` is accepted.
 
 .Filter command output
 A restricted session rejects the pipe character, so filter locally and send only the command to the device:
 
 [source,shell]
 ----
-kobiton device adb-shell dumpsys window displays | grep -E 'mCurrentFocus|mFocusedApp'
+kobiton device shell dumpsys window displays | grep -E 'mCurrentFocus|mFocusedApp'
 ----
 
 .Output (both forms)
@@ -675,7 +676,7 @@ On a dedicated device, quote the whole expression instead. The pipe then runs on
 
 [source,shell]
 ----
-kobiton device adb-shell "dumpsys window displays | grep -E 'mCurrentFocus|mFocusedApp'"
+kobiton device shell "dumpsys window displays | grep -E 'mCurrentFocus|mFocusedApp'"
 ----
 
 === `device forward`
@@ -827,6 +828,51 @@ Plus all <<global-options,global options>>.
 ----
 kobiton device screen -q 80 > screen.jpg
 ----
+
+== `organization`
+
+Organization operations.
+
+=== `organization user create`
+
+Create a user in the current organization.
+
+.Syntax
+----
+kobiton organization user create [OPTIONS] --email <EMAIL> --username <USERNAME>
+----
+
+.Options
+[cols="1,1,3",options="header"]
+|===
+| Option | Argument | Description
+
+| `--email` | `<EMAIL>` | Email of the new user. *(required)*
+| `--username` | `<USERNAME>` | Username of the new user: 5-32 characters of `a-z`, `0-9`, and `. + - _`. *(required)*
+| `--password` | `<PASSWORD>` | Sign-in password for the new user. Required unless `--enable-sso` is set. Can also be set with the `KOBITON_NEW_USER_PASSWORD` environment variable.
+| `--enable-sso` | | Enable single sign-on (SSO) for the user instead of a password. This can't be reverted through the API, and it clears the password of an existing user.
+| `--first-name` | `<FIRST_NAME>` | First name of the new user. Default: the part of the email before `@`.
+| `--last-name` | `<LAST_NAME>` | Last name of the new user.
+|===
+
+Plus all <<global-options,global options>>.
+
+*Requires:*
+
+* `--email <EMAIL>` and `--username <USERNAME>`
+* `--password <PASSWORD>`, the `KOBITON_NEW_USER_PASSWORD` environment variable, or `--enable-sso`
+
+.Example
+[source,shell]
+----
+export KOBITON_NEW_USER_PASSWORD='<password>'
+kobiton organization user create --email jane.doe@example.com --username janedoe --first-name Jane --last-name Doe
+----
+
+Replace `<password>` with the new user's sign-in password.
+
+// REVIEWER NOTE (KOB-55553): Output not captured. Add an .Output block after running the command.
+// REVIEWER NOTE (KOB-55553): Confirm which role or permission is required to create users.
 
 == `reservation`
 
@@ -1068,6 +1114,45 @@ kobiton session list-active
 ----
 Session 8155111, device 3e4e7fe7, status RUNNING, created 2025-10-09T03:38:03Z, ended active
 ----
+
+=== `session list`
+
+Display a page of sessions created within a time window.
+
+.Syntax
+----
+kobiton session list [OPTIONS]
+----
+
+.Options
+[cols="1,1,3",options="header"]
+|===
+| Option | Argument | Description
+
+| `--from` | `<FROM>` | Start of the window, as `YYYY-MM-DD` or RFC 3339. Default: 30 days ago.
+| `--to` | `<TO>` | End of the window, as `YYYY-MM-DD` or RFC 3339. Default: now.
+| `--page` | `<PAGE>` | Page to retrieve. Default: the first page.
+| `--size` | `<SIZE>` | Max number of items to return per page. Default: `20`.
+| `--all` | | Retrieve every page in the window instead of a single page.
+| `--team` | `<TEAM>` | Filter by team ID.
+| `--user` | `<USER>` | Filter by user ID.
+| `--state` | `<STATE>` | Filter by session state, for example `START`, `COMPLETE`, `PASSED`, `FAILED`, `TIMEOUT`, `ERROR`, or `TERMINATED`.
+| `--type` | `<SESSION_TYPE>` | Filter by session type, for example `AUTO`, `MANUAL`, `SCRIPTLESS`, or `MIXED`.
+| `--platform` | `<PLATFORM>` | Filter by device platform, for example `Android` or `iOS`.
+| `--keyword` | `<KEYWORD>` | Filter by keyword, matching device name or platform version.
+|===
+
+Plus all <<global-options,global options>>.
+
+.Example
+[source,shell]
+----
+kobiton session list --from 2026-10-01 --platform Android --state COMPLETE --all
+----
+
+// REVIEWER NOTE (KOB-55553): Output not captured. Add an .Output block after running the command.
+// REVIEWER NOTE (KOB-55553): The CLI help lists example --type values (AUTO, MANUAL, SCRIPTLESS, MIXED).
+// Confirm whether CLI sessions have their own type value.
 
 === `session show`
 
