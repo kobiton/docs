@@ -1,0 +1,55 @@
+= Enter a device passcode on iOS
+:navtitle: Enter a device passcode on iOS
+
+During an iOS manual session, enter the device passcode when the system keypad is hidden from the session stream.
+
+This includes passcode prompts for:
+
+* Apple Pay
+* Wallet *Add Card*
+* Hidden apps folder
+
+== Requirements
+
+* A supported private or local iOS device with a configured passcode.
+* An iOS agent from October 9, 2026 or later.
+
+The device passcode can be managed through Kobiton passcode (PIN) mode or configured manually.
+
+Public Cloud devices do not support this feature.
+
+== Find a device that supports passcode entry
+
+When organization passcode (PIN) mode is enabled, use the *Passcode* filter to find supported devices.
+
+. Select *Devices*.
+. In the search bar, select *Passcode*, then select *Supported*.
++
+Supported devices display a passcode icon next to the device name in card view and list view.
+. xref:manual-testing:start-a-manual-session.adoc[Start a manual session] on the device.
+
+The *Passcode* filter is available only when organization passcode (PIN) mode is enabled.
+
+== Enter the passcode
+
+. During a manual session, open a flow that requests the iOS device passcode.
++
+The *Apple Security Enablement* dialog opens beside the device screen with the subtitle *Device Passcode*.
+. Enter the numeric passcode.
+. Select *Submit* or press Enter.
++
+The *Entered on device* indicator shows how many digits the device has received.
+
+*Input as sensitive data* is on by default to prevent the passcode from being recorded in the session log.
+
+== Limitations
+
+* Only numeric passcodes are supported in the dialog. For alphanumeric passcodes, use the device's keyboard.
+* The dialog does not provide a delete key. To correct an entry, use *Delete* on the device screen and submit the passcode again.
+* On older iOS agents, the dialog may open without entering the passcode on the device.
+
+== Related guides
+
+* xref:manual-testing:local-devices/use-apple-pay-in-manual-session.adoc[]
+* xref:devices:local-devices/set-up-device-for-apple-pay.adoc[]
+* xref:devices:search-for-a-device.adoc[]
