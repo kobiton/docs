@@ -838,7 +838,7 @@ Organization operations.
 Create a user in the current organization.
 
 [NOTE]
-Only users whose role has the `org_management.modify` permission can create users.
+Only roles with the `org_management.modify` permission can create users.
 
 .Syntax
 ----
@@ -850,11 +850,11 @@ kobiton organization user create [OPTIONS] --email <EMAIL> --username <USERNAME>
 |===
 | Option | Argument | Description
 
-| `--email` | `<EMAIL>` | Email of the new user. *(required)*
-| `--username` | `<USERNAME>` | Username of the new user: 5-32 characters of `a-z`, `0-9`, and `. + - _`. *(required)*
+| `--email` | `<EMAIL>` | Email address of the new user. *(required)*
+| `--username` | `<USERNAME>` | Username of the new user: 5 to 32 characters from `a-z`, `0-9`, and `. + - _`. *(required)*
 | `--password` | `<PASSWORD>` | Sign-in password for the new user. Required unless `--enable-sso` is set. Can also be set with the `KOBITON_NEW_USER_PASSWORD` environment variable.
-| `--enable-sso` | | Enable single sign-on (SSO) for the user instead of a password. This can't be reverted through the API, and it clears the password of an existing user.
-| `--first-name` | `<FIRST_NAME>` | First name of the new user. Default: the part of the email before `@`.
+| `--enable-sso` | | Enable single sign-on (SSO) for the user instead of a password. The API can't revert this setting. It also clears the password of an existing user.
+| `--first-name` | `<FIRST_NAME>` | First name of the new user. Default: the part of the email address before `@`.
 | `--last-name` | `<LAST_NAME>` | Last name of the new user.
 |===
 
@@ -1137,7 +1137,7 @@ kobiton session list [OPTIONS]
 | `--from` | `<FROM>` | Start of the window, as `YYYY-MM-DD` or RFC 3339. Default: 30 days ago.
 | `--to` | `<TO>` | End of the window, as `YYYY-MM-DD` or RFC 3339. Default: now.
 | `--page` | `<PAGE>` | Page to retrieve. Default: the first page.
-| `--size` | `<SIZE>` | Max number of items to return per page. Default: `20`.
+| `--size` | `<SIZE>` | Maximum number of sessions to return per page. Default: `20`.
 | `--all` | | Retrieve every page in the window instead of a single page.
 | `--team` | `<TEAM>` | Filter by team ID.
 | `--user` | `<USER>` | Filter by user ID.
