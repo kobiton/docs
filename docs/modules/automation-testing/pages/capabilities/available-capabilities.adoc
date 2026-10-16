@@ -31,6 +31,7 @@ capabilities.setCapability("kobiton:sessionName", "Login test");
 Capabilities with the `kobiton:` prefix cannot be used without the prefix.
 
 .Kobiton capability index
+* <<_accessibilityValidation,kobiton:accessibilityValidation>>
 * <<_app_install,kobiton:app-install>>
 * <<_baselineSessionId,kobiton:baselineSessionId>>
 * <<_bluetooth,kobiton:bluetooth>>
@@ -54,6 +55,21 @@ Capabilities with the `kobiton:` prefix cannot be used without the prefix.
 * <<_web_find,kobiton:web-find>>
 * <<_work_app,kobiton:workApp>>
 * <<_xpath2,kobiton:xpath2>>
+
+[#_accessibilityValidation]
+=== `kobiton:accessibilityValidation`
+
+Runs accessibility validation during an Appium automation session. For setup steps, see xref:automation-testing:scripting/add-accessibility-validation-to-appium-script.adoc[].
+
+* *Type:* `boolean`
+* *Required capabilities:* xref:_scriptlessCapture[`kobiton:scriptlessCapture`] set to `true`
+* *Optional capabilities:* None
+
+.Example
+[source,java]
+----
+capabilities.setCapability("kobiton:accessibilityValidation", true);
+----
 
 [#_app_install]
 === `kobiton:app-install`
@@ -310,7 +326,7 @@ capabilities.setCapability("kobiton:runtime", "appium");
 [NOTE]
 This capability replaces `kobiton:scriptlessEnable`, which continues to work identically. Setting both on the same session is safe and produces no conflict.
 
-Marks an automation session as convertible into a Test Case. When set on an initial Appium or Xium script, the resulting session bypasses cache and captures full metadata for later conversion. Setting this capability is optional but recommended for full conversion support.
+Marks an automation session as convertible into a Test Case. When set on an initial Appium or Xium script, the resulting session bypasses cache and captures full metadata for later conversion. Setting this capability is optional but recommended for full conversion support, and required for xref:_accessibilityValidation[`kobiton:accessibilityValidation`].
 
 * *Type:* `boolean`
 * *Required capabilities:* None
