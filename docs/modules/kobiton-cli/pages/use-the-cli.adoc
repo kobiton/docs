@@ -92,7 +92,7 @@ For scripts or isolated commands, pass `--session-token` explicitly with each co
 
 == Known limitations
 
-* Session Explorer, including *WebDriver Traffic*, is available for a CLI session only when both of the following are true:
+* Session Explorer, including the *WebDriver Traffic* panel, is available for a CLI session only when both of the following are true:
 ** The session was created with at least one data type in `--capture`.
 ** At least one `kobiton webdriver get` or `kobiton webdriver post` command ran during the session.
 
@@ -100,10 +100,7 @@ For scripts or isolated commands, pass `--session-token` explicitly with each co
 
 * Only `kobiton webdriver` commands appear as steps in Session Explorer, with their screenshots, view hierarchies, and metrics.
 
-// REVIEWER NOTE (KOB-52718): Removed "Session video and logs are not available in Session
-// Overview." Video and logs are now captured when requested with --capture. Confirm how the
-// View Device Logs button on Session Overview behaves for sessions without logs capture
-// before publishing (tracked as a separate defect fix).
+* Session Overview disables *View Device Logs* for sessions created without `logs` in `--capture`, and shows *Video is not available* for sessions created without `video`.
 
 * Kobiton CLI does not support mixing manual and CLI testing sessions.
 

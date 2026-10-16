@@ -949,14 +949,12 @@ Session token eyJhbGciOiJ...
 
 Capture is opt-in. A CLI session created without `--capture` captures no session data.
 
-Session Explorer, including *WebDriver Traffic*, is available for a CLI session only when both of the following are true:
+Session Explorer, including the *WebDriver Traffic* panel, is available for a CLI session only when both of the following are true:
 
 * The session was created with at least one data type in `--capture`.
 * At least one `kobiton webdriver get` or `kobiton webdriver post` command ran during the session.
 
-*WebDriver Traffic* is not a `--capture` value. All other Session Explorer data depends on the values passed to `--capture`.
-
-// REVIEWER NOTE (KOB-52718): Confirm the exact UI label and location of WebDriver Traffic in Session Explorer.
+*WebDriver Traffic* is not a `--capture` value. The panel shows the *Request Body* and *Response Body* of each `kobiton webdriver` command. All other Session Explorer data depends on the values passed to `--capture`.
 
 Add `--capture` with one or more of the following values. Separate values with commas, or repeat `--capture` once per value.
 
@@ -965,9 +963,9 @@ Add `--capture` with one or more of the following values. Separate values with c
 | Value | Description
 
 | `screenshots` | Screenshots, collected continuously during the session.
-| `view-trees` | View hierarchies, collected continuously during the session and shown in the *Inspector*.
-| `logs` | Device log lines.
-| `metrics` | Device metric samples.
+| `view-trees` | View hierarchies, collected continuously during the session and shown in the *Inspector* panel.
+| `logs` | Device log lines, shown in the *Device Logs* panel.
+| `metrics` | Device metric samples, shown in the *System Metrics* panel.
 | `video` | Session video.
 | `foreground-apps` | Foreground app change events.
 | `user-action` | Each user action, added to the session timeline after the action completes.
@@ -985,8 +983,6 @@ If `view-trees` is not captured, session steps appear in Session Explorer only a
 // CLI help (kobiton session create --help). Earlier testing found that foreground-apps and
 // user-action produce no visible artifact in Session Explorer for a CLI-only session. Confirm
 // where this data appears in the portal before publishing.
-// REVIEWER NOTE (KOB-52718): An "all" value was discussed in Jira as a follow-up and is not
-// listed in the CLI help. It is intentionally omitted.
 
 .Example
 [source,shell]
