@@ -837,6 +837,9 @@ Organization operations.
 
 Create a user in the current organization.
 
+[NOTE]
+Only users whose role has the `org_management.modify` permission can create users.
+
 .Syntax
 ----
 kobiton organization user create [OPTIONS] --email <EMAIL> --username <USERNAME>
@@ -875,8 +878,6 @@ Replace `<password>` with the new user's sign-in password.
 ----
 jane.doe@tester.com: new account, SSO disabled
 ----
-
-// REVIEWER NOTE (KOB-55553): Confirm which role or permission is required to create users.
 
 == `reservation`
 
