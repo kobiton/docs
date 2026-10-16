@@ -43,24 +43,19 @@ This functionality supports book-style foldable devices, such as Galaxy Z Fold a
 
 == Session Explorer support for Kobiton CLI sessions
 
-Kobiton CLI sessions now support capturing and reviewing session activity in Session Explorer. Captured data provides a more detailed view of commands, device logs, and screenshots throughout a session.
+CLI sessions now populate Session Explorer and provide additional information in Session Overview when the capture option is enabled.
 
-=== Capture session data from the Kobiton CLI
+Use the following comma-separated values in your CLI session to view this information in Session Explorer:
 
-Use the new `--capture` option with `kobiton session create` to specify which session data to capture, including screenshots, view trees, device logs, metrics, and video.
+* `screenshots`: Screenshots are collected continuously. Steps without a new screenshot show the previous screenshot.
+* `view-trees`: Provides view trees when applicable.
+* `metrics`: Device metric samples.
+* `user-action`: User actions appear on the session timeline. These are currently not exhaustive of all steps in a session.
 
-Session capture is optional. CLI sessions created without `--capture` continue to open on Session Overview, with Session Explorer unavailable.
+Use the following comma-separated values in your CLI session to capture these items in Session Overview:
 
-=== Review CLI session activity in Session Explorer
-
-Session Explorer now provides a more accurate view of captured CLI session activity:
-
-* *Session timeline:* The timeline shows session creation once, followed by a step for each `kobiton webdriver` call, without duplicate session creation steps.
-* *Device logs:* Each step displays the device logs recorded since the previous step, making it easier to associate log entries with the corresponding activity.
-* *Screenshots:* Steps without their own screenshot display the screenshot from the previous step instead of showing "Screenshot Not Available". This behavior also applies to session command APIs.
-* *Appium Inspector:* Screenshots and XML hierarchies follow the same display behavior, while remaining associated with the appropriate session steps.
-
-For sessions without captured device logs, *View Device Logs* and *Download all* are unavailable rather than displaying an error.
+* `video`: Session video.
+* `logs`: Device logs.
 
 // Source: KOB-53003 from PR #709 (passcode helper overlay + Devices page support)
 // Source: KOB-53785 from PR #708 (earlier Apple Pay-scoped passcode entry; merged here)
