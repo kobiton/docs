@@ -922,7 +922,8 @@ kobiton session create [OPTIONS]
 | Option | Argument | Description
 
 | `-t`, `--timeout` | `<TIMEOUT>` | Inactivity timeout for this session, in minutes. Default/minimum is `10`, maximum is `120`. Can be refreshed with `session ping`.
-| `--capture` | `<KINDS>` | Comma-separated list of session data to capture for Session Explorer. See <<session-create-capture,Capture session data>>. Default: nothing is captured.
+| `--hide` | | Doesn't print the session token. The token is still saved for later commands.
+| `--capture` | `<CAPTURE>` | Session data to capture, as a comma-separated list or by repeating the option. See <<session-create-capture,Capture session data>>. Default: nothing is captured.
 |===
 
 Plus all <<global-options,global options>>.
@@ -948,30 +949,39 @@ Session token eyJhbGciOiJ...
 
 Capture is opt-in. A CLI session created without `--capture` captures no session data, and Session Explorer is not available for that session.
 
-Add `--capture` with one or more of the following values to make the captured data available in Session Explorer:
+Add `--capture` with one or more of the following values. Separate values with commas, or repeat `--capture` once per value.
 
 [cols="1,3",options="header"]
 |===
-| Value | Captured data
+| Value | Description
 
-| `screenshots` | A screenshot for each session step.
-| `view-trees` | The view hierarchy for each session step, shown in the *Inspector*.
-| `logs` | Device logs.
-| `metrics` | System metrics.
+| `screenshots` | Screenshots, collected continuously during the session.
+| `view-trees` | View hierarchies, collected continuously during the session and shown in the *Inspector*.
+| `logs` | Device log lines.
+| `metrics` | Device metric samples.
 | `video` | Session video.
+| `foreground-apps` | Foreground app change events.
+| `user-action` | Each user action, added to the session timeline after the action completes.
+| `wait-for-idle` | Not a data type. Waits for the device to go idle after each user action before capturing.
 |===
 
-// REVIEWER NOTE (KOB-52718): Jira also lists foreground-apps, user-action, and wait-for-idle
-// as accepted values. Testing found that they produce no visible artifact for a CLI-only
-// session, and engineering described them as app change events (not yet shown in the portal),
-// device actions, and a capture-timing setting. Confirm whether to document them.
+// REVIEWER NOTE (KOB-52718): foreground-apps, user-action, and wait-for-idle are now listed in the
+// CLI help (kobiton session create --help). Earlier testing found that foreground-apps and
+// user-action produce no visible artifact in Session Explorer for a CLI-only session. Confirm
+// where this data appears in the portal before publishing.
 // REVIEWER NOTE (KOB-52718): An "all" value was discussed in Jira as a follow-up and is not
-// confirmed as shipped. It is intentionally omitted.
+// listed in the CLI help. It is intentionally omitted.
 
 .Example
 [source,shell]
 ----
 kobiton session create -u 3e4e7fe7 --capture screenshots,view-trees,logs
+----
+
+.Example: repeated option
+[source,shell]
+----
+kobiton session create -u 3e4e7fe7 --capture screenshots --capture video
 ----
 
 [NOTE]

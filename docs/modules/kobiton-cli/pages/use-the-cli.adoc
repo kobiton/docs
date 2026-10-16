@@ -92,7 +92,7 @@ For scripts or isolated commands, pass `--session-token` explicitly with each co
 
 == Known limitations
 
-* Session Explorer is available only for CLI sessions created with the `--capture` option. Session Explorer shows only the data types listed in `--capture`. For details, see xref:cli-commands.adoc#session-create-capture[Capture session data].
+* Session Explorer is available only for CLI sessions created with the `--capture` option. Session Explorer shows only the data captured with `--capture`. For details, see xref:cli-commands.adoc#session-create-capture[Capture session data].
 
 * Only `kobiton webdriver` commands appear as steps in Session Explorer.
 
@@ -103,7 +103,7 @@ For scripts or isolated commands, pass `--session-token` explicitly with each co
 
 * Kobiton CLI does not support mixing manual and CLI testing sessions.
 
-* By default, CLI sessions time out after 10 minutes. You can configure the timeout up to 2 hours using the `kobiton session ping` command.
+* By default, CLI sessions time out after 10 minutes of inactivity. Set a timeout of up to 2 hours with `kobiton session create --timeout`, and reset the timeout period with `kobiton session ping`.
 
 [#_troubleshooting]
 == Troubleshooting
