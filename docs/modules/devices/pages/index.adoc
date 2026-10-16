@@ -5,6 +5,19 @@ Find, manage, and configure your devices.
 
 image:devices:devices-index-context.png[width=1000,alt="select Devices tab"]
 
+== Device types
+
+There are three device types: public, private, and local. The type determines where the device is hosted and who can access it.
+
+Public devices::
+A shared pool of Kobiton-hosted devices available to all customers. Public devices are wiped between sessions and don't support installs from the App Store or TestFlight. Public devices consume testing minutes while in use.
+
+Private devices::
+Devices dedicated to your organization and hosted by Kobiton. Only members of your organization can connect to them. Private devices support xref:devices:manage-devices.adoc#_restart_private_device[restart] and device tags. They don't consume testing minutes.
+
+Local devices::
+Devices hosted at your location through Kobiton deviceConnect. Only members of your organization can connect to them, and the devices stay under your physical control. Local devices otherwise behave like Private devices.
+
 == In this section
 
 include::../nav.adoc[lines=2..]

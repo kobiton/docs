@@ -120,7 +120,7 @@ curl -X POST https://api.kobiton.com/v2/apps \
     -H 'Authorization: Basic ${yourBase64String}' \
     -H 'Content-Type: application/json' \
     -H 'Accept: application/json' \
-    -d '{ "MyApp.ipa": "" , "app_path": "users/1/apps/MyApp‐237824a0‐302c‐9bfd‐ff417c89610a.ipa" }'
+    -d '{ "file_name": "MyApp.ipa" , "app_path": "users/1/apps/MyApp‐237824a0‐302c‐9bfd‐ff417c89610a.ipa" }'
 ----
 
 If your request was successful, `POST` will return a `200` status with the following response:

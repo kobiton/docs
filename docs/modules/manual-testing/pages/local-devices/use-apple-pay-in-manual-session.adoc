@@ -7,6 +7,11 @@ NOTE: APPLE Pay testing is supported on Private and Local iOS devices only.
 
 Before you start, xref:devices:local-devices/set-up-device-for-apple-pay.adoc[set up an iOS device for Apple Pay].
 
+To find devices with passcode support, filter the device list by xref:devices:device-metadata.adoc#_passcode[Passcode] and choose *Supported*.
+
+// REVIEWER NOTE (KOB-53007): Confirm this filter shipped before publishing. See the note on
+// the Passcode entry in devices:device-metadata.adoc.
+
 Log into an Apple ID account. Turn on *AssistiveTouch* if device cleanup policy cleaned it up.
 
 image::bypass-apple-pay-manual-session-assistive-touch-settings-toggle.PNG[width=500,alt="The Assistive touch toggle turned on]
@@ -34,10 +39,5 @@ image::bypass-apple-pay-manual-session-assistive-touch-confirm-pay.PNG[width=500
 When the iOS system passcode screen appears, the *Apple Security Enablement* dialog opens beside the device screen. Enter the numeric passcode and select *Submit* or press Enter. For details, see xref:manual-testing:enter-ios-device-passcode.adoc[].
 
 image::bypass-apple-pay-manual-session-enter-passcode-empty.PNG[width=500,alt="The passcode input screen"]
-
-// REVIEWER NOTE (KOB-53003): This replaces the previous keyboard workaround (tap the black space,
-// type the passcode, press backspace, retype the last digit). The Jira source does not state whether
-// the keyboard workaround still works. Confirm before removing it permanently, and replace the
-// screenshot above with one that shows the keypad overlay.
 
 The payment is confirmed.

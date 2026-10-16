@@ -11,6 +11,8 @@ You'll need to complete the following:
 
 * xref:debugging:local-devices/configure-your-personal-computer.adoc[Configure your computer] (Standalone with a self-signed SSL certificate only).
 
+* Ask an organization admin to xref:device-lab-management:deviceConnect/enable-virtualusb-for-host-machines.adoc[enable virtualUSB on the device's host machine,window=read-later] (private or local devices only).
+
 == Locate virtualUSB CLI
 
 Navigate to the installation directory of virtualUSB.
@@ -35,10 +37,16 @@ cd "C:\Program Files\virtualUSB"
 
 --
 
+Linux::
++
+--
+Skip this step. The installer adds `vusb` to the system `PATH`, so `vusb` runs from any directory.
+--
+
 ====
 
 [NOTE]
-* *All subsequent commands* assume that the current location is the virtualUSB CLI folder.
+* On macOS and Windows, *all subsequent commands* assume that the current location is the virtualUSB CLI folder.
 
 * Replace `vusb` with `./vusb` for MacOS for the subsequent commands.
 
@@ -204,3 +212,9 @@ vusb setup-adb
 == Considerations
 
 See xref:start-debugging.adoc#_considerations[this section,window=read-later] for considerations when using virtualUSB CLI.
+
+=== Linux
+
+* Supported iOS versions are the same as on macOS. See xref:debugging:start-debugging.adoc#_considerations[Considerations in Start debugging,window=read-later].
+
+* iOS devices connected through virtualUSB work with `usbmuxd`-based tools such as go-ios, libimobiledevice, and pymobiledevice3.
