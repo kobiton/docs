@@ -16,7 +16,7 @@ The plugin exposes 41 MCP tools across 5 domains.
 |Tool |Description
 
 |`listDevices`
-|List available devices, filtered by platform, availability, device group, name, UDID, or group ID. Returns device name, UDID, platform, OS version, availability, and an `is_cloud` flag. Pass `virtualUsb: true` to list the private devices that are ready for virtualUSB.
+|List available devices, filtered by platform, availability, device group, name, UDID, or group ID. Returns device name, UDID, platform, OS version, availability, and an `is_cloud` flag, plus a total for each device list and the `limit` applied. Pass `virtualUsb: true` to list the private devices that are ready for virtualUSB.
 
 |`getDeviceStatus`
 |Get the real-time status of one device, including availability, current session, battery level, and connection state.
@@ -53,6 +53,10 @@ The plugin exposes 41 MCP tools across 5 domains.
 A value without wildcards matches the exact full name only, so `Galaxy` on its own returns no devices. The `--name` filter in xref:kobiton-cli:cli-commands.adoc#_device_list[Kobiton CLI] uses the same convention.
 
 When every device list in the response is empty, `listDevices` returns an `applied_filters` object that echoes the filter values it used. Check it to tell a filter that matched no devices apart from an organization that has no devices to list.
+
+`listDevices` returns up to `limit` devices in each device list. `limit` defaults to 5 and is clamped to the range 1 to 20. The response returns the `limit` it applied and a total for each list: `private_devices_total`, `cloud_devices_total`, and `favorite_devices_total`. Each total counts every device that matches the filters, not only the devices returned. When a total exceeds `limit`, narrow the results with `platform`, `deviceName`, `udid`, or `deviceGroup`.
+
+A favorite device can also appear in the private or cloud list, so the totals don't add up to a single device count.
 
 Devices returned with `is_cloud: true` have restricted shell-command access in CLI sessions. Devices returned with `is_cloud: false` are unrestricted.
 
