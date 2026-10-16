@@ -866,14 +866,14 @@ Plus all <<global-options,global options>>.
 [source,shell]
 ----
 export KOBITON_NEW_USER_PASSWORD='<password>'
-kobiton organization user create --email jane.doe@example.com --username janedoe --first-name Jane --last-name Doe
+kobiton organization user create --email jane.doe@tester.com --username janedoe --first-name Jane --last-name Doe
 ----
 
 Replace `<password>` with the new user's sign-in password.
 
 .Output
 ----
-jane.doe@example.com: new account, SSO disabled
+jane.doe@tester.com: new account, SSO disabled
 ----
 
 // REVIEWER NOTE (KOB-55553): Confirm which role or permission is required to create users.
