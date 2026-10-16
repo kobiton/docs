@@ -947,7 +947,16 @@ Session token eyJhbGciOiJ...
 [#session-create-capture]
 ==== Capture session data
 
-Capture is opt-in. A CLI session created without `--capture` captures no session data, and Session Explorer is not available for that session.
+Capture is opt-in. A CLI session created without `--capture` captures no session data.
+
+Session Explorer, including *WebDriver Traffic*, is available for a CLI session only when both of the following are true:
+
+* The session was created with at least one data type in `--capture`.
+* At least one `kobiton webdriver get` or `kobiton webdriver post` command ran during the session.
+
+*WebDriver Traffic* is not a `--capture` value. All other Session Explorer data depends on the values passed to `--capture`.
+
+// REVIEWER NOTE (KOB-52718): Confirm the exact UI label and location of WebDriver Traffic in Session Explorer.
 
 Add `--capture` with one or more of the following values. Separate values with commas, or repeat `--capture` once per value.
 

@@ -92,7 +92,11 @@ For scripts or isolated commands, pass `--session-token` explicitly with each co
 
 == Known limitations
 
-* Session Explorer is available only for CLI sessions created with the `--capture` option. Session Explorer shows only the data captured with `--capture`. For details, see xref:cli-commands.adoc#session-create-capture[Capture session data].
+* Session Explorer, including *WebDriver Traffic*, is available for a CLI session only when both of the following are true:
+** The session was created with at least one data type in `--capture`.
+** At least one `kobiton webdriver get` or `kobiton webdriver post` command ran during the session.
+
+* Other than *WebDriver Traffic*, Session Explorer shows only the data captured with `--capture`. For details, see xref:cli-commands.adoc#session-create-capture[Capture session data].
 
 * Only `kobiton webdriver` commands appear as steps in Session Explorer, with their screenshots, view hierarchies, and metrics.
 
