@@ -54,6 +54,13 @@ A value without wildcards matches the exact full name only, so `Galaxy` on its o
 
 When every device list in the response is empty, `listDevices` returns an `applied_filters` object that echoes the filter values it used. Check it to tell a filter that matched no devices apart from an organization that has no devices to list.
 
+// Source: KOB-55265. Robot Ranch (Ledger) draft for docs-team review.
+Each device list in a `listDevices` response has a matching `<list>_total` field with the number of devices that matched the filters, and the response reports the `limit` it applied. Compare a list's total with the number of devices returned to tell whether the list was cut off. Totals are counted per list and are not summed, because a device can appear in more than one list.
+
+// REVIEWER NOTE (KOB-55265): The source gives the total field only as the pattern
+// `<list>_total`. Confirm the exact field names, for example `favorite_devices_total`,
+// and whether to list them here. Confirm the `limit` default and maximum before adding them.
+
 Devices returned with `is_cloud: true` have restricted shell-command access in CLI sessions. Devices returned with `is_cloud: false` are unrestricted.
 
 For the `virtualUsb` filter on `listDevices`, the admin-only `listHostingMachines` and `configureHostingMachine` tools, and their response fields, see xref:mcp/virtualusb-mcp-tools.adoc[virtualUSB MCP tools]. For the same settings in Kobiton Portal, see xref:device-lab-management:device-management-page.adoc[].
@@ -68,13 +75,13 @@ For the `virtualUsb` filter on `listDevices`, the admin-only `listHostingMachine
 |List test sessions, filtered by state, device, platform, and date range. Returns session ID, state, device information, duration, and timestamps.
 
 |`getSession`
-|Get session details, including commands, capabilities, and metadata.
+|Get session details, including commands, capabilities, and metadata. Returns `scan_status`, which reports whether each validation scan for the session has finished. See <<scan-status,Scan status>>.
 
 |`getSessionArtifacts`
 |Get download URLs for a session's video, logs, screenshots, and reports.
 
 |`getUserInputEvents`
-|Get the touch and swipe gestures performed in device-only live view during a session.
+|Get the touch and swipe gestures performed in device-only live view during a session. `limit` defaults to 10 and is clamped to 20.
 
 |`terminateSession`
 |Stop a running test session.
@@ -86,10 +93,10 @@ For the `virtualUsb` filter on `listDevices`, the admin-only `listHostingMachine
 |List a session's accessibility findings. Filter by finding type with `type`, which accepts `TOUCH_TARGET_SIZE`, `COLOR_CONTRAST`, and `CONTENT_LABELING`.
 
 |`getAccessibilityValidationsSummary`
-|Get a session's accessibility counts by finding type and issue name, with the number of steps scanned and the time of the latest finding. The summary carries no findings.
+|Get a session's accessibility counts by finding type and issue name, with the number of steps scanned and the time of the latest finding. The summary carries no findings. `scan_complete` reports whether the accessibility scan has finished.
 
 |`listCrashValidations`
-|List a session's crash findings.
+|List a session's crash findings. `pending_count` reports how many crash logs are still waiting to be processed.
 
 |`listResponseTimeValidations`
 |List a session's response time findings.
@@ -113,6 +120,33 @@ A session with no findings of the requested type returns `total_items: 0` and an
 `listAccessibilityValidations` returns lean items by default. Use the `include` parameter to add the element, metadata, screen, and screenshot URL fields.
 
 Ask for validations in natural language. The assistant selects the tool from the tool descriptions, so requests such as "did the app crash" or "show accessibility issues" route to the matching tool.
+
+// Source: KOB-55265. Robot Ranch (Ledger) draft for docs-team review.
+[#scan-status]
+==== Scan status
+
+Kobiton scans a session for validations in the background after the session runs. Until a scan finishes, the validation tools return the findings recorded so far, and an empty result does not mean the session is clean. Check scan status before treating findings as final:
+
+* `getSession` returns `scan_status` with one value per validation type: `complete`, `in_progress`, or `not_applicable`.
+* `getAccessibilityValidationsSummary` returns `scan_complete`. When it is `false`, the counts can still grow.
+* `listCrashValidations` returns `pending_count`. Items include only processed crashes, so a value above 0 means more crash findings can still appear.
+* `getTestRun` and `listTestRuns` return `accessibility_scanning_status`, `crash_scanning_status`, and `network_payload_scanning_status` on each execution.
+
+// REVIEWER NOTE (KOB-55265): The source names the `scan_status.accessibility` key only.
+// It lists accessibility, crash, response time, and Flex Correct as the scanned types.
+// Confirm the other key names before listing them.
+//
+// REVIEWER NOTE (KOB-55265): The source describes a settle window after the session ends,
+// after which a scan with no result reports `not_applicable`. The window length is an
+// engineering design value flagged as a residual risk. Confirm with engineering before
+// documenting how long `in_progress` can last.
+//
+// REVIEWER NOTE (KOB-55265): The source lists execution scanning status values as NONE,
+// SCHEDULED, RUNNING, COMPLETED, IGNORED, and TIMEOUT, and notes that COMPLETED can also
+// mean the scan did not apply. Confirm whether to document these values.
+//
+// REVIEWER NOTE (KOB-55265): The `pending_count` response shape was flagged for product
+// review at the engineering approval gate. Confirm it shipped as described.
 
 === Apps
 
@@ -183,7 +217,7 @@ Reuse the `team_id` returned on a listed item when you compose suites and runs. 
 |List test runs, filtered by team, keyword, or platform. Sort the results with `sortBy`, which accepts the uppercase values `NAME` and `CREATED_AT`.
 
 |`getTestRun`
-|Get test run details, including its sessions.
+|Get test run details, including its sessions. Each execution reports whether its validation scans have finished. See <<scan-status,Scan status>>.
 
 |`terminateTestRun`
 |Stop a running test run.
@@ -203,6 +237,9 @@ Reuse the `team_id` returned on a listed item when you compose suites and runs. 
 |`deleteTestSuite`
 |Delete a test suite. Member test cases are kept.
 |===
+
+// Source: KOB-55265. Robot Ranch (Ledger) draft for docs-team review.
+`listTestCases`, `listTestSuites`, and `listTestRuns` return one page per call. `rowsPerPage` defaults to 10 and is clamped to 20, so a single call never returns more than 20 items. Use `total_items` to size the result before fetching more pages.
 
 === Account
 
@@ -262,6 +299,13 @@ IMPORTANT: Using these skills in Claude Desktop requires a Claude Code subscript
 |`debug-device-over-vusb`
 |Debug an app on a private Kobiton device connected to your computer over virtualUSB. Installs the pinned virtualUSB client, connects the device so it appears in `adb` or Xcode, runs the install, reproduce, and capture-logs loop, and always disconnects the device at the end. See xref:mcp/debug-over-virtualusb.adoc[Debug over virtualUSB].
 |===
+
+// Source: KOB-55265. Robot Ranch (Ledger) draft for docs-team review.
+Starting in `automate` plugin 1.15.0, `drive-automation-session` and `run-interactive-session` read a compact UI tree of the current screen by default instead of the full page source. The full page source is still saved on each step of `drive-automation-session`. Ask the assistant for the full page source when the compact tree does not show the element you need.
+
+// REVIEWER NOTE (KOB-55265): This page states it covers plugin version 1.13.0. The source
+// gives the release of this change as 1.15.0. Update the version statement at the top of
+// the page if the docs team brings the whole page to 1.15.0.
 
 === Choose a skill
 
