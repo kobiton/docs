@@ -230,3 +230,36 @@ be disabled.
 |
 
 |===
+[#_ios_simulators]
+== iOS Simulators
+
+On an iOS Simulator, cleanup erases the simulator instead of running the iOS/iPadOS configurations. The erase returns the simulator to its default state and removes:
+
+* Apps installed during the session and their data
+* Safari history and tabs
+* Settings changes made during the session, including time zone and locale
+
+The erase runs every time cleanup runs on a simulator, on any iOS version. The individual configurations selected in a cleanup policy don't apply to simulators. To skip cleanup on simulators, assign the _No Cleanup_ policy.
+
+After the erase, the simulator becomes available again without any action on the host. The simulator might appear offline for a short time before it's available.
+
+Real iOS devices connected to the same host keep the cleanup configured in their policy.
+
+// REVIEWER NOTE (KOB-55454): Jira status is Wait For Deployment and no fix version is set.
+// Confirm the deviceConnect release that includes this change before you publish.
+// REVIEWER NOTE (KOB-55454): The ticket says "a policy that turns cleanup off" skips the erase.
+// This draft maps that to the predefined No Cleanup policy. Confirm whether a user-created
+// policy with no options selected (which still runs the always-active configurations) also
+// erases the simulator.
+// REVIEWER NOTE (KOB-55454): The ticket scope says the simulator stays Online through the erase.
+// QA observed the simulator listed offline for about 9 to 76 seconds after some erases, and
+// engineering confirmed this is intentional. The "might appear offline" sentence reflects the
+// tested behavior. QA also saw a simulator erased twice after a restart on one Xcode version,
+// which delays availability by about 2 minutes; engineering confirmed this is intentional.
+// Decide whether customers need that detail.
+// REVIEWER NOTE (KOB-55454): QA could not verify app removal because installing an app on a
+// simulator was blocked during testing. The app removal statement comes from the ticket's
+// acceptance criteria. Confirm before you publish.
+// REVIEWER NOTE (KOB-55454): Confirm that iOS Simulator support is available to customers. The
+// parent simulator support epic is still in progress, and an earlier release (2026-08-07) left
+// out a simulator entry because simulators were not supported then.
