@@ -1,0 +1,24 @@
+== deviceConnect for Linux hosts (Android)
+
+deviceConnect now runs on x64 Linux hosts for Android devices. Linux hosts support manual and automation sessions on Android devices, alongside existing Mac mini hosts.
+
+* Install deviceConnect with a `.deb` package on Debian-based distributions, such as Ubuntu, or an `.rpm` package on Red Hat-based distributions, such as Fedora or Rocky Linux.
+* Upgrades keep your existing deviceConnect configuration.
+* Uninstall deviceConnect with your distribution's package manager.
+
+iOS devices are not supported on Linux hosts. deviceConnect cannot be installed on the same Linux host as GigaCap.
+
+For host requirements, see xref:device-lab-management:deviceConnect/hardware-requirements-for-deviceconnect.adoc[].
+
+// Source: KOB-55320
+// REVIEWER NOTE (KOB-55320): Jira is in Wait For Deployment and the Release Notes field selects the
+// customer-facing release email. The parent epic is still In Progress and the latest QA comment in
+// Jira lists remaining test items. Confirm the Linux host is generally available in this release
+// before you publish.
+// REVIEWER NOTE (KOB-55320): Confirm the supported distributions and versions. QA tested Ubuntu 24.04
+// and RHEL 9.8; the supported-distributions list is still open with engineering.
+// REVIEWER NOTE (KOB-55320): Confirm how customers get the Linux packages (for example, the *Downloads*
+// page in Kobiton Portal or a Kobiton package repository). Jira does not state the customer download path.
+// REVIEWER NOTE (KOB-55320): Confirm whether Network Payload Capture and Cambrionix hubs are supported on
+// Linux hosts in this release. QA reported both as blocked or affected by open defects.
+// REVIEWER NOTE (KOB-55320): Add a deviceConnect component version if this release publishes one.
