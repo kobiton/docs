@@ -1,0 +1,24 @@
+// Source: KOB-54317 (Jira Release Notes field)
+// Release-note partial drafted by Robot Ranch. Requires docs-team review before publication.
+
+== Kobiton MCP server: optional `userIntent`
+
+AI assistants connected to the Kobiton MCP server no longer have to send `userIntent` with every tool call, and the tool definitions they load are smaller.
+
+- A tool call without `userIntent` now runs instead of failing. When a call includes `userIntent`, Kobiton still records it in the audit log exactly as sent.
+- Every tool describes `userIntent` with the same one-line description, "A brief summary of why this call is being made." This reduces the tool definitions an AI assistant loads by about 1,100 tokens per session.
+- `automate` plugin version 1.16.0 asks AI assistants to send `userIntent` only when the tool name and arguments don't show why a call is made, such as ending a session or deleting a test case.
+
+For details, see xref:ai:mcp/ai-plugin-mcp-ref.adoc#_call_purpose_userintent[Call purpose (`userIntent`)].
+
+// REVIEWER NOTE (KOB-54317): Jira fix version is 2026.10.16, and the latest Jira comment
+// reports deployment to US production. Confirm the target Cloud weekly release page.
+// REVIEWER NOTE (KOB-54317): The token figure (about 1,100) comes from the Jira Release Notes
+// field and engineering measurement. Confirm product wants a numeric figure in public notes.
+// REVIEWER NOTE (KOB-54317): Confirm the customer-facing name and location of the audit log.
+// REVIEWER NOTE (KOB-54317): Confirm `automate` plugin 1.16.0 is published, so the release
+// note does not reference an unreleased plugin version.
+// REVIEWER NOTE (KOB-54317): A Jira select field on this ticket carries the value "Internal".
+// The field name is not in the exported evidence. The Release Notes field and the
+// "Release Email (customer-facing release notes)" selection both mark this change as
+// customer-facing. Confirm before publishing.
