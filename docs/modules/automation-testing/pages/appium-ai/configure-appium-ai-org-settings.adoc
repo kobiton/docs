@@ -1,0 +1,80 @@
+= Configure Appium AI settings for your organization
+:navtitle: Configure Appium AI settings
+:description: Set the default LLM provider and locator settings that Appium AI uses for every Appium session in your organization.
+
+// Robot Ranch draft for KOB-54326. Docs team review required before publishing.
+// TODO(docs-review): Confirm the exact navigation path, page name, and field labels against the shipped Portal UI and Figma design.
+// TODO(docs-review): Confirm which roles can view and edit these settings.
+
+Organization administrators set the default LLM provider and locator settings for Appium AI in Kobiton Portal. Every new Appium session in the organization uses these settings unless the session overrides them with desired capabilities.
+
+== Requirements
+
+- An administrator role in the organization.
+// TODO(docs-review): Confirm the required role or permission.
+- An API key for the LLM provider, or a reachable endpoint that does not require a key.
+- Appium AI is available on the devices in your organization. See xref:appium-ai/overview-appium-ai.adoc[Appium AI overview] for availability.
+
+== Open Appium AI settings
+
+include::profile:partial$open-settings.adoc[]
+
+// TODO(docs-review): Replace with the confirmed page or tab label.
+Select the Appium AI settings page.
+
+== Turn on Appium AI for your organization
+
+Turn on the organization-level Appium AI switch. Appium AI works only when this switch is on.
+
+// TODO(docs-review): Confirm the switch label.
+
+== Available settings
+
+// TODO(docs-review): Confirm field labels, which fields are required, and which are optional. Source lists the settings but not the final UI labels.
+[cols="2,5", options="header"]
+|===
+| Setting | Purpose
+
+| LLM endpoint
+| Base URL of the LLM provider.
+
+| API key
+| API key for the LLM provider. Required whenever an LLM endpoint is set, except when the API format is Ollama chat.
+
+| API format
+| API protocol format that matches the LLM provider.
+
+| Text model
+| Model used for UI tree-based operations.
+
+| Vision model
+| Model used for vision-based operations such as screenshot analysis. Must support image input.
+
+| Extra body
+| Optional. JSON passed into the request body of model calls to send model-specific parameters.
+
+| Locator strategy
+| Default strategy used to resolve natural language locators.
+
+| Coordinate space
+| Coordinate space used for vision-based element location.
+|===
+
+// TODO(docs-review): Confirm the API format values shown in the UI, including the Ollama chat format, and whether extra body is a single field or separate text and vision fields.
+// TODO(docs-review): Confirm the purpose and allowed values for Coordinate space.
+
+Select *Save*.
+// TODO(docs-review): Confirm the save button label.
+
+If an LLM endpoint is set without an API key, the settings are not saved. Enter an API key, or select the Ollama chat API format if the endpoint does not require a key.
+
+// TODO(docs-review): Confirm how the API key displays after saving (for example, masked with a replace action) and whether keys can be removed or tested. Source discusses this behavior but does not confirm the shipped implementation.
+
+== How settings apply to sessions
+
+- New Appium sessions use the saved organization settings on every device host in the organization.
+- Sessions that are already running keep the settings they started with.
+- Desired capabilities passed in a session override the organization settings for that session only. See xref:appium-ai/override-llm.adoc[Override Appium AI settings per session].
+- If a setting is not set at the session or organization level, the session uses the default value.
+
+If a session uses an LLM endpoint without an API key, the session fails with a missing API key error.
