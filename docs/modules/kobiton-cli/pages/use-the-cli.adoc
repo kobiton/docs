@@ -92,13 +92,19 @@ For scripts or isolated commands, pass `--session-token` explicitly with each co
 
 == Known limitations
 
-* Session Explorer is not available when using Kobiton CLI.
+* Session Explorer, including the *WebDriver Traffic* panel, is available for a CLI session only when both of the following are true:
+** The session was created with at least one data type in `--capture`.
+** At least one `kobiton webdriver get` or `kobiton webdriver post` command ran during the session.
 
-* Session video and logs are not available in Session Overview.
+* Other than *WebDriver Traffic*, Session Explorer shows only the data captured with `--capture`. For details, see xref:cli-commands.adoc#session-create-capture[Capture session data].
+
+* Only `kobiton webdriver` commands appear as steps in Session Explorer, with their screenshots, view hierarchies, and metrics.
+
+* Session Overview disables *View Device Logs* for sessions created without `logs` in `--capture`, and shows *Video is not available* for sessions created without `video`.
 
 * Kobiton CLI does not support mixing manual and CLI testing sessions.
 
-* By default, CLI sessions time out after 10 minutes. You can configure the timeout up to 2 hours using the `kobiton session ping` command.
+* By default, CLI sessions time out after 10 minutes of inactivity. Set a timeout of up to 2 hours with `kobiton session create --timeout`, and reset the timeout period with `kobiton session ping`.
 
 [#_troubleshooting]
 == Troubleshooting
