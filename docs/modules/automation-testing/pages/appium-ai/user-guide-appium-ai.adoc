@@ -48,7 +48,7 @@ the precision of selector-based resolution and capture a screenshot on each
 request. Because the strategy is chosen per app, the capability is the correct
 place to set it.
 
-A capability passed in the session takes precedence over the `dc.ini` value.
+A capability passed in the session takes precedence over your organization settings and the `dc.ini` value.
 
 `visionvirtual` uses the vision model already configured for Appium AI. You do
 not need to set `kobiton:llmVisionModel` to use it. To route vision requests
@@ -136,6 +136,8 @@ metadata (view hierarchy or accessibility attributes) for element identification
 the current screen
 
 If natural language locators are not working as expected, contact your lab administrator to verify the following:
+
+* Appium AI is not turned off in your organization settings
 
 * OpenAI or Azure OpenAI API credentials are configured correctly
 
