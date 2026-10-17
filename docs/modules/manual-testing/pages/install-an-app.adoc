@@ -16,3 +16,19 @@ image:manual-testing:install-apps-closeup.png[width=750, alt="A close-up of the 
 
 [NOTE]
 Depending on your xref:devices:local-devices/cleanup-policy/manage-device-cleanup-policies.adoc[cleanup policy], your app may automatically uninstall after the session.
+
+[#_apps_listed_on_ios]
+== Apps listed on iOS
+
+On iOS, *Install Apps* lists only the app builds that can install on the current device:
+
+* On an iOS Simulator, only simulator builds (`.app`) are listed.
+* On a real iOS device, simulator builds are hidden.
+
+The filter applies to the app list, search results, and version lists. If an app has both simulator and device builds, only the versions that match the device are listed, and the version count includes only those versions.
+
+Android sessions list apps without this filter.
+
+=== Install a simulator build on an iOS Simulator
+
+To install a simulator build that isn't in the app repository, use *Upload File* or *Install From URL* with a `.app` bundle compressed to a `.zip` file. If you select a `.app` file that isn't a `.zip` archive, a message asks you to compress it first. For details, see xref:apps:supported-filetypes.adoc[].
