@@ -1,0 +1,26 @@
+== Reset device state through the Kobiton API
+
+Organization admins can now reset the state of devices in their organization using the new `RESET_DEVICE_STATE` task of the `POST /v2/execute-admin-tasks` API.
+
+Resetting a device sets its state to `UNPLUGGED`, clears its booked status, and takes the device offline. The reset does not send any command to the physical device or its host machine. Sessions, reservations, history, and device settings are not changed.
+
+* Reset up to 100 online devices in one request by listing their UDIDs.
+* Review the result for each device in the response. The request returns HTTP 200 even when some devices fail to reset.
+* The device stays offline until deviceConnect services are restarted. For details, see xref:device-lab-management:deviceConnect/restart-deviceconnect-services.adoc[].
+* If the device has a live session, the session is disconnected and ends automatically.
+* A reset does not send a `deviceStateChanged` webhook or a real-time update.
+
+Available to users with the *ADMIN* predefined role, for devices in their own organization.
+
+For request parameters, response fields, and error codes, see the https://api.kobiton.com/docs/#kobiton-api-v2[Kobiton API v2 reference].
+
+// Source: KOB-55554 (API documentation for KOB-55322, api-doc PR #305)
+// https://github.com/kobiton/api-doc/pull/305
+// REVIEWER NOTE (KOB-55554): Jira states the endpoint was deployed to US Production on 2026-10-18.
+// No fix version or Release Notes field is set. Confirm which Cloud release page this entry belongs to.
+// REVIEWER NOTE (KOB-55554): Confirm the API reference anchor for the new Admin Tasks section and
+// replace the generic v2 link once the api-doc site deployment is live.
+// REVIEWER NOTE (KOB-55554): The ticket also covers API docs for
+// GET /v2/devices/{deviceId}/installed-apps and GET /v2/devices/udid/{udid}/installed-apps (KOB-55366, api-doc PR #303).
+// The Jira evidence does not describe their behavior or release timing, so no entry was drafted.
+// Add an entry only if engineering confirms these endpoints are new in this release.
