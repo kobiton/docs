@@ -1,0 +1,16 @@
+== Turbo Test reports
+
+- Completed Appium Turbo Test sessions now consistently show the *Test Report* section in Session Overview, and the session details in the Kobiton API include the test report download URL. Previously, a small number of completed sessions showed no test report, even though the report was generated.
+
+For details on downloading test reports, see xref:automation-testing:turbo-test-execution/run-appium-test.adoc#_download_test_report[Download test report].
+
+// Source: KOB-55461 (Jira status: Released, fix version 2026.10.18)
+// REVIEWER NOTE (KOB-55461): Jira confirms the fix that saves the test report when the
+// session is created. A related follow-up that retries other session updates was still in
+// review per the Jira comments and is intentionally excluded from this note.
+// REVIEWER NOTE (KOB-55461): The Jira evidence references the v1 session details endpoint,
+// while the public Turbo Test guide documents the v2 endpoint and the
+// `test_report_download_url` field. The wording avoids naming a field. Confirm that the fix
+// applies to the endpoint and field documented in run-appium-test.adoc.
+// REVIEWER NOTE (KOB-55461): Jira fix version 2026.10.18 is marked unreleased in Jira while
+// the ticket status is Released. Confirm the target release-notes page.
