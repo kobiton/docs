@@ -63,8 +63,8 @@ If your organization has never saved Appium AI settings, sessions use the host d
 | `kobiton:locatorStrategy`
 
 | *Model*
-| Model used for Appium AI requests. Select a model from the list or type a model name. Available after you select an *API Format*.
-| `kobiton:llmTextModel`, `kobiton:llmVisionModel`
+| Model used for Appium AI requests. Select a model from the list or type a model name. Available after you select an *API Format*. Sets the vision model when *Locator Strategy* is *Find element by vision*, or the text model when it is *Find element by view tree*.
+| `kobiton:llmVisionModel` or `kobiton:llmTextModel`
 
 | *Timeout Seconds*
 | Timeout for LLM requests, in seconds. Default is `10`.
@@ -75,11 +75,10 @@ If your organization has never saved Appium AI settings, sessions use the host d
 | None
 
 | *Extra body*
-| JSON object added to the request body of model calls to send model-specific parameters.
-| `kobiton:llmTextExtraBody`, `kobiton:llmVisionExtraBody`
+| JSON object added to the request body of model calls to send model-specific parameters. Applies to the vision or text model, based on *Locator Strategy*.
+| `kobiton:llmVisionExtraBody` or `kobiton:llmTextExtraBody`
 |===
 +
-// TODO(docs-review): Confirm that Model and Extra body apply to both text and vision calls.
 // TODO(docs-review): Confirm the Timeout Seconds and Retry Interval Seconds behavior with engineering.
 
 . Select *Save*.
@@ -92,11 +91,11 @@ After you save, *API Key* shows a masked value, the date it was configured, and 
 
 === Session-only settings
 
-Kobiton Portal doesn't include the following settings. Set them per session with desired capabilities:
+Kobiton Portal doesn't set the following. Set them per session with desired capabilities:
 
 - `kobiton:llmApiVersion`: API version for Azure OpenAI endpoints.
 - `kobiton:visionCoordSpace`: Coordinate space used for vision-based element location.
-- `kobiton:llmTextModel`, `kobiton:llmVisionModel`, `kobiton:llmTextExtraBody`, and `kobiton:llmVisionExtraBody`: Separate models or extra request bodies for text and vision calls.
+- The model and extra request body for the strategy not selected in *Locator Strategy*: `kobiton:llmTextModel` and `kobiton:llmTextExtraBody`, or `kobiton:llmVisionModel` and `kobiton:llmVisionExtraBody`.
 
 See xref:capabilities/available-capabilities.adoc[Available capabilities] for capability details and allowed values.
 
