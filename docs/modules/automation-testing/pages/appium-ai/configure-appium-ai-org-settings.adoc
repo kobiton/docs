@@ -67,19 +67,17 @@ If your organization has never saved Appium AI settings, sessions use the host d
 | `kobiton:llmVisionModel` or `kobiton:llmTextModel`
 
 | *Timeout Seconds*
-| Timeout for LLM requests, in seconds. Default is `10`.
-| None
+| Timeout for LLM requests, in seconds. Overrides the host default. Default is `10`.
+| None. Sessions can't override this setting.
 
 | *Retry Interval Seconds*
-| Interval between LLM request retries, in seconds. Default is `2`.
-| None
+| Interval between LLM request retries, in seconds. Overrides the host default. Default is `2`.
+| None. Sessions can't override this setting.
 
 | *Extra body*
 | JSON object added to the request body of model calls to send model-specific parameters. Applies to the vision or text model, based on *Locator Strategy*.
 | `kobiton:llmVisionExtraBody` or `kobiton:llmTextExtraBody`
 |===
-+
-// TODO(docs-review): Confirm the Timeout Seconds and Retry Interval Seconds behavior with engineering.
 
 . Select *Save*.
 +
