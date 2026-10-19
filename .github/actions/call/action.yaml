@@ -38,6 +38,10 @@ runs:
       with:
         role-to-assume: arn:aws:iam::${{ inputs.aws-account-id }}:role/github-action-role
         aws-region: ${{ inputs.aws-region }}
+    # Authenticated pulls avoid the anonymous public.ecr.aws data limit (429 toomanyrequests)
+    - name: Log in to ECR Public
+      shell: bash
+      run: aws ecr-public get-login-password --region us-east-1 | docker login --username AWS --password-stdin public.ecr.aws
     - name: ssh-agent setup
       uses: webfactory/ssh-agent@v0.9.0
       with:
