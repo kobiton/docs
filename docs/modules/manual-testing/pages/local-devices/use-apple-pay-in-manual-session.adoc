@@ -7,6 +7,11 @@ NOTE: APPLE Pay testing is supported on Private and Local iOS devices only.
 
 Before you start, xref:devices:local-devices/set-up-device-for-apple-pay.adoc[set up an iOS device for Apple Pay].
 
+To find devices with passcode support, filter the device list by xref:devices:device-metadata.adoc#_passcode[Passcode] and choose *Supported*.
+
+// REVIEWER NOTE (KOB-53007): Confirm this filter shipped before publishing. See the note on
+// the Passcode entry in devices:device-metadata.adoc.
+
 Log into an Apple ID account. Turn on *AssistiveTouch* if device cleanup policy cleaned it up.
 
 image::bypass-apple-pay-manual-session-assistive-touch-settings-toggle.PNG[width=500,alt="The Assistive touch toggle turned on]
@@ -31,12 +36,8 @@ Tap *Confirm Pay*.
 
 image::bypass-apple-pay-manual-session-assistive-touch-confirm-pay.PNG[width=500,alt="The Confirm Pay option in Assistive touch expanded menu"]
 
-Tap the black space and enter the passcode using your keyboard. Contact the Kobiton Support, if needed, to retrieve the passcode set on the device.
+When the iOS system passcode screen appears, the *Apple Security Enablement* dialog opens beside the device screen. Enter the numeric passcode and select *Submit* or press Enter. For details, see xref:manual-testing:enter-ios-device-passcode.adoc[].
 
-image::bypass-apple-pay-manual-session-enter-passcode-empty.PNG[width=500,alt="The passcode input screen"]
-
-After inputting the whole passcode, press the *backspace* or *delete* key on your keyboard once, then input the last digit of the passcode. Tap the *Done* button when it is enabled:
-
-image::bypass-apple-pay-manual-session-enter-passcode-empty.PNG[width=500,alt="The passcode input screen filled in"]
+NOTE: For in-app Apple Pay, the app must retain its original signature. Re-signing the app with Kobiton removes the Apple Pay entitlement.
 
 The payment is confirmed.

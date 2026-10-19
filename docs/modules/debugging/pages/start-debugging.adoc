@@ -188,23 +188,22 @@ image:virtualusb-save-logs-popup.png[width=400,alt="The time period dropdown in 
 
 * In the zip file exported using the *save log* feature, the created and modified date time of some of the files and folders are displayed incorrectly as _January 1, 1980 at 12:00 AM_.
 
-* iOS support on macOS:
+* iOS support on macOS and Linux:
 
-** *iOS 16 or earlier*: supported. These devices connect without a pairing step. See xref:supported-platforms:mobile-operating-systems-and-devices.adoc[Supported OS versions,window=read-later] for the minimum iOS version.
+** *iOS 12 through 14*: contact https://support.kobiton.com/hc/en-us/requests/new[Kobiton Support].
+
+** *iOS 15 and 16*: supported. These devices connect without a pairing step.
 
 ** *iOS 17.0 through 17.3*: not supported.
 
-** *iOS 17.4 or later*: supported. virtualUSB pairs these devices with the Mac automatically when they connect, which requires Xcode on the Mac.
+** *iOS 17.4 or later*: supported. On macOS, virtualUSB pairs these devices with the Mac automatically when they connect, which requires Xcode on the Mac.
 
-// REVIEWER NOTE: iOS 17.4 or later support comes from the release-note drafts for KOB-55311
-// (#652), KOB-55354 (#660), and KOB-55318 (#668). The parent epic KOB-46544 was In Progress
-// when those drafts were written, and earlier weekly pages held virtualUSB 2 entries for a
-// future release. Publish this change only in the same release as those entries.
-// The iOS 17.0 through 17.3 bullet matches the virtualUSB test plan's iOS support matrix
-// (17.0 to 17.3 unsupported; older iOS uses the classic path; 17.4 or later uses Core Device).
-// The iOS 16 or earlier bullet restates the previous text (only iOS 17 and later were excluded)
-// and #652 ("iOS versions earlier than 17.4 connect without a pairing step").
+// REVIEWER NOTE: The iOS ranges match the Cloud October 9, 2026 release note
+// (release-notes:all-releases/2026-10-09.adoc), taken from the reviewed virtualUSB release-note
+// draft. The iOS 17.0 through 17.3 bullet matches the virtualUSB test plan's iOS support matrix.
 // set-up-virtualusb.adoc keeps Xcode 13 as the floor and does not name a minimum Xcode version
 // for iOS 17.4 or later pairing; no source states one. Add it if engineering confirms a version.
 
 * iOS device support for *virtualUSB on Windows* is not available.
+
+* virtualUSB on Linux is a command-line tool only. For other Linux considerations, see xref:debugging:virtualusb-cli-commands.adoc#_linux[Linux considerations in virtualUSB CLI commands,window=read-later].

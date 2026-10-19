@@ -2,11 +2,18 @@
 :navtitle: Configure Appium AI settings
 :description: Set the default LLM provider and locator settings that Appium AI uses for every Appium session in your organization.
 
-// Robot Ranch draft for KOB-54326. Docs team review required before publishing.
+// Robot Ranch draft for KOB-54326 (organization settings UI), with content folded in from KOB-53282 (PR #712, organization settings behavior). Docs team review required before publishing.
 // TODO(docs-review): Confirm the exact navigation path, page name, and field labels against the shipped Portal UI and Figma design.
 // TODO(docs-review): Confirm which roles can view and edit these settings.
 
 Organization administrators set the default LLM provider and locator settings for Appium AI in Kobiton Portal. Every new Appium session in the organization uses these settings unless the session overrides them with desired capabilities.
+
+Use organization settings to:
+
+- Provide your LLM provider details to Kobiton once, instead of in every test script.
+- Turn Appium AI off for your organization from a single place.
+
+Appium AI is in Beta and is available on Private and Local devices. It is not available on Public Cloud devices.
 
 == Requirements
 
@@ -22,46 +29,70 @@ include::profile:partial$open-settings.adoc[]
 // TODO(docs-review): Replace with the confirmed page or tab label.
 Select the Appium AI settings page.
 
-== Turn on Appium AI for your organization
+== Turn Appium AI on or off for your organization
 
-Turn on the organization-level Appium AI switch. Appium AI works only when this switch is on.
+Use the organization-level Appium AI switch to turn Appium AI on or off for every session in your organization.
 
 // TODO(docs-review): Confirm the switch label.
 
+When you turn Appium AI off, natural language finds in your organization's sessions fail with the error `LLM client is disabled for this organization`. Session capabilities cannot turn Appium AI back on.
+
+If your organization has never saved Appium AI settings, sessions use the host defaults configured by your Kobiton administrator.
+
+The LLM provider settings are optional. If you turn Appium AI on without entering a provider, pass the provider settings in each session with `kobiton:*` capabilities. See xref:appium-ai/override-llm.adoc[Override Appium AI settings per session].
+
 == Available settings
 
+Each setting can be overridden for a single session with the listed capability. See xref:capabilities/available-capabilities.adoc[Available capabilities] for capability details and allowed values.
+
 // TODO(docs-review): Confirm field labels, which fields are required, and which are optional. Source lists the settings but not the final UI labels.
-[cols="2,5", options="header"]
+[cols="2,4,3", options="header"]
 |===
-| Setting | Purpose
+| Setting | Purpose | Session capability
 
 | LLM endpoint
 | Base URL of the LLM provider.
+| `kobiton:llmBaseUrl`
 
 | API key
 | API key for the LLM provider. Required whenever an LLM endpoint is set, except when the API format is Ollama chat.
+| `kobiton:llmApiKey`
 
 | API format
 | API protocol format that matches the LLM provider.
+| `kobiton:llmApiFormat`
+
+| API version
+| API version for providers that require one, such as Azure OpenAI.
+| `kobiton:llmApiVersion`
 
 | Text model
 | Model used for UI tree-based operations.
+| `kobiton:llmTextModel`
 
 | Vision model
 | Model used for vision-based operations such as screenshot analysis. Must support image input.
+| `kobiton:llmVisionModel`
 
-| Extra body
-| Optional. JSON passed into the request body of model calls to send model-specific parameters.
+| Text model extra body
+| Optional. JSON passed into the request body of text model calls to send model-specific parameters.
+| `kobiton:llmTextExtraBody`
+
+| Vision model extra body
+| Optional. JSON passed into the request body of vision model calls to send model-specific parameters.
+| `kobiton:llmVisionExtraBody`
 
 | Locator strategy
 | Default strategy used to resolve natural language locators.
+| `kobiton:locatorStrategy`
 
 | Coordinate space
 | Coordinate space used for vision-based element location.
+| `kobiton:visionCoordSpace`
 |===
 
-// TODO(docs-review): Confirm the API format values shown in the UI, including the Ollama chat format, and whether extra body is a single field or separate text and vision fields.
-// TODO(docs-review): Confirm the purpose and allowed values for Coordinate space.
+// TODO(docs-review): Confirm the API format values shown in the UI, including the Ollama chat format, and whether extra body is a single field or separate text and vision fields (KOB-53282 lists separate fields).
+// TODO(docs-review): Confirm the purpose and allowed values for Coordinate space, and whether API version appears in the Portal UI.
 
 Select *Save*.
 // TODO(docs-review): Confirm the save button label.
@@ -74,7 +105,22 @@ If an LLM endpoint is set without an API key, the settings are not saved. Enter 
 
 - New Appium sessions use the saved organization settings on every device host in the organization.
 - Sessions that are already running keep the settings they started with.
-- Desired capabilities passed in a session override the organization settings for that session only. See xref:appium-ai/override-llm.adoc[Override Appium AI settings per session].
-- If a setting is not set at the session or organization level, the session uses the default value.
+- Desired capabilities passed in a session override the organization settings for that session only, one setting at a time. See xref:appium-ai/override-llm.adoc[Override Appium AI settings per session].
+
+For each setting, Appium AI uses the first value it finds in this order:
+
+. A capability passed in the Appium session.
+. Your organization settings.
+. The host defaults configured by your Kobiton administrator.
+. The Kobiton default.
+
+=== API keys and endpoints
+
+An API key is sent only to an endpoint set at the same level or a lower level in this order. Appium AI does not send an API key from your organization settings or the host defaults to an endpoint set in a session. If you pass `kobiton:llmBaseUrl` in a session, also pass `kobiton:llmApiKey` in that session.
 
 If a session uses an LLM endpoint without an API key, the session fails with a missing API key error.
+
+== Related pages
+
+- xref:appium-ai/overview-appium-ai.adoc[Appium AI: Natural language locators (Beta)]
+- xref:appium-ai/override-llm.adoc[Override Appium AI settings per session]

@@ -11,7 +11,7 @@ virtualUSB is available on private devices only. When `virtualUsb` is `true`, `l
 
 * Leave `deviceGroup` unset or set it to `PRIVATE`. Any other device group returns an error before any devices are listed.
 * Each returned device carries `virtual_usb_ready`. A device that is not ready also carries `virtual_usb_reason`, which points to the host machine settings in *Device Management*.
-* Without `udid`, only ready devices are returned.
+* Without `udid`, only ready devices are returned, and `private_devices_total` counts only ready devices.
 * With `udid`, the named device is returned whether or not it is ready. If the UDID is not among your private devices, the response returns an empty `private_devices` list and a top-level `virtual_usb_reason`.
 * `applied_filters` is always returned, including when devices are found.
 

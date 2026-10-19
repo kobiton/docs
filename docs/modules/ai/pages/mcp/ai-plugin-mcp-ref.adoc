@@ -16,7 +16,7 @@ The plugin exposes 41 MCP tools across 5 domains.
 |Tool |Description
 
 |`listDevices`
-|List available devices, filtered by platform, availability, device group, name, UDID, or group ID. Returns device name, UDID, platform, OS version, availability, and an `is_cloud` flag. Pass `virtualUsb: true` to list the private devices that are ready for virtualUSB.
+|List available devices, filtered by platform, availability, device group, name, UDID, or group ID. Returns device name, UDID, platform, OS version, availability, and an `is_cloud` flag, plus a total for each device list and the `limit` applied. Pass `virtualUsb: true` to list the private devices that are ready for virtualUSB.
 
 |`getDeviceStatus`
 |Get the real-time status of one device, including availability, current session, battery level, and connection state.
@@ -54,6 +54,10 @@ A value without wildcards matches the exact full name only, so `Galaxy` on its o
 
 When every device list in the response is empty, `listDevices` returns an `applied_filters` object that echoes the filter values it used. Check it to tell a filter that matched no devices apart from an organization that has no devices to list.
 
+`listDevices` returns up to `limit` devices in each device list. `limit` defaults to 5 and is clamped to the range 1 to 20. The response returns the `limit` it applied and a total for each list: `private_devices_total`, `cloud_devices_total`, and `favorite_devices_total`. Each total counts every device that matches the filters, not only the devices returned. When a total exceeds `limit`, narrow the results with `platform`, `deviceName`, `udid`, or `deviceGroup`.
+
+A favorite device can also appear in the private or cloud list, so the totals don't add up to a single device count.
+
 Devices returned with `is_cloud: true` have restricted shell-command access in CLI sessions. Devices returned with `is_cloud: false` are unrestricted.
 
 For the `virtualUsb` filter on `listDevices`, the admin-only `listHostingMachines` and `configureHostingMachine` tools, and their response fields, see xref:mcp/virtualusb-mcp-tools.adoc[virtualUSB MCP tools]. For the same settings in Kobiton Portal, see xref:device-lab-management:device-management-page.adoc[].
@@ -68,13 +72,13 @@ For the `virtualUsb` filter on `listDevices`, the admin-only `listHostingMachine
 |List test sessions, filtered by state, device, platform, and date range. Returns session ID, state, device information, duration, and timestamps.
 
 |`getSession`
-|Get session details, including commands, capabilities, and metadata.
+|Get session details, including commands, capabilities, and metadata. Returns a `scan_status` block that reports whether each validation scan has finished.
 
 |`getSessionArtifacts`
 |Get download URLs for a session's video, logs, screenshots, and reports.
 
 |`getUserInputEvents`
-|Get the touch and swipe gestures performed in device-only live view during a session.
+|Get the touch and swipe gestures performed in device-only live view during a session. `limit` defaults to 10 and is clamped to the range 1 to 20.
 
 |`terminateSession`
 |Stop a running test session.
@@ -86,10 +90,10 @@ For the `virtualUsb` filter on `listDevices`, the admin-only `listHostingMachine
 |List a session's accessibility findings. Filter by finding type with `type`, which accepts `TOUCH_TARGET_SIZE`, `COLOR_CONTRAST`, and `CONTENT_LABELING`.
 
 |`getAccessibilityValidationsSummary`
-|Get a session's accessibility counts by finding type and issue name, with the number of steps scanned and the time of the latest finding. The summary carries no findings.
+|Get a session's accessibility counts by finding type and issue name, with the number of steps scanned, the time of the latest finding, and a `scan_complete` flag. The summary carries no findings.
 
 |`listCrashValidations`
-|List a session's crash findings.
+|List a session's crash findings. Returns a `pending_count` of crash logs that are still being processed.
 
 |`listResponseTimeValidations`
 |List a session's response time findings.
@@ -108,11 +112,37 @@ The validation tools read the findings that Session Explorer shows in *Test Resu
 
 Each `list` tool takes `sessionId`, `limit`, and `offset`. `limit` defaults to 10 and is clamped to 20, so a single call never returns more than 20 findings. Responses return `items` alongside `page`, `total_pages`, and `total_items`, so an assistant pages through a large session one validation type at a time instead of pulling every finding into context.
 
-A session with no findings of the requested type returns `total_items: 0` and an empty `items` array, not an error. An unknown or inaccessible session returns a tool error.
+A session with no findings of the requested type returns `total_items: 0` and an empty `items` array, not an error. While a scan is still running, an empty result may be partial. See <<_scan_completeness>>. An unknown or inaccessible session returns a tool error.
 
 `listAccessibilityValidations` returns lean items by default. Use the `include` parameter to add the element, metadata, screen, and screenshot URL fields.
 
 Ask for validations in natural language. The assistant selects the tool from the tool descriptions, so requests such as "did the app crash" or "show accessibility issues" route to the matching tool.
+
+==== Scan completeness
+
+Validation scanning runs in the background after a session ends and can continue for more than ten minutes. Until a scan finishes, the `list` tools and `getAccessibilityValidationsSummary` can return partial results, including an empty `items` array for a session that later has findings.
+
+Call `getSession` and check `scan_status` before treating a result as final. `scan_status` has one entry for each scan type: `accessibility`, `crash`, `response_time`, and `flex_correct`. Each entry has one of these values:
+
+[cols="1,3",options="header"]
+|===
+|Value |Meaning
+
+|`complete`
+|The scan has finished. Results for that type are final.
+
+|`in_progress`
+|The scan is still running. Results for that type may be partial.
+
+|`not_applicable`
+|The session never had this scan, for example because the scan type is turned off or the session ran no commands.
+|===
+
+`getAccessibilityValidationsSummary` returns `scan_complete`, which matches `scan_status.accessibility`.
+
+`listCrashValidations` lists only crash logs that have finished processing. A `pending_count` greater than 0 means at least one crash log is still being processed, so an empty `items` array does not mean the app did not crash.
+
+For test runs, `getTestRun` returns `accessibility_scanning_status`, `crash_scanning_status`, and `network_payload_scanning_status` on each execution, alongside `is_processing`.
 
 === Apps
 
@@ -183,7 +213,7 @@ Reuse the `team_id` returned on a listed item when you compose suites and runs. 
 |List test runs, filtered by team, keyword, or platform. Sort the results with `sortBy`, which accepts the uppercase values `NAME` and `CREATED_AT`.
 
 |`getTestRun`
-|Get test run details, including its sessions.
+|Get test run details, including its sessions. Each execution carries `accessibility_scanning_status`, `crash_scanning_status`, and `network_payload_scanning_status` alongside `is_processing`.
 
 |`terminateTestRun`
 |Stop a running test run.
@@ -203,6 +233,10 @@ Reuse the `team_id` returned on a listed item when you compose suites and runs. 
 |`deleteTestSuite`
 |Delete a test suite. Member test cases are kept.
 |===
+
+`listTestCases`, `listTestSuites`, and `listTestRuns` take a `rowsPerPage` parameter that defaults to 10 and is clamped to the range 1 to 20, so a single call never returns more than 20 items. A larger value returns 20 items, and a value below 1 returns 1 item instead of an error. The `total_items` count in the response reflects every matching item, not only the current page.
+
+These page-size limits apply to the MCP tools only. The REST API and Kobiton Portal are unchanged.
 
 === Account
 
@@ -345,6 +379,24 @@ All MCP tools and the `run-automation-suite` skill work on every platform your h
 
 The `run-interactive-session` skill ships a CLI binary built for macOS as a single-architecture x86_64 executable. It runs natively on Intel Macs and under Rosetta 2 on Apple Silicon. No Linux or Windows build ships. On those platforms, use `run-automation-suite` or `drive-automation-session`, or call the MCP tools directly.
 ====
+
+// Source: KOB-55269. Robot Ranch (Ledger) draft for docs-team review.
+// REVIEWER NOTE: Applies to automate plugin 1.15.0. The page header still states 1.13.0.
+[#filtered-ui-tree]
+=== Filtered UI tree in WebDriver skills
+
+The `drive-automation-session` and `run-interactive-session` skills give your AI assistant a filtered view of the screen's UI tree on each step instead of the full page source. This reduces how much of the page source your AI assistant reads on each step.
+
+The filtered view keeps each element a skill can target, with its bounds:
+
+* Elements with an ID or resource ID
+* Elements with an accessibility label or content description
+* Elements with text
+* Clickable elements
+
+Filtering applies to native Android and iOS screens as well as webviews.
+
+The full page source and the screenshot remain available. Your AI assistant reads them when the filtered view isn't enough to complete a step.
 
 == Commands
 
