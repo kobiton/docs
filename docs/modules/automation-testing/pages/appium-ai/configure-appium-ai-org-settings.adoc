@@ -120,8 +120,6 @@ Appium AI sends an API key only to an endpoint chosen by the same source or a mo
 - If your organization settings set the base URL, Appium AI uses the API key from session capabilities or organization settings. Appium AI never sends the host default API key to that endpoint.
 - If neither the session nor your organization sets the base URL, Appium AI uses the API key from any source.
 
-Appium AI includes your organization's API key only when an organization administrator owns the device. On other devices, pass `kobiton:llmApiKey` in the session.
-
 If no allowed API key is available, the first natural language locator in the session fails with a missing API key error.
 
 == Related pages
