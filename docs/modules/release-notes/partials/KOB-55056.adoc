@@ -1,0 +1,15 @@
+// KOB-55056. Release-note partial for Standalone 4.27.2S.
+// Sources: Jira KOB-55056 implementation, testing, and impact notes, and the Jira comment
+// confirming the change ships in 4.27.2S (verified on a 4.27.2S install).
+// Scope: Standalone only. The matching Cloud storage rule is an operational change with no
+// customer-visible behavior and is excluded.
+// Intentionally omitted: the infra.env setting that controls the cleanup lifespan. Jira describes
+// it as a testing setting, and lowering it can remove files before they are processed. Confirm with
+// the SME whether admin docs cover it.
+// Open question for review: Jira notes that a file not processed within the cleanup window (for
+// example, after an extended service outage) is deleted unprocessed. Confirm whether to publish this
+// as a limitation.
+
+=== Storage
+
+* Standalone now automatically deletes temporary session data files that deviceConnect uploads to Kobiton storage for processing. Standalone removes any file left over after processing 24 to 48 hours after upload, so these files no longer accumulate in storage.
