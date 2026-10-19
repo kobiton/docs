@@ -6,7 +6,7 @@
 
 Set the default LLM provider and locator settings that Appium AI uses for every new Appium session in your organization. A session can override these settings with desired capabilities.
 
-Appium AI is in Beta and is available on Private and Local devices. It is not available on Public Cloud devices.
+Appium AI is in Beta and is available on Private and Local devices. It isn't available on Public Cloud devices.
 
 == Requirements
 
@@ -67,11 +67,11 @@ If your organization has never saved Appium AI settings, sessions use the host d
 | `kobiton:llmVisionModel` or `kobiton:llmTextModel`
 
 | *Timeout Seconds*
-| Timeout for LLM requests, in seconds. Overrides the host default. Default is `10`.
+| Timeout for LLM requests, in seconds. The form shows `10` by default.
 | None. Sessions can't override this setting.
 
 | *Retry Interval Seconds*
-| Interval between LLM request retries, in seconds. Overrides the host default. Default is `2`.
+| Interval between LLM request retries, in seconds. The form shows `2` by default.
 | None. Sessions can't override this setting.
 
 | *Extra body*
@@ -89,7 +89,7 @@ After you save, *API Key* shows a masked value, the date it was configured, and 
 
 === Session-only settings
 
-Kobiton Portal doesn't set the following. Set them per session with desired capabilities:
+Kobiton Portal doesn't set the following settings. Set them per session with desired capabilities:
 
 - `kobiton:llmApiVersion`: API version for Azure OpenAI endpoints.
 - `kobiton:visionCoordSpace`: Coordinate space used for vision-based element location.
@@ -113,7 +113,7 @@ Appium AI resolves each setting separately, using the first value it finds in th
 ====
 This order has two exceptions:
 
-* *Enable Appium AI* isn't resolved in this order. Appium AI runs only when neither your organization settings nor the host defaults turn it off, and a session capability can't turn it back on. See <<_turn_appium_ai_on_or_off_for_your_organization>>.
+* *Enable Appium AI* doesn't follow this order. Appium AI runs only when neither your organization settings nor the host defaults turn it off, and a session capability can't turn it back on. See <<_turn_appium_ai_on_or_off_for_your_organization>>.
 * *Timeout Seconds* and *Retry Interval Seconds* have no session capability. Appium AI uses your organization settings, then the host defaults, then the Kobiton default.
 ====
 

@@ -3,7 +3,7 @@
 
 By default, Appium AI uses the LLM settings configured for your organization. See xref:appium-ai/configure-appium-ai-org-settings.adoc[Configure Appium AI settings for your organization]. You can override those settings for a single Appium session by passing `kobiton:*` desired capabilities.
 
-If you omit a capability, the session uses the value from your organization settings. If your organization does not set a value, the session uses the host defaults.
+If you omit a capability, the session uses the value from your organization settings. If your organization doesn't set a value, the session uses the host defaults.
 
 See xref:capabilities/available-capabilities.adoc[Available capabilities] for the full reference of the `kobiton:llm*`, `kobiton:visionCoordSpace`, and `kobiton:locatorStrategy` capabilities. `kobiton:locatorStrategy` selects how Appium AI resolves elements; see xref:appium-ai/overview-appium-ai.adoc[Appium AI: Natural language locators] for guidance on choosing a strategy.
 
@@ -115,6 +115,6 @@ Local endpoints are resolved from the host running the Appium session. For examp
 == Notes
 
 - Capabilities apply only to the session that passed them; other sessions continue to use your organization settings or the host defaults.
-- A session that sets `kobiton:llmBaseUrl` must also set `kobiton:llmApiKey`. Appium AI does not send an API key from your organization settings or the host defaults to an endpoint set in the session. Existing scripts that set `kobiton:llmBaseUrl` without `kobiton:llmApiKey` fail on the first LLM request. See xref:appium-ai/configure-appium-ai-org-settings.adoc#api-key-rules[API key rules].
+- A session that sets `kobiton:llmBaseUrl` must also set `kobiton:llmApiKey`. Appium AI doesn't send an API key from your organization settings or the host defaults to an endpoint set in the session. Existing scripts that set `kobiton:llmBaseUrl` without `kobiton:llmApiKey` fail on the first LLM request. See xref:appium-ai/configure-appium-ai-org-settings.adoc#api-key-rules[API key rules].
 - `kobiton:llmApiFormat` must match the provider used by `kobiton:llmBaseUrl`.
 - Vision-based features require a model that accepts image input such as screenshots.
