@@ -49,7 +49,7 @@ If your organization has never saved Appium AI settings, sessions use the host d
 | `kobiton:llmBaseUrl`
 
 | *API Key*
-| API key for the LLM provider. Not required when *API Format* is `OllamaChat`.
+| API key for the LLM provider. Kobiton Portal hides this field when *API Format* is `OllamaChat`.
 | `kobiton:llmApiKey`
 |===
 
@@ -64,7 +64,7 @@ If your organization has never saved Appium AI settings, sessions use the host d
 | `kobiton:locatorStrategy`
 
 | *Model*
-| Model used for Appium AI requests. Available after you select an *API Format*.
+| Model used for Appium AI requests. Select a model from the list or type a model name. Available after you select an *API Format*.
 | `kobiton:llmTextModel`, `kobiton:llmVisionModel`
 
 | *Timeout Seconds*
@@ -85,7 +85,7 @@ If your organization has never saved Appium AI settings, sessions use the host d
 
 . Select *Save*.
 +
-Kobiton doesn't save the settings if *Base URL* is set without an *API Key*, unless *API Format* is `OllamaChat`.
+Kobiton doesn't save the settings if *Base URL* is set without an *API Key*. This check doesn't apply to `OllamaChat`, which has no *API Key* field.
 
 To discard unsaved changes, select *Cancel*.
 
