@@ -975,6 +975,8 @@ kobiton session create [OPTIONS]
 | Option | Argument | Description
 
 | `-t`, `--timeout` | `<TIMEOUT>` | Inactivity timeout for this session, in minutes. Default/minimum is `10`, maximum is `120`. Can be refreshed with `session ping`.
+| `--hide` | | Doesn't print the session token. The token is still saved for later commands.
+| `--capture` | `<CAPTURE>` | Session data to capture, as a comma-separated list or by repeating the option. See <<session-create-capture,Capture session data>>. Default: nothing is captured.
 |===
 
 Plus all <<global-options,global options>>.
@@ -993,6 +995,57 @@ kobiton session create -u 3e4e7fe7
 ----
 Session 8155111 created for device 3e4e7fe7.
 Session token eyJhbGciOiJ...
+----
+
+[#session-create-capture]
+==== Capture session data
+
+Capture is opt-in. A CLI session created without `--capture` captures no session data.
+
+Session Explorer, including the *WebDriver Traffic* panel, is available for a CLI session only when both of the following are true:
+
+* The session was created with at least one data type in `--capture`.
+* At least one `kobiton webdriver get` or `kobiton webdriver post` command ran during the session.
+
+*WebDriver Traffic* isn't a `--capture` value. The panel shows the *Request Body* and *Response Body* of each `kobiton webdriver` command. All other Session Explorer data depends on the values passed to `--capture`.
+
+Add `--capture` with one or more of the following values. Separate values with commas, or repeat `--capture` once per value.
+
+[cols="1,3",options="header"]
+|===
+| Value | Description
+
+| `screenshots` | Screenshots, collected continuously during the session.
+| `view-trees` | View hierarchies, collected continuously during the session and shown in the *Inspector* panel.
+| `logs` | Device log lines, shown in the *Device Logs* panel.
+| `metrics` | Device metric samples, shown in the *System Metrics* panel.
+| `video` | Session video.
+| `foreground-apps` | Foreground app change events.
+| `user-action` | Each user action, added to the session timeline after the action completes.
+| `wait-for-idle` | Waits for the device to go idle after each user action before capturing data. Captures no data of its own.
+|===
+
+After the session ends, Session Explorer shows screenshots, view hierarchies, and metrics only for `kobiton webdriver get` and `kobiton webdriver post` commands. Other commands, such as `kobiton app install`, don't appear as steps.
+
+[NOTE]
+====
+If `view-trees` isn't captured, session steps appear in Session Explorer only after the session ends.
+====
+
+// REVIEWER NOTE (KOB-52718): foreground-apps and user-action are in the CLI help, so they stay
+// documented. Earlier testing found no visible artifact in Session Explorer for a CLI-only
+// session. Confirm where this data appears in the portal, if anywhere, so the table can say so.
+
+.Example
+[source,shell]
+----
+kobiton session create -u 3e4e7fe7 --capture screenshots,view-trees,logs
+----
+
+.Example: repeated option
+[source,shell]
+----
+kobiton session create -u 3e4e7fe7 --capture screenshots --capture video
 ----
 
 === `session end`
