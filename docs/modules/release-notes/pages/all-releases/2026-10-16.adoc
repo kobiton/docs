@@ -88,14 +88,15 @@ For Apple Pay instructions, see xref:manual-testing:local-devices/use-apple-pay-
 
 == Configure Appium AI settings across your organization
 
-Users with the *ADMIN* role or the `org_setting.modify` permission can now configure Appium AI for their organization in Kobiton Portal, under *Settings* > *AI Settings*. New Appium sessions use the organization's LLM provider and locator settings without extra capabilities in test scripts.
+Users with the *ADMIN* role or the `org_setting.modify` permission can now configure Appium AI for the organization in Kobiton Portal, under *Settings* > *AI Settings*. New Appium sessions use the organization's LLM provider and locator settings without extra capabilities in test scripts.
+
+With organization settings, you can:
 
 * Turn Appium AI on or off for the organization.
 * Set the API format, base URL, API key, model, locator strategy, and request timeout and retry interval.
 * Override most organization settings for a single session with `kobiton:*` desired capabilities.
-* Organizations without saved settings continue to use the host defaults.
 
-Changes apply to new sessions. Running sessions keep their existing settings.
+Changes apply to new sessions. Running sessions keep their existing settings. Organizations without saved settings continue to use the host defaults.
 
 Appium AI is in Beta and is available on Private and Local devices only.
 
