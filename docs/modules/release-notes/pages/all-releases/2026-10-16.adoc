@@ -35,28 +35,6 @@ This functionality supports book-style foldable devices, such as Galaxy Z Fold a
 * *Fold state:* The device retains its folded or unfolded state between sessions rather than resetting to a default state.
 * *Automation:* Switching between folded and unfolded states is not currently supported during automated testing.
 
-// Source: KOB-52718 from PR #743 (--capture option)
-// Source: KOB-55503 from PR #738 (per-step device logs)
-// Source: KOB-55494 from PR #734 (View Device Logs disabled when no logs)
-// Source: KOB-55504 from PR #735 (no duplicate session-creation steps)
-// Source: KOB-55505 from PR #736 (screenshot carryover and Appium Inspector)
-
-== Session Explorer support for Kobiton CLI sessions
-
-CLI sessions now populate Session Explorer and provide additional information in Session Overview when the capture option is enabled.
-
-Use the following comma-separated values in your CLI session to view this information in Session Explorer:
-
-* `screenshots`: Screenshots are collected continuously. Steps without a new screenshot show the previous screenshot.
-* `view-trees`: Provides view trees when applicable.
-* `metrics`: Device metric samples.
-* `user-action`: User actions appear on the session timeline. These are currently not exhaustive of all steps in a session.
-
-Use the following comma-separated values in your CLI session to capture these items in Session Overview:
-
-* `video`: Session video.
-* `logs`: Device logs.
-
 // Source: KOB-53003 from PR #709 (passcode helper overlay + Devices page support)
 // Source: KOB-53785 from PR #708 (earlier Apple Pay-scoped passcode entry; merged here)
 // Source: KOB-53007 from PR #707 (earlier Passcode filter entry; merged here)
