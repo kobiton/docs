@@ -20,6 +20,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - name: Configure AWS credentials from TEST account
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: arn:aws:iam::${{ secrets.AWS_ACCOUNT_ID_TEST }}:role/github-action-role
+          aws-region: ${{ secrets.AWS_PROD_REGION_TEST }}
+      # Authenticated pulls avoid the anonymous public.ecr.aws data limit (429 toomanyrequests)
+      - name: Log in to ECR Public
+        run: aws ecr-public get-login-password --region us-east-1 | docker login --username AWS --password-stdin public.ecr.aws
       - name: ssh-agent setup
         uses: webfactory/ssh-agent@v0.9.0
         with:
