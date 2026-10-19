@@ -2,102 +2,104 @@
 :navtitle: Configure Appium AI settings
 :description: Set the default LLM provider and locator settings that Appium AI uses for every Appium session in your organization.
 
-// Robot Ranch draft for KOB-54326 (organization settings UI), with content folded in from KOB-53282 (PR #712, organization settings behavior) and KOB-55121 (PR #723, session behavior). Docs team review required before publishing.
-// TODO(docs-review): Confirm the exact navigation path, page name, and field labels against the shipped Portal UI and Figma design.
+// Robot Ranch draft for KOB-54326 (organization settings UI), with content folded in from KOB-53282 (PR #712, organization settings behavior) and KOB-55121 (PR #723, session behavior). UI labels verified against Kobiton Portal on 2026-10-19. Docs team review required before publishing.
 // TODO(docs-review): Confirm which roles can view and edit these settings.
 
 Organization administrators set the default LLM provider and locator settings for Appium AI in Kobiton Portal. Every new Appium session in the organization uses these settings unless the session overrides them with desired capabilities.
-
-Organization settings remove the need to pass LLM provider details in every test script.
 
 Appium AI is in Beta and is available on Private and Local devices. It is not available on Public Cloud devices.
 
 == Requirements
 
 - An administrator role in the organization.
-// TODO(docs-review): Confirm the required role or permission.
-- To set an LLM provider: an API key for the provider, or a reachable endpoint that does not require a key.
+- An API key for the LLM provider, or a reachable endpoint that does not require a key.
 
 == Open Appium AI settings
 
 include::profile:partial$open-settings.adoc[]
 
-// TODO(docs-review): Replace with the confirmed page or tab label.
-Select the Appium AI settings page.
+Select the *AI Settings* tab. On the *Appium AI* card, select *Configure*.
+
+The *Appium AI Configuration* page opens.
 
 == Turn Appium AI on or off for your organization
 
-Use the organization-level Appium AI switch to turn Appium AI on or off for every session in your organization.
+Turn on *Enable Appium AI* to show the configuration fields. To turn off Appium AI for every session in your organization, turn off *Enable Appium AI* and select *Save*. When Appium AI is off, the *Appium AI* card on the *AI Settings* tab shows *Disabled*.
 
-// TODO(docs-review): Confirm the switch label.
-
-When you turn Appium AI off, natural language locators in your organization's sessions fail with the error `LLM client is disabled for this organization`. Session capabilities cannot turn Appium AI back on. Other session commands continue to work.
+When Appium AI is off, natural language locators in your organization's sessions fail with the error `LLM client is disabled for this organization`. Session capabilities cannot turn Appium AI back on. Other session commands continue to work.
 
 If Appium AI is off on the host running the session, natural language locators fail with the error `LLM client is disabled on this host`.
 
 If your organization has never saved Appium AI settings, sessions use the host defaults configured by your lab administrator.
 
-The LLM provider settings are optional. If you turn Appium AI on without entering a provider, pass the provider settings in each session with `kobiton:*` capabilities. See xref:appium-ai/override-llm.adoc[Override Appium AI settings per session].
+== Configure the LLM provider
 
-== Available settings
-
-To override a setting for a single session, pass the listed capability. See xref:capabilities/available-capabilities.adoc[Available capabilities] for capability details and allowed values.
-
-// TODO(docs-review): Confirm field labels, which fields are required, and which are optional. Source lists the settings but not the final UI labels.
+. Under *Required Fields*, enter the following:
++
 [cols="2,4,3", options="header"]
 |===
-| Setting | Purpose | Session capability
+| Field | Description | Session capability
 
-| LLM endpoint
+| *API Format*
+| API protocol format that matches the LLM provider. Select `OpenAiResponses`, `OpenAiChatCompletions`, `AnthropicMessages`, `KobitonChatCompletions`, `OllamaChat`, `AzureOpenAiV1ChatCompletions`, or `AzureOpenAiChatCompletions`.
+| `kobiton:llmApiFormat`
+
+| *Base URL*
 | Base URL of the LLM provider.
 | `kobiton:llmBaseUrl`
 
-| API key
-| API key for the LLM provider. Required whenever an LLM endpoint is set, except when the API format is Ollama chat.
+| *API Key*
+| API key for the LLM provider. Not required when *API Format* is `OllamaChat`.
 | `kobiton:llmApiKey`
+|===
 
-| API format
-| API protocol format that matches the LLM provider.
-| `kobiton:llmApiFormat`
+. Optional: Under *Optional Fields*, change the following:
++
+[cols="2,4,3", options="header"]
+|===
+| Field | Description | Session capability
 
-| API version
-| API version for providers that require one, such as Azure OpenAI.
-| `kobiton:llmApiVersion`
-
-| Text model
-| Model used for UI tree-based operations.
-| `kobiton:llmTextModel`
-
-| Vision model
-| Model used for vision-based operations such as screenshot analysis. Must support image input.
-| `kobiton:llmVisionModel`
-
-| Text model extra body
-| Optional. JSON passed into the request body of text model calls to send model-specific parameters.
-| `kobiton:llmTextExtraBody`
-
-| Vision model extra body
-| Optional. JSON passed into the request body of vision model calls to send model-specific parameters.
-| `kobiton:llmVisionExtraBody`
-
-| Locator strategy
+| *Locator Strategy*
 | Default strategy used to resolve natural language locators.
 | `kobiton:locatorStrategy`
 
-| Coordinate space
-| Coordinate space used for vision-based element location.
-| `kobiton:visionCoordSpace`
+| *Model*
+| Model used for Appium AI requests. Available after you select an *API Format*.
+| `kobiton:llmTextModel`, `kobiton:llmVisionModel`
+
+| *Timeout Seconds*
+| Timeout for LLM requests, in seconds. Default is `10`.
+| None
+
+| *Retry Interval Seconds*
+| Interval between LLM request retries, in seconds. Default is `2`.
+| None
+
+| *Extra body*
+| JSON object added to the request body of model calls to send model-specific parameters.
+| `kobiton:llmTextExtraBody`, `kobiton:llmVisionExtraBody`
 |===
++
+// TODO(docs-review): Confirm the Locator Strategy options shown in the UI, and that Model and Extra body apply to both text and vision calls.
+// TODO(docs-review): Confirm the Timeout Seconds and Retry Interval Seconds behavior with engineering.
 
-// TODO(docs-review): Confirm the API format values shown in the UI, including the Ollama chat format, and whether extra body is a single field or separate text and vision fields (KOB-53282 lists separate fields).
-// TODO(docs-review): Confirm the purpose and allowed values for Coordinate space, and whether API version appears in the Portal UI.
+. Select *Save*.
++
+Kobiton doesn't save the settings if *Base URL* is set without an *API Key*, unless *API Format* is `OllamaChat`.
 
-Select *Save*.
-// TODO(docs-review): Confirm the save button label.
+To discard unsaved changes, select *Cancel*.
 
-Unless the API format is Ollama chat, Kobiton doesn't save the settings if an LLM endpoint has no API key. Enter an API key, or select the Ollama chat API format if the endpoint does not require a key.
+// TODO(docs-review): Confirm how the API key displays after saving (for example, masked with a replace action) and whether keys can be removed or tested.
 
-// TODO(docs-review): Confirm how the API key displays after saving (for example, masked with a replace action) and whether keys can be removed or tested. Source discusses this behavior but does not confirm the shipped implementation.
+=== Session-only settings
+
+Kobiton Portal does not include the following settings. Set them per session with desired capabilities:
+
+- `kobiton:llmApiVersion`: API version for Azure OpenAI endpoints.
+- `kobiton:visionCoordSpace`: Coordinate space used for vision-based element location.
+- `kobiton:llmTextModel`, `kobiton:llmVisionModel`, `kobiton:llmTextExtraBody`, and `kobiton:llmVisionExtraBody`: Separate models or extra request bodies for text and vision calls.
+
+See xref:capabilities/available-capabilities.adoc[Available capabilities] for capability details and allowed values.
 
 == How settings apply to sessions
 
@@ -111,7 +113,7 @@ Appium AI resolves each setting separately, using the first value it finds in th
 . The host defaults configured by your lab administrator.
 . The Kobiton default.
 
-A session can combine values from different sources. For example, your organization settings can set the models while the session passes its own `kobiton:llmBaseUrl` and `kobiton:llmApiKey`.
+A session can combine values from different sources. For example, your organization settings can set the model while the session passes its own `kobiton:llmBaseUrl` and `kobiton:llmApiKey`.
 
 [#api-key-rules]
 === API key rules
@@ -119,8 +121,8 @@ A session can combine values from different sources. For example, your organizat
 Appium AI sends an API key only to an endpoint chosen by the same source or a more specific source:
 
 - If the session passes `kobiton:llmBaseUrl`, pass `kobiton:llmApiKey` in the same session. Appium AI does not send an API key from your organization settings or the host defaults to that endpoint.
-- If your organization settings set the endpoint, Appium AI uses the API key from session capabilities or organization settings. Appium AI never sends the host default API key to that endpoint.
-- If neither the session nor your organization sets the endpoint, Appium AI uses the API key from any source.
+- If your organization settings set the base URL, Appium AI uses the API key from session capabilities or organization settings. Appium AI never sends the host default API key to that endpoint.
+- If neither the session nor your organization sets the base URL, Appium AI uses the API key from any source.
 
 Appium AI includes your organization's API key only when an organization administrator owns the device. On other devices, pass `kobiton:llmApiKey` in the session.
 
