@@ -8,10 +8,7 @@
 
 Organization administrators set the default LLM provider and locator settings for Appium AI in Kobiton Portal. Every new Appium session in the organization uses these settings unless the session overrides them with desired capabilities.
 
-Use organization settings to:
-
-- Provide your LLM provider details to Kobiton once, instead of in every test script.
-- Turn Appium AI off for your organization from a single place.
+Organization settings remove the need to pass LLM provider details in every test script.
 
 Appium AI is in Beta and is available on Private and Local devices. It is not available on Public Cloud devices.
 
@@ -19,8 +16,7 @@ Appium AI is in Beta and is available on Private and Local devices. It is not av
 
 - An administrator role in the organization.
 // TODO(docs-review): Confirm the required role or permission.
-- An API key for the LLM provider, or a reachable endpoint that does not require a key.
-- Appium AI is available on the devices in your organization. See xref:appium-ai/overview-appium-ai.adoc[Appium AI overview] for availability.
+- To set an LLM provider: an API key for the provider, or a reachable endpoint that does not require a key.
 
 == Open Appium AI settings
 
@@ -35,17 +31,17 @@ Use the organization-level Appium AI switch to turn Appium AI on or off for ever
 
 // TODO(docs-review): Confirm the switch label.
 
-When you turn Appium AI off, natural language finds in your organization's sessions fail with the error `LLM client is disabled for this organization`. Session capabilities cannot turn Appium AI back on. Other session commands are not affected.
+When you turn Appium AI off, natural language locators in your organization's sessions fail with the error `LLM client is disabled for this organization`. Session capabilities cannot turn Appium AI back on. Other session commands continue to work.
 
-If Appium AI is off on the host running the session, natural language finds fail with the error `LLM client is disabled on this host`.
+If Appium AI is off on the host running the session, natural language locators fail with the error `LLM client is disabled on this host`.
 
-If your organization has never saved Appium AI settings, sessions use the host defaults configured by your Kobiton administrator.
+If your organization has never saved Appium AI settings, sessions use the host defaults configured by your lab administrator.
 
 The LLM provider settings are optional. If you turn Appium AI on without entering a provider, pass the provider settings in each session with `kobiton:*` capabilities. See xref:appium-ai/override-llm.adoc[Override Appium AI settings per session].
 
 == Available settings
 
-Each setting can be overridden for a single session with the listed capability. See xref:capabilities/available-capabilities.adoc[Available capabilities] for capability details and allowed values.
+To override a setting for a single session, pass the listed capability. See xref:capabilities/available-capabilities.adoc[Available capabilities] for capability details and allowed values.
 
 // TODO(docs-review): Confirm field labels, which fields are required, and which are optional. Source lists the settings but not the final UI labels.
 [cols="2,4,3", options="header"]
@@ -99,21 +95,20 @@ Each setting can be overridden for a single session with the listed capability. 
 Select *Save*.
 // TODO(docs-review): Confirm the save button label.
 
-If an LLM endpoint is set without an API key, the settings are not saved. Enter an API key, or select the Ollama chat API format if the endpoint does not require a key.
+Unless the API format is Ollama chat, Kobiton doesn't save the settings if an LLM endpoint has no API key. Enter an API key, or select the Ollama chat API format if the endpoint does not require a key.
 
 // TODO(docs-review): Confirm how the API key displays after saving (for example, masked with a replace action) and whether keys can be removed or tested. Source discusses this behavior but does not confirm the shipped implementation.
 
 == How settings apply to sessions
 
-- New Appium sessions use the saved organization settings on every device host in the organization. Appium AI reads your organization settings when a session starts.
-- Sessions that are already running keep the settings they started with. Changes apply to the next new session.
-- Desired capabilities passed in a session override the organization settings for that session only, one setting at a time. See xref:appium-ai/override-llm.adoc[Override Appium AI settings per session].
+- Appium AI reads organization settings when a session starts, on every device host in the organization.
+- Running sessions keep the settings they started with. Changes apply to the next new session.
 
-Appium AI resolves each setting separately. For each setting, it uses the first value it finds in this order:
+Appium AI resolves each setting separately, using the first value it finds in this order:
 
 . A capability passed in the Appium session.
 . Your organization settings.
-. The host defaults configured by your Kobiton administrator.
+. The host defaults configured by your lab administrator.
 . The Kobiton default.
 
 A session can combine values from different sources. For example, your organization settings can set the models while the session passes its own `kobiton:llmBaseUrl` and `kobiton:llmApiKey`.
@@ -124,12 +119,12 @@ A session can combine values from different sources. For example, your organizat
 Appium AI sends an API key only to an endpoint chosen by the same source or a more specific source:
 
 - If the session passes `kobiton:llmBaseUrl`, pass `kobiton:llmApiKey` in the same session. Appium AI does not send an API key from your organization settings or the host defaults to that endpoint.
-- If your organization settings set the endpoint, Appium AI uses the API key from session capabilities or organization settings. The host default API key is never sent to that endpoint.
+- If your organization settings set the endpoint, Appium AI uses the API key from session capabilities or organization settings. Appium AI never sends the host default API key to that endpoint.
 - If neither the session nor your organization sets the endpoint, Appium AI uses the API key from any source.
 
-Your organization's API key is included in a session only when the device is owned by an administrator of your organization. On other devices, pass `kobiton:llmApiKey` in the session.
+Appium AI includes your organization's API key only when an organization administrator owns the device. On other devices, pass `kobiton:llmApiKey` in the session.
 
-If no allowed API key is available, the first natural language find in the session fails with a missing API key error.
+If no allowed API key is available, the first natural language locator in the session fails with a missing API key error.
 
 == Related pages
 

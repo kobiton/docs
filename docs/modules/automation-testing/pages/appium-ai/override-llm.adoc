@@ -3,7 +3,7 @@
 
 By default, Appium AI uses the LLM settings configured for your organization. See xref:appium-ai/configure-appium-ai-org-settings.adoc[Configure Appium AI settings for your organization]. You can override those settings for a single Appium session by passing `kobiton:*` desired capabilities.
 
-If you omit a capability, the session uses the value from your organization settings. If your organization does not set a value, the session uses the host default.
+If you omit a capability, the session uses the value from your organization settings. If your organization does not set a value, the session uses the host defaults.
 
 See xref:capabilities/available-capabilities.adoc[Available capabilities] for the full reference of the `kobiton:llm*`, `kobiton:visionCoordSpace`, and `kobiton:locatorStrategy` capabilities. `kobiton:locatorStrategy` selects how Appium AI resolves elements; see xref:appium-ai/overview-appium-ai.adoc[Appium AI: Natural language locators] for guidance on choosing a strategy.
 
@@ -15,7 +15,7 @@ Use this to:
 
 == Prerequisites
 
-- Appium AI is not turned off in your organization settings.
+- Appium AI is turned on in your organization settings, or your organization hasn't saved Appium AI settings.
 - You have an API key or reachable local endpoint for the LLM provider you want to use.
 
 == Examples
