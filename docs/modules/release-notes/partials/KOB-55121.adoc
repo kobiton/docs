@@ -1,0 +1,20 @@
+== Appium AI uses organization LLM settings
+
+Appium AI now uses the LLM settings configured for your organization. Natural language locators use your organization's endpoint, models, and API key without host configuration changes or extra capabilities in test scripts.
+
+* Session capabilities (`kobiton:llm*`) still take precedence over organization settings, one setting at a time.
+* Organization admins can turn off Appium AI for their organization. When it is off, natural language finds fail with the error `LLM client is disabled for this organization`, and session capabilities cannot turn it back on.
+* Organizations without LLM settings continue to use the host defaults.
+* Changes to organization settings apply to the next new session. Running sessions keep their settings.
+
+Appium AI is in Beta and is available for private device deployments only.
+
+For details, see xref:automation-testing:appium-ai/override-llm.adoc[].
+
+// REVIEWER NOTE:
+// KOB-55121 | Status: Released | Components: Appium, deviceConnect
+// Source: Jira Release Notes field, description (updated 2026-10-10), and acceptance criteria.
+// Release Notes field wording "for all of the organization's hosts" replaced with "for their organization":
+// the 2026-10-10 description update states the settings come from the session user's organization.
+// "dc.ini" replaced with "host configuration" / "host defaults" for Cloud release-note wording.
+// Verify before publishing: the exact Portal label for the organization LLM settings page.
