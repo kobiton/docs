@@ -495,7 +495,7 @@ capabilities.setCapability("kobiton:llmApiFormat", "AnthropicMessages");
 [#_llmApiKey]
 === `kobiton:llmApiKey`
 
-LLM provider API key. A session that sets `kobiton:llmBaseUrl` must also set this capability. The default server-side key is not sent to a session-specified endpoint.
+LLM provider API key. A session that sets `kobiton:llmBaseUrl` must also set this capability. Appium AI does not send an API key from your organization settings or the host defaults to an endpoint set in the session. See xref:automation-testing:appium-ai/configure-appium-ai-org-settings.adoc#api-key-rules[API key rules].
 
 * *Type:* `string`
 * *Required capabilities:* None
