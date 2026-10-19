@@ -109,6 +109,14 @@ Appium AI resolves each setting separately, using the first value it finds in th
 . The host defaults configured by your lab administrator.
 . The Kobiton default.
 
+[NOTE]
+====
+This order has two exceptions:
+
+* *Enable Appium AI* isn't resolved in this order. Appium AI runs only when neither your organization settings nor the host defaults turn it off, and a session capability can't turn it back on. See <<_turn_appium_ai_on_or_off_for_your_organization>>.
+* *Timeout Seconds* and *Retry Interval Seconds* have no session capability. Appium AI uses your organization settings, then the host defaults, then the Kobiton default.
+====
+
 A session can combine values from different sources. For example, your organization settings can set the model while the session passes its own `kobiton:llmBaseUrl` and `kobiton:llmApiKey`.
 
 [#api-key-rules]
