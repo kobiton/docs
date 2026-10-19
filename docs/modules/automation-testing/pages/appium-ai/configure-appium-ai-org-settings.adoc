@@ -60,7 +60,7 @@ If your organization has never saved Appium AI settings, sessions use the host d
 | Field | Description | Session capability
 
 | *Locator Strategy*
-| Default strategy used to resolve natural language locators.
+| Default strategy used to resolve natural language locators. Select *Find element by vision* (`visionvirtual`) or *Find element by view tree* (`uitree`). The form selects *Find element by vision* by default.
 | `kobiton:locatorStrategy`
 
 | *Model*
@@ -80,7 +80,7 @@ If your organization has never saved Appium AI settings, sessions use the host d
 | `kobiton:llmTextExtraBody`, `kobiton:llmVisionExtraBody`
 |===
 +
-// TODO(docs-review): Confirm the Locator Strategy options shown in the UI, and that Model and Extra body apply to both text and vision calls.
+// TODO(docs-review): Confirm the Locator Strategy option-to-value mapping and that the form default (Find element by vision) differs from the uitree capability default. Confirm that Model and Extra body apply to both text and vision calls.
 // TODO(docs-review): Confirm the Timeout Seconds and Retry Interval Seconds behavior with engineering.
 
 . Select *Save*.
