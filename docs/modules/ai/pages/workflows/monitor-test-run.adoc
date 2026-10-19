@@ -1,0 +1,72 @@
+= Monitor a Claude-launched test run
+:navtitle: Monitor a test run
+
+NOTE: `monitorTestRun` is a beta feature.
+
+The `monitorTestRun` MCP skill monitors a Kobiton test run launched from Claude. When an execution encounters a blocker, the skill provides the blocked step, assigned device, and a link to the Live Remediation view. You can use the link to resolve the blocker in Kobiton Portal.
+
+== Before you begin
+
+* Launch a test run from Claude with the `createTestRun` MCP skill.
+
+== Monitor a test run
+
+Call the skill with the test run ID:
+
+[source,typescript]
+----
+monitorTestRun(testRunId)
+----
+
+When monitoring starts, the skill reads your organization's Live Remediation setting and uses that value for the remainder of the run. It monitors the run until every execution reaches a final state.
+
+== When an execution encounters a blocker
+
+A blocker is a paused step that requires user action. The skill's response depends on whether Live Remediation is enabled for your organization.
+
+image:monitor-test-run-blocker.png[width=800,alt="Claude chat showing a blocker notification with the blocked step, assigned device, and a link to the Live Remediation view."]
+
+=== Live Remediation is enabled
+
+Open the Live Remediation link and resolve the blocker by chatting with KobiAI in Kobiton Portal.
+
+The execution resumes after the resolution is applied. The final summary marks the execution as passed if it completes successfully.
+
+For more information, see xref:test-management:remediations.adoc#_live_remediation[Live remediation].
+
+=== Live Remediation is not enabled
+
+The skill provides the blocker information and explains that the execution will end with a `BLOCKER_ENCOUNTERED` status.
+
+Remediation completed later in Kobiton Portal applies to the next run. The final summary reports the execution as blocker-encountered.
+
+== Monitor multiple executions or test cases
+
+The skill can monitor:
+
+* A single test case rerun with multiple executions
+* A test suite containing multiple test cases
+
+Blockers are reported for each affected execution. The skill identifies the test case, blocked step, and execution.
+
+Progress messages are not shown for passing test cases. The final summary lists each execution as passed, blocker-encountered, failed, or terminated.
+
+image:monitor-test-run-summary.png[width=800,alt="Claude chat showing the final summary of a multi-execution test run, listing each execution as passed, blocker-encountered, failed, or terminated."]
+
+== Errors and edge cases
+
+* If the `testRunId` does not exist, the skill returns `NOT_FOUND`.
+* If the test run is not owned by your account, the skill returns `FORBIDDEN`.
+* If the run has already reached a final state, the skill returns the summary immediately.
+* If a blocked execution has no assigned device, the skill provides the blocker text without a Live Remediation link and reports `INVALID_EXECUTION_STATE`.
+* If repeated backend errors prevent the skill from monitoring the run, it reports the run as unrecoverable.
+* If the Live Remediation setting cannot be read when monitoring starts, the skill handles the run as though Live Remediation is not enabled.
+
+== See also
+
+* xref:test-management:remediations.adoc[Remediations]
+* xref:ai:mcp/ai-plugin-mcp-ref.adoc[Kobiton AI plugin and tools reference]
+// TODO: uncomment when createTestRun is documented in the plugin reference table
+// * xref:ai:mcp/ai-plugin-mcp-ref.adoc[createTestRun MCP tool]
+// TODO: uncomment when getOrgSettings is documented in the plugin reference table
+// * xref:ai:mcp/ai-plugin-mcp-ref.adoc[getOrgSettings MCP tool]
