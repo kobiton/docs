@@ -3,15 +3,14 @@
 :description: Set the default LLM provider and locator settings that Appium AI uses for every Appium session in your organization.
 
 // Robot Ranch draft for KOB-54326 (organization settings UI), with content folded in from KOB-53282 (PR #712, organization settings behavior) and KOB-55121 (PR #723, session behavior). UI labels verified against Kobiton Portal on 2026-10-19. Docs team review required before publishing.
-// TODO(docs-review): Confirm which roles can view and edit these settings.
 
-Organization administrators set the default LLM provider and locator settings for Appium AI in Kobiton Portal. Every new Appium session in the organization uses these settings unless the session overrides them with desired capabilities.
+Users with permission to modify organization settings set the default LLM provider and locator settings for Appium AI in Kobiton Portal. Every new Appium session in the organization uses these settings unless the session overrides them with desired capabilities.
 
 Appium AI is in Beta and is available on Private and Local devices. It is not available on Public Cloud devices.
 
 == Requirements
 
-- An administrator role in the organization.
+- The *ADMIN* role, or a role with the xref:organization:roles/user-roles-and-permissions.adoc#_org_setting_modify[`org_setting.modify`] permission.
 - An API key for the LLM provider, or a reachable endpoint that does not require a key.
 
 == Open Appium AI settings
