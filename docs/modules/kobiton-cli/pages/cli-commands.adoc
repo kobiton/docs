@@ -549,6 +549,23 @@ kobiton file pull @com.company.app:Documents/foo.dat
 Pulled 505031 bytes to foo.dat
 ----
 
+[IMPORTANT]
+====
+*A failed pull fails with a non-zero exit code.*
+
+When the device cannot complete a pull, for example because the source path does not exist, the CLI reports the device's reason and exits with a non-zero status. A successful pull is unaffected and exits `0`.
+
+.Example error (Android, missing source file)
+----
+open failed: No such file or directory
+----
+====
+
+// REVIEWER NOTE (KOB-55541): The missing-file pull message and exit code come from the ticket's
+// verification steps and developer verification. The QA sign-off explicitly lists the refused-push
+// case only. Confirm the pull error wording before publishing. Depends on the related CLI fix
+// shipping; confirm whether an "update to the latest CLI version" note is also needed here.
+
 == `device`
 
 Device operations: discovery, shell access, port forwarding, logs, and screenshots.
