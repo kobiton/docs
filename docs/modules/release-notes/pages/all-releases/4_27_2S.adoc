@@ -42,14 +42,11 @@ Roll back a Standalone server to an earlier 4.27.0S or later version with `kobic
 *Highlights*
 
 - Rollback is supported only when both the current version and the target version are 4.27.0S or later. Rolling back to a version earlier than 4.27.0S is not supported.
-- Run `sudo kobictl list` to see the installed versions. An asterisk (`*`) marks the active version.
-- After the rollback completes, run `sudo kobictl restart all`, then confirm health with `sudo kobictl status`.
-- Kobiton is unavailable during the install and the restart.
-- Upgrade delta packages work in one direction only. Rollback always uses `kobictl install`.
-- To keep a version available for rollback, do not remove it with `kobictl remove` or `kobictl gc` until the update is verified.
+- Kobiton is unavailable during the rollback.
 
 // Source: KOB-55463 description and the 2026-10-09 gem65 test results comment.
 // Rollback confirmed self-service at review; engineering questions on KOB-55463 answered.
+// Trimmed to the main idea at review; details belong in admin-docs.
 
 == New features
 
