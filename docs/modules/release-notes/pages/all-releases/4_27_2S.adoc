@@ -12,18 +12,17 @@
 // Device Bundles, `virtual_devices` in `GET /v2/devices`). Virtual devices are not yet supported on
 // Standalone (manual-testing:start-a-virtual-session.adoc).
 
-_TBD_
+_October 21, 2026_
 
 == Back up and restore Kobiton data
 
-Back up the data on a Standalone server while Kobiton keeps running, then restore it onto a target server that can take over if the primary server fails. Run `sudo kobictl run backup` on the primary server and `sudo kobictl run restore` on the target server.
+Back up a Standalone server's data without taking the deployment offline, then restore it onto a target server that can take over if the primary server fails.
 
 *Highlights*
 
-- Backup and restore require 4.27.1S or later on both servers.
-- A backup includes the Kobiton databases and file storage, such as session videos, screenshots, and apps. The backup excludes the license file and SSL certificate.
-- Back up to a remote destination over SSH, or to a local or mounted path.
-- Restore replaces all Kobiton data on the target server.
+- A backup includes the Standalone databases and file storage, such as session videos, screenshots, and apps. The backup excludes the Standalone license file and SSL certificate.
+- Back up to a local directory or to a remote destination over SSH.
+- Restoring overwrites any existing Standalone data on the target server.
 
 // Source: KOB-55338 description and comments (2026-09-30 through 2026-10-12).
 // Minimum version 4.27.1S stated at review: backup and restore need the Elasticsearch snapshot mount
@@ -39,7 +38,7 @@ Roll back a Standalone server to an earlier version with `kobictl install`.
 *Highlights*
 
 - Both the current version and the target version must be 4.27.0S or later.
-- Kobiton is unavailable during the rollback.
+- Portal is unavailable during the rollback.
 
 // Source: KOB-55463 description and the 2026-10-09 gem65 test results comment.
 // Rollback confirmed self-service at review; engineering questions on KOB-55463 answered.
@@ -47,15 +46,15 @@ Roll back a Standalone server to an earlier version with `kobictl install`.
 
 == virtualUSB updates
 
-virtualUSB connects dedicated Kobiton devices to your local development environment for tools such as ADB and Xcode. virtualUSB requires a Kobiton subscription plan that includes the feature.
+virtualUSB connects your lab devices to your local development environment for tools such as ADB and Xcode. virtualUSB requires a subscription that includes the feature.
 
 *Highlights*
 
 - virtualUSB supports devices running iOS 15 and 16, and iOS 17.4 through 27. For devices running iOS 12 through 14, contact Kobiton Support.
-- A new virtualUSB CLI runs on Debian-based and Red Hat-based Linux distributions.
+- virtualUSB now supports Linux through a command-line interface, available for Debian-based and Red Hat-based distributions.
 - Org Admins can enable or disable virtualUSB for each host machine from *Device Management*. On Standalone deployments, enter a *Connection Address* for each enabled host machine. Editing `dc.ini` on each host machine is no longer required.
 - Filter *Device Management* to show only virtualUSB-enabled host machines, which display a *virtualUSB* badge.
-- With the `debug-device-over-vusb` skill in the Kobiton automate plugin 1.13.0 or later, an AI assistant can connect to a device, install your app, reproduce an issue, and collect device logs. This skill supports macOS and Windows.
+- An AI assistant connected to the Kobiton MCP server can debug a device over virtualUSB: connect to the device, install your app, reproduce an issue, and collect device logs. Supported on macOS and Windows.
 - The `listHostingMachines` and `configureHostingMachine` MCP tools let Org Admins check host machine availability and configure virtualUSB and Max Parallel Tests from an AI assistant.
 - New deviceConnect installations require an additional license configuration step before deviceConnect can initialize. Existing installations require no changes.
 
@@ -73,7 +72,7 @@ For details, see xref:debugging:set-up-virtualusb.adoc[] and xref:device-lab-man
 - Added support for devices running iOS and iPadOS 27.2.
 - Kobiton-managed passcodes now support devices running iOS 27.
 
-iOS 27, macOS 27, and Xcode 27 affect how device labs host devices running iOS 12, 13, or 14. If your device lab includes these devices, contact Kobiton Support for installation and configuration information.
+Apple's iOS 27, macOS 27, and Xcode 27 releases introduce compatibility considerations for device labs hosting devices on iOS 12, 13, or 14. If your device lab includes these devices, contact Kobiton Support for installation and configuration guidance.
 
 // Source: 2026-09-25.adoc (KOB-55177), 2026-10-02.adoc (KOB-55335, KOB-55316, KOB-55195)
 
@@ -128,7 +127,7 @@ When an app install fails in a manual session, Kobiton Portal displays the error
 
 === Kobiton CLI session data
 
-Kobiton CLI sessions can now populate Session Explorer and Session Overview. Capture is opt-in. Add `--capture` to `kobiton session create` with one or more data types, separated by commas.
+Kobiton CLI sessions can now appear in Session Explorer and Session Overview. To opt in, add `--capture` to `kobiton session create` with one or more data types, separated by commas.
 
 *Highlights*
 
@@ -162,7 +161,7 @@ Sessions without recorded steps open on *Session Overview*. The *Explorer* tab d
 
 === UiAutomator idle wait
 
-Android Appium sessions support the `appium:waitForIdleTimeout` capability, which controls how long UiAutomator waits for an app to become idle before searching for elements. Change it during a session with the Appium Settings API. Set it to `0` to skip the idle wait for apps that update their interface continuously. The default is 10 seconds.
+Appium sessions on Android devices support the `appium:waitForIdleTimeout` capability, which controls how long UiAutomator waits for an app to become idle before searching for elements.
 
 For details, see xref:automation-testing:capabilities/available-capabilities.adoc#_waitForIdleTimeout[waitForIdleTimeout].
 
@@ -183,7 +182,7 @@ For details, see xref:automation-testing:capabilities/available-capabilities.ado
 === Java 17 for generated scripts
 
 - Appium scripts generated for Java use Java 17, Appium Java client 10.x, and Selenium 4. JDK 17 or later is required to build and run them.
-- Scripts generated from Test Cases created before this release do not support Java 17. To use Java 17, create a new Test Case.
+- Scripts generated from Test Cases created before 4.27.2S do not support Java 17. To use Java 17, create a new Test Case.
 
 // Source: 2026-10-02.adoc (KOB-54691)
 // REVIEWER NOTE (KOB-54691): The Cloud page asks to confirm Standalone availability separately.
@@ -194,7 +193,7 @@ Users with the *ADMIN* role or the `org_setting.modify` permission can configure
 
 *Highlights*
 
-- Turn Appium AI on or off for the organization.
+- Enable or disable Appium AI for the organization.
 - Set the API format, base URL, API key, model, locator strategy, request timeout, and retry interval.
 - Override most organization settings for a single session with `kobiton:*` desired capabilities.
 - Changes apply to new sessions. Organizations without saved settings continue to use the host defaults.
@@ -204,23 +203,17 @@ For details, see xref:automation-testing:appium-ai/configure-appium-ai-org-setti
 
 // Source: 2026-10-16.adoc (KOB-54326, KOB-53282, KOB-55121)
 
-== Session validations and plugin updates in the Kobiton MCP server
+== Session validations and automation updates in the Kobiton MCP server
 
-AI assistants connected to the Kobiton MCP server can read a session's validations one type at a time.
+The Kobiton MCP server provides AI assistants with more detailed session validation results, improved search results, and updates to interactive automation.
 
-*Highlights*
+- *Session validations:* AI assistants can retrieve accessibility, crash, response time, blocker, element selection, and flexCorrect findings individually. Results support pagination, and accessibility findings can be filtered by issue type. Accessibility summaries provide finding counts and scan details.
+- *Validation progress:* AI assistants can distinguish between scans that are still processing and completed results, including accessibility, crash, and response time validations.
+- *Search results:* Device searches report the total number of matching devices. Pagination helps manage results for test cases, test suites, test runs, and user input events.
+- *UI inspection:* The `automate` plugin 1.15.0 uses a compact UI tree by default during interactive automation, with full page source available on request.
+- *Credential security:* The `/automate:setup` command writes Kobiton credentials without passing the API key through the AI assistant. If a setup conversation from an earlier plugin version was shared, rotate that API key in *Settings > API Keys*.
 
-- New tools: `listAccessibilityValidations`, `listCrashValidations`, `listResponseTimeValidations`, `listBlockerValidations`, `listElementSelectionValidations`, `listFlexCorrects`, and `getAccessibilityValidationsSummary`.
-- Each list tool returns at most 20 findings per call, with `page`, `total_pages`, and `total_items` counts.
-- `getAccessibilityValidationsSummary` returns accessibility counts by finding type and issue name, the number of steps scanned, and the time of the latest finding.
-- `listAccessibilityValidations` filters by `TOUCH_TARGET_SIZE`, `COLOR_CONTRAST`, or `CONTENT_LABELING`. Request element, metadata, screen, and screenshot URL fields through the `include` parameter.
-- AI assistants can tell whether a validation scan is still processing or complete.
-
-Additional MCP server and plugin updates in this release:
-
-- `/automate:setup` writes your Kobiton credentials without your API key passing through the AI assistant. If you shared a conversation from a setup run in an earlier plugin version, rotate that API key in *Settings > API Keys*.
-- Device searches report the total number of matching devices. Results for Test Cases, Test Suites, Test Runs, and user input events are paginated.
-- The automate plugin 1.15.0 uses a compact UI tree by default during interactive automation. The full page source is available on request.
+For details, see xref:ai:mcp/ai-plugin-mcp-ref.adoc[Kobiton AI plugin and tools reference].
 
 // Source: 2026-09-25.adoc (KOB-55095), 2026-10-16.adoc (KOB-55265),
 // 2026-10-09.adoc (KOB-55307), 2026-10-16.adoc (KOB-55269)
@@ -287,7 +280,7 @@ Devices running Android 11 and later now initialize and become available for ses
 
 == Simplified sign-in for SSO-only users
 
-Kobiton Portal directs users with *SSO Only* enabled to their organization's SSO sign-in after they enter their email address or username, even when SSO is not enforced for the organization. Password sign-in options are no longer displayed for these users.
+Users with *SSO Only* enabled now go directly to their organization's SSO sign-in after entering their email address or username. Portal no longer displays password sign-in options for these users, even when SSO is not enforced for the rest of the organization.
 
 // Source: 2026-10-09.adoc (KOB-52796)
 
