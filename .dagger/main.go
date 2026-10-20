@@ -22,7 +22,7 @@ type Ci struct {
 // "Release file ... is expired", which broke every CI run.
 func nodeBase() *dagger.Container {
 	return dag.Container(dagger.ContainerOpts{Platform: "linux/amd64"}).
-		From("public.ecr.aws/docker/library/node:20-bookworm-slim").
+		From("node:20-bookworm-slim").
 		WithEnvVariable("DEBIAN_FRONTEND", "noninteractive").
 		WithEnvVariable("GIT_SSH_COMMAND", "ssh -o StrictHostKeyChecking=no").
 		WithExec([]string{"apt-get", "update"}).
