@@ -22,7 +22,7 @@ type Ci struct {
 // "Release file ... is expired", which broke every CI run.
 func nodeBase() *dagger.Container {
 	return dag.Container(dagger.ContainerOpts{Platform: "linux/amd64"}).
-		From("node:20-bookworm-slim").
+		From("node:20-bookworm-slim@sha256:2cf067cfed83d5ea958367df9f966191a942351a2df77d6f0193e162b5febfc0").
 		WithEnvVariable("DEBIAN_FRONTEND", "noninteractive").
 		WithEnvVariable("GIT_SSH_COMMAND", "ssh -o StrictHostKeyChecking=no").
 		WithExec([]string{"apt-get", "update"}).
@@ -116,7 +116,7 @@ func (m *Ci) Server(
 	path := fmt.Sprintf("/%s", site)
 
 	return dag.Container(dagger.ContainerOpts{Platform: "linux/amd64"}).
-		From("nginx:alpine").
+		From("nginx:alpine@sha256:892bb2152464f0c5d8972593a5f5afaf8054552580b699d95f8ff4af08c2d33d").
 		WithWorkdir(path).
 		WithDirectory(path, dir.Directory(site)).
 		WithFile(fmt.Sprintf("/%s/replace-env-vars.sh", site), m.Source.File("scripts/replace-env-vars.sh")).
