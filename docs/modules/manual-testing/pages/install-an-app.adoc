@@ -16,3 +16,37 @@ image:manual-testing:install-apps-closeup.png[width=750, alt="A close-up of the 
 
 [NOTE]
 Depending on your xref:devices:local-devices/cleanup-policy/manage-device-cleanup-policies.adoc[cleanup policy], your app may automatically uninstall after the session.
+
+// Source: KOB-55544
+[#_install_ios_app_builds]
+== Install `.app` builds on iOS
+
+In iOS manual sessions, *Upload File* and *Install From URL* accept `.app` builds on real devices and iOS Simulators.
+
+Compress the `.app` bundle to a `.zip` archive before you upload it or link to it. If you select a `.app` that isn't a `.zip` archive, the modal shows an error and doesn't upload the file.
+
+=== Match the build type to the device
+
+A real iOS device runs only device builds. An iOS Simulator runs only Simulator builds.
+
+Kobiton reads the `DTPlatformName` value in the app's `Info.plist` file to identify the build type:
+
+* `iphonesimulator`: Simulator build.
+* Any other value, or no value: device build.
+
+A device build `.app` installs on a real iOS device the same way as an `.ipa`.
+
+When you install an app with *Upload File* or *Install From URL*, Kobiton checks the build type before it installs the app. If the build type doesn't match the device, Kobiton doesn't install the app and shows one of these messages:
+
+[cols="1,2"]
+|===
+|Situation |Message
+
+|Simulator build on a real iOS device
+|`This .app is built for iOS Simulator and can't be installed on a real device. Upload an .ipa or a device build instead`
+
+|Device build on an iOS Simulator
+|`This app is built for real iOS devices and can't be installed on an iOS Simulator. Upload a Simulator build instead`
+|===
+
+To resolve the error, install a build that matches the device in the session.
