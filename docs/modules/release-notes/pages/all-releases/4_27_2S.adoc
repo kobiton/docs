@@ -24,7 +24,7 @@ Back up the data on a Standalone server while Kobiton keeps running, then restor
 *Highlights*
 
 - Backup and restore require 4.27.1S or later on both servers.
-- A backup includes the Kobiton databases and file storage, such as session videos, screenshots, and apps. The license file and SSL certificate are not included.
+- A backup includes the Kobiton databases and file storage, such as session videos, screenshots, and apps. The backup excludes the license file and SSL certificate.
 - Back up to a remote destination over SSH, or to a local or mounted path.
 - Restore replaces all Kobiton data on the target server.
 
@@ -41,7 +41,7 @@ Roll back a Standalone server to an earlier version with `kobictl install`.
 
 *Highlights*
 
-- Rollback is supported only when both the current version and the target version are 4.27.0S or later. Rolling back to a version earlier than 4.27.0S is not supported.
+- Both the current version and the target version must be 4.27.0S or later.
 - Kobiton is unavailable during the rollback.
 
 // Source: KOB-55463 description and the 2026-10-09 gem65 test results comment.
