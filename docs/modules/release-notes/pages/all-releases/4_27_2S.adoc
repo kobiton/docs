@@ -160,11 +160,14 @@ Kobiton CLI sessions can now populate Session Explorer and Session Overview. Cap
 - `video` and `logs` make the session video and device logs available in Session Overview.
 - Session Explorer is available for a CLI session only when the session captures at least one data type and runs at least one `kobiton webdriver get` or `kobiton webdriver post` command.
 
-For all capture values, see xref:kobiton-cli:cli-commands.adoc#session-create-capture[Capture session data].
+For all data types, see xref:kobiton-cli:cli-commands.adoc#session-create-capture[Capture session data].
 
 // Source: KOB-52718, KOB-55503, KOB-55494, KOB-55504, KOB-55505 (entry removed from 2026-10-16.adoc in
 // PR #763 commit d1ef6fb as outdated; re-added at review). Behavior aligned with the current
 // kobiton-cli:cli-commands.adoc "Capture session data" section.
+// REVIEWER NOTE (KOB-52718): cli-commands.adoc notes that earlier testing found no visible
+// user-action artifact in Session Explorer for a CLI-only session. Confirm the timeline behavior
+// before publishing, or remove the user-action bullet.
 
 == Updates
 
