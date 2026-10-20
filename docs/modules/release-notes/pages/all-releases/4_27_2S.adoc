@@ -23,23 +23,15 @@ Back up the data on a Standalone server while Kobiton keeps running, then restor
 
 *Highlights*
 
-- Backup and restore require 4.27.1S or later on both servers. Updating a 4.27.0S server to 4.27.2S restarts the Elasticsearch pod once.
-- A backup includes the Postgres databases, Elasticsearch indices, and MinIO file storage, such as session videos, screenshots, and apps. A copy of `infra.env` is included for reference only and is not applied on restore.
-- The license file and SSL certificate are not included in the backup. Keep a copy of each for the target server.
-- Back up to a remote destination over SSH, or to a local or mounted path, such as a USB disk or NAS share. A remote destination requires SSH key authentication from the primary server to the destination. Password authentication is not supported.
-- Save the destination, SSH key file path, and retention count in `/etc/kobiton/backup.env`, or pass the destination on the command line. By default, the last 7 backups are kept.
-- Backups run on demand. Scheduled backups are not supported.
-- Repeat backups transfer only new and changed files. If a backup stops partway, run the same command again to resume. The previous complete backup stays valid.
-- The destination does not need Kobiton installed. Restore reads a local backup folder, or reads the backup directly from the destination over SSH, for example to rebuild the primary server.
-- Restore replaces all Kobiton data on the target server. It does not merge data. The target server keeps its own license, SSL certificate, and `infra.env`.
-- The target server must run the same version as the backup, or a newer version with the `--allow-newer` option. With `--allow-newer`, restore applies the newer version's database migrations.
-- If a restore fails partway, Kobiton stays stopped on the target server. Run `sudo kobictl run restore --resume-services` to start it again.
-- An older backup restores its own databases and indices, but the most recent MinIO files.
-- Run long backups and restores inside `tmux` or `screen` so that a dropped SSH connection does not stop them.
+- Backup and restore require 4.27.1S or later on both servers.
+- A backup includes the Kobiton databases and file storage, such as session videos, screenshots, and apps. The license file and SSL certificate are not included.
+- Back up to a remote destination over SSH, or to a local or mounted path.
+- Restore replaces all Kobiton data on the target server.
 
 // Source: KOB-55338 description and comments (2026-09-30 through 2026-10-12).
 // Minimum version 4.27.1S stated at review: backup and restore need the Elasticsearch snapshot mount
 // added in 4.27.1S. Known backup and restore bugs omitted at review.
+// Trimmed to the main idea at review; details belong in admin-docs.
 // REVIEWER NOTE (KOB-55338): Link to the admin-docs backup and restore runbook once it is published.
 // The 4.27.0S notes intentionally omitted admin-docs links. Confirm the same rule applies here.
 
