@@ -45,6 +45,24 @@ Roll back a Standalone server to an earlier version with `kobictl install`.
 // Rollback confirmed self-service at review; engineering questions on KOB-55463 answered.
 // Trimmed to the main idea at review; details belong in admin-docs.
 
+== virtualUSB updates
+
+virtualUSB connects dedicated Kobiton devices to your local development environment for tools such as ADB and Xcode. virtualUSB requires a Kobiton subscription plan that includes the feature.
+
+*Highlights*
+
+- virtualUSB supports devices running iOS 15 and 16, and iOS 17.4 through 27. For devices running iOS 12 through 14, contact Kobiton Support.
+- A new virtualUSB CLI runs on Debian-based and Red Hat-based Linux distributions.
+- Org Admins can enable or disable virtualUSB for each host machine from *Device Management*. On Standalone deployments, enter a *Connection Address* for each enabled host machine. Editing `dc.ini` on each host machine is no longer required.
+- Filter *Device Management* to show only virtualUSB-enabled host machines, which display a *virtualUSB* badge.
+- With the `debug-device-over-vusb` skill in the Kobiton automate plugin 1.13.0 or later, an AI assistant can connect to a device, install your app, reproduce an issue, and collect device logs. This skill supports macOS and Windows.
+- The `listHostingMachines` and `configureHostingMachine` MCP tools let Org Admins check host machine availability and configure virtualUSB and Max Parallel Tests from an AI assistant.
+
+For details, see xref:debugging:set-up-virtualusb.adoc[] and xref:device-lab-management:deviceConnect/enable-virtualusb-for-host-machines.adoc[].
+
+// Source: 2026-10-09.adoc (KOB-55371, KOB-52820, KOB-52679, KOB-55165, KOB-55306, KOB-55305, KOB-54596)
+// virtualUSB confirmed available on Standalone at review.
+
 == iPhone 18 and iOS 27.2 support
 
 - Added support for iPhone 18 Pro and iPhone 18 Pro Max.
@@ -103,24 +121,6 @@ Users with the *ADMIN* role or the `org_setting.modify` permission can configure
 For details, see xref:automation-testing:appium-ai/configure-appium-ai-org-settings.adoc[Configure Appium AI settings for your organization].
 
 // Source: 2026-10-16.adoc (KOB-54326, KOB-53282, KOB-55121)
-
-== virtualUSB updates
-
-virtualUSB connects dedicated Kobiton devices to your local development environment for tools such as ADB and Xcode. virtualUSB requires a Kobiton subscription plan that includes the feature.
-
-*Highlights*
-
-- virtualUSB supports devices running iOS 15 and 16, and iOS 17.4 through 27. For devices running iOS 12 through 14, contact Kobiton Support.
-- A new virtualUSB CLI runs on Debian-based and Red Hat-based Linux distributions.
-- Org Admins can enable or disable virtualUSB for each host machine from *Device Management*. On Standalone deployments, enter a *Connection Address* for each enabled host machine. Editing `dc.ini` on each host machine is no longer required.
-- Filter *Device Management* to show only virtualUSB-enabled host machines, which display a *virtualUSB* badge.
-- With the `debug-device-over-vusb` skill in the Kobiton automate plugin 1.13.0 or later, an AI assistant can connect to a device, install your app, reproduce an issue, and collect device logs. This skill supports macOS and Windows.
-- The `listHostingMachines` and `configureHostingMachine` MCP tools let Org Admins check host machine availability and configure virtualUSB and Max Parallel Tests from an AI assistant.
-
-For details, see xref:debugging:set-up-virtualusb.adoc[] and xref:device-lab-management:deviceConnect/enable-virtualusb-for-host-machines.adoc[].
-
-// Source: 2026-10-09.adoc (KOB-55371, KOB-52820, KOB-52679, KOB-55165, KOB-55306, KOB-55305, KOB-54596)
-// virtualUSB confirmed available on Standalone at review.
 
 == Kobiton MCP server
 
