@@ -149,6 +149,23 @@ For details, see xref:automation-testing:capabilities/available-capabilities.ado
 
 // Source: 2026-10-16.adoc (KOB-54485)
 
+=== Session Explorer data for Kobiton CLI sessions
+
+Kobiton CLI sessions can now populate Session Explorer and Session Overview. Capture is opt-in. Add `--capture` to `kobiton session create` with one or more data types, separated by commas.
+
+*Highlights*
+
+- `screenshots`, `view-trees`, and `metrics` add screenshots, view hierarchies, and device metrics to Session Explorer.
+- `user-action` adds each user action to the session timeline.
+- `video` and `logs` make the session video and device logs available in Session Overview.
+- Session Explorer is available for a CLI session only when the session captures at least one data type and runs at least one `kobiton webdriver get` or `kobiton webdriver post` command.
+
+For all capture values, see xref:kobiton-cli:cli-commands.adoc#session-create-capture[Capture session data].
+
+// Source: KOB-52718, KOB-55503, KOB-55494, KOB-55504, KOB-55505 (entry removed from 2026-10-16.adoc in
+// PR #763 commit d1ef6fb as outdated; re-added at review). Behavior aligned with the current
+// kobiton-cli:cli-commands.adoc "Capture session data" section.
+
 == Updates
 
 === Device Management
