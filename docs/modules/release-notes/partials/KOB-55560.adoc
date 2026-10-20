@@ -1,0 +1,16 @@
+// Release-note partial: KOB-55560
+// Fix version: 2026.10.20 | Type: Bug | Components: CLI, Session Explorer
+// Drafted by Robot Ranch (Town Crier). Requires docs-team review before publishing.
+//
+// REVIEWER NOTES:
+// - Source: Jira customer-facing release-note field, impact field, and description.
+// - The v2 session commands endpoint path is not named in the source. Confirm the path before
+//   adding it to the bullet text.
+// - The impact field also lists `POST /v1/sessions/{id}/commandWithPresignedUrls`, but the
+//   customer-facing release-note field does not. Confirm whether to name it here.
+// - The API reference is hosted outside this repository. Confirm whether the endpoint
+//   descriptions there need a matching note.
+
+== Kobiton API
+
+- Fixed the session commands endpoints returning more commands than Session Explorer shows for Kobiton CLI sessions. `GET /v1/sessions/\{id}/commands`, the v2 session commands endpoint, and `GET /v1/sessions/\{id}/commandsCount` now return one session creation plus one command per `kobiton webdriver` call, matching the steps in Session Explorer. Previously, these endpoints also returned the repeated `POST /wd/hub/session` request that Kobiton CLI sends before each call. This change applies to CLI sessions recorded after this release. Sessions recorded earlier are unchanged.
