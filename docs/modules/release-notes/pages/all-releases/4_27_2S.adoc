@@ -105,7 +105,7 @@ Enter device passcodes during iOS manual sessions, including passcode prompts fo
 Additional passcode fixes in this release, for organizations with passcode mode enabled:
 
 - iOS devices with custom numeric passcodes unlock when you use *Power* to lock and unlock the screen in a manual session. Previously, you could be asked to enter the passcode on the physical device.
-- Devices stay protected by a passcode, and compliant with MDM passcode requirements, after session cleanup.
+- Devices stay protected by a passcode, and compliant with mobile device management passcode requirements, after session cleanup.
 - iPad passcodes persist when the device language changes during a session.
 
 // Source: 2026-10-16.adoc (KOB-53003, KOB-53785, KOB-53007);
@@ -228,7 +228,7 @@ For details, see xref:ai:mcp/ai-plugin-mcp-ref.adoc[Kobiton AI plugin and tools 
 
 === List installed apps on devices
 
-`GET /v2/devices/{deviceId}/installed-apps` and `GET /v2/devices/udid/{udid}/installed-apps` return the apps installed on a private device, including apps installed manually or through MDM. Results include each app's bundle ID, name, version, and build version.
+`GET /v2/devices/{deviceId}/installed-apps` and `GET /v2/devices/udid/{udid}/installed-apps` return the apps installed on a private device, including apps installed manually or through mobile device managment. Results include each app's bundle ID, name, version, and build version.
 
 // Source: 2026-10-16.adoc (KOB-55366)
 
