@@ -57,11 +57,15 @@ virtualUSB connects dedicated Kobiton devices to your local development environm
 - Filter *Device Management* to show only virtualUSB-enabled host machines, which display a *virtualUSB* badge.
 - With the `debug-device-over-vusb` skill in the Kobiton automate plugin 1.13.0 or later, an AI assistant can connect to a device, install your app, reproduce an issue, and collect device logs. This skill supports macOS and Windows.
 - The `listHostingMachines` and `configureHostingMachine` MCP tools let Org Admins check host machine availability and configure virtualUSB and Max Parallel Tests from an AI assistant.
+- New deviceConnect installations require an additional license configuration step before deviceConnect can initialize. Existing installations require no changes.
 
 For details, see xref:debugging:set-up-virtualusb.adoc[] and xref:device-lab-management:deviceConnect/enable-virtualusb-for-host-machines.adoc[].
 
 // Source: 2026-10-09.adoc (KOB-55371, KOB-52820, KOB-52679, KOB-55165, KOB-55306, KOB-55305, KOB-54596)
 // virtualUSB confirmed available on Standalone at review.
+// Source: 2026-10-02.adoc (KOB-55058) for the deviceConnect license step.
+// REVIEWER NOTE (KOB-55058): Confirm whether the Standalone installer sets License.Valid=true for new
+// host machines. If it does, remove this entry.
 
 == iPhone 18 and iOS 27.2 support
 
@@ -73,7 +77,9 @@ iOS 27, macOS 27, and Xcode 27 affect how device labs host devices running iOS 1
 
 // Source: 2026-09-25.adoc (KOB-55177), 2026-10-02.adoc (KOB-55335, KOB-55316, KOB-55195)
 
-== Fold and unfold Android devices during manual sessions
+== Manual session controls and reliability
+
+=== Fold and unfold Android devices
 
 Manual sessions on supported foldable Android devices now include *Fold device* and *Unfold device* controls on the session toolbar. The session stream and *Inspector* adjust to the active screen.
 
@@ -86,7 +92,7 @@ Manual sessions on supported foldable Android devices now include *Fold device* 
 
 // Source: 2026-10-16.adoc (KOB-55167, KOB-55174)
 
-== Passcode entry for iOS manual sessions
+=== Passcode entry for iOS
 
 Enter device passcodes during iOS manual sessions, including passcode prompts for Apple Pay, Wallet, and the hidden apps folder.
 
@@ -106,7 +112,83 @@ Additional passcode fixes in this release, for organizations with passcode mode 
 // Source: 2026-10-16.adoc (KOB-53003, KOB-53785, KOB-53007);
 // 2026-09-25.adoc (KOB-54991, KOB-55182, KOB-55053) for the device-passcode fixes.
 
-== Organization settings for Appium AI
+=== Video reliability
+
+Manual sessions now try to restore the full video stream after a brief interruption to the live device screen. Previously, the session switched to lower-quality screenshots for the rest of the session.
+
+// Source: 2026-10-09.adoc (KOB-55153)
+
+=== App installation error messages
+
+When an app install fails in a manual session, Kobiton Portal displays the error reported by the device. For example, iOS signature verification failures display `ApplicationVerificationFailed` instead of an AS-500 error about Kobiton certificate signing.
+
+// Source: 2026-10-16.adoc (KOB-55419)
+
+== Session Explorer expands to Kobiton CLI sessions
+
+=== Kobiton CLI session data
+
+Kobiton CLI sessions can now populate Session Explorer and Session Overview. Capture is opt-in. Add `--capture` to `kobiton session create` with one or more data types, separated by commas.
+
+*Highlights*
+
+- `screenshots`, `view-trees`, and `metrics` add screenshots, view hierarchies, and device metrics to Session Explorer.
+- `user-action` adds each user action to the session timeline.
+- `video` and `logs` make the session video and device logs available in Session Overview.
+- Session Explorer is available for a CLI session only when the session captures at least one data type and runs at least one `kobiton webdriver get` or `kobiton webdriver post` command.
+
+For all data types, see xref:kobiton-cli:cli-commands.adoc#session-create-capture[Capture session data].
+
+// Source: KOB-52718, KOB-55503, KOB-55494, KOB-55504, KOB-55505 (entry removed from 2026-10-16.adoc in
+// PR #763 commit d1ef6fb as outdated; re-added at review). Behavior aligned with the current
+// kobiton-cli:cli-commands.adoc "Capture session data" section.
+// REVIEWER NOTE (KOB-52718): cli-commands.adoc notes that earlier testing found no visible
+// user-action artifact in Session Explorer for a CLI-only session. Confirm the timeline behavior
+// before publishing, or remove the user-action bullet.
+
+=== Crash reporting
+
+Session Explorer displays app crashes and crash logs for manual, Appium, and API sessions on Android and iOS. Previously, these crashes were not captured.
+
+// Source: 2026-10-16.adoc (KOB-55400)
+
+=== Sessions without recorded steps
+
+Sessions without recorded steps open on *Session Overview*. The *Explorer* tab displays "Explorer is not available for this session." XCUITest sessions no longer show steps labeled `null` without screenshots.
+
+// Source: 2026-10-16.adoc (KOB-55471, KOB-55496)
+
+== Appium automation updates
+
+=== UiAutomator idle wait
+
+Android Appium sessions support the `appium:waitForIdleTimeout` capability, which controls how long UiAutomator waits for an app to become idle before searching for elements. Change it during a session with the Appium Settings API. Set it to `0` to skip the idle wait for apps that update their interface continuously. The default is 10 seconds.
+
+For details, see xref:automation-testing:capabilities/available-capabilities.adoc#_waitForIdleTimeout[waitForIdleTimeout].
+
+// Source: 2026-10-16.adoc (KOB-54485)
+
+=== Element inspection and interaction
+
+- Automation sessions on iOS and iPadOS can interact with system alerts, such as the Location Services alert. Previously, these commands could fail with `No active application elements`.
+- On iOS 26, scripts can locate and select the buttons on location permission alerts, including *Allow Once*, *Allow While Using App*, and *Don't Allow*.
+- *Appium Inspector* shows the correct XML hierarchy for each step of iPad automation sessions started without an app, such as a Safari session.
+- On Android 13 and later, screens that contain web views now show their complete XML hierarchy, so element searches and interactions succeed.
+- The WebDriver Get Element Attribute command returns `null` when an element does not have the requested attribute. Previously, it returned an error.
+- Appium sessions support the `mobile: setText` command on Android and iOS. Previously, it returned a "not implemented" error.
+
+// Source: 2026-10-02.adoc (KOB-55247, KOB-54432),
+// 2026-10-16.adoc (KOB-55464, KOB-55355, KOB-55507, KOB-55394)
+
+=== Java 17 for generated scripts
+
+- Appium scripts generated for Java use Java 17, Appium Java client 10.x, and Selenium 4. JDK 17 or later is required to build and run them.
+- Scripts generated from Test Cases created before this release do not support Java 17. To use Java 17, create a new Test Case.
+
+// Source: 2026-10-02.adoc (KOB-54691)
+// REVIEWER NOTE (KOB-54691): The Cloud page asks to confirm Standalone availability separately.
+
+== Appium AI organization settings
 
 Users with the *ADMIN* role or the `org_setting.modify` permission can configure Appium AI for the organization under *Settings* > *AI Settings*. New Appium sessions use the organization's LLM provider and locator settings without extra capabilities in test scripts.
 
@@ -122,7 +204,7 @@ For details, see xref:automation-testing:appium-ai/configure-appium-ai-org-setti
 
 // Source: 2026-10-16.adoc (KOB-54326, KOB-53282, KOB-55121)
 
-== Kobiton MCP server
+== Session validations and plugin updates in the Kobiton MCP server
 
 AI assistants connected to the Kobiton MCP server can read a session's validations one type at a time.
 
@@ -143,100 +225,47 @@ Additional MCP server and plugin updates in this release:
 // Source: 2026-09-25.adoc (KOB-55095), 2026-10-16.adoc (KOB-55265),
 // 2026-10-09.adoc (KOB-55307), 2026-10-16.adoc (KOB-55269)
 
-== Reset stuck device states with the Kobiton API
+== New Kobiton API endpoints and session-detail access
+
+=== Reset stuck device states
 
 `POST /v2/execute-admin-tasks` accepts a new `RESET_DEVICE_STATE` task. Org Admins can reset the recorded state of devices that remain in an incorrect state, such as a device that appears in use after its session has ended. The reset does not end active sessions or cancel reservations.
 
 // Source: 2026-10-16.adoc (KOB-55322)
 
-== List installed apps on devices with the Kobiton API
+=== List installed apps on devices
 
 `GET /v2/devices/{deviceId}/installed-apps` and `GET /v2/devices/udid/{udid}/installed-apps` return the apps installed on a private device, including apps installed manually or through MDM. Results include each app's bundle ID, name, version, and build version.
 
 // Source: 2026-10-16.adoc (KOB-55366)
 
-== UiAutomator idle wait for Android automation sessions
-
-Android Appium sessions support the `appium:waitForIdleTimeout` capability, which controls how long UiAutomator waits for an app to become idle before searching for elements. Change it during a session with the Appium Settings API. Set it to `0` to skip the idle wait for apps that update their interface continuously. The default is 10 seconds.
-
-For details, see xref:automation-testing:capabilities/available-capabilities.adoc#_waitForIdleTimeout[waitForIdleTimeout].
-
-// Source: 2026-10-16.adoc (KOB-54485)
-
-== Session Explorer data for Kobiton CLI sessions
-
-Kobiton CLI sessions can now populate Session Explorer and Session Overview. Capture is opt-in. Add `--capture` to `kobiton session create` with one or more data types, separated by commas.
-
-*Highlights*
-
-- `screenshots`, `view-trees`, and `metrics` add screenshots, view hierarchies, and device metrics to Session Explorer.
-- `user-action` adds each user action to the session timeline.
-- `video` and `logs` make the session video and device logs available in Session Overview.
-- Session Explorer is available for a CLI session only when the session captures at least one data type and runs at least one `kobiton webdriver get` or `kobiton webdriver post` command.
-
-For all data types, see xref:kobiton-cli:cli-commands.adoc#session-create-capture[Capture session data].
-
-// Source: KOB-52718, KOB-55503, KOB-55494, KOB-55504, KOB-55505 (entry removed from 2026-10-16.adoc in
-// PR #763 commit d1ef6fb as outdated; re-added at review). Behavior aligned with the current
-// kobiton-cli:cli-commands.adoc "Capture session data" section.
-// REVIEWER NOTE (KOB-52718): cli-commands.adoc notes that earlier testing found no visible
-// user-action artifact in Session Explorer for a CLI-only session. Confirm the timeline behavior
-// before publishing, or remove the user-action bullet.
-
-== Search host machines by name
-
-Search host machines by name as well as IP address.
-
-// Source: 2026-10-09.adoc (KOB-52678). The Max Parallel Tests tab shipped in 4.27.0S.
-
-== `max_parallel_tests` in the host machines API
+=== `max_parallel_tests` in `/v2/machines`
 
 `GET /v2/machines` returns each host machine's `max_parallel_tests` setting.
 
 // Source: 2026-10-09.adoc (KOB-52819)
 
-== Sign-in for SSO-only users
+=== Running XCUITest session details
 
-Kobiton Portal directs users with *SSO Only* enabled to their organization's SSO sign-in after they enter their email address or username, even when SSO is not enforced for the organization. Password sign-in options are no longer displayed for these users.
+`GET /v1/sessions/{id}` and `GET /v2/sessions/{id}` return session details while XCUITest native framework sessions are running. Previously, they returned HTTP 500 until the test report and video were available.
 
-// Source: 2026-10-09.adoc (KOB-52796)
+// Source: 2026-10-16.adoc (KOB-55472)
 
-== Java 17 for generated Appium scripts
+== Host machine search in Device Management
 
-- Appium scripts generated for Java use Java 17, Appium Java client 10.x, and Selenium 4. JDK 17 or later is required to build and run them.
-- Scripts generated from Test Cases created before this release do not support Java 17. To use Java 17, create a new Test Case.
+Search host machines by name as well as IP address.
 
-// Source: 2026-10-02.adoc (KOB-54691)
-// REVIEWER NOTE (KOB-54691): The Cloud page asks to confirm Standalone availability separately.
+// Source: 2026-10-09.adoc (KOB-52678). The Max Parallel Tests tab shipped in 4.27.0S.
 
-== Analytics report improvements
+== Reliability improvements for iOS, iPadOS, and Android devices
 
-- The *Parallel Sessions* and *Retained Devices* reports count every hour a device was retained, including retains that have ended or expired. Previously, these reports could undercount retained devices.
-- CSV exports of *Parallel Sessions* and *Sessions per Day* list one row per day in chronological order.
-- *Device Utilization* exports are sorted by *Sessions*, with the most-used devices first.
-- PNG exports of *Parallel Sessions* and *Sessions per Day* include the report's bar chart.
+=== Android devices
 
-// Source: 2026-09-25.adoc (KOB-55244), 2026-10-09.adoc (KOB-55321)
+Devices running Android 11 and later now initialize and become available for sessions. Previously, they could fail to initialize.
 
-== Video reliability in manual sessions
+// Source: 2026-09-25.adoc (KOB-55087, KOB-55104)
 
-Manual sessions now try to restore the full video stream after a brief interruption to the live device screen. Previously, the session switched to lower-quality screenshots for the rest of the session.
-
-// Source: 2026-10-09.adoc (KOB-55153)
-
-== Improved element inspection and interaction in Appium sessions
-
-- Automation sessions on iOS and iPadOS can interact with system alerts, such as the Location Services alert. Previously, these commands could fail with `No active application elements`.
-- On iOS 26, scripts can locate and select the buttons on location permission alerts, including *Allow Once*, *Allow While Using App*, and *Don't Allow*.
-- *Appium Inspector* shows the correct XML hierarchy for each step of iPad automation sessions started without an app, such as a Safari session.
-- On Android 13 and later, screens that contain web views now show their complete XML hierarchy, so element searches and interactions succeed.
-- The WebDriver Get Element Attribute command returns `null` when an element does not have the requested attribute. Previously, it returned an error.
-- Appium sessions support the `mobile: setText` command on Android and iOS. Previously, it returned a "not implemented" error.
-
-// Source: 2026-10-02.adoc (KOB-55247, KOB-54432),
-// 2026-10-16.adoc (KOB-55464, KOB-55355, KOB-55507, KOB-55394)
-
-== Improved reliability for iOS and iPadOS devices
+=== iOS and iPadOS devices
 
 - Developer Disk Image (DDI) mounting no longer fails intermittently on newer iOS devices, including iPhone 18 models on iOS 26.4 and later, or when a DDI is already mounted.
 - Device cleanup resets time zone, language, and HTTP proxy settings on devices with newer iOS and iPadOS Settings layouts.
@@ -247,43 +276,20 @@ Manual sessions now try to restore the full video stream after a brief interrupt
 // Source: 2026-10-16.adoc (KOB-55444, KOB-50523, KOB-55245),
 // 2026-09-25.adoc (KOB-55040)
 
-== Android device initialization
+== Analytics reports updates
 
-Devices running Android 11 and later now initialize and become available for sessions. Previously, they could fail to initialize.
+- The *Parallel Sessions* and *Retained Devices* reports count every hour a device was retained, including retains that have ended or expired. Previously, these reports could undercount retained devices.
+- CSV exports of *Parallel Sessions* and *Sessions per Day* list one row per day in chronological order.
+- *Device Utilization* exports are sorted by *Sessions*, with the most-used devices first.
+- PNG exports of *Parallel Sessions* and *Sessions per Day* include the report's bar chart.
 
-// Source: 2026-09-25.adoc (KOB-55087, KOB-55104)
+// Source: 2026-09-25.adoc (KOB-55244), 2026-10-09.adoc (KOB-55321)
 
-== Restored crash reporting in Session Explorer
+== Simplified sign-in for SSO-only users
 
-Session Explorer displays app crashes and crash logs for manual, Appium, and API sessions on Android and iOS. Previously, these crashes were not captured.
+Kobiton Portal directs users with *SSO Only* enabled to their organization's SSO sign-in after they enter their email address or username, even when SSO is not enforced for the organization. Password sign-in options are no longer displayed for these users.
 
-// Source: 2026-10-16.adoc (KOB-55400)
-
-== Improved handling of sessions without recorded steps
-
-Sessions without recorded steps open on *Session Overview*. The *Explorer* tab displays "Explorer is not available for this session." XCUITest sessions no longer show steps labeled `null` without screenshots.
-
-// Source: 2026-10-16.adoc (KOB-55471, KOB-55496)
-
-== Improved app installation error messages in manual sessions
-
-When an app install fails in a manual session, Kobiton Portal displays the error reported by the device. For example, iOS signature verification failures display `ApplicationVerificationFailed` instead of an AS-500 error about Kobiton certificate signing.
-
-// Source: 2026-10-16.adoc (KOB-55419)
-
-== Improved access to running XCUITest session details
-
-`GET /v1/sessions/{id}` and `GET /v2/sessions/{id}` return session details while XCUITest native framework sessions are running. Previously, they returned HTTP 500 until the test report and video were available.
-
-// Source: 2026-10-16.adoc (KOB-55472)
-
-== deviceConnect license configuration for new Standalone deployments
-
-New deviceConnect installations require an additional license configuration step before deviceConnect can initialize. Existing installations require no changes.
-
-// Source: 2026-10-02.adoc (KOB-55058)
-// REVIEWER NOTE (KOB-55058): Confirm whether the Standalone installer sets License.Valid=true for new
-// host machines. If it does, remove this entry.
+// Source: 2026-10-09.adoc (KOB-52796)
 
 == Component versions
 
