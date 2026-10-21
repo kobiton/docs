@@ -52,6 +52,22 @@ The path form you can use depends on how the app was signed:
 | Must be set to `true`. The `./` form is not available.
 |===
 
+== iOS simulators
+
+The `kobiton file list`, `kobiton file push`, and `kobiton file pull` commands also work on iOS simulators. Use the same `@<bundle>:<container>/<path>` path syntax as on a real iOS device.
+
+On a simulator, the commands can only access files inside the app's own container. The app must be installed on the simulator.
+
+// REVIEWER NOTE:
+// Source: KOB-55441 (Released). Evidence: Jira Testing Notes and Release Notes fields, QA comments.
+// Open questions before publishing:
+// - Does the UIFileSharingEnabled requirement and the signing-certificate table above apply to simulators? Not stated in Jira.
+// - Jira Testing Notes say a push into a missing folder creates it on a simulator, and that
+//   '@<bundle>:/Documents/<path>' is treated the same as '@<bundle>:Documents/<path>'. QA did not
+//   explicitly confirm these, so they are not documented here.
+// - The parent epic (iOS simulator support) is still In Progress in Jira. Confirm iOS simulators are
+//   customer-available before publishing.
+
 == Examples by app
 
 The following apps are commonly used to verify file sharing. The `--udid` and session-context arguments are omitted for brevity.
