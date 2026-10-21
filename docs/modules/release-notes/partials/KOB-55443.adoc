@@ -1,0 +1,20 @@
+// Release-note partial: KOB-55443
+// Type: Bug | Component: Emulator/Simulator | Jira status: Released | No fix version set in Jira
+// Drafted by Robot Ranch (Town Crier). Requires docs-team review before publishing.
+//
+// REVIEWER NOTES:
+// - Source: Jira description, impact and acceptance fields, and the QA verification comment (TEST PASSED
+//   on iPhone and iPad simulators, two iOS and Xcode versions, default and Appium runtimes).
+// - The Jira Release Notes field includes the customer-facing Release Email.
+// - The refusal message is quoted verbatim from the QA-verified session-start reply.
+// - Confirm iOS simulators are customer-available before publishing. The parent epic for iOS simulator
+//   support is still In Progress, and the 2026-08-07 release notes removed a simulator fix because
+//   simulators were not then a supported customer surface.
+// - Confirm the target release page. The release comment lists deviceConnect 2610.210259.0 as a bulk
+//   update and says not all builds may apply to this ticket.
+// - Intentionally omitted: QA shows a refused start still returns HTTP 500 and is still recorded as a
+//   terminated session, so this entry makes no claim about status codes or session records.
+
+== iOS simulators
+
+- Fixed an issue where automation sessions that request Safari (`browserName: Safari`) on an iOS simulator failed with an internal error that did not state the cause. Kobiton now refuses these sessions at start with the message `Web testing is not supported on iOS simulators. Please use a real iOS device.` The simulator stays available for other sessions. To run web tests, use a real iOS device.
