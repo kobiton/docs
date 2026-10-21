@@ -1,0 +1,18 @@
+== iOS simulators
+
+* Fixed an issue where restarting an iOS simulator sometimes left it shut down and *Offline*. This affected restarts from *Restart* in Kobiton Portal and from the Kobiton CLI `device restart` command. The simulator stayed unavailable until someone started it again on the host machine. A restarted iOS simulator now comes back *Online* with the same UDID.
+
+// Source: KOB-55438 (Jira, Released). Bug, component: Emulator/Simulator.
+// Jira Release Notes field includes "Release Email (What's new/fixed, customer-facing release notes)".
+// REVIEWER NOTE (KOB-55438): The Jira release comment lists deviceConnect 2610.210259.0
+// (release label 2610.21). The comment is a bulk update and states that not all listed builds
+// may apply to this ticket. No fix version is set. Confirm the release page for this entry.
+// REVIEWER NOTE (KOB-55438): The 2026-08-07 release page records a manager decision not to
+// advertise fixes for simulator surfaces without active customer usage. The parent epic for iOS
+// simulator support is still In Progress in Jira. Confirm that iOS simulators are available to
+// customers in this release before you publish. If they are not, drop this entry.
+// REVIEWER NOTE (KOB-55438): QA verified the fix on iPhone and iPad simulators (iOS 16.4 to 27.0)
+// with Portal and CLI restarts. Real devices are out of scope and were regression-checked only.
+// Restarting a simulator that is already Offline is still refused, which is unchanged behavior.
+// REVIEWER NOTE (KOB-55438): The Jira Release Notes field also selects "Support Notes (Internal
+// only)". Route any support note through internal channels, not this page.
