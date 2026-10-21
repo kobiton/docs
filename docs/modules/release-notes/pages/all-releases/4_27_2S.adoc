@@ -1,0 +1,310 @@
+= Standalone 4.27.2S
+
+// KOB-55635. Sources: the Cloud release notes 2026-09-25, 2026-10-02, 2026-10-09, and 2026-10-16;
+// KOB-55338 (backup and restore); KOB-55463 (rollback).
+// Scope: items released after 4.27.0S, cut off at Gigacap 2610.14, deviceConnect 2610.15, and
+// Portal 2610.19. The Cloud pages end at Portal 2610.15, deviceConnect 2610.15, and Gigacap 2610.14.
+// Per the ticket, Jira was not searched for Portal items between 2610.15 and 2610.19.
+//
+// Excluded as already shipped in 4.27.0S: Device Utilization report (KOB-54817), the Max Parallel
+// Tests tab and All machines row in Device Management.
+// Excluded as Cloud and Hybrid only: Android emulator support (API operations, CLI app install,
+// Device Bundles, `virtual_devices` in `GET /v2/devices`). Virtual devices are not yet supported on
+// Standalone (manual-testing:start-a-virtual-session.adoc).
+
+_October 21, 2026_
+
+== Back up and restore Kobiton data
+
+Standalone deployments can back up a server's data without taking the deployment offline, then restore it onto a target server that takes over if the primary server fails.
+
+- A backup includes the Standalone databases and file storage, such as session videos, screenshots, and apps. The backup excludes the Standalone license file and SSL certificate.
+- Backups write to a local directory or to a remote destination over SSH.
+- Restoring overwrites any existing Standalone data on the target server.
+
+For the complete procedure, refer to the Kobiton Admin Docs. If you need access, please contact your Account Manager.
+
+// Source: KOB-55338 description and comments (2026-09-30 through 2026-10-12).
+// 4.27.1S minimum version dropped at review: 4.27.1S was never released. Known backup and restore
+// bugs omitted at review.
+// Trimmed to the main idea at review; details belong in admin-docs.
+// Admin Docs reference wording ratified by Erin on PR #798 (2026-10-21); no hyperlink since the
+// Admin Docs are password-protected.
+
+== Roll back to an earlier version
+
+Standalone servers can roll back to an earlier version with `kobictl install`.
+
+- Both the current version and the target version must be 4.27.0S or later.
+- Portal is unavailable during the rollback.
+
+For the complete procedure, refer to the Kobiton Admin Docs. If you need access, please contact your Account Manager.
+
+// Source: KOB-55463 description and the 2026-10-09 gem65 test results comment.
+// Rollback confirmed self-service at review; engineering questions on KOB-55463 answered.
+// Trimmed to the main idea at review; details belong in admin-docs.
+// Admin Docs reference wording ratified by Erin on PR #798 (2026-10-21); no hyperlink since the
+// Admin Docs are password-protected.
+
+== virtualUSB expands with broader iOS support, Linux CLI, and easier configuration
+
+virtualUSB connects your lab devices to your local development environment, making them available to development and debugging tools such as ADB and Xcode.
+
+This release expands virtualUSB with support for newer iOS versions, a new Linux CLI, centralized configuration in Kobiton Portal, and AI-assisted debugging through the Kobiton MCP server.
+
+=== Expanded iOS support
+
+virtualUSB now supports devices running iOS 17.4 and later, significantly expanding support for newer iOS devices. The new version supports iOS 15–16 and iOS 17.4–27.
+
+If you need to use virtualUSB with devices running iOS 12 through 14, contact Kobiton Support.
+
+=== New virtualUSB CLI for Linux
+
+virtualUSB now supports Linux through a command-line interface (CLI). Linux users can connect Android and iOS devices to their local environment for testing, debugging, and other device-level interactions. The CLI supports Debian-based and Red Hat-based Linux distributions.
+
+=== Manage virtualUSB hosts from Kobiton Portal
+
+Org Admins can now configure and manage virtualUSB for their host machines directly from *Device Management* in Kobiton Portal. Previously, virtualUSB configuration required updating the `dc.ini` file individually on each host.
+
+*Device Management* now provides a central place to:
+
+- Enable or disable virtualUSB for individual host machines. On Standalone deployments, each enabled host machine requires a *Connection Address*.
+- Filter the host machine list to show only virtualUSB-enabled hosts, which display a *virtualUSB* badge.
+
+For details, see xref:device-lab-management:deviceConnect/enable-virtualusb-for-host-machines.adoc[].
+
+=== AI-assisted debugging with virtualUSB
+
+The Kobiton MCP server now supports AI-assisted debugging over virtualUSB. Describe an issue to your AI assistant, and it can connect to the device, install your app, reproduce the issue, and collect device logs. Supported on macOS and Windows.
+
+Org Admins can also check host machine availability and configure virtualUSB and Max Parallel Tests through an AI coding assistant connected to the Kobiton MCP server.
+
+For details, see xref:debugging:set-up-virtualusb.adoc[].
+
+// Source: 2026-10-09.adoc (KOB-55371, KOB-52820, KOB-52679, KOB-55165, KOB-55306, KOB-55305, KOB-54596)
+// virtualUSB confirmed available on Standalone at review.
+
+== deviceConnect license configuration
+
+New deviceConnect installations require an additional license configuration step before deviceConnect can initialize. Existing installations require no changes.
+
+// Source: 2026-10-02.adoc (KOB-55058).
+// Confirmed at review: the license configuration step shipped with deviceConnect 2610.1, which is
+// after 4.27.0S (2609.11). The entry stays in 4.27.2S.
+// Promoted out of the virtualUSB section per Erin's review on PR #798 (2026-10-21); the license
+// step is not virtualUSB-related.
+
+== iPhone 18 and iOS 27.2 support
+
+- Added support for iPhone 18 Pro and iPhone 18 Pro Max.
+- Added support for devices running iOS and iPadOS 27.2.
+- Kobiton-managed passcodes support devices running iOS 27.
+
+Apple's iOS 27, macOS 27, and Xcode 27 releases introduce compatibility considerations for device labs hosting devices on iOS 12, 13, or 14. If your device lab includes these devices, contact Kobiton Support for installation and configuration guidance.
+
+// Source: 2026-09-25.adoc (KOB-55177), 2026-10-02.adoc (KOB-55335, KOB-55316, KOB-55195)
+
+== Manual session controls and reliability
+
+=== Fold and unfold Android devices
+
+Manual sessions on supported foldable Android devices include *Fold device* and *Unfold device* controls on the session toolbar. The session stream and *Inspector* adjust to the active screen.
+
+- Session Explorer records each fold or unfold action as a timeline step, with a screenshot of the device in its posture. Touch and swipe markers stay aligned with the captured screen.
+- Book-style foldable devices, such as Galaxy Z Fold and Pixel Fold, are supported. Flip-style devices, such as Galaxy Z Flip, are not supported.
+- The device keeps its folded or unfolded state between sessions.
+
+// Source: 2026-10-16.adoc (KOB-55167, KOB-55174)
+
+=== Passcode entry for iOS
+
+iOS manual sessions help users enter device passcodes at the prompts for Apple Pay, Wallet, and the hidden apps folder.
+
+- When an iOS passcode screen appears, Kobiton Portal opens an *Apple Security Enablement* dialog, subtitled *Device Passcode*, beside the device screen.
+- Users manually enter the device passcode into the dialog. The *Entered on device indicator* shows how many digits the device has received.
+- Users select *Submit* in the dialog or press Enter to continue.
+- The Devices page includes a *Passcode* filter with *Supported* and *Not Supported* options. Supported devices display a passcode icon in card and list views.
+
+Additional passcode improvements in 4.27.2S, for organizations with Kobiton-managed passcodes enabled:
+
+- iOS devices with custom numeric passcodes unlock when the *Power* button locks and unlocks the screen in a manual session. Previously, the device could prompt for the passcode on its own screen.
+- iPad passcodes persist when the device language changes during a session.
+
+// Source: 2026-10-16.adoc (KOB-53003, KOB-53785, KOB-53007);
+// 2026-09-25.adoc (KOB-54991, KOB-55182, KOB-55053) for the device-passcode fixes.
+
+=== Video reliability
+
+Manual sessions attempt to restore the full video stream after a brief interruption to the live device screen. Previously, the session switched to lower-quality screenshots for the rest of the session.
+
+// Source: 2026-10-09.adoc (KOB-55153)
+
+=== App installation error messages
+
+When an app install fails in a manual session, Kobiton Portal displays the error reported by the device. For example, iOS signature verification failures display `ApplicationVerificationFailed` instead of an AS-500 error about Kobiton certificate signing.
+
+// Source: 2026-10-16.adoc (KOB-55419)
+
+== Session Explorer improvements
+
+=== Kobiton CLI session data
+
+Kobiton CLI sessions can appear in Session Explorer and Session Overview. To opt in, add `--capture` to `kobiton session create` with one or more data types, separated by commas.
+
+- `screenshots`, `view-trees`, and `metrics` add screenshots, view hierarchies, and device metrics to Session Explorer.
+- `user-action` adds each user action to the session timeline.
+- `video` and `logs` make the session video and device logs available in Session Overview.
+- Session Explorer is available for a CLI session only when the session captures at least one data type and runs at least one `kobiton webdriver get` or `kobiton webdriver post` command.
+
+For all data types, see xref:kobiton-cli:cli-commands.adoc#session-create-capture[Capture session data].
+
+// Source: KOB-52718, KOB-55503, KOB-55494, KOB-55504, KOB-55505 (entry removed from 2026-10-16.adoc in
+// PR #763 commit d1ef6fb as outdated; re-added at review). Behavior aligned with the current
+// kobiton-cli:cli-commands.adoc "Capture session data" section.
+// REVIEWER NOTE (KOB-52718): cli-commands.adoc notes that earlier testing found no visible
+// user-action artifact in Session Explorer for a CLI-only session. Confirm the timeline behavior
+// before publishing, or remove the user-action bullet.
+
+=== Sessions without recorded steps
+
+Sessions without recorded steps open on *Session Overview*. The *Explorer* tab displays "Explorer is not available for this session." XCUITest sessions no longer show steps labeled `null` without screenshots.
+
+// Source: 2026-10-16.adoc (KOB-55471, KOB-55496)
+
+== Appium automation updates
+
+=== UiAutomator idle wait
+
+Appium sessions on Android devices support the `appium:waitForIdleTimeout` capability, which controls how long UiAutomator waits for an app to become idle before searching for elements.
+
+For details, see xref:automation-testing:capabilities/available-capabilities.adoc#_waitForIdleTimeout[waitForIdleTimeout].
+
+// Source: 2026-10-16.adoc (KOB-54485)
+
+=== Element inspection and interaction
+
+- Automation sessions on iOS and iPadOS can interact with system alerts, such as the Location Services alert. Previously, these commands could fail with `No active application elements`.
+- On iOS 26, scripts can locate and select the buttons on location permission alerts, including *Allow Once*, *Allow While Using App*, and *Don't Allow*.
+- *Appium Inspector* shows the correct XML hierarchy for each step of iPad automation sessions started without an app, such as a Safari session.
+- On Android 13 and later, screens that contain web views show their complete XML hierarchy, so element searches and interactions succeed.
+- The WebDriver Get Element Attribute command returns `null` when an element does not have the requested attribute. Previously, it returned an error.
+- Appium sessions support the `mobile: setText` command on Android and iOS. Previously, it returned a "not implemented" error.
+
+// Source: 2026-10-02.adoc (KOB-55247, KOB-54432),
+// 2026-10-16.adoc (KOB-55464, KOB-55355, KOB-55507, KOB-55394)
+
+=== Java 17 for generated scripts
+
+- Appium scripts generated for Java use Java 17, Appium Java client 10.x, and Selenium 4. JDK 17 or later is required to build and run them.
+- Scripts generated from Test Cases created before 4.27.2S do not support Java 17. To use Java 17, create a new Test Case.
+
+// Source: 2026-10-02.adoc (KOB-54691)
+// REVIEWER NOTE (KOB-54691): The Cloud page asks to confirm Standalone availability separately.
+
+== Appium AI organization settings
+
+Users with the *ADMIN* role or the `org_setting.modify` permission can configure Appium AI for the organization under *Settings* > *AI Settings*. New Appium sessions use the organization's LLM provider and locator settings without extra capabilities in test scripts.
+
+- Settings include an enable/disable toggle, API format, base URL, API key, model, locator strategy, request timeout, and retry interval.
+- `kobiton:*` desired capabilities override most organization settings for a single session.
+- Changes apply to new sessions. Organizations without saved settings continue to use the host defaults.
+- Appium AI is in Beta and is available on private and local devices only.
+
+For details, see xref:automation-testing:appium-ai/configure-appium-ai-org-settings.adoc[Configure Appium AI settings for your organization].
+
+// Source: 2026-10-16.adoc (KOB-54326, KOB-53282, KOB-55121)
+
+== Session validations and automation updates in the Kobiton MCP server
+
+The Kobiton MCP server provides AI assistants with more detailed session validation results, improved search results, and updates to interactive automation.
+
+- *Session validations:* AI assistants can retrieve accessibility, crash, response time, blocker, element selection, and flexCorrect findings individually. Results support pagination, and accessibility findings can be filtered by issue type. Accessibility summaries provide finding counts and scan details.
+- *Validation progress:* AI assistants can distinguish between in-progress scans and completed results for accessibility, crash, and response time validations.
+- *Search results:* Device searches report the total number of matching devices. Pagination helps manage results for test cases, test suites, test runs, and user input events.
+- *UI inspection:* The `automate` plugin 1.15.0 uses a compact UI tree by default during interactive automation, with full page source available on request.
+- *Credential security:* The `/automate:setup` command writes Kobiton credentials without passing the API key through the AI assistant. If a setup conversation from an earlier plugin version was shared, rotate that API key in *Settings > API Keys*.
+
+For details, see xref:ai:mcp/ai-plugin-mcp-ref.adoc[Kobiton AI plugin and tools reference].
+
+// Source: 2026-09-25.adoc (KOB-55095), 2026-10-16.adoc (KOB-55265),
+// 2026-10-09.adoc (KOB-55307), 2026-10-16.adoc (KOB-55269)
+
+== New Kobiton API endpoints and session-detail access
+
+=== Reset stuck device states
+
+`POST /v2/execute-admin-tasks` accepts a new `RESET_DEVICE_STATE` task. Org Admins can reset the recorded state of devices that remain in an incorrect state, such as a device that appears in use after its session has ended. The reset does not end active sessions or cancel reservations.
+
+// Source: 2026-10-16.adoc (KOB-55322)
+
+=== List installed apps on devices
+
+`GET /v2/devices/{deviceId}/installed-apps` and `GET /v2/devices/udid/{udid}/installed-apps` return the apps installed on a private device, including apps installed manually or through mobile device management. Results include each app's bundle ID, name, version, and build version.
+
+// Source: 2026-10-16.adoc (KOB-55366)
+
+=== `max_parallel_tests` in `/v2/machines`
+
+`GET /v2/machines` returns each host machine's `max_parallel_tests` setting.
+
+// Source: 2026-10-09.adoc (KOB-52819)
+
+=== Running XCUITest session details
+
+`GET /v1/sessions/{id}` and `GET /v2/sessions/{id}` return session details while XCUITest native framework sessions are running. Previously, they returned HTTP 500 until the test report and video were available.
+
+// Source: 2026-10-16.adoc (KOB-55472)
+
+== Host machine search in Device Management
+
+The *Device Management* search field accepts host machine names in addition to IP addresses.
+
+// Source: 2026-10-09.adoc (KOB-52678). The Max Parallel Tests tab shipped in 4.27.0S.
+
+== Reliability improvements for iOS, iPadOS, and Android devices
+
+=== Android devices
+
+Devices running Android 11 and later initialize and become available for sessions. Previously, they could fail to initialize.
+
+// Source: 2026-09-25.adoc (KOB-55087)
+
+=== iOS and iPadOS devices
+
+- Developer Disk Image (DDI) mounting no longer fails intermittently on newer iOS devices, including iPhone 18 models on iOS 26.4 and later, or when a DDI is already mounted.
+- Device cleanup resets time zone, language, and HTTP proxy settings on devices with newer iOS and iPadOS Settings layouts.
+- When an XCTest runner fails to start, the device health check reports the runner error instead of an unrelated passcode error. The device keeps its passcode when the failure is unrelated to passcode configuration.
+- iOS devices that stop reporting web contexts recover when the next session starts, without a device reboot. This applies to Safari automation, Appium `autoWebview`, and other operations that use web contexts.
+
+// Source: 2026-10-16.adoc (KOB-55444, KOB-50523, KOB-55245),
+// 2026-09-25.adoc (KOB-55040)
+
+=== App installation on host machines
+
+App installs on iOS and Android devices no longer leave unneeded files in temporary storage on host machines, which could cause installation failures from insufficient disk space.
+
+// Source: 2026-09-25.adoc (KOB-55104)
+
+== Analytics reports updates
+
+- The *Parallel Sessions* and *Retained Devices* reports count every hour a device was retained, including retains that have ended or expired. Previously, these reports could undercount retained devices.
+- CSV exports of *Parallel Sessions* and *Sessions per Day* list one row per day in chronological order.
+- *Device Utilization* exports are sorted by *Sessions*, with the most-used devices first.
+- PNG exports of *Parallel Sessions* and *Sessions per Day* include the report's bar chart.
+
+// Source: 2026-09-25.adoc (KOB-55244), 2026-10-09.adoc (KOB-55321)
+
+== Simplified sign-in for SSO-only users
+
+Users with *SSO Only* enabled go directly to their organization's SSO sign-in after entering their email address or username. Portal no longer displays password sign-in options for these users, even when SSO is not enforced for the rest of the organization.
+
+// Source: 2026-10-09.adoc (KOB-52796)
+
+== Component versions
+
+* Portal 2610.19
+* deviceConnect 2610.15
+* Gigacap 2610.14
+
+// REVIEWER NOTE: Versions are the ticket's cutoff versions. Confirm the deviceShare and ADB versions,
+// which 4.27.0S listed.
