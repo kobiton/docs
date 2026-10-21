@@ -1,0 +1,8 @@
+// Source: KOB-55557 (Story, Wait For Deployment, Release Notes field populated, Release Email target selected)
+// Applies to: Cloud. Turbo Test Execution only. Target release date needs confirmation (no fix version set).
+// EDITOR: Jira "Bug Type" is set to Internal while the release targets include Release Email. Confirm customer-facing publication with the ticket owner.
+// EDITOR: The Release Notes field also mentions health and readiness reporting. Omitted here as an operational change with no customer action.
+
+=== Turbo Test Execution
+
+* *Session reliability:* Fixed an issue where running Turbo Test sessions could end unexpectedly when a scheduled background authentication renewal failed. The renewal now retries automatically, so running Turbo Test sessions continue while the authentication service is briefly unavailable.
