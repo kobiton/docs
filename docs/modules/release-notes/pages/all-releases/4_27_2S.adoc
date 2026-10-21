@@ -40,19 +40,44 @@ Standalone servers can roll back to an earlier version with `kobictl install`.
 // Rollback confirmed self-service at review; engineering questions on KOB-55463 answered.
 // Trimmed to the main idea at review; details belong in admin-docs.
 
-== virtualUSB updates
+== virtualUSB expands with broader iOS support, Linux CLI, and easier configuration
 
-virtualUSB connects your lab devices to your local development environment for tools such as ADB and Xcode. virtualUSB requires a subscription that includes the feature.
+virtualUSB connects your lab devices to your local development environment, making them available to development and debugging tools such as ADB and Xcode.
 
-- virtualUSB supports devices running iOS 15 and 16, and iOS 17.4 through 27. For devices running iOS 12 through 14, contact Kobiton Support.
-- virtualUSB supports Linux through a command-line interface, available for Debian-based and Red Hat-based distributions.
-- Org Admins can enable or disable virtualUSB for each host machine from *Device Management*. On Standalone deployments, each enabled host machine requires a *Connection Address*. Editing `dc.ini` on each host machine is no longer required.
-- *Device Management* can filter to show only virtualUSB-enabled host machines, which display a *virtualUSB* badge.
-- An AI assistant connected to the Kobiton MCP server can debug a device over virtualUSB: connect to the device, install your app, reproduce an issue, and retrieve device logs. This feature supports macOS and Windows.
-- Org Admins can check host machine availability and configure virtualUSB and Max Parallel Tests from an AI assistant connected to the Kobiton MCP server.
-- New deviceConnect installations require an additional license configuration step before deviceConnect can initialize. Existing installations require no changes.
+This release expands virtualUSB with support for newer iOS versions, a new Linux CLI, centralized configuration in Kobiton Portal, and AI-assisted debugging through the Kobiton MCP server.
 
-For details, see xref:debugging:set-up-virtualusb.adoc[] and xref:device-lab-management:deviceConnect/enable-virtualusb-for-host-machines.adoc[].
+=== Expanded iOS support
+
+virtualUSB now supports devices running iOS 17.4 and later, significantly expanding support for newer iOS devices. The new version supports iOS 15–16 and iOS 17.4–27.
+
+If you need to use virtualUSB with devices running iOS 12 through 14, contact Kobiton Support.
+
+=== New virtualUSB CLI for Linux
+
+virtualUSB now supports Linux through a command-line interface (CLI). Linux users can connect Android and iOS devices to their local environment for testing, debugging, and other device-level interactions. The CLI supports Debian-based and Red Hat-based Linux distributions.
+
+=== Manage virtualUSB hosts from Kobiton Portal
+
+Org Admins can now configure and manage virtualUSB for their host machines directly from *Device Management* in Kobiton Portal. Previously, virtualUSB configuration required updating the `dc.ini` file individually on each host.
+
+*Device Management* now provides a central place to:
+
+- Enable or disable virtualUSB for individual host machines. On Standalone deployments, each enabled host machine requires a *Connection Address*.
+- Filter the host machine list to show only virtualUSB-enabled hosts, which display a *virtualUSB* badge.
+
+For details, see xref:device-lab-management:deviceConnect/enable-virtualusb-for-host-machines.adoc[].
+
+=== AI-assisted debugging with virtualUSB
+
+The Kobiton MCP server now supports AI-assisted debugging over virtualUSB. Describe an issue to your AI assistant, and it can connect to the device, install your app, reproduce the issue, and collect device logs. Supported on macOS and Windows.
+
+Org Admins can also check host machine availability and configure virtualUSB and Max Parallel Tests through an AI coding assistant connected to the Kobiton MCP server.
+
+For details, see xref:debugging:set-up-virtualusb.adoc[].
+
+=== deviceConnect license configuration
+
+New deviceConnect installations require an additional license configuration step before deviceConnect can initialize. Existing installations require no changes.
 
 // Source: 2026-10-09.adoc (KOB-55371, KOB-52820, KOB-52679, KOB-55165, KOB-55306, KOB-55305, KOB-54596)
 // virtualUSB confirmed available on Standalone at review.
@@ -79,7 +104,6 @@ Manual sessions on supported foldable Android devices include *Fold device* and 
 - Session Explorer records each fold or unfold action as a timeline step, with a screenshot of the device in its posture. Touch and swipe markers stay aligned with the captured screen.
 - Book-style foldable devices, such as Galaxy Z Fold and Pixel Fold, are supported. Flip-style devices, such as Galaxy Z Flip, are not supported.
 - The device keeps its folded or unfolded state between sessions.
-- Fold and unfold actions are not supported during automated testing.
 
 // Source: 2026-10-16.adoc (KOB-55167, KOB-55174)
 
@@ -92,10 +116,9 @@ iOS manual sessions help users enter device passcodes at the prompts for Apple P
 - Users select *Submit* in the dialog or press Enter to continue.
 - The Devices page includes a *Passcode* filter with *Supported* and *Not Supported* options. Supported devices display a passcode icon in card and list views.
 
-Additional passcode improvements in 4.27.2S, for organizations with passcode mode enabled:
+Additional passcode improvements in 4.27.2S, for organizations with Kobiton-managed passcodes enabled:
 
 - iOS devices with custom numeric passcodes unlock when the *Power* button locks and unlocks the screen in a manual session. Previously, the device could prompt for the passcode on its own screen.
-- Devices stay protected by a passcode, and compliant with mobile device management passcode requirements, after session cleanup.
 - iPad passcodes persist when the device language changes during a session.
 
 // Source: 2026-10-16.adoc (KOB-53003, KOB-53785, KOB-53007);
