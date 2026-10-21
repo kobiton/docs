@@ -2,7 +2,11 @@
 :navtitle: Hardware requirements for deviceConnect
 
 == Hardware requirements for deviceConnect
-deviceConnect requires an Apple silicon Mac mini - the *Mac mini host* - with the following minimum specs:
+deviceConnect runs on a Mac mini host or, for Android devices only, on a Linux host.
+
+=== Mac mini host
+
+The Mac mini host must be an Apple silicon Mac mini with the following minimum specs:
 
 * macOS Sonoma 14 or later (including Tahoe)
 * At least 24GB RAM
@@ -11,7 +15,32 @@ deviceConnect requires an Apple silicon Mac mini - the *Mac mini host* - with th
 [IMPORTANT]
 The Mac mini host must be dedicated to hosting Kobiton and devices. Do not install any additional software not mentioned in install documentation.
 
+=== Linux host
+
+A Linux host supports Android devices only. iOS devices are not supported on a Linux host.
+
+The Linux host requires:
+
+* An x64 processor
+* A Debian-based distribution, such as Ubuntu, for the `.deb` package, or a Red Hat-based distribution, such as Fedora or Rocky Linux, for the `.rpm` package
+
+// REVIEWER NOTE (KOB-55320): Jira lists Ubuntu, Fedora, and Rocky as target distributions.
+// QA tested Ubuntu 24.04 and RHEL 9.8, and the final supported distribution list was still
+// pending developer confirmation in the latest QA comment. Confirm the supported distributions
+// and versions before publishing.
+// REVIEWER NOTE (KOB-55320): Jira does not state minimum RAM, disk, or device-count limits for
+// a Linux host. Add them here, or confirm whether the Mac mini values above apply.
+
+[IMPORTANT]
+deviceConnect and GigaCap cannot be installed on the same Linux host.
+
+=== Connect devices
+
 A Mac mini workstation can host up to 15 mobile devices. Use one of the following Cambrionix hub models to connect mobile devices to the workstation:
+
+// REVIEWER NOTE (KOB-55320): Jira does not confirm which Cambrionix hub models, if any, are
+// supported on a Linux host. Hub support on Linux was an open item in QA. Confirm before
+// publishing, and state Linux hub support here if it applies.
 
 * link:https://www.cambrionix.com/products/powerpad15s-pp15s-industrial-usb-hub[PowerPad15S,window=read-later]
 * link:https://www.cambrionix.com/products/supersync15/[SuperSync15,window=read-later]
