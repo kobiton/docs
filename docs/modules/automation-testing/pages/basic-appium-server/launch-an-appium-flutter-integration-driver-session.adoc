@@ -1,34 +1,30 @@
 = Launch an Appium Flutter Integration driver session on Kobiton (Beta)
 :navtitle: Launch an Appium Flutter Integration driver session (Beta)
 
-NOTE: The https://github.com/AppiumTestDistribution/appium-flutter-integration-driver[Appium Flutter Integration Driver] is not the same as the https://github.com/appium/appium-flutter-driver[Appium Flutter Driver]. To launch a session with the Appium Flutter Driver, see xref:basic-appium-server/launch-an-appium-flutter-driver-session.adoc[].
-
-Learn how to perform automation testing using the Appium Flutter Integration driver on Kobiton devices.
+NOTE: The https://github.com/AppiumTestDistribution/appium-flutter-integration-driver[Appium Flutter Integration Driver] is not the same as the https://github.com/appium/appium-flutter-driver[Appium Flutter Driver]. To launch a session with the Appium Flutter driver, see xref:basic-appium-server/launch-an-appium-flutter-driver-session.adoc[].
 
 == Prerequisites
 
 * Familiarity with creating, signing, and building https://docs.flutter.dev/[Flutter apps].
 * Familiarity with writing and running Appium tests.
-* For Java (TestNG or JUnit test scripts), Appium Java Client *version 9.3 or later* is required.
+* Java TestNG or JUnit test scripts require Appium Java Client *version 9.3 or later*.
 
-== Preprocess your Flutter App
+== Preprocess the Flutter app
 
-Follow the https://github.com/AppiumTestDistribution/appium-flutter-integration-driver?tab=readme-ov-file#prepare-the-app-with-flutter-integration-server[Prepare the app with Flutter Integration Server] section in the Appium Flutter Integration driver's GitHub repository to prepare your Flutter app.
+Follow the https://github.com/AppiumTestDistribution/appium-flutter-integration-driver?tab=readme-ov-file#prepare-the-app-with-flutter-integration-server[Prepare the app with Flutter Integration Server] section in the Flutter Integration driver's GitHub repository to prepare the Flutter app.
 
-== Build your Flutter App
+== Build the Flutter app
 
-After you have enabled the Flutter Integration driver, build your app for testing.
+Open the Flutter project in an IDE, or open a terminal in the project root.
 
-Open your Flutter project in your favorite IDE or open a terminal in the root directory of your Flutter project.
+Choose a device type and run the corresponding build command.
 
-Choose a device type (Android emulator, Android real device, or iOS real device) to build your app and run one of the following commands.
+The build commands assume:
 
-The build commands below assume that:
-
-* You have followed the instructions to prepare your app with Flutter Integration Server, and:
-** added the `integration_test` folder under the project root folder.
-** created the file `appium_test.dart` under `integration_test`.
-* The `gradlew` file is under `android/` of your project root folder (for building an Android app).
+* The app includes:
+** an `integration_test` folder under the project root.
+** an `appium_test.dart` file under `integration_test`.
+* The `gradlew` file is under `android/` in the project root (for Android builds).
 
 [tabs]
 ======
@@ -62,7 +58,7 @@ flutter build ipa --release integration_test/appium_test.dart
 --
 ======
 
-The corresponding output file path of the above commands:
+Output file paths:
 
 [tabs]
 ======
@@ -85,23 +81,21 @@ iOS real device::
 --
 ======
 
-== Upload your Flutter App
+== Upload the Flutter app
 
-Upload the Flutter app from the output folder to the Kobiton App Repository or a cloud storage of your choice.
+Upload the Flutter app from the output folder to the Kobiton App Repository or another cloud storage service.
 
-== Configure Appium Capabilities in your test script
+== Configure Appium capabilities
 
-The Appium Flutter Integration driver is supported only via our basic Appium 2 server functionality. Follow xref:basic-appium-server/launch-a-basic-appium-2-session.adoc[this document] to prepare your test script for running a basic Appium 2 server session on Kobiton devices.
+Only the basic Appium 2 server supports the Flutter Integration driver. Follow xref:basic-appium-server/launch-a-basic-appium-2-session.adoc[Launch a basic Appium 2 session] to prepare the test script for a basic Appium 2 server session on Kobiton devices.
 
-Then, alter the following capabilities in your test script:
+Update these capabilities in the test script:
 
-* Change the value of `'appium:automationName'` to `'FlutterIntegration'` to use the Appium Flutter Integration driver.
-* Add `'kobiton:app'` and input either the URL or the App Repo ID of your Flutter app:
+* Change the value of `'appium:automationName'` to `'FlutterIntegration'` to use the Flutter Integration driver.
+* Add `'kobiton:app'` and input either the URL or the App Repo ID of the Flutter app:
 ** URL example: `'https://kobiton-us-east.s3.amazonaws.com/.../flutter_app.apk'`
 ** App Repo ID example: `'kobiton-store:v1'`
-* Add `'appium:appPackage'` for Android or `'appium:bundleId'` for iOS. These capabilities are required for launching your Flutter app after installation.
-
-See below for full examples.
+* Add `'appium:appPackage'` for Android or `'appium:bundleId'` for iOS. These capabilities are required for launching the Flutter app after installation.
 
 Example Android capabilities:
 
@@ -116,8 +110,8 @@ const capabilities = {
     'appium:appPackage': 'com.example.my_app', // required
     'appium:appActivity': 'com.example.my_app.MainActivity', // optional
 
-    'appium:automationName': 'FlutterIntegration', // required to use Appium Flutter Integration Driver
-    'kobiton:runtime':'appium', // required to use Basic Appium Server
+    'appium:automationName': 'FlutterIntegration', // required to use the Flutter Integration driver
+    'kobiton:runtime':'appium', // required to use the basic Appium 2 server
 }
 ----
 
@@ -133,13 +127,11 @@ const capabilities = {
     'appium:fullReset': true, // recommended for successive test runs
     'appium:bundleId': 'com.example.myApp', // required
 
-    'appium:automationName': 'FlutterIntegration', // required to use Appium Flutter Integration Driver
-    'kobiton:runtime':'appium', // required to use Basic Appium Server
+    'appium:automationName': 'FlutterIntegration', // required to use the Flutter Integration driver
+    'kobiton:runtime':'appium', // required to use the basic Appium 2 server
 }
 ----
 
-Now, you are ready to run your script.
-
 == Limitations
 
-* All limitations for basic Appium 2 sessions apply (see xref:basic-appium-server/launch-a-basic-appium-2-session.adoc#_noteslimitations[here]).
+* All limitations for basic Appium 2 sessions apply. See xref:basic-appium-server/launch-a-basic-appium-2-session.adoc#_noteslimitations[Notes and limitations].
