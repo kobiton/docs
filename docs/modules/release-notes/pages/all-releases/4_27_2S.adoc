@@ -23,8 +23,8 @@ Standalone deployments can back up a server's data without taking the deployment
 - Restoring overwrites any existing Standalone data on the target server.
 
 // Source: KOB-55338 description and comments (2026-09-30 through 2026-10-12).
-// Minimum version 4.27.1S stated at review: backup and restore need the Elasticsearch snapshot mount
-// added in 4.27.1S. Known backup and restore bugs omitted at review.
+// 4.27.1S minimum version dropped at review: 4.27.1S was never released. Known backup and restore
+// bugs omitted at review.
 // Trimmed to the main idea at review; details belong in admin-docs.
 // REVIEWER NOTE (KOB-55338): Link to the admin-docs backup and restore runbook once it is published.
 // The 4.27.0S notes intentionally omitted admin-docs links. Confirm the same rule applies here.
@@ -48,8 +48,8 @@ virtualUSB connects your lab devices to your local development environment for t
 - virtualUSB supports Linux through a command-line interface, available for Debian-based and Red Hat-based distributions.
 - Org Admins can enable or disable virtualUSB for each host machine from *Device Management*. On Standalone deployments, each enabled host machine requires a *Connection Address*. Editing `dc.ini` on each host machine is no longer required.
 - *Device Management* can filter to show only virtualUSB-enabled host machines, which display a *virtualUSB* badge.
-- An AI assistant connected to the Kobiton MCP server can debug a device over virtualUSB: connect to the device, install your app, reproduce an issue, and retrieve device logs. Supported on macOS and Windows.
-- The `listHostingMachines` and `configureHostingMachine` MCP tools let Org Admins check host machine availability and configure virtualUSB and Max Parallel Tests from an AI assistant.
+- An AI assistant connected to the Kobiton MCP server can debug a device over virtualUSB: connect to the device, install your app, reproduce an issue, and retrieve device logs. This feature supports macOS and Windows.
+- Org Admins can check host machine availability and configure virtualUSB and Max Parallel Tests from an AI assistant connected to the Kobiton MCP server.
 - New deviceConnect installations require an additional license configuration step before deviceConnect can initialize. Existing installations require no changes.
 
 For details, see xref:debugging:set-up-virtualusb.adoc[] and xref:device-lab-management:deviceConnect/enable-virtualusb-for-host-machines.adoc[].
@@ -85,14 +85,13 @@ Manual sessions on supported foldable Android devices include *Fold device* and 
 
 === Passcode entry for iOS
 
-iOS manual sessions accept device passcodes, including passcode prompts for Apple Pay, Wallet, and the hidden apps folder.
+iOS manual sessions help users enter device passcodes at the prompts for Apple Pay, Wallet, and the hidden apps folder.
 
-- When an iOS passcode screen appears, Kobiton Portal displays a keypad overlay. The overlay includes a keypad for manual entry and an *Auto-fill passcode* option that uses the device's configured passcode.
-- The *Passcode helper* menu on the session toolbar shows or hides the keypad and auto-fills the passcode.
-- The Devices page includes a *Passcode* filter with *Supported* and *Not Supported* options. Supported devices display a passcode icon in card and list views.
-- Passcode entry requires passcode (PIN) mode for your organization and a passcode configured on the device.
+- When an iOS passcode screen appears, Kobiton Portal opens an *Apple Security Enablement* dialog, subtitled *Device Passcode*, beside the device screen.
+- Users manually enter the device passcode into the dialog. The *Entered on device indicator* shows how many digits the device has received.
+- Users select *Submit* in the dialog or press Enter to continue.
 
-Additional passcode fixes in this release, for organizations with passcode mode enabled:
+Additional passcode improvements in 4.27.2S, for organizations with passcode mode enabled:
 
 - iOS devices with custom numeric passcodes unlock when the *Power* button locks and unlocks the screen in a manual session. Previously, the device could prompt for the passcode on its own screen.
 - Devices stay protected by a passcode, and compliant with mobile device management passcode requirements, after session cleanup.
@@ -103,7 +102,7 @@ Additional passcode fixes in this release, for organizations with passcode mode 
 
 === Video reliability
 
-Manual sessions restore the full video stream after a brief interruption to the live device screen. Previously, the session switched to lower-quality screenshots for the rest of the session.
+Manual sessions attempt to restore the full video stream after a brief interruption to the live device screen. Previously, the session switched to lower-quality screenshots for the rest of the session.
 
 // Source: 2026-10-09.adoc (KOB-55153)
 
@@ -113,7 +112,7 @@ When an app install fails in a manual session, Kobiton Portal displays the error
 
 // Source: 2026-10-16.adoc (KOB-55419)
 
-== Session Explorer expands to Kobiton CLI sessions
+== Session Explorer improvements
 
 === Kobiton CLI session data
 
@@ -241,18 +240,23 @@ The *Device Management* search field accepts host machine names in addition to I
 
 Devices running Android 11 and later initialize and become available for sessions. Previously, they could fail to initialize.
 
-// Source: 2026-09-25.adoc (KOB-55087, KOB-55104)
+// Source: 2026-09-25.adoc (KOB-55087)
 
 === iOS and iPadOS devices
 
 - Developer Disk Image (DDI) mounting no longer fails intermittently on newer iOS devices, including iPhone 18 models on iOS 26.4 and later, or when a DDI is already mounted.
 - Device cleanup resets time zone, language, and HTTP proxy settings on devices with newer iOS and iPadOS Settings layouts.
 - When an XCTest runner fails to start, the device health check reports the runner error instead of an unrelated passcode error. The device keeps its passcode when the failure is unrelated to passcode configuration.
-- App installs no longer leave unneeded files in temporary storage on host machines, which could cause installation failures from insufficient disk space.
 - iOS devices that stop reporting web contexts recover when the next session starts, without a device reboot. This applies to Safari automation, Appium `autoWebview`, and other operations that use web contexts.
 
 // Source: 2026-10-16.adoc (KOB-55444, KOB-50523, KOB-55245),
 // 2026-09-25.adoc (KOB-55040)
+
+=== App installation on host machines
+
+App installs on iOS and Android devices no longer leave unneeded files in temporary storage on host machines, which could cause installation failures from insufficient disk space.
+
+// Source: 2026-09-25.adoc (KOB-55104)
 
 == Analytics reports updates
 
