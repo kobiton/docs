@@ -1,0 +1,17 @@
+// Release-note partial for KOB-55539. Generated draft for docs-team review; not approved for publication.
+//
+// REVIEWER NOTE:
+// KOB-55539 | Jira status: Wait For Deployment | Type: Bug | Priority: High
+// Source: Jira Release Notes field (populated) and Release Notes Type "Release Email".
+// Wording avoids the internal component name, following the KOB-54477 decision on the
+// 2026-08-28 page ("Direct Hub" is not a term end users know).
+// Verify before publishing:
+//   - Deployment scope (Cloud, Standalone, or both). Jira scope lists every environment.
+//   - Exact 503 response message. The Release Notes field and the implementation notes in Jira
+//     word it differently, so this draft does not quote it.
+//   - Target release page and ship date. The ticket is not yet deployed.
+
+== Session reliability
+
+- Fixed an issue where one unresponsive session could block other sessions on the same host. Previously, new sessions could not start, automation sessions failed, and active sessions could not end until the host was restarted.
+- Appium commands and other requests sent to a session that cannot keep up now fail right away with an HTTP `503` response instead of hanging. Retry the request later.
