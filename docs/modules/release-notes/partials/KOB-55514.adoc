@@ -1,0 +1,11 @@
+// Source: KOB-55514 (Device Inspector, Bug, Released)
+// Release candidate: deviceConnect 2610.21 (from Jira bulk release comment; confirm this build carries the fix)
+// EDITOR: Merge into the "Improved element inspection and interaction" section of the target release page if one exists.
+
+== Inspector and page source now load for iOS screens with unbounded elements
+
+Fixed an issue on iOS devices where *Inspector* displayed no XML hierarchy, and Appium page source requests failed with a `JSON serialization failed` error, when the screen contained an element that iOS reports with an unbounded position or size.
+
+Kobiton now returns these elements with a position of `-1, -1` and a width and height of `0`, matching Appium behavior, so the rest of the page loads. All other elements are returned unchanged.
+
+The fix applies to the iOS *Inspector* XML hierarchy, page source, and find element results.
