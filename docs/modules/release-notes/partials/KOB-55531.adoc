@@ -1,0 +1,10 @@
+// Source: KOB-55531 (Jira status: Released)
+// Release label: 2610.21 (deviceConnect build released with this fix)
+// EDITOR: Confirm whether this entry belongs in Cloud, Standalone, or both release notes.
+// EDITOR: Verify the Android-only scope with the engineering owner before publishing.
+
+== Fixed devices stuck after Appium 2 scripts in mixed sessions
+
+Fixed an issue in mixed sessions on Android devices where the device remained on the *Lightning Mode is turning off* screen after a basic Appium 2 script finished. The next script on the same device could not view or interact with the device until the session was exited and reopened.
+
+Consecutive Appium 2 scripts now run on the same device in a mixed session without exiting the session. Manual interaction with the device is also available after a script ends.
