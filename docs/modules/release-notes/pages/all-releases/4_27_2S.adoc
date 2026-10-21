@@ -22,14 +22,14 @@ Standalone deployments can back up a server's data without taking the deployment
 - Backups write to a local directory or to a remote destination over SSH.
 - Restoring overwrites any existing Standalone data on the target server.
 
-For the complete procedure, see the _Standalone administrator guide_.
+For the complete procedure, refer to the Kobiton Admin Docs. If you need access, please contact your Account Manager.
 
 // Source: KOB-55338 description and comments (2026-09-30 through 2026-10-12).
 // 4.27.1S minimum version dropped at review: 4.27.1S was never released. Known backup and restore
 // bugs omitted at review.
 // Trimmed to the main idea at review; details belong in admin-docs.
-// Admin-docs reference added per Erin's review on PR #798; no hyperlink since the guide is
-// password-protected.
+// Admin Docs reference wording ratified by Erin on PR #798 (2026-10-21); no hyperlink since the
+// Admin Docs are password-protected.
 
 == Roll back to an earlier version
 
@@ -38,13 +38,13 @@ Standalone servers can roll back to an earlier version with `kobictl install`.
 - Both the current version and the target version must be 4.27.0S or later.
 - Portal is unavailable during the rollback.
 
-For the complete procedure, see the _Standalone administrator guide_.
+For the complete procedure, refer to the Kobiton Admin Docs. If you need access, please contact your Account Manager.
 
 // Source: KOB-55463 description and the 2026-10-09 gem65 test results comment.
 // Rollback confirmed self-service at review; engineering questions on KOB-55463 answered.
 // Trimmed to the main idea at review; details belong in admin-docs.
-// Admin-docs reference added per Erin's review on PR #798; no hyperlink since the guide is
-// password-protected.
+// Admin Docs reference wording ratified by Erin on PR #798 (2026-10-21); no hyperlink since the
+// Admin Docs are password-protected.
 
 == virtualUSB expands with broader iOS support, Linux CLI, and easier configuration
 
@@ -81,15 +81,18 @@ Org Admins can also check host machine availability and configure virtualUSB and
 
 For details, see xref:debugging:set-up-virtualusb.adoc[].
 
-=== deviceConnect license configuration
+// Source: 2026-10-09.adoc (KOB-55371, KOB-52820, KOB-52679, KOB-55165, KOB-55306, KOB-55305, KOB-54596)
+// virtualUSB confirmed available on Standalone at review.
+
+== deviceConnect license configuration
 
 New deviceConnect installations require an additional license configuration step before deviceConnect can initialize. Existing installations require no changes.
 
-// Source: 2026-10-09.adoc (KOB-55371, KOB-52820, KOB-52679, KOB-55165, KOB-55306, KOB-55305, KOB-54596)
-// virtualUSB confirmed available on Standalone at review.
-// Source: 2026-10-02.adoc (KOB-55058) for the deviceConnect license step.
+// Source: 2026-10-02.adoc (KOB-55058).
 // Confirmed at review: the license configuration step shipped with deviceConnect 2610.1, which is
 // after 4.27.0S (2609.11). The entry stays in 4.27.2S.
+// Promoted out of the virtualUSB section per Erin's review on PR #798 (2026-10-21); the license
+// step is not virtualUSB-related.
 
 == iPhone 18 and iOS 27.2 support
 
