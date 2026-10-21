@@ -3,6 +3,13 @@
 
 * For app instrumentation, images cannot be injected into some Android applications due to the immense number of required libraries, we currently support the most common libraries. If you encounter issues, please contact our Support team through support@kobiton.com.
 
+* Kobiton cannot instrument apps that use method handles. For these apps, instrumentation stops and displays an error message that names the app's file format.
+
+* For Android apps that use Camera v1, the on-screen camera preview continues to show the live camera feed. Preview frames and captured pictures receive the injected image.
+
+// REVIEWER NOTE (KOB-55529): Confirm the exact error message text for apps that use method handles,
+// and whether Kobiton recommends an alternative (for example, the image injection SDK) for these apps.
+
 * Inject the image after launching the camera. Injecting the image before launching the camera might crash the app.
 
 * It may take up to 5 seconds for the image injection process to complete.
