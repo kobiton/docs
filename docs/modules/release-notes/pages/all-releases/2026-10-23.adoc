@@ -140,13 +140,15 @@ This change applies to CLI sessions recorded after this release. Previously reco
 // Source: KOB-55514 from PR #790
 // https://github.com/kobiton/docs/pull/790
 
-== Inspector and page source now load for iOS screens with unbounded elements
+== Improved element inspection for iOS screens with unbounded elements
 
-Fixed an issue on iOS devices where *Inspector* displayed no XML hierarchy, and Appium page source requests failed with a `JSON serialization failed` error, when the screen contained an element that iOS reports with an unbounded position or size.
+Kobiton Inspector and Appium page source requests can retrieve element information from iOS screens containing elements with unbounded positions or sizes.
 
-Kobiton now returns these elements with a position of `-1, -1` and a width and height of `0`, matching Appium behavior, so the rest of the page loads. All other elements are returned unchanged.
+Previously, these screens could display an empty XML hierarchy in Inspector or return a `JSON serialization failed` error for Appium page source requests.
 
-The fix applies to the iOS *Inspector* XML hierarchy, page source, and find element results.
+Elements with unbounded positions or sizes are returned with a position of `-1, -1` and a width and height of `0`, consistent with Appium behavior. Other elements are unaffected.
+
+The improvement also applies to Appium find element results.
 
 // Source: KOB-55529 from PR #773
 // https://github.com/kobiton/docs/pull/773
