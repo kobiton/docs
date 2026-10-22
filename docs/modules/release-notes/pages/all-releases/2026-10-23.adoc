@@ -17,7 +17,6 @@ Cloud release notes are typically published weekly and summarize changes since t
 // Source: KOB-55509 from PR #805 (file push/pull exit codes; merged into Improvements)
 // Source: KOB-55541 from PR #792 (device reason reported on failure; merged into Improvements)
 // Source: KOB-55547 from PR #791 (large file pull completion; merged into Improvements)
-// Source: KOB-55546 from PR #796 (Session Explorer loads CLI sessions with many screenshots; merged into Improvements)
 
 == Session Explorer support for Kobiton CLI sessions
 
@@ -41,9 +40,6 @@ Use the following comma-separated values in your CLI session to capture these it
 * Fixed `kobiton file push` to iOS devices intermittently failing with an error even though the file was written.
 * Fixed an issue where a failed `kobiton file push` or `kobiton file pull` did not show the reason reported by the device. The CLI now displays the device's reason, such as `Error sending file: couldn't create file: Read-only file system.`, and exits with a non-zero code. Successful transfers are not affected.
 * Fixed an issue where `kobiton file pull` stopped partway through a large file transfer from an Android device without reporting an error or exiting. Large pulls now complete, and the pulled file matches the file on the device.
-* Session Overview and Session Explorer now load CLI sessions that include many full-resolution screenshots. Previously, a CLI session with five or more WebDriver screenshot requests could fail to load its steps.
-** *Step labels:* Session Explorer labels each WebDriver step in a CLI session with its request path, such as `GET /screenshot`.
-** *Private mode:* Screenshots and page sources stay hidden in private mode for automation and CLI sessions.
 
 // REVIEWER NOTE:
 // KOB-55509 | Component: CLI, deviceConnect | Jira status: Released | Release build label: 2610.21
