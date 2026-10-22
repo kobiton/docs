@@ -251,12 +251,12 @@ Scriptless test runs now handle device initialization failures more efficiently,
 // Source: KOB-55544 from PR #793 (Jira status: Wait For Deployment)
 // https://github.com/kobiton/docs/pull/793
 
-=== Install `.app` builds on real iOS devices in manual sessions
+=== Install `.app` builds on physical iOS devices
 
-In manual sessions, the *Install Apps* modal now accepts `.app` builds on real iOS devices and stops installs of iOS builds that can't run on the device in use.
+Manual sessions now support installing zipped `.app` builds on physical iPhones and iPads through the *Install Apps* dialog.
 
-* *Upload File* and *Install From URL* accept a zipped `.app` on real iPhones and iPads. A device build `.app` installs the same way as an `.ipa`.
-* Android sessions and iOS builds that match the device work as before.
+- *Upload File* and *Install From URL* support zipped `.app` builds intended for physical devices, using the same installation process as `.ipa` files.
+- Installations of iOS builds that are incompatible with the selected device are prevented.
 
 For details, see xref:manual-testing:install-an-app.adoc#_install_ios_app_builds[Install `.app` builds on iOS].
 
