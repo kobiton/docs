@@ -234,7 +234,7 @@ Report data from July 2026 onward reflects the updated calculation.
 
 Unresponsive sessions no longer prevent other sessions on the same host from starting, running automation, or ending normally.
 
-Appium commands and other requests sent to an unresponsive session now return an HTTP `503` response instead of remaining pending. Requests can be retried later.
+Appium commands and other requests sent to a session that cannot process them promptly now return an HTTP `503` response instead of remaining pending. Requests can be retried later.
 
 // Source: KOB-55489 from PR #821 (Jira status: Wait For Deployment)
 // https://github.com/kobiton/docs/pull/821
