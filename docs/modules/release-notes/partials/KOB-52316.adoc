@@ -1,0 +1,16 @@
+// Release-note partial for the next Cloud release notes page.
+// Source: KOB-52316 (Jira status: Wait For Deployment; Release Notes field: Release Email)
+// Suggested placement: bug fixes and improvements.
+
+== Lightning Mode fix for some Android devices
+
+- Fixed an issue where Lightning Mode failed to start on some Android devices, such as the Samsung Galaxy Tab A9+, whose video encoder does not support the device's full screen resolution. On these devices, Lightning Mode now streams at a lower resolution than the device's screen. Other devices continue to stream at the same resolution as before.
+
+// REVIEWER NOTE (KOB-52316): No fix version is set in Jira. Confirm the target release date
+// and which release notes page this item belongs on.
+// REVIEWER NOTE (KOB-52316): Jira states the fix ships in the Android agent with the
+// deviceConnect agent bundle. Confirm whether Standalone deployments receive it in this release
+// and whether a deviceConnect version belongs in the Component versions section.
+// REVIEWER NOTE (KOB-52316): Jira also lists a fix for an encoder restart about 1.5 seconds into
+// streams on devices that report a fold posture. The user-visible effect is not described, so it
+// is not included. Confirm with engineering whether it should be added.
