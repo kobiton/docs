@@ -239,14 +239,14 @@ Appium commands and other requests sent to a session that cannot process them pr
 // Source: KOB-55489 from PR #821 (Jira status: Wait For Deployment)
 // https://github.com/kobiton/docs/pull/821
 
-=== Scriptless Automation
+=== Improved Scriptless test run initialization
 
-Scriptless test runs now end sooner when a device can't start the test, and they report the actual error instead of "Device retry exceeded". Previously, these runs could retry for about an hour and a half before failing with that general message.
+Scriptless test runs now handle device initialization failures more efficiently, reducing unnecessary retries and providing clearer error messages.
 
-* Fixed an issue where a run whose app is not on the target device, with no App Repository version to install, retried repeatedly. The run now ends after the first attempt with an *Init session failed* status and the device's error message.
-* Fixed an issue where a test case recorded only on the device home screen launched the home screen. The run now ends after the first attempt.
-* Fixed an issue where a test case that included a system screen without an app identifier, such as Camera on iOS, failed to start. The run now continues with the other apps in the test case.
-* Runs that keep failing to start now end with the last error the device reported instead of "Device retry exceeded".
+- *Missing applications:* When an application is not installed on the target device and no version is available in the App Repository, the run ends after the first attempt with an *Init session failed* status and the device's error message.
+- *Home screen test cases:* Test cases recorded only on the device home screen now end after the first attempt instead of repeatedly attempting to start.
+- *System screens:* Test cases containing system screens without an app identifier, such as Camera on iOS, can proceed with the other applications in the test case.
+- *Error reporting:* Runs that repeatedly fail to initialize now display the last error reported by the device instead of the generic *Device retry exceeded* message.
 
 // Source: KOB-55544 from PR #793 (Jira status: Wait For Deployment)
 // https://github.com/kobiton/docs/pull/793
