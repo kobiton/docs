@@ -48,13 +48,13 @@ Previously, these requests returned an HTTP 500 error, which could take approxim
 // Source: KOB-54317 from PR #769
 // https://github.com/kobiton/docs/pull/769
 
-== Kobiton MCP server: optional `userIntent`
+== Simplified tool calls for the Kobiton MCP server
 
-AI assistants connected to the Kobiton MCP server no longer have to send `userIntent` with every tool call, and the tool definitions they load are smaller.
+The `userIntent` parameter is now optional for all Kobiton MCP server tools. AI assistants can call tools without providing a description of the intended action.
 
-- A tool call without `userIntent` now runs instead of failing. When a call includes `userIntent`, Kobiton still records it in the audit log exactly as sent.
-- Every tool describes `userIntent` with the same one-line description, "A brief summary of why this call is being made." This reduces the tool definitions an AI assistant loads by about 1,100 tokens per session.
-- `automate` plugin version 1.16.0 asks AI assistants to send `userIntent` only when the tool name and arguments don't show why a call is made, such as ending a session or deleting a test case.
+When `userIntent` is provided, Kobiton continues to record its value in the audit log.
+
+Tool definitions have also been streamlined to reduce the amount of information AI assistants need to process.
 
 For details, see xref:ai:mcp/ai-plugin-mcp-ref.adoc#_call_purpose_userintent[Call purpose (`userIntent`)].
 
