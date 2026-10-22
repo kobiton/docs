@@ -153,11 +153,13 @@ The improvement also applies to Appium find element results.
 // Source: KOB-55529 from PR #773
 // https://github.com/kobiton/docs/pull/773
 
-== Image injection
+== Improved image injection for Android apps
 
-* Fixed an issue where installing an Android app with *Instrument application for camera injection* enabled failed with a `Failed to instrument` error when the app was built with R8 code optimization.
-* Improved image injection for instrumented Android apps that use Camera2. Camera frames and captured images now receive the injected image.
-* Instrumentation now stops and displays an error message that names the app's file format when an app uses method handles. Kobiton cannot instrument these apps.
+Updates to image injection improve compatibility with Android apps and provide clearer feedback when instrumentation is not supported.
+
+- *R8-optimized apps:* Android apps built with R8 code optimization can be instrumented for camera injection without encountering the `Failed to instrument` error.
+- *Camera2 support:* Injected images are now applied to camera frames and captured images in instrumented Android apps that use Camera2.
+- *Unsupported apps:* When an app uses method handles, instrumentation stops and displays an error identifying the app's file format. Apps that use method handles cannot be instrumented.
 
 // REVIEWER NOTE (KOB-55529): QA verified CameraX with ML Kit QR scanning on instrumented apps, but
 // apps:image-injection-sdk/add-the-sdk-to-your-android-app.adoc still lists CameraX as
