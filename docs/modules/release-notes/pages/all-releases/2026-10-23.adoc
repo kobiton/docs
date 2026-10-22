@@ -36,6 +36,28 @@ Cloud release notes are typically published weekly and summarize changes since t
 
 - Fixed an issue where `kobiton file pull` stopped partway through a large file transfer from an Android device without reporting an error or exiting. Large pulls now complete, and the pulled file matches the file on the device.
 
+// Source: KOB-52718 from PR #743 (--capture option)
+// Source: KOB-55503 from PR #738 (per-step device logs)
+// Source: KOB-55494 from PR #734 (View Device Logs disabled when no logs)
+// Source: KOB-55504 from PR #735 (no duplicate session-creation steps)
+// Source: KOB-55505 from PR #736 (screenshot carryover and Appium Inspector)
+
+== Session Explorer support for Kobiton CLI sessions
+
+CLI sessions now populate Session Explorer and provide additional information in Session Overview when the capture option is enabled.
+
+Use the following comma-separated values in your CLI session to view this information in Session Explorer:
+
+* `screenshots`: Screenshots are collected continuously. Steps without a new screenshot show the previous screenshot.
+* `view-trees`: Provides view trees when applicable.
+* `metrics`: Device metric samples.
+* `user-action`: User actions appear on the session timeline. These are currently not exhaustive of all steps in a session.
+
+Use the following comma-separated values in your CLI session to capture these items in Session Overview:
+
+* `video`: Session video.
+* `logs`: Device logs.
+
 // Source: KOB-55531 from PR #799
 // https://github.com/kobiton/docs/pull/799
 
