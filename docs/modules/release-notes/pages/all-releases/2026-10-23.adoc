@@ -174,14 +174,6 @@ The report contents and how you view the report are unchanged.
 
 - Fixed the session commands endpoints returning more commands than Session Explorer shows for Kobiton CLI sessions. `GET /v1/sessions/\{id}/commands`, the v2 session commands endpoint, and `GET /v1/sessions/\{id}/commandsCount` now return one session creation plus one command per `kobiton webdriver` call, matching the steps in Session Explorer. Previously, these endpoints also returned the repeated `POST /wd/hub/session` request that Kobiton CLI sends before each call. This change applies to CLI sessions recorded after this release. Sessions recorded earlier are unchanged.
 
-// Source: KOB-55556 from PR #795
-// https://github.com/kobiton/docs/pull/795
-
-== Session data archiving
-
-* Kobiton now archives sessions with hundreds of megabytes of recorded command data in smaller parts. Previously, archiving these sessions ran out of memory and restarted repeatedly, which stopped all session archiving.
-* When Kobiton can't archive a session, it skips that session and continues archiving the remaining sessions.
-
 // Source: KOB-55539 from PR #804
 // https://github.com/kobiton/docs/pull/804
 
