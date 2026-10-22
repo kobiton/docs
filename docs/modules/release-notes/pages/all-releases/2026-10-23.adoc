@@ -175,14 +175,15 @@ Updates to image injection improve compatibility with Android apps and provide c
 // Source: KOB-55565 from PR #802 (Jira status: Wait For Deployment)
 // https://github.com/kobiton/docs/pull/802
 
-=== Appium AI settings require Private device slots
+=== Appium AI settings availability for organizations with Private device slots
 
-Appium AI organization settings are now available only to organizations whose subscription includes Private device slots.
+Appium AI organization settings are available only to organizations with Private device slots included in their subscription.
 
-* Organizations without Private device slots no longer see the *AI Settings* tab in Kobiton Portal settings. Opening the page by its URL shows *Appium AI is not available* with a link to contact your account manager.
-* Requests to read, save, or delete Appium AI settings through the API are refused for those organizations.
-* Settings saved earlier are kept and return automatically when the organization adds Private device slots.
-* Kobiton Standalone isn't affected.
+For organizations without Private device slots:
+
+- The *AI Settings* tab is no longer displayed in Kobiton Portal. Opening the page directly displays *Appium AI is not available*, with a link to contact an account manager.
+- API requests to view, save, or delete Appium AI settings are rejected.
+- Previously saved settings are retained and become available again when Private device slots are added to the subscription.
 
 For details, see xref:automation-testing:appium-ai/configure-appium-ai-org-settings.adoc#no-private-device-slots[Configure Appium AI settings for your organization].
 
