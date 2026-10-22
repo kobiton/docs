@@ -97,12 +97,15 @@ For details, see xref:automation-testing:turbo-test-execution/run-appium-test.ad
 // Source: KOB-55105 from PR #822
 // https://github.com/kobiton/docs/pull/822
 
-=== New report: Mean Time Between Failure
+=== New Mean Time Between Failure report
 
-- Available under *Reports* in Portal to Org Admins only, in the *Device* category.
-- Measures the average time, in hours, that devices remain online and available between offline events. Higher MTBF values indicate greater device stability and reliability.
-- Charts MTBF trends over time, summarized by week, for a date range you select.
-- A week with no offline events shows an MTBF of 1000 hours. This value is a placeholder, not a measurement.
+The new *Mean Time Between Failure (MTBF)* report measures how long devices remain online and available between offline events, helping organization administrators assess device stability and reliability.
+
+Available under *Reports* in Kobiton Portal, in the *Device* category, the report includes:
+
+- MTBF trends over time, summarized by week for a selected date range.
+- Average time between offline events, measured in hours.
+- A placeholder value of 1,000 hours for weeks with no offline events. This value is not a measurement.
 
 // REVIEWER NOTE (KOB-55105): Live at https://portal.kobiton.com/predefined-reports/10.
 // Cloud only for now. The ticket states the report missed the 4.27.2S Standalone package and
@@ -115,12 +118,13 @@ For details, see xref:automation-testing:turbo-test-execution/run-appium-test.ad
 // Source: KOB-55525 from PR #772
 // https://github.com/kobiton/docs/pull/772
 
-=== Usage report
+=== More accurate session data in the usage report
 
-* Updated the xref:reporting:usage-report/use-the-report.adoc[usage report] to record session data, including session counts, minutes, and validation counts, when a session ends instead of on a periodic schedule.
-* Validation results that finish after a session ends now update that session's counts in the usage report.
+The xref:reporting:usage-report/use-the-report.adoc[usage report] now records session counts, session minutes, and validation counts when a session ends instead of waiting for the next scheduled update.
 
-The report contents and how you view the report are unchanged.
+Validation results that complete after a session ends also update the session's counts in the report.
+
+The report's contents and how users access it remain unchanged.
 
 // Source: KOB-55560 from PR #785
 // https://github.com/kobiton/docs/pull/785
@@ -190,11 +194,13 @@ These changes also address an issue where simultaneous executor disconnections a
 // Source: KOB-55190 from PR #820 (Jira status: Wait For Deployment)
 // https://github.com/kobiton/docs/pull/820
 
-=== Parallel Sessions report includes retained devices
+=== Retained devices included in the Parallel Sessions report
 
-- The *Parallel Sessions* report now counts retained devices toward peak parallel sessions, even when no session is running on the retained device.
-- A device that is retained and in an active session at the same time is counted once.
-- Report data from July 2026 onward reflects the updated count.
+The *Parallel Sessions* report now includes retained devices when calculating peak parallel sessions, even when those devices have no active sessions.
+
+Devices that are both retained and in an active session are counted only once.
+
+Report data from July 2026 onward reflects the updated calculation.
 
 // REVIEWER NOTE (KOB-55190): The Cloud 2026-09-25 release notes already include a "Retained device
 // counts" entry sourced from KOB-55244, with a reviewer note asking engineering to confirm whether
