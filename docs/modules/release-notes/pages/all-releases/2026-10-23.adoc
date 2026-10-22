@@ -230,10 +230,11 @@ Report data from July 2026 onward reflects the updated calculation.
 // Source: KOB-55539 from PR #804 (Jira status: Wait For Deployment)
 // https://github.com/kobiton/docs/pull/804
 
-=== Session reliability
+=== Improved session reliability and error handling
 
-- Fixed an issue where one unresponsive session could block other sessions on the same host. Previously, new sessions could not start, automation sessions failed, and active sessions could not end until the host was restarted.
-- Appium commands and other requests sent to a session that cannot keep up now fail right away with an HTTP `503` response instead of hanging. Retry the request later.
+Unresponsive sessions no longer prevent other sessions on the same host from starting, running automation, or ending normally.
+
+Appium commands and other requests sent to an unresponsive session now return an HTTP `503` response instead of remaining pending. Requests can be retried later.
 
 // Source: KOB-55489 from PR #821 (Jira status: Wait For Deployment)
 // https://github.com/kobiton/docs/pull/821
