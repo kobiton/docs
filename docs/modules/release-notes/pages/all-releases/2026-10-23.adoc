@@ -11,10 +11,12 @@ Cloud release notes are typically published weekly and summarize changes since t
 
 // Source: KOB-55509 from PR #805 (file push/pull exit codes)
 
-== Kobiton CLI
+== More reliable file transfers with Kobiton CLI
 
-* Fixed `kobiton file push` and `kobiton file pull` reporting success and exiting `0` when the transfer failed on the device. A push to a path the device refuses, a push to an iOS app that is not installed, and a pull of a file that does not exist now exit with a non-zero status. This applies to iOS devices and Android devices.
-* Fixed `kobiton file push` to iOS devices intermittently failing with an error even though the file was written.
+The `kobiton file push` and `kobiton file pull` commands now report file transfer results more accurately on Android and iOS devices.
+
+- *Failed transfers:* File transfers that fail now return a non-zero exit status instead of reporting success. This includes pushing files to restricted device paths or iOS apps that are not installed, and pulling files that do not exist.
+- *iOS file transfers:* The `kobiton file push` command no longer intermittently reports an error when a file is successfully transferred to an iOS device.
 
 // REVIEWER NOTE:
 // KOB-55509 | Component: CLI, deviceConnect | Jira status: Released | Release build label: 2610.21
