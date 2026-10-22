@@ -129,9 +129,13 @@ The report's contents and how users access it remain unchanged.
 // Source: KOB-55560 from PR #785
 // https://github.com/kobiton/docs/pull/785
 
-== Kobiton API
+== Consistent command counts across the Kobiton API and Session Explorer
 
-- Fixed the session commands endpoints returning more commands than Session Explorer shows for Kobiton CLI sessions. `GET /v1/sessions/\{id}/commands`, the v2 session commands endpoint, and `GET /v1/sessions/\{id}/commandsCount` now return one session creation plus one command per `kobiton webdriver` call, matching the steps in Session Explorer. Previously, these endpoints also returned the repeated `POST /wd/hub/session` request that Kobiton CLI sends before each call. This change applies to CLI sessions recorded after this release. Sessions recorded earlier are unchanged.
+For Kobiton CLI sessions, the Kobiton API now returns command counts that match the steps displayed in Session Explorer.
+
+The session commands endpoints return one session creation command and one command for each `kobiton webdriver` call, without including repeated session creation requests.
+
+This change applies to CLI sessions recorded after this release. Previously recorded sessions are unchanged.
 
 // Source: KOB-55514 from PR #790
 // https://github.com/kobiton/docs/pull/790
