@@ -40,15 +40,24 @@ Previously, these requests returned an HTTP 500 error, which could take approxim
 
 Kobiton MCP server tool definitions have been streamlined to reduce the amount of information AI assistants need to process. Optional context parameters are no longer required when the server can infer the same information from other actions.
 
+== Turbo Test
+
 // Source: KOB-55461 from PR #779
 
-== Improved test report availability for Turbo Test sessions
+=== Improved test report availability
 
 Completed Appium Turbo Test sessions now consistently display the *Test Report* section in Session Overview. Session details retrieved through the Kobiton API also include the test report download URL.
 
 Previously, some completed sessions did not display the test report, even though it had been generated.
 
 For details, see xref:automation-testing:turbo-test-execution/run-appium-test.adoc#_download_test_report[Download test report].
+
+// Source: KOB-55557 from PR #803
+// Source: KOB-55562 from PR #786
+
+=== Improved session reliability
+
+Turbo Test sessions now handle temporary connection and authentication issues more reliably. Sessions are less likely to be interrupted unexpectedly, connection failures surface faster, and new sessions start more reliably.
 
 == Analytics reports
 
@@ -104,44 +113,6 @@ Updates to image injection improve compatibility with Android apps and provide c
 
 - *R8-optimized apps:* Camera injection now supports Android apps built with R8 code optimization.
 - *Unsupported apps:* When an app uses method handles, instrumentation stops and displays an error identifying the app's file format. Apps that use method handles cannot be instrumented.
-
-== Wait For Deployment
-
-// Source: KOB-55557 from PR #803
-// Source: KOB-55562 from PR #786
-
-=== Improved Turbo Test session reliability
-
-Turbo Test sessions now handle temporary connection and authentication issues more reliably. Sessions are less likely to be interrupted unexpectedly, connection failures surface faster, and new sessions start more reliably.
-
-// Source: KOB-55539 from PR #804
-
-=== Improved session reliability and error handling
-
-Unresponsive sessions no longer prevent other sessions on the same host from starting, running automation, or ending normally.
-
-Appium commands and other requests sent to a session that cannot process them promptly now return an HTTP `503` response instead of remaining pending. Requests can be retried later.
-
-// Source: KOB-55489 from PR #821
-
-=== Improved Scriptless test run initialization
-
-Scriptless test runs now handle device initialization failures more efficiently, reducing unnecessary retries and providing clearer error messages.
-
-- *Missing applications:* When an application is not installed on the target device and no version is available in the App Repository, the run ends after the first attempt with an *Init session failed* status and the device's error message.
-- *Home screen test cases:* Test cases recorded only on the device home screen now end after the first attempt instead of repeatedly attempting to start.
-- *System screens:* Test cases containing system screens without an app identifier, such as Camera on iOS, can proceed with the other applications in the test case.
-- *Error reporting:* Runs that repeatedly fail to initialize now display the last error reported by the device instead of the generic *Device retry exceeded* message.
-
-// Source: KOB-55544 from PR #793
-
-=== Install `.app` builds on physical iOS devices
-
-During a manual session, you can install `.app` builds on physical iOS devices using *Upload File* or *Install From URL* in the *Install Apps* dialog, just as you would an `.ipa` file.
-
-Compress the `.app` folder into a `.zip` file before uploading it or providing its URL.
-
-For details, see xref:manual-testing:install-an-app.adoc#_install_ios_app_builds[Install `.app` builds on physical iOS devices].
 
 == Component versions
 
