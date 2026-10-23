@@ -549,6 +549,15 @@ kobiton file pull @com.company.app:Documents/foo.dat
 Pulled 505031 bytes to foo.dat
 ----
 
+[IMPORTANT]
+====
+**A failed pull returns a non-zero exit code.**
+
+A pull fails when the source path does not exist on the device or the device refuses the transfer. A failed pull reports the reason and exits with a non-zero status. A successful pull exits `0`.
+
+Earlier CLI versions could report a failed pull as `Pulled 0 bytes` and exit `0`. Update to the latest CLI version before relying on the exit code in a CI/CD pipeline. See xref:set-up-cli.adoc[].
+====
+
 == `device`
 
 Device operations: discovery, shell access, port forwarding, logs, and screenshots.
