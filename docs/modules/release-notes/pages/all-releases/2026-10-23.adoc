@@ -36,19 +36,13 @@ Previously, these requests returned an HTTP 500 error, which could take approxim
 
 // Source: KOB-54317 from PR #769
 
-== Simplified tool calls for the Kobiton MCP server
+== Streamlined tool calls for the Kobiton MCP server
 
-The `userIntent` parameter is now optional for all Kobiton MCP server tools. AI assistants can call tools without providing a description of the intended action.
-
-When `userIntent` is provided, Kobiton continues to record its value in the audit log.
-
-Tool definitions have also been streamlined to reduce the amount of information AI assistants need to process.
-
-For details, see xref:ai:mcp/ai-plugin-mcp-ref.adoc#_call_purpose_userintent[Call purpose (`userIntent`)].
+Kobiton MCP server tool definitions have been streamlined to reduce the amount of information AI assistants need to process. Optional context parameters are no longer required when the server can infer the same information from other actions.
 
 // Source: KOB-55461 from PR #779
 
-== Access test reports for completed Turbo Test sessions
+== Improved test report availability for Turbo Test sessions
 
 Completed Appium Turbo Test sessions now consistently display the *Test Report* section in Session Overview. Session details retrieved through the Kobiton API also include the test report download URL.
 
@@ -70,15 +64,15 @@ Available under *Reports* in Kobiton Portal, in the *Device* category, the repor
 - Average time between offline events, measured in hours.
 - A placeholder value of 1,000 hours for weeks with no offline events. This value is not a measurement.
 
-// Source: KOB-55525 from PR #772
+// Source: KOB-55190 from PR #820
 
-=== More accurate session data in the usage report
+=== Retained devices included in the Parallel Sessions report
 
-The xref:reporting:usage-report/use-the-report.adoc[usage report] now records session counts, session minutes, and validation counts when a session ends instead of waiting for the next scheduled update.
+The *Parallel Sessions* report now includes retained devices when calculating peak parallel sessions, even when those devices have no active sessions.
 
-Validation results that complete after a session ends also update the session's counts in the report.
+Devices that are both retained and in an active session are counted only once.
 
-The report's contents and how users access it remain unchanged.
+Report data from July 2026 onward reflects the updated calculation.
 
 // Source: KOB-55560 from PR #785
 
@@ -108,48 +102,17 @@ The improvement also applies to Appium find element results.
 
 Updates to image injection improve compatibility with Android apps and provide clearer feedback when instrumentation is not supported.
 
-- *R8-optimized apps:* Android apps built with R8 code optimization can be instrumented for camera injection without encountering the `Failed to instrument` error.
-- *Camera2 support:* Injected images are now applied to camera frames and captured images in instrumented Android apps that use Camera2.
+- *R8-optimized apps:* Camera injection now supports Android apps built with R8 code optimization.
 - *Unsupported apps:* When an app uses method handles, instrumentation stops and displays an error identifying the app's file format. Apps that use method handles cannot be instrumented.
 
 == Wait For Deployment
-
-// Source: KOB-55565 from PR #802
-
-=== Appium AI settings availability for organizations with Private device slots
-
-Appium AI organization settings are available only to organizations with Private device slots included in their subscription.
-
-For organizations without Private device slots:
-
-- The *AI Settings* tab is no longer displayed in Kobiton Portal. Opening the page directly displays *Appium AI is not available*, with a link to contact an account manager.
-- API requests to view, save, or delete Appium AI settings are rejected.
-- Previously saved settings are retained and become available again when Private device slots are added to the subscription.
-
-For details, see xref:automation-testing:appium-ai/configure-appium-ai-org-settings.adoc#no-private-device-slots[Configure Appium AI settings for your organization].
 
 // Source: KOB-55557 from PR #803
 // Source: KOB-55562 from PR #786
 
 === Improved Turbo Test session reliability
 
-Turbo Test sessions now handle temporary authentication failures and executor connection interruptions more reliably.
-
-- *Authentication renewal:* Running sessions continue when a scheduled authentication renewal fails temporarily. Kobiton automatically retries the renewal instead of ending the session.
-- *Executor availability:* New sessions are assigned only to online test executors. Executors that stop responding are removed from the available pool within approximately 15 seconds.
-- *Executor connection loss:* Sessions that lose their executor connection now fail promptly with the status message `Executor connection lost`, instead of waiting up to 15 minutes to time out.
-
-These changes also address an issue where simultaneous executor disconnections and reconnections could prevent new sessions from starting.
-
-// Source: KOB-55190 from PR #820
-
-=== Retained devices included in the Parallel Sessions report
-
-The *Parallel Sessions* report now includes retained devices when calculating peak parallel sessions, even when those devices have no active sessions.
-
-Devices that are both retained and in an active session are counted only once.
-
-Report data from July 2026 onward reflects the updated calculation.
+Turbo Test sessions now handle temporary connection and authentication issues more reliably. Sessions are less likely to be interrupted unexpectedly, connection failures surface faster, and new sessions start more reliably.
 
 // Source: KOB-55539 from PR #804
 
