@@ -14,6 +14,16 @@ The `kobiton file push` and `kobiton file pull` commands now report file transfe
 - *Failed transfers:* File transfers that fail now return a non-zero exit status instead of reporting success. This includes pushing files to restricted device paths or iOS apps that are not installed, and pulling files that do not exist.
 - *iOS file transfers:* The `kobiton file push` command no longer intermittently reports an error when a file is successfully transferred to an iOS device.
 
+// Source: KOB-55560 from PR #785
+
+== Consistent CLI command counts across the Kobiton API and Session Explorer
+
+For Kobiton CLI sessions, the Kobiton API now returns command counts that match the steps displayed in Session Explorer.
+
+The session commands endpoints return one session creation command and one command for each `kobiton webdriver` call, without including repeated session creation requests.
+
+This change applies to CLI sessions recorded after this release. Previously recorded sessions are unchanged.
+
 == Improved reliability in Appium automation sessions
 
 Updates to Appium automation improve consecutive script execution in mixed sessions and attribute handling on iOS devices.
@@ -33,12 +43,6 @@ Previously, devices could remain on the *Lightning Mode is turning off* screen a
 The WebDriver Get Element Attribute command now returns `null` when the requested attribute does not exist in iOS native automation sessions, matching the existing behavior on Android.
 
 Previously, these requests returned an HTTP 500 error, which could take approximately 25 seconds to appear because Appium clients retried the request.
-
-// Source: KOB-54317 from PR #769
-
-== Streamlined tool calls for the Kobiton MCP server
-
-Kobiton MCP server tool definitions have been streamlined to reduce the amount of information AI assistants need to process. Optional context parameters are no longer required when the server can infer the same information from other actions.
 
 == Turbo Test
 
@@ -83,16 +87,6 @@ Devices that are both retained and in an active session are counted only once.
 
 Report data from July 2026 onward reflects the updated calculation.
 
-// Source: KOB-55560 from PR #785
-
-== Consistent command counts across the Kobiton API and Session Explorer
-
-For Kobiton CLI sessions, the Kobiton API now returns command counts that match the steps displayed in Session Explorer.
-
-The session commands endpoints return one session creation command and one command for each `kobiton webdriver` call, without including repeated session creation requests.
-
-This change applies to CLI sessions recorded after this release. Previously recorded sessions are unchanged.
-
 // Source: KOB-55514 from PR #790
 
 == Improved element inspection for iOS screens with unbounded elements
@@ -104,6 +98,12 @@ Previously, these screens could display an empty XML hierarchy in Inspector or r
 Elements with unbounded positions or sizes are returned with a position of `-1, -1` and a width and height of `0`, consistent with Appium behavior. Other elements are unaffected.
 
 The improvement also applies to Appium find element results.
+
+// Source: KOB-54317 from PR #769
+
+== Streamlined tool calls for the Kobiton MCP server
+
+Kobiton MCP server tool definitions have been streamlined to reduce the amount of information AI assistants need to process. Optional context parameters are no longer required when the server can infer the same information from other actions.
 
 // Source: KOB-55529 from PR #773
 
