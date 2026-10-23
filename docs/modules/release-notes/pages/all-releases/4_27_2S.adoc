@@ -1,17 +1,5 @@
 = Standalone 4.27.2S
 
-// KOB-55635. Sources: the Cloud release notes 2026-09-25, 2026-10-02, 2026-10-09, and 2026-10-16;
-// KOB-55338 (backup and restore); KOB-55463 (rollback).
-// Scope: items released after 4.27.0S, cut off at Gigacap 2610.14, deviceConnect 2610.15, and
-// Portal 2610.19. The Cloud pages end at Portal 2610.15, deviceConnect 2610.15, and Gigacap 2610.14.
-// Per the ticket, Jira was not searched for Portal items between 2610.15 and 2610.19.
-//
-// Excluded as already shipped in 4.27.0S: Device Utilization report (KOB-54817), the Max Parallel
-// Tests tab and All machines row in Device Management.
-// Excluded as Cloud and Hybrid only: Android emulator support (API operations, CLI app install,
-// Device Bundles, `virtual_devices` in `GET /v2/devices`). Virtual devices are not yet supported on
-// Standalone (manual-testing:start-a-virtual-session.adoc).
-
 _October 21, 2026_
 
 == Back up and restore Kobiton data
@@ -305,7 +293,7 @@ Users with *SSO Only* enabled go directly to their organization's SSO sign-in af
 * Portal 2610.19
 * deviceConnect 2610.21
 * Gigacap 2610.19
-* deviceShare 2610.9
+* deviceShare 2610.6
 
 // REVIEWER NOTE: Versions are the ticket's cutoff versions. Confirm the deviceShare and ADB versions,
 // which 4.27.0S listed.
