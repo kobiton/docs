@@ -32,6 +32,16 @@ To download device or crash logs as a `.log` file, select *Device* or *Crash*.
 
 image:session-explorer:logs-closeup.png[width=400,alt="Logs section in Session Overview"]
 
+[NOTE]
+====
+Some sessions don't capture device logs, such as Kobiton CLI sessions created without `logs` in the capture list. After Kobiton finishes processing one of these sessions, the *Logs* section shows:
+
+* *View Device Logs* disabled, with the tooltip "No device logs were captured for this session".
+* *Download all* disabled, with the tooltip "No logs were captured for this session", if the session captured no logs of any type.
+
+While the session is still processing, *View Device Logs* stays enabled.
+====
+
 === Download last mile speed test logs
 [NOTE]
 Last mile speed test log is only available for Cloud and Hybrid (Cloud Customer-hosted) deployments.
@@ -39,6 +49,19 @@ Last mile speed test log is only available for Cloud and Hybrid (Cloud Customer-
 To download the last mile speed test logs, select *View Last Mile Speed Result Logs*.
 
 image:session-explorer:logs-last-mile-speed.png[width=500,alt="Last mile speed result section in Session Overview"]
+
+=== Download video of test session
+
+To download a video of your test session, open *Session Overview* and select the *Download* icon in the upper-right corner of the video player.
+
+image:session-explorer:download-video.png[width=500,alt="Download video of test session"]
+
+[NOTE]
+====
+Videos played in QuickTime may appear jittery. This playback issue is specific to QuickTime and does not reflect the actual test session.
+
+For accurate playback, use the VLC media player.
+====
 
 === Create a Jira ticket
 

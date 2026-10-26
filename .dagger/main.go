@@ -13,6 +13,25 @@ type Ci struct {
 	Container *dagger.Container // +private
 }
 
+// nodeBase builds the Node builder container used for all CI steps.
+//
+// This mirrors the base container that the pinned `node` module builds by
+// default, but on Debian 12 "bookworm" instead of Debian 11 "bullseye".
+// Bullseye reached end of LTS on 2026-08-31: its bullseye-security metadata
+// expired on 2026-09-07 and `apt-get update` now exits 100 with
+// "Release file ... is expired", which broke every CI run.
+func nodeBase() *dagger.Container {
+	return dag.Container(dagger.ContainerOpts{Platform: "linux/amd64"}).
+		From("node:20-bookworm-slim@sha256:2cf067cfed83d5ea958367df9f966191a942351a2df77d6f0193e162b5febfc0").
+		WithEnvVariable("DEBIAN_FRONTEND", "noninteractive").
+		WithEnvVariable("GIT_SSH_COMMAND", "ssh -o StrictHostKeyChecking=no").
+		WithExec([]string{"apt-get", "update"}).
+		WithExec([]string{"apt-get", "install", "-y", "--no-install-recommends",
+			"build-essential", "curl", "lsb-release", "unzip", "sudo",
+			"python3", "python3-pip", "python3-venv", "git", "openssh-client", "make"}).
+		WithExec([]string{"rm", "-rf", "/var/lib/apt/lists/*"})
+}
+
 func New(
 	// Project source directory.
 	// +defaultPath="/"
@@ -31,7 +50,7 @@ func New(
 		WithFile("package.json", source.File("package.json"))
 
 	m := dag.
-		Node().
+		Node(dagger.NodeOpts{Ctr: nodeBase()}).
 		WithYarn().
 		WithSource(dependencyFiles).
 		Install().
@@ -97,7 +116,7 @@ func (m *Ci) Server(
 	path := fmt.Sprintf("/%s", site)
 
 	return dag.Container(dagger.ContainerOpts{Platform: "linux/amd64"}).
-		From("nginx:alpine").
+		From("nginx:alpine@sha256:892bb2152464f0c5d8972593a5f5afaf8054552580b699d95f8ff4af08c2d33d").
 		WithWorkdir(path).
 		WithDirectory(path, dir.Directory(site)).
 		WithFile(fmt.Sprintf("/%s/replace-env-vars.sh", site), m.Source.File("scripts/replace-env-vars.sh")).

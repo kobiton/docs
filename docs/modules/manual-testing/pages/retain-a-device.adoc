@@ -1,0 +1,35 @@
+= Retain a device
+:navtitle: Retain a device
+
+Retaining a device reserves it for exclusive use for a set duration. While a device is retained, no other user can start a session on it, and the xref:devices:local-devices/cleanup-policy/manage-device-cleanup-policies.adoc[cleanup policy,window=read-later] (if active) does not run between sessions.
+
+Retain a device from the exit prompt of a manual session, or xref:devices:manage-devices.adoc#_retain_the_device[retain a private or local device from the device list,window=read-later] without starting a session.
+
+== Retain a device when you exit a session
+
+. In the manual session, select *Exit current session*. Kobiton Portal opens a confirmation prompt.
+. Open the *Retain* list and select a duration.
+. Select *Exit Session*. To stay in the session, select *Continue Session* instead.
+
+image:manual-testing:exit-session-retain-option.png[width=750,alt="Exit-session confirmation prompt with the Retain list open"]
+
+== Available durations
+
+The *Retain* list on the exit prompt offers these durations:
+
+* *Do not retain device* (default)
+* *Unlimited* (available only when the organization allows xref:organization:other-settings.adoc#_device_retention[unlimited retention,window=read-later])
+* *1 hour*
+* *2 hours*
+* *4 hours*
+* *8 hours*
+* *16 hours*
+* *24 hours*
+
+[NOTE]
+When retaining from the device list, the *Retain* list does not include *Do not retain device*.
+
+== Related guides
+
+* xref:devices:manage-devices.adoc[]
+* xref:manual-testing:resume-a-session.adoc[]

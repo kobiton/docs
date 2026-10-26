@@ -1,51 +1,63 @@
 = Inspector
 :navtitle: Inspector
 
-During a manual session, select *Inspector* to copy specific xpath values, inspect UI elements, and download your device inventory.
+During a manual session, select *Inspector* to copy specific `xpath` values, inspect UI elements, and download your device inventory.
 
-image:manual-testing:inspector-context.png[width=, alt="A manual session displaying a device and the device inspector."]
+image:manual-testing:inspector-context.png[width=1000, alt="A manual session displaying a device and the device inspector."]
 
 == Refresh inventory
 
-Display the XML hierarchy of the current device screen. Select a specific element from the hierarchy to highlight it on the device.
+Display the XML hierarchy of the current device screen. Select an element from the hierarchy to highlight it on the device.
 
-image:manual-testing:refresh-inventory-closeup.png[width=, alt="The XML hierarchy of the current device screen"]
+image:manual-testing:refresh-inventory-closeup.png[width=1000, alt="The XML hierarchy of the current device screen"]
 
 [NOTE]
+====
 *Refresh inventory* resets all filters and searches.
+====
 
 == Inspect elements
 
-Hover over on-screen elements to highlight the elements in the XML hierarchy.
+Hover over an on-screen element to highlight it in the XML hierarchy.
 
-image:manual-testing:inspect-elements-closeup.png[width=, alt="The icon to inspect elements"]
+image:manual-testing:inspect-elements-closeup.png[width=1000, alt="The icon to inspect elements"]
 
 == Download inventory
 
 Download the current XML hierarchy as an `.xml` file.
 
-image:manual-testing:download-inventory-closeup.png[width=, alt="The icon to download the XML heirarchy"]
+image:manual-testing:download-inventory-closeup.png[width=1000, alt="The icon to download the XML hierarchy"]
+
+[NOTE]
+====
+The downloaded file contains every WebView, not only the WebView selected in the dropdown.
+====
 
 == WebView
 
-Filter the XML hierarchy by the selected WebView. The default WebView is `NATIVE_APP`.
+Select a WebView to highlight its elements in the XML hierarchy. The default WebView is `NATIVE_APP`.
 
-image:manual-testing:inspector-dropdown-closeup.png[width=, alt="The WebView filter"]
+image:manual-testing:inspector-dropdown-closeup.png[width=1000, alt="The WebView filter"]
+
+[NOTE]
+====
+Selecting a WebView highlights its elements within a box. It does not remove other elements from the hierarchy.
+====
 
 On iOS devices, turn on *Web Inspector* and *Remote Automation* in *Settings → Safari → Advanced*.
 
 == Search bar
 
-Filter the XML hierarchy by a specific element.
+Enter the name, ID, or attribute value of an element to filter the hierarchy to matching elements.
 
-image:manual-testing:inspector-search-closeup.png[width=, alt="Search an element to filter that specific element"]
+image:manual-testing:inspector-search-closeup.png[width=1000, alt="Search an element to filter that specific element"]
 
 == Attributes
 
-Display an element's attributes.
+Display the attributes of the selected element, including element IDs, class names, and accessibility labels.
 
-image:manual-testing:hierarchy-closeup.png[width=, alt="The button to display attributes"]
+image:manual-testing:hierarchy-closeup.png[width=1000, alt="The button to display attributes"]
 
-Hover over a specific attribute and to copy it to your clipboard.
+Hover over an attribute to copy it to your clipboard.
 
-image:manual-testing:attributes-closeup.png[width=, alt="The icon to copy the attribute"]
+image:manual-testing:attributes-closeup.png[width=1000, alt="The icon to copy the attribute"]

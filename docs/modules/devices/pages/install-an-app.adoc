@@ -79,3 +79,19 @@ image:select-apps-from-device-overview-closeup.png[width=500,alt="Select Apps fr
 Select *Uninstall All*.
 
 image:uninstall-all-apps-closeup.png[width=500,alt="Uninstall all apps"]
+
+// TODO(KOB-54289): This section documents corrected installed-version behavior that has not
+// shipped yet. Verify against a released build before publishing, confirm the version column
+// label, and confirm the no-match behavior described in the note.
+
+== Check which version is installed
+
+The *Apps* list shows one row per app. Each row reports whether a version of that app is installed on the device.
+
+* When a version is installed, the row shows *Installed* and names that build in the version column.
+* When no version is installed, the row shows *Available* and names the latest version in your app repository.
+
+For an app with multiple versions, select the *App Name* to see each build. Kobiton marks the installed build *Installed* and lists the others as *Available*.
+
+[NOTE]
+If Kobiton cannot match the build on the device to a version in your app repository, no version is marked *Installed*, even though the app is on the device. This happens when the app repository does not record enough detail to tell the app's builds apart.

@@ -1,0 +1,167 @@
+= Add audio injection to Appium script
+:navtitle: Add audio injection to Appium script
+
+Audio injection provides deterministic audio input during automated test sessions on iOS and Android devices. Use it to validate application behavior involving calls, voice input, or audio routing without manual device interaction.
+
+Audio injection simulates incoming audio only. It does not capture microphone input from the test environment.
+
+== Supported platforms
+
+* iOS (XCUITest automation engine)
+* Android (UiAutomator2 automation engine)
+
+== Prerequisites
+
+* xref:automation-testing:capabilities/available-capabilities.adoc#_bluetooth[`kobiton:bluetooth`] capability enabled on the session
+* Audio file hosted at a direct download URL the device can reach at runtime
+* Device in a valid state to receive audio: call or audio-receiving state active if applicable, unmuted, not in airplane mode
+
+=== Audio file requirements
+
+|===
+| Requirement | Value
+
+| Container | WAV (16-bit), MP3, or OGG
+| Sample rate | 8 kHz
+| Channels | mono
+| Max file size | 30 MB
+|===
+
+Use reliable, publicly accessible hosting so the runtime download does not delay test execution.
+
+== Enable Bluetooth
+
+Add the `kobiton:bluetooth` capability to your test configuration. This capability enables Bluetooth on the device during the session and is required for all audio injection commands.
+
+[source,javascript]
+----
+capabilities: {
+    'platformName': 'iOS',
+    'kobiton:bluetooth': true,
+    'appium:deviceName': 'iPhone 15',
+    'appium:app': 'kobiton-store:v1'
+}
+----
+
+== Audio injection commands
+
+Control audio injection through the `driver.execute()` method with Kobiton-specific command keys.
+
+[options="header"]
+|===
+| Command | Description | Parameters
+| `kobiton:startAudioInjection` | Begins playback of the specified audio file. | `url`: direct download URL for the audio file.
+| `kobiton:pollAudioInjection` | Returns the current injection state and the result of the poll operation. | None.
+| `kobiton:stopAudioInjection` | Terminates audio playback and releases resources. | None.
+|===
+
+=== `kobiton:pollAudioInjection` return payload
+
+Each poll returns an object with a `state` string and an `operationResult` wrapper:
+
+[source,json]
+----
+{
+  "state": "INJECT_START",
+  "operationResult": { "success": true }
+}
+----
+
+* `state` is `INJECT_START` while injection is active and `INJECT_END` after playback finishes.
+* `operationResult.success` is a boolean indicating whether the poll itself succeeded.
+
+== Example: full audio injection workflow
+
+A full workflow enables Bluetooth at session start, performs a test action, then starts, polls, and stops injection.
+
+[source,javascript]
+----
+// Enable Bluetooth in capabilities
+const capabilities = {
+    'platformName': 'iOS',
+    'kobiton:bluetooth': true,
+    'appium:deviceName': 'iPhone 15',
+    'appium:app': 'kobiton-store:v1'
+};
+
+// Initialize driver
+const driver = await wdio.remote({
+    protocol: 'https',
+    hostname: 'api.kobiton.com',
+    port: 443,
+    path: '/wd/hub',
+    capabilities
+});
+
+// Perform test actions (for example, initiate a call)
+await driver.$('~Keypad').click();
+
+// Start audio injection
+await driver.execute('kobiton:startAudioInjection', {
+    url: 'https://example.com/audio.mp3'
+});
+
+// Optional: poll playback status
+const status = await driver.execute('kobiton:pollAudioInjection');
+
+// Stop audio injection
+await driver.execute('kobiton:stopAudioInjection');
+
+// Cleanup
+await driver.deleteSession();
+----
+
+Playback begins immediately and runs asynchronously while the test continues.
+
+== Best practices
+
+=== Poll for playback completion
+
+Fixed waits based on audio length work but can drift out of sync with actual playback. Poll `kobiton:pollAudioInjection` and break when `state` becomes `INJECT_END`.
+
+.Fixed wait
+[source,javascript]
+----
+await new Promise((resolve) => setTimeout(resolve, audioLength * 1000));
+----
+
+.Poll for completion
+[source,javascript]
+----
+const startTime = Date.now();
+
+while (Date.now() - startTime < maxWaitTime) {
+    const status = await driver.execute('kobiton:pollAudioInjection');
+    if (status?.state === 'INJECT_END') {
+        break;
+    }
+    await new Promise((resolve) => setTimeout(resolve, 1000));
+}
+----
+
+=== Clean up resources on failure
+
+Stop audio injection and close the session in a `finally` block so failed tests do not leave audio routing active.
+
+[source,javascript]
+----
+try {
+    // ... test code ...
+} finally {
+    try {
+        await driver.execute('kobiton:stopAudioInjection');
+    } catch (err) {
+        // Ignore errors during cleanup
+    }
+
+    if (driver) {
+        await driver.deleteSession();
+    }
+}
+----
+
+== Related documentation
+
+* xref:manual-testing:inject-audio.adoc[Inject audio during a manual session]
+* https://www.youtube.com/watch?v=uQ5hmIXeVfg[Video demo]
+* https://github.com/kobiton/samples/tree/master/audio[Audio injection code samples on GitHub]

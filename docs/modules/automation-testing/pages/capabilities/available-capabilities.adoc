@@ -31,8 +31,10 @@ capabilities.setCapability("kobiton:sessionName", "Login test");
 Capabilities with the `kobiton:` prefix cannot be used without the prefix.
 
 .Kobiton capability index
+* <<_accessibilityValidation,kobiton:accessibilityValidation>>
 * <<_app_install,kobiton:app-install>>
 * <<_baselineSessionId,kobiton:baselineSessionId>>
+* <<_bluetooth,kobiton:bluetooth>>
 * <<_kobitoncapturescreenshots,kobiton:captureScreenshot>>
 * <<_kobitondevicegroup,kobiton:deviceGroup>>
 * <<_kobitondevicetags,kobiton:deviceTags>>
@@ -44,6 +46,7 @@ Capabilities with the `kobiton:` prefix cannot be used without the prefix.
 * <<_passcodeKey,kobiton:passcodeKey>>
 * <<_passcodeType,kobiton:passcodeType>>
 * <<_runtime,kobiton:runtime>>
+* <<_scriptlessCapture,kobiton:scriptlessCapture>>
 * <<_kobitonsessiondescription,kobiton:sessionDescription>>
 * <<_kobitonsessionname,kobiton:sessionName>>
 * <<_kobtionsessiontags,kobiton:sessionTags>>
@@ -52,6 +55,21 @@ Capabilities with the `kobiton:` prefix cannot be used without the prefix.
 * <<_web_find,kobiton:web-find>>
 * <<_work_app,kobiton:workApp>>
 * <<_xpath2,kobiton:xpath2>>
+
+[#_accessibilityValidation]
+=== `kobiton:accessibilityValidation`
+
+Runs accessibility validation during an Appium automation session. For setup steps, see xref:automation-testing:scripting/add-accessibility-validation-to-appium-script.adoc[].
+
+* *Type:* `boolean`
+* *Required capabilities:* xref:_scriptlessCapture[`kobiton:scriptlessCapture`] set to `true`
+* *Optional capabilities:* None
+
+.Example
+[source,java]
+----
+capabilities.setCapability("kobiton:accessibilityValidation", true);
+----
 
 [#_app_install]
 === `kobiton:app-install`
@@ -86,6 +104,21 @@ Select a baseline session to use for xref:_flexCorrect[].
 [source,java]
 ----
 capabilities.setCapability("kobiton:baselineSessionId", 0000011);
+----
+
+[#_bluetooth]
+=== `kobiton:bluetooth`
+
+Enables Bluetooth functionality on the device during the session. Required for xref:automation-testing:scripting/add-audio-injection-to-appium-script.adoc[audio injection in automated sessions,window=read-later].
+
+* *Type:* `boolean`
+* *Required capabilities:* None
+* *Optional capabilities:* None
+
+.Example
+[source,java]
+----
+capabilities.setCapability("kobiton:bluetooth", true);
 ----
 
 === `kobiton:captureScreenshots`
@@ -287,6 +320,24 @@ Configure the automation runtime that executes the test. Values are `xium` (Xium
 capabilities.setCapability("kobiton:runtime", "appium");
 ----
 
+[#_scriptlessCapture]
+=== `kobiton:scriptlessCapture`
+
+[NOTE]
+This capability replaces `kobiton:scriptlessEnable`, which continues to work identically. Setting both on the same session is safe and produces no conflict.
+
+Marks an automation session as convertible into a Test Case. When set on an initial Appium or Xium script, the resulting session bypasses cache and captures full metadata for later conversion. Setting this capability is optional but recommended for full conversion support, and required for xref:_accessibilityValidation[`kobiton:accessibilityValidation`].
+
+* *Type:* `boolean`
+* *Required capabilities:* None
+* *Optional capabilities:* None
+
+.Example
+[source,java]
+----
+capabilities.setCapability("kobiton:scriptlessCapture", true);
+----
+
 === `kobiton:sessionDescription`
 
 The description of the test session, typically between 50-72 characters, but can be set to any length.
@@ -409,6 +460,173 @@ Enable XPath 2.0 searches on all supported device platforms. Default is `false`.
 capabilities.setCapability("kobiton:xpath2", true);
 ----
 
+[discrete]
+=== Appium AI capabilities
+
+These capabilities override the Appium AI configuration on a per-session basis. For the system-level configuration, see xref:automation-testing:appium-ai/override-llm.adoc[Override Appium AI settings per session].
+
+.Appium AI capability index
+* <<_llmApiFormat,kobiton:llmApiFormat>>
+* <<_llmApiKey,kobiton:llmApiKey>>
+* <<_llmApiVersion,kobiton:llmApiVersion>>
+* <<_llmBaseUrl,kobiton:llmBaseUrl>>
+* <<_llmTextExtraBody,kobiton:llmTextExtraBody>>
+* <<_llmTextModel,kobiton:llmTextModel>>
+* <<_llmVisionExtraBody,kobiton:llmVisionExtraBody>>
+* <<_llmVisionModel,kobiton:llmVisionModel>>
+* <<_locatorStrategy,kobiton:locatorStrategy>>
+* <<_visionCoordSpace,kobiton:visionCoordSpace>>
+
+[#_llmApiFormat]
+=== `kobiton:llmApiFormat`
+
+API protocol format for the LLM endpoint. The value must match the provider used by `kobiton:llmBaseUrl`. Accepts `OpenAiResponses`, `OpenAiChatCompletions`, `AnthropicMessages`, `KobitonChatCompletions`, `OllamaChat`, `AzureOpenAiV1ChatCompletions`, or `AzureOpenAiChatCompletions`. Default is `OpenAiResponses`.
+
+* *Type:* `string`
+* *Required capabilities:* None
+* *Optional capabilities:* None
+
+.Example
+[source,java]
+----
+capabilities.setCapability("kobiton:llmApiFormat", "AnthropicMessages");
+----
+
+[#_llmApiKey]
+=== `kobiton:llmApiKey`
+
+LLM provider API key. A session that sets `kobiton:llmBaseUrl` must also set this capability. Appium AI does not send an API key from your organization settings or the host defaults to an endpoint set in the session. See xref:automation-testing:appium-ai/configure-appium-ai-org-settings.adoc#api-key-rules[API key rules].
+
+* *Type:* `string`
+* *Required capabilities:* None
+* *Optional capabilities:* None
+
+.Example
+[source,java]
+----
+capabilities.setCapability("kobiton:llmApiKey", "<your-api-key>");
+----
+
+[#_llmApiVersion]
+=== `kobiton:llmApiVersion`
+
+API version string for Azure OpenAI endpoints. Required when `kobiton:llmApiFormat` is set to an Azure value. Default is `2024-02-01`.
+
+* *Type:* `string`
+* *Required capabilities:* None
+* *Optional capabilities:* None
+
+.Example
+[source,java]
+----
+capabilities.setCapability("kobiton:llmApiVersion", "2024-02-01");
+----
+
+[#_llmBaseUrl]
+=== `kobiton:llmBaseUrl`
+
+LLM provider base URL. Default is `https://api.openai.com/v1`. See xref:automation-testing:appium-ai/override-llm.adoc[Override Appium AI settings per session] for provider-specific endpoint values.
+
+* *Type:* `string`
+* *Required capabilities:* `kobiton:llmApiKey`
+* *Optional capabilities:* `kobiton:llmApiFormat`, `kobiton:llmTextModel`, `kobiton:llmVisionModel`
+
+.Example
+[source,java]
+----
+capabilities.setCapability("kobiton:llmBaseUrl", "https://api.anthropic.com/v1");
+----
+
+[#_llmTextExtraBody]
+=== `kobiton:llmTextExtraBody`
+
+JSON object passed verbatim into the request body for text model calls. Use to send model-specific parameters such as `temperature`. Leave unset unless the model requires it.
+
+* *Type:* `string`
+* *Required capabilities:* None
+* *Optional capabilities:* None
+
+.Example
+[source,java]
+----
+capabilities.setCapability("kobiton:llmTextExtraBody", "{\"temperature\": 0}");
+----
+
+[#_llmTextModel]
+=== `kobiton:llmTextModel`
+
+Model used for UI tree-based operations (XPath/CSS generation). For Azure, pass the deployment name. Default is `gpt-5.6-terra`.
+
+* *Type:* `string`
+* *Required capabilities:* None
+* *Optional capabilities:* None
+
+.Example
+[source,java]
+----
+capabilities.setCapability("kobiton:llmTextModel", "claude-opus-4-8");
+----
+
+[#_llmVisionExtraBody]
+=== `kobiton:llmVisionExtraBody`
+
+JSON object passed verbatim into the request body for vision model calls. Use to send model-specific parameters such as `temperature`. Leave unset unless the model requires it.
+
+* *Type:* `string`
+* *Required capabilities:* None
+* *Optional capabilities:* None
+
+.Example
+[source,java]
+----
+capabilities.setCapability("kobiton:llmVisionExtraBody", "{\"temperature\": 0}");
+----
+
+[#_llmVisionModel]
+=== `kobiton:llmVisionModel`
+
+Model used for vision-based operations (screenshot analysis). Must accept image input. For Azure, pass the deployment name. Default is `gpt-5.6-terra`.
+
+* *Type:* `string`
+* *Required capabilities:* None
+* *Optional capabilities:* None
+
+.Example
+[source,java]
+----
+capabilities.setCapability("kobiton:llmVisionModel", "claude-opus-4-8");
+----
+
+[#_locatorStrategy]
+=== `kobiton:locatorStrategy`
+
+Locator strategy used to resolve natural language locators. Accepts `uitree` and `visionvirtual`. Pass `visionvirtual` for canvas-based apps. Default is `uitree`. See xref:automation-testing:appium-ai/overview-appium-ai.adoc[Appium AI: Natural language locators] for guidance on choosing a strategy.
+
+* *Type:* `string`
+* *Required capabilities:* None
+* *Optional capabilities:* None
+
+.Example
+[source,java]
+----
+capabilities.setCapability("kobiton:locatorStrategy", "visionvirtual");
+----
+
+[#_visionCoordSpace]
+=== `kobiton:visionCoordSpace`
+
+Coordinate convention the vision model returns. Accepts `Pixel` or `Normalized` (0–1000). Default is `Pixel`, which is correct for GPT-5.6, Claude Opus 4.8, and the Kobiton-hosted qwen25-vl-7b. Set `Normalized` only for a model that returns 0–1000 coordinates, such as the Qwen3 family.
+
+* *Type:* `string`
+* *Required capabilities:* None
+* *Optional capabilities:* None
+
+.Example
+[source,java]
+----
+capabilities.setCapability("kobiton:visionCoordSpace", "Pixel");
+----
+
 == Appium Capabilities
 
 Kobiton supports most standard Appium capabilities. The capabilities listed below are commonly used when running automation sessions on Kobiton devices.
@@ -422,11 +640,13 @@ For Basic Appium 2 sessions, follow the https://appium.io/docs/en/2.0/guides/mig
 * <<browsername,browserName>>
 * <<devicename,deviceName>>
 * <<deviceorientation,deviceOrientation>>
+* <<enforceappinstall,enforceAppInstall>>
 * <<fullreset,fullReset>>
 * <<noreset,noReset>>
 * <<platformname,platformName>>
 * <<udid,udid>>
 * <<username,username>>
+* <<_waitForIdleTimeout,waitForIdleTimeout>>
 
 [#_accessKey]
 === `accessKey`
@@ -526,13 +746,29 @@ capabilities.setCapability("appium:deviceOrientation", "portrait");
 capabilities.setCapability("appium:deviceOrientation", "landscape");
 ----
 
+=== `enforceAppInstall`
+
+Force installation of the app at session start, even if the app is already installed on the device. Use with xref:_fullreset[] to clear app data at session start. For more information, see xref:automation-testing:capabilities/clear-app-state-between-sessions.adoc[window=read-later]. *Only available for private devices.*
+
+* *Type:* `boolean`
+* *Required capabilities:* None
+* *Optional capabilities:* xref:_fullreset[]
+
+.Example
+[source,java]
+----
+capabilities.setCapability("appium:enforceAppInstall", true);
+----
+
 === `fullReset`
 
 Remove all apps installed during the test session. To keep the apps and only remove their data, use xref:_noreset[]. *Only available for private devices.*
 
+If the app is already on the device, `fullReset` alone may leave app data in place, because installing the app can be skipped. Pair with xref:_enforceappinstall[] to force the installation and clear app data. For more information, see xref:automation-testing:capabilities/clear-app-state-between-sessions.adoc[window=read-later].
+
 * *Type:* `boolean`
 * *Required capabilities:* None
-* *Optional capabilities:* None
+* *Optional capabilities:* xref:_enforceappinstall[]
 
 .Example
 [source,java]
@@ -589,3 +825,33 @@ The Kobiton xref:profile:manage-your-profile.adoc[username,window=read-later] us
 ----
 capabilities.setCapability("appium:username", "johndoe");
 ----
+
+[#_waitForIdleTimeout]
+=== `waitForIdleTimeout`
+
+[NOTE]
+This capability is only available in automation sessions on Android devices. On iOS devices, the setting is ignored.
+
+The maximum time, in milliseconds, that the session waits for the app screen to become idle before each UiAutomator element search. Default is `10000`.
+
+Set to `0` to skip the idle wait. Use this value for apps that redraw continuously, such as apps with ongoing animations, where the screen never becomes idle and `-android uiautomator` locators return `no such element`.
+
+* *Type:* `integer`
+* *Required capabilities:* None
+* *Optional capabilities:* None
+
+.Example
+[source,java]
+----
+capabilities.setCapability("appium:waitForIdleTimeout", 0);
+----
+
+You can also change this value during the session with the Appium Settings API. The new value applies to later element searches in the same session. When the session ends, the value returns to the default.
+
+.Example
+[source,java]
+----
+driver.setSetting("waitForIdleTimeout", 0);
+----
+
+To restore the default behavior, remove the capability or the `setSetting` call from the test script.
