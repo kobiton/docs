@@ -1,0 +1,122 @@
+= Cloud October 23, 2026
+
+[NOTE]
+====
+Cloud release notes are typically published weekly and summarize changes since the previous publication. Kobiton uses date-based release versioning, with releases identified by the build date in YYMM.DD format. Version information for individual software components is available in the Component versions section.
+====
+
+// Source: KOB-55509 from PR #805
+
+== More accurate file transfer results in Kobiton CLI
+
+The `kobiton file push` and `kobiton file pull` commands now report file transfer results more accurately on Android and iOS devices.
+
+- *Failed transfers:* File transfers that fail now return a non-zero exit status instead of reporting success. This includes pushing files to restricted device paths or iOS apps that are not installed, and pulling files that do not exist.
+- *iOS file transfers:* The `kobiton file push` command no longer intermittently reports an error when a file is successfully transferred to an iOS device.
+
+// Source: KOB-55560 from PR #785
+
+== Consistent CLI command counts across the Kobiton API and Session Explorer
+
+For Kobiton CLI sessions, the Kobiton API now returns command counts that match the steps displayed in Session Explorer.
+
+The session commands endpoints return one session creation command and one command for each `kobiton webdriver` call, without including repeated session creation requests.
+
+This change applies to CLI sessions recorded after this release. Previously recorded sessions are unchanged.
+
+== Improved reliability in Appium automation sessions
+
+Updates to Appium automation improve consecutive script execution in mixed sessions and attribute handling on iOS devices.
+
+// Source: KOB-55531 from PR #799
+
+=== Run consecutive Appium 2 scripts in mixed sessions
+
+Mixed sessions on Android devices now support consecutive Appium 2 scripts without requiring users to exit and reopen the session.
+
+Previously, devices could remain on the *Lightning Mode is turning off* screen after a script finished, preventing further interaction. Additional scripts and manual interaction are now available after a script ends.
+
+// Source: KOB-55522 from PR #774
+
+=== Return null for missing element attributes on iOS
+
+The WebDriver Get Element Attribute command now returns `null` when the requested attribute does not exist in iOS native automation sessions, matching the existing behavior on Android.
+
+Previously, these requests returned an HTTP 500 error, which could take approximately 25 seconds to appear because Appium clients retried the request.
+
+== Turbo Test
+
+// Source: KOB-55461 from PR #779
+
+=== Improved test report availability
+
+Completed Appium Turbo Test sessions now consistently display the *Test Report* section in Session Overview. Session details retrieved through the Kobiton API also include the test report download URL.
+
+Previously, some completed sessions did not display the test report, even though it had been generated.
+
+For details, see xref:automation-testing:turbo-test-execution/run-appium-test.adoc#_download_test_report[Download test report].
+
+// Source: KOB-55557 from PR #803
+// Source: KOB-55562 from PR #786
+
+=== Improved session reliability
+
+Turbo Test sessions now handle temporary connection and authentication issues more reliably. Sessions are less likely to be interrupted unexpectedly, connection failures surface faster, and new sessions start more reliably.
+
+== Analytics reports
+
+// Source: KOB-55105 from PR #822
+
+=== New Mean Time Between Failure report
+
+The new *Mean Time Between Failure (MTBF)* report measures how long devices remain online and available between offline events, helping organization administrators assess device stability and reliability.
+
+Available under *Reports* in Kobiton Portal, in the *Device* category, the report includes:
+
+- MTBF trends over time, summarized by week for a selected date range.
+- Average time between offline events, measured in hours.
+- A placeholder value of 1,000 hours for weeks with no offline events. This value is not a measurement.
+
+// Source: KOB-55190 from PR #820
+
+=== Retained devices included in the Parallel Sessions report
+
+The *Parallel Sessions* report now includes retained devices when calculating peak parallel sessions, even when those devices have no active sessions.
+
+Devices that are both retained and in an active session are counted only once.
+
+Report data from July 2026 onward reflects the updated calculation.
+
+// Source: KOB-55514 from PR #790
+
+== Improved element inspection for iOS screens with unbounded elements
+
+Kobiton Inspector and Appium page source requests can retrieve element information from iOS screens containing elements with unbounded positions or sizes.
+
+Previously, these screens could display an empty XML hierarchy in Inspector or return a `JSON serialization failed` error for Appium page source requests.
+
+Elements with unbounded positions or sizes are returned with a position of `-1, -1` and a width and height of `0`, consistent with Appium behavior. Other elements are unaffected.
+
+The improvement also applies to Appium find element results.
+
+// Source: KOB-54317 from PR #769
+
+== Streamlined tool calls for the Kobiton MCP server
+
+Kobiton MCP server tool definitions have been streamlined to reduce the amount of information AI assistants need to process. Optional context parameters are no longer required when the server can infer the same information from other actions.
+
+// Source: KOB-55529 from PR #773
+
+== Improved image injection for Android apps
+
+Updates to image injection improve compatibility with Android apps and provide clearer feedback when instrumentation is not supported.
+
+- *R8-optimized apps:* Camera injection now supports Android apps built with R8 code optimization.
+- *Unsupported apps:* When an app uses method handles, instrumentation stops and displays an error identifying the app's file format. Apps that use method handles cannot be instrumented.
+
+== Component versions
+
+* Portal 2610.21
+* deviceConnect 2610.21
+* deviceShare 2610.6
+* Gigacap 2610.19

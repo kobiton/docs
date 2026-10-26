@@ -1,0 +1,84 @@
+= Enable virtualUSB on host machines
+:navtitle: Enable virtualUSB on host machines
+
+Enable virtualUSB on specific host machines so end users can connect to remote devices on those machines directly from their local machine or development environment.
+
+// REVIEWER NOTE: Source is KOB-52820 (Settings dialog, virtualUSB tab). Confirm rollout state of the
+// Settings dialog for all organizations before publishing.
+
+== Before you start
+
+* Sign in with an account that has the *ADMIN* predefined role.
+
+* The *virtualUSB* tab is available only to organizations whose plan includes virtualUSB. Organizations without virtualUSB see only the *Max Parallel Tests* tab.
+
+* For self-managed host machines, confirm the IP address you plan to use is reachable from your end users' machines.
+
+== Enable virtualUSB
+
+. In Kobiton Portal, select your profile name or picture, then choose *Settings*.
+
+. Select the *Device Management* tab.
+
+. Select *Settings* at the top of the page.
++
+The *virtualUSB* tab opens first.
++
+// REVIEWER NOTE: Add a screenshot of the virtualUSB tab. Confirm the Settings button placement
+// (delivered by KOB-52819).
+
+. Find the host machine. Enter its name or IP address in the search field, or select *Show enabled only* to list only host machines that already have virtualUSB enabled.
+
+. Turn on the *Enabled* toggle for the host machine.
+
+. Review the *Network Routing* and *Connection Address* values for the host machine:
++
+[cols="1,1,2"]
+|===
+|Host machine |Network Routing |Connection Address
+
+|Hosted by Kobiton
+|*Managed by Kobiton*
+|Shows *Auto-configured by Kobiton*. No input is required.
+
+|Hosted by your organization
+|*Self-managed*
+|Pre-filled with the host machine's current IP address, which you can edit. This field is required.
+
+|Standalone
+|Not shown
+|Enter the IP address. This field is required.
+|===
++
+The connection address is the IP address used to route virtualUSB connections to the host machine. Make sure it is reachable from your end users' machines before saving.
+
+. Repeat for each host machine you want to enable. To disable virtualUSB on a host machine, turn off its *Enabled* toggle.
+
+. Select *Save*.
++
+*Save* is blocked until every enabled host machine has a *Network Routing* value and every required *Connection Address* has an IP address. A message appears next to each missing value.
+
+== Verify
+
+After a successful save, the dialog closes and the *Device Management* page updates to show the new virtualUSB state of each host machine.
+
+If no host machines match the search or the *Show enabled only* filter, the list shows *No machines found*.
+
+== Troubleshooting
+
+Save fails::
+An error message appears and the dialog stays open with your changes kept. Select *Save* again.
+
+Host machine list does not load::
+The dialog shows an error with an option to retry. Select the retry option to reload the list.
+
+Close the dialog without saving::
+Select *Cancel* or the close icon. When the dialog has unsaved changes, confirm *You have unsaved changes. Leave anyway?* to discard them, or cancel to return to the dialog with your changes intact.
+
+== Related guides
+
+* xref:device-lab-management:device-management-page.adoc[]
+
+* xref:device-lab-management:deviceConnect/control-host-capacity.adoc[]
+
+* xref:debugging:set-up-virtualusb.adoc[]

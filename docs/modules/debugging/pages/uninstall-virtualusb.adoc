@@ -29,4 +29,26 @@ Open *File Explorer*, go to *C:\Program Files\virtualUSB\*, then double-click *U
 
 image:debugging:uninstall-virtualusb-context.png[width=1000,alt="Uninstall virtual USB on Window"]
 --
+
+Linux::
++
+--
+Open a terminal and remove the package for your distribution:
+
+* Debian-based (Ubuntu):
++
+[source,shell]
+----
+sudo apt-get remove kobiton-vusb
+----
++
+To also remove configuration files, use `sudo apt-get purge kobiton-vusb` instead.
+
+* Red Hat-based (RHEL):
++
+[source,shell]
+----
+sudo dnf remove kobiton-vusb
+----
+--
 ======

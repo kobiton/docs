@@ -481,6 +481,17 @@ kobiton file push foo.dat @com.company.app:Documents/foo.dat
 Pushed 505031 bytes to /data/local/tmp/foo.dat
 ----
 
+[IMPORTANT]
+====
+*A refused push fails with a non-zero exit code.*
+
+A device can refuse the destination path. Public cloud and trial devices run a restricted session that limits writes to the permitted directories, and any device refuses a write to a path it does not permit. When a push is refused, nothing is written to the device. See <<adb-shell-restricted-sessions,restricted sessions>>.
+
+A refused push reports the reason and exits with a non-zero status. A successful push is unaffected and exits `0`.
+
+Earlier CLI versions reported a refused push as `Pushed 505031 bytes` and exited `0`. Update to the latest CLI version before relying on the exit code in a CI/CD pipeline. See xref:set-up-cli.adoc[].
+====
+
 === `file pull`
 
 Pull a file or directory from the device to a local path.
@@ -538,6 +549,15 @@ kobiton file pull @com.company.app:Documents/foo.dat
 Pulled 505031 bytes to foo.dat
 ----
 
+[IMPORTANT]
+====
+**A failed pull returns a non-zero exit code.**
+
+A pull fails when the source path does not exist on the device or the device refuses the transfer. A failed pull reports the reason and exits with a non-zero status. A successful pull exits `0`.
+
+Earlier CLI versions could report a failed pull as `Pulled 0 bytes` and exit `0`. Update to the latest CLI version before relying on the exit code in a CI/CD pipeline. See xref:set-up-cli.adoc[].
+====
+
 == `device`
 
 Device operations: discovery, shell access, port forwarding, logs, and screenshots.
@@ -591,13 +611,16 @@ Display Name, UDID, Platform, List, Status, Host
 iPhone 12, 79de3c497b9f1****19040aeb44, iOS 18.1, Private, ACTIVATED, 192.168.50.86
 ----
 
-=== `device adb-shell`
+[#device-shell]
+=== `device shell`
 
-Run `adb shell` commands on an Android device.
+Run `adb shell` commands on an Android device. iOS devices have no shell.
+
+The CLI also accepts `adb-shell` as an alias for `shell`.
 
 .Syntax
 ----
-kobiton device adb-shell [OPTIONS] [ARGS]...
+kobiton device shell [OPTIONS] [ARGS]...
 ----
 
 .Arguments
@@ -605,7 +628,7 @@ kobiton device adb-shell [OPTIONS] [ARGS]...
 |===
 | Argument | Description
 
-| `[ARGS]...` | Arguments to pass (before or after `--`). If not provided, launches an interactive adb shell. The interactive shell is unavailable on public cloud and trial devices.
+| `[ARGS]...` | Arguments to pass (before or after `--`). If not provided, opens an interactive shell. The interactive shell is unavailable on public cloud and trial devices.
 |===
 
 Accepts all <<global-options,global options>>.
@@ -629,29 +652,29 @@ A restricted session rejects control characters and these shell metacharacters a
 
 Pipes, redirection, command and variable substitution, backgrounding, globbing, and quoting are therefore unavailable on the device. Arguments cannot contain whitespace, and a command line cannot exceed 1024 characters. Individual commands further restrict which arguments and file paths they accept, so a whitelisted command can still reject an argument.
 
-Run `kobiton device adb-shell --help` for the current list of allowed commands, permitted directories, and per-command restrictions.
+Run `kobiton device shell --help` for the current list of allowed commands, permitted directories, and per-command restrictions.
 ====
 
 .Example
 [source,shell]
 ----
 # Read a device property
-kobiton device adb-shell getprop ro.build.version.sdk
+kobiton device shell getprop ro.build.version.sdk
 
 # Pass arguments after -- so the CLI does not read them as its own options
-kobiton device adb-shell -- logcat -d -t 200
+kobiton device shell -- logcat -d -t 200
 ----
 
 Both examples run on a restricted session.
 
-To list files on a device, use <<file-list,`kobiton file list`>>. A restricted session confines `adb-shell ls` to the permitted directories, so `ls -l /sdcard` is rejected while `ls -l /sdcard/Download/` is accepted.
+To list files on a device, use <<file-list,`kobiton file list`>>. A restricted session confines `shell ls` to the permitted directories, so `ls -l /sdcard` is rejected while `ls -l /sdcard/Download/` is accepted.
 
 .Filter command output
 A restricted session rejects the pipe character, so filter locally and send only the command to the device:
 
 [source,shell]
 ----
-kobiton device adb-shell dumpsys window displays | grep -E 'mCurrentFocus|mFocusedApp'
+kobiton device shell dumpsys window displays | grep -E 'mCurrentFocus|mFocusedApp'
 ----
 
 .Output (both forms)
@@ -664,7 +687,7 @@ On a dedicated device, quote the whole expression instead. The pipe then runs on
 
 [source,shell]
 ----
-kobiton device adb-shell "dumpsys window displays | grep -E 'mCurrentFocus|mFocusedApp'"
+kobiton device shell "dumpsys window displays | grep -E 'mCurrentFocus|mFocusedApp'"
 ----
 
 === `device forward`
@@ -817,6 +840,56 @@ Plus all <<global-options,global options>>.
 kobiton device screen -q 80 > screen.jpg
 ----
 
+== `organization`
+
+Organization operations. The CLI also accepts `org` as an alias for `organization`.
+
+=== `organization user create`
+
+Create a user in the current organization.
+
+[NOTE]
+Only roles with the `org_management.modify` permission can create users.
+
+.Syntax
+----
+kobiton organization user create [OPTIONS] --email <EMAIL> --username <USERNAME>
+----
+
+.Options
+[cols="1,1,3",options="header"]
+|===
+| Option | Argument | Description
+
+| `--email` | `<EMAIL>` | Email address of the new user. *(required)*
+| `--username` | `<USERNAME>` | Username of the new user: 5 to 32 characters from `a-z`, `0-9`, and `. + - _`. *(required)*
+| `--password` | `<PASSWORD>` | Sign-in password for the new user. Required unless `--enable-sso` is set. Can also be set with the `KOBITON_NEW_USER_PASSWORD` environment variable.
+| `--enable-sso` | | Enable single sign-on (SSO) for the user instead of a password. The API can't revert this setting. It also clears the password of an existing user.
+| `--first-name` | `<FIRST_NAME>` | First name of the new user. Default: the part of the email address before `@`.
+| `--last-name` | `<LAST_NAME>` | Last name of the new user.
+|===
+
+Plus all <<global-options,global options>>.
+
+*Requires:*
+
+* `--email <EMAIL>` and `--username <USERNAME>`
+* `--password <PASSWORD>`, the `KOBITON_NEW_USER_PASSWORD` environment variable, or `--enable-sso`
+
+.Example
+[source,shell]
+----
+export KOBITON_NEW_USER_PASSWORD='<password>'
+kobiton organization user create --email jane.doe@tester.com --username janedoe --first-name Jane --last-name Doe
+----
+
+Replace `<password>` with the new user's sign-in password.
+
+.Output
+----
+jane.doe@tester.com: new account, SSO disabled
+----
+
 == `reservation`
 
 Reservation operations: list and terminate device reservations.
@@ -911,6 +984,8 @@ kobiton session create [OPTIONS]
 | Option | Argument | Description
 
 | `-t`, `--timeout` | `<TIMEOUT>` | Inactivity timeout for this session, in minutes. Default/minimum is `10`, maximum is `120`. Can be refreshed with `session ping`.
+| `--hide` | | Doesn't print the session token. The token is still saved for later commands.
+| `--capture` | `<CAPTURE>` | Session data to capture, as a comma-separated list or by repeating the option. See <<session-create-capture,Capture session data>>. Default: nothing is captured.
 |===
 
 Plus all <<global-options,global options>>.
@@ -929,6 +1004,57 @@ kobiton session create -u 3e4e7fe7
 ----
 Session 8155111 created for device 3e4e7fe7.
 Session token eyJhbGciOiJ...
+----
+
+[#session-create-capture]
+==== Capture session data
+
+Capture is opt-in. A CLI session created without `--capture` captures no session data.
+
+Session Explorer, including the *WebDriver Traffic* panel, is available for a CLI session only when both of the following are true:
+
+* The session was created with at least one data type in `--capture`.
+* At least one `kobiton webdriver get` or `kobiton webdriver post` command ran during the session.
+
+*WebDriver Traffic* isn't a `--capture` value. The panel shows the *Request Body* and *Response Body* of each `kobiton webdriver` command. All other Session Explorer data depends on the values passed to `--capture`.
+
+Add `--capture` with one or more of the following values. Separate values with commas, or repeat `--capture` once per value.
+
+[cols="1,3",options="header"]
+|===
+| Value | Description
+
+| `screenshots` | Screenshots, collected continuously during the session.
+| `view-trees` | View hierarchies, collected continuously during the session and shown in the *Inspector* panel.
+| `logs` | Device log lines, shown in the *Device Logs* panel.
+| `metrics` | Device metric samples, shown in the *System Metrics* panel.
+| `video` | Session video.
+| `foreground-apps` | Foreground app change events.
+| `user-action` | Each user action, added to the session timeline after the action completes.
+| `wait-for-idle` | Waits for the device to go idle after each user action before capturing data. Captures no data of its own.
+|===
+
+After the session ends, Session Explorer shows screenshots, view hierarchies, and metrics only for `kobiton webdriver get` and `kobiton webdriver post` commands. Other commands, such as `kobiton app install`, don't appear as steps.
+
+[NOTE]
+====
+If `view-trees` isn't captured, session steps appear in Session Explorer only after the session ends.
+====
+
+// REVIEWER NOTE (KOB-52718): foreground-apps and user-action are in the CLI help, so they stay
+// documented. Earlier testing found no visible artifact in Session Explorer for a CLI-only
+// session. Confirm where this data appears in the portal, if anywhere, so the table can say so.
+
+.Example
+[source,shell]
+----
+kobiton session create -u 3e4e7fe7 --capture screenshots,view-trees,logs
+----
+
+.Example: repeated option
+[source,shell]
+----
+kobiton session create -u 3e4e7fe7 --capture screenshots --capture video
 ----
 
 === `session end`
@@ -1056,6 +1182,50 @@ kobiton session list-active
 .Output
 ----
 Session 8155111, device 3e4e7fe7, status RUNNING, created 2025-10-09T03:38:03Z, ended active
+----
+
+=== `session list`
+
+Display a page of sessions created within a time window.
+
+.Syntax
+----
+kobiton session list [OPTIONS]
+----
+
+.Options
+[cols="1,1,3",options="header"]
+|===
+| Option | Argument | Description
+
+| `--from` | `<FROM>` | Start of the window, as `YYYY-MM-DD` or RFC 3339. Default: 30 days ago.
+| `--to` | `<TO>` | End of the window, as `YYYY-MM-DD` or RFC 3339. Default: now.
+| `--page` | `<PAGE>` | Page to retrieve. Default: the first page.
+| `--size` | `<SIZE>` | Maximum number of sessions to return per page. Default: `20`.
+| `--all` | | Retrieve every page in the window instead of a single page.
+| `--team` | `<TEAM>` | Filter by team ID.
+| `--user` | `<USER>` | Filter by user ID.
+| `--state` | `<STATE>` | Filter by session state, for example `START`, `COMPLETE`, `PASSED`, `FAILED`, `TIMEOUT`, `ERROR`, or `TERMINATED`.
+| `--type` | `<SESSION_TYPE>` | Filter by session type, for example `AUTO`, `MANUAL`, `SCRIPTLESS`, `MIXED`, or `CLI`.
+| `--platform` | `<PLATFORM>` | Filter by device platform, for example `Android` or `iOS`.
+| `--keyword` | `<KEYWORD>` | Filter by keyword, matching device name or platform version.
+|===
+
+Plus all <<global-options,global options>>.
+
+.Example
+[source,shell]
+----
+kobiton session list --type CLI
+----
+
+.Output
+----
+ID, State, Type, Device, Platform, Created, Ended
+36, COMPLETE, CLI, 00008103-00115458****A01E, iOS 26.1, 2026-10-16T18:28:06.592Z, 2026-10-16T18:28:25.141Z
+35, COMPLETE, CLI, 00008103-00115458****A01E, iOS 26.1, 2026-10-16T18:27:04.672Z, 2026-10-16T18:27:27.383Z
+
+Page 1 (2 items), 2 total
 ----
 
 === `session show`
@@ -1196,6 +1366,8 @@ out: Tear Down
 == `webdriver`
 
 Send generic WebDriver commands to the session. The session path prefix (`/session/<id>`) is supplied automatically — provide only the path suffix.
+
+The CLI also accepts `wd` as an alias for `webdriver`, for example `kobiton wd get source`.
 
 === `webdriver post`
 

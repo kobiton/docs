@@ -11,7 +11,7 @@ By the end of this walkthrough, you will have connected to a device, recorded au
 Kobiton currently supports mobile automation in UiPath Studio for:
 
 * iOS devices (Kobiton 4.19.6 and above).
-* Android devices (Kobiton 4.21.1 and newer).
+* Android devices (Kobiton 4.23 and newer).
 ====
 
 == Prerequisites
@@ -21,7 +21,7 @@ Kobiton currently supports mobile automation in UiPath Studio for:
 ** xref:profile:manage-your-api-credentials.adoc#_get_an_api_key[API key]
 ** xref:profile:manage-your-api-credentials.adoc#_get_server_url[Appium Server URL]
 * Ensure UiPath Studio is installed and activated.
-* If you are working with Android devices, verify that your Kobiton version is 4.21.1 or newer.
+* If you are working with Android devices, verify that your Kobiton version is 4.23 or newer.
 
 == Open and configure a project
 
@@ -63,7 +63,7 @@ In the *Add a device* window, fill in the following information:
 ** `udid`: input the UDID of the device. If omitted, the Device Name, Platform, and Platform Version will be used to find the device.
 ** `kobiton:username` (required, case-sensitive): input the Kobiton username.
 ** `kobiton:accessKey` (required, case-sensitive): input the Kobiton API key.
-** `kobiton:runtime` (required): input appium.
+** `kobiton:runtime` (recommended): input `xium`. To use Basic Appium 2 instead, input `appium`.
 
 See the screenshot below for an example of adding a device:
 

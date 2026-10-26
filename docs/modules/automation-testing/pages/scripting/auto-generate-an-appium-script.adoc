@@ -45,3 +45,33 @@ This section lists all programming languages and test frameworks available for g
 * Java - JUnit
 * NodeJS - Mocha
 * C# - NUnit
+
+[#_java_project_requirements]
+== Java project requirements
+
+Java projects exported with TestNG or JUnit require JDK 17 or later and Maven. Follow the `README.md` file in the exported project to build and run the tests.
+
+Exported Java projects use the following stack:
+
+* Java 17 compile target
+* Appium `java-client` 10.1.1
+* Selenium 4 (W3C protocol)
+* TestNG or JUnit 4, based on the selected framework
+
+Maven Surefire generates the test reports.
+
+Add an exported Java project as a module in an existing framework that uses current Appium and Selenium versions.
+
+// REVIEWER NOTE (Robot Ranch, KOB-54691): Source is Jira KOB-54691 (Released, fixVersion 2026.09.29).
+// Acceptance criterion AC-6 asks for the ASG docs pages to reference the new stack.
+// - The ticket's design blueprint chose java-client 9.5.0 with Selenium 4.34.0, but the later impact
+//   analysis and the customer-facing release note field both state java-client 10.1.1 with Selenium 4
+//   (selenium-bom 4.49.0). This draft uses 10.1.1. Confirm with engineering before publishing.
+// - Exact TestNG (7.12.0) and JUnit (4.13.2) versions are omitted to limit version drift. Add them if
+//   the docs team wants the full list.
+// - Confirm whether generated Java scripts use Appium AI locators. If they do, the java-client 10.x
+//   note on the Appium AI overview page may apply to exported projects.
+// - test-management:generate-appium.adoc also lists supported languages. Decide whether it needs a
+//   pointer to this section.
+// - The supported languages list on this page omits Python (pyTest), which generate-appium.adoc lists.
+//   Out of scope for KOB-54691; flagged for follow-up.

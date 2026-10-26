@@ -28,11 +28,6 @@ on:
         description: "Target release date, YYYY-MM-DD"
         required: true
         type: string
-      release_label:
-        description: "Release label, for example 2608.18"
-        required: false
-        default: ""
-        type: string
       create_pr:
         description: "Create a pull request"
         required: false
@@ -41,21 +36,13 @@ on:
         options:
           - "true"
           - "false"
-      # Turn off Claude, probably not needed.
-      # run_claude:
-      #  description: "Compile release-note draft with Claude"
-      #  required: false
-      #  default: "false"
-      #  type: choice
-      #  options:
-      #    - "true"
-      #    - "false"
 
   pull_request:
     paths:
       - ".github/workflows/gazette-collect.yaml"
       - ".github/scripts/release-collect.js"
       - ".github/scripts/gazette-draft.js"
+      - ".github/scripts/gazette-editor.js"
 
   schedule:
     # Thursday 9:00 PM Eastern during daylight saving time.
@@ -106,44 +93,40 @@ jobs:
           path: ${{ runner.temp }}/gazette-sources.json
           retention-days: 7
 
-      - name: Set Gazette release date and file
+      - name: Set Gazette dates and file
         id: gazette_release
+        shell: bash
         run: |
+          GAZETTE_RUN_DATE="$(TZ=America/New_York date +%Y-%m-%d)"
+
           if [[ "${{ github.event_name }}" == "workflow_dispatch" ]]; then
-            RELEASE_DATE="${{ inputs.release_date }}"
+            PUBLICATION_DATE="${{ inputs.release_date }}"
           else
-            RELEASE_DATE="$(TZ=America/New_York date +%Y-%m-%d)"
+            PUBLICATION_DATE="$(TZ=America/New_York date -d '+1 day' +%Y-%m-%d)"
           fi
 
-          if [[ -z "${RELEASE_DATE}" ]]; then
-            echo "::error::release_date is required for Gazette runs."
+          if [[ -z "${PUBLICATION_DATE}" ]]; then
+            echo "::error::release_date is required for manual Gazette runs."
             exit 1
           fi
 
-          RELEASE_FILE_NAME="${RELEASE_DATE}.adoc"
+          RELEASE_FILE_NAME="${PUBLICATION_DATE}.adoc"
           RELEASE_FILE_PATH="docs/modules/release-notes/pages/all-releases/${RELEASE_FILE_NAME}"
 
-          echo "release_date=${RELEASE_DATE}" >> "$GITHUB_OUTPUT"
+          echo "gazette_run_date=${GAZETTE_RUN_DATE}" >> "$GITHUB_OUTPUT"
+          echo "publication_date=${PUBLICATION_DATE}" >> "$GITHUB_OUTPUT"
           echo "release_file_name=${RELEASE_FILE_NAME}" >> "$GITHUB_OUTPUT"
           echo "release_file_path=${RELEASE_FILE_PATH}" >> "$GITHUB_OUTPUT"
 
-          echo "Gazette release date: ${RELEASE_DATE}"
-          echo "Gazette release file: ${RELEASE_FILE_PATH}"
+          echo "Gazette run date: ${GAZETTE_RUN_DATE}"
+          echo "Publication date: ${PUBLICATION_DATE}"
+          echo "Release file: ${RELEASE_FILE_PATH}"
 
       - name: Create draft release note artifact
         run: node .github/scripts/gazette-draft.js > ${{ runner.temp }}/gazette-release-notes.adoc
         env:
           GAZETTE_SOURCES_FILE: ${{ runner.temp }}/gazette-sources.json
-          RELEASE_DATE: ${{ steps.gazette_release.outputs.release_date }}
-          RELEASE_LABEL: ${{ github.event_name == 'workflow_dispatch' && inputs.release_label || 'Target release TBD' }}
-
-      # For compiler testing.
-      # - name: Upload Gazette draft artifact
-      #  uses: actions/upload-artifact@v5
-      #  with:
-      #    name: gazette-release-notes
-      #    path: ${{ runner.temp }}/gazette-release-notes.adoc
-      #    retention-days: 7
+          RELEASE_DATE: ${{ steps.gazette_release.outputs.publication_date }}
 
       - name: Set Gazette branch name
         id: gazette_branch
@@ -187,6 +170,14 @@ jobs:
         env:
           RELEASE_FILE_PATH: ${{ steps.gazette_release.outputs.release_file_path }}
 
+      - name: Run Gazette Editor
+        run: node .github/scripts/gazette-editor.js
+        env:
+          RELEASE_FILE_PATH: ${{ steps.gazette_release.outputs.release_file_path }}
+          PUBLICATION_DATE: ${{ steps.gazette_release.outputs.publication_date }}
+          NAV_FILE: docs/modules/release-notes/nav.adoc
+          LATEST_FILE: docs/modules/release-notes/pages/kobiton-four-latest.adoc
+
       - name: Upload Gazette repo-shaped artifact
         uses: actions/upload-artifact@v5
         with:
@@ -205,7 +196,10 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
-          git add "$FILE"
+          git add \
+            "$FILE" \
+            docs/modules/release-notes/nav.adoc \
+            docs/modules/release-notes/pages/kobiton-four-latest.adoc
 
           if git diff --cached --quiet; then
             echo "No Gazette changes to commit."
@@ -233,9 +227,10 @@ jobs:
           - \`docs/modules/release-notes/partials/\`
 
           Review notes:
-          - Confirm included entries are assigned to the correct release.
-          - Rename or move the generated page if publishing for a specific release date.
-          - Confirm nav/sidebar placement if this page should be published.
+          - Confirm included entries belong to this publication.
+          - Verify component versions.
+          - Review entries for duplicate or previously published content.
+          - Review customer-facing wording and section structure.
           - Product-doc changes bundled in source PRs are not applied here.
           EOF
 
