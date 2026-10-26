@@ -39,6 +39,21 @@ When a blocker occurs, the execution pauses. Open the live remediation link and 
 
 The execution resumes after you resolve the blocker. The final summary marks the execution as passed if it completes successfully.
 
+.Example blocker message and final summary (live remediation enabled, blocker not resolved)
+====
+*Action needed now:* execution `01a177cb-d7dc-3034-5cb5-e8b158cb7ce4` is paused on a blocker and waiting for you.
+
+* Test case: `01a177bc-52d2-6d02-a9c5-c672e59d44b3`
+* Device: `1815372264` (session `9034307`)
+* Live remediation: \https://portal.kobiton.com/devices/launch?id=1815372264
+
+If the live remediation window times out, the execution automatically fails with `BLOCKER_ENCOUNTERED`, so resolve it soon. Use the KobiAI chat in the live remediation window to clear the blocker, and the execution will resume on its own.
+
+*Final summary for test run `01a177cb-d7d6-ccf7-4f33-4cfde4b4d62e`*
+
+* Execution `01a177cb-d7dc-3034-5cb5-e8b158cb7ce4` (test case `01a177bc-52d2-6d02-a9c5-c672e59d44b3`) hit a blocker, paused for live remediation, and timed out unresolved. It ended with `BLOCKER_ENCOUNTERED`. The resolution you submit in the portal applies to the next rerun.
+====
+
 For more information, see xref:test-management:remediations.adoc#_live_remediation[Live remediation].
 
 === Live remediation is not enabled
