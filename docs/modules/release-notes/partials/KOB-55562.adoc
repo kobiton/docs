@@ -1,0 +1,14 @@
+// Source: KOB-55562
+// Reviewer note: KOB-55562 is already summarized, together with KOB-55557, under
+// "Turbo Test > Improved session reliability" in all-releases/2026-10-23.adoc.
+// Merge these details into that entry or drop this partial; do not publish both.
+
+== Turbo Test
+
+=== More reliable session starts after executor reconnects
+
+Turbo Test sessions now start reliably when test executors reconnect at the same time, such as after a network interruption or an executor restart.
+
+- New sessions go only to executors that are online.
+- Executors that stop responding are removed within about 15 seconds and no longer receive new sessions.
+- If an executor's connection drops while a session is starting, the session fails quickly with an `Executor connection lost` error instead of waiting for a timeout.
