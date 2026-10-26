@@ -2,21 +2,25 @@
 
 == Overview
 
-A baseline session is a manual test session that serves as the source for automated test execution. It captures how an application is exercised on a real device and provides the reference used to create a test case.
+A baseline session is a completed test session that serves as the source for automated test execution. It captures how an application is exercised on a real device and provides the reference used to create a test case.
 
-Baseline sessions are created through manual interaction in the Kobiton platform and are required before a test can be run automatically.
+A baseline session is required before a test can be run automatically. You can create one from any of the following session types:
+
+* Manual sessions
+* Appium automation sessions
+* Mixed sessions, which combine manual and automation steps in a single session
 
 == What is a baseline session?
 
-A baseline session is a manual session performed on a real device through the platform.
+A baseline session is a session performed on a real device through the platform.
 
-During the session, a user interacts with the application as they would during normal testing. These interactions are captured by the platform and later reused to define a test flow.
+During the session, the application is exercised as it would be during normal testing, through manual interaction, an Appium script, or a mix of both. These interactions are captured by the platform and later reused to define a test flow.
 
-Once converted into a test case, the baseline session becomes the reference for future test execution. Test cases can also be used to generate Appium scripts.
+Once converted into a test case, the baseline session becomes the reference for future test execution. Test cases created from manual sessions can also be used to generate Appium scripts.
 
-== Create a baseline session
+== Create a baseline from a manual session
 
-Baseline sessions are created by running a manual test session with capture enabled and completing a defined test flow.
+Baseline sessions are created from manual sessions by running a session with capture enabled and completing a defined test flow.
 
 === 1. Start a manual session and enable capture
 
@@ -50,6 +54,18 @@ To convert a session into a test case or learn more about Test Management, see x
 
 image::convert-test-case.png[width=600,alt="Convert Test Case in Session Explorer"]
 
+== Create a baseline from an automation or mixed session
+
+To use an Appium automation or mixed session as a baseline:
+
+. In your Appium script, set the `kobiton:scriptlessCapture` capability. Without it, Kobiton captures limited session data.
+. Run the session to completion. Sessions that are still running cannot be converted.
+. Convert the session to a test case from Session Explorer, or from Test Management by selecting *New Test Case*. To find the session in Test Management, search for `type:appium` or `type:mixed`.
+
+When a mixed session is converted, the test case keeps the manual and automation steps in the order they were recorded.
+
+For limits on supported apps, unsupported steps, and Appium script generation, see xref:test-management:test-cases.adoc#_test_cases_from_automation_sessions[Test Cases from automation and mixed sessions].
+
 == What makes a good baseline
 
 Baseline sessions are most reliable when they reflect a clear and stable test flow.
@@ -68,9 +84,9 @@ Baseline sessions are platform-specific.
 
 Separate baseline sessions are required for Android and iOS, even when the application behavior is similar.
 
-Baseline sessions must target a supported application context: a web application (Safari or Chrome), an app installed from the App Repository, or an existing app already available on the device.
+Baseline sessions must target a supported application context: a web application (Safari or Chrome), an app installed from the App Repository, or an existing app already available on the device. For automation sessions and the automation steps of mixed sessions, only apps from the App Repository and existing apps are supported.
 
-Manual sessions can be converted into test cases even if unsupported actions were captured. Test cases that contain unsupported actions cannot be executed in a test run until those steps are removed and the test case is saved as a new version.
+Sessions can be converted into test cases even if unsupported actions were captured. Test cases that contain unsupported actions cannot be executed in a test run until those steps are removed and the test case is saved as a new version.
 
 == Related pages
 
