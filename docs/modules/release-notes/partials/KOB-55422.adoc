@@ -1,0 +1,32 @@
+// Source: KOB-55422
+// Release-note partial drafted by Robot Ranch. Requires docs-team review before publication.
+
+== virtualUSB
+
+- The `vusb connect` command no longer reports an iOS simulator as connected. iOS simulators cannot be paired, so virtualUSB does not support them. Connection attempts to an iOS simulator now fail, and the simulator does not stay booked after the attempt ends.
+
+// REVIEWER NOTE (KOB-55422): Publication decision needed. The 2026-08-07 Cloud page records a
+// manager decision not to advertise fixes for surfaces with no active customer usage, and states
+// that simulators are not currently supported. The parent epic (Support iOS Simulators) is still
+// In Progress and the docs have no iOS simulator page. Jira's Release Notes field for this ticket
+// selects "Release Email (customer-facing release notes)". Confirm whether iOS simulators are now
+// available to customers before publishing. If they are not, drop this entry.
+//
+// REVIEWER NOTE (KOB-55422): The shipped behavior is narrower than the ticket's expected result.
+// QA marked the ticket passed with a concern: the connect attempt fails after about 35 seconds,
+// a virtualUSB session starts and then ends as complete, and nothing tells the user that
+// virtualUSB does not support simulators. Engineering accepted this and QA planned a low-priority
+// follow-up ticket. One Jira field says the refusal returns "a named reason"; QA results do not
+// confirm a user-visible message, so the draft does not claim one.
+//
+// REVIEWER NOTE (KOB-55422): Jira is inconsistent about the virtualUSB client. One field says the
+// client is not changed; the test notes say the vusb CLI now releases the device when a connect
+// fails. Confirm whether users need a newer vusb CLI version for this behavior. If so, add the
+// minimum version.
+//
+// REVIEWER NOTE (KOB-55422): Real iOS devices and Android emulators are unchanged per Jira. The
+// virtualUSB app and CLI still differ in which virtual devices they list; that is tracked in a
+// separate ticket and is not covered here.
+//
+// REVIEWER NOTE (KOB-55422): Jira status is Wait For Deployment with no fix version. Place this
+// entry on the Cloud release page for the week it deploys.
