@@ -42,6 +42,8 @@ Each test run includes:
 
 If execution cannot proceed for a particular step, the test run is marked as requiring action and must be remediated before execution can continue.
 
+If a test cannot start on a device, the execution ends with *Init session failed* and the error message reported by the device. For example, this happens when the app is not installed on the device and no App Repository version is available to install, or when the app requires a newer Android version than the device has.
+
 == Rerun a test
 
 Test runs can be rerun using the same configuration.

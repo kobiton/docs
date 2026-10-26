@@ -70,6 +70,8 @@ Separate baseline sessions are required for Android and iOS, even when the appli
 
 Baseline sessions must target a supported application context: a web application (Safari or Chrome), an app installed from the App Repository, or an existing app already available on the device.
 
+A baseline session must launch at least one app. If the recording captures only the Home screen, the resulting test case cannot run, and the test run ends after its first attempt. Home screen steps within a test case that launches an app are skipped during execution.
+
 Manual sessions can be converted into test cases even if unsupported actions were captured. Test cases that contain unsupported actions cannot be executed in a test run until those steps are removed and the test case is saved as a new version.
 
 == Related pages

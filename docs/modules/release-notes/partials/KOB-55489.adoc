@@ -1,0 +1,11 @@
+// Source: KOB-55489
+
+== Clearer results when Scriptless Test Runs cannot start
+
+Scriptless Test Runs that cannot start on a device now end sooner and report the underlying error instead of `Device retry exceeded`. Previously, these runs could retry for about an hour and a half before ending.
+
+- *App not on the device:* When the app is not installed on the device and no App Repository version is available to install, the run ends with *Init session failed* and the device's error message after every matching device fails this way. A run that targets one specific device ends after its first attempt.
+- *Unsupported Android version:* When the app requires a newer Android version than the device has, the run ends after its first attempt with that reason.
+- *Home-screen-only recordings:* When a test case recording captured only the Home screen, the run now ends after its first attempt instead of launching the Home screen.
+- *System screens without an app identifier:* Test cases that include a system screen without an app identifier, such as Camera on iOS, now run their other apps instead of failing to start.
+- *Repeated start failures:* A run that keeps failing to start now ends with the last error instead of `Device retry exceeded`.
