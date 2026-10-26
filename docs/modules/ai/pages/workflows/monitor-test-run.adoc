@@ -1,0 +1,123 @@
+= Monitor a Claude-launched test run
+:navtitle: Monitor a test run
+
+NOTE: The `monitor-test-run` skill is a beta feature.
+
+The `monitor-test-run` skill in the Kobiton `automate` plugin monitors a test run launched from Claude. When an execution encounters a blocker, the skill provides the execution, test case, assigned device, and a link to the live remediation view. Use the link to resolve the blocker in Kobiton Portal.
+
+== Before you begin
+
+* Install the Kobiton `automate` plugin and sign in to the Kobiton MCP server.
+* Install Node.js 18 or later.
+* Run `/automate:setup` to write your Kobiton credentials to `~/.kobiton/.credentials`.
+* Launch a test run from Claude with the `createTestRun` MCP tool or the `create-test-run` skill.
+
+NOTE: The skill runs a local script that reads the credentials file. It doesn't work in hosts that offer only an MCP connection without local file access. For details, see xref:ai:mcp/ai-plugin-mcp-ref.adoc#_skill_requirements_by_host[Skill requirements by host].
+
+== Monitor a test run
+
+Run the skill with the test run ID:
+
+[source,shell]
+----
+/automate:monitor-test-run <testRunId>
+----
+
+You can also ask Claude to monitor the test run by ID.
+
+When monitoring starts, the skill reads your organization's live remediation setting and uses that value for the rest of the run. It monitors the run until every execution reaches a final state.
+
+== When an execution encounters a blocker
+
+A blocker is a step that the execution can't complete without user action. The skill's response depends on whether live remediation is enabled for your organization.
+
+=== Live remediation is enabled
+
+Before monitoring starts, the skill asks whether to open the live remediation window automatically when a blocker occurs. If you already chose an option when you created the run with the `create-test-run` skill, the skill doesn't ask again.
+
+When a blocker occurs, the execution pauses. Open the live remediation link and resolve the blocker by chatting with KobiAI in Kobiton Portal. The execution resumes after you resolve the blocker, and the final summary marks it as passed if it completes successfully.
+
+.Example blocker message and final summary (live remediation enabled, blocker resolved)
+====
+*Action needed now:* execution `01a177d8-2160-a0e9-2362-ad05099b000f` is paused on a blocker and waiting for you.
+
+* Test case: `01a177bc-52d2-6d02-a9c5-c672e59d44b3`
+* Device: `1815372264` (session `9034335`)
+* Live remediation: \https://portal.kobiton.com/devices/launch?id=1815372264
+
+If the live remediation window times out, the execution automatically fails with `BLOCKER_ENCOUNTERED`, so resolve it soon. Use the KobiAI chat in the live remediation window to clear the blocker, and the execution will resume on its own.
+
+*Final summary for test run `01a177d8-2158-6561-14fd-68e8fe4a6459`*
+
+* Execution `01a177d8-2160-a0e9-2362-ad05099b000f` (test case `01a177bc-52d2-6d02-a9c5-c672e59d44b3`) passed.
+====
+
+If you don't resolve the blocker within the 5-minute live remediation window, the execution ends with a `BLOCKER_ENCOUNTERED` status.
+
+.Example final summary (live remediation enabled, blocker not resolved)
+====
+*Final summary for test run `01a177cb-d7d6-ccf7-4f33-4cfde4b4d62e`*
+
+* Execution `01a177cb-d7dc-3034-5cb5-e8b158cb7ce4` (test case `01a177bc-52d2-6d02-a9c5-c672e59d44b3`) hit a blocker, paused for live remediation, and timed out unresolved. It ended with `BLOCKER_ENCOUNTERED`. The resolution you submit in Kobiton Portal applies to the next rerun.
+====
+
+For more information, see xref:test-management:remediations.adoc#_live_remediation[Live remediation].
+
+=== Live remediation is not enabled
+
+When a blocker occurs, the execution ends immediately. The skill provides the blocker information and explains that the execution ended with a `BLOCKER_ENCOUNTERED` status.
+
+Remediation completed later in Kobiton Portal applies to the next run. The final summary reports the execution as blocker-encountered.
+
+.Example blocker message and final summary (live remediation not enabled)
+====
+Execution `01a177b0-0173-2105-7a46-d2085b8bde35` hit a blocker.
+
+* Test case: `01a177ac-1e4b-7db1-e6e3-c7f3870c87a7`
+* Device: `1894335975` (session `9034251`)
+* Link: \https://portal.kobiton.com/devices/launch?id=1894335975
+
+Live remediation isn't enabled for your organization, so the execution ended with `BLOCKER_ENCOUNTERED`. Submit your resolution in Kobiton Portal and it will apply to the next rerun.
+
+*Final summary for test run `01a177b0-016f-2820-8a37-971d3dda8665`*
+
+* Execution `01a177b0-0173-2105-7a46-d2085b8bde35` ended with `BLOCKER_ENCOUNTERED`, because Live remediation isn't enabled for your organization. It did not pass.
+====
+
+== Monitor multiple executions or test cases
+
+The skill can monitor:
+
+* A single test case rerun with multiple executions
+* A test suite containing multiple test cases
+
+The skill reports each blocked execution separately. It doesn't post progress messages for executions that are running normally. The final summary groups executions by test case and lists each one as passed, blocker-encountered, failed, or terminated.
+
+.Illustrative final summary (test suite)
+====
+*Test case `01a177ac-1e4b-7db1-e6e3-c7f3870c87a7`*
+
+* Execution `01a177b0-0173-2105-7a46-d2085b8bde35` ended with `BLOCKER_ENCOUNTERED`, because Live remediation isn't enabled for your organization. It did not pass.
+* Execution `01a177b0-0173-2105-7a46-d2085b8bde36` passed.
+
+*Test case `01a177ac-1e4b-7db1-e6e3-c7f3870c87a8`*
+
+* Execution `01a177b0-0173-2105-7a46-d2085b8bde37` failed: `APP_CRASHED`.
+* Execution `01a177b0-0173-2105-7a46-d2085b8bde38` terminated (`TERMINATED_BY_USER`).
+====
+
+== Errors and edge cases
+
+* If the `testRunId` doesn't exist, the skill returns `NOT_FOUND`.
+* If the test run isn't owned by your account, the skill returns `FORBIDDEN`.
+* If the run has already reached a final state, the skill returns the summary immediately.
+* If a blocked execution has no assigned device, the skill provides the blocker text without a live remediation link and reports `INVALID_EXECUTION_STATE`.
+* If repeated backend errors prevent the skill from monitoring the run, it reports the run as unrecoverable.
+* If the skill can't read the live remediation setting when monitoring starts, it handles the run as though live remediation is not enabled.
+
+== See also
+
+* xref:test-management:remediations.adoc[Remediations]
+* xref:ai:mcp/ai-plugin-mcp-ref.adoc[Kobiton AI plugin and tools reference]
+* xref:ai:mcp/ai-plugin-mcp-ref.adoc#_test_management[createTestRun MCP tool]
+* xref:ai:mcp/ai-plugin-mcp-ref.adoc#_account[getOrgSettings MCP tool]
