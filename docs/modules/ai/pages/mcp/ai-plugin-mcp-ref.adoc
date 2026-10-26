@@ -78,7 +78,7 @@ For the `virtualUsb` filter on `listDevices`, the admin-only `listHostingMachine
 |Get download URLs for a session's video, logs, screenshots, and reports.
 
 |`getUserInputEvents`
-|Get the touch and swipe gestures performed in device-only live view during a session. `limit` defaults to 10 and is clamped to the range 1 to 20.
+|Get the touch and swipe gestures made in device-only view during a session.
 
 |`terminateSession`
 |Stop a running test session.
@@ -107,6 +107,12 @@ For the `virtualUsb` filter on `listDevices`, the admin-only `listHostingMachine
 |`listFlexCorrects`
 |List a session's Flex Correct findings.
 |===
+
+In device-only view, a user can steer an agent-driven session by tapping or swiping on the device screen. To open device-only view, add `&view=device-only` to the live session URL. Each gesture reaches the device in real time, and `getUserInputEvents` returns it to the agent, which adjusts its plan between scripted commands. The `run-automation-suite` skill polls the tool no more than once per second while its script runs. The tool does not capture keystrokes, right-clicks, pinches, or drags that leave the device screen.
+
+The tool returns events oldest first. Each event has a `kind` of `touch` or `swipe`, a `timestamp` in epoch milliseconds, and `xNorm` and `yNorm` coordinates normalized from 0 to 1 against the device screen. A swipe adds the end point as `xNorm2` and `yNorm2`, and its duration as `durationMs`.
+
+Omit `sinceTimestamp` to get every event currently buffered. `limit` defaults to 10 and is clamped to 20. When a call returns `limit` events, more may be buffered. Call again with the newest event's `timestamp` as `sinceTimestamp` until a call returns fewer than `limit` events. The next page skips any other event with exactly that timestamp.
 
 The validation tools read the findings that Session Explorer shows in *Test Result Analysis*. See xref:session-explorer:analytics/review-test-result-analysis.adoc[Review test result analysis] and xref:session-explorer:validations/validate-accessibility.adoc[Validate accessibility].
 
