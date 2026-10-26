@@ -33,11 +33,11 @@ A blocker is a step that the execution can't complete without user action. The s
 
 === Live remediation is enabled
 
-Before monitoring starts, the skill asks whether to open the live remediation window automatically when a blocker occurs.
+Before monitoring starts, the skill asks whether to open the live remediation window automatically when a blocker occurs. If you already chose an option when you created the run with the `create-test-run` skill, the skill doesn't ask again.
 
-When a blocker occurs, the execution pauses. Open the live remediation link and resolve the blocker by chatting with KobiAI in Kobiton Portal. If you don't resolve the blocker within the 5-minute live remediation window, the execution ends with a `BLOCKER_ENCOUNTERED` status.
+When a blocker occurs, the execution pauses. Open the live remediation link and resolve the blocker by chatting with KobiAI in Kobiton Portal. The execution resumes after you resolve the blocker, and the final summary marks it as passed if it completes successfully.
 
-The execution resumes after you resolve the blocker. The final summary marks the execution as passed if it completes successfully.
+If you don't resolve the blocker within the 5-minute live remediation window, the execution ends with a `BLOCKER_ENCOUNTERED` status.
 
 .Example blocker message and final summary (live remediation enabled, blocker not resolved)
 ====
@@ -51,7 +51,7 @@ If the live remediation window times out, the execution automatically fails with
 
 *Final summary for test run `01a177cb-d7d6-ccf7-4f33-4cfde4b4d62e`*
 
-* Execution `01a177cb-d7dc-3034-5cb5-e8b158cb7ce4` (test case `01a177bc-52d2-6d02-a9c5-c672e59d44b3`) hit a blocker, paused for live remediation, and timed out unresolved. It ended with `BLOCKER_ENCOUNTERED`. The resolution you submit in the portal applies to the next rerun.
+* Execution `01a177cb-d7dc-3034-5cb5-e8b158cb7ce4` (test case `01a177bc-52d2-6d02-a9c5-c672e59d44b3`) hit a blocker, paused for live remediation, and timed out unresolved. It ended with `BLOCKER_ENCOUNTERED`. The resolution you submit in Kobiton Portal applies to the next rerun.
 ====
 
 For more information, see xref:test-management:remediations.adoc#_live_remediation[Live remediation].
@@ -70,11 +70,11 @@ Execution `01a177b0-0173-2105-7a46-d2085b8bde35` hit a blocker.
 * Device: `1894335975` (session `9034251`)
 * Link: \https://portal.kobiton.com/devices/launch?id=1894335975
 
-Live Remediation isn't enabled for your org, so the execution ended with `BLOCKER_ENCOUNTERED`. Submit your resolution in the portal and it will apply to the next rerun.
+Live remediation isn't enabled for your organization, so the execution ended with `BLOCKER_ENCOUNTERED`. Submit your resolution in Kobiton Portal and it will apply to the next rerun.
 
 *Final summary for test run `01a177b0-016f-2820-8a37-971d3dda8665`*
 
-* Execution `01a177b0-0173-2105-7a46-d2085b8bde35` ended with `BLOCKER_ENCOUNTERED`, because Live Remediation isn't enabled for your org. It did not pass.
+* Execution `01a177b0-0173-2105-7a46-d2085b8bde35` ended with `BLOCKER_ENCOUNTERED`, because Live remediation isn't enabled for your organization. It did not pass.
 ====
 
 == Monitor multiple executions or test cases
@@ -90,7 +90,7 @@ The skill reports each blocked execution separately. It doesn't post progress me
 ====
 *Test case `01a177ac-1e4b-7db1-e6e3-c7f3870c87a7`*
 
-* Execution `01a177b0-0173-2105-7a46-d2085b8bde35` ended with `BLOCKER_ENCOUNTERED`, because Live Remediation isn't enabled for your org. It did not pass.
+* Execution `01a177b0-0173-2105-7a46-d2085b8bde35` ended with `BLOCKER_ENCOUNTERED`, because Live remediation isn't enabled for your organization. It did not pass.
 * Execution `01a177b0-0173-2105-7a46-d2085b8bde36` passed.
 
 *Test case `01a177ac-1e4b-7db1-e6e3-c7f3870c87a8`*
