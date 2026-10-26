@@ -1,19 +1,31 @@
-= Enter an Apple ID verification code during a manual session
+= Sign in to an Apple Account during a manual session
 
-During a manual iOS session, Apple might block direct text entry for protected Apple ID verification fields. When this happens, use your physical keyboard to enter the verification code or Mac password shown on the device screen.
+During a manual iOS session, Apple disables the device's virtual keyboard for protected sign-in fields, such as the password and verification code. Use the *Apple Security Enablement* window in Portal to enter these values.
 
-== Complete Apple ID verification
+NOTE: Apple Account sign-in is available on private and local iOS devices only.
 
-. On the device screen, open Settings and start the Apple ID sign-in process.
-. Follow the prompts on the device screen.
-. If the Apple ID Verification Code prompt appears, type the six-digit verification code on your physical keyboard.
+== Sign in to an Apple Account
+
+. On the device screen, open *Settings*, then tap *Apple Account*.
+. Tap *Sign in Manually*.
+. Tap *Email or Phone Number*, type or paste the Apple Account email address, then press Enter.
 +
-The verification code appears in a separate window on the Mac mini host. After you enter the code, the verification window closes and the Apple ID sign-in process continues.
-. If the Enter Mac Password prompt appears, type the password for the Mac mini host on your physical keyboard.
-. If the Apple Security Enablement window appears in Portal, do not type in that window. Continue typing on your physical keyboard to enter the value on the device screen.
+The *Password* field appears, and the *Apple Security Enablement* window opens in Portal.
+. In the *Apple Security Enablement* window, click the *Password* field, type or paste the password, then click *Submit*.
 +
-image:manual-testing:enter-mac-pw.png[width=400, alt="The Apple Security Enablement window appears in a separate window"]
+image:manual-testing:enter-appleid-pw.png[width=400, alt="The Apple Security Enablement window next to the Apple Account password field on the device screen"]
+. Close the *Apple Security Enablement* window.
+. Swipe up on the device screen, then tap *Continue*.
+. When the *Apple Account Verification Code* prompt appears, type the six-digit verification code in the *Apple Security Enablement* window, then click *Submit*.
 +
-. If the iCloud merge prompt appears for Safari data and Freeform, select **Don’t Merge**.
+Apple sends the verification code to the trusted devices signed in to the Apple Account. After a few seconds, the window and the prompt close, and sign-in continues.
++
+image:manual-testing:enter-verification-code.png[width=400, alt="The Apple Security Enablement window next to the Apple Account Verification Code prompt on the device screen"]
+. If the *Enter Mac Password* prompt appears, type the Mac password in the *Apple Security Enablement* window, then click *Submit*.
++
+Use the password for the Mac named in the prompt, not the Apple Account password.
++
+image:manual-testing:enter-mac-pw.png[width=400, alt="The Apple Security Enablement window next to the Enter Mac Password prompt on the device screen"]
+. Follow the remaining prompts on the device screen.
 
-When the Apple ID name and email appear on the device screen, sign-in is complete.
+When the Apple Account name and email address appear on the device screen, sign-in is complete.
