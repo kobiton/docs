@@ -1,0 +1,6 @@
+// Source: KOB-55682 from PR #562 (Bug, Wait For Deployment, no fix version set)
+// Applies to: Inspector on Android 13 and later. Target release date and whether the fix also ships in a Standalone patch need confirmation.
+
+=== Inspector
+
+* *Jetpack Compose screens on Android:* Fixed an issue where the *Inspector* XML hierarchy was missing content on Android 13 and later for Jetpack Compose screens that contain native Android views. The hierarchy showed only elements such as the status bar and the bottom navigation, and the rest of the screen appeared as empty `android.view.View` elements with no text or resource ID. These screens now show their full content in the hierarchy.
