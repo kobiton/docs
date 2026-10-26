@@ -1,21 +1,21 @@
-= Kobiton iOS app signing
+= iOS app signing with deviceShare
 :navtitle: iOS app signing
 
-Kobiton signs iOS apps at install time so you can upload a build once and run it across your device fleet.
+deviceShare signs iOS apps at install time so you can upload a build once and run it across your device fleet.
 
 [#_overview]
 == Overview
 
-When you upload an iOS app to the Kobiton App Repository, Kobiton re-signs the binary at install time using deviceShare, Kobiton's signing service. Each install uses your organization's signing certificate and provisioning profile, which your lab team has already imported into deviceShare for the devices in your fleet.
+When you upload an iOS app to Kobiton App Repository, deviceShare re-signs the binary at install time. Each install uses your organization's signing certificate and provisioning profile, which your lab team has already imported into deviceShare for the devices in your fleet.
 
-Your original upload is not modified in the App Repository. Re-signing happens on each install.
+deviceShare does not modify your original upload in App Repository. Re-signing happens on each install.
 
 [#_prerequisites]
 == Prerequisites
 
 Re-signing with deviceShare requires:
 
-* deviceShare installed on the Mac mini hosts in your Kobiton environment.
+* deviceShare installed on the Mac mini hosts in your Kobiton deployment.
 * Your organization's development signing certificate and provisioning profiles imported into the deviceShare keychain, covering the UDIDs of the hosted devices.
 
 Both tasks are handled by your device lab team. For the admin setup, see xref:deviceShare/install-update-deviceshare.adoc[,window=read-later] and xref:ios-devices/import-ios-signing-certificates-and-provisioning-profiles.adoc#_import_developer_certificates_and_provisioning_profiles_to_deviceshare[,window=read-later].
@@ -23,18 +23,18 @@ Both tasks are handled by your device lab team. For the admin setup, see xref:de
 [#_how_re_signing_works]
 == How re-signing works
 
-Build and upload your app once using an iOS Development certificate or an Ad-hoc Distribution certificate. When you start a session on a hosted device, Kobiton:
+Build and upload your app once using an iOS Development certificate or an Ad-hoc Distribution certificate. When you start a session on a hosted device, deviceShare:
 
-. Retrieves your uploaded binary from the App Repository.
+. Retrieves your uploaded binary from App Repository.
 . Re-signs it with your organization's development certificate and provisioning profile, which already cover the hosted device UDIDs.
 . Installs the re-signed app on the selected device.
 
-You do not need to add fleet device UDIDs to your Apple Developer account, list them on your build, or re-upload the app for different devices. Kobiton handles signing and installation for every device the session targets.
+You do not need to add fleet device UDIDs to your Apple Developer account, list them on your build, or re-upload the app for different devices. deviceShare handles signing and installation for every device the session targets.
 
 [#_entitlements_stripped_by_re_signing]
 == Entitlements stripped by re-signing
 
-Re-signing replaces the app's original signing identity. Entitlements tied to that identity are not carried through. The following entitlements are stripped:
+Re-signing replaces the app's original signing identity. deviceShare does not carry over entitlements tied to that identity. The following entitlements are stripped:
 
 * Push notifications
 * Access WiFi Information
@@ -50,7 +50,7 @@ If your app depends on any stripped entitlement, keep your own signing identity 
 
 If your app depends on a stripped entitlement, turn off Kobiton re-signing before you upload. Only Org Admins can change this setting. In Kobiton Portal, open xref:organization:other-settings.adoc[Other settings,window=read-later] and disable *App signing using Kobiton Certificate (iOS)* under *Kobiton Re-signing Process*.
 
-With re-signing off, Kobiton installs your app exactly as you uploaded it. You are then responsible for signing the app so it installs on the hosted devices. You have two options.
+With re-signing off, your app installs exactly as you uploaded it. You are then responsible for signing the app so it installs on the hosted devices. You have two options.
 
 [#_option_a_development_or_ad_hoc]
 === Option A: Development or Ad-hoc Distribution certificate
@@ -62,7 +62,7 @@ Apple limits registered devices to 100 per device type per account per year. For
 [#_option_b_enterprise]
 === Option B: Enterprise (in-house) certificate
 
-An Enterprise certificate does not require listing individual device UDIDs. The trade-off is a one-time trust step on each device, and that trust step changed with iOS 18.
+An Enterprise certificate does not require listing individual device UDIDs. The trade-off is a one-time trust step on each device, which changed with iOS 18.
 
 On iOS 18 and later, trusting an Enterprise or developer-signed app triggers an *Allow & Restart* prompt. The device reboots, and after the reboot, the trust step must be completed manually on the device. Because the reboot takes the device offline and the post-reboot step requires a physical touch, your lab team has to bring each device back manually. iOS 17 and earlier do not require the restart.
 
@@ -76,20 +76,20 @@ Once the device trusts your certificate, future builds signed with the same cert
 [#_frequently_asked_questions]
 == Frequently asked questions
 
-[#_faq_does_kobiton_resign]
-=== Does Kobiton re-sign the apps I upload?
+[#_faq_does_deviceshare_resign]
+=== Does deviceShare re-sign the apps I upload?
 
-Yes, by default. The application IPA is re-signed with your organization's development certificate at install time while *App signing using Kobiton Certificate (iOS)* is enabled. If you turn re-signing off, Kobiton installs the IPA you uploaded without changing its signature.
+Yes, by default. deviceShare re-signs the application IPA with your organization's development certificate at install time while *App signing using Kobiton Certificate (iOS)* is enabled. If you turn re-signing off, your IPA installs on the hosted device without any changes to its signature.
 
 [#_faq_what_gets_modified]
-=== What does Kobiton modify when re-signing?
+=== What does deviceShare modify when re-signing?
 
 Re-signing replaces the app's signing identity and provisioning profile, and strips the entitlements tied to the original identity. See xref:#_entitlements_stripped_by_re_signing[].
 
 [#_faq_install_as_uploaded]
-=== Can Kobiton install the IPA exactly as I uploaded it?
+=== Can my IPA install exactly as I uploaded it?
 
-Yes. Disable *App signing using Kobiton Certificate (iOS)* in xref:organization:other-settings.adoc[Other settings,window=read-later]. With re-signing off, Kobiton installs the app you uploaded without changing signatures, provisioning profiles, entitlements, or bundle contents. You are then responsible for signing the app so it installs on the hosted devices. See xref:#_keep_your_own_signing_identity[].
+Yes. Disable *App signing using Kobiton Certificate (iOS)* in xref:organization:other-settings.adoc[Other settings,window=read-later]. With re-signing off, your app installs exactly as you uploaded it, with no changes to signatures, provisioning profiles, entitlements, or bundle contents. You are then responsible for signing the app so it installs on the hosted devices. See xref:#_keep_your_own_signing_identity[].
 
 [#_related_guides]
 == Related guides
