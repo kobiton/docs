@@ -183,6 +183,20 @@ Select *More security settings*, then turn off *Block USB connections while lock
 
 image:device-lab-management:android-prepare-more-security-settings.png[width=240, alt="The Block USB connections while locked setting is turned off in the More Security Settings screen on Android."]
 
+[#host_foldable_devices]
+== Keep foldable devices unfolded (required for foldable devices)
+
+Host book-style foldable devices, such as Galaxy Z Fold, with the hinge physically open.
+
+When the hinge is closed, the inner screen is off. Sessions show the cover screen or the Always-On Display, and the device goes to sleep after each fold or unfold, so testers cannot interact with the screen after a posture change.
+
+Flip-style foldable devices, such as Galaxy Z Flip, are not supported for xref:manual-testing:device-controls.adoc#_fold_or_unfold_device[fold and unfold controls].
+
+// Source: KOB-55124 (Jira status: Released)
+// REVIEWER NOTE (KOB-55124): Jira asks for hosting guidance in Admin Docs. This repo has no Admin Docs
+// surface, so the guidance is drafted on this page. Move or mirror it to Admin Docs if the docs team prefers.
+// REVIEWER NOTE (KOB-55124): Confirm whether Pixel Fold needs the same hosting guidance. Only Galaxy Z Fold3 5G was verified.
+
 == Download Google Chrome (required for specific feature)
 
 [NOTE]

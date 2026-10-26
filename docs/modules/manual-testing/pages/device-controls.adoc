@@ -36,7 +36,7 @@ image:manual-testing:device-controls-context2.png[width=1000,alt="A manual sessi
 [#_fold_or_unfold_device]
 == Fold or unfold device
 
-On foldable Android devices, such as Galaxy Z Fold and Pixel Fold, use the fold control to switch the device between its folded and unfolded postures. The control appears directly above *Rotate Screen* only when the session runs on a foldable device.
+On book-style foldable Android devices, such as Galaxy Z Fold, use the fold control to switch the device between its folded and unfolded postures. The control appears directly above *Rotate Screen* only when the session runs on a foldable device.
 
 The control shows the action it performs next:
 
@@ -51,6 +51,24 @@ On some Samsung devices, the cover screen shows the lock screen after a fold. To
 ====
 Flip-style foldable devices, such as Galaxy Z Flip, are not supported. The fold control can appear on these devices, but folding them locks the screen.
 ====
+
+=== Limitations
+
+* The fold control is available in manual sessions only. Automation sessions cannot fold or unfold a device.
+* At the start of a session, the device is in the posture left by the previous session. Check the device screen and select *Fold device* or *Unfold device* if needed before you begin testing.
+* After a fold or unfold, the saved session video can appear stretched or distorted instead of keeping the original proportions of each screen.
+* In Session Explorer, *Inspector* can be misaligned on steps captured after a fold or unfold.
+
+// Source: KOB-55124 (Jira status: Released)
+// REVIEWER NOTE (KOB-55124): Pixel Fold is listed in the epic acceptance criteria, but QA verified only
+// Galaxy Z Fold3 5G (Android 15). "Pixel Fold" was removed from the device examples until a Pixel Fold is
+// verified. Confirm with Product whether to restore it. The released notes for 2026-10-16 and 4.27.2S still name Pixel Fold.
+// REVIEWER NOTE (KOB-55124): QA tracks the posture carrying over to the next session as an open defect.
+// The existing sentence "The device retains its folded or unfolded state between sessions" and the second
+// limitation describe current behavior. Revise both if the defect is fixed.
+// REVIEWER NOTE (KOB-55124): The video and Inspector limitations are open known issues. Remove each when fixed.
+// REVIEWER NOTE (KOB-55124): Confirm the list of supported foldable models and Android versions. Jira asks
+// for this list, but the only verified device is Galaxy Z Fold3 5G on Android 15.
 
 == Volume
 

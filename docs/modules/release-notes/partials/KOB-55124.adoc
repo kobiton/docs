@@ -1,0 +1,22 @@
+// Source: KOB-55124 (Jira status: Released)
+// Epic-level release note for foldable Android device support (Phase 1).
+// EDITOR: The fold control and Session Explorer steps were already announced in the 2026-10-16 and 4.27.2S
+// release notes. Use this partial to add the limitations and hosting guidance, or merge it into those entries.
+
+== Foldable Android device support in manual sessions
+
+Manual sessions on book-style foldable Android devices, such as Galaxy Z Fold, include *Fold device* and *Unfold device* controls. The device screen and *Inspector* switch to the active screen after each change, and Session Explorer records each fold and unfold as a timeline step with its own screenshot.
+
+*Considerations*
+
+* Fold and unfold controls are available in manual sessions only.
+* Flip-style foldable devices, such as Galaxy Z Flip, are not supported.
+* Host foldable devices with the hinge physically open. For details, see xref:device-lab-management:android-devices/prepare-android-device.adoc#host_foldable_devices[Prepare Android device for hosting].
+* The device keeps its folded or unfolded posture from the previous session.
+
+*Known issues*
+
+* After a fold or unfold, the saved session video can appear stretched or distorted.
+* In Session Explorer, *Inspector* can be misaligned on steps captured after a fold or unfold.
+
+For more information, see xref:manual-testing:device-controls.adoc#_fold_or_unfold_device[Fold or unfold device].
