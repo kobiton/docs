@@ -18,7 +18,7 @@ Re-signing with deviceShare requires:
 * deviceShare installed on the Mac mini hosts in your Kobiton deployment.
 * Your organization's development signing certificate and provisioning profiles imported into the deviceShare keychain, covering the UDIDs of the hosted devices.
 
-Both tasks are handled by your device lab team. For the admin setup, see xref:deviceShare/install-update-deviceshare.adoc[,window=read-later] and xref:ios-devices/import-ios-signing-certificates-and-provisioning-profiles.adoc#_import_developer_certificates_and_provisioning_profiles_to_deviceshare[,window=read-later].
+Both tasks are handled by your device lab team. For the admin setup, see xref:deviceShare/install-update-deviceshare.adoc[,window=read-later] and xref:ios-devices/import-ios-signing-certificates-and-provisioning-profiles.adoc#_import_developer_certificates_and_provisioning_profiles_to_deviceshare[Import certificates and profiles,window=read-later].
 
 [#_how_re_signing_works]
 == How re-signing works
@@ -36,11 +36,25 @@ You do not need to add fleet device UDIDs to your Apple Developer account, list 
 
 Re-signing replaces the app's original signing identity. deviceShare does not carry over entitlements tied to that identity. The following entitlements are stripped:
 
-* Push notifications
 * Access WiFi Information
 * App Groups
+* Apple Pay Payment Processing
 * Associated Domains
-* Apple Pay
+* AutoFill Credential Provider
+* ClassKit
+* Fonts
+* Game Center
+* HealthKit
+* HomeKit
+* Hotspot
+* In-App Purchase
+* NFC Tag Reading
+* Personal VPN
+* Push Notifications
+* Sign in With Apple
+* System Extension
+* User Management
+* Wireless Accessory Configuration
 * Any other entitlement that depends on the original signing identity
 
 If your app depends on any stripped entitlement, keep your own signing identity instead. See xref:#_keep_your_own_signing_identity[].
@@ -48,7 +62,7 @@ If your app depends on any stripped entitlement, keep your own signing identity 
 [#_keep_your_own_signing_identity]
 == Keep your own signing identity
 
-If your app depends on a stripped entitlement, turn off Kobiton re-signing before you upload. Only Org Admins can change this setting. In Kobiton Portal, open xref:organization:other-settings.adoc[Other settings,window=read-later] and disable *App signing using Kobiton Certificate (iOS)* under *Kobiton Re-signing Process*.
+If your app depends on a stripped entitlement, turn off Kobiton re-signing before you upload. Only Org Admins can change this setting. In Kobiton Portal, open xref:organization:other-settings.adoc#_kobiton_re_signing_process[Other settings,window=read-later] and disable *App signing using Kobiton Certificate (iOS)* under *Kobiton Re-signing Process*.
 
 With re-signing off, your app installs exactly as you uploaded it. You are then responsible for signing the app so it installs on the hosted devices. You have two options.
 
