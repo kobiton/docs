@@ -14,9 +14,28 @@ The `kobiton file push` and `kobiton file pull` commands now report file transfe
 - *Failed transfers:* File transfers that fail now return a non-zero exit status instead of reporting success. This includes pushing files to restricted device paths or iOS apps that are not installed, and pulling files that do not exist.
 - *iOS file transfers:* The `kobiton file push` command no longer intermittently reports an error when a file is successfully transferred to an iOS device.
 
+== Session Explorer
+
+// Source: KOB-52718, KOB-55503, KOB-55494, KOB-55504, KOB-55505 (entry removed from 2026-10-16.adoc in
+// PR #763 commit d1ef6fb as outdated; re-added at review). Behavior aligned with the current
+// kobiton-cli:cli-commands.adoc "Capture session data" section. The user-action bullet matches
+// 4_27_2S.adoc.
+
+=== Capture Kobiton CLI session data
+
+Kobiton CLI sessions now record session data for Session Explorer and Session Overview when created with `--capture`. Add one or more data types to `kobiton session create`, separated by commas.
+
+- `screenshots`, `view-trees`, and `metrics` add screenshots, view hierarchies, and device metrics to Session Explorer.
+- `user-action` adds each user action to the session timeline.
+- `video` and `logs` make the session video and device logs available in Session Overview.
+
+Session Explorer is available for a CLI session only when the session captures at least one data type and runs at least one `kobiton webdriver get` or `kobiton webdriver post` command.
+
+For all data types, see xref:kobiton-cli:cli-commands.adoc#session-create-capture[Capture session data].
+
 // Source: KOB-55560 from PR #785
 
-== Consistent CLI command counts across the Kobiton API and Session Explorer
+=== Consistent CLI command counts across the Kobiton API and Session Explorer
 
 For Kobiton CLI sessions, the Kobiton API now returns command counts that match the steps displayed in Session Explorer.
 
