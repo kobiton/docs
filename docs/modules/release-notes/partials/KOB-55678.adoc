@@ -1,0 +1,6 @@
+// Source: KOB-55678 (Bug, Released, fix version 2026.10.27)
+// Applies to: Turbo Test sessions started through the Kobiton API with a specific device (udid or deviceId), in IMMEDIATE and QUEUED execution modes.
+
+=== Turbo Test
+
+* *Device still reserved by a previous session:* Fixed an issue where starting a Turbo Test session on a specific device with `POST /v2/sessions/native` returned an HTTP 500 error when your previous Turbo Test session still held that device. While the device remains reserved, the request now returns HTTP 404 with the message `No device available.` Retry the request after the device is released. Queued sessions record the 404 response instead of a server error and continue to retry as before.
