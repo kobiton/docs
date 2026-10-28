@@ -1,0 +1,14 @@
+// Source: KOB-55539 (Jira status: Released). Drafted from the Jira release-note field and
+// the impact field. Bug fix. Deployment scope per Jira: every environment that runs the
+// affected component, including Cloud and Standalone.
+// Review: "Direct Hub" is dropped from the wording because it is not a term end users know
+// (see the KOB-54477 note in 2026-08-28.adoc). Confirm that "host" is the right public term.
+// Review: confirm the target release page and section before including this partial.
+
+== Improved session reliability
+
+Fixed an issue where one unresponsive session could stop every other session on the same host. Until the host was restarted, new sessions could not start on it, Appium and mixed sessions on it failed, and active sessions could not end.
+
+- An unresponsive session no longer blocks other sessions or new session creation on the same host.
+- An Appium or REST API request to a session that cannot accept more requests now fails immediately with HTTP `503` and the message `Session <session-id> is busy. Retry later`. Previously, the request waited without a response.
+- No configuration change is required.
