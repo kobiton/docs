@@ -1,0 +1,33 @@
+= Usage Report
+
+Review how much each testable component (sessions, Test Cases, Appium exports, validations) was used over a selected date range.
+
+== Availability
+
+The Usage Report is available to organization ADMINs.
+
+== Open the report
+
+Select *Analytics Reports*, then *Usage Report*.
+
+== Use the report
+
+Select a date range to review component usage during that period.
+
+To export the report, select *Export > Export report*, then download it as CSV or PNG. Select *Bookmark* to save the report for later.
+
+The *Last synced* indicator shows when the report data was last refreshed.
+
+== Understand the report
+
+The report shows usage grouped into tiles and tables by category. Units vary — sessions and minutes for test sessions, validations and screens for validation findings, corrections for FlexCorrect, and downloads for Appium scripts.
+
+Categories appear in this order:
+
+* *Manual Sessions*, *Automation Sessions*, *Mixed Sessions*: xref:manual-testing:index.adoc[manual], xref:automation-testing:index.adoc[automation], and xref:manual-testing:start-a-mixed-session.adoc[mixed] test sessions, each with session count and total minutes.
+* *Test Cases*, *Test Suites*, *Test Runs*, *Revisit Executions*: xref:test-management:test-cases.adoc[Test Cases], xref:test-management:test-suites.adoc[Test Suites], xref:test-management:test-runs.adoc[Test Runs], and revisit sessions executed as part of a Test Run.
+* *Accessibility Validation*: xref:session-explorer:validations/validate-accessibility.adoc[accessibility] findings and the screens where they appear, broken down into *Touch Target Size*, *Color Contrast*, and *Content Labeling*.
+* *Crash Validation*: crash findings detected by xref:test-management:test-runs.adoc#_automatic_validations[automatic validations].
+* *Response Time Validation*: xref:session-explorer:analytics/review-network-payload-data.adoc#_review_response_times[response time] findings and the screens where they appear.
+* *FlexCorrect*: xref:automation-testing:capabilities/add-flexcorrect.adoc[flexCorrect] corrections applied during an automation session.
+* *Appium Script Downloads*: Appium scripts xref:test-management:generate-appium.adoc[exported from a Test Case], broken down by language and framework: *Java - JUnit*, *Java - TestNG*, *NodeJS - Mocha*, *C# - NUnit*, *Python - pytest*.
