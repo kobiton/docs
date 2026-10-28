@@ -213,7 +213,7 @@ Reuse the `team_id` returned on a listed item when you compose suites and runs. 
 |Delete a test case.
 
 |`createTestRun`
-|Create a test run from a test suite or from selected test cases. The suite or the selected test cases all belong to one team.
+|Create a test run from a test suite or from selected test cases. The suite or the selected test cases all belong to one team. Returns a `400` error, and creates no executions, when any selected test case version can't be replayed by a test run. See xref:test-management:test-cases.adoc#_test_cases_that_cant_run[Test Cases that can't run].
 
 |`listTestRuns`
 |List test runs, filtered by team, keyword, or platform. Sort the results with `sortBy`, which accepts the uppercase values `NAME` and `CREATED_AT`.
