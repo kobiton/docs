@@ -2,7 +2,7 @@
 :navtitle: Configure Appium AI settings
 :description: Set the default LLM provider and locator settings that Appium AI uses for every Appium session in your organization.
 
-// Robot Ranch draft for KOB-54326 (organization settings UI), with content folded in from KOB-53282 (PR #712, organization settings behavior) and KOB-55121 (PR #723, session behavior). UI labels verified against Kobiton Portal on 2026-10-19. Docs team review required before publishing.
+// Robot Ranch draft for KOB-54326 (organization settings UI), with content folded in from KOB-53282 (PR #712, organization settings behavior) and KOB-55121 (PR #723, session behavior). UI labels verified against Kobiton Portal on 2026-10-19. Updated for KOB-55565 (separate text and vision model fields); KOB-55565 labels come from Jira and are not yet verified in Kobiton Portal. Docs team review required before publishing.
 
 Set the default LLM provider and locator settings that Appium AI uses for every new Appium session in your organization. A session can override these settings with desired capabilities.
 
@@ -50,6 +50,18 @@ If your organization has never saved Appium AI settings, sessions use the host d
 | *API Key*
 | API key for the LLM provider. Kobiton Portal hides this field when *API Format* is `OllamaChat`.
 | `kobiton:llmApiKey`
+
+| *Default Locator Strategy*
+| Strategy used to resolve natural language locators unless a session overrides it. Select *Find element by vision* (`visionvirtual`) or *Find element by view tree* (`uitree`). The form selects *Find element by vision* by default.
+| `kobiton:locatorStrategy`
+
+| *Text Model*
+| Model used for text-based Appium AI requests. Select a model from the list or type a model name. The form prefills a default model. Kobiton Portal hides this field when *API Format* is `KobitonChatCompletions`.
+| `kobiton:llmTextModel`
+
+| *Vision Model*
+| Model used for vision-based Appium AI requests. Select a model from the list or type a model name. The form prefills a default model. Kobiton Portal hides this field when *API Format* is `KobitonChatCompletions`.
+| `kobiton:llmVisionModel`
 |===
 
 . Optional: Under *Optional Fields*, change the following:
@@ -58,34 +70,32 @@ If your organization has never saved Appium AI settings, sessions use the host d
 |===
 | Field | Description | Session capability
 
-| *Locator Strategy*
-| Default strategy used to resolve natural language locators. Select *Find element by vision* (`visionvirtual`) or *Find element by view tree* (`uitree`). The form selects *Find element by vision* by default.
-| `kobiton:locatorStrategy`
-
-| *Model*
-| Model used for Appium AI requests. Select a model from the list or type a model name. Available after you select an *API Format*. Sets the vision model when *Locator Strategy* is *Find element by vision*, or the text model when it is *Find element by view tree*.
-| `kobiton:llmVisionModel` or `kobiton:llmTextModel`
-
 | *Timeout Seconds*
-| Timeout for LLM requests, in seconds. The form shows `10` by default.
+| Timeout for LLM requests, in seconds. The form shows `10` by default. Leave the field blank to use the host default.
 | None. Sessions can't override this setting.
 
 | *Retry Interval Seconds*
-| Interval between LLM request retries, in seconds. The form shows `2` by default.
+| Interval between LLM request retries, in seconds. The form shows `2` by default. Leave the field blank to use the host default.
 | None. Sessions can't override this setting.
 
-| *Extra body*
-| JSON object added to the request body of model calls to send model-specific parameters. Applies to the vision or text model, based on *Locator Strategy*.
-| `kobiton:llmVisionExtraBody` or `kobiton:llmTextExtraBody`
+| *Text Extra Body*
+| JSON object added to the request body of text model calls to send model-specific parameters.
+| `kobiton:llmTextExtraBody`
+
+| *Vision Extra Body*
+| JSON object added to the request body of vision model calls to send model-specific parameters.
+| `kobiton:llmVisionExtraBody`
 |===
 
 . Select *Save*.
 +
-Kobiton Portal doesn't save the settings if you enter a *Base URL* without an *API Key*. This check doesn't apply to `OllamaChat`, which has no *API Key* field.
+*Save* stores both models and both extra bodies, regardless of *Default Locator Strategy*. Kobiton Portal doesn't save the settings if you enter a *Base URL* without an *API Key*. This check doesn't apply to `OllamaChat`, which has no *API Key* field.
 
 To discard unsaved changes, select *Cancel*.
 
 After you save, *API Key* shows a masked value, the date it was configured, and the user who configured it, such as `Configured October 19, 2026 by <name>`. Kobiton Portal doesn't reveal a saved API key. To change it, select *Replace* and enter a new key.
+
+The *Appium AI* card on the *AI Settings* tab shows the saved API format and both models, such as `API format: <format> | Text model: <model> | Vision model: <model>`.
 
 === Session-only settings
 
@@ -93,7 +103,6 @@ Kobiton Portal doesn't set the following settings. Set them per session with des
 
 - `kobiton:llmApiVersion`: API version for Azure OpenAI endpoints.
 - `kobiton:visionCoordSpace`: Coordinate space used for vision-based element location.
-- The model and extra request body for the strategy not selected in *Locator Strategy*: `kobiton:llmTextModel` and `kobiton:llmTextExtraBody`, or `kobiton:llmVisionModel` and `kobiton:llmVisionExtraBody`.
 
 See xref:capabilities/available-capabilities.adoc[Available capabilities] for capability details and allowed values.
 
