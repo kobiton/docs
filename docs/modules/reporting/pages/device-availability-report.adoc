@@ -1,0 +1,51 @@
+= Device Availability report
+
+Review the availability of Private Devices and Local Devices over a selected date range, including each device's offline history. Separate tabs display the results for Private Devices and Local Devices.
+
+== Availability
+
+The Device Availability report is available to organization ADMINs.
+
+== Open the report
+
+Select *Analytics Reports*, then *Device Availability*.
+
+== Use the report
+
+Select a date range to review device availability during that period.
+
+To filter by device, select one or more UDIDs from the *UDID* dropdown. This filters the *Device Table* and *State History* tables.
+
+To export the report, select *Export > Export report*, then download it as CSV or PNG. Select *Bookmark* to save the report for later.
+
+The *Last synced* indicator shows when the report data was last refreshed.
+
+== Understand the report
+
+The *Private Devices* and *Local Devices* tabs contain the same information for their respective devices.
+
+=== Summary metrics
+
+Three values appear at the top of each tab:
+
+* *Registered Devices*: Number of registered devices.
+* *Total Online Days*: Total online time across the selected date range, including fractional days.
+* *Availability %*: Percentage of the selected date range during which devices were available.
+
+The metric labels begin with *Private* or *Local*, depending on the selected tab.
+
+=== Registered Over Time
+
+Shows registered device counts across intervals within the selected date range.
+
+=== Device Table
+
+Shows availability information for individual devices, including their time in service, days online, and minutes offline.
+
+*Days Online* displays the number of days online relative to the days in the selected range (for example, *0.16/7.00*).
+
+=== State History
+
+Shows individual offline intervals for devices, including when each interval started and ended.
+
+The *State* column identifies the reason or condition recorded for the interval: *Offline*, *Offline (Unplugged)*, or *No Network*.
