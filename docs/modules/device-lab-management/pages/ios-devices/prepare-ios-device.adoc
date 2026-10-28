@@ -144,6 +144,23 @@ Turn off *Bringing Devices Together*.
 
 image:device-lab-management:ios-prepare-general-airdrop.png[width=240,alt="General settings screen showing navigation to AirDrop configuration options."] -> image:device-lab-management:ios-prepare-airdrop-bring-devices-together-off.png[width=240,alt="The Bringing Devices Together feature is disabled on Airdrop settings."]
 
+== Enable automatic timezone updates (required)
+
+[IMPORTANT]
+====
+
+Without this step, iOS Location Services continues to override the timezone, and timezone updates do not stick.
+
+====
+
+Open the *Settings* app. Tap *Privacy & Security* -> *Location Services* -> *System Services*.
+
+Turn off *Setting Time Zone*.
+
+Go back to *Settings*. Tap *General* -> *Date & Time*.
+
+Turn on *Set Automatically*.
+
 == Turn on web inspector in Safari (required by specific features)
 
 [NOTE]
