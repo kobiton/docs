@@ -1,0 +1,147 @@
+= Read device identifiers in Appium script
+:navtitle: Read device identifiers in Appium script
+
+// Source: KOB-55417
+
+Use the `mobile: deviceIdentifiers` command to read the advertising and tracking identifiers that a device holds during an automation session. Compare these values with the identifiers your app under test reports.
+
+== Supported identifiers
+
+[options="header"]
+|=======================
+|Identifier |Platform |Value is tied to |Requirements
+|Advertising ID (IDFA on iOS, AAID on Android) |iOS and Android |The whole device |None
+|Android ID (SSAID) |Android |The device and the signing certificate of the Kobiton agent |None
+|DRM ID |Android |The app package name |The app is a debug build and is running
+|=======================
+
+The identifier for vendor (IDFV) on iOS is not supported.
+
+== Requirements
+
+* An active Xium automation session.
+* For the DRM ID only: a debug build of the app, running on the device, and its package name.
+
+// REVIEWER NOTE (KOB-55417): Confirm whether the command is also available in basic Appium 2 sessions and on standalone deployments. The source describes it only as a Xium command.
+
+== Run the command
+
+Call `mobile: deviceIdentifiers` through your client's execute script method.
+
+.Example (JavaScript)
+[source,javascript]
+----
+// Read every identifier the platform supports
+const all = await driver.executeScript(
+    "mobile: deviceIdentifiers", []);
+
+// Read one identifier
+const advertisingId = await driver.executeScript(
+    "mobile: deviceIdentifiers", [{ identifier: "advertisingId" }]);
+
+// Read the DRM ID of a specific app
+const drmId = await driver.executeScript(
+    "mobile: deviceIdentifiers", [{ identifier: "drmId", appId: "<app-package-name>" }]);
+----
+
+Replace `<app-package-name>` with the package name of your app, such as `com.example.app`.
+
+=== Parameters
+
+[options="header"]
+|=======================
+|Name |Required |Values |Description
+|`identifier` |No |`advertisingId`, `androidId`, or `drmId` |The identifier to read. If omitted, the command reads every identifier the platform supports. The DRM ID is included only when `appId` is also set.
+|`appId` |Only for `drmId` |An app package name |The app whose DRM ID to read.
+|=======================
+
+The command returns an error, without reading the device, in these cases:
+
+* `identifier` is set to a value that is not in the list.
+* `identifier` is set to `drmId` and `appId` is not set.
+
+== Response
+
+Client libraries such as WebdriverIO return the identifiers as an object. Each identifier adds its own keys.
+
+.Advertising ID on iOS
+[source,json]
+----
+{ "advertisingId": "A1B2C3D4-E5F6-4A7B-8C9D-0E1F2A3B4C5D", "trackingStatus": "authorized" }
+----
+
+.Advertising ID on Android
+[source,json]
+----
+{ "advertisingId": "a1b2c3d4-e5f6-4a7b-8c9d-0e1f2a3b4c5d" }
+----
+
+.Android ID
+[source,json]
+----
+{
+  "androidId": "a1b2c3d4e5f60718",
+  "signingCertificateName": "<certificate-subject>",
+  "signingCertificateSha256": "<certificate-sha256-fingerprint>"
+}
+----
+
+.DRM ID
+[source,json]
+----
+{ "drmId": "4e81cab07d3f29615ba0c7e4d81f36a2907b5ce314df82a6b0e519c74d3a8f60" }
+----
+
+When `identifier` is omitted, all values are returned in one object. Without `appId`, the response includes a `drmIdMessage` key instead of a DRM ID.
+
+.All identifiers on Android, without `appId`
+[source,json]
+----
+{
+  "advertisingId": "a1b2c3d4-e5f6-4a7b-8c9d-0e1f2a3b4c5d",
+  "androidId": "a1b2c3d4e5f60718",
+  "signingCertificateName": "<certificate-subject>",
+  "signingCertificateSha256": "<certificate-sha256-fingerprint>",
+  "drmIdMessage": "The DRM id needs 'appId', so nothing was read for it."
+}
+----
+
+=== Missing values
+
+If an identifier cannot be read, the response includes a message key in its place: `advertisingIdMessage`, `androidIdMessage`, or `drmIdMessage`. The message explains why the value is missing.
+
+When you request several identifiers, the response keeps every value that was read. The command fails only when none of the requested identifiers can be read.
+
+== Identifier behavior
+
+=== Advertising ID
+
+The advertising ID belongs to the whole device. Every app on the device reads the same value, and reinstalling an app does not change it.
+
+On iOS, the advertising ID is all zeros until app tracking is allowed. Kobiton allows tracking automatically while it prepares the device. If tracking was denied on the device, the command returns all zeros and `trackingStatus` is `denied`.
+
+On Android, the response does not include `trackingStatus`.
+
+=== Android ID
+
+The Android ID depends on the device and the certificate that signed the app reading it. Apps signed with the same certificate on the same device read the same value. The same certificate on a different device reads a different value.
+
+The command reads the Android ID through the Kobiton agent, so the value belongs to the certificate that signed the agent. The `signingCertificateName` and `signingCertificateSha256` keys identify that certificate.
+
+On Kobiton cloud devices, the agent is signed with a Kobiton certificate, so the value differs from the one your production app reads. To read the production value, the agent must be signed with your app's signing certificate. Contact https://support.kobiton.com[Kobiton Support] for options.
+
+// REVIEWER NOTE (KOB-55417): The source includes a procedure for replacing the agent signing certificate on self-hosted deployments. That procedure involves deviceConnect files and dc.ini settings, so it belongs in admin docs rather than this page. Confirm the customer-facing route to the production Android ID.
+
+=== DRM ID
+
+Reading the DRM ID requires attaching to the running app, so the app must be a debug build and must be open on the device. No device setup is required.
+
+If the app is a release build or is not running, the response explains what to do, for example:
+
+----
+The app com.example.app is not a debug build, so its DRM id cannot be read. Install a build with the debugger enabled to get this value.
+----
+
+----
+No process named com.example.app is running, so its DRM id cannot be read. Launch the app first.
+----
