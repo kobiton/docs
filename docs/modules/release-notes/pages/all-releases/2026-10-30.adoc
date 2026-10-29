@@ -208,7 +208,7 @@ Previously, red and blue could appear swapped in the Lightning mode video on som
 
 == Read device identifiers in automation scripts
 
-Xium automation sessions now support the `mobile: deviceIdentifiers` command, which returns the advertising and tracking identifiers a device holds. Use it to compare the identifiers your app reports with the values on the device.
+Appium automation sessions now support the `mobile: deviceIdentifiers` command, which returns the advertising and tracking identifiers a device holds. Use it to compare the identifiers your app reports with the values on the device.
 
 * *Advertising ID:* Read the IDFA on iOS and the AAID on Android. On iOS, the response also includes the app tracking status.
 * *Android ID:* Read the Android ID (SSAID) along with the signing certificate it belongs to.
@@ -229,32 +229,21 @@ Previously, finding an element by XPath immediately after opening a screen or pr
 
 When the app window is briefly unavailable during a screen transition, page source requests now retry for up to 1 second before returning an error. The improvement also applies to the view hierarchy that manual sessions capture after each action.
 
-On screens that display only system windows, such as the lock screen or an expanded notification shade, page source requests still return `node_access_error` after about 1 second.
+On screens that display only system windows, such as the lock screen or an expanded notification shade, page source requests still return `node_access_error`.
 
 // Source: KOB-54746 from PR #848
 // https://github.com/kobiton/docs/pull/848
 
-=== Accessibility
+=== TalkBack Enhanced keymap
 
-* *TalkBack Enhanced keymap:* Fixed an issue where the *Screen Reader* panel buttons, such as *Next* and *Previous*, did not move the TalkBack focus on Android devices that use the Enhanced keymap introduced in TalkBack 16.2. The buttons now work with both the Default and Enhanced keymaps. Switching the device back to the Default keymap is no longer required.
-
-// REVIEWER NOTE (KOB-54746): Current-release evidence is the Wait For Deployment status and the
-// "Release Email" release-note type on the ticket. Jira has no fix version or release label.
-// Confirm the target publication date and release page.
-//
-// REVIEWER NOTE (KOB-54746): The fix requires an updated Android agent on the devices. Confirm
-// whether Hybrid or Standalone customers need a specific deviceConnect release before the fix
-// applies to their devices, and add availability wording if so.
-//
-// REVIEWER NOTE (KOB-54746): The ticket also selects "Support Notes (Internal only)". Route
-// support-facing detail through internal enablement, not this partial.
+Fixed an issue where the *Screen Reader* panel buttons, such as *Next* and *Previous*, did not move the TalkBack focus on Android devices that use the Enhanced keymap introduced in TalkBack 16.2. The buttons now work with both the Default and Enhanced keymaps. Switching the device back to the Default keymap is no longer required.
 
 // Source: KOB-55682 from PR #841
 // https://github.com/kobiton/docs/pull/841
 
-=== Inspector
+=== Jetpack Compose screens on Android
 
-* *Jetpack Compose screens on Android:* Fixed an issue where the *Inspector* XML hierarchy was missing content on Android 13 and later for Jetpack Compose screens that contain native Android views. The hierarchy showed only elements such as the status bar and the bottom navigation, and the rest of the screen appeared as empty `android.view.View` elements with no text or resource ID. These screens now show their full content in the hierarchy.
+Fixed an issue where the *Inspector* XML hierarchy was missing content on Android 13 and later for Jetpack Compose screens that contain native Android views. The hierarchy showed only elements such as the status bar and the bottom navigation, and the rest of the screen appeared as empty `android.view.View` elements with no text or resource ID. These screens now show their full content in the hierarchy.
 
 // Source: KOB-54826 from PR #825
 // https://github.com/kobiton/docs/pull/825
@@ -268,16 +257,7 @@ Fixed an issue where sessions on a deviceConnect host stopped producing session 
 
 == Lightning Mode fix for some Android devices
 
-- Fixed an issue where Lightning Mode failed to start on some Android devices, such as the Samsung Galaxy Tab A9+, whose video encoder does not support the device's full screen resolution. On these devices, Lightning Mode now streams at a lower resolution than the device's screen. Other devices continue to stream at the same resolution as before.
-
-// REVIEWER NOTE (KOB-52316): No fix version is set in Jira. Confirm the target release date
-// and which release notes page this item belongs on.
-// REVIEWER NOTE (KOB-52316): Jira states the fix ships in the Android agent with the
-// deviceConnect agent bundle. Confirm whether Standalone deployments receive it in this release
-// and whether a deviceConnect version belongs in the Component versions section.
-// REVIEWER NOTE (KOB-52316): Jira also lists a fix for an encoder restart about 1.5 seconds into
-// streams on devices that report a fold posture. The user-visible effect is not described, so it
-// is not included. Confirm with engineering whether it should be added.
+Fixed an issue where Lightning Mode failed to start on some Android devices, such as the Samsung Galaxy Tab A9+, whose video encoder does not support the device's full screen resolution. On these devices, Lightning Mode now streams at a lower resolution than the device's screen. Other devices continue to stream at the same resolution as before.
 
 == Component versions
 
