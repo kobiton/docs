@@ -1,0 +1,10 @@
+// Source: KOB-55559
+// Release-note partial. Place under the "Turbo Test" section of the next Cloud release page.
+// REVIEWER NOTE (KOB-55559): The ticket marks this change for the release email, but another ticket field is set to "Internal". Confirm with Product that a public entry is intended.
+// REVIEWER NOTE (KOB-55559): The guarantee covers Appium Turbo Test sessions, which are capped at 120 minutes. GameDriver runs longer than about 2 hours 15 minutes can still end when infrastructure scales down. Confirm whether to name GameDriver tests or keep the entry Appium-only.
+
+=== Sessions continue during infrastructure scaling and updates
+
+Appium Turbo Test sessions that are running when Kobiton scales down or updates its test execution infrastructure now run to completion instead of being terminated. Results and test reports from these sessions remain available as usual.
+
+During these events, new Turbo Test sessions start on other available infrastructure.
