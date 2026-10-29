@@ -1,0 +1,16 @@
+// Source: KOB-55558
+
+=== Retry guidance when test executors are busy
+
+Kobiton can now limit how many Appium Turbo Test sessions each test executor runs at the same time. This keeps a burst of new sessions from overloading test executors.
+
+When every test executor is at its limit:
+
+- *Immediate execution mode:* `POST /v2/sessions/native` returns HTTP `503` with the message `All test executors are busy. Please retry later.` The device booked for the request is released. Retry the request later.
+- *Queued execution mode:* Kobiton retries the test automatically until a test executor is available or `device_wait_timeout` is reached.
+
+The limit applies only on deployments where it is enabled. Deployments without the limit are unchanged.
+
+For details, see xref:automation-testing:turbo-test-execution/run-appium-test.adoc#_handle_busy_test_executors[Handle busy test executors].
+
+// REVIEWER NOTE (KOB-55558): Confirm which customer environments have the limit enabled before publishing.

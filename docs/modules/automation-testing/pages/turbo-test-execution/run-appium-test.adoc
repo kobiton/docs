@@ -632,6 +632,31 @@ The response is similar to that of the test run request, with 2 additional param
 ** *Example:* `1135`
 ** *Description:* ID of the session where the test executed. Use this ID to query the session details.
 
+// Source: KOB-55558
+
+=== Handle busy test executors
+
+Kobiton can limit how many Appium Turbo Test sessions each test executor runs at the same time. When every test executor is at its limit, the test does not start right away.
+
+// REVIEWER NOTE (KOB-55558): The limit is enabled only on some Kobiton deployments, and other deployments have no limit. Confirm which customer environments to name here.
+
+* If `execution_mode` is `IMMEDIATE`, the request returns HTTP `503` and the device booked for the request is released. Retry the request later.
++
+[source,json]
+----
+{
+  "error": {
+    "message": "All test executors are busy. Please retry later.",
+    "code": 503,
+    "status": "Service Unavailable"
+  }
+}
+----
+
+* If `execution_mode` is `QUEUED`, Kobiton retries the test automatically until a test executor is available or `device_wait_timeout` is reached.
+
+// REVIEWER NOTE (KOB-55558): Confirm which queue `status` value is returned when `device_wait_timeout` is reached after these automatic retries.
+
 == Download test report
 
 === Method 1: Using Kobiton Portal
