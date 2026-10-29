@@ -24,6 +24,59 @@ For host requirements, see xref:device-lab-management:deviceConnect/hardware-req
 // Source: KOB-55044
 // REVIEW (KOB-55044): Confirm availability before publishing: how customers obtain the Linux package, which deployment types support Linux hosts (Hybrid, Standalone/On-Prem), and the release version.
 
+// Source: KOB-55488 from PR #836
+// https://github.com/kobiton/docs/pull/836
+// Source: KOB-55489 from PR #838
+// https://github.com/kobiton/docs/pull/838
+
+== Test Cases that can't replay fail faster with clear reasons
+
+Kobiton now blocks Test Runs on Test Cases that can't replay, and Scriptless Test Runs that still can't start on a device end sooner with the underlying error instead of `Device retry exceeded`.
+
+A Test Case can't run when its app wasn't installed from the app repository during recording, such as an app uploaded from a local file or installed from a URL in an automation session, or when the recording only uses the device home screen.
+
+- In Test Management, *Run* is disabled for these Test Cases, with a tooltip that explains why and how to record them again. They can't be selected on the *New Test Run* page or in *Customize Test Suite*.
+- Creating a Test Run through the API or the `createTestRun` MCP tool returns a `400` error that names the Test Case and the reason.
+- Test Case reads in the API return a new `run_blocked_reason` field.
+
+Test Cases whose app comes from the app repository, and apps opened without an install, such as Chrome, run as before.
+
+For runs that still start and cannot complete initialization, Scriptless Test Runs now end sooner and report the underlying reason:
+
+- *App not on the device:* When the app is not installed on the device and no App Repository version is available to install, the run ends with *Init session failed* and the device's error message after every matching device fails this way. A run that targets one specific device ends after its first attempt.
+- *Unsupported Android version:* When the app requires a newer Android version than the device has, the run ends after its first attempt with that reason.
+- *Home-screen-only recordings:* When a test case recording captured only the home screen, the run now ends after its first attempt instead of launching the home screen.
+- *System screens without an app identifier:* Test cases that include a system screen without an app identifier, such as Camera on iOS, now run their other apps instead of failing to start.
+- *Repeated start failures:* A run that keeps failing to start now ends with the last error instead of `Device retry exceeded`.
+
+For details, see xref:test-management:test-cases.adoc#_test_cases_that_cant_run[Test Cases that can't run].
+
+// Source: KOB-55539 from PR #854
+// https://github.com/kobiton/docs/pull/854
+
+== Unresponsive sessions no longer block their host
+
+Fixed an issue where one unresponsive session could stop every other session on the same host. Until the host was restarted, new sessions could not start on it, Appium and mixed sessions on it failed, and active sessions could not end.
+
+- An Appium or REST API request to a session that cannot accept more requests now fails immediately with HTTP `503` and the message `Session <session-id> is busy. Retry later`. Previously, the request waited without a response.
+- No configuration change is required.
+
+// Source: KOB-55565 from PR #853
+// https://github.com/kobiton/docs/pull/853
+
+== Appium AI settings updates
+
+Appium AI settings are now available only to organizations whose subscription includes Private Device slots. Organizations without slots no longer see *AI Settings* in Org Settings; opening the page by direct URL shows *Appium AI is not available* with a link to contact their account manager, and the Appium AI settings API refuses their requests. Settings saved earlier are kept and reappear if the organization adds Private Device slots later.
+
+The *Appium AI Configuration* form now sets the text model and the vision model separately:
+
+* The form shows *Text Model* and *Vision Model*, plus *Text Extra Body* and *Vision Extra Body*. *Save* stores all of them, regardless of the selected locator strategy.
+* *Locator Strategy* is now *Default Locator Strategy*. A session can still override it with the `kobiton:locatorStrategy` capability.
+* *Optional Fields* now lists only fields you can leave blank.
+* The *Appium AI* card on the *AI Settings* tab shows the API format and both models.
+
+For details, see xref:automation-testing:appium-ai/configure-appium-ai-org-settings.adoc[Configure Appium AI settings for your organization].
+
 == Turbo Test
 
 // Source: KOB-55558 from PR #844
@@ -70,22 +123,6 @@ When a connection is interrupted:
 - Sessions that are already running continue, complete, and upload their test reports.
 - Sessions that have not finished starting are canceled and retried automatically.
 
-// Source: KOB-55565 from PR #853
-// https://github.com/kobiton/docs/pull/853
-
-== Appium AI settings updates
-
-Appium AI settings are now available only to organizations whose subscription includes Private Device slots. Organizations without slots no longer see *AI Settings* in Org Settings; opening the page by direct URL shows *Appium AI is not available* with a link to contact their account manager, and the Appium AI settings API refuses their requests. Settings saved earlier are kept and reappear if the organization adds Private Device slots later.
-
-The *Appium AI Configuration* form now sets the text model and the vision model separately:
-
-* The form shows *Text Model* and *Vision Model*, plus *Text Extra Body* and *Vision Extra Body*. *Save* stores all of them, regardless of the selected locator strategy.
-* *Locator Strategy* is now *Default Locator Strategy*. A session can still override it with the `kobiton:locatorStrategy` capability.
-* *Optional Fields* now lists only fields you can leave blank.
-* The *Appium AI* card on the *AI Settings* tab shows the API format and both models.
-
-For details, see xref:automation-testing:appium-ai/configure-appium-ai-org-settings.adoc[Configure Appium AI settings for your organization].
-
 // Source: KOB-54805 from PR #835
 // https://github.com/kobiton/docs/pull/835
 
@@ -107,32 +144,12 @@ The new `kobiton file rm` command removes a file or an empty folder from an Andr
 
 For details, see xref:kobiton-cli:cli-commands.adoc#file-rm[`file rm`].
 
-// Source: KOB-55488 from PR #836
-// https://github.com/kobiton/docs/pull/836
-// Source: KOB-55489 from PR #838
-// https://github.com/kobiton/docs/pull/838
+// Source: KOB-55695 from PR #851
+// https://github.com/kobiton/docs/pull/851
 
-== Test Cases that can't replay fail faster with clear reasons
+=== MTBF report loads for large device fleets
 
-Kobiton now blocks Test Runs on Test Cases that can't replay, and Scriptless Test Runs that still can't start on a device end sooner with the underlying error instead of `Device retry exceeded`.
-
-A Test Case can't run when its app wasn't installed from the app repository during recording, such as an app uploaded from a local file or installed from a URL in an automation session, or when the recording only uses the device home screen.
-
-- In Test Management, *Run* is disabled for these Test Cases, with a tooltip that explains why and how to record them again. They can't be selected on the *New Test Run* page or in *Customize Test Suite*.
-- Creating a Test Run through the API or the `createTestRun` MCP tool returns a `400` error that names the Test Case and the reason.
-- Test Case reads in the API return a new `run_blocked_reason` field.
-
-Test Cases whose app comes from the app repository, and apps opened without an install, such as Chrome, run as before.
-
-For runs that still start and cannot complete initialization, Scriptless Test Runs now end sooner and report the underlying reason:
-
-- *App not on the device:* When the app is not installed on the device and no App Repository version is available to install, the run ends with *Init session failed* and the device's error message after every matching device fails this way. A run that targets one specific device ends after its first attempt.
-- *Unsupported Android version:* When the app requires a newer Android version than the device has, the run ends after its first attempt with that reason.
-- *Home-screen-only recordings:* When a test case recording captured only the home screen, the run now ends after its first attempt instead of launching the home screen.
-- *System screens without an app identifier:* Test cases that include a system screen without an app identifier, such as Camera on iOS, now run their other apps instead of failing to start.
-- *Repeated start failures:* A run that keeps failing to start now ends with the last error instead of `Device retry exceeded`.
-
-For details, see xref:test-management:test-cases.adoc#_test_cases_that_cant_run[Test Cases that can't run].
+Fixed an issue where the *Mean Time Between Failure (MTBF)* report could fail to load and display an error instead of the chart for organizations with a large number of devices.
 
 // Source: KOB-55124 from PR #834
 // https://github.com/kobiton/docs/pull/834
@@ -141,23 +158,6 @@ For details, see xref:test-management:test-cases.adoc#_test_cases_that_cant_run[
 
 - After a fold or unfold, the saved session video can appear stretched or distorted.
 - In Session Explorer, *Inspector* can be misaligned on steps captured after a fold or unfold.
-
-// Source: KOB-55695 from PR #851
-// https://github.com/kobiton/docs/pull/851
-
-=== MTBF report loads for large device fleets
-
-Fixed an issue where the *Mean Time Between Failure (MTBF)* report could fail to load and display an error instead of the chart for organizations with a large number of devices.
-
-// Source: KOB-55539 from PR #854
-// https://github.com/kobiton/docs/pull/854
-
-== Unresponsive sessions no longer block their host
-
-Fixed an issue where one unresponsive session could stop every other session on the same host. Until the host was restarted, new sessions could not start on it, Appium and mixed sessions on it failed, and active sessions could not end.
-
-- An Appium or REST API request to a session that cannot accept more requests now fails immediately with HTTP `503` and the message `Session <session-id> is busy. Retry later`. Previously, the request waited without a response.
-- No configuration change is required.
 
 == Wait For Deployment
 
