@@ -99,72 +99,35 @@ Fixed an issue that prevented the *Mean Time Between Failure (MTBF)* report from
 
 == Wait For Deployment
 
-// Source: KOB-55660 from PR #858
-// https://github.com/kobiton/docs/pull/858
-
-== Accurate colors in Lightning mode on Android devices
-
-Lightning mode now displays accurate colors on Android devices.
-
-Previously, red and blue could appear swapped in the Lightning mode video on some Android devices. For example, blue icons appeared orange. Screenshots in Session Explorer were not affected.
-
-// REVIEWER NOTE (KOB-55660): The fix passed internal regression testing, but the original symptom was not reproduced in the lab, and verification on the affected devices is still pending. Confirm resolution before publishing.
-
-// Source: KOB-55417 from PR #856
-// https://github.com/kobiton/docs/pull/856
-
-== Read device identifiers in automation scripts
-
-Appium automation sessions now support the `mobile: deviceIdentifiers` command, which returns the advertising and tracking identifiers a device holds. Use it to compare the identifiers your app reports with the values on the device.
-
-* *Advertising ID:* Read the IDFA on iOS and the AAID on Android. On iOS, the response also includes the app tracking status.
-* *Android ID:* Read the Android ID (SSAID) along with the signing certificate it belongs to.
-* *DRM ID:* Read the DRM ID of an Android app that is a debug build and is running.
-
-The identifier for vendor (IDFV) on iOS is not supported.
-
-For details, see xref:automation-testing:scripting/read-device-identifiers-in-appium-script.adoc[].
-
 // Source: KOB-55513 from PR #849
 // https://github.com/kobiton/docs/pull/849
 
-== Improved page source reliability during Android screen transitions
+=== Improved Appium reliability during Android screen transitions
 
-Appium page source requests on Android devices no longer intermittently fail while an app screen opens or closes.
-
-Previously, finding an element by XPath immediately after opening a screen or pressing *Back* could return `SessionException: Agent error: GET /system/inventory, node_access_error ()`.
-
-When the app window is briefly unavailable during a screen transition, page source requests now retry for up to 1 second before returning an error. The improvement also applies to the view hierarchy that manual sessions capture after each action.
-
-On screens that display only system windows, such as the lock screen or an expanded notification shade, page source requests still return `node_access_error`.
+Fixed an issue where Appium automation sessions could encounter page source errors when opening or closing app screens on Android devices.
 
 // Source: KOB-54746 from PR #848
 // https://github.com/kobiton/docs/pull/848
 
-=== TalkBack Enhanced keymap
+=== Improved TalkBack navigation on Android devices
 
-Fixed an issue where the *Screen Reader* panel buttons, such as *Next* and *Previous*, did not move the TalkBack focus on Android devices that use the Enhanced keymap introduced in TalkBack 16.2. The buttons now work with both the Default and Enhanced keymaps. Switching the device back to the Default keymap is no longer required.
-
-// Source: KOB-55682 from PR #841
-// https://github.com/kobiton/docs/pull/841
-
-=== Jetpack Compose screens on Android
-
-Fixed an issue where the *Inspector* XML hierarchy was missing content on Android 13 and later for Jetpack Compose screens that contain native Android views. The hierarchy showed only elements such as the status bar and the bottom navigation, and the rest of the screen appeared as empty `android.view.View` elements with no text or resource ID. These screens now show their full content in the hierarchy.
+The *Screen Reader* panel controls, including *Next* and *Previous*, now work with both the Default and Enhanced TalkBack keymaps on Android devices.
 
 // Source: KOB-54826 from PR #825
 // https://github.com/kobiton/docs/pull/825
 
-== Session videos on long-running deviceConnect hosts
+== Improved session recording reliability in Lightning mode
 
-Fixed an issue where sessions on a deviceConnect host stopped producing session videos after the host's video capture service had been running for an extended period. Sessions started and live view worked normally, but no video was available on the session detail page after the session ended. The issue affected every device on the host until the video capture service restarted.
+Fixed an issue that could prevent session recordings from being saved even when sessions and live view operated normally.
 
 // Source: KOB-52316 from PR #824
 // https://github.com/kobiton/docs/pull/824
 
-== Lightning Mode fix for some Android devices
+== Improved Lightning mode compatibility with Android devices
 
-Fixed an issue where Lightning Mode failed to start on some Android devices, such as the Samsung Galaxy Tab A9+, whose video encoder does not support the device's full screen resolution. On these devices, Lightning Mode now streams at a lower resolution than the device's screen. Other devices continue to stream at the same resolution as before.
+Lightning mode now supports Android devices with video encoders that cannot stream at the device's native screen resolution, including the Samsung Galaxy Tab A9+.
+
+On these devices, Lightning mode automatically adjusts the streaming resolution to a supported size.
 
 == Component versions
 
