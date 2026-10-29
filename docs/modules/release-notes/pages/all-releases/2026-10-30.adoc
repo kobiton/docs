@@ -57,60 +57,29 @@ The *Appium AI Configuration* form now supports separate text and vision model s
 
 For details, see xref:automation-testing:appium-ai/configure-appium-ai-org-settings.adoc[Configure Appium AI settings for your organization].
 
-== Turbo Test
-
 // Source: KOB-55558 from PR #844
 // https://github.com/kobiton/docs/pull/844
-
-=== Retry guidance when test executors are busy
-
-Kobiton can now limit how many Appium Turbo Test sessions each test executor runs at the same time. This keeps a burst of new sessions from overloading test executors.
-
-When every test executor is at its limit:
-
-- *Immediate execution mode:* `POST /v2/sessions/native` returns HTTP `503` with the message `All test executors are busy. Please retry later.` The device booked for the request is released. Retry the request later.
-- *Queued execution mode:* Kobiton retries the test automatically until a test executor is available or `device_wait_timeout` is reached.
-
-For details, see xref:automation-testing:turbo-test-execution/run-appium-test.adoc#_handle_busy_test_executors[Handle busy test executors].
-
 // Source: KOB-55559 from PR #859
 // https://github.com/kobiton/docs/pull/859
-
-=== Sessions continue during infrastructure scaling and updates
-
-Appium Turbo Test sessions that are running when Kobiton scales down or updates its test execution infrastructure now run to completion instead of being terminated. Results and test reports from these sessions remain available as usual.
-
-During these events, new Turbo Test sessions start on other available infrastructure.
-
 // Source: KOB-55678 from PR #839
 // https://github.com/kobiton/docs/pull/839
-
-=== Device still reserved by a previous session
-
-Fixed an issue where starting a Turbo Test session on a specific device with `POST /v2/sessions/native` returned an HTTP 500 error when your previous Turbo Test session still held that device. While the device remains reserved, the request now returns HTTP 404 with the message `No device available.` Retry the request after the device is released. Queued sessions record the 404 response instead of a server error and continue to retry as before.
-
 // Source: KOB-55674 from PR #828
 // https://github.com/kobiton/docs/pull/828
 
-=== Faster recovery from connection interruptions
+== Improved Turbo Test session reliability
 
-Turbo Test now detects an interrupted connection and reconnects automatically, so new sessions resume processing sooner.
+Turbo Test now recovers automatically from interrupted connections. Active sessions continue running, while sessions interrupted during startup are retried.
 
-Previously, an interrupted connection could pause the processing of new Turbo Test sessions, and sessions started during that time could fail with a timeout error.
+When Turbo Test is at capacity, new session requests receive an error explaining that the service is busy. Queued sessions retry automatically when capacity becomes available.
 
-When a connection is interrupted:
-
-- Sessions that are already running continue, complete, and upload their test reports.
-- Sessions that have not finished starting are canceled and retried automatically.
+For details, see xref:automation-testing:turbo-test-execution/run-appium-test.adoc#_handle_busy_test_executors[Handle busy test executors].
 
 // Source: KOB-54805 from PR #835
 // https://github.com/kobiton/docs/pull/835
 
-== More predictable responses from MCP tools
+== Improved reliability for Kobiton MCP tools
 
-- The `terminateSession` MCP tool now returns a successful result with status `already_ended` when the session has already ended. Previously, this call returned an error. An unknown session ID still returns an error.
-- The `saveTestCase` MCP tool now returns a retryable error with the code `SESSION_PROCESSING` and a `retry_after_sec` value when the session is still being processed after it ends. Previously, it returned an error with no explanation. Wait the indicated number of seconds, then retry the call.
-- The `getCredential` MCP tool now returns a successful result for MCP clients that authenticate with a static API-key header. Previously, these calls returned a `401 Unauthorized` error.
+Kobiton MCP tools now handle common operations more reliably, reducing errors that interrupt AI agent workflows. When an operation requires additional action, tools provide clearer error messages to help agents recover or retry.
 
 // Source: KOB-55629 from PR #830
 // https://github.com/kobiton/docs/pull/830
@@ -119,9 +88,6 @@ When a connection is interrupted:
 
 The new `kobiton file rm` command removes a file or an empty folder from an Android or iOS device in a CLI session.
 
-- A successful removal prints `Removed <path>` and exits `0`.
-- A removal fails with a non-zero exit status when the path does not exist or the folder still contains files.
-
 For details, see xref:kobiton-cli:cli-commands.adoc#file-rm[`file rm`].
 
 // Source: KOB-55695 from PR #851
@@ -129,15 +95,7 @@ For details, see xref:kobiton-cli:cli-commands.adoc#file-rm[`file rm`].
 
 === MTBF report loads for large device fleets
 
-Fixed an issue where the *Mean Time Between Failure (MTBF)* report could fail to load and display an error instead of the chart for organizations with a large number of devices.
-
-// Source: KOB-55124 from PR #834
-// https://github.com/kobiton/docs/pull/834
-
-== Known issues with fold and unfold in manual sessions
-
-- After a fold or unfold, the saved session video can appear stretched or distorted.
-- In Session Explorer, *Inspector* can be misaligned on steps captured after a fold or unfold.
+Fixed an issue that prevented the *Mean Time Between Failure (MTBF)* report from loading for organizations with large device fleets.
 
 == Wait For Deployment
 
