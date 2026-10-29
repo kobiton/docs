@@ -11,18 +11,14 @@ Cloud release notes are typically published weekly and summarize changes since t
 
 // Source: KOB-55044 from PR #837
 // https://github.com/kobiton/docs/pull/837
-// FROZEN: Feature announcement for this release. Handled separately in a different format.
 
-== deviceConnect support for Linux hosts with Android devices
+== deviceConnect support for Linux device hosts
 
-deviceConnect now runs on Linux hosts for Android devices. Organizations that host dedicated Android devices can use a Linux x64 machine as the deviceConnect host instead of a Mac mini.
+Organizations with Private Devices can now use Linux device hosts to connect Android devices to Kobiton Portal, providing an alternative to Mac mini hosts for Android device testing.
 
-Linux hosts support Android devices only. iOS devices continue to require a Mac mini host.
+Linux hosts support Ubuntu and Red Hat Enterprise Linux (RHEL) and operate in Standard mode only. Lightning mode and iOS devices are not supported on Linux hosts.
 
-For host requirements, see xref:device-lab-management:deviceConnect/hardware-requirements-for-deviceconnect.adoc[].
-
-// Source: KOB-55044
-// REVIEW (KOB-55044): Confirm availability before publishing: how customers obtain the Linux package, which deployment types support Linux hosts (Hybrid, Standalone/On-Prem), and the release version.
+For requirements and installation instructions, see the deviceConnect Linux host setup guides in the Admin Docs.
 
 // Source: KOB-55488 from PR #836
 // https://github.com/kobiton/docs/pull/836
