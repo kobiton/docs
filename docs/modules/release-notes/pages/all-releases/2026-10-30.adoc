@@ -51,73 +51,12 @@ Appium Turbo Test sessions that are running when Kobiton scales down or updates 
 
 During these events, new Turbo Test sessions start on other available infrastructure.
 
-// Source: KOB-55488 from PR #836
-// https://github.com/kobiton/docs/pull/836
-
-== Test Management blocks Test Cases that a Test Run can't replay
-
-Test Runs now refuse Test Cases that a Test Run can't replay, and Test Management shows the reason before you start a run.
-
-- A Test Case can't run when its app wasn't installed from the app repository during recording, such as an app uploaded from a local file or installed from a URL in an automation session, or when the recording only uses the device home screen.
-- In Test Management, *Run* is disabled for these Test Cases, with a tooltip that explains why and how to record them again. They can't be selected on the Test Run Setup screen or in *Customize* for a Test Suite.
-- Creating a Test Run through the API or the `createTestRun` MCP tool returns a `400` error that names the Test Case and the reason.
-- Test Case reads in the API return a new `run_blocked_reason` field.
-
-Test Cases whose app comes from the app repository, and apps opened without an install, such as Chrome, run as before.
-
-For details, see xref:test-management:test-cases.adoc#_test_cases_that_cant_run[Test Cases that can't run].
-
-// Source: KOB-55539 from PR #854
-// https://github.com/kobiton/docs/pull/854
-
-== Improved session reliability
-
-Fixed an issue where one unresponsive session could stop every other session on the same host. Until the host was restarted, new sessions could not start on it, Appium and mixed sessions on it failed, and active sessions could not end.
-
-- An unresponsive session no longer blocks other sessions or new session creation on the same host.
-- An Appium or REST API request to a session that cannot accept more requests now fails immediately with HTTP `503` and the message `Session <session-id> is busy. Retry later`. Previously, the request waited without a response.
-- No configuration change is required.
-
-// Source: KOB-55565 from PR #853
-// https://github.com/kobiton/docs/pull/853
-
-== Separate text and vision models in Appium AI settings
-
-The *Appium AI Configuration* form for organization settings now sets the text model and the vision model separately.
-
-* The form shows *Text Model* and *Vision Model*, plus *Text Extra Body* and *Vision Extra Body*. *Save* stores all of them, regardless of the selected locator strategy.
-* *Locator Strategy* is now *Default Locator Strategy*. A session can still override it with the `kobiton:locatorStrategy` capability.
-* *Optional Fields* now lists only fields you can leave blank.
-* The *Appium AI* card on the *AI Settings* tab shows the API format and both models.
-
-For details, see xref:automation-testing:appium-ai/configure-appium-ai-org-settings.adoc[Configure Appium AI settings for your organization].
-
-// Source: KOB-55695 from PR #851
-// https://github.com/kobiton/docs/pull/851
-
-=== Mean Time Between Failure report loads for organizations with large device fleets
-
-Fixed an issue where the *Mean Time Between Failure (MTBF)* report could fail to load and display an error instead of the chart for organizations with a large number of devices.
-
 // Source: KOB-55678 from PR #839
 // https://github.com/kobiton/docs/pull/839
 
 === Turbo Test
 
 * *Device still reserved by a previous session:* Fixed an issue where starting a Turbo Test session on a specific device with `POST /v2/sessions/native` returned an HTTP 500 error when your previous Turbo Test session still held that device. While the device remains reserved, the request now returns HTTP 404 with the message `No device available.` Retry the request after the device is released. Queued sessions record the 404 response instead of a server error and continue to retry as before.
-
-// Source: KOB-55489 from PR #838
-// https://github.com/kobiton/docs/pull/838
-
-== Clearer results when Scriptless Test Runs cannot start
-
-Scriptless Test Runs that cannot start on a device now end sooner and report the underlying error instead of `Device retry exceeded`. Previously, these runs could retry for about an hour and a half before ending.
-
-- *App not on the device:* When the app is not installed on the device and no App Repository version is available to install, the run ends with *Init session failed* and the device's error message after every matching device fails this way. A run that targets one specific device ends after its first attempt.
-- *Unsupported Android version:* When the app requires a newer Android version than the device has, the run ends after its first attempt with that reason.
-- *Home-screen-only recordings:* When a test case recording captured only the Home screen, the run now ends after its first attempt instead of launching the Home screen.
-- *System screens without an app identifier:* Test cases that include a system screen without an app identifier, such as Camera on iOS, now run their other apps instead of failing to start.
-- *Repeated start failures:* A run that keeps failing to start now ends with the last error instead of `Device retry exceeded`.
 
 // Source: KOB-55674 from PR #828
 // https://github.com/kobiton/docs/pull/828
@@ -133,11 +72,87 @@ When a connection is interrupted:
 - Sessions that are already running continue, complete, and upload their test reports.
 - Sessions that have not finished starting are canceled and retried automatically.
 
+// Source: KOB-55557 from PR #832
+// https://github.com/kobiton/docs/pull/832
+
+=== Fewer interrupted Turbo Test sessions
+
+A failed weekly sign-in renewal by the service that runs Turbo Test sessions no longer ends running sessions.
+
+- *Automatic retry:* The service renews its sign-in early and retries automatically if renewal fails, instead of restarting and ending every running Turbo Test session.
+- *Brief outages:* Running Turbo Test sessions continue while the sign-in service is briefly unavailable.
+
+// Source: KOB-55562 from PR #831
+// https://github.com/kobiton/docs/pull/831
+
+== Turbo Test
+
+=== More reliable session starts after executor reconnects
+
+Turbo Test sessions now start reliably when test executors reconnect at the same time, such as after a network interruption or an executor restart.
+
+- New sessions go only to executors that are online.
+- Executors that stop responding are removed within about 15 seconds and no longer receive new sessions.
+- If an executor's connection drops while a session is starting, the session fails quickly with an `Executor connection lost` error instead of waiting for a timeout.
+
+// Source: KOB-55565 from PR #853
+// https://github.com/kobiton/docs/pull/853
+
+== Separate text and vision models in Appium AI settings
+
+The *Appium AI Configuration* form for organization settings now sets the text model and the vision model separately.
+
+* The form shows *Text Model* and *Vision Model*, plus *Text Extra Body* and *Vision Extra Body*. *Save* stores all of them, regardless of the selected locator strategy.
+* *Locator Strategy* is now *Default Locator Strategy*. A session can still override it with the `kobiton:locatorStrategy` capability.
+* *Optional Fields* now lists only fields you can leave blank.
+* The *Appium AI* card on the *AI Settings* tab shows the API format and both models.
+
+For details, see xref:automation-testing:appium-ai/configure-appium-ai-org-settings.adoc[Configure Appium AI settings for your organization].
+
 // Source: KOB-54805 from PR #835
 // https://github.com/kobiton/docs/pull/835
 
 - The `terminateSession` MCP tool now returns a successful result with status `already_ended` when the session has already ended. Previously, this call returned an error. An unknown session ID still returns an error.
 - The `saveTestCase` MCP tool now returns a retryable error with the code `SESSION_PROCESSING` and a `retry_after_sec` value when the session is still being processed after it ends. Previously, it returned an error with no explanation. Wait the indicated number of seconds, then retry the call.
+
+// Source: KOB-55629 from PR #830
+// https://github.com/kobiton/docs/pull/830
+
+== Remove files from devices with Kobiton CLI
+
+The new `kobiton file rm` command removes a file or an empty folder from an Android or iOS device in a CLI session.
+
+- A successful removal prints `Removed <path>` and exits `0`.
+- A removal fails with a non-zero exit status when the path does not exist or the folder still contains files.
+
+For details, see xref:kobiton-cli:cli-commands.adoc#file-rm[`file rm`].
+
+// Source: KOB-55488 from PR #836
+// https://github.com/kobiton/docs/pull/836
+// Source: KOB-55489 from PR #838
+// https://github.com/kobiton/docs/pull/838
+
+== Test Cases that can't replay fail faster with clear reasons
+
+Kobiton now blocks Test Runs on Test Cases that can't replay, and Scriptless Test Runs that still can't start on a device end sooner with the underlying error instead of `Device retry exceeded`.
+
+A Test Case can't run when its app wasn't installed from the app repository during recording, such as an app uploaded from a local file or installed from a URL in an automation session, or when the recording only uses the device home screen.
+
+- In Test Management, *Run* is disabled for these Test Cases, with a tooltip that explains why and how to record them again. They can't be selected on the Test Run Setup screen or in *Customize* for a Test Suite.
+- Creating a Test Run through the API or the `createTestRun` MCP tool returns a `400` error that names the Test Case and the reason.
+- Test Case reads in the API return a new `run_blocked_reason` field.
+
+Test Cases whose app comes from the app repository, and apps opened without an install, such as Chrome, run as before.
+
+For runs that still start and cannot complete initialization, Scriptless Test Runs now end sooner (previously these runs could retry for about an hour and a half) and report the underlying reason:
+
+- *App not on the device:* When the app is not installed on the device and no App Repository version is available to install, the run ends with *Init session failed* and the device's error message after every matching device fails this way. A run that targets one specific device ends after its first attempt.
+- *Unsupported Android version:* When the app requires a newer Android version than the device has, the run ends after its first attempt with that reason.
+- *Home-screen-only recordings:* When a test case recording captured only the Home screen, the run now ends after its first attempt instead of launching the Home screen.
+- *System screens without an app identifier:* Test cases that include a system screen without an app identifier, such as Camera on iOS, now run their other apps instead of failing to start.
+- *Repeated start failures:* A run that keeps failing to start now ends with the last error instead of `Device retry exceeded`.
+
+For details, see xref:test-management:test-cases.adoc#_test_cases_that_cant_run[Test Cases that can't run].
 
 // Source: KOB-55124 from PR #834
 // https://github.com/kobiton/docs/pull/834
@@ -159,6 +174,13 @@ Manual sessions on book-style foldable Android devices, such as Galaxy Z Fold, i
 * In Session Explorer, *Inspector* can be misaligned on steps captured after a fold or unfold.
 
 For more information, see xref:manual-testing:device-controls.adoc#_fold_or_unfold_device[Fold or unfold device].
+
+// Source: KOB-55695 from PR #851
+// https://github.com/kobiton/docs/pull/851
+
+=== Mean Time Between Failure report loads for organizations with large device fleets
+
+Fixed an issue where the *Mean Time Between Failure (MTBF)* report could fail to load and display an error instead of the chart for organizations with a large number of devices.
 
 // Source: KOB-55190 from PR #833
 // https://github.com/kobiton/docs/pull/833
@@ -185,40 +207,16 @@ For more information, see xref:manual-testing:device-controls.adoc#_fold_or_unfo
 
 // Source: KOB-55190
 
-// Source: KOB-55557 from PR #832
-// https://github.com/kobiton/docs/pull/832
+// Source: KOB-55539 from PR #854
+// https://github.com/kobiton/docs/pull/854
 
-=== Fewer interrupted Turbo Test sessions
+== Improved session reliability
 
-A failed weekly sign-in renewal by the service that runs Turbo Test sessions no longer ends running sessions.
+Fixed an issue where one unresponsive session could stop every other session on the same host. Until the host was restarted, new sessions could not start on it, Appium and mixed sessions on it failed, and active sessions could not end.
 
-- *Automatic retry:* The service renews its sign-in early and retries automatically if renewal fails, instead of restarting and ending every running Turbo Test session.
-- *Brief outages:* Running Turbo Test sessions continue while the sign-in service is briefly unavailable.
-
-// Source: KOB-55562 from PR #831
-// https://github.com/kobiton/docs/pull/831
-
-== Turbo Test
-
-=== More reliable session starts after executor reconnects
-
-Turbo Test sessions now start reliably when test executors reconnect at the same time, such as after a network interruption or an executor restart.
-
-- New sessions go only to executors that are online.
-- Executors that stop responding are removed within about 15 seconds and no longer receive new sessions.
-- If an executor's connection drops while a session is starting, the session fails quickly with an `Executor connection lost` error instead of waiting for a timeout.
-
-// Source: KOB-55629 from PR #830
-// https://github.com/kobiton/docs/pull/830
-
-== Remove files from devices with Kobiton CLI
-
-The new `kobiton file rm` command removes a file or an empty folder from an Android or iOS device in a CLI session.
-
-- A successful removal prints `Removed <path>` and exits `0`.
-- A removal fails with a non-zero exit status when the path does not exist or the folder still contains files.
-
-For details, see xref:kobiton-cli:cli-commands.adoc#file-rm[`file rm`].
+- An unresponsive session no longer blocks other sessions or new session creation on the same host.
+- An Appium or REST API request to a session that cannot accept more requests now fails immediately with HTTP `503` and the message `Session <session-id> is busy. Retry later`. Previously, the request waited without a response.
+- No configuration change is required.
 
 == Wait For Deployment
 
