@@ -24,6 +24,8 @@ For host requirements, see xref:device-lab-management:deviceConnect/hardware-req
 // Source: KOB-55044
 // REVIEW (KOB-55044): Confirm availability before publishing: how customers obtain the Linux package, which deployment types support Linux hosts (Hybrid, Standalone/On-Prem), and the release version.
 
+== Turbo Test
+
 // Source: KOB-55558 from PR #844
 // https://github.com/kobiton/docs/pull/844
 
@@ -54,7 +56,7 @@ During these events, new Turbo Test sessions start on other available infrastruc
 // Source: KOB-55678 from PR #839
 // https://github.com/kobiton/docs/pull/839
 
-=== Turbo Test
+=== Device still reserved by a previous session
 
 * *Device still reserved by a previous session:* Fixed an issue where starting a Turbo Test session on a specific device with `POST /v2/sessions/native` returned an HTTP 500 error when your previous Turbo Test session still held that device. While the device remains reserved, the request now returns HTTP 404 with the message `No device available.` Retry the request after the device is released. Queued sessions record the 404 response instead of a server error and continue to retry as before.
 
@@ -63,9 +65,9 @@ During these events, new Turbo Test sessions start on other available infrastruc
 
 === Faster recovery from connection interruptions
 
-Turbo Test now detects an interrupted connection within about 30 seconds and reconnects automatically, so new sessions resume processing sooner.
+Turbo Test now detects an interrupted connection and reconnects automatically, so new sessions resume processing sooner.
 
-Previously, an interrupted connection could pause the processing of new Turbo Test sessions for up to about 20 minutes, and sessions started during that time could fail with a timeout error.
+Previously, an interrupted connection could pause the processing of new Turbo Test sessions, and sessions started during that time could fail with a timeout error.
 
 When a connection is interrupted:
 
@@ -77,7 +79,7 @@ When a connection is interrupted:
 
 === Fewer interrupted Turbo Test sessions
 
-A failed weekly sign-in renewal by the service that runs Turbo Test sessions no longer ends running sessions.
+Turbo Test sessions keep running when the service that manages them fails to refresh its sign-in credentials.
 
 - *Automatic retry:* The service renews its sign-in early and retries automatically if renewal fails, instead of restarting and ending every running Turbo Test session.
 - *Brief outages:* Running Turbo Test sessions continue while the sign-in service is briefly unavailable.
@@ -85,14 +87,12 @@ A failed weekly sign-in renewal by the service that runs Turbo Test sessions no 
 // Source: KOB-55562 from PR #831
 // https://github.com/kobiton/docs/pull/831
 
-== Turbo Test
-
 === More reliable session starts after executor reconnects
 
 Turbo Test sessions now start reliably when test executors reconnect at the same time, such as after a network interruption or an executor restart.
 
 - New sessions go only to executors that are online.
-- Executors that stop responding are removed within about 15 seconds and no longer receive new sessions.
+- Executors that stop responding are removed and no longer receive new sessions.
 - If an executor's connection drops while a session is starting, the session fails quickly with an `Executor connection lost` error instead of waiting for a timeout.
 
 // Source: KOB-55565 from PR #853
@@ -111,6 +111,8 @@ For details, see xref:automation-testing:appium-ai/configure-appium-ai-org-setti
 
 // Source: KOB-54805 from PR #835
 // https://github.com/kobiton/docs/pull/835
+
+== More predictable responses from MCP tools
 
 - The `terminateSession` MCP tool now returns a successful result with status `already_ended` when the session has already ended. Previously, this call returned an error. An unknown session ID still returns an error.
 - The `saveTestCase` MCP tool now returns a retryable error with the code `SESSION_PROCESSING` and a `retry_after_sec` value when the session is still being processed after it ends. Previously, it returned an error with no explanation. Wait the indicated number of seconds, then retry the call.
@@ -144,7 +146,7 @@ A Test Case can't run when its app wasn't installed from the app repository duri
 
 Test Cases whose app comes from the app repository, and apps opened without an install, such as Chrome, run as before.
 
-For runs that still start and cannot complete initialization, Scriptless Test Runs now end sooner (previously these runs could retry for about an hour and a half) and report the underlying reason:
+For runs that still start and cannot complete initialization, Scriptless Test Runs now end sooner and report the underlying reason:
 
 - *App not on the device:* When the app is not installed on the device and no App Repository version is available to install, the run ends with *Init session failed* and the device's error message after every matching device fails this way. A run that targets one specific device ends after its first attempt.
 - *Unsupported Android version:* When the app requires a newer Android version than the device has, the run ends after its first attempt with that reason.
@@ -178,7 +180,7 @@ For more information, see xref:manual-testing:device-controls.adoc#_fold_or_unfo
 // Source: KOB-55695 from PR #851
 // https://github.com/kobiton/docs/pull/851
 
-=== Mean Time Between Failure report loads for organizations with large device fleets
+=== MTBF report loads for large device fleets
 
 Fixed an issue where the *Mean Time Between Failure (MTBF)* report could fail to load and display an error instead of the chart for organizations with a large number of devices.
 
@@ -210,7 +212,7 @@ Fixed an issue where the *Mean Time Between Failure (MTBF)* report could fail to
 // Source: KOB-55539 from PR #854
 // https://github.com/kobiton/docs/pull/854
 
-== Improved session reliability
+== Unresponsive sessions no longer block their host
 
 Fixed an issue where one unresponsive session could stop every other session on the same host. Until the host was restarted, new sessions could not start on it, Appium and mixed sessions on it failed, and active sessions could not end.
 
