@@ -632,6 +632,14 @@ The response is similar to that of the test run request, with 2 additional param
 ** *Example:* `1135`
 ** *Description:* ID of the session where the test executed. Use this ID to query the session details.
 
+[#_handle_busy_test_executors]
+=== When Turbo Test is at capacity
+
+Turbo Test supports up to 20 concurrent sessions per test executor on Cloud deployments with capacity limits enabled. When all available test executors reach this limit, new session requests are handled according to the selected execution mode:
+
+* `IMMEDIATE`: The request returns HTTP `503` with the message `All test executors are busy. Please retry later.` The reserved device is released. Retry the request later.
+* `QUEUED`: Portal automatically retries the request until capacity becomes available or `device_wait_timeout` is reached.
+
 == Download test report
 
 === Method 1: Using Kobiton Portal
