@@ -2,7 +2,12 @@
 :navtitle: Hardware requirements for deviceConnect
 
 == Hardware requirements for deviceConnect
-deviceConnect requires an Apple silicon Mac mini - the *Mac mini host* - with the following minimum specs:
+deviceConnect runs on one of the following hosts:
+
+* *Mac mini host*: hosts Android and iOS devices.
+* *Linux host*: hosts Android devices only. See xref:#linux-host[Linux host requirements].
+
+The Mac mini host is an Apple silicon Mac mini with the following minimum specs:
 
 * macOS Sonoma 14 or later (including Tahoe)
 * At least 24GB RAM
@@ -20,7 +25,14 @@ A Mac mini workstation can host up to 15 mobile devices. Use one of the followin
 
 PowerPad15S or SuperSync15 requires one USB 3.0 cable to connect a hub to the Mac mini or Dell server. We recommend shielded USB 3.0 cables. For Standard mode, 3ft or 6ft cables are usually sufficient.
 
-ThunderSync3-16 requires one Thunderbolt™ cable to connect a hub to the Mac mini or Lenovo server. Thunderbolt 3 is the minimum requirement, but Thunderbolt 4 and Thunderbolt 5 cables also work. For Standard mode, 3ft or 6ft cables are usually sufficient.
+Connect the ThunderSync3-16 hub to the Mac mini or Lenovo server using a Thunderbolt 3, 4, or 5 cable. For Standard mode, a 3 ft or 6 ft cable is typically sufficient.
 
 [NOTE]
 The Dell server does not support Thunderbolt. To connect a hub to a Dell server, use PowerPad15S or SuperSync15 with a USB 3.0 cable.
+
+[#linux-host]
+== Linux host requirements
+
+A Linux host runs deviceConnect for Android devices only. iOS devices require a Mac mini host.
+
+Linux hosts support Ubuntu and Red Hat Enterprise Linux (RHEL) in Standard mode. Lightning mode is not supported on Linux hosts.
