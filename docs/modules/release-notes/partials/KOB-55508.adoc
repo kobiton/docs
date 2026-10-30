@@ -1,0 +1,8 @@
+// Source: KOB-55508
+// REVIEWER NOTE (KOB-55508): Place under the Appium automation section of the next Cloud release page. Confirm whether this fix also ships in a Standalone release.
+
+=== Web views available in iOS Appium sessions
+
+Fixed an issue where Appium automation sessions on iOS devices could intermittently return only the `NATIVE_APP` context. In affected sessions, web content opened in the app, such as a sign-in page, did not appear as a `WEBVIEW` context and could not be inspected or automated. Web views are now available as a `WEBVIEW` context in these sessions.
+
+Web views on iOS devices still require *Web Inspector* to be turned on in *Settings → Safari → Advanced*.
