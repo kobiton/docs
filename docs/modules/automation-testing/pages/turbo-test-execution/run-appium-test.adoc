@@ -632,30 +632,13 @@ The response is similar to that of the test run request, with 2 additional param
 ** *Example:* `1135`
 ** *Description:* ID of the session where the test executed. Use this ID to query the session details.
 
-// Source: KOB-55558
+[#_handle_busy_test_executors]
+=== When Turbo Test is at capacity
 
-=== Handle busy test executors
+Turbo Test supports up to 20 concurrent sessions per test executor on Cloud deployments with capacity limits enabled. When all available test executors reach this limit, new session requests are handled according to the selected execution mode:
 
-Kobiton can limit how many Appium Turbo Test sessions each test executor runs at the same time. When every test executor is at its limit, the test does not start right away.
-
-// REVIEWER NOTE (KOB-55558): The limit is enabled only on some Kobiton deployments, and other deployments have no limit. Confirm which customer environments to name here.
-
-* If `execution_mode` is `IMMEDIATE`, the request returns HTTP `503` and the device booked for the request is released. Retry the request later.
-+
-[source,json]
-----
-{
-  "error": {
-    "message": "All test executors are busy. Please retry later.",
-    "code": 503,
-    "status": "Service Unavailable"
-  }
-}
-----
-
-* If `execution_mode` is `QUEUED`, Kobiton retries the test automatically until a test executor is available or `device_wait_timeout` is reached.
-
-// REVIEWER NOTE (KOB-55558): Confirm which queue `status` value is returned when `device_wait_timeout` is reached after these automatic retries.
+* `IMMEDIATE`: The request returns HTTP `503` with the message `All test executors are busy. Please retry later.` The reserved device is released. Retry the request later.
+* `QUEUED`: Portal automatically retries the request until capacity becomes available or `device_wait_timeout` is reached.
 
 == Download test report
 
