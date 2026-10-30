@@ -81,7 +81,7 @@ For the `virtualUsb` filter on `listDevices`, the admin-only `listHostingMachine
 |Get the touch and swipe gestures made in device-only view during a session.
 
 |`terminateSession`
-|Stop a running test session.
+|Stop a running test session. If the session has already ended, the response includes `status: already_ended`.
 
 |`startNativeSession`
 |Start a native automation session with XCUITest, UIAutomator, or GameDriver. Upload the app and the test runner to Kobiton Store first, then pass their `kobiton-store:` identifiers. This books a device and starts a billable session.
@@ -243,6 +243,12 @@ Reuse the `team_id` returned on a listed item when you compose suites and runs. 
 `listTestCases`, `listTestSuites`, and `listTestRuns` take a `rowsPerPage` parameter that defaults to 10 and is clamped to the range 1 to 20, so a single call never returns more than 20 items. A larger value returns 20 items, and a value below 1 returns 1 item instead of an error. The `total_items` count in the response reflects every matching item, not only the current page.
 
 These page-size limits apply to the MCP tools only. The REST API and Kobiton Portal are unchanged.
+
+After a session ends, processing must finish before `saveTestCase` can create a test case.
+
+If the response includes `code: SESSION_PROCESSING` and `retryable: true`, retry the request after the interval specified by `retry_after_sec` (in seconds).
+
+If the response does not indicate that the request is retryable, do not retry it.
 
 === Account
 
