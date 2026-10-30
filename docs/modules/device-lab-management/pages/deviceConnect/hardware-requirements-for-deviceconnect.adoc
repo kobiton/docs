@@ -33,10 +33,6 @@ The Dell server does not support Thunderbolt. To connect a hub to a Dell server,
 [#linux-host]
 == Linux host requirements
 
-A Linux host runs deviceConnect for Android devices. Linux hosts do not support iOS devices. To host iOS devices, use a Mac mini host.
+A Linux host runs deviceConnect for Android devices only. iOS devices require a Mac mini host.
 
-The Linux host requires a Linux x64 operating system.
-
-// REVIEW (KOB-55044): Confirm the supported Linux distributions and versions, minimum RAM, and minimum storage for the Linux host before publishing. The source ticket does not define a supported hardware specification.
-// REVIEW (KOB-55044): Confirm whether the Cambrionix hub models and cable guidance above apply to Linux hosts.
-// REVIEW (KOB-55044): Confirm whether Lightning mode (GEM) is unsupported on Linux hosts. The ticket description states GEM is not supported "for now", but the description predates the implementation.
+Linux hosts support Ubuntu and Red Hat Enterprise Linux (RHEL) in Standard mode. Lightning mode is not supported on Linux hosts.
