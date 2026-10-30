@@ -14,9 +14,9 @@ Cloud release notes are typically published weekly and summarize changes since t
 
 == Host Android devices on Linux
 
-Organizations with Private Devices can now use Linux device hosts to connect Android devices to Kobiton Portal, providing an alternative to Mac mini hosts for Android device testing.
+Organizations with Private and Local devices can now use Linux device hosts to connect Android devices to Kobiton Portal, providing an alternative to Mac mini hosts for Android device testing.
 
-Linux hosts support Ubuntu and Red Hat Enterprise Linux (RHEL) in Standard mode only. Lightning mode is not supported on Linux hosts. iOS devices continue to require Mac mini hosts.
+Linux hosts support Ubuntu and Red Hat Enterprise Linux (RHEL) in Standard mode. Lightning mode has not yet been validated on Linux hosts. iOS devices continue to require Mac mini hosts due to Apple platform requirements.
 
 For requirements and installation instructions, see the deviceConnect Linux host setup guides in the Admin Docs.
 
@@ -33,16 +33,24 @@ Test Cases that cannot be replayed are also excluded from Test Run and Test Suit
 
 Scriptless Test Runs now report specific initialization errors and end unsuccessful attempts sooner, rather than repeatedly retrying and returning the generic `Device retry exceeded` error.
 
-For details, see xref:test-management:test-cases.adoc#_test_cases_that_cant_run[Test Cases that can't run].
+For details, see xref:test-management:test-cases.adoc[Test Cases].
 
 // Source: KOB-55539 from PR #854
 // https://github.com/kobiton/docs/pull/854
+// Source: KOB-55513 from PR #849
+// https://github.com/kobiton/docs/pull/849
 
 == Improved reliability for Appium automation sessions
+
+=== Session recovery and API error handling
 
 An unresponsive session no longer disrupts other automation sessions or prevents new sessions from starting.
 
 Appium and REST API requests to sessions that cannot respond now return an error instead of waiting indefinitely.
+
+=== Page source during Android screen transitions
+
+Appium automation sessions on Android devices now reliably return page source during screen transitions when apps open or close.
 
 // Source: KOB-55565 from PR #853
 // https://github.com/kobiton/docs/pull/853
@@ -91,35 +99,27 @@ For details, see xref:kobiton-cli:cli-commands.adoc#file-rm[`file rm`].
 
 == MTBF report loads for large device fleets
 
-Fixed an issue that prevented the *Mean Time Between Failure (MTBF)* report from loading for organizations with large device fleets.
-
-== Wait For Deployment
-
-// Source: KOB-55513 from PR #849
-// https://github.com/kobiton/docs/pull/849
-
-=== Improved Appium reliability during Android screen transitions
-
-Fixed an issue where Appium automation sessions could encounter page source errors when opening or closing app screens on Android devices.
+The *Mean Time Between Failure (MTBF)* report now loads for organizations with large device fleets.
 
 // Source: KOB-54746 from PR #848
 // https://github.com/kobiton/docs/pull/848
 
-=== Improved TalkBack navigation on Android devices
+== Improved TalkBack navigation on Android devices
 
 The *Screen Reader* panel controls, including *Next* and *Previous*, now work with both the Default and Enhanced TalkBack keymaps on Android devices.
 
 // Source: KOB-54826 from PR #825
 // https://github.com/kobiton/docs/pull/825
-
-=== Improved session recording reliability in Lightning mode
-
-Fixed an issue that could prevent session recordings from being saved even when sessions and live view operated normally.
-
 // Source: KOB-52316 from PR #824
 // https://github.com/kobiton/docs/pull/824
 
-=== Improved Lightning mode compatibility with Android devices
+== Improved Lightning mode reliability
+
+=== Session recording consistency
+
+Session recordings in Lightning mode now save reliably across all sessions on a device host, even during extended operation.
+
+=== Android device compatibility
 
 Lightning mode now supports Android devices with video encoders that cannot stream at the device's native screen resolution, including the Samsung Galaxy Tab A9+.
 
