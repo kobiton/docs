@@ -74,7 +74,7 @@ Use the search bar at the top of the list to find a specific Test Case by name. 
 The following actions are available for each Test Case in the list:
 
 * Select the Test Case ID to open the Test Case details view. Additional actions, such as generating an Appium script, are available there.
-* *Run Test Case* — create a new Test Run from the existing definition.
+* *Run Test Case* — Create a Test Run from the selected Test Case. The action is unavailable when the Test Case does not meet replay requirements. See xref:test-management:test-cases.adoc#_test_case_replay_requirements[Test Case replay requirements].
 * *Clone Test Case* — create a duplicate that can be modified independently.
 * *Delete Test Case* — remove the Test Case from the list and from any test suites it was assigned to.
 
@@ -131,6 +131,48 @@ From the Test Case details page, you can open remediation for an individual touc
 For the full procedure, see xref:test-management:remediations.adoc[Remediations].
 
 After you save the remediation, Kobiton creates a new version of the Test Case.
+
+[#_test_case_replay_requirements]
+== Test Case replay requirements
+
+To replay a Test Case, its baseline session must include an app or browser that the Test Run can open.
+
+Test Cases support replay when the baseline session uses:
+
+* An app installed from the app repository.
+* An app or browser that can be opened without installation, such as Chrome.
+
+Test Cases cannot be replayed when the baseline session:
+
+* Uses an app uploaded from a local file during a manual session or installed from a URL through the `app` capability in an automation session.
+* Contains only the device home screen.
+* Does not include an app or browser under test.
+
+=== Replay availability
+
+Test Cases that do not meet replay requirements display the reason in the interface:
+
+* In the Test Case list and details page, *Run Test Case* or *Run* is disabled. Hover over the action to view the reason.
+* In Test Run Setup, an alert icon identifies Test Cases that cannot be selected.
+* In Test Suite *Customize*, an alert icon identifies Test Case versions that cannot be selected.
+
+Other Test Case actions, including editing, cloning, deleting, and Appium script generation, remain available.
+
+=== Record a replayable Test Case
+
+If the baseline session does not meet replay requirements, create a new recording using the appropriate application source:
+
+* **Manual sessions:** Upload the app to the app repository and install it from there before recording.
+* **Automation sessions:** Upload the app to the app repository and set the `app` capability to `kobiton-store:v<appVersionId>`, where `<appVersionId>` is the app version ID.
+* **Home screen or missing app/browser:** Open the app or browser under test before recording.
+
+=== API and MCP behavior
+
+Creating a Test Run through `POST /v2/test-runs` or the `createTestRun` MCP tool returns HTTP `400` if any selected Test Case version does not meet replay requirements. No executions are created.
+
+The error identifies the Test Case ID and version and provides the reason and corrective action.
+
+Test Case API responses include `run_blocked_reason` for each version. The value is `null` when replay is available.
 
 [#_test_cases_from_automation_sessions]
 == Test Cases from automation and mixed sessions

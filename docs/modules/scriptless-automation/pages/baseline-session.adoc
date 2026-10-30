@@ -86,6 +86,12 @@ Separate baseline sessions are required for Android and iOS, even when the appli
 
 Baseline sessions must target a supported application context: a web application (Safari or Chrome), an app installed from the App Repository, or an existing app already available on the device. For automation sessions and the automation steps of mixed sessions, only apps from the App Repository and existing apps are supported.
 
+To create a Test Case that can be replayed, record a baseline session using an app installed from the app repository or an app or browser that can be opened without installation.
+
+Sessions that use only the device home screen or an app installed from a local file or URL cannot produce replayable Test Cases.
+
+See xref:test-management:test-cases.adoc#_test_case_replay_requirements[Test Case replay requirements].
+
 Sessions can be converted into test cases even if unsupported actions were captured. Test cases that contain unsupported actions cannot be executed in a test run until those steps are removed and the test case is saved as a new version.
 
 == Related pages
