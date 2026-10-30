@@ -1,7 +1,0 @@
-// Release-note partial for KOB-54805.
-// Place under the Kobiton MCP server section of the target release page.
-// The getCredential, listTestRuns sortBy, and teamId changes from this epic were
-// published on the 2026-09-11 page from child tickets and are not repeated here.
-
-- The `terminateSession` MCP tool now returns a successful result with status `already_ended` when the session has already ended. Previously, this call returned an error. An unknown session ID still returns an error.
-- The `saveTestCase` MCP tool now returns a retryable error with the code `SESSION_PROCESSING` and a `retry_after_sec` value when the session is still being processed after it ends. Previously, it returned an error with no explanation. Wait the indicated number of seconds, then retry the call.
