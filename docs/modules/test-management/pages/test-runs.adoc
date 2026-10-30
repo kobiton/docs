@@ -52,13 +52,13 @@ Test Runs can also be started directly from a Test Case or Test Suite:
 
 In each case, the Test Run Setup screen opens with the Test Case or Test Suite already selected.
 
-=== Test Cases that can't run
+=== Test Case replay requirements
 
-A Test Run can't replay some Test Cases, for example when the app was uploaded from a local file instead of installed from the app repository, or when the recording only uses the device home screen. These Test Cases can't be selected on the Test Run Setup screen, and *Run* is disabled for them in Test Cases.
+Test Run Setup identifies Test Cases that do not meet replay requirements and prevents their selection.
 
-Kobiton refuses a Test Run that includes a blocked Test Case, and the error message names the Test Case. This applies to Test Suites that contain a blocked Test Case, reruns, and links that open the Test Run Setup screen with a blocked Test Case already selected. No executions are created.
+If a Test Run request includes an ineligible Test Case, the request returns an error identifying the Test Case. No executions are created. This behavior also applies to Test Suites, reruns, and links that open Test Run Setup with a previously selected Test Case.
 
-For the full list of reasons and how to fix each one, see xref:test-management:test-cases.adoc#_test_cases_that_cant_run[Test Cases that can't run].
+For requirements and corrective actions, see xref:test-management:test-cases.adoc#_test_case_replay_requirements[Test Case replay requirements].
 
 image::test-run-setup.png[width=700,alt="Run Setup screen with all configuration fields visible"]
 
