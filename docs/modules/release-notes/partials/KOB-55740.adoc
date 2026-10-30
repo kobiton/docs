@@ -1,0 +1,14 @@
+// Source: KOB-55740
+
+== Passcode indicator for Android and HarmonyOS devices
+
+The device list passcode indicator now covers Android and HarmonyOS devices, and the *Passcode* filter uses clearer labels.
+
+- Android and HarmonyOS devices with a passcode now display the passcode icon in card view and list view, the same as iOS devices.
+- The passcode icon tooltip now reads *Passcode enabled*.
+- The *Passcode* filter in the device search bar now offers *Enabled* and *Not Enabled*, replacing *Supported* and *Not Supported*. *Enabled* returns devices with a passcode on every platform.
+
+For details, see xref:devices:device-metadata.adoc#_passcode[Passcode].
+
+// REVIEWER NOTE (KOB-55740): HarmonyOS devices appear in the device list only with separate HarmonyOS support work. Confirm HarmonyOS devices are available in this release before publishing the HarmonyOS mention.
+// REVIEWER NOTE (KOB-55740): The Jira Release Notes field names the previous labels "Supported" and "Unsupported". The current docs and the 2026-10-16 release notes use "Not Supported". Confirm the previous label shown in the product.

@@ -120,11 +120,16 @@ In List View, the Lightning mode column (when enabled) indicates the Lightning m
 
 image:devices:lightning-mode-indicator-device-list.png[width=1000,alt="The lightning indicator on the device under the list view"]
 
+// Source: KOB-55740
 [#_passcode]
 == Passcode
 
-The passcode support of the device, either `Supported` or `Not Supported`. when your organization has passcode (PIN) mode enabled and the device meets the requirements for passcode support.
+Whether the device has a passcode, either `Enabled` or `Not Enabled`. This metadata is available when your organization has passcode (PIN) mode enabled.
 
-In Card View and List View, a passcode icon appears next to the device name for supported devices. Hover over the icon to show *Passcode enabled - required for Apple Pay*.
+In Card View and List View, a passcode icon appears next to the device name for iOS, Android, and HarmonyOS devices that have a passcode. Hover over the icon to show *Passcode enabled*.
 
-Use a supported device to xref:manual-testing:enter-ios-device-passcode.adoc[enter a device passcode on iOS] during a manual session.
+Filter by *Passcode* and select *Enabled* to list devices with a passcode on every platform. Select *Not Enabled* to list devices without a passcode. The previous `Supported` and `Not Supported` values no longer return results.
+
+// REVIEWER NOTE (KOB-55740): HarmonyOS devices appear in the device list only with separate HarmonyOS support work. Confirm HarmonyOS devices are available before publishing the HarmonyOS mention.
+
+Use an iOS device with a passcode to xref:manual-testing:enter-ios-device-passcode.adoc[enter a device passcode on iOS] during a manual session.
