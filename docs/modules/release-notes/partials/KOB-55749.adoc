@@ -1,0 +1,13 @@
+// Source: KOB-55749
+
+== Turbo Test
+
+=== Session timeout now ends Turbo Test sessions
+
+Turbo Test sessions now end when the session timeout (`session_timeout`) is reached. Previously, a test script that ran past the session timeout kept the session running and the device in use until the script finished on its own.
+
+- When the session timeout is reached, Kobiton stops the test script and every process it started, ends the session, and releases the device.
+- If the script does not start its session before the timeout, the run fails with a message stating that the script did not finish within the session timeout.
+- Scripts that finish before the session timeout run as before.
+
+// REVIEWER NOTE (KOB-55749): The `session_timeout` request parameter is not listed in the Request parameter reference in automation-testing:turbo-test-execution/run-appium-test.adoc. Confirm whether to keep the parameter name here, and its unit and default, before publishing.
