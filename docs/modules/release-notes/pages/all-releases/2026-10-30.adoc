@@ -12,11 +12,11 @@ Cloud release notes are typically published weekly and summarize changes since t
 // Source: KOB-55044 from PR #837
 // https://github.com/kobiton/docs/pull/837
 
-== deviceConnect support for Linux device hosts
+== Host Android devices on Linux
 
 Organizations with Private Devices can now use Linux device hosts to connect Android devices to Kobiton Portal, providing an alternative to Mac mini hosts for Android device testing.
 
-Linux hosts support Ubuntu and Red Hat Enterprise Linux (RHEL) and operate in Standard mode only. Lightning mode and iOS devices are not supported on Linux hosts.
+Linux hosts support Ubuntu and Red Hat Enterprise Linux (RHEL) in Standard mode only. Lightning mode is not supported on Linux hosts. iOS devices continue to require Mac mini hosts.
 
 For requirements and installation instructions, see the deviceConnect Linux host setup guides in the Admin Docs.
 
@@ -89,7 +89,7 @@ For details, see xref:kobiton-cli:cli-commands.adoc#file-rm[`file rm`].
 // Source: KOB-55695 from PR #851
 // https://github.com/kobiton/docs/pull/851
 
-=== MTBF report loads for large device fleets
+== MTBF report loads for large device fleets
 
 Fixed an issue that prevented the *Mean Time Between Failure (MTBF)* report from loading for organizations with large device fleets.
 
