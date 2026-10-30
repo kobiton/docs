@@ -44,7 +44,7 @@ image:session-explorer:download-screenshot-closeup.png[width=500,alt="Download b
 [#_review_fold_and_unfold_steps]
 === Review fold and unfold steps
 
-When a foldable device is folded or unfolded during a manual session, the timeline records the change as a test step:
+When a foldable device is folded or unfolded during a manual session with the xref:manual-testing:device-controls.adoc#_fold_or_unfold_device[fold control], the timeline records the change as a test step:
 
 * *FOLD DEVICE*: The device was folded.
 * *UNFOLD DEVICE*: The device was unfolded.
@@ -58,16 +58,8 @@ Screenshots keep the screen size and shape of the posture the device was in when
 * The screenshot for a fold or unfold step is captured shortly after the change. If the device is slow to switch screens, the screenshot can still show the previous screen.
 * Fold and unfold steps are recorded for manual sessions only.
 * When you convert a session to a test case, fold and unfold steps appear as unsupported steps.
+* On foldable Android devices, *Inspector* can be misaligned on steps recorded after folding or unfolding the device.
 ====
-
-// Source: KOB-55174 (Jira status: Released)
-// REVIEWER NOTE (KOB-55174): Steps are produced by the fold/unfold toolbar control from KOB-55167,
-// which is not documented yet. Add an xref to its page when it exists, and confirm the toolbar label.
-// REVIEWER NOTE (KOB-55174): Jira scopes recording to manual sessions only. Confirm whether mixed
-// sessions are included.
-// REVIEWER NOTE (KOB-55174): Confirm the timeline label casing (FOLD DEVICE / UNFOLD DEVICE) and
-// that conversion to a test case shows fold steps as unsupported.
-// REVIEWER NOTE (KOB-55174): Add a screenshot of the FOLD DEVICE and UNFOLD DEVICE icons if needed.
 
 [#_view_validation_issues]
 === View validation issues
