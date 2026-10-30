@@ -1,0 +1,34 @@
+= Sign in to an Apple Account during a manual session
+
+During a manual iOS session, Apple disables the device's virtual keyboard for protected sign-in fields, such as the password and verification code. Use the *Apple Security Enablement* window in Portal to enter these values.
+
+NOTE: Apple Account sign-in is available on private and local iOS devices only.
+
+== Sign in to an Apple Account
+
+. On the device screen, open *Settings*, then tap *Apple Account*.
+. Tap *Sign in Manually*.
+. Tap *Email or Phone Number*, type or paste the Apple Account email address, then press Enter.
++
+The *Password* field appears, and the *Apple Security Enablement* window opens in Portal.
+. In the *Apple Security Enablement* window, click the *Password* field, type or paste the password, then click *Submit*.
++
+image:manual-testing:enter-appleid-pw.png[width=400, alt="The Apple Security Enablement window next to the Apple Account password field on the device screen"]
+. Close the *Apple Security Enablement* window.
+. Swipe up on the device screen, then tap *Continue*.
+. When the *Apple Account Verification Code* prompt appears, get the six-digit verification code from a trusted device signed in to the Apple Account.
+. Type the code in the *Apple Security Enablement* window, then click *Submit*.
++
+image:manual-testing:enter-verification-code.png[width=400, alt="The Apple Security Enablement window next to the Apple Account Verification Code prompt on the device screen"]
++
+After a few seconds, the window and the prompt close, and sign-in continues.
+. If iOS asks for the passcode or password of another device signed in to the Apple Account, type that device's passcode or password in the *Apple Security Enablement* window, then click *Submit*. Don't use the Apple Account password.
++
+For example, the *Enter Mac Password* prompt asks for the password of the Mac named in the prompt. This prompt appears only when the Apple Account stores end-to-end encrypted data in iCloud, such as saved passwords. For details, see https://support.apple.com/en-us/102660[Two-factor authentication for Apple Account,window=_blank].
++
+image:manual-testing:enter-mac-pw.png[width=400, alt="The Apple Security Enablement window next to the Enter Mac Password prompt on the device screen"]
++
+Close the *Apple Security Enablement* window, then tap *Done* on the device screen.
+. Follow the remaining prompts on the device screen.
+
+When the Apple Account name and email address appear on the device screen, sign-in is complete.

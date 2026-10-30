@@ -72,6 +72,19 @@ For details, see xref:debugging:set-up-virtualusb.adoc[].
 // Source: 2026-10-09.adoc (KOB-55371, KOB-52820, KOB-52679, KOB-55165, KOB-55306, KOB-55305, KOB-54596)
 // virtualUSB confirmed available on Standalone at review.
 
+== deviceConnect support for Linux device hosts
+
+Standalone deployments can now use Linux device hosts to connect Android devices to Kobiton, as an alternative to Mac mini hosts.
+
+Linux hosts support Ubuntu 24.04 LTS and Red Hat Enterprise Linux (RHEL) 9.8 or 10.2, and run in Standard mode only. They do not support Lightning mode, iOS and iPadOS devices, or deviceShare.
+
+For the complete procedure, refer to the Kobiton Admin Docs. If you need access, please contact your Account Manager.
+
+// Source: KOB-55044 (epic), KOB-55701 and KOB-55741 (Admin Docs, admin-docs PR #272).
+// Wording matches the Cloud entry in 2026-10-30.adoc (PR #860). Linux hosts require Standalone 4.27.2S
+// or later; the Admin Docs were tested with deviceConnect 2610.21, this release's component version.
+// Admin Docs reference wording follows PR #798; no hyperlink since the Admin Docs are password-protected.
+
 == deviceConnect license configuration
 
 New deviceConnect installations require an additional license configuration step before deviceConnect can initialize. Existing installations require no changes.

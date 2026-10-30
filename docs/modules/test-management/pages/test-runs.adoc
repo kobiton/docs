@@ -52,6 +52,14 @@ Test Runs can also be started directly from a Test Case or Test Suite:
 
 In each case, the Test Run Setup screen opens with the Test Case or Test Suite already selected.
 
+=== Test Case replay requirements
+
+Test Run Setup identifies Test Cases that do not meet replay requirements and prevents their selection.
+
+If a Test Run request includes an ineligible Test Case, the request returns an error identifying the Test Case. No executions are created. This behavior also applies to Test Suites, reruns, and links that open Test Run Setup with a previously selected Test Case.
+
+For requirements and corrective actions, see xref:test-management:test-cases.adoc#_test_case_replay_requirements[Test Case replay requirements].
+
 image::test-run-setup.png[width=700,alt="Run Setup screen with all configuration fields visible"]
 
 == Manage Test Runs

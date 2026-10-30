@@ -157,8 +157,13 @@ if (navContent.includes(navEntry)) {
 // Update latest release include
 //
 
-const latestContent =
-  `include::all-releases/${publicationDate}.adoc[leveloffset=1]\n`;
+const latestContent = [
+  "= Cloud latest updates",
+  ":navtitle: Cloud latest updates",
+  "",
+  `include::all-releases/${publicationDate}.adoc[leveloffset=1]`,
+  "",
+].join("\n");
 
 fs.writeFileSync(latestFile, latestContent);
 
