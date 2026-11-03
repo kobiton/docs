@@ -14,13 +14,13 @@ The following limitations apply to Portal 2610.15 or later, deviceConnect 2610.1
 
 The fold position does not reset when a session ends. The next session on the device starts in the position the previous session left it in, even if that position differs from the device's physical position. The fold control and the session stream always show the device's current position.
 
-* To change the position for the current session, select *Fold device* or *Unfold device*. The next session starts in the position you leave the device in.
+* To change the position for the current session, select *Fold device* or *Unfold device*.
 * To return a Private device to its physical position, xref:devices:manage-devices.adoc#_restart_private_device[restart the device].
-* To return a Public device to its physical position, submit a support ticket to Kobiton to restart the device.
+* To return a Public device to its physical position, submit a support ticket to Kobiton requesting a device restart.
 
 == Session video
 
-After a fold or unfold, the session video can appear stretched or squeezed. The video frame size can change partway through the recording. When the frame shape does not match the device position, the video stretches or squeezes the screen to fill the frame.
+After a fold or unfold, the session video can appear stretched or squeezed. The video frame size can change partway through the recording. When the frame shape does not match the device position, the video distorts the screen to fill the frame.
 
 No workaround is available. To view the screen at its correct size and shape, use the step screenshots in the xref:session-explorer:analytics/use-the-session-timeline.adoc#_review_fold_and_unfold_steps[Session Explorer timeline].
 
@@ -42,7 +42,9 @@ The screenshot for a fold or unfold step is captured shortly after the change. I
 Closing or opening a flip-style device during a session affects the session stream:
 
 * *Closing the device*: The device turns off its main screen, so the stream goes black. The stream does not show the cover screen, and no workaround is available.
-* *Opening the device again*: The stream stays black. To restore video, select *Power* to turn on the screen and show the lock screen, then select *Power* again to unlock the device. Alternatively, turn off *Lightning Mode* in *Speedometer*. With *Lightning Mode* off, video resumes at a lower frame rate.
+* *Opening the device again*: The stream stays black. To restore video, do one of the following:
+** Select *Power* to turn on the screen and show the lock screen, then select *Power* again to unlock the device.
+** Turn off *Lightning Mode* in *Speedometer*. Video resumes at a lower frame rate.
 * *Starting a session on a closed device*: The session shows only the cover screen's always-on display and cannot be used. *Unfold device* and *Home* have no effect.
 
 == Hosting foldable devices
