@@ -140,7 +140,7 @@ capabilities.setCapability("captureScreenshots", true);
 
 === `kobiton:deviceGroup`
 
-The device group within the test session metadata.
+The device group to select a device from: `ORGANIZATION` (your organization's devices), `KOBITON` (Kobiton cloud devices) or `ANY` (both). Defaults to `ANY`, so if omitted, devices from both groups that you can access are considered.
 
 * *Type:* `string`
 * *Required capabilities:* None
@@ -172,9 +172,7 @@ Follow 2-dimensional string array formats when specifying tags:
 * Multiple groups (AND across groups): `[["project","dev"],["healthy"]]`
 * Multiple nested layers such as `[["project", ["dev", "test"]],["healthy"]]` are not supported.
 
-WARNING: Do not provide an empty value for `kobiton:deviceTags`. An empty value may cause session creation to fail.
-
-NOTE: If no device selection capability is provided (such as `deviceName`, `udid`, or `kobiton:deviceTags`), Kobiton may not be able to determine a target device for the session.
+NOTE: `deviceName`, `udid` and `kobiton:deviceTags` are all optional. If none of them is provided, Kobiton picks any available device that matches `platformName` and your other capabilities (such as `platformVersion`) in the requested `kobiton:deviceGroup`. An empty `kobiton:deviceTags` value is ignored.
 
 See the below examples of how to use 2-dimensional string array formats for different programming languages.
 
@@ -792,9 +790,9 @@ capabilities.setCapability("appium:noReset", false);
 
 === `platformName`
 
-The type of platform, i.e Android or iOS.
+The type of platform, i.e Android or iOS. Required when `udid` isn't provided; without it, session creation fails with `platformName is required`.
 
-* *Type:* `boolean`
+* *Type:* `string`
 * *Required capabilities:* None
 * *Optional capabilities:* None
 
