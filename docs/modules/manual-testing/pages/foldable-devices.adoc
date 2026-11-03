@@ -1,0 +1,47 @@
+= Foldable device considerations
+:navtitle: Foldable devices
+
+Use the xref:manual-testing:device-controls.adoc#_fold_or_unfold_device[fold control] to fold and unfold book-style foldable Android devices, such as Galaxy Z Fold and Pixel Fold, during a manual session. Flip-style devices, such as Galaxy Z Flip, are not supported.
+
+The following limitations apply to Portal 2610.15 and deviceConnect 2610.15.
+
+== Supported sessions
+
+* Fold and unfold controls are available in manual sessions only.
+* Session Explorer records fold and unfold steps for manual sessions only. When you convert a session to a test case, fold and unfold steps appear as unsupported steps.
+
+== Fold position between sessions
+
+The fold position does not reset when a session ends. The next session on the device starts in the position the previous session left it in, even if that position differs from the device's physical position. The fold control and the session stream always show the device's current position.
+
+* To change the position for the current session, select *Fold device* or *Unfold device*. The next session starts in the position you leave the device in.
+* To return a Private device to its physical position, xref:devices:manage-devices.adoc#_restart_private_device[restart the device].
+
+== Session video
+
+After a fold or unfold, the session video can appear stretched or squeezed. The video frame size can change partway through the recording. When the frame shape does not match the device position, the video stretches or squeezes the screen to fill the frame.
+
+No workaround is available. To view the screen at its correct size and shape, use the step screenshots in the xref:session-explorer:analytics/use-the-session-timeline.adoc#_review_fold_and_unfold_steps[Session Explorer timeline].
+
+== Session Explorer
+
+[#_inspector_alignment]
+=== Inspector alignment
+
+On some steps captured after a fold or unfold, *Inspector* highlights do not line up with the app's elements. Hovering over or selecting an element highlights a different area of the screenshot. Touch and swipe markers are not affected.
+
+No workaround is available.
+
+=== Step screenshots
+
+The screenshot for a fold or unfold step is captured shortly after the change. If the device is slow to switch screens, the screenshot can still show the previous screen.
+
+== Flip-style devices
+
+Closing or opening a flip-style device during a session affects the session stream:
+
+* *Closing the device*: The stream goes black and does not show the cover screen. No workaround is available.
+* *Opening the device again*: The stream stays black. To restore video, select *Power* twice, or turn off *Lightning Mode* in *Speedometer*. With *Lightning Mode* off, video resumes at a lower frame rate.
+* *Starting a session on a closed device*: The session shows only the cover screen's always-on display and cannot be used. *Unfold device* and *Home* have no effect.
+
+To avoid these issues on Private and Local devices, xref:device-lab-management:android-devices/prepare-android-device.adoc#_prepare_foldable_android_devices[keep flip-style devices open when hosting them].
