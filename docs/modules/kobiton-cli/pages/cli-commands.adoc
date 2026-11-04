@@ -519,6 +519,8 @@ kobiton file pull [OPTIONS] <REMOTE_PATH> [LOCAL_PATH]
 | `-j`, `--concurrency` | `<CONCURRENCY>` | Maximum simultaneous transfers (recursive pulls only). Default: `5`.
 |===
 
+Keep simultaneous transfers below 10. Higher values increase the rate of transfer failure.
+
 Plus all <<global-options,global options>>.
 
 *Requires:*
