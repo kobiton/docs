@@ -1,0 +1,29 @@
+== Device tags API
+
+- Fixed an issue where adding a tag to a device through the API could fail with HTTP 400 and a `SequelizeUniqueConstraintError` message.
+- Adding a tag that is already assigned to a device now succeeds instead of returning an error.
+- When several requests add the same tag to the same device at the same time, every request succeeds and the tag is assigned to the device only once.
+- The fix applies to these device-tag endpoints:
+** `POST /v1/tags/device/\{udid}`
+** `POST /v1/tags/assign`
+** `POST /v2/tags/\{tagName}/devices`
+** `POST /v2/tags/devices`
+
+// Source: KOB-52861 | Escalation | Component: Device Tags | Fix version: 2026.11.04.
+// Jira status: Released. Production verification passed 2026-11-04.
+//
+// REVIEWER NOTE: Wording is based on the ticket's release-note field. The customer name
+// and escalation history from the ticket are intentionally omitted.
+//
+// REVIEWER NOTE: The error name `SequelizeUniqueConstraintError` is kept because it is
+// the exact message API users saw and is useful for search. Remove it if the docs team
+// prefers not to expose framework-level error names.
+//
+// REVIEWER NOTE: The engineering scope also states that replace-style updates
+// (POST /v1/tags/device/{udid}, POST /v2/tags/devices) sent concurrently for the same
+// device are now applied in order, with the last request winning. The ticket's
+// release-note field does not include this, so it is left out. Confirm with engineering
+// whether it should be called out.
+//
+// REVIEWER NOTE: Assign this partial to the release page that covers fix version
+// 2026.11.04 (deployed to US production 2026-11-04).
