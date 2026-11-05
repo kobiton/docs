@@ -1,0 +1,8 @@
+// Source: KOB-55532
+
+=== Reliable app lifecycle commands on iOS 15 and 16
+
+On iOS 15 and iOS 16 devices, these commands stay reliable across long-running sessions and no longer require a device reboot to restore:
+
+* CLI: `app run`, `app kill`, `device ps`
+* Appium: `mobile: terminateApp`
