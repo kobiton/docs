@@ -1,0 +1,11 @@
+// Source: KOB-54409
+
+== Support for the MCP 2026-07-28 specification
+
+The Kobiton MCP server now supports the MCP 2026-07-28 specification. AI clients that use the new protocol connect without an initialization handshake, and clients that use earlier MCP versions continue to work without changes.
+
+* AI clients on the 2026-07-28 protocol, such as current versions of Claude Code, connect statelessly and can use server discovery and cacheable tool lists.
+* AI clients on earlier MCP versions connect as before. No reconnection or configuration change is required.
+* Requests from untrusted browser origins are rejected, which protects the MCP endpoint against DNS rebinding attacks.
+
+// REVIEWER NOTE (KOB-54409): Confirm whether customers need to know which browser origins are trusted by default, and whether Standalone customers can change the trusted origins. The source states only that untrusted origins are rejected.
