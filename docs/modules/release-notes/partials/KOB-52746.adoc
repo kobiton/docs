@@ -1,0 +1,8 @@
+// Source: KOB-52746
+
+=== Accurate memory values in Device Metrics
+
+Device Metrics now shows the memory a device is actually using, matching Android Settings and Xcode Instruments, instead of reading 90%+.
+
+* Android and iOS: memory the OS can reclaim on demand (cache) now counts as free.
+* Sessions recorded before the upgrade keep their old, higher memory values.
