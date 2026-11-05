@@ -1,0 +1,7 @@
+// Source: KOB-52033
+
+== Android device passcode fix
+
+Fixed an issue where the *Passcode Feature Enforced* setting could turn off on its own for some Android devices. When this happened, a device that still had a passcode set could not be unlocked. The setting now stays on when an Android 8 or later device reconnects.
+
+// REVIEWER NOTE (KOB-52033): Devices that were already affected before this release are corrected by a separate one-time data repair. The source evidence does not confirm that the repair is complete. If it is not complete, affected devices can still show the setting as off until the repair runs. Confirm before publishing.
