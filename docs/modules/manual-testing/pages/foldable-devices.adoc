@@ -1,7 +1,7 @@
 = Foldable device considerations
 :navtitle: Foldable devices
 
-Use the xref:manual-testing:device-controls.adoc#_fold_or_unfold_device[fold control] to fold and unfold book-style foldable Android devices, such as Samsung Galaxy Z Fold and Google Pixel Fold, during a manual session. Flip-style devices, such as Samsung Galaxy Z Flip, are not supported.
+Use the xref:manual-testing:device-controls.adoc#_fold_or_unfold_device[fold control] to fold and unfold book-style foldable Android devices, such as Samsung Galaxy Z Fold and Google Pixel Fold, during a manual session. The fold control does not support flip-style devices, such as Samsung Galaxy Z Flip.
 
 The following limitations apply to Portal 2610.15 or later, deviceConnect 2610.15 or later, and Standalone 4.27.2S or later.
 
@@ -10,19 +10,21 @@ The following limitations apply to Portal 2610.15 or later, deviceConnect 2610.1
 * Fold and unfold controls are available in manual sessions only.
 * Session Explorer records fold and unfold steps for manual sessions only. When you convert a session to a test case, fold and unfold steps appear as unsupported steps.
 
-== Fold position between sessions
+== Fold state between sessions
 
-The fold position does not reset when a session ends. The next session on the device starts in the position the previous session left it in, even if that position differs from the device's physical position. The fold control and the session stream always show the device's current position.
+The physical fold state is the position of the device's hinge. The reported fold state is the folded or unfolded state that the fold control sets and that the session uses.
 
-* To change the position for the current session, select *Fold device* or *Unfold device*.
-* To return a Private device to its physical position, xref:devices:manage-devices.adoc#_restart_private_device[restart the device].
-* To return a Public device to its physical position, submit a support ticket to Kobiton requesting a device restart.
+The reported fold state does not reset when a session ends. The next session starts in the reported fold state that the previous session left, even if it differs from the physical fold state. The fold control and the session stream show the reported fold state.
+
+* To change the reported fold state for the current session, select *Fold device* or *Unfold device*.
+* To reset a Private device to its physical fold state, xref:devices:manage-devices.adoc#_restart_private_device[restart the device].
+* To reset a Public device to its physical fold state, submit a support ticket to Kobiton requesting a device restart.
 
 == Session video
 
-After a fold or unfold, the session video can appear stretched or squeezed. The video frame size can change partway through the recording. When the frame shape does not match the device position, the video distorts the screen to fill the frame.
+After a fold or unfold, the session video may appear stretched or squeezed.
 
-No workaround is available. To view the screen at its correct size and shape, use the step screenshots in the xref:session-explorer:analytics/use-the-session-timeline.adoc#_review_fold_and_unfold_steps[Session Explorer timeline].
+To view the screen without distortion, use the step screenshots in the xref:session-explorer:analytics/use-the-session-timeline.adoc#_review_fold_and_unfold_steps[Session Explorer timeline].
 
 == Session Explorer
 
@@ -31,27 +33,23 @@ No workaround is available. To view the screen at its correct size and shape, us
 
 On some steps captured after a fold or unfold, *Inspector* highlights do not line up with the app's elements. Hovering over or selecting an element highlights a different area of the screenshot. Touch and swipe markers are not affected.
 
-No workaround is available.
-
 === Step screenshots
 
 The screenshot for a fold or unfold step is captured shortly after the change. If the device is slow to switch screens, the screenshot can still show the previous screen.
 
 == Flip-style devices
 
-Closing or opening a flip-style device during a session affects the session stream:
-
-* *Closing the device*: The device turns off its main screen, so the stream goes black. The stream does not show the cover screen, and no workaround is available.
-* *Opening the device again*: The stream stays black. To restore video, do one of the following:
-** Select *Power* to turn on the screen and show the lock screen, then select *Power* again to unlock the device.
-** Turn off *Lightning Mode* in *Speedometer*. Video resumes at a lower frame rate.
-* *Starting a session on a closed device*: The session shows only the cover screen's always-on display and cannot be used. *Unfold device* and *Home* have no effect.
+* *Folding the device*: The main screen turns off, and the session stream goes black. The cover screen is not displayed.
+* *Unfolding the device*: The stream remains black. To restore video:
+** Select *Power* to turn on the screen and display the lock screen, then select *Power* again to unlock the device.
+** Alternatively, turn off *Lightning Mode* in *Speedometer*. Video resumes at a lower frame rate.
+* *Starting a session on a folded device*: The session displays only the cover screen's always-on display. *Unfold device* and *Home* have no effect.
 
 == Hosting foldable devices
 
-Follow these guidelines when hosting Private or Local foldable devices, such as Samsung Galaxy Z Fold, Google Pixel Fold, and Samsung Galaxy Z Flip:
+When hosting Private or Local foldable Android devices, such as Samsung Galaxy Z Fold, Google Pixel Fold, and Samsung Galaxy Z Flip:
 
-* Keep the devices open.
-* Stand the devices upright. When a device lies flat, the session stream can fail to adjust to the new screen after a fold or unfold.
+* Keep devices unfolded.
+* Position devices vertically. When a device lies flat, the session stream may not adjust to the screen after a fold or unfold.
 
 For details, see xref:device-lab-management:android-devices/prepare-android-device.adoc#_prepare_foldable_android_devices[Prepare foldable Android devices].
