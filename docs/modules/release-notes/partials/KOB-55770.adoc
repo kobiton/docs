@@ -1,0 +1,8 @@
+// Source: KOB-55770
+
+== Device passcodes returned to all users in the v2 devices API
+
+`GET /v2/devices` and `GET /v2/devices/udid/{deviceUdid}` now return a device's `passcode` to every user who can access the device. Previously, only users with the ADMIN role received this field.
+
+* The `has_passcode` and `passcode_enabled` fields are unchanged.
+* The v1 device endpoints are unchanged.
