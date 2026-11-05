@@ -1,0 +1,13 @@
+// Source: KOB-55544
+=== Install `.app` files on real iOS devices during manual sessions
+
+During a manual session on a real iOS device, *Upload File* and *Install From URL* in *Install Apps* now accept zipped `.app` files. A `.app` built for real iOS devices installs the same way as an `.ipa`.
+
+Apps with a build type that doesn't match the device are now stopped before installation with a clear message, instead of failing with a generic install error:
+
+* An iOS Simulator build is not installed on a real iOS device.
+* A device build is not installed on an iOS Simulator.
+
+Android sessions, and iOS apps whose build type matches the device, are unaffected.
+
+For details, see xref:manual-testing:install-an-app.adoc#_ios_build_types[iOS build types].
