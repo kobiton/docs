@@ -13,6 +13,10 @@ module.exports = (label) => {
       // Hide support items on the standalone and break new tickets to enhance on the next release (could be 4.9S)
       href = 'https://support.kobiton.com/hc/en-us/requests/new'
       break
+    case 'Kobiton Status Page':
+      // Cloud status page; the row is hidden on standalone (see partials/article.hbs)
+      href = 'https://status.kobiton.com/'
+      break
     default:
       href = ''
       break
