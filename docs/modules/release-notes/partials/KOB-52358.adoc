@@ -1,0 +1,11 @@
+// Source: KOB-52358
+
+== Appium device selection requires only platformName
+
+Fixed an issue where Appium sessions failed with `deviceTags is required` when the request didn't include `deviceName`, `udid`, or `kobiton:deviceTags`. The error appeared even when `kobiton:deviceTags` was omitted entirely.
+
+* When `udid` isn't provided, `platformName` is the only required device-selection capability. `deviceName` and `kobiton:deviceTags` are optional filters.
+* If neither `deviceName` nor `kobiton:deviceTags` is provided, the session runs on any available device that matches `platformName` and your other capabilities in the requested device group. The default device group is `ANY`, which includes your organization's devices and Kobiton cloud devices.
+* An empty `kobiton:deviceTags` value is ignored.
+* If neither `udid` nor `platformName` is provided, session creation fails with `platformName is required`.
+* Appium Turbo Test sessions that don't include `udid`, `device_name`, or `device_tags` now fail with `one of udid, device_name or device_tags is required`.
