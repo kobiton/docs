@@ -5,6 +5,12 @@
 Cloud release notes are typically published weekly and summarize changes since the previous publication. Kobiton uses date-based release versioning, with releases identified by the build date in YYMM.DD format. Version information for individual software components is available in the Component versions section.
 ====
 
+// Source: KOB-55737
+
+== Check service status from the help widget
+
+The Kobiton Portal help widget now includes a link to the Kobiton Status Page, making it easy to check service status before contacting Support. The link opens https://status.kobiton.com/[status.kobiton.com^] in a new tab, where you can also subscribe to status updates.
+
 // Source: KOB-55749 from PR #864
 
 == Session timeout now ends Turbo Test sessions
@@ -22,28 +28,22 @@ Turbo Test sessions now end when the session timeout (`session_timeout`) is reac
 - Updates to a session's name, description, or state through `PUT /v2/sessions/{id}` now take effect immediately. After a successful update, `GET /v2/sessions/{id}` returns the updated values without the previous delay of 30 seconds or longer.
 - For completed sessions, you can set the state to `PASSED` or `FAILED`. Requests to update the state of a running session return HTTP 400. Session lists, search results, and reports reflect the updated state immediately.
 
-// Source: KOB-55807
-
-== Devices complete cleanup after sessions and reservations end
-
-Devices now complete cleanup after a session ends or a reservation is canceled.
-
 // Source: KOB-55508 from PR #862
 
-== Web views available in iOS Appium sessions
+== More reliable WEBVIEW discovery in iOS Appium sessions
 
-Web views in iOS Appium automation sessions now appear as a `WEBVIEW` context, so you can inspect and automate them.
+Improved `WEBVIEW` context discovery in iOS Appium sessions, including Auth0 authentication flows. Sessions now retry unresponsive Web Inspector connections to prevent returning only `NATIVE_APP` when the device's Web Inspector restarts during session initialization.
 
 Web views on iOS devices still require *Web Inspector* to be turned on in *Settings → Safari → Advanced*.
 
 // Source: KOB-52358
 
-== Appium device selection requires only platformName
+== More flexible device selection for Appium sessions
 
-Appium sessions now start when the request includes only `platformName`. Previously, these requests failed with `deviceTags is required`.
+Appium sessions now start when the request includes `platformName`. Previously, these requests failed with `deviceTags is required`.
 
 * When `udid` isn't provided, `platformName` is the only required device-selection capability. `deviceName` and `kobiton:deviceTags` are optional filters.
-* If neither `deviceName` nor `kobiton:deviceTags` is provided, the session runs on any available device that matches `platformName` and your other capabilities in the requested device group. The default device group is `ANY`, which includes your organization's devices and Kobiton cloud devices.
+* If neither `deviceName` nor `kobiton:deviceTags` is provided, the session runs on any available device that matches `platformName` and your other capabilities in the requested device group. The default device group is `ANY`, which includes your organization's devices.
 * An empty `kobiton:deviceTags` value is ignored.
 * If neither `udid` nor `platformName` is provided, session creation fails with `platformName is required`.
 * Appium Turbo Test sessions that don't include `udid`, `device_name`, or `device_tags` now fail with `one of udid, device_name or device_tags is required`.
@@ -83,9 +83,9 @@ The improvement applies to screenshots in the manual viewer, the initial frame o
 
 // Source: KOB-52033
 
-== Passcode Feature Enforced setting persists on Android devices
+== More reliable Android passcode management
 
-The *Passcode Feature Enforced* setting now stays on when an Android 8 or later device reconnects. Previously, the setting could turn off on its own for some Android devices, which blocked users from unlocking a device that still had a passcode set.
+Improved Android passcode management to prevent an intermittent issue where the *Passcode Feature Enforced* setting could turn off during device reconnection, blocking users from unlocking a device that still had a passcode set.
 
 Devices affected before this release may still have the Passcode Feature Enforced setting turned off.
 
@@ -103,25 +103,24 @@ For details, see xref:devices:device-metadata.adoc#_passcode[Passcode].
 
 // Source: KOB-52746
 
-== Accurate memory values in Device Metrics
+== Improved memory reporting in Device Metrics
 
-Device Metrics now shows the memory a device is actually using, matching Android Settings and Xcode Instruments, instead of reading 90%+.
+Device Metrics now accounts for reclaimable cached memory when reporting memory usage on Android and iOS, bringing values more closely in line with Android Settings and Xcode Instruments.
 
-* On Android and iOS devices, cached memory that the operating system can reclaim is now counted as free memory.
-* Sessions recorded before the upgrade keep their old, higher memory values.
+* Cached memory that the operating system can reclaim is now counted as free memory, reducing previously inflated usage values.
+* Sessions recorded before the upgrade retain their original memory values.
 
 // Source: KOB-55321 from PR #873
 
-== Analytics reports
+== Improved report exports
 
-- CSV and PNG exports of the *Device Utilization*, *Parallel Sessions*, and *Sessions per Day* reports now return the report data.
-- CSV exports of *Parallel Sessions* and *Sessions per Day* list one row per day in date order. CSV exports of *Device Utilization* sort by *Sessions*, with the most-used devices at the top.
-- PNG exports of *Parallel Sessions* and *Sessions per Day* now include the report's bar chart.
-- Exports use the date range selected for the report, or the report's saved date range when none is selected.
+CSV and PNG exports of *Device Utilization*, *Parallel Sessions*, and *Sessions per Day* now include report data instead of returning an export error. Exports respect the report's date range, and PNG exports of *Parallel Sessions* and *Sessions per Day* now include bar charts.
 
 // Source: KOB-55244 from PR #867
 
-- The *Retained Devices* report now counts a retained device for each hour it was retained, including retentions that have ended or expired.
+== More accurate Retained Devices counts
+
+The *Retained Devices* report now counts a retained device for each hour it was retained, including retentions that have ended or expired.
 
 // Source: KOB-55544
 
@@ -164,14 +163,6 @@ For details, see xref:manual-testing:install-an-app.adoc#_ios_build_types[iOS bu
 == Support for MCP specification 2026-07-28
 
 The Kobiton MCP server now supports version 2026-07-28 of the Model Context Protocol (MCP). AI clients using this version can connect without an initialization handshake. Clients using earlier MCP versions continue to work without configuration changes.
-
-// Source: KOB-55737
-
-== Check service status from the help widget
-
-The help widget in Kobiton Portal now includes a *Kobiton Status Page* option, so you can check service status before contacting Support. The option appears after *Support* and opens https://status.kobiton.com/[status.kobiton.com^] in a new tab.
-
-This option is available only on Kobiton Public Cloud. It is not supported on Private Cloud.
 
 == Component versions
 
