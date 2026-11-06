@@ -35,6 +35,8 @@ jobs:
         with:
           site: "widget"
           cloudfront-id: ${{ secrets.WIDGET_CLOUDFRONT_ID }}
+          # Currently, shared public cloud only. Private-cloud widgets must not set it.
+          status-page-url: "https://status.kobiton.com/"
           aws-account-id: ${{ secrets.AWS_ACCOUNT_ID }}
           aws-region: ${{ secrets.AWS_PROD_REGION }}
           dagger-token: ${{ secrets.DAGGER_CLOUD_TOKEN }}

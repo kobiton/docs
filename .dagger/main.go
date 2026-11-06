@@ -78,11 +78,20 @@ func (m *Ci) Generate(name string) *dagger.File {
 
 // Build the project
 func (m *Ci) Build() (*dagger.Directory, error) {
+	return m.build("", "")
+}
+
+// `build` renders both sites.
+// environment is read by the templates at build time:
+// - "standalone" drops Google Analytics.
+// - "statusPageURL" turns on the widget's "Kobiton Status Page" row; leave it empty for private-cloud and standalone widgets.
+func (m *Ci) build(environment, statusPageURL string) (*dagger.Directory, error) {
 	var eg errgroup.Group
 
 	var docs *dagger.Directory
 	eg.Go(func() error {
 		docs = m.Container.
+			WithEnvVariable("KOBITON_ENVIRONMENT", environment).
 			WithFile("/work/src/ui-bundle-docs/css/site.css", m.Generate("docs")).
 			WithExec([]string{"yarn", "build-docs:ci"}).
 			Directory("/work/src/build/docs")
@@ -91,6 +100,8 @@ func (m *Ci) Build() (*dagger.Directory, error) {
 	var widget *dagger.Directory
 	eg.Go(func() error {
 		widget = m.Container.
+			WithEnvVariable("KOBITON_ENVIRONMENT", environment).
+			WithEnvVariable("KOBITON_STATUS_PAGE_URL", statusPageURL).
 			WithFile("/work/src/ui-bundle-docs/css/site.css", m.Generate("widget")).
 			WithExec([]string{"yarn", "build-widget:ci"}).
 			Directory("/work/src/build/widget")
@@ -106,12 +117,14 @@ func (m *Ci) Build() (*dagger.Directory, error) {
 		WithDirectory("/widget", widget), nil
 }
 
-// Create a production image
+// Create a production image.
+// Only standalone installs pull these ECR images,
+// so the sites are also built for standalone.
 func (m *Ci) Server(
 	// Site to build
 	site string,
 ) *dagger.Container {
-	dir, _ := m.Build()
+	dir, _ := m.build("standalone", "")
 
 	path := fmt.Sprintf("/%s", site)
 
@@ -216,6 +229,9 @@ func (m *Ci) Release(
 	// S3 bucket
 	// +optional
 	bucket string,
+	// Status page linked from the widget; set only for the shared cloud
+	// +optional
+	statusPageUrl string,
 ) error {
 	ctr, err := m.AWS().AwsCli(ctx, awsAccessKeyID, awsSecretAccessKey, awsSessionToken, awsRegion)
 	if err != nil {
@@ -226,7 +242,7 @@ func (m *Ci) Release(
 		bucket = site
 	}
 
-	dir, _ := m.Build()
+	dir, _ := m.build("", statusPageUrl)
 
 	eg, ctx := errgroup.WithContext(ctx)
 
