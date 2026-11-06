@@ -22,20 +22,11 @@ A standard `.zip` file containing a compressed version of your iOS app and relat
 
 === `.app`
 
-An iOS app bundle built either for iOS Simulator or for real iOS devices. Compress the `.app` bundle to a `.zip` file before uploading. Upload the compressed file as a `.zip` file, or as a `.app` file that is a `.zip` archive.
-
-`.app` uploads are supported from the app repository, API v2, and the Kobiton CLI. If you select an uncompressed `.app` in the app repository, a message asks you to compress it first.
+An iOS app bundle built for physical iOS devices. Compress the `.app` bundle to a `.zip` file before uploading. Upload the compressed file as a `.zip` file, or as a `.app` file that is a `.zip` archive.
 
 // Source: KOB-55544
-// REVIEWER NOTE (KOB-55544): The source confirms device-build .app support only for Install Apps during a manual session. Confirm whether a device-build .app uploaded to the app repository can be installed on real devices.
-During a manual session, a zipped `.app` can also be installed from *Install Apps* on real iOS devices and iOS Simulators. For details, see xref:manual-testing:install-an-app.adoc#_ios_build_types[iOS build types].
 
-The build type is determined by the `DTPlatformName` value in the app's `Info.plist`:
-
-* `iphonesimulator`: iOS Simulator build.
-* Any other value, or no value: device build.
-
-Simulator builds can't be installed on real devices, and device builds can't be installed on iOS Simulators.
+During a manual session, a zipped `.app` can be installed from *Install Apps* on physical iOS devices. For details, see xref:manual-testing:install-an-app.adoc#_ios_build_types[iOS build types].
 
 == Android
 

@@ -21,24 +21,6 @@ Depending on your xref:devices:local-devices/cleanup-policy/manage-device-cleanu
 [#_ios_build_types]
 == iOS build types
 
-On iOS devices, *Upload File* and *Install From URL* accept `.ipa`, `.zip`, and `.app` files on both real devices and iOS Simulators. Compress a `.app` bundle to a `.zip` archive before uploading. If the selected `.app` is not a `.zip` archive, a message asks you to compress it and the file is not uploaded.
+On physical iOS devices, *Upload File* and *Install From URL* in *Install Apps* accept `.ipa`, `.zip`, and `.app` files. A `.app` built for physical iOS devices installs the same way as an `.ipa`.
 
-The build type must match the device type:
-
-* Real iOS devices accept device builds. A device-build `.app` installs the same way as an `.ipa`.
-* iOS Simulators accept iOS Simulator builds.
-
-The build type is determined by the `DTPlatformName` value in the app's `Info.plist`. A value of `iphonesimulator` identifies an iOS Simulator build. Any other value, or no value, identifies a device build.
-
-When the build type doesn't match the device type, the app is not installed and *Install Apps* shows one of the following messages:
-
-[cols="1,2"]
-|===
-|Condition |Message
-
-|iOS Simulator build on a real device
-|`This .app is built for iOS Simulator and can't be installed on a real device. Upload an .ipa or a device build instead`
-
-|Device build on an iOS Simulator
-|`This app is built for real iOS devices and can't be installed on an iOS Simulator. Upload a Simulator build instead`
-|===
+Compress a `.app` bundle to a `.zip` archive before uploading. If the selected `.app` is not a `.zip` archive, a message asks you to compress it and the file is not uploaded.
