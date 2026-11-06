@@ -14,7 +14,7 @@ Cloud release notes are typically published weekly and summarize changes since t
 
 === Analytics reports
 
-- Fixed an issue where exporting the *Device Utilization*, *Parallel Sessions*, and *Sessions per Day* reports as CSV or PNG returned no data. The CSV showed an export error in place of the report data.
+- CSV and PNG exports of the *Device Utilization*, *Parallel Sessions*, and *Sessions per Day* reports now return the report data.
 - CSV exports of *Parallel Sessions* and *Sessions per Day* list one row per day in date order. CSV exports of *Device Utilization* sort by *Sessions*, with the most-used devices at the top.
 - PNG exports of *Parallel Sessions* and *Sessions per Day* now include the report's chart as a bar chart. Previously, the PNG showed only the report title for these reports.
 - Exports use the date range selected for the report, or the report's saved date range when none is selected.
@@ -29,7 +29,7 @@ Cloud release notes are typically published weekly and summarize changes since t
 // Source: KOB-55244 from PR #867
 // https://github.com/kobiton/docs/pull/867
 
-- Fixed an issue where analytics reports showed fewer retained devices than were actually retained. A device is now counted for each hour it was retained, including retains that have since ended or expired.
+- Analytics reports now count retained devices for each hour of retention, including retention periods that have ended or expired.
 
 // REVIEWER NOTE: Source is KOB-55244 (Bug, status Wait For Deployment, Jira release channel
 // "Release Email (customer-facing release notes)"). No fix version or release label is set, so
@@ -75,10 +75,9 @@ Cloud release notes are typically published weekly and summarize changes since t
 
 == Device tags API
 
-- Fixed an issue where adding a tag to a device through the API could fail with HTTP 400 and a `SequelizeUniqueConstraintError` message.
 - Adding a tag that is already assigned to a device now succeeds instead of returning an error.
 - When several requests add the same tag to the same device at the same time, every request succeeds and the tag is assigned to the device only once.
-- The fix applies to these device-tag endpoints:
+- The change applies to these device-tag endpoints:
 ** `POST /v1/tags/device/\{udid}`
 ** `POST /v1/tags/assign`
 ** `POST /v2/tags/\{tagName}/devices`
@@ -105,7 +104,7 @@ Cloud release notes are typically published weekly and summarize changes since t
 
 === Web views available in iOS Appium sessions
 
-Fixed an issue where Appium automation sessions on iOS devices could intermittently return only the `NATIVE_APP` context. In affected sessions, web content opened in the app, such as a sign-in page, did not appear as a `WEBVIEW` context and could not be inspected or automated. Web views are now available as a `WEBVIEW` context in these sessions.
+Web views in iOS Appium automation sessions now appear as a `WEBVIEW` context, so you can inspect and automate them.
 
 Web views on iOS devices still require *Web Inspector* to be turned on in *Settings → Safari → Advanced*.
 
@@ -113,7 +112,7 @@ Web views on iOS devices still require *Web Inspector* to be turned on in *Setti
 
 == Appium device selection requires only platformName
 
-Fixed an issue where Appium sessions failed with `deviceTags is required` when the request didn't include `deviceName`, `udid`, or `kobiton:deviceTags`. The error appeared even when `kobiton:deviceTags` was omitted entirely.
+Appium sessions now start when the request includes only `platformName`. Previously, they failed with `deviceTags is required` when `deviceName`, `udid`, and `kobiton:deviceTags` were all absent — even when `kobiton:deviceTags` was omitted entirely.
 
 * When `udid` isn't provided, `platformName` is the only required device-selection capability. `deviceName` and `kobiton:deviceTags` are optional filters.
 * If neither `deviceName` nor `kobiton:deviceTags` is provided, the session runs on any available device that matches `platformName` and your other capabilities in the requested device group. The default device group is `ANY`, which includes your organization's devices and Kobiton cloud devices.
@@ -209,9 +208,9 @@ Device Metrics now shows the memory a device is actually using, matching Android
 
 == Android device passcode fix
 
-Fixed an issue where the *Passcode Feature Enforced* setting could turn off on its own for some Android devices. When this happened, a device that still had a passcode set could not be unlocked. The setting now stays on when an Android 8 or later device reconnects.
+The *Passcode Feature Enforced* setting now stays on when an Android 8 or later device reconnects. Previously, the setting could turn off on its own for some Android devices, which blocked users from unlocking a device that still had a passcode set.
 
-Android devices affected before this release may continue to show the setting off.
+Devices affected before this release may still have the Passcode Feature Enforced setting disabled.
 
 // Source: KOB-55544
 
@@ -243,7 +242,7 @@ Sessions that already showed as *Running* after they ended, before this release,
 
 == Devices complete cleanup after sessions and reservations end
 
-Fixed an issue where devices could remain in the *Awaiting cleanup configuration* status after a session ended or a reservation was canceled. Devices now complete cleanup as expected.
+Devices now complete cleanup after a session ends or a reservation is canceled.
 
 // Source: KOB-55657
 
