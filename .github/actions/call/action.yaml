@@ -30,6 +30,11 @@ inputs:
     default: '""'
     required: false
 
+  status-page-url:
+    description: "Status page linked from the widget; empty hides the row (optional)"
+    default: '""'
+    required: false
+
 runs:
   using: "composite"
   steps:
@@ -59,5 +64,6 @@ runs:
           --aws-session-token=env:AWS_SESSION_TOKEN \
           --cloudfront-id=${{ inputs.cloudfront-id }} \
           --bucket ${{ inputs.bucket }} \
+          --status-page-url="${{ inputs.status-page-url }}" \
         dagger-flags: "--silent"
         cloud-token: ${{ inputs.dagger-token }}
