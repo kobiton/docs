@@ -177,6 +177,157 @@ Web views on iOS devices still require *Web Inspector* to be turned on in *Setti
 // evidence export. Confirm it does not mark the ticket as internal-only before publishing.
 // Source: KOB-54432
 
+// Source: KOB-52746
+
+=== Accurate memory values in Device Metrics
+
+Device Metrics now shows the memory a device is actually using, matching Android Settings and Xcode Instruments, instead of reading 90%+.
+
+* Android and iOS: memory the OS can reclaim on demand (cache) now counts as free.
+* Sessions recorded before the upgrade keep their old, higher memory values.
+
+// Source: KOB-55532
+
+=== Reliable app lifecycle commands on iOS 15 and 16
+
+On iOS 15 and iOS 16 devices, these commands stay reliable across long-running sessions and no longer require a device reboot to restore:
+
+* CLI: `app run`, `app kill`, `device ps`
+* Appium: `mobile: terminateApp`
+
+// Source: KOB-55657
+
+=== First screenshots on Android devices
+
+On Android devices, the first screenshot after a session starts, after the device rotates, or after the display refreshes now returns a valid image. This applies to the manual viewer, session video recording, and automation screenshots taken as the first command.
+
+// Source: KOB-55737
+
+== Check service status from the help widget
+
+The help widget in Kobiton Portal now includes a *Kobiton Status Page* option, so you can check service status before contacting Support. The option appears after *Support* and opens https://status.kobiton.com/[status.kobiton.com^] in a new tab.
+
+This option is available on Kobiton Public Cloud. Private Cloud and Standalone deployments are unchanged.
+
+// REVIEWER NOTE (KOB-55737): The Jira release-note field also states that, on Standalone, the help widget and documentation pages no longer load Google Analytics. That change is omitted here because this entry covers the Public Cloud release. Confirm whether it belongs in the Standalone release notes.
+
+// Source: KOB-55961
+
+== Kobiton API: session updates take effect immediately
+
+- Updates to a session's name, description, or state through `PUT /v1/sessions/{id}` or `PUT /v2/sessions/{id}` now take effect before the request returns. After the request returns HTTP 200, `GET /v1/sessions/{id}` and `GET /v2/sessions/{id}` return the new name, description, and state right away. Previously, the change could take 30 seconds or longer to appear.
+- A `PASSED` or `FAILED` state takes effect immediately only for a session that has ended. Session lists, search, and reports show the new state without additional delay.
+- `PUT /v1/sessions/{id}` continues to accept a state while the session is running, for example a state set just before the script ends the session. That state is saved shortly after the request returns, as before.
+
+// REVIEWER NOTE (KOB-55961): The Jira test summary says a running session "gets 400 on v2 and now on v1",
+// but the Jira release-note and deployment fields say v1 still returns 200 for a state sent while the
+// session is running. This draft follows the release-note field. Confirm the v1 behavior before publication.
+//
+// REVIEWER NOTE (KOB-55961): Jira lists fix version 2026.11.06 and states the change works on Cloud and
+// Standalone. Confirm the target release-notes page or pages for this entry.
+
+// Source: KOB-52358
+
+== Appium device selection requires only platformName
+
+Fixed an issue where Appium sessions failed with `deviceTags is required` when the request didn't include `deviceName`, `udid`, or `kobiton:deviceTags`. The error appeared even when `kobiton:deviceTags` was omitted entirely.
+
+* When `udid` isn't provided, `platformName` is the only required device-selection capability. `deviceName` and `kobiton:deviceTags` are optional filters.
+* If neither `deviceName` nor `kobiton:deviceTags` is provided, the session runs on any available device that matches `platformName` and your other capabilities in the requested device group. The default device group is `ANY`, which includes your organization's devices and Kobiton cloud devices.
+* An empty `kobiton:deviceTags` value is ignored.
+* If neither `udid` nor `platformName` is provided, session creation fails with `platformName is required`.
+* Appium Turbo Test sessions that don't include `udid`, `device_name`, or `device_tags` now fail with `one of udid, device_name or device_tags is required`.
+
+// Source: KOB-55544
+=== Install `.app` files on real iOS devices during manual sessions
+
+During a manual session on a real iOS device, *Upload File* and *Install From URL* in *Install Apps* now accept zipped `.app` files. A `.app` built for real iOS devices installs the same way as an `.ipa`.
+
+Apps with a build type that doesn't match the device are now stopped before installation with a clear message, instead of failing with a generic install error:
+
+* An iOS Simulator build is not installed on a real iOS device.
+* A device build is not installed on an iOS Simulator.
+
+Android sessions, and iOS apps whose build type matches the device, are unaffected.
+
+For details, see xref:manual-testing:install-an-app.adoc#_ios_build_types[iOS build types].
+
+// Source: KOB-52033
+
+== Android device passcode fix
+
+Fixed an issue where the *Passcode Feature Enforced* setting could turn off on its own for some Android devices. When this happened, a device that still had a passcode set could not be unlocked. The setting now stays on when an Android 8 or later device reconnects.
+
+// REVIEWER NOTE (KOB-52033): Devices that were already affected before this release are corrected by a separate one-time data repair. The source evidence does not confirm that the repair is complete. If it is not complete, affected devices can still show the setting as off until the repair runs. Confirm before publishing.
+
+== Device tags API
+
+- Fixed an issue where adding a tag to a device through the API could fail with HTTP 400 and a `SequelizeUniqueConstraintError` message.
+- Adding a tag that is already assigned to a device now succeeds instead of returning an error.
+- When several requests add the same tag to the same device at the same time, every request succeeds and the tag is assigned to the device only once.
+- The fix applies to these device-tag endpoints:
+** `POST /v1/tags/device/\{udid}`
+** `POST /v1/tags/assign`
+** `POST /v2/tags/\{tagName}/devices`
+** `POST /v2/tags/devices`
+
+// Source: KOB-52861 | Escalation | Component: Device Tags | Fix version: 2026.11.04.
+// Jira status: Released. Production verification passed 2026-11-04.
+//
+// REVIEWER NOTE: Wording is based on the ticket's release-note field. The customer name
+// and escalation history from the ticket are intentionally omitted.
+//
+// REVIEWER NOTE: The error name `SequelizeUniqueConstraintError` is kept because it is
+// the exact message API users saw and is useful for search. Remove it if the docs team
+// prefers not to expose framework-level error names.
+//
+// REVIEWER NOTE: The engineering scope also states that replace-style updates
+// (POST /v1/tags/device/{udid}, POST /v2/tags/devices) sent concurrently for the same
+// device are now applied in order, with the last request winning. The ticket's
+// release-note field does not include this, so it is left out. Confirm with engineering
+// whether it should be called out.
+//
+// REVIEWER NOTE: Assign this partial to the release page that covers fix version
+// 2026.11.04 (deployed to US production 2026-11-04).
+
+// Source: KOB-53277
+
+== Ended sessions no longer show as Running on the Sessions page
+
+Sessions that have ended now keep their final status on the *Sessions* page, such as *Complete* or *Terminated*. This status matches the status shown on the session *Overview*.
+
+Status and session details on the *Sessions* page also stay in sync more reliably when an update fails temporarily.
+
+Sessions that already showed as *Running* after they ended, before this release, keep that status.
+
+// Source: KOB-55807
+// Release-note draft partial. Requires docs-team review before publication.
+
+== Device cleanup fix
+
+Fixed an issue where devices could remain in the *Awaiting cleanup configuration* status after a session ended or a reservation was canceled. Devices now complete cleanup as expected.
+
+// Source: KOB-54409
+
+== Support for the MCP 2026-07-28 specification
+
+The Kobiton MCP server now supports the MCP 2026-07-28 specification. AI clients that use the new protocol connect without an initialization handshake, and clients that use earlier MCP versions continue to work without changes.
+
+* AI clients on the 2026-07-28 protocol, such as current versions of Claude Code, connect statelessly and can use server discovery and cacheable tool lists.
+* AI clients on earlier MCP versions connect as before. No reconnection or configuration change is required.
+* Requests from untrusted browser origins are rejected, which protects the MCP endpoint against DNS rebinding attacks.
+
+// REVIEWER NOTE (KOB-54409): Confirm whether customers need to know which browser origins are trusted by default, and whether Standalone customers can change the trusted origins. The source states only that untrusted origins are rejected.
+
+// Source: KOB-55770
+
+== Device passcodes returned to all users in the v2 devices API
+
+`GET /v2/devices` and `GET /v2/devices/udid/{deviceUdid}` now return a device's `passcode` to every user who can access the device. Previously, only users with the ADMIN role received this field.
+
+* The `has_passcode` and `passcode_enabled` fields are unchanged.
+* The v1 device endpoints are unchanged.
+
 == Component versions
 
 // Editor review required: component versions not yet verified.
