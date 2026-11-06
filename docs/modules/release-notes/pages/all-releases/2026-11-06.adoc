@@ -30,15 +30,6 @@ Cloud release notes are typically published weekly and summarize changes since t
 // date range" in the source. Confirm that the export uses the date range selected in the
 // report filter.
 
-// Source: KOB-55347 from PR #872
-// https://github.com/kobiton/docs/pull/872
-
-=== Standalone deployment
-
-- On Standalone deployments with GPUs, Intelligent Quality Suite (IQS) AI services now keep GPU access after system package installs, such as a GigaCap install or upgrade. Previously, these services could switch to the CPU, and IQS element finding slowed down and timed out.
-- Installing or updating Standalone now stops with an error if a configured GPU ID does not match a GPU on the host. Previously, the install continued without reporting the problem.
-- After you update, the IQS AI services restart once to apply the new GPU configuration.
-
 // Source: KOB-55749 from PR #864
 // https://github.com/kobiton/docs/pull/864
 
@@ -53,38 +44,6 @@ Turbo Test sessions now end when the session timeout (`session_timeout`) is reac
 - Scripts that finish before the session timeout run as before.
 
 // REVIEWER NOTE (KOB-55749): The `session_timeout` request parameter is not listed in the Request parameter reference in automation-testing:turbo-test-execution/run-appium-test.adoc. Confirm whether to keep the parameter name here, and its unit and default, before publishing.
-
-// Source: KOB-55399 from PR #869
-// https://github.com/kobiton/docs/pull/869
-
-=== Standalone deployment
-
-- Added `sudo kobictl fix consul-server-metadata`. It repairs an unreadable Consul server metadata file that stops Consul from starting with `error reading server metadata: unexpected end of JSON input`. The fix prints the file size and contents, removes only that file, and restarts Consul. Other Consul data is kept. If the file is valid or missing, the command makes no changes.
-- `sudo kobictl restart` now runs the same check automatically after each restart.
-
-// Source: KOB-55338 from PR #868
-// https://github.com/kobiton/docs/pull/868
-
-=== Back up and restore Standalone data to a standby server
-
-Standalone deployments can now back up Kobiton data from the primary server and restore it onto a standby server. The standby server can then take over if the primary server fails.
-
-*Highlights*
-
-- `sudo kobictl run backup` backs up Kobiton databases, search data, and stored files such as session videos, screenshots, and apps. Kobiton keeps running during the backup.
-- Backups go to a standby server over SSH with key-based authentication, or to a locally mounted path such as a USB disk or NAS share.
-- Repeat backups transfer only new or changed data.
-- Backup checks free disk space before it starts. A failed backup leaves the previous complete backup intact.
-- `sudo kobictl run restore <backup-path>` runs on the standby server and replaces all Kobiton data on that server with the backup. A restore can't be undone, so run it only on a standby server.
-- Restore checks the Kobiton version of the standby server before it stops any services. To restore onto a standby server that runs a newer Kobiton version, add `--allow-newer`. Restore then applies the newer version's database updates.
-- If a restore fails partway, Kobiton stays stopped instead of running on partially restored data. Run `sudo kobictl run restore --resume-services` to start Kobiton again.
-- The license and SSL certificate aren't part of the backup. Install them on the standby server.
-
-Replace `<backup-path>` with the path to the backup on the standby server.
-
-*Availability*
-
-Standalone deployments only. The standby server must run 4.27.0S or later. Backups and restores run only when started manually. Scheduled backups aren't supported.
 
 // Source: KOB-55244 from PR #867
 // https://github.com/kobiton/docs/pull/867
