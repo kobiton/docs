@@ -58,6 +58,15 @@ Appium sessions now start when the request includes only `platformName`. Previou
 * If neither `udid` nor `platformName` is provided, session creation fails with `platformName is required`.
 * Appium Turbo Test sessions that don't include `udid`, `device_name`, or `device_tags` now fail with `one of udid, device_name or device_tags is required`.
 
+// Source: KOB-55532
+
+=== Reliable app lifecycle commands on iOS 15 and 16
+
+On iOS 15 and iOS 16 devices, these commands stay reliable across long-running sessions and no longer require a device reboot to restore:
+
+* CLI: `app run`, `app kill`, `device ps`
+* Appium: `mobile: terminateApp`
+
 // Source: KOB-54432 from PR #861
 // https://github.com/kobiton/docs/pull/861
 
@@ -207,15 +216,6 @@ The help widget in Kobiton Portal now includes a *Kobiton Status Page* option, s
 This option is available on Kobiton Public Cloud. Private Cloud and Standalone deployments are unchanged.
 
 // REVIEWER NOTE (KOB-55737): The Jira release-note field also states that, on Standalone, the help widget and documentation pages no longer load Google Analytics. That change is omitted here because this entry covers the Public Cloud release. Confirm whether it belongs in the Standalone release notes.
-
-// Source: KOB-55532
-
-=== Reliable app lifecycle commands on iOS 15 and 16
-
-On iOS 15 and iOS 16 devices, these commands stay reliable across long-running sessions and no longer require a device reboot to restore:
-
-* CLI: `app run`, `app kill`, `device ps`
-* Appium: `mobile: terminateApp`
 
 == Component versions
 
