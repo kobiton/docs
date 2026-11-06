@@ -1,0 +1,14 @@
+// Source: KOB-55961
+
+== Kobiton API: session updates take effect immediately
+
+- Updates to a session's name, description, or state through `PUT /v1/sessions/{id}` or `PUT /v2/sessions/{id}` now take effect before the request returns. After the request returns HTTP 200, `GET /v1/sessions/{id}` and `GET /v2/sessions/{id}` return the new name, description, and state right away. Previously, the change could take 30 seconds or longer to appear.
+- A `PASSED` or `FAILED` state takes effect immediately only for a session that has ended. Session lists, search, and reports show the new state without additional delay.
+- `PUT /v1/sessions/{id}` continues to accept a state while the session is running, for example a state set just before the script ends the session. That state is saved shortly after the request returns, as before.
+
+// REVIEWER NOTE (KOB-55961): The Jira test summary says a running session "gets 400 on v2 and now on v1",
+// but the Jira release-note and deployment fields say v1 still returns 200 for a state sent while the
+// session is running. This draft follows the release-note field. Confirm the v1 behavior before publication.
+//
+// REVIEWER NOTE (KOB-55961): Jira lists fix version 2026.11.06 and states the change works on Cloud and
+// Standalone. Confirm the target release-notes page or pages for this entry.
