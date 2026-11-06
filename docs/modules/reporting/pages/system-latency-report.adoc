@@ -1,0 +1,41 @@
+= System Latency report
+
+Review network latency between system components across test sessions over a selected date range. Separate tabs organize the results *By Connection* and *By Location*.
+
+== Availability
+
+The System Latency report is available to organization ADMINs.
+
+== Open the report
+
+Select *Analytics Reports*, then *System Latency*.
+
+== Use the report
+
+Select a date range to review latency during that period.
+
+To narrow the results, use the *Connection Type*, *Location*, or *deviceShare* dropdowns, or the *Search* field.
+
+To export the report, select *Export > Export report*, then download it as CSV or PNG. Select *Bookmark* to save the report for later.
+
+The *Last synced* indicator shows when the report data was last refreshed.
+
+== Understand the report
+
+Latency is measured in milliseconds for each connection path: *Browser to Device*, *Browser to Server*, *Server to deviceShare*, *deviceShare to Device*, and *Device to Browser*. Every table reports *Average*, *Minimum*, *Maximum*, and *Median*.
+
+=== Connection Summary
+
+Latency per connection, aggregated across all sessions in the date range. A *Total* row rolls up all connections.
+
+=== Connection Location Summary
+
+Latency per connection, broken down by location.
+
+=== Connection deviceShare Summary
+
+Latency per connection, broken down by deviceShare host and location.
+
+=== Connection Details
+
+Per-session latency rows showing *Session ID*, *Username*, *Device UDID*, *deviceShare*, *Location*, and *Connection*.
