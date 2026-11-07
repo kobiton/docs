@@ -107,9 +107,9 @@ For *Cloud and Hybrid* customers, select the *Download* button on the navigation
 * *virtualUSB for Linux (Debian-based)*
 * *virtualUSB for Linux (Red Hat-based)*
 
-Each entry downloads the latest virtualUSB 2 installer from Kobiton's public download site. No additional sign-in is required.
+Each entry downloads the latest virtualUSB installer from Kobiton's public download site. No additional sign-in is required.
 
-image:debugging:download-virtualusb-closeup.png[width=500,alt="Download virtual USB from Kobiton portal"]
+image:debugging:download-virtualusb-closeup.png[width=500,alt="The Downloads panel in Kobiton Portal with virtualUSB installers for Mac, Windows, and Linux"]
 
 For *Standalone/On-Prem* customers, Standalone installations include the virtualUSB installers for macOS, Windows, Debian-based Linux, and Red Hat-based Linux.
 
@@ -199,10 +199,10 @@ vusb --version
 ======
 
 [#_launch_vusb_and_log_in]
-== Launch virtualUSB and log in
+== Open virtualUSB and sign in
 
 [NOTE]
-On Linux, sign in with the xref:debugging:virtualusb-cli-commands.adoc#_login[`vusb login` command] instead of the desktop app. Use the values in the following tabs for the `--apibaseurl` and `--grpcbaseurl` flags if your organization uses a custom domain or Standalone/On-Prem.
+On Linux, sign in with the xref:debugging:virtualusb-cli-commands.adoc#_login[`vusb login` command] instead of the desktop app. If your organization uses a custom domain or Standalone/On-Prem, use the *API Base Url* value from the following tabs for the `--apibaseurl` flag.
 
 [tabs]
 ====
@@ -211,9 +211,9 @@ Cloud/Hybrid::
 +
 --
 
-Launch virtualUSB and sign in using your email address and password or xref:profile:manage-your-api-credentials.adoc[Kobiton API key].
+Open virtualUSB and sign in with your username or email address and your xref:profile:manage-your-api-credentials.adoc[Kobiton API key].
 
-image:debugging:sign-in-virtualusb-context.png[width=1000,alt="Sign in Virtual USB using email or API Key"]
+image:debugging:sign-in-virtualusb-context.png[width=1000,alt="The virtualUSB sign-in screen with Username/Email and API Key fields"]
 
 --
 
@@ -221,19 +221,15 @@ Cloud/Hybrid with custom domain::
 +
 --
 
-Select the **Login to your custom domain portal** checkbox in the login screen.
+Select the *Login to your custom domain portal* checkbox on the sign-in screen.
 
-image:login-virtualusb-custom-domain.png[width=450,alt="The virtualUSB login screen with the additional fields for custom domain"]
+image:login-virtualusb-custom-domain.png[width=450,alt="The virtualUSB sign-in screen with the API Base Url field for a custom domain"]
 
-Input the values for the two additional fields as below, replacing `<custom-domain>` with the customer's domain name:
+In *API Base Url*, enter `https://api.<custom-domain>.com`, where `<custom-domain>` is your organization's domain name.
 
-* API Base Url: _https://api.<custom-domain>.com_
+Enter your username or email address in *Username/Email* and your xref:profile:manage-your-api-credentials.adoc[API key] in *API Key*, and then select *Login*.
 
-* API GRPC Base Url: _https://proxy-api-public-grpc-server.<custom-domain>.com_
-
-Input the *Username/Email* and *Password/API Key* to log in.
-
-The values for *API Base Url* and *API GRPC Base Url* are remembered and prefilled the next time you open the app.
+virtualUSB remembers the *API Base Url* value and fills it in the next time you open the app.
 
 --
 
@@ -244,29 +240,19 @@ Standalone/On-Prem::
 [IMPORTANT]
 xref:debugging:local-devices/configure-your-personal-computer.adoc[Configure your computer for Standalone Portal with a self-signed SSL certificate] before signing in.
 
-Select the *Login to your custom domain portal* checkbox on the login screen
+Select the *Login to your custom domain portal* checkbox on the sign-in screen.
 
-image:login-virtualusb-custom-domain.png[width=450,alt="The virtualUSB login screen with the additional fields for custom domain"]
+image:login-virtualusb-custom-domain.png[width=450,alt="The virtualUSB sign-in screen with the API Base Url field for a custom domain"]
 
-Input the values for two the additional fields as `<http/https>://<Portal private domain or IP>:<REST API port>`, where:
+In *API Base Url*, enter `<http/https>://<Portal private domain or IP>:3000`, where:
 
 * `<http/https>`: if the Portal server uses HTTPS, then use https. Otherwise, use http.
 
 * `<Portal private domain or IP>`: if the Portal server has a private domain, use its private domain. Otherwise, use the Portal server’s IP address.
 
-* `<REST API port>`:
+*Example:* `http://192.168.36.24:3000` or `https://www.acme.local:3000`
 
-** For *API Base Url*, use `3000`.
-
-** For *API GRPC Base Url*, use `3001`.
-
-*Example:*
-
-* API Base Url: `http://129.168.36.24:3000` or `https://www.acme.local:3000`
-
-* API GRPC Base Url: `http://129.168.36.24:3001` or `https://www.acme.local:3001`
-
-Then input the *Username/Email* and *Password/API Key* to log in.
+Enter your username or email address in *Username/Email* and your xref:profile:manage-your-api-credentials.adoc[API key] in *API Key*, and then select *Login*.
 
 --
 

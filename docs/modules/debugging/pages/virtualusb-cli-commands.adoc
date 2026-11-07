@@ -69,22 +69,22 @@ vusb help <command>
 
 == `login`
 
-To log in to your Kobiton account with your email address and password or xref:profile:manage-your-api-credentials.adoc[Kobiton API key], run:
+To sign in to your Kobiton account with your username or email address and your xref:profile:manage-your-api-credentials.adoc[Kobiton API key], run:
 
 [source,shell]
 ----
 vusb login
 ----
 
-If your organization uses a custom domain for Kobiton, append the following flags to manually set your API and GRPC base URLs:
+If your organization uses a custom domain for Kobiton, pass the API base URL and your credentials as flags:
 
 [source,shell]
 ----
-vusb login --apibaseurl <url> --grpcbaseurl <url> --username <username> --password <password>
+vusb login --apibaseurl <url> --username <username> --apikey <api-key>
 ----
 
 [IMPORTANT]
-Follow xref:set-up-virtualusb.adoc#_launch_vusb_and_log_in[this guide] on how to fill in the `--apibaseurl` and `--grpcbaseurl` values.
+For the `--apibaseurl` value, see xref:set-up-virtualusb.adoc#_launch_vusb_and_log_in[Set up virtualUSB].
 
 [NOTE]
 Using flags will expose your credentials in the terminal. *Do not use this method while sharing your screen or around others*.
