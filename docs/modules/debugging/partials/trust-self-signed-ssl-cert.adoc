@@ -58,7 +58,9 @@ Trust the certificate using the steps for your distribution:
 
 * Debian-based: copy the certificate to `/usr/local/share/ca-certificates` (create the directory if it does not exist), then run `update-ca-certificates` as root.
 
-* Red Hat-based: copy the certificate to `/etc/pki/ca-trust/source/anchors`, then run `update-ca-trust` as root.
+* Red Hat-based, such as RHEL or Fedora: copy the certificate to `/etc/pki/ca-trust/source/anchors`, then run `update-ca-trust` as root.
+
+* Arch: copy the certificate to `/etc/ca-certificates/trust-source/anchors`, then run `update-ca-trust` as root.
 
 --
 
