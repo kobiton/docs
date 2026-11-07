@@ -32,7 +32,7 @@ Windows::
 
 Double-click the certificate file, then select *Install Certificate* on the *Certificate* window.
 
-image:debugging:windows-certificate-install.png[width=400,alt="The certificate information screen with an option to Install Cerficicate"]
+image:debugging:windows-certificate-install.png[width=400,alt="The certificate information screen with an option to Install Certificate"]
 
 On the next screen, select *Local Machine*. This requires administrator privileges.
 
@@ -56,7 +56,7 @@ Linux::
 
 Trust the certificate using the steps for your distribution:
 
-* Debian-based, such as Ubuntu: copy the certificate to `/usr/local/share/ca-certificates` (create the directory if it does not exist), then run `update-ca-certificates` as root.
+* Debian-based, such as Ubuntu: copy the certificate to `/usr/local/share/ca-certificates` (create the directory if it does not exist), then run `update-ca-certificates` as root. The file name must end in `.crt`. If the file ends in `.pem`, rename it to `.crt` when you copy it.
 
 * Red Hat-based, such as Red Hat Enterprise Linux (RHEL) or Fedora: copy the certificate to `/etc/pki/ca-trust/source/anchors`, then run `update-ca-trust` as root.
 
