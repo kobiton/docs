@@ -56,7 +56,7 @@ Linux::
 
 Trust the certificate using the steps for your distribution:
 
-* Debian-based, such as Ubuntu: copy the certificate to `/usr/local/share/ca-certificates` (create the directory if it does not exist), then run `update-ca-certificates` as root. The file name must end in `.crt`. If the file ends in `.pem`, rename it to `.crt` when you copy it.
+* Debian-based, such as Ubuntu: copy the certificate to `/usr/local/share/ca-certificates` (create the directory if it does not exist) with a file name that ends in `.crt`, such as `ca.crt`. Then run `update-ca-certificates` as root.
 
 * Red Hat-based, such as Red Hat Enterprise Linux (RHEL) or Fedora: copy the certificate to `/etc/pki/ca-trust/source/anchors`, then run `update-ca-trust` as root.
 
