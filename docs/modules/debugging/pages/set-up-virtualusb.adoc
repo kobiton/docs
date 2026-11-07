@@ -202,7 +202,7 @@ vusb --version
 == Launch virtualUSB and log in
 
 [NOTE]
-On Linux, sign in with the xref:debugging:virtualusb-cli-commands.adoc#_login[`vusb login` command] instead of the desktop app. Use the values in the following tabs for the `--apibaseurl` and `--grpcbaseurl` flags if your organization uses a custom domain or Standalone/On-Prem.
+On Linux, sign in with the xref:debugging:virtualusb-cli-commands.adoc#_login[`vusb login` command] instead of the desktop app. Use the value in the following tabs for the `--apibaseurl` flag if your organization uses a custom domain or Standalone/On-Prem.
 
 [tabs]
 ====
@@ -225,15 +225,11 @@ Select the **Login to your custom domain portal** checkbox in the login screen.
 
 image:login-virtualusb-custom-domain.png[width=450,alt="The virtualUSB login screen with the additional fields for custom domain"]
 
-Input the values for the two additional fields as below, replacing `<custom-domain>` with the customer's domain name:
-
-* API Base Url: _https://api.<custom-domain>.com_
-
-* API GRPC Base Url: _https://proxy-api-public-grpc-server.<custom-domain>.com_
+In *API Base Url*, enter `https://api.<custom-domain>.com`, replacing `<custom-domain>` with the customer's domain name.
 
 Input the *Username/Email* and *Password/API Key* to log in.
 
-The values for *API Base Url* and *API GRPC Base Url* are remembered and prefilled the next time you open the app.
+The value for *API Base Url* is remembered and prefilled the next time you open the app.
 
 --
 
@@ -248,23 +244,13 @@ Select the *Login to your custom domain portal* checkbox on the login screen
 
 image:login-virtualusb-custom-domain.png[width=450,alt="The virtualUSB login screen with the additional fields for custom domain"]
 
-Input the values for two the additional fields as `<http/https>://<Portal private domain or IP>:<REST API port>`, where:
+In *API Base Url*, enter `<http/https>://<Portal private domain or IP>:3000`, where:
 
 * `<http/https>`: if the Portal server uses HTTPS, then use https. Otherwise, use http.
 
 * `<Portal private domain or IP>`: if the Portal server has a private domain, use its private domain. Otherwise, use the Portal server’s IP address.
 
-* `<REST API port>`:
-
-** For *API Base Url*, use `3000`.
-
-** For *API GRPC Base Url*, use `3001`.
-
-*Example:*
-
-* API Base Url: `http://129.168.36.24:3000` or `https://www.acme.local:3000`
-
-* API GRPC Base Url: `http://129.168.36.24:3001` or `https://www.acme.local:3001`
+*Example:* `http://129.168.36.24:3000` or `https://www.acme.local:3000`
 
 Then input the *Username/Email* and *Password/API Key* to log in.
 
