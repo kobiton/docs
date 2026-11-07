@@ -140,7 +140,7 @@ capabilities.setCapability("captureScreenshots", true);
 
 === `kobiton:deviceGroup`
 
-The device group within the test session metadata.
+The device group to select a device from: `ORGANIZATION` (your organization's devices), `KOBITON` (Kobiton cloud devices) or `ANY` (both). Defaults to `ANY`. If omitted, Kobiton selects from both groups that you have access to.
 
 * *Type:* `string`
 * *Required capabilities:* None
@@ -149,7 +149,7 @@ The device group within the test session metadata.
 .Example
 [source,java]
 ----
-capabilities.setCapability("deviceGroup", "ORGANIZATION");
+capabilities.setCapability("kobiton:deviceGroup", "ORGANIZATION");
 ----
 
 === `kobiton:deviceTags`
@@ -172,9 +172,12 @@ Follow 2-dimensional string array formats when specifying tags:
 * Multiple groups (AND across groups): `[["project","dev"],["healthy"]]`
 * Multiple nested layers such as `[["project", ["dev", "test"]],["healthy"]]` are not supported.
 
-WARNING: Do not provide an empty value for `kobiton:deviceTags`. An empty value may cause session creation to fail.
+[NOTE]
+====
+`deviceName`, `udid` and `kobiton:deviceTags` are all optional. If none of them is provided, Kobiton picks any available device that matches `platformName` and your other capabilities (such as `platformVersion`) in the requested `kobiton:deviceGroup`. Kobiton ignores an empty `kobiton:deviceTags` value.
 
-NOTE: If no device selection capability is provided (such as `deviceName`, `udid`, or `kobiton:deviceTags`), Kobiton may not be able to determine a target device for the session.
+These rules apply to device selection through capabilities. Turbo Test Execution selects the device from its API request, which requires one of `udid`, `device_name` or `device_tags`. See xref:automation-testing:turbo-test-execution/run-appium-test.adoc#_request_parameter_reference[Request parameter reference].
+====
 
 See the below examples of how to use 2-dimensional string array formats for different programming languages.
 
@@ -792,9 +795,9 @@ capabilities.setCapability("appium:noReset", false);
 
 === `platformName`
 
-The type of platform, i.e Android or iOS.
+The device platform: `Android` or `iOS`. Required when `udid` isn't provided. Without it, session creation fails with the error `platformName is required`.
 
-* *Type:* `boolean`
+* *Type:* `string`
 * *Required capabilities:* None
 * *Optional capabilities:* None
 
