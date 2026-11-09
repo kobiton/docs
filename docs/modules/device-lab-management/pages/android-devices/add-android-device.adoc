@@ -188,21 +188,7 @@ On older ColorOS versions, such as ColorOS 6, open **Settings**, select **App Ma
 [#_oppo_after_restart]
 === After an OPPO device restarts
 
-Disabling `com.heytap.accessory` doesn't persist after the device restarts. Each time an OPPO device that has `com.heytap.accessory` restarts, run the commands in <<_oppo_free_port>> again.
-
-On a private or local device, you can also run the commands in the xref:manual-testing:device-controls.adoc#_adb_shell[adb shell] of a manual session. Run only the part of each command after `shell`:
-
-[source,shell]
-----
-pm disable-user --user 0 com.heytap.accessory
-am force-stop com.mobilelabsinc.deviceControl
-----
-
-// REVIEWER NOTE (KOB-52386): confirm with Hao Anh Tran that Kobiton software restarts deviceControl
-// automatically after force-stop, and that running force-stop from a manual session ends the session.
-
-[NOTE]
-Running `am force-stop` in a manual session ends the session. Kobiton software then restarts deviceControl, and the device comes back online.
+Disabling `com.heytap.accessory` doesn't persist after the device restarts. Each time an OPPO device that has `com.heytap.accessory` restarts, run the commands in <<_oppo_free_port>> again from the host. The **adb shell** in a manual session can't stop deviceControl.
 
 == Verify device is available in Kobiton
 
