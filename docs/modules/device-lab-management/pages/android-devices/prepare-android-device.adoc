@@ -185,6 +185,61 @@ Select *More security settings*, then turn off *Block USB connections while lock
 
 image:device-lab-management:android-prepare-more-security-settings.png[width=240, alt="The Block USB connections while locked setting is turned off in the More Security Settings screen on Android."]
 
+[#_prepare_oppo_devices]
+== Free the port that Kobiton software uses (OPPO devices, highly recommended)
+
+// REVIEWER NOTE (KOB-52386): confirm with Hao Anh Tran whether com.heytap.accessory holds the port
+// on OPPO models other than the Reno12 5G (source: KOB-51528 comment 114868). Also confirm whether
+// deviceConnect can install deviceControl before this step runs; if so, first-time setup also needs
+// `am force-stop com.mobilelabsinc.deviceControl`.
+
+[IMPORTANT]
+====
+
+On OPPO Reno12 5G (CPH2625), the preinstalled system app `com.heytap.accessory` uses a network port that Kobiton software requires. Other OPPO models might also be affected.
+
+If you skip this step, the device might not come online, or it might go offline or stop responding after it connects.
+
+====
+
+. Connect the device to the host as described in xref:android-devices/add-android-device.adoc#_connect_the_device_to_the_host[Add Android device].
+
+. On the host, run the command for your host mode:
++
+[tabs]
+====
+
+Standard mode::
++
+--
+
+On the Mac mini, open Terminal and run:
+
+[source,shell]
+----
+/usr/local/deviceconnect/bin/adb -s <device-serial> shell pm disable-user --user 0 com.heytap.accessory
+----
+
+--
+
+Lightning mode::
++
+--
+
+Set up `adb` on the GEM as described in xref:android-devices/add-android-device.adoc#_establish_trust_pairing_between_the_device_and_the_host[Establish trust pairing between the device and the host], then run:
+
+[source,shell]
+----
+adb -s <device-serial> shell pm disable-user --user 0 com.heytap.accessory
+----
+
+--
+====
++
+Replace `<device-serial>` with the serial number of the device.
+
+. If the command returns a `device unauthorized` error, tap **Always allow from this computer** in the **Allow USB debugging** popup on the device, tap **Allow**, then run the command again.
+
 [#_prepare_foldable_android_devices]
 == Prepare foldable Android devices
 

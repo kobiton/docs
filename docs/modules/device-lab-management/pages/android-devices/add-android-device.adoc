@@ -30,6 +30,7 @@ See below for an example of the SuperSync15 with the Host port visible.
 
 image::device-lab-management:device-lab-management-add-android-supersync15.PNG[width=500, alt="SuperSync15 with the Host port visible"]
 
+[#_connect_the_device_to_the_host]
 == Connect the device to the host
 
 Make sure you have properly xref:android-devices/prepare-android-device.adoc[prepared the device] for hosting on Kobiton.
@@ -40,6 +41,7 @@ For Lightning mode, connect the mobile device to the Cambrionix hub that is atta
 
 Check the device to see if it is charging after connecting. If it is not charging, the USB cable might be malfunctioning, or the Cambrionix hub is not connected to a power source.
 
+[#_establish_trust_pairing_between_the_device_and_the_host]
 == Establish trust pairing between the device and the host
 
 Access the Mac mini host directly, or via screen sharing.
@@ -98,6 +100,58 @@ Choose the **File Transfer** option.
 Wait until the device screen changes to the below before continuing:
 
 image::device-lab-management:device-lab-management-add-android-screen-changes-to-blue.PNG[width=400, alt="device screen changes and shows Kobiton name and logo"]
+
+[#_allow_background_activity_oppo]
+== Allow Kobiton apps to run in the background (OPPO devices, highly recommended)
+
+[IMPORTANT]
+====
+
+By default, ColorOS battery management on OPPO devices stops apps that run in the background, including Kobiton apps. If you skip this step, the device might go offline or stop responding after it connects.
+
+====
+
+// REVIEWER NOTE (KOB-52386): replace the package names below with the app display names shown in the
+// OPPO App list (keep the package names in parentheses), and verify the Settings menu path on an OPPO device.
+
+On the device, complete these steps for each of the following apps:
+
+* `com.mobilelabsinc.deviceControl`
+* `com.mobilelabsinc.trust.agent.stub`
+
+. Open **Settings** and select **App management** -> **App list**.
+
+. Select the app.
+
+. Select **Battery usage**.
+
+. Turn on **Allow background activity**.
+
+[NOTE]
+Menu labels can vary slightly by ColorOS version.
+
+[#_oppo_after_restart]
+=== After an OPPO device restarts
+
+Disabling `com.heytap.accessory` doesn't persist after the device restarts. Each time an OPPO device restarts, disable the app again and restart the deviceControl app (`com.mobilelabsinc.deviceControl`):
+
+[source,shell]
+----
+pm disable-user --user 0 com.heytap.accessory
+am force-stop com.mobilelabsinc.deviceControl
+----
+
+On the host, add `adb -s <device-serial> shell` before each command, using the `adb` path for your host mode from xref:android-devices/prepare-android-device.adoc#_prepare_oppo_devices[Free the port that Kobiton software uses]. Replace `<device-serial>` with the serial number of the device.
+
+On a private or local device, you can also run the commands in the xref:manual-testing:device-controls.adoc#_adb_shell[adb shell] of a manual session.
+
+// REVIEWER NOTE (KOB-52386): confirm with Hao Anh Tran that Kobiton software restarts deviceControl
+// automatically after force-stop, and that running force-stop from a manual session ends the session.
+
+Kobiton software restarts deviceControl, and the device comes back online.
+
+[NOTE]
+Running `am force-stop` in a manual session ends the session.
 
 == Verify device is available in Kobiton
 
