@@ -1,0 +1,64 @@
+
+= Page source with iOS authentication sheets
+:navtitle: Page source with iOS authentication sheets
+
+Some iOS apps use system authentication sheets for sign-in, such as Auth0 Universal Login through `ASWebAuthenticationSession` or `SFAuthenticationSession`.
+
+While an authentication sheet is open, Appium requests that read the view tree, such as `getPageSource`, can time out with a `kAXErrorIPCTimeout` error.
+
+For automation sessions on iOS devices, enable the `snapshotHonorModalViews` Appium setting to retrieve the app's page source while the authentication sheet is open.
+
+== Appium setting
+
+[options="header"]
+|=======================
+|Appium setting |Description |Default value
+|`snapshotHonorModalViews` |Set to `true` to retrieve the app's page source while a system authentication sheet is open. |`false`
+|=======================
+
+The setting applies only to the current session. Each new session starts with the default value.
+
+== Enable the setting
+
+Before retrieving the page source, use the Appium Settings API to set `snapshotHonorModalViews` to `true` during the active session.
+
+.Example (Java)
+[source,java]
+----
+driver.setSetting("snapshotHonorModalViews", true);
+----
+
+.Example (Python)
+[source,python]
+----
+driver.update_settings({"snapshotHonorModalViews": True})
+----
+
+.Example (WebDriver request)
+[source,shell]
+----
+curl -X POST "https://<user-name>:<api-key>@api.kobiton.com/wd/hub/session/<session-id>/appium/settings" \
+  -H "Content-Type: application/json" \
+  -d '{"settings": {"snapshotHonorModalViews": true}}'
+----
+
+Replace `<user-name>` and `<api-key>` with your Kobiton username and API key, and `<session-id>` with the ID of the active Appium session. For a custom domain or Standalone deployment, replace `api.kobiton.com/wd/hub` with your Appium server URL.
+
+The setting must be enabled during the session. Passing `snapshotHonorModalViews` as a capability when starting the session does not apply the setting.
+
+== Verify the setting
+
+Retrieve the current settings and confirm that `snapshotHonorModalViews` is `true`.
+
+.Example (Java)
+[source,java]
+----
+Map<String, Object> settings = driver.getSettings();
+System.out.println(settings.get("snapshotHonorModalViews"));
+----
+
+With the authentication sheet open, call `getPageSource` to retrieve the app's page source.
+
+== Limitations
+
+Elements within the authentication sheet, such as email and password fields or the *Continue* button, are not included in the page source. Only the app's own views are returned.
