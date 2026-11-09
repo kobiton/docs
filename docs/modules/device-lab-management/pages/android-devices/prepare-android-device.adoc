@@ -189,9 +189,7 @@ image:device-lab-management:android-prepare-more-security-settings.png[width=240
 == Free the port that Kobiton software uses (OPPO devices, highly recommended)
 
 // REVIEWER NOTE (KOB-52386): confirm with Hao Anh Tran whether com.heytap.accessory holds the port
-// on OPPO models other than the Reno12 5G (source: KOB-51528 comment 114868). Also confirm whether
-// deviceConnect can install deviceControl before this step runs; if so, first-time setup also needs
-// `am force-stop com.mobilelabsinc.deviceControl`.
+// on OPPO models other than the Reno12 5G (source: KOB-51528 comment 114868).
 
 [IMPORTANT]
 ====
@@ -239,6 +237,15 @@ adb -s <device-serial> shell pm disable-user --user 0 com.heytap.accessory
 Replace `<device-serial>` with the serial number of the device.
 
 . If the command returns a `device unauthorized` error, tap **Always allow from this computer** in the **Allow USB debugging** popup on the device, tap **Allow**, then run the command again.
+
+. If the device was hosted with Kobiton before, also stop the deviceControl app. Use the same `adb` path as in the previous command:
++
+[source,shell]
+----
+adb -s <device-serial> shell am force-stop com.mobilelabsinc.deviceControl
+----
++
+Kobiton software then restarts deviceControl.
 
 [#_prepare_foldable_android_devices]
 == Prepare foldable Android devices
