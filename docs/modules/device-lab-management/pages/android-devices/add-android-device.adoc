@@ -183,14 +183,14 @@ On the device, complete these steps for each of the following apps:
 image:device-lab-management:device-lab-management-add-android-oppo-apps.png[width=240, alt="The Apps screen in OPPO Settings with App management at the top"] -> image:device-lab-management:device-lab-management-add-android-oppo-app-management.png[width=240, alt="The App management list on an OPPO device showing the deviceControl app"] -> image:device-lab-management:device-lab-management-add-android-oppo-app-info.png[width=240, alt="The App info screen for deviceControl with the Battery usage option"] -> image:device-lab-management:device-lab-management-add-android-oppo-allow-background-activity.png[width=240, alt="Power consumption controls for deviceControl with the Allow background activity option"]
 
 [NOTE]
-Menu labels can vary slightly by ColorOS version.
+On older ColorOS versions, such as ColorOS 6, open **Settings**, select **App Management**, select the app, and select **Power Saver**. Then select **Allow Background Running**.
 
 [#_oppo_after_restart]
 === After an OPPO device restarts
 
-Disabling `com.heytap.accessory` doesn't persist after the device restarts. Each time an OPPO device restarts, run the commands in <<_oppo_free_port>> again.
+Disabling `com.heytap.accessory` doesn't persist after the device restarts. Each time an OPPO device that has `com.heytap.accessory` restarts, run the commands in <<_oppo_free_port>> again.
 
-On a private or local device, you can also run the commands in the xref:manual-testing:device-controls.adoc#_adb_shell[adb shell] of a manual session. Leave out the `adb -s <device-serial> shell` part:
+On a private or local device, you can also run the commands in the xref:manual-testing:device-controls.adoc#_adb_shell[adb shell] of a manual session. Run only the part of each command after `shell`:
 
 [source,shell]
 ----
