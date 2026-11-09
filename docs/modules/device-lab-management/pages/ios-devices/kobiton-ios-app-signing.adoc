@@ -50,12 +50,14 @@ Re-signing replaces the app's original signing identity. deviceShare does not ca
 * In-App Purchase
 * NFC Tag Reading
 * Personal VPN
-* Push Notifications
 * Sign in With Apple
 * System Extension
 * User Management
 * Wireless Accessory Configuration
 * Any other entitlement that depends on the original signing identity
+
+// Source: KOB-53678
+Push Notifications pass through re-signing when the provisioning profile imported into deviceShare includes the `aps-environment` entitlement. Without `aps-environment` on that profile, Push Notifications are stripped as well.
 
 If your app depends on any stripped entitlement, keep your own signing identity instead. See xref:#_keep_your_own_signing_identity[].
 
