@@ -1,32 +1,48 @@
 = Create a Jira ticket
 :navtitle: Create a Jira ticket
 
-Learn how to create a Jira ticket directly from xref:session-explorer:index.adoc[Session Explorer].
+Create Jira tickets from xref:session-explorer:index.adoc[Session Explorer] and track the tickets created from each session.
 
 == Before you start
 
-You'll need to verify that either xref:integrations:jira/enable-jira-integration.adoc[Jira Cloud] or xref:integrations:jira/enable-jira-data-center-integration.adoc[Jira Data Center] has been enabled for your organization.
+Enable Jira integration for your organization. See xref:integrations:jira/enable-jira-integration.adoc[Enable Jira Cloud integration] or xref:integrations:jira/enable-jira-data-center-integration.adoc[Enable Jira Data Center integration].
 
-== Create a Jira ticket
+== Open the Jira menu
 
-In Kobiton, select *Sessions* then xref:session-explorer:search-for-a-session.adoc[search for a session].
-
+. In Kobiton Portal, select *Sessions*, then xref:session-explorer:search-for-a-session.adoc[search for a session].
++
 image:session-explorer:search-bar-session-criteria-context.png[width=1000,alt="Search for sessions"]
 
-Select a session.
+. Select the session to open it in *Session Explorer*.
+. Select the *Jira* icon in the lower-left corner of the session timeline.
++
+image:integrations:jira-create-ticket-integration.png[width=500,alt="The Jira icon in the lower-left corner of the session timeline"]
++
+If you aren't signed in to Jira, a new browser tab opens. Sign in to Jira, then allow Kobiton to access your account. A confirmation message appears in Kobiton.
 
-If you have not logged into Jira, select **Jira Integration** from **Session Explorer**.
+== Create a ticket
 
-image:jira-create-ticket-integration.png[width=500,alt="The Jira Integration button in Session Overview"]
+. In the Jira menu, select *Create* next to *Create Jira Issue*.
+. Select a *Project* and *Issue Type*, then enter a *Title*.
++
+Kobiton prepopulates *Description* with a link to the session and the device details.
++
+image:integrations:jira-create-ticket-context.png[width=500,alt="The Create issue form with Project, Issue Type, Title, and a prepopulated Description"]
 
-Log in as a Jira user, then authorize the Kobiton integration.
+. Optional: Complete the remaining fields. Available fields depend on your Jira project configuration.
+. Optional: Under *Attachments*, select the session logs to attach to the ticket.
+. Select *Create*.
 
-After logging in, select **Jira ticket**, then **Create** in **Session Overview** or **Session Explorer**.
+A confirmation message appears with a link to the new ticket in Jira.
 
-image:integrations:jira-create-ticket-button.png[width="500",alt="Select Jira ticket and then Create in Session Overview"]
+== View tickets created from a session
 
-Fill out the *Project*, *Issue Type*, and *Title*. A link to the session and other session details are prepopulated in the *Description*.
+The number on the *Jira* icon shows the count of tickets created from the session.
 
-image:integrations:jira-create-ticket-context.png[width="500",alt="Fill out required fields in the create ticket screen then select Create"]
+. Select the *Jira* icon.
++
+The menu lists each ticket with its title, creation date, and current Jira status.
++
+image:integrations:jira-create-ticket-button.png[width=500,alt="The Jira menu listing a ticket created from the session with its status"]
 
-You can choose to fill out the rest of the form, or leave it as is. When you're finished, select *Create*.
+. Select the arrow next to a ticket to open it in Jira. To open all tickets created from the session, select *View all in Jira*.
