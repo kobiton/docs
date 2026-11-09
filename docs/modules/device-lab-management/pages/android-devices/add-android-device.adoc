@@ -109,7 +109,7 @@ image::device-lab-management:device-lab-management-add-android-screen-changes-to
 
 ColorOS on OPPO devices can block Kobiton software in two ways:
 
-* On some models, the preinstalled system app `com.heytap.accessory` uses a network port that Kobiton software requires.
+* On newer ColorOS versions, the preinstalled system app `com.heytap.accessory` can use a network port that Kobiton software requires.
 
 * Battery management restricts background activity for apps, including Kobiton apps, and can stop them.
 
@@ -120,11 +120,10 @@ If you skip these steps, the device might not come online, or it might go offlin
 [#_oppo_free_port]
 === Free the port that Kobiton software uses
 
-// REVIEWER NOTE (KOB-52386): confirm with Hao Anh Tran whether com.heytap.accessory holds the port
-// on OPPO models other than the Reno12 5G (source: KOB-51528 comment 114868). It is not installed on
-// OPPO A5 2020 (CPH1931, ColorOS 6.0.1).
+Run this step on every OPPO device. If the first command returns an error that contains `Unknown package: com.heytap.accessory`, the device doesn't have the app. Skip the second command and continue to <<_allow_background_activity_oppo>>.
 
-This step applies to OPPO Reno12 5G (CPH2625). Other OPPO models might also be affected. If the first command returns an error that contains `Unknown package: com.heytap.accessory`, the device doesn't have the app. Skip the second command and continue to <<_allow_background_activity_oppo>>.
+[NOTE]
+Disabling `com.heytap.accessory` turns off quick pairing with OPPO accessories, such as Enco earbuds. Standard Bluetooth pairing still works.
 
 On the host, run the commands for your host mode:
 
