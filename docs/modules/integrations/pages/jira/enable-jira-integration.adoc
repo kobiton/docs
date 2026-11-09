@@ -1,32 +1,62 @@
-=  Enable Jira Cloud integration
-:navtitle:  Enable Jira Cloud integration
+= Enable Jira Cloud integration
+:navtitle: Enable Jira Cloud integration
 
-Learn how to enable Jira Cloud so everyone in your organization can create Jira tickets directly from their xref:session-explorer:manage-sessions.adoc[Session Explorer].
+Connect Kobiton to Jira Cloud to create Jira tickets from xref:session-explorer:manage-sessions.adoc[Session Explorer].
 
-== Before you start
+Jira integration requires a Jira Cloud account and a Kobiton subscription that includes Jira integration.
 
-* A Jira Cloud account is required.
-* Your Kobiton subscription must include Jira integration.
-
-[#_create_jira_api_token]
-== Create Jira API token
-
-Follow the official guide for creating a https://support.atlassian.com/atlassian-account/docs/manage-api-tokens-for-your-atlassian-account/[Jira API token].
-
-image:integrations:create-jira-api-token-context.png[width=1000,alt="The Create API token button under Security settings"]
-
-Copy and save the generated token to a secure location.
-
-== Connect your account
-
-Log into the Kobiton Portal.
+== Enable Jira integration
 
 include::profile:partial$open-settings.adoc[]
 
-Select *Integration*. Under *Issue Tracking*, locate the Jira integration and select *Connect Account*.
+. Select *Integration*.
+. Under *Issue Tracking*, in the *Jira Integration* card, select *Enable Jira Integration*.
++
+image:integrations:integration-jira-enable-jira-integration.png[width=500,alt="The Enable Jira Integration button under Issue Tracking"]
 
-image:integrations:integration-jira-enable-jira-dc-integration-kobiton-connect-account.PNG[width=1000,alt="A closeup image of the integrations page with Jira highlighted."]
+. Select *Confirm*.
 
-Select the **Jira Cloud** tab. Enter your Jira Host URL, email, and the xref:_create_jira_api_token[API Token] you created earlier, then select *Connect* to finish. Now users in your organization can create Jira tickets directly from the xref:session-explorer:manage-sessions.adoc#_create_a_jira_ticket[Session Explorer].
+If the card shows *Disable Jira Integration*, the integration is already enabled.
 
-image:integrations:integration-jira-enable-jira-cloud-integration-popup-closeup.png[width=400,alt="A closeup image of the Jira account connection form."]
+== Connect your Jira account
+
+Connect your Jira Cloud account using one of the following methods:
+
+* xref:_sign_in_from_session_explorer[Sign in from Session Explorer] using your Atlassian account.
+* xref:_connect_with_an_api_token[Connect with an API token] in *Settings*.
+
+[#_sign_in_from_session_explorer]
+=== Sign in from Session Explorer
+
+. In Kobiton Portal, select *Sessions*, then open a session.
+. Select the *Jira* icon in the lower-left corner of the session timeline.
++
+image:integrations:jira-create-ticket-integration.png[width=500,alt="The Jira icon in the lower-left corner of the session timeline"]
+
+. In the new browser tab, sign in with your Atlassian account.
+. Review the requested permissions, then select *Accept*.
+
+After authorization, you can create Jira tickets from Session Explorer.
+
+[#_connect_with_an_api_token]
+=== Connect with an API token
+
+[#_create_jira_api_token]
+. Create a Jira API token by following the Atlassian guide to https://support.atlassian.com/atlassian-account/docs/manage-api-tokens-for-your-atlassian-account/[managing API tokens]. Store the token securely.
++
+image:integrations:create-jira-api-token-context.png[width=1000,alt="The Create API token button under Security settings"]
+
+. In Kobiton Portal, select your profile picture, then select *Settings* and *Integration*.
+. Under *Issue Tracking*, in the *Jira Integration* card, select *Connect account*.
++
+image:integrations:integration-jira-enable-jira-dc-integration-kobiton-connect-account.PNG[width=1000,alt="The Integration settings page with Jira Integration under Issue Tracking"]
+
+. Select the *Jira Cloud* tab, then enter the following:
++
+* *Host*: Open Jira in your browser and copy your Jira Cloud site URL, including `.atlassian.net` (for example, `https://<your-site>.atlassian.net`).
+* *User email*: The email address associated with your Atlassian account.
+* *API Token*: The token you created.
++
+image:integrations:integration-jira-enable-jira-cloud-integration-popup-closeup.png[width=400,alt="The Jira Cloud connection form with Host, User email, and API Token fields"]
+
+. Select *Connect*.
