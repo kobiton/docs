@@ -101,15 +101,71 @@ Wait until the device screen changes to the below before continuing:
 
 image::device-lab-management:device-lab-management-add-android-screen-changes-to-blue.PNG[width=400, alt="device screen changes and shows Kobiton name and logo"]
 
-[#_allow_background_activity_oppo]
-== Allow Kobiton apps to run in the background (OPPO devices, highly recommended)
+[#_set_up_oppo_devices]
+== Set up OPPO devices (highly recommended)
 
 [IMPORTANT]
 ====
 
-By default, ColorOS battery management on OPPO devices restricts background activity for apps, including Kobiton apps, and can stop them. If you skip this step, the device might go offline or stop responding after it connects.
+ColorOS on OPPO devices can block Kobiton software in two ways:
+
+* On some models, the preinstalled system app `com.heytap.accessory` uses a network port that Kobiton software requires.
+
+* Battery management restricts background activity for apps, including Kobiton apps, and can stop them.
+
+If you skip these steps, the device might not come online, or it might go offline or stop responding after it connects.
 
 ====
+
+[#_oppo_free_port]
+=== Free the port that Kobiton software uses
+
+// REVIEWER NOTE (KOB-52386): confirm with Hao Anh Tran whether com.heytap.accessory holds the port
+// on OPPO models other than the Reno12 5G (source: KOB-51528 comment 114868). It is not installed on
+// OPPO A5 2020 (CPH1931, ColorOS 6.0.1).
+
+This step applies to OPPO Reno12 5G (CPH2625). Other OPPO models might also be affected. If the first command returns an error that contains `Unknown package: com.heytap.accessory`, the device doesn't have the app. Skip the second command and continue to <<_allow_background_activity_oppo>>.
+
+On the host, run the commands for your host mode:
+
+[tabs]
+====
+
+Standard mode::
++
+--
+
+On the Mac mini, open Terminal and run:
+
+[source,shell]
+----
+/usr/local/deviceconnect/bin/adb -s <device-serial> shell pm disable-user --user 0 com.heytap.accessory
+/usr/local/deviceconnect/bin/adb -s <device-serial> shell am force-stop com.mobilelabsinc.deviceControl
+----
+
+--
+
+Lightning mode::
++
+--
+
+Set up `adb` on the GEM as described in <<_establish_trust_pairing_between_the_device_and_the_host>>, then run:
+
+[source,shell]
+----
+adb -s <device-serial> shell pm disable-user --user 0 com.heytap.accessory
+adb -s <device-serial> shell am force-stop com.mobilelabsinc.deviceControl
+----
+
+--
+====
+
+Replace `<device-serial>` with the serial number of the device.
+
+The first command disables `com.heytap.accessory`. The second command stops deviceControl, and Kobiton software then restarts it on the freed port.
+
+[#_allow_background_activity_oppo]
+=== Allow Kobiton apps to run in the background
 
 On the device, complete these steps for each of the following apps:
 
@@ -132,7 +188,9 @@ Menu labels can vary slightly by ColorOS version.
 [#_oppo_after_restart]
 === After an OPPO device restarts
 
-Disabling `com.heytap.accessory` doesn't persist after the device restarts. Each time an OPPO device restarts, disable the app again and stop the deviceControl app (`com.mobilelabsinc.deviceControl`):
+Disabling `com.heytap.accessory` doesn't persist after the device restarts. Each time an OPPO device restarts, run the commands in <<_oppo_free_port>> again.
+
+On a private or local device, you can also run the commands in the xref:manual-testing:device-controls.adoc#_adb_shell[adb shell] of a manual session. Leave out the `adb -s <device-serial> shell` part:
 
 [source,shell]
 ----
@@ -140,17 +198,11 @@ pm disable-user --user 0 com.heytap.accessory
 am force-stop com.mobilelabsinc.deviceControl
 ----
 
-On the host, add `adb -s <device-serial> shell` before each command, using the `adb` path for your host mode from xref:android-devices/prepare-android-device.adoc#_prepare_oppo_devices[Free the port that Kobiton software uses]. Replace `<device-serial>` with the serial number of the device.
-
-On a private or local device, you can also run the commands in the xref:manual-testing:device-controls.adoc#_adb_shell[adb shell] of a manual session.
-
 // REVIEWER NOTE (KOB-52386): confirm with Hao Anh Tran that Kobiton software restarts deviceControl
 // automatically after force-stop, and that running force-stop from a manual session ends the session.
 
-Kobiton software then restarts deviceControl, and the device comes back online.
-
 [NOTE]
-Running `am force-stop` in a manual session ends the session.
+Running `am force-stop` in a manual session ends the session. Kobiton software then restarts deviceControl, and the device comes back online.
 
 == Verify device is available in Kobiton
 
