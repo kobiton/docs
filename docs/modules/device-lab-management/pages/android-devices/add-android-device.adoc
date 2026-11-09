@@ -102,37 +102,27 @@ Wait until the device screen changes to the below before continuing:
 image::device-lab-management:device-lab-management-add-android-screen-changes-to-blue.PNG[width=400, alt="device screen changes and shows Kobiton name and logo"]
 
 [#_set_up_oppo_devices]
-== Set up OPPO devices (highly recommended)
-
-[IMPORTANT]
-====
+== Set up OPPO devices
 
 ColorOS on OPPO devices can block Kobiton software in two ways:
 
-* On newer ColorOS versions, the preinstalled system app `com.heytap.accessory` can use a network port that Kobiton software requires.
+* On newer ColorOS versions, the preinstalled system app `com.heytap.accessory` system app can occupy a network port required by Kobiton software.
 
-* Battery management restricts background activity for apps, including Kobiton apps, and can stop them.
+* Battery management can restrict background activity and stop Kobiton apps.
 
-If you skip these steps, the device might not come online, or it might go offline or stop responding after it connects.
-
-====
+These settings can prevent a device from connecting to Kobiton or cause it to disconnect or become unresponsive.
 
 [#_oppo_free_port]
-=== Free the port that Kobiton software uses
+=== Disable the conflicting system app
 
-Run this step on every OPPO device. If the first command returns an error that contains `Unknown package: com.heytap.accessory`, the device doesn't have the app. Skip the second command and continue to <<_allow_background_activity_oppo>>.
+On each OPPO device, disable `com.heytap.accessory` to prevent it from using a network port required by Kobiton software.
+
+If the first command returns an error that contains `Unknown package: com.heytap.accessory`, the app isn't installed. Skip the second command and continue to <<_allow_background_activity_oppo>>.
 
 [NOTE]
-Disabling `com.heytap.accessory` turns off quick pairing with OPPO accessories, such as Enco earbuds. Standard Bluetooth pairing still works.
+Disabling `com.heytap.accessory` turns off quick pairing with OPPO accessories, such as Enco earbuds. Standard Bluetooth pairing remains available.
 
-On the host, run the commands for your host mode:
-
-[tabs]
-====
-
-Standard mode::
-+
---
+==== Mac mini
 
 On the Mac mini, open Terminal and run:
 
@@ -142,13 +132,9 @@ On the Mac mini, open Terminal and run:
 /usr/local/deviceconnect/bin/adb -s <device-serial> shell am force-stop com.mobilelabsinc.deviceControl
 ----
 
---
+==== Lightning mode (Linux server)
 
-Lightning mode::
-+
---
-
-Set up `adb` on the GEM as described in <<_establish_trust_pairing_between_the_device_and_the_host>>, then run:
+Configure `adb` on the Linux server as described in <<_establish_trust_pairing_between_the_device_and_the_host>>, then run:
 
 [source,shell]
 ----
@@ -156,17 +142,14 @@ adb -s <device-serial> shell pm disable-user --user 0 com.heytap.accessory
 adb -s <device-serial> shell am force-stop com.mobilelabsinc.deviceControl
 ----
 
---
-====
-
 Replace `<device-serial>` with the serial number of the device.
 
-The first command disables `com.heytap.accessory`. The second command stops deviceControl, and Kobiton software then restarts it on the freed port.
+The first command disables `com.heytap.accessory`. The second command stops `deviceControl`, which Kobiton software then restarts using the available port.
 
 [#_allow_background_activity_oppo]
 === Allow Kobiton apps to run in the background
 
-On the device, complete these steps for each of the following apps:
+On the OPPO device, enable background activity for both apps:
 
 * **deviceControl** (`com.mobilelabsinc.deviceControl`)
 * **Kobiton Agent Launcher** (`com.mobilelabsinc.trust.agent.stub`)
@@ -185,9 +168,11 @@ image:device-lab-management:device-lab-management-add-android-oppo-apps.png[widt
 On older ColorOS versions, such as ColorOS 6, open **Settings**, select **App Management**, select the app, and select **Power Saver**. Then select **Allow Background Running**.
 
 [#_oppo_after_restart]
-=== After an OPPO device restarts
+=== After restarting an OPPO device
 
-Disabling `com.heytap.accessory` doesn't persist after the device restarts. Each time an OPPO device that has `com.heytap.accessory` restarts, run the commands in <<_oppo_free_port>> again from the host. The **adb shell** in a manual session can't stop deviceControl.
+When an OPPO device restarts, `com.heytap.accessory` is re-enabled. Run the commands in <<_oppo_free_port>> again from the host.
+
+Use the host terminal rather than the ADB shell in a manual session to stop `deviceControl`.
 
 == Verify device is available in Kobiton
 
