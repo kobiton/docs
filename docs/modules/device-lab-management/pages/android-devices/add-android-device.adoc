@@ -107,7 +107,7 @@ image::device-lab-management:device-lab-management-add-android-screen-changes-to
 [IMPORTANT]
 ====
 
-By default, ColorOS battery management on OPPO devices stops apps that run in the background, including Kobiton apps. If you skip this step, the device might go offline or stop responding after it connects.
+By default, ColorOS battery management on OPPO devices restricts background activity for apps, including Kobiton apps, and can stop them. If you skip this step, the device might go offline or stop responding after it connects.
 
 ====
 
@@ -132,7 +132,7 @@ Menu labels can vary slightly by ColorOS version.
 [#_oppo_after_restart]
 === After an OPPO device restarts
 
-Disabling `com.heytap.accessory` doesn't persist after the device restarts. Each time an OPPO device restarts, disable the app again and restart the deviceControl app (`com.mobilelabsinc.deviceControl`):
+Disabling `com.heytap.accessory` doesn't persist after the device restarts. Each time an OPPO device restarts, disable the app again and stop the deviceControl app (`com.mobilelabsinc.deviceControl`):
 
 [source,shell]
 ----
@@ -147,7 +147,7 @@ On a private or local device, you can also run the commands in the xref:manual-t
 // REVIEWER NOTE (KOB-52386): confirm with Hao Anh Tran that Kobiton software restarts deviceControl
 // automatically after force-stop, and that running force-stop from a manual session ends the session.
 
-Kobiton software restarts deviceControl, and the device comes back online.
+Kobiton software then restarts deviceControl, and the device comes back online.
 
 [NOTE]
 Running `am force-stop` in a manual session ends the session.
