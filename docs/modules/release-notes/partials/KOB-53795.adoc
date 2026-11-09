@@ -1,0 +1,12 @@
+// Source: KOB-53795
+
+== App uploads no longer stay in Parsing
+
+Fixed an issue where uploaded apps could stay in *Parsing* and never finish. Each upload now either finishes parsing or ends in a parsing failure. In the Kobiton API, the app version `state` moves from `PARSING` to `OK` or `FAILURE_PARSING`.
+
+* If the uploaded file can't be read, the app version shows a parsing failure.
+* If parsing can't start after the upload, the app version is marked as a parsing failure.
+* Deleting an app or app version while it waits to be parsed no longer leaves it in *Parsing*.
+* The *Delete* button for an app that stays in *Parsing* now appears after 1 hour instead of 15 minutes.
+
+// REVIEWER NOTE (KOB-53795): Confirm the Portal label of the button that appears for an app stuck in Parsing. The source calls it *Delete*; the Manage apps page documents *Remove App*.
