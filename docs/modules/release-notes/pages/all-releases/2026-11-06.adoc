@@ -1,0 +1,171 @@
+= Cloud November 6, 2026
+
+[NOTE]
+====
+Cloud release notes are typically published weekly and summarize changes since the previous publication. Kobiton uses date-based release versioning, with releases identified by the build date in YYMM.DD format. Version information for individual software components is available in the Component versions section.
+====
+
+// Source: KOB-55737
+
+== Check service status from the help widget
+
+The Kobiton Portal help widget now includes a link to the Kobiton Status Page, making it easy to check service status before contacting Support. The link opens https://status.kobiton.com/[status.kobiton.com^] in a new tab, where you can also subscribe to status updates.
+
+// Source: KOB-55749 from PR #864
+
+== Session timeout now ends Turbo Test sessions
+
+Turbo Test sessions now end when the session timeout (`session_timeout`) is reached. Previously, a test script that ran past the session timeout kept the session running and the device in use until the script finished on its own.
+
+- When the session timeout is reached, the test script and every process it started are stopped, the session ends, and the device is released.
+- If the script does not start its session before the timeout, the run fails. For a `session_timeout` under 15 minutes, the failure message states that the script did not finish within the session timeout. For a `session_timeout` of 15 minutes or longer, the run fails after 15 minutes with a general error.
+- Scripts that finish before the session timeout run as before.
+
+// Source: KOB-55961
+
+== Kobiton API: session updates take effect immediately
+
+- Updates to a session's name, description, or state through `PUT /v2/sessions/{id}` now take effect immediately. After a successful update, `GET /v2/sessions/{id}` returns the updated values without the previous delay of 30 seconds or longer.
+- For completed sessions, you can set the state to `PASSED` or `FAILED`. Requests to update the state of a running session return HTTP 400. Session lists, search results, and reports reflect the updated state immediately.
+
+// Source: KOB-55508 from PR #862
+
+== More reliable WEBVIEW discovery in iOS Appium sessions
+
+Improved `WEBVIEW` context discovery in iOS Appium sessions, including Auth0 authentication flows. Sessions now retry unresponsive Web Inspector connections to prevent returning only `NATIVE_APP` when the device's Web Inspector restarts during session initialization.
+
+Web views on iOS devices still require *Web Inspector* to be turned on in *Settings → Safari → Advanced*.
+
+// Source: KOB-52358
+
+== More flexible device selection for Appium sessions
+
+Appium sessions now start when the request includes `platformName`. Previously, these requests failed with `deviceTags is required`.
+
+* When `udid` isn't provided, `platformName` is the only required device-selection capability. `deviceName` and `kobiton:deviceTags` are optional filters.
+* If neither `deviceName` nor `kobiton:deviceTags` is provided, the session runs on any available device that matches `platformName` and your other capabilities in the requested device group. The default device group is `ANY`, which includes your organization's devices.
+* An empty `kobiton:deviceTags` value is ignored.
+* If neither `udid` nor `platformName` is provided, session creation fails with `platformName is required`.
+* Appium Turbo Test sessions that don't include `udid`, `device_name`, or `device_tags` now fail with `one of udid, device_name or device_tags is required`.
+
+// Source: KOB-55532
+
+== Reliable app lifecycle commands on iOS 15 and 16
+
+On iOS 15 and iOS 16 devices, the following commands continue to work during long-running sessions without requiring a device reboot:
+
+* CLI: `app run`, `app kill`, `device ps`
+* Appium: `mobile: terminateApp`
+
+// Source: KOB-54432 from PR #861
+
+== Restored XML hierarchy in iPad Inspector sessions
+
+*Session Explorer Inspector* now shows the XML hierarchy for each step of an iPad automation session started without an app, such as a Safari web session.
+
+// Source: KOB-53277
+
+== Accurate final status for ended sessions on the Sessions page
+
+Sessions that have ended now keep their final status on the *Sessions* page, such as *Complete* or *Terminated*. This status matches the status shown on the session *Overview*.
+
+Status and session details on the *Sessions* page also stay in sync more reliably when an update fails temporarily.
+
+Sessions that already showed as *Running* after they ended, before this release, keep that status.
+
+// Source: KOB-55657
+
+== Reliable screenshots after Android screen capture restarts
+
+On Android devices, screenshots now wait for the first available display frame after a session starts, the device rotates, or the display refreshes. This prevents the first screenshot from failing when a new image is not yet available.
+
+The improvement applies to screenshots in the manual viewer, the initial frame of session video recordings, and screenshots requested through automation.
+
+// Source: KOB-52033
+
+== More reliable Android passcode management
+
+Improved Android passcode management to prevent an intermittent issue where the *Passcode Feature Enforced* setting could turn off during device reconnection, blocking users from unlocking a device that still had a passcode set.
+
+Devices affected before this release may still have the Passcode Feature Enforced setting turned off.
+
+// Source: KOB-55740 from PR #863
+
+== Passcode indicator available for Android devices
+
+The device list passcode indicator now covers Android devices, and the *Passcode* filter uses clearer labels.
+
+- Android devices with a passcode now display the passcode icon in card view and list view, the same as iOS devices.
+- The passcode icon tooltip now reads *Passcode enabled*.
+- The *Passcode* filter in the device search bar now offers *Enabled* and *Not Enabled*. *Enabled* returns devices with a passcode on every platform.
+
+For details, see xref:devices:device-metadata.adoc#_passcode[Passcode].
+
+// Source: KOB-52746
+
+== Improved memory reporting in Device Metrics
+
+Device Metrics now accounts for reclaimable cached memory when reporting memory usage on Android and iOS, bringing values more closely in line with Android Settings and Xcode Instruments.
+
+* Cached memory that the operating system can reclaim is now counted as free memory, reducing previously inflated usage values.
+* Sessions recorded before the upgrade retain their original memory values.
+
+// Source: KOB-55321 from PR #873
+
+== Improved report exports
+
+CSV and PNG exports of *Device Utilization*, *Parallel Sessions*, and *Sessions per Day* now include report data instead of returning an export error. Exports respect the report's date range, and PNG exports of *Parallel Sessions* and *Sessions per Day* now include bar charts.
+
+// Source: KOB-55244 from PR #867
+
+== More accurate Retained Devices counts
+
+The *Retained Devices* report now counts a retained device for each hour it was retained, including retentions that have ended or expired.
+
+// Source: KOB-55544
+
+== Install `.app` files on real iOS devices during manual sessions
+
+During a manual session on a real iOS device, *Upload File* and *Install From URL* in *Install Apps* now accept zipped `.app` files. A `.app` built for real iOS devices installs the same way as an `.ipa`.
+
+Apps with a build type that doesn't match the device are now stopped before installation with a clear message, instead of failing with a generic install error:
+
+* An iOS Simulator build is not installed on a real iOS device.
+* A device build is not installed on an iOS Simulator.
+
+Android sessions, and iOS apps whose build type matches the device, are unaffected.
+
+For details, see xref:manual-testing:install-an-app.adoc#_ios_build_types[iOS build types].
+
+// Source: KOB-55770
+
+== Device passcodes available to organization members through the v2 API
+
+`GET /v2/devices` and `GET /v2/devices/udid/{deviceUdid}` now return a device's `passcode` to every user who can access the device. Previously, only users with the ADMIN role received this field.
+
+* The `has_passcode` and `passcode_enabled` fields are unchanged.
+* The v1 device endpoints are unchanged.
+
+// Source: KOB-52861
+
+== Successful device-tag assignment through the API
+
+- Adding a tag that is already assigned to a device now succeeds instead of returning an error.
+- When several requests add the same tag to the same device at the same time, every request succeeds and the tag is assigned to the device only once.
+- The change applies to these device-tag endpoints:
+** `POST /v1/tags/device/\{udid}`
+** `POST /v1/tags/assign`
+** `POST /v2/tags/\{tagName}/devices`
+** `POST /v2/tags/devices`
+
+// Source: KOB-54409
+
+== Support for MCP specification 2026-07-28
+
+The Kobiton MCP server now supports version 2026-07-28 of the Model Context Protocol (MCP). AI clients using this version can connect without an initialization handshake. Clients using earlier MCP versions continue to work without configuration changes.
+
+== Component versions
+
+* Portal 2611.6
+* deviceConnect 2611.4
+* Kobiton CLI 2611.2
