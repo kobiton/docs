@@ -10,7 +10,7 @@ NOTE: This procedure requires Apple Account sign-in, which is available on priva
 * A xref:devices:local-devices/set-up-device-for-apple-pay.adoc[device set up for Apple Pay], with a passcode.
 * A Sandbox Apple Account. Create one in App Store Connect. For details, see https://developer.apple.com/apple-pay/sandbox-testing/[Apple Pay sandbox testing,window=_blank].
 * A test card from the *Test Cards for Apps and the Web* list on the same page. Each card has its own expiration date and security code. Cards under *Test Cards for Point of Sale Systems* can't be added to Wallet.
-* A device region set to a country or region that supports Apple Pay. American Express test cards also require the region to be set to the United States or the United Kingdom.
+* A device region set to a country or region that supports Apple Pay. American Express test cards also require the United States or United Kingdom region.
 
 == Sign in with a Sandbox Apple Account
 
@@ -39,10 +39,10 @@ image::manual-testing:add-card-input-sensitive-data.png[width=500,alt="The Input
 . Tap *✓* next to *Scan Card with Camera*.
 +
 The hidden keyboard covers *Continue*, so tapping *Continue* has no effect.
-. Tap *Expiration Date* and *Security Code*, and enter each value with Input Sensitive Data. Then tap *✓* next to *Scan Card with Camera*.
+. Tap *Expiration Date* and *Security Code*, and enter each value with *Input Sensitive Data*. Then tap *✓* next to *Scan Card with Camera*.
 . On the *Terms and Conditions* screen, tap *Agree*.
 +
-The card network, such as Visa or Mastercard, provides these terms.
+The card network, such as Visa, provides these terms.
 . If *Add to Other Devices* appears, tap *Add to Other Devices Later*.
 +
 This keeps the test card off other devices signed in to the same Sandbox Apple Account.
