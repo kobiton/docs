@@ -1,0 +1,3 @@
+// Source: KOB-52208
+* Fixed an issue where `kobiton:stopAudioInjection` was ignored if the audio file was still downloading. The download now stops, and the audio is not played.
+// REVIEWER NOTE (KOB-52208): The fix requires updated deviceConnect and Bluetooth bridge builds. Confirm whether the entry should state a minimum version or note that both components must be updated.
