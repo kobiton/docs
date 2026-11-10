@@ -1,0 +1,57 @@
+= TestFlight integration
+:navtitle: TestFlight
+
+TestFlight is Apple's app for installing beta builds. Use it to install and test a prerelease build of an iOS or iPadOS app on a Kobiton private or local device. For Apple's instructions on accepting invitations and installing beta builds, see link:https://testflight.apple.com/[TestFlight^].
+
+NOTE: TestFlight isn't available on public devices. Use a private or local device instead. See xref:devices:index.adoc#_device_types[Device types].
+
+== Requirements
+
+* A TestFlight invitation from the app developer, sent as an email invitation or a public link from link:https://appstoreconnect.apple.com/[App Store Connect^].
+* A Kobiton private or local iOS device that meets the device and OS criteria the developer set for the beta.
+* An Apple Account signed in on that device.
+
+== Start a manual session
+
+xref:manual-testing:start-a-manual-session.adoc[Start a manual session] on a private or local iOS device. Complete the remaining steps on that device.
+
+== Install TestFlight
+
+. Open *App Store* and search for *TestFlight*.
+. Install *TestFlight*.
+
+NOTE: The Apple Account on the device doesn't need to match the Apple Account the developer uses in App Store Connect.
+
+== Accept the invitation and install the build
+
+. On the device, open the invitation:
+** For an email invitation, open the email and select *View in TestFlight*.
+** For a public link, open the link.
+. In TestFlight, select *Accept*.
+. Select *Install*.
+. When the app appears on the home screen, open it to start testing.
+
+== Update to a newer build
+
+When the developer publishes a new beta build, TestFlight sends a notification. To install it, open *TestFlight* and select *Update* next to the app.
+
+== Compare TestFlight beta apps with App Repository apps
+
+Kobiton handles a beta app installed through TestFlight the same way as an app installed from the App Store, not as an App Repository app.
+
+=== Cleanup policy
+
+If the device's cleanup policy includes *All apps installed and associated data within a session will be removed*, cleanup removes the beta app at the end of the session, like any other installed app. TestFlight itself (`com.apple.TestFlight`) stays on the device because cleanup doesn't remove apps with bundle IDs that start with `com.apple`. Cleanup also doesn't remove the Apple Account, so you can reinstall the beta app from TestFlight in the next session.
+
+To keep the beta app installed between sessions, add its bundle ID to the policy's exemption list. See xref:devices:local-devices/cleanup-policy/cleanup-configurations.adoc#_iosipados[Cleanup configurations].
+
+=== Test Cases and Test Runs
+
+You can convert a session that uses the beta app into a Test Case. Because the app isn't in App Repository, a Test Run can't install it. The Test Case replays only on devices where the beta app is already installed when the Test Run starts.
+
+Before you start a Test Run:
+
+* Install the beta build from TestFlight on every device in the Test Run.
+* Exempt the beta app from the cleanup policy, or reinstall it before each Test Run.
+
+The Test Run opens whichever build is installed on the device. To choose the build version for a Test Run, upload the build to App Repository instead. See xref:test-management:test-cases.adoc#_test_case_replay_requirements[Test Case replay requirements].
