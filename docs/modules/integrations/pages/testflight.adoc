@@ -37,11 +37,11 @@ When the developer publishes a new beta build, TestFlight sends a notification. 
 
 == Compare TestFlight beta apps with App Repository apps
 
-Kobiton treats a beta app installed through TestFlight as an existing app on the device, not as an App Repository app.
+Kobiton handles a beta app installed through TestFlight the same way as an app installed from the App Store, not as an App Repository app.
 
 === Cleanup policy
 
-If the device's cleanup policy includes *All apps installed and associated data within a session will be removed*, cleanup removes the beta app at the end of the session, the same as an App Repository app. TestFlight itself stays on the device because cleanup doesn't remove apps with bundle IDs that start with `com.apple`. Cleanup also doesn't remove the Apple Account, so you can reinstall the beta app from TestFlight in the next session.
+If the device's cleanup policy includes *All apps installed and associated data within a session will be removed*, cleanup removes the beta app at the end of the session, like any other installed app. TestFlight itself (`com.apple.TestFlight`) stays on the device because cleanup doesn't remove apps with bundle IDs that start with `com.apple`. Cleanup also doesn't remove the Apple Account, so you can reinstall the beta app from TestFlight in the next session.
 
 To keep the beta app installed between sessions, add its bundle ID to the policy's exemption list. See xref:devices:local-devices/cleanup-policy/cleanup-configurations.adoc#_iosipados[Cleanup configurations].
 
