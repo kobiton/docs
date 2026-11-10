@@ -1,0 +1,10 @@
+// Source: KOB-55783
+
+== Accurate no-device messages for sessions started by device tags
+
+When a session request selects devices by tag and no device is available, the reason in the error message is now based only on devices that have the requested tags. Previously, the reason could come from any device that matched the other capabilities, including devices without the requested tags.
+
+* If a device with the requested tags matches the request but is in use, the message states that the matching devices are currently in use.
+* If no device matches the requested tags, the message states `There are no devices that satisfy your filter criteria`. Requests that previously returned a "currently in use" message because of a device without the requested tags now return this message instead.
+
+This applies to Appium sessions that use `kobiton:deviceTags` and to Turbo Test sessions started by device tags. Device selection is unchanged. A session started by device tags runs on the same device as before.
