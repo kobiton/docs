@@ -34,3 +34,24 @@ NOTE: The Apple Account on the device doesn't need to match the Apple Account th
 == Update to a newer build
 
 When the developer publishes a new beta build, TestFlight sends a notification. To install it, open *TestFlight* and select *Update* next to the app.
+
+== Compare TestFlight beta apps with App Repository apps
+
+Kobiton treats a beta app installed through TestFlight as an existing app on the device, not as an App Repository app.
+
+=== Cleanup policy
+
+If the device's cleanup policy includes *All apps installed and associated data within a session will be removed*, cleanup removes the beta app at the end of the session, the same as an App Repository app. TestFlight itself stays on the device because cleanup doesn't remove apps with bundle IDs that start with `com.apple`. Cleanup also doesn't remove the Apple Account, so you can reinstall the beta app from TestFlight in the next session.
+
+To keep the beta app installed between sessions, add its bundle ID to the policy's exemption list. See xref:devices:local-devices/cleanup-policy/cleanup-configurations.adoc#_iosipados[Cleanup configurations].
+
+=== Test Cases and Test Runs
+
+You can convert a session that uses the beta app into a Test Case. Because the app isn't in App Repository, a Test Run can't install it. The Test Case replays only on devices where the beta app is already installed when the Test Run starts.
+
+Before you start a Test Run:
+
+* Install the beta build from TestFlight on every device in the Test Run.
+* Exempt the beta app from the cleanup policy, or reinstall it before each Test Run.
+
+The Test Run opens whichever build is installed on the device. To choose the build version for a Test Run, upload the build to App Repository instead. See xref:test-management:test-cases.adoc#_test_case_replay_requirements[Test Case replay requirements].
