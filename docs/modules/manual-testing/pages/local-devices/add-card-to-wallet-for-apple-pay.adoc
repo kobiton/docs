@@ -5,22 +5,12 @@ During a manual iOS session, add an Apple Pay sandbox test card to Wallet to tes
 
 NOTE: This procedure requires Apple Account sign-in, which is available on private and local iOS devices only.
 
-// REVIEWER NOTE (KOB-55923): This flow is not yet verified in a Kobiton manual session.
-// Confirm on a private test device: manual card entry works from the session stream,
-// no extra card verification step appears for sandbox cards, and the device passcode
-// prompt opens the Apple Security Enablement dialog. Capture screenshots during this check.
-
 == Requirements
 
 * A xref:devices:local-devices/set-up-device-for-apple-pay.adoc[device set up for Apple Pay], with a passcode.
 * A Sandbox Apple Account. Create one in App Store Connect. For details, see https://developer.apple.com/apple-pay/sandbox-testing/[Apple Pay sandbox testing,window=_blank].
-* Card details from Apple's sandbox test card list on the same page.
-
-Sandbox test cards work only on a device signed in with a Sandbox Apple Account.
-
-// REVIEWER NOTE (KOB-55923): Confirm where to sign in with the Sandbox Apple Account on the device
-// (Settings > Apple Account, per Apple's sandbox guidance) and whether the device region
-// must be set to a country or region that supports Apple Pay.
+* A test card from the *Test Cards for Apps and the Web* list on the same page. Each card has its own expiration date and security code. Cards under *Test Cards for Point of Sale Systems* can't be added to Wallet.
+* A device region set to a country or region that supports Apple Pay. American Express test cards also require the region to be set to the United States or the United Kingdom.
 
 == Sign in with a Sandbox Apple Account
 
@@ -30,23 +20,50 @@ Sandbox test cards work only on a device signed in with a Sandbox Apple Account.
 
 == Add a test card
 
-. On the device screen, open *Wallet*.
-. Tap *+* (Add).
-. Tap *Debit or Credit Card*, then tap *Continue*.
+. On the device screen, open *Settings*, then tap *Wallet & Apple Pay*.
+. Under *Sandbox*, tap *Add Card*.
++
+If *Sandbox* doesn't appear, the device isn't signed in with a Sandbox Apple Account.
++
+image::manual-testing:add-card-sandbox-add-card.png[width=300,alt="The Wallet & Apple Pay screen with Add Card under Sandbox"]
+. On the *Add to Wallet* screen, tap *Debit or Credit Card*, then tap *Continue*.
++
+If *Cards Found For You* appears, ignore it. Those cards come from other devices signed in to the same account.
 . Tap *Enter Card Details Manually*.
-. Enter the card number, name, expiration date, and security code of a test card from Apple's sandbox test card list.
-. Follow the prompts on the device screen to accept the terms and finish adding the card.
-. When the device asks for its passcode, enter it in the *Apple Security Enablement* dialog, then select *Submit*. For details, see xref:manual-testing:enter-ios-device-passcode.adoc[].
+. Tap *Name* and type any name.
+. Tap *Card Number*, then enter the card number with xref:manual-testing:device-controls.adoc#_input_sensitive_data[Input Sensitive Data].
++
+This field hides the keyboard and the card number from the session stream.
++
+image::manual-testing:add-card-input-sensitive-data.png[width=500,alt="The Input the sensitive data dialog next to the Card Details screen"]
+. Tap *✓* next to *Scan Card with Camera*.
++
+The hidden keyboard covers *Continue*, so tapping *Continue* has no effect.
+. Tap *Expiration Date* and *Security Code*, and enter each value with Input Sensitive Data. Then tap *✓* next to *Scan Card with Camera*.
+. On the *Terms and Conditions* screen, tap *Agree*.
++
+The card network, such as Visa or Mastercard, provides these terms.
+. If *Add to Other Devices* appears, tap *Add to Other Devices Later*.
++
+This keeps the test card off other devices signed in to the same Sandbox Apple Account.
 
-When the card appears in Wallet, the device is ready for Apple Pay testing. Continue with xref:manual-testing:local-devices/use-apple-pay-in-manual-session.adoc[].
+The card appears under *Sandbox* in *Wallet & Apple Pay*. Continue with xref:manual-testing:local-devices/use-apple-pay-in-manual-session.adoc[].
 
-// REVIEWER NOTE (KOB-55923): Confirm whether the sandbox account sign-in and the Wallet card
-// persist after the session ends, or whether device cleanup removes them. If cleanup removes
-// them, add a note that the card must be added again each session, or link to the cleanup
-// policy guidance in devices:local-devices/cleanup-policy/manage-device-cleanup-policies.adoc.
+// REVIEWER NOTE (KOB-55923): Confirm whether the Sandbox Apple Account sign-in and the
+// Wallet card persist after the session ends, or whether device cleanup removes them. If
+// cleanup removes them, add a note that the card must be added again each session, or link
+// to devices:local-devices/cleanup-policy/manage-device-cleanup-policies.adoc.
+
+== Troubleshoot adding a card
+
+*This Card Is Not Eligible for Apple Pay*::
+The card isn't a valid sandbox test card for this device. Use a card from *Test Cards for Apps and the Web*, and check that the device region supports Apple Pay.
+
+*Invalid Card*::
+The expiration date or security code doesn't match the card number. Because the session can't show or clear the hidden fields, tap *Add Card Later*, then start again from *Add Card*.
 
 == Related guides
 
 * xref:devices:local-devices/set-up-device-for-apple-pay.adoc[]
 * xref:manual-testing:local-devices/use-apple-pay-in-manual-session.adoc[]
-* xref:manual-testing:enter-ios-device-passcode.adoc[]
+* xref:manual-testing:device-controls.adoc[]
