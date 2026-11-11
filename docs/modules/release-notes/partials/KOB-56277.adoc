@@ -1,0 +1,9 @@
+// Source: KOB-56277
+
+== Session Explorer keeps steps after private mode ends
+
+In Xium and Appium automation sessions that use `kobiton:privateMode`, Session Explorer now keeps the step that turns private mode off and every step after it. Previously, if a script ran commands while private mode was on, turned private mode off, and then ended the session within about 5 seconds, those steps were missing from Session Explorer.
+
+Sessions that don't turn on private mode are unchanged.
+
+// REVIEWER NOTE (KOB-56277): Test evidence for this ticket states that commands run while private mode is on are not stored in Session Explorer. The published page "Obfuscate private data in Appium script" says that private data in those steps is obfuscated in View HTTP Headers and Appium Inspector. That behavior comes from a related ticket that was not yet released when this evidence was captured. Confirm which behavior is current before publishing this entry, and whether that page needs an update.
