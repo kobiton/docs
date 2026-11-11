@@ -1,0 +1,7 @@
+// Source: KOB-55511
+
+== More reliable WEBVIEW discovery in Android mixed sessions
+
+On Android devices, each Appium session that runs during the same mixed session now lists the `WEBVIEW` context for a web page open in Chrome, including pages in a Chrome Custom Tab such as Auth0 sign-in pages. Previously, only the first Appium session listed the `WEBVIEW` context. Later Appium sessions in the same mixed session returned only `NATIVE_APP`, without an error.
+
+Mixed sessions that include only one Appium session behave as before. iOS sessions are unaffected.
