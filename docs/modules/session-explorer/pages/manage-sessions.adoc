@@ -1,7 +1,7 @@
 = Manage sessions
 :navtitle: Manage sessions
 
-Learn how to manage sessions so you can rename a session, change the session description, download logs, or create a Jira ticket. You can also leverage Session Explorer to xref:analytics/index.adoc[review analytics] or xref:validations/index.adoc[run validations].
+Manage your test sessions by renaming sessions, updating descriptions, downloading logs, creating Jira tickets, or deleting sessions. In Session Explorer you can also xref:analytics/index.adoc[review analytics] and xref:validations/index.adoc[run validations].
 
 == Open a session
 
@@ -111,3 +111,25 @@ image:session-overview-execution-history.png[width=600,alt="The Execution Histor
 If the current session is not one of the five most recent sessions, you’ll see an ellipsis (…) indicating that additional sessions exist but aren’t shown in this view.
 
 Clicking on a tag name in the Execution History section will open the Session List, automatically filtered to show all sessions associated with that tag.
+
+// Source: KOB-56359
+[#_delete_a_session]
+== Delete a session
+
+Delete a session to remove it from the session list. Sessions are deleted one at a time.
+
+*Delete* is available only when both of these are true:
+
+* The session has ended. A running session shows *Terminate* instead of *Delete*.
+* The session is yours, or your role has the xref:organization:roles/user-roles-and-permissions.adoc#_session_modify_other_session[`session.modify_other_session`] permission.
+
+To delete a session:
+
+. In Kobiton Portal, select *Sessions*.
+. xref:session-explorer:search-for-a-session.adoc[Search for the session].
+. Right-click the session, then select *Delete*.
++
+You can also select the session, then select the trash icon above the session list.
+. In the *Delete Session* dialog, select *Delete*.
+
+The session is removed from the session list, and links to the session no longer work. A deleted session can't be restored from Portal.
