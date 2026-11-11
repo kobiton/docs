@@ -1,0 +1,58 @@
+// Source: KOB-56002
+= Individual Sessions report
+
+View all sessions started within the selected date range, with one row per session.
+
+== Availability
+
+The Individual Sessions report is available to organization ADMINs.
+
+== Open the report
+
+Select *Analytics Reports*, then *Individual Sessions*. The report is grouped under *Usage*.
+
+// REVIEWER NOTE (KOB-56002): Confirm the navigation path. The ticket places the report in the Usage group; the Analytics Reports entry point is taken from the other report pages in this module.
+
+== Filter the report
+
+The report shows sessions from the last 7 days by default.
+
+* *Date Range*: Select the period to review. Only sessions started within this range appear.
+* *Team*: Show sessions for one or more teams.
+* *User Email*: Select one or more user emails. Enter part of an address to search the full user list.
+
+Filters combine. For example, select a date range, then a user email, to review one person's sessions for that period.
+
+// REVIEWER NOTE (KOB-56002): The ticket keeps the report's other existing filters but names only Date Range, Team, and User Email. Confirm whether any additional filters appear and add them here.
+
+== Report columns
+
+Each row represents one session and includes the following columns, in this order:
+
+. *Session ID*
+. *Session Start*
+. *Session End*
+. *User Email*
+. *Team*
+. *Device Name*
+. *OS*
+. *OS Version*
+. *UDID*
+. *Device Type*
+. *Device Model*
+. *Serial Number*
+. *IMEI*
+. *Phone Number*
+. *Session Minutes*
+. *Session Type*
+. *Session State*
+. *Session Deleted*
+. *Session Deleted At*
+
+== Large result sets
+
+The table displays up to 100,000 rows. Because the report lists every session, wide date ranges for large organizations can reach this limit and take longer to load.
+
+To review more sessions, narrow the *Date Range*, filter by *Team* or *User Email*, or export the report to CSV.
+
+// REVIEWER NOTE (KOB-56002): Confirm the export control label for this report and whether CSV export includes rows beyond the 100,000-row table limit.
