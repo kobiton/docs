@@ -1,0 +1,41 @@
+= Change your organization name
+:navtitle: Change your organization name
+
+Change the name and description of your organization in Kobiton Portal. The organization name appears at the top of *Org Management* and in the organization icon in the left navigation.
+
+Standalone organizations start with the default name `kobitonadmin organization`. Replace it with your organization's name after setup.
+
+[NOTE]
+Only users with the xref:organization:roles/user-roles-and-permissions.adoc#_org_management[`org_management.modify`] permission can change the organization name and description. The Organization Owner and ADMIN roles include this permission.
+
+== Change the name or description
+
+. In the left navigation, select *Org Management*.
+. Next to *Organization Management for <organization name>*, select the edit icon.
++
+image:organization:edit-organization-icon-context.png[width=1000,alt="The edit icon next to the organization name in Org Management"]
+. In *Edit Organization*, enter a new *Organization Name*, *Organization Description*, or both.
++
+image:organization:edit-organization-dialog-context.png[width=1000,alt="The Edit Organization dialog with Organization Name and Organization Description fields"]
+. Select *Update*.
++
+The new name appears at the top of the page.
+
+To close *Edit Organization* without saving, select the close icon.
+
+== Name and description requirements
+
+[cols="1h,4"]
+|===
+| Organization Name
+a| * Required.
+* 5 to 80 characters. Leading and trailing spaces do not count toward the length.
+* Can contain letters, numbers, spaces, periods (`.`), plus signs (`+`), hyphens (`-`), and underscores (`_`).
+* Cannot contain other symbols, such as `&`, `'`, `@`, or `,`.
+
+| Organization Description
+a| * Optional.
+* Up to 150 characters.
+|===
+
+If a value does not meet these requirements, an error appears under the field and *Update* is unavailable.
