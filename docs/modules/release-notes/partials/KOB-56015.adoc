@@ -1,0 +1,11 @@
+// Source: KOB-56015
+// REVIEWER NOTE (KOB-56015): The fix shipped in a deviceConnect build and was verified on Kobiton Portal Cloud. Confirm whether this entry also belongs in Standalone release notes, and whether Private and Local device hosts need the updated deviceConnect build to get the fix.
+
+== Live view stays current on Android devices with Lightning Mode off
+
+Fixed an issue in manual sessions on Android devices where, with *Lightning Mode* off, the live view kept showing an earlier screen until you tapped it. Because the tap acted on the real device screen, it could open something other than what the live view showed.
+
+The live view now updates as the device screen changes:
+
+* Screen changes that happen on their own, such as a running stopwatch, appear without a tap.
+* *Home*, *Back*, *Power*, and *Recent apps* on the session toolbar show their result right away.
