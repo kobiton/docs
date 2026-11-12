@@ -34,6 +34,79 @@ Installing an iOS app built with an App Store distribution profile no longer fai
 // errors" until engineering confirms that case.
 // REVIEWER NOTE (KOB-55419): Customer-specific context in the ticket is intentionally excluded.
 
+// Source: KOB-56015 from PR #914
+// https://github.com/kobiton/docs/pull/914
+
+== Live view stays current on Android devices with Lightning Mode off
+
+In manual sessions on Android devices with *Lightning Mode* off, the live view now updates as the device screen changes. Previously, the live view could keep showing an earlier screen until you tapped it.
+
+* Screen changes that happen on their own, such as a running stopwatch, appear in the live view without a tap.
+* *Home*, *Back*, *Power*, and *Recent apps* on the session toolbar show their result in the live view right away.
+* After you tap the live view, it shows the screen the tap led to, not the screen from before the tap.
+
+// Source: KOB-55810 from PR #926
+// https://github.com/kobiton/docs/pull/926
+
+== Text entry into covered fields in iOS Xium sessions
+
+Fixed an issue in iOS Xium sessions where tapping, clearing, or typing into an element failed with a `kAXErrorCannotComplete` error when iOS couldn't scroll the element into view. This occurred, for example, when the on-screen keyboard covered a password or PIN field on an iPad in landscape orientation, in an app whose form uses its own scrolling instead of the standard iOS scrolling.
+
+When iOS can't scroll an element into view, the session now scrolls the element's nearest scrollable container until the element can be reached, then completes the tap, clear, or text entry. If the element still can't be reached after three scroll attempts, the original error is returned.
+
+Elements that are already visible, or that iOS can scroll into view, are not affected.
+
+// Source: KOB-55511 from PR #918
+// https://github.com/kobiton/docs/pull/918
+
+== More reliable WEBVIEW discovery in Android mixed sessions
+
+On Android devices, each Appium session that runs during the same mixed session now lists the `WEBVIEW` context for a web page open in Chrome, including pages in a Chrome Custom Tab such as Auth0 sign-in pages. Previously, only the first Appium session listed the `WEBVIEW` context. Later Appium sessions in the same mixed session returned only `NATIVE_APP`, without an error.
+
+Mixed sessions that include only one Appium session behave as before. iOS sessions are unaffected.
+
+// Source: KOB-55750 from PR #917
+// https://github.com/kobiton/docs/pull/917
+
+== Private mode now stops recording session data
+
+When `kobiton:privateMode` is on in a Xium or Appium 2 Basic automation session, session data is no longer recorded for the private part of the session. Previously, private data was obfuscated only in *View HTTP Headers* and *Appium Inspector* in Session Explorer, and could still appear in video, screenshots, and logs.
+
+- Turn on private mode with the `kobiton:privateMode` capability at session start, or turn it on and off during the session with the `Update Settings` Appium command.
+- While private mode is on, screenshots, Appium and Xium logs, device logs, WebDriver traffic, view trees, system metrics, and network capture are not recorded. Commands run during this time are hidden in Session Explorer, and the session video skips the private part.
+- Errors are still returned to the script, and crash logs are still collected.
+- Recording resumes when private mode is turned off. Sessions that never turn on private mode are recorded as before.
+
+For details and limitations, see xref:automation-testing:scripting/obfuscate-private-data-in-appium-script.adoc[].
+
+// Source: KOB-56277 from PR #921
+// https://github.com/kobiton/docs/pull/921
+
+== Session Explorer keeps steps after private mode ends
+
+In Xium and Appium automation sessions that use `kobiton:privateMode`, Session Explorer now keeps the step that turns private mode off and every step after it. Previously, if a script ran commands while private mode was on, turned private mode off, and then ended the session within about 5 seconds, those steps were missing from Session Explorer.
+
+Sessions that don't turn on private mode are unchanged.
+
+// REVIEWER NOTE (KOB-56277): Test evidence for this ticket states that commands run while private mode is on are not stored in Session Explorer. The published page "Obfuscate private data in Appium script" says that private data in those steps is obfuscated in View HTTP Headers and Appium Inspector. That behavior comes from a related ticket that was not yet released when this evidence was captured. Confirm which behavior is current before publishing this entry, and whether that page needs an update.
+
+// Source: KOB-55512 from PR #912
+// https://github.com/kobiton/docs/pull/912
+
+- Fixed Xium automation sessions started with Selenium 3 or Selenium 4 Java clients, including Appium Java client 10, receiving error responses without W3C error names. A missing element raised a general `WebDriverException` instead of `NoSuchElementException`, and client logs showed `incorrect JSON status mapping`. These sessions now receive standard W3C WebDriver errors. Sessions that use only `desiredCapabilities` and Basic Appium sessions are unchanged.
+
+// Source: KOB-55783 from PR #908
+// https://github.com/kobiton/docs/pull/908
+
+== Accurate no-device messages for sessions started by device tags
+
+When a session request selects devices by tag and no device is available, the reason in the error message is now based only on devices that have the requested tags. Previously, the reason could come from any device that matched the other capabilities, including devices without the requested tags.
+
+* If a device with the requested tags matches the request but is in use, the message states that the matching devices are currently in use.
+* If no device matches the requested tags, the message states `There are no devices that satisfy your filter criteria`. Requests that previously returned a "currently in use" message because of a device without the requested tags now return this message instead.
+
+This applies to Appium sessions that use `kobiton:deviceTags` and to Turbo Test sessions started by device tags. Device selection is unchanged. A session started by device tags runs on the same device as before.
+
 // Source: KOB-56321 from PR #928
 // https://github.com/kobiton/docs/pull/928
 
@@ -49,16 +122,92 @@ Screen reads on other iOS versions are unchanged.
 
 // REVIEWER NOTE (KOB-56321): QA could not reproduce the original failure on four iOS 15 devices (15.4, 15.4.1, 15.5) before the fix; the fix build passed regression on iOS 15 through 27. Confirm the issue was customer-observable before publishing this entry.
 
-// Source: KOB-55810 from PR #926
-// https://github.com/kobiton/docs/pull/926
+// Source: KOB-56002 from PR #923
+// https://github.com/kobiton/docs/pull/923
 
-== Text entry into covered fields in iOS Xium sessions
+=== New report: Individual Sessions
 
-Fixed an issue in iOS Xium sessions where tapping, clearing, or typing into an element failed with a `kAXErrorCannotComplete` error when iOS couldn't scroll the element into view. This occurred, for example, when the on-screen keyboard covered a password or PIN field on an iPad in landscape orientation, in an app whose form uses its own scrolling instead of the standard iOS scrolling.
+- Available under *Analytics Reports* in the Portal to organization ADMINs only, in the *Usage* group.
+- The report lists every session started within the selected date range, one row per session, including session timing, user, team, device details, session minutes, type, and state.
+- The date range defaults to the last 7 days.
+- Filter by *Date Range*, *Team*, or *User Email*. *User Email* accepts multiple addresses and searches the full user list as you type.
+- The table displays up to 100,000 rows. For larger result sets, narrow the filters or export the report to CSV.
 
-When iOS can't scroll an element into view, the session now scrolls the element's nearest scrollable container until the element can be reached, then completes the tap, clear, or text entry. If the element still can't be reached after three scroll attempts, the original error is returned.
+See xref:reporting:individual-sessions-report.adoc[].
 
-Elements that are already visible, or that iOS can scroll into view, are not affected.
+// REVIEWER NOTE (KOB-56002): Confirm the Analytics Reports navigation path and the CSV export behavior for result sets over 100,000 rows.
+
+// Source: KOB-55149 from PR #916
+// https://github.com/kobiton/docs/pull/916
+
+== HarmonyOS devices in the device list
+
+The device list now recognizes HarmonyOS devices alongside iOS and Android devices.
+
+- HarmonyOS devices display a HarmonyOS icon in List View and the *Remove unused devices* window.
+- Device cards show the platform and OS version, such as `HarmonyOS 6.0.0`.
+- A *HarmonyOS* platform filter shows only HarmonyOS devices and displays the number of HarmonyOS devices. The filter appears only when your organization has at least one HarmonyOS device.
+
+// Source: KOB-55142 from PR #903
+// https://github.com/kobiton/docs/pull/903
+
+== HarmonyOS devices recognized in the device list
+
+HarmonyOS devices and emulators connected through deviceConnect are now recognized and listed correctly in Kobiton Portal.
+
+* HarmonyOS devices and emulators show *HarmonyOS* as their platform and come online in the device list.
+* The OS version shows the HarmonyOS version reported by the device, such as 6.1.0.117, instead of the device model.
+* Real devices show their marketing name, such as HUAWEI Mate 80, instead of the model code.
+* Ending a session on a HarmonyOS device no longer fails during post-session cleanup.
+
+HarmonyOS devices that were connected before this release are updated the next time they reconnect.
+
+// REVIEWER NOTE (KOB-55142): Confirm this entry should publish now. Broader HarmonyOS device support is still in progress and may be limited to enabled organizations. The OS version and marketing-name fixes also depend on the deviceConnect release installed on the host, so confirm the deviceConnect version to list.
+
+// Source: KOB-53795 from PR #905
+// https://github.com/kobiton/docs/pull/905
+
+== App uploads no longer stay in Parsing
+
+Fixed an issue where uploaded apps could stay in *Parsing* and never finish. Each upload now either finishes parsing or ends in a parsing failure. In the Kobiton API, the app version `state` moves from `PARSING` to `OK` or `FAILURE_PARSING`.
+
+* If the uploaded file can't be read, the app version shows a parsing failure.
+* If parsing can't start after the upload, the app version is marked as a parsing failure.
+* Deleting an app or app version while it waits to be parsed no longer leaves it in *Parsing*.
+* The *Delete* button for an app that stays in *Parsing* now appears after 1 hour instead of 15 minutes.
+
+// REVIEWER NOTE (KOB-53795): Confirm the Portal label of the button that appears for an app stuck in Parsing. The source calls it *Delete*; the Manage apps page documents *Remove App*.
+
+// Source: KOB-55761 from PR #907
+// https://github.com/kobiton/docs/pull/907
+
+== Kobiton CLI prevents commands from acting on the wrong session
+
+Kobiton CLI commands that pass `-s <SESSION_ID>` with a session token for a different session now fail with an error that identifies the token to pass, instead of acting on the wrong session.
+
+Previously, with more than one CLI session open, a command run with `-s` and no `-a` or `KOBITON_SESSION_TOKEN` used the saved token for the most recently created session. Parts of the command then applied to a different session than the one named, and `kobiton session ping` could keep a different session active than the one named.
+
+- Each open session needs its own session token, passed with `-a <SESSION_TOKEN>` or the `KOBITON_SESSION_TOKEN` environment variable.
+- Help for `-a`, `-s`, `kobiton session create`, and `--hide` now describes this requirement.
+- With a single session open, commands run without `-a` or `-s` work as before.
+- `kobiton session end`, `kobiton session terminate`, `kobiton session show`, and `kobiton session delete`, which require only `-s`, are unchanged.
+
+For details, see xref:kobiton-cli:use-the-cli.adoc#session-context[Use session context consistently].
+
+// Source: KOB-55961 from PR #902
+// https://github.com/kobiton/docs/pull/902
+
+== Session updates through the Kobiton API take effect immediately
+
+Changes to a session's name, description, or state made with `PUT /v1/sessions/{id}` or `PUT /v2/sessions/{id}` now take effect before the request returns. Previously, the updated values could take 30 seconds or longer to appear.
+
+* *Session details:* After the request returns `200`, retrieving the session returns the new name, description, and state (`PASSED` or `FAILED`) right away.
+* *Session state:* A new `PASSED` or `FAILED` state takes effect immediately once the session has ended.
+* *Session lists, search, and reports:* The new state appears without additional delay.
+
+// REVIEWER NOTE (KOB-55961): The Jira release-note field states that `PUT /v1/sessions/{id}` still accepts a state while the session is running and saves it shortly after, as before, while one test summary in the ticket says a running session now gets `400` on v1. Confirm the v1 behavior before adding a line about running sessions.
+
+// REVIEWER NOTE (KOB-55961): Jira lists fix version 2026.11.06 and states the change works on Cloud and Standalone. Confirm the target release-notes page or pages for this entry.
 
 // Source: KOB-55656 from PR #925
 // https://github.com/kobiton/docs/pull/925
@@ -96,21 +245,6 @@ Fixed an issue where a new Android device connected to a deviceConnect host took
 // The evidence package does not resolve the field name. Confirm that this value does not
 // exclude the change from public release notes.
 
-// Source: KOB-56002 from PR #923
-// https://github.com/kobiton/docs/pull/923
-
-=== New report: Individual Sessions
-
-- Available under *Analytics Reports* in the Portal to organization ADMINs only, in the *Usage* group.
-- The report lists every session started within the selected date range, one row per session, including session timing, user, team, device details, session minutes, type, and state.
-- The date range defaults to the last 7 days.
-- Filter by *Date Range*, *Team*, or *User Email*. *User Email* accepts multiple addresses and searches the full user list as you type.
-- The table displays up to 100,000 rows. For larger result sets, narrow the filters or export the report to CSV.
-
-See xref:reporting:individual-sessions-report.adoc[].
-
-// REVIEWER NOTE (KOB-56002): Confirm the Analytics Reports navigation path and the CSV export behavior for result sets over 100,000 rows.
-
 // Source: KOB-56018 from PR #922
 // https://github.com/kobiton/docs/pull/922
 
@@ -122,79 +256,6 @@ Fixed an issue where the device list in deviceConnect Console stopped loading, a
 * Re-signing of your iOS apps can also use a newer provisioning profile from a different team than the one the app was last signed with. Profiles that lack a capability your app requires are still not used.
 
 // REVIEWER NOTE (KOB-56018): The ticket's impact analysis states that re-signing customer apps can use a profile from a different team. The recorded test results cover the deviceConnect agent apps only. Confirm the second bullet before publication.
-
-// Source: KOB-56277 from PR #921
-// https://github.com/kobiton/docs/pull/921
-
-== Session Explorer keeps steps after private mode ends
-
-In Xium and Appium automation sessions that use `kobiton:privateMode`, Session Explorer now keeps the step that turns private mode off and every step after it. Previously, if a script ran commands while private mode was on, turned private mode off, and then ended the session within about 5 seconds, those steps were missing from Session Explorer.
-
-Sessions that don't turn on private mode are unchanged.
-
-// REVIEWER NOTE (KOB-56277): Test evidence for this ticket states that commands run while private mode is on are not stored in Session Explorer. The published page "Obfuscate private data in Appium script" says that private data in those steps is obfuscated in View HTTP Headers and Appium Inspector. That behavior comes from a related ticket that was not yet released when this evidence was captured. Confirm which behavior is current before publishing this entry, and whether that page needs an update.
-
-// Source: KOB-55511 from PR #918
-// https://github.com/kobiton/docs/pull/918
-
-== More reliable WEBVIEW discovery in Android mixed sessions
-
-On Android devices, each Appium session that runs during the same mixed session now lists the `WEBVIEW` context for a web page open in Chrome, including pages in a Chrome Custom Tab such as Auth0 sign-in pages. Previously, only the first Appium session listed the `WEBVIEW` context. Later Appium sessions in the same mixed session returned only `NATIVE_APP`, without an error.
-
-Mixed sessions that include only one Appium session behave as before. iOS sessions are unaffected.
-
-// Source: KOB-55750 from PR #917
-// https://github.com/kobiton/docs/pull/917
-
-== Private mode now stops recording session data
-
-When `kobiton:privateMode` is on in a Xium or Appium 2 Basic automation session, session data is no longer recorded for the private part of the session. Previously, private data was obfuscated only in *View HTTP Headers* and *Appium Inspector* in Session Explorer, and could still appear in video, screenshots, and logs.
-
-- Turn on private mode with the `kobiton:privateMode` capability at session start, or turn it on and off during the session with the `Update Settings` Appium command.
-- While private mode is on, screenshots, Appium and Xium logs, device logs, WebDriver traffic, view trees, system metrics, and network capture are not recorded. Commands run during this time are hidden in Session Explorer, and the session video skips the private part.
-- Errors are still returned to the script, and crash logs are still collected.
-- Recording resumes when private mode is turned off. Sessions that never turn on private mode are recorded as before.
-
-For details and limitations, see xref:automation-testing:scripting/obfuscate-private-data-in-appium-script.adoc[].
-
-// Source: KOB-55149 from PR #916
-// https://github.com/kobiton/docs/pull/916
-
-== HarmonyOS devices in the device list
-
-The device list now recognizes HarmonyOS devices alongside iOS and Android devices.
-
-- HarmonyOS devices display a HarmonyOS icon in List View and the *Remove unused devices* window.
-- Device cards show the platform and OS version, such as `HarmonyOS 6.0.0`.
-- A *HarmonyOS* platform filter shows only HarmonyOS devices and displays the number of HarmonyOS devices. The filter appears only when your organization has at least one HarmonyOS device.
-
-// Source: KOB-56015 from PR #914
-// https://github.com/kobiton/docs/pull/914
-
-== Live view stays current on Android devices with Lightning Mode off
-
-In manual sessions on Android devices with *Lightning Mode* off, the live view now updates as the device screen changes. Previously, the live view could keep showing an earlier screen until you tapped it.
-
-* Screen changes that happen on their own, such as a running stopwatch, appear in the live view without a tap.
-* *Home*, *Back*, *Power*, and *Recent apps* on the session toolbar show their result in the live view right away.
-* After you tap the live view, it shows the screen the tap led to, not the screen from before the tap.
-
-// Source: KOB-55783 from PR #908
-// https://github.com/kobiton/docs/pull/908
-
-== Accurate no-device messages for sessions started by device tags
-
-When a session request selects devices by tag and no device is available, the reason in the error message is now based only on devices that have the requested tags. Previously, the reason could come from any device that matched the other capabilities, including devices without the requested tags.
-
-* If a device with the requested tags matches the request but is in use, the message states that the matching devices are currently in use.
-* If no device matches the requested tags, the message states `There are no devices that satisfy your filter criteria`. Requests that previously returned a "currently in use" message because of a device without the requested tags now return this message instead.
-
-This applies to Appium sessions that use `kobiton:deviceTags` and to Turbo Test sessions started by device tags. Device selection is unchanged. A session started by device tags runs on the same device as before.
-
-// Source: KOB-55512 from PR #912
-// https://github.com/kobiton/docs/pull/912
-
-- Fixed Xium automation sessions started with Selenium 3 or Selenium 4 Java clients, including Appium Java client 10, receiving error responses without W3C error names. A missing element raised a general `WebDriverException` instead of `NoSuchElementException`, and client logs showed `incorrect JSON status mapping`. These sessions now receive standard W3C WebDriver errors. Sessions that use only `desiredCapabilities` and Basic Appium sessions are unchanged.
 
 // Source: KOB-55959 from PR #909
 // https://github.com/kobiton/docs/pull/909
@@ -222,73 +283,12 @@ Add these settings under `[set]` in the `dc.ini` file on the host machine, then 
 // REVIEWER NOTE (KOB-55959): Confirm the exact name of the admin page that lists dc.ini settings ("System" in the Jira evidence).
 // REVIEWER NOTE (KOB-55959): The full dc.ini reference for these settings belongs in the Admin Docs. Add a link once that page exists.
 
-// Source: KOB-55761 from PR #907
-// https://github.com/kobiton/docs/pull/907
-
-== Kobiton CLI prevents commands from acting on the wrong session
-
-Kobiton CLI commands that pass `-s <SESSION_ID>` with a session token for a different session now fail with an error that identifies the token to pass, instead of acting on the wrong session.
-
-Previously, with more than one CLI session open, a command run with `-s` and no `-a` or `KOBITON_SESSION_TOKEN` used the saved token for the most recently created session. Parts of the command then applied to a different session than the one named, and `kobiton session ping` could keep a different session active than the one named.
-
-- Each open session needs its own session token, passed with `-a <SESSION_TOKEN>` or the `KOBITON_SESSION_TOKEN` environment variable.
-- Help for `-a`, `-s`, `kobiton session create`, and `--hide` now describes this requirement.
-- With a single session open, commands run without `-a` or `-s` work as before.
-- `kobiton session end`, `kobiton session terminate`, `kobiton session show`, and `kobiton session delete`, which require only `-s`, are unchanged.
-
-For details, see xref:kobiton-cli:use-the-cli.adoc#session-context[Use session context consistently].
-
-// Source: KOB-55142 from PR #903
-// https://github.com/kobiton/docs/pull/903
-
-== HarmonyOS devices recognized in the device list
-
-HarmonyOS devices and emulators connected through deviceConnect are now recognized and listed correctly in Kobiton Portal.
-
-* HarmonyOS devices and emulators show *HarmonyOS* as their platform and come online in the device list.
-* The OS version shows the HarmonyOS version reported by the device, such as 6.1.0.117, instead of the device model.
-* Real devices show their marketing name, such as HUAWEI Mate 80, instead of the model code.
-* Ending a session on a HarmonyOS device no longer fails during post-session cleanup.
-
-HarmonyOS devices that were connected before this release are updated the next time they reconnect.
-
-// REVIEWER NOTE (KOB-55142): Confirm this entry should publish now. Broader HarmonyOS device support is still in progress and may be limited to enabled organizations. The OS version and marketing-name fixes also depend on the deviceConnect release installed on the host, so confirm the deviceConnect version to list.
-
-// Source: KOB-53795 from PR #905
-// https://github.com/kobiton/docs/pull/905
-
-== App uploads no longer stay in Parsing
-
-Fixed an issue where uploaded apps could stay in *Parsing* and never finish. Each upload now either finishes parsing or ends in a parsing failure. In the Kobiton API, the app version `state` moves from `PARSING` to `OK` or `FAILURE_PARSING`.
-
-* If the uploaded file can't be read, the app version shows a parsing failure.
-* If parsing can't start after the upload, the app version is marked as a parsing failure.
-* Deleting an app or app version while it waits to be parsed no longer leaves it in *Parsing*.
-* The *Delete* button for an app that stays in *Parsing* now appears after 1 hour instead of 15 minutes.
-
-// REVIEWER NOTE (KOB-53795): Confirm the Portal label of the button that appears for an app stuck in Parsing. The source calls it *Delete*; the Manage apps page documents *Remove App*.
-
 // Source: KOB-56011 from PR #901
 // https://github.com/kobiton/docs/pull/901
 
 == deviceConnect hosts reconnect after restart
 
 Fixed an issue where deviceConnect hosts that restarted after the November 6, 2026 release could not reconnect, leaving their devices offline. Restarted and newly started deviceConnect hosts now connect normally.
-
-// Source: KOB-55961 from PR #902
-// https://github.com/kobiton/docs/pull/902
-
-== Session updates through the Kobiton API take effect immediately
-
-Changes to a session's name, description, or state made with `PUT /v1/sessions/{id}` or `PUT /v2/sessions/{id}` now take effect before the request returns. Previously, the updated values could take 30 seconds or longer to appear.
-
-* *Session details:* After the request returns `200`, retrieving the session returns the new name, description, and state (`PASSED` or `FAILED`) right away.
-* *Session state:* A new `PASSED` or `FAILED` state takes effect immediately once the session has ended.
-* *Session lists, search, and reports:* The new state appears without additional delay.
-
-// REVIEWER NOTE (KOB-55961): The Jira release-note field states that `PUT /v1/sessions/{id}` still accepts a state while the session is running and saves it shortly after, as before, while one test summary in the ticket says a running session now gets `400` on v1. Confirm the v1 behavior before adding a line about running sessions.
-
-// REVIEWER NOTE (KOB-55961): Jira lists fix version 2026.11.06 and states the change works on Cloud and Standalone. Confirm the target release-notes page or pages for this entry.
 
 == Wait For Deployment
 
