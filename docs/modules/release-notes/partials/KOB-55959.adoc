@@ -1,0 +1,15 @@
+// Source: KOB-55959
+
+== Send deviceConnect telemetry to your own OpenTelemetry collector
+
+deviceConnect can now send its OpenTelemetry metrics and traces to an OpenTelemetry collector or observability backend that you choose. Previously, redirecting this data required environment variables on the deviceConnect process, and those settings were lost when deviceConnect was reinstalled.
+
+* Set the destination endpoint, the headers to send with each export (such as an `Authorization` token), and the export protocol (`Grpc` or `HttpProtobuf`) in the `dc.ini` file. The settings take effect after deviceConnect restarts.
+* The settings are kept when deviceConnect is reinstalled.
+* Hosts without these settings export telemetry as before.
+* An endpoint that isn't an HTTP or HTTPS URL, or a header value that isn't in `key=value` format, is logged as an error and ignored. deviceConnect still starts.
+* Each deviceConnect trace span is now exported once. Previously, spans were exported twice, so trace and span counts in your backend decrease after the update.
+
+For setup instructions, see the deviceConnect configuration guides in the Admin Docs.
+
+// REVIEWER NOTE (KOB-55959): The Admin Docs page for these `dc.ini` settings does not exist yet. Confirm the page is published, or remove the Admin Docs sentence, before this entry is released.
