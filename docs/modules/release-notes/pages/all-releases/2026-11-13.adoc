@@ -19,21 +19,6 @@ Installing an iOS app built with an App Store distribution profile no longer ret
 * When the install fails, the error reported by the device is shown instead, such as a code signature verification failure.
 * When *App signing using Kobiton Certificate (iOS)* is turned off, these apps are no longer rejected before installation.
 
-// Source: KOB-55419 from PR #931
-// https://github.com/kobiton/docs/pull/931
-
-=== Install errors in manual sessions
-
-- Fixed an issue where app installation errors in manual sessions hid the error reported by the device. For some iOS and Android errors, Kobiton Portal replaced the device error with its own explanation, which could point to the wrong cause. The error message now shows the device error text after `Failed to install '<app>'.`, for example `ApplicationVerificationFailed`, `INSTALL_FAILED_VERSION_DOWNGRADE`, `INSTALL_FAILED_UPDATE_INCOMPATIBLE`, `INSTALL_FAILED_OLDER_SDK`, or `DeviceOSVersionTooLow`. When an install error includes a Kobiton error code, the code still appears at the start of the message.
-- iOS installs that fail signature verification now show the `ApplicationVerificationFailed` error instead of an AS-500 message stating that *App signing using Kobiton Certificate (iOS)* is disabled. This error means the app's own signature isn't valid on the device, for example, because the provisioning profile doesn't include the device UDID or the profile or certificate has expired.
-
-// REVIEWER NOTE (KOB-55419): Successful installs and app install behavior are unchanged per Jira.
-// REVIEWER NOTE (KOB-55419): QA passed 13 of 14 cases. One case is inconclusive: an unparsable APK
-// showed "App was not installed because failed to parse app." instead of a raw device error.
-// This entry is scoped to the error groups listed in the ticket. Do not broaden it to "all install
-// errors" until engineering confirms that case.
-// REVIEWER NOTE (KOB-55419): Customer-specific context in the ticket is intentionally excluded.
-
 // Source: KOB-56015 from PR #914
 // https://github.com/kobiton/docs/pull/914
 
@@ -165,21 +150,6 @@ Previously, with more than one CLI session open, a command run with `-s` and no 
 - With a single session open, commands run without `-a` or `-s` work as before.
 
 For details, see xref:kobiton-cli:use-the-cli.adoc#session-context[Use session context consistently].
-
-// Source: KOB-55961 from PR #902
-// https://github.com/kobiton/docs/pull/902
-
-== Session updates through the Kobiton API take effect immediately
-
-Changes to a session's name, description, or state made with `PUT /v1/sessions/{id}` or `PUT /v2/sessions/{id}` now take effect before the request returns.
-
-* *Session details:* After the request returns `200`, retrieving the session returns the new name, description, and state (`PASSED` or `FAILED`) right away.
-* *Session state:* A new `PASSED` or `FAILED` state takes effect immediately once the session has ended.
-* *Session lists, search, and reports:* The new state appears without additional delay.
-
-// REVIEWER NOTE (KOB-55961): The Jira release-note field states that `PUT /v1/sessions/{id}` still accepts a state while the session is running and saves it shortly after, as before, while one test summary in the ticket says a running session now gets `400` on v1. Confirm the v1 behavior before adding a line about running sessions.
-
-// REVIEWER NOTE (KOB-55961): Jira lists fix version 2026.11.06 and states the change works on Cloud and Standalone. Confirm the target release-notes page or pages for this entry.
 
 // Source: KOB-55656 from PR #925
 // https://github.com/kobiton/docs/pull/925
