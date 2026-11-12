@@ -14,7 +14,7 @@ Cloud release notes are typically published weekly and summarize changes since t
 
 == Accurate install errors for iOS apps built with an App Store distribution profile
 
-Installing an iOS app built with an App Store distribution profile no longer fails with an incorrect AD-403 error that asks you to re-upload a development build.
+Installing an iOS app built with an App Store distribution profile no longer returns an incorrect AD-403 error asking you to re-upload a development build.
 
 * When the install fails, the error reported by the device is shown instead, such as a code signature verification failure.
 * When *App signing using Kobiton Certificate (iOS)* is turned off, these apps are no longer rejected before installation.
@@ -22,7 +22,7 @@ Installing an iOS app built with an App Store distribution profile no longer fai
 // Source: KOB-55419 from PR #931
 // https://github.com/kobiton/docs/pull/931
 
-=== Manual testing
+=== Install errors in manual sessions
 
 - Fixed an issue where app installation errors in manual sessions hid the error reported by the device. For some iOS and Android errors, Kobiton Portal replaced the device error with its own explanation, which could point to the wrong cause. The error message now shows the device error text after `Failed to install '<app>'.`, for example `ApplicationVerificationFailed`, `INSTALL_FAILED_VERSION_DOWNGRADE`, `INSTALL_FAILED_UPDATE_INCOMPATIBLE`, `INSTALL_FAILED_OLDER_SDK`, or `DeviceOSVersionTooLow`. When an install error includes a Kobiton error code, the code still appears at the start of the message.
 - iOS installs that fail signature verification now show the `ApplicationVerificationFailed` error instead of an AS-500 message stating that *App signing using Kobiton Certificate (iOS)* is disabled. This error means the app's own signature isn't valid on the device, for example, because the provisioning profile doesn't include the device UDID or the profile or certificate has expired.
@@ -84,7 +84,7 @@ For details and limitations, see xref:automation-testing:scripting/obfuscate-pri
 
 == Session Explorer keeps steps after private mode ends
 
-In Xium and Appium automation sessions that use `kobiton:privateMode`, Session Explorer now keeps the step that turns private mode off and every step after it. Previously, if a script ran commands while private mode was on, turned private mode off, and then ended the session within about 5 seconds, those steps were missing from Session Explorer.
+In Xium and Appium automation sessions that use `kobiton:privateMode`, Session Explorer now keeps the step that turns private mode off and every step after it, even when the session ends soon after private mode is turned off. Previously, those steps could be missing from Session Explorer.
 
 Sessions that don't turn on private mode are unchanged.
 
@@ -137,44 +137,17 @@ See xref:reporting:individual-sessions-report.adoc[].
 
 // REVIEWER NOTE (KOB-56002): Confirm the Analytics Reports navigation path and the CSV export behavior for result sets over 100,000 rows.
 
-// Source: KOB-55149 from PR #916
-// https://github.com/kobiton/docs/pull/916
-
-== HarmonyOS devices in the device list
-
-The device list now recognizes HarmonyOS devices alongside iOS and Android devices.
-
-- HarmonyOS devices display a HarmonyOS icon in List View and the *Remove unused devices* window.
-- Device cards show the platform and OS version, such as `HarmonyOS 6.0.0`.
-- A *HarmonyOS* platform filter shows only HarmonyOS devices and displays the number of HarmonyOS devices. The filter appears only when your organization has at least one HarmonyOS device.
-
-// Source: KOB-55142 from PR #903
-// https://github.com/kobiton/docs/pull/903
-
-== HarmonyOS devices recognized in the device list
-
-HarmonyOS devices and emulators connected through deviceConnect are now recognized and listed correctly in Kobiton Portal.
-
-* HarmonyOS devices and emulators show *HarmonyOS* as their platform and come online in the device list.
-* The OS version shows the HarmonyOS version reported by the device, such as 6.1.0.117, instead of the device model.
-* Real devices show their marketing name, such as HUAWEI Mate 80, instead of the model code.
-* Ending a session on a HarmonyOS device no longer fails during post-session cleanup.
-
-HarmonyOS devices that were connected before this release are updated the next time they reconnect.
-
-// REVIEWER NOTE (KOB-55142): Confirm this entry should publish now. Broader HarmonyOS device support is still in progress and may be limited to enabled organizations. The OS version and marketing-name fixes also depend on the deviceConnect release installed on the host, so confirm the deviceConnect version to list.
-
 // Source: KOB-53795 from PR #905
 // https://github.com/kobiton/docs/pull/905
 
-== App uploads no longer stay in Parsing
+== App upload parsing reaches a final state
 
-Fixed an issue where uploaded apps could stay in *Parsing* and never finish. Each upload now either finishes parsing or ends in a parsing failure. In the Kobiton API, the app version `state` moves from `PARSING` to `OK` or `FAILURE_PARSING`.
+Each app upload now finishes parsing or ends in a parsing failure. In the Kobiton API, the app version `state` moves from `PARSING` to `OK` or `FAILURE_PARSING`.
 
 * If the uploaded file can't be read, the app version shows a parsing failure.
 * If parsing can't start after the upload, the app version is marked as a parsing failure.
-* Deleting an app or app version while it waits to be parsed no longer leaves it in *Parsing*.
-* The *Delete* button for an app that stays in *Parsing* now appears after 1 hour instead of 15 minutes.
+* An app or app version that is waiting to be parsed can be deleted from the Portal.
+* The *Delete* button for an app in *Parsing* now appears after 1 hour instead of 15 minutes.
 
 // REVIEWER NOTE (KOB-53795): Confirm the Portal label of the button that appears for an app stuck in Parsing. The source calls it *Delete*; the Manage apps page documents *Remove App*.
 
@@ -190,7 +163,6 @@ Previously, with more than one CLI session open, a command run with `-s` and no 
 - Each open session needs its own session token, passed with `-a <SESSION_TOKEN>` or the `KOBITON_SESSION_TOKEN` environment variable.
 - Help for `-a`, `-s`, `kobiton session create`, and `--hide` now describes this requirement.
 - With a single session open, commands run without `-a` or `-s` work as before.
-- `kobiton session end`, `kobiton session terminate`, `kobiton session show`, and `kobiton session delete`, which require only `-s`, are unchanged.
 
 For details, see xref:kobiton-cli:use-the-cli.adoc#session-context[Use session context consistently].
 
@@ -199,7 +171,7 @@ For details, see xref:kobiton-cli:use-the-cli.adoc#session-context[Use session c
 
 == Session updates through the Kobiton API take effect immediately
 
-Changes to a session's name, description, or state made with `PUT /v1/sessions/{id}` or `PUT /v2/sessions/{id}` now take effect before the request returns. Previously, the updated values could take 30 seconds or longer to appear.
+Changes to a session's name, description, or state made with `PUT /v1/sessions/{id}` or `PUT /v2/sessions/{id}` now take effect before the request returns.
 
 * *Session details:* After the request returns `200`, retrieving the session returns the new name, description, and state (`PASSED` or `FAILED`) right away.
 * *Session state:* A new `PASSED` or `FAILED` state takes effect immediately once the session has ended.
@@ -257,82 +229,12 @@ Fixed an issue where the device list in deviceConnect Console stopped loading, a
 
 // REVIEWER NOTE (KOB-56018): The ticket's impact analysis states that re-signing customer apps can use a profile from a different team. The recorded test results cover the deviceConnect agent apps only. Confirm the second bullet before publication.
 
-// Source: KOB-55959 from PR #909
-// https://github.com/kobiton/docs/pull/909
-
-== Send deviceConnect telemetry to your own OpenTelemetry collector
-
-deviceConnect can now export its metrics and traces to an OpenTelemetry collector or observability backend that you choose. Set the export destination in the `dc.ini` file, and the setting is kept when deviceConnect is reinstalled or upgraded.
-
-=== Configure the export destination
-
-Add these settings under `[set]` in the `dc.ini` file on the host machine, then xref:device-lab-management:deviceConnect/restart-deviceconnect-services.adoc[restart deviceConnect services]:
-
-* `TelemetryModule.OtlpEndpoint`: The `http` or `https` URL of the collector or backend.
-* `TelemetryModule.OtlpHeaders`: Headers to send with each export, such as an authorization token, as comma-separated `key=value` pairs.
-* `TelemetryModule.OtlpProtocol`: `Grpc` (default) or `HttpProtobuf`. With `HttpProtobuf`, metrics are sent to `<endpoint>/v1/metrics` and traces to `<endpoint>/v1/traces`.
-
-=== Considerations
-
-* *Default behavior:* When these settings are not set, telemetry is exported as before.
-* *Invalid values:* An invalid endpoint or header value is ignored and recorded as an error in the deviceConnect log. deviceConnect still starts.
-* *Header visibility:* The `TelemetryModule.OtlpHeaders` value, including any token it contains, is shown on the admin *System* page with other `dc.ini` settings.
-* *Span counts:* Each trace span is now exported once instead of twice, so span counts in your backend are lower than before.
-
-// REVIEWER NOTE (KOB-55959): QA found that an invalid TelemetryModule.OtlpProtocol value falls back to Grpc without a log message, unlike the endpoint and header settings. The draft does not claim protocol errors are logged. Confirm whether this is intended before publishing.
-// REVIEWER NOTE (KOB-55959): Confirm the exact name of the admin page that lists dc.ini settings ("System" in the Jira evidence).
-// REVIEWER NOTE (KOB-55959): The full dc.ini reference for these settings belongs in the Admin Docs. Add a link once that page exists.
-
 // Source: KOB-56011 from PR #901
 // https://github.com/kobiton/docs/pull/901
 
 == deviceConnect hosts reconnect after restart
 
 Fixed an issue where deviceConnect hosts that restarted after the November 6, 2026 release could not reconnect, leaving their devices offline. Restarted and newly started deviceConnect hosts now connect normally.
-
-== Wait For Deployment
-
-// Source: KOB-55728 from PR #929
-// https://github.com/kobiton/docs/pull/929
-
-=== Network Payload Capture options hidden for iOS Simulators
-
-Network Payload Capture is not supported on iOS Simulators, so its configuration options no longer appear for iOS Simulators in *Devices*.
-
-* The device details for an iOS Simulator no longer show the *Configuration* toggle and dropdown.
-* In Card view and List view, the dropdown next to *Launch* no longer includes *Use custom configuration* for iOS Simulators. If *Use custom configuration* was the only option, only the *Launch* button appears.
-* Launching an iOS Simulator from *Devices* never turns on Network Payload Capture, even if a configuration was selected earlier for another device.
-
-Real iOS devices, Android devices, and Android emulators are unchanged.
-
-For details, see xref:manual-testing:local-devices/capture-network-payload-data.adoc#_limitations[Network Payload Capture limitations].
-
-// REVIEWER NOTE (KOB-55728): Jira calls the device details window the "Device modal" and the
-// control the "Configuration toggle and dropdown". The test notes call it the "Use Configuration"
-// row. Confirm the exact UI labels before publication.
-//
-// REVIEWER NOTE (KOB-55728): Jira has no fix version or release label. Current-release signals
-// are the Wait For Deployment status, the populated release-note field, and the Release Email
-// channel selection. Confirm the target weekly release page.
-//
-// REVIEWER NOTE (KOB-55728): An unnamed Jira custom field on the ticket is set to "Internal".
-// The evidence package does not resolve the field name. Confirm that this value does not
-// exclude the change from public release notes.
-
-// Source: KOB-55401 from PR #927
-// https://github.com/kobiton/docs/pull/927
-
-=== Readable device details for iOS Simulator sessions
-
-In the session *Overview* for an iOS Simulator session, a long *Model Name* value, such as `com.apple.CoreSimulator.SimDeviceType.iPhone-16`, now wraps within its own column in the *Virtual Device Info* card. Previously, the value ran into the *UDID* column, and the two values overlapped and couldn't be read.
-
-The *UDID* hover tooltip and copy behavior are unchanged.
-
-// Source: KOB-52208 from PR #915
-// https://github.com/kobiton/docs/pull/915
-
-* Fixed an issue where `kobiton:stopAudioInjection` was ignored if the audio file was still downloading. The download now stops, and the audio is not played.
-// REVIEWER NOTE (KOB-52208): The fix requires updated deviceConnect and Bluetooth bridge builds. Confirm whether the entry should state a minimum version or note that both components must be updated.
 
 == Component versions
 
