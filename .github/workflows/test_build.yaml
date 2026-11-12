@@ -17,7 +17,7 @@ permissions:
 jobs:
   test-build:
     name: Test Build
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4
       - name: ssh-agent setup
@@ -34,7 +34,7 @@ jobs:
           args: build
 
   publish-docs-test:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4
       - name: "Docs publish"
