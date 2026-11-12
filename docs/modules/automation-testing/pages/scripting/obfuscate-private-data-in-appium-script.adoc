@@ -1,43 +1,62 @@
 = Obfuscate private data in Appium script
 :navtitle: Obfuscate private data in Appium script
 
-Learn how to obfuscate (hide) private data in an Appium test script in the *View HTTP Headers* and *Appium Inspector* section of Session Explorer.
+// Source: KOB-55750
 
-== Data obfuscation Appium setting
+Use `kobiton:privateMode` to keep private data, such as passwords and payment details, out of the session record of a Xium or Appium 2 Basic automation session. While private mode is on, data from that part of the session is not recorded.
 
-We introduced a new custom setting to start and stop obfuscation for private data in an Appium sesssion:
+== Private mode setting
 
 [options="header"]
 |=======================
-|Appium setting | Description | Default value
-| `kobiton:privateMode` | Set to `true` to start obfuscating data, or to `false` to stop obfuscating | `false`
+|Name | Description | Default value
+| `kobiton:privateMode` | Set to `true` to turn on private mode, or to `false` to turn it off. Use it as a capability to turn on private mode when the session starts, or as an Appium setting to turn private mode on and off during the session. | `false`
 |=======================
 
-== Start data obfuscation
+Sessions that do not turn on private mode are recorded as usual.
 
-Before starting a test action that involves private data, such as passing account password, use the `Update Settings` Appium command to set `'kobiton:privateMode'` to `true`.
+== Turn on private mode when the session starts
+
+To keep the beginning of a session private, set the `kobiton:privateMode` capability to `true`.
+
+.Example (JavaScript)
+[source,javascript]
+----
+const desiredCaps = {
+  // other capabilities
+  'kobiton:privateMode': true,
+}
+----
+
+// REVIEWER NOTE (KOB-55750): Testing found inconsistent results when kobiton:privateMode is sent only in W3C firstMatch (tracked separately as a known issue). Confirm whether to document a supported capability placement before publishing.
+
+== Turn on private mode during the session
+
+Before a test action that involves private data, such as entering an account password, use the `Update Settings` Appium command to set `kobiton:privateMode` to `true`.
 
 .Example (JavaScript)
 [source,javascript]
 
 await driver.updateSettings({'kobiton:privateMode': true})
 
-As long as the setting is `true`, the data provided is marked for obfuscation.
+Private mode stays on until the script turns it off or the session ends.
 
-== Stop data obfuscation
+== Turn off private mode
 
-When test steps no longer involve private data, use the `Update Settings` Appium command to set `'kobiton:privateMode'` back to `false`.
+When test steps no longer involve private data, use the `Update Settings` Appium command to set `kobiton:privateMode` to `false`.
+
+Before turning off private mode, leave or clear any screen that still shows private data. The first step after private mode is turned off captures the current screen.
 
 .Example (JavaScript)
 [source,javascript]
 
 await driver.updateSettings({'kobiton:privateMode': false})
 
-After this command, the data is no longer obfuscated.
+After this command, session data is recorded again. You can turn private mode on and off as many times as needed in one session.
 
 == Examples
 
-Below is a complete example of JavaScript code using `wd` that demonstrates a simple login on a website, with the username and password obfuscated during the process.
+The following JavaScript example uses `wd` to log in to a website, with private mode on while the username and password are entered.
 
 .Example (JavaScript)
 [source,javascript]
@@ -106,7 +125,7 @@ describe('Android Web sample', () => {
   it('should perform a simple login', async () => {
     await driver.settings()
 
-    // Start obfuscating data before passing username and password.
+    // Turn on private mode before passing username and password.
     await driver.updateSettings({'kobiton:privateMode': true})
     await driver.settings()
 
@@ -120,7 +139,7 @@ describe('Android Web sample', () => {
      .sleep(3000)
      .keys(wd.SPECIAL_KEYS.Enter)
 
-    // Login completes. Stop obfuscating data.
+    // Login completes. Turn off private mode.
     await driver.updateSettings({'kobiton:privateMode': false})
     await driver.settings()
 
@@ -145,22 +164,42 @@ describe('Android Web sample', () => {
 
 ----
 
-== Obfuscated private data in Session Explorer
+== Session data while private mode is on
 
-When an Appium script with data obfuscation finishes running, the private data is obfuscated in the Session Explorer page in these places:
+While private mode is on, the following data is not recorded for that part of the session, even if other capabilities or settings request it:
 
-* View HTTP Headers
+* Commands. Commands run while private mode is on do not appear in *Session Explorer*. The commands that turn private mode on and off are kept.
+* Session video. The video skips the private part of the session.
+* Screenshots and view trees (XML).
+* WebDriver request and response bodies.
+* Appium and Xium logs.
+* Device logs.
+* System metrics.
+* Network capture.
 
-image:session-explorer-obfuscate-private-data-http-headers.png[width=500,alt="The obfuscated data in the View HTTP Headers section"]
+Accessibility and performance analysis does not run on the private part of the session.
 
-* Appium Inspector
+// REVIEWER NOTE (KOB-55750): The Jira release-note field says step screenshots are black and command bodies show an obfuscated message during private mode. Later verification and the updated acceptance criteria say commands run while private mode is on are hidden. This draft follows the verified behavior. Confirm before publishing. The Session Explorer screenshots previously on this page showed obfuscated HTTP headers and Appium Inspector data and were removed because they no longer match; confirm whether replacement images are needed.
 
-image:session-explorer-obfuscate-private-data-inspector.png[width=500,alt="The obfuscated data in the Appium Inspector section"]
+// REVIEWER NOTE (KOB-55750): Accessibility and performance analysis behavior during private mode is stated in the acceptance criteria but could not be verified in testing. Confirm before publishing.
 
-== Limitations/Notes
+The following continue to work while private mode is on:
+
+* The script receives errors as usual.
+* Crash logs are collected for troubleshooting.
+* The script receives real screenshots and page source from its own commands.
+* The live view of the session shows the device screen.
+
+== Limitations
 
 * Only supported in Xium and Appium 2 Basic automation sessions.
+* Crash logs are kept while private mode is on and can contain app data.
+* When private mode is turned on by the capability, the device log can contain about 1 to 4 seconds of lines from the start of the session before private mode applies.
+* On iOS Safari, the first request after private mode is turned off can include the URL of the private page in its `Referer` header. This URL appears in the network capture.
+* Text that is still on screen when private mode is turned off is captured by the first step after it is turned off.
+* If the session ends within about 5 seconds after private mode is turned off, the command that turns it off and later steps might not be recorded. Keep the session running for at least 10 seconds after turning off private mode.
+* Automation sessions that use private mode are not marked as sensitive sessions and can be accessed by admins or other team members.
 
-* Unlike Manual sessions with sensitive data, Automation sessions with obfuscated data are not marked as sensitive sessions and can be accessed by admins or other team members.
+// REVIEWER NOTE (KOB-55750): The limitation about sessions ending within about 5 seconds after private mode is turned off was tracked as a separate follow-up fix. Confirm whether it still applies in this release before publishing. The 10-second guidance comes from testing, where every case passed with 10 seconds between turning off private mode and ending the session.
 
-* Although the private data is obfuscated in _View HTTP Headers_ and _Appium Inspector_, it may not be obfuscated in session video, screenshots, and logs.
+// REVIEWER NOTE (KOB-55750): Two behaviors are pending a product decision and are not documented here: whether manual recording resumes when a script ends with private mode on in a manual session, and how Convert to Test Case handles sessions with private steps (private steps are currently dropped).
