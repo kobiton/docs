@@ -6,13 +6,15 @@ Commands that operate on an active CLI session require session context.
 
 The CLI determines the session context using one of the following methods:
 
-* Use the session token stored in `~/.token/.session` (default). This file is automatically created or updated when you run `kobiton session create`, and commands will use the token for the *most recently created session*.
+* Use the session token stored in `~/.kobiton/.session` (default). This file is automatically created or updated when you run `kobiton session create`, and commands will use the token for the *most recently created session*.
 * Pass the session token with the command: `--session-token <SESSION_TOKEN>` (or `-a <SESSION_TOKEN>`)
 * Set the `KOBITON_SESSION_TOKEN` environment variable
 
 The `<SESSION_TOKEN>` value is returned when you create a CLI session. For details, see xref:use-the-cli.adoc[Start using Kobiton CLI].
 
-Relying on the default `~/.token/.session` file is convenient for single-user workflows but is not recommended for environments with concurrent or parallel executions, because it is overwritten each time a new CLI session is created.
+Relying on the default `~/.kobiton/.session` file is convenient for single-user workflows but is not recommended for environments with concurrent or parallel executions, because it is overwritten each time a new CLI session is created.
+
+Each open session needs its own session token. When more than one session is open, pass the token for the session you want with `-a` or `KOBITON_SESSION_TOKEN`. If `-s` names a different session from the one the session token belongs to, the command stops with an error that identifies the token to pass, instead of acting on the wrong session.
 
 == Synopsis
 
@@ -41,7 +43,7 @@ These options are accepted by every command and subcommand.
 | `-a`, `--session-token` | `<SESSION_TOKEN>` | Authorization token returned by `session create`.
 | `-u`, `--udid` | `<UDID>` | UDID of the device to use.
 | `-p`, `--portal` | `<PORTAL>` | Portal base address (Kobiton API/portal endpoint).
-| `-s`, `--session-id` | `<SESSION_ID>` | Kobiton session ID returned by `session create`.
+| `-s`, `--session-id` | `<SESSION_ID>` | Kobiton session ID returned by `session create`. For commands that also use a session token, the session ID must match the session the token belongs to.
 | `-l`, `--log-level` | `<LOG_LEVEL>` | Log verbosity: `error`, `warn`, `info`, `debug`, `trace`. Default: `info`.
 | `-h`, `--help` | | Print help for the command or subcommand.
 | `-V`, `--version` | | Print version (top-level command only).
@@ -1189,6 +1191,10 @@ Accepts all <<global-options,global options>>.
 *Requires:*
 
 * *both* `-s <SESSION_ID>` and `KOBITON_SESSION_TOKEN` environment variable (or `-a <SESSION_TOKEN>`)
+
+The session token must belong to the session named with `-s`. If it belongs to a different session, the command fails and the session is not pinged.
+
+// REVIEWER NOTE (KOB-55761): Jira test results show `kobiton session ping` with no `-a` or `-s` pinging the session in the saved token, which suggests `-s` defaults to the token's session. Confirm whether `-s` is still required before updating the *Requires* list.
 
 .Example
 [source,shell]
