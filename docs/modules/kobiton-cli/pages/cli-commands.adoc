@@ -485,7 +485,7 @@ Pushed 505031 bytes to /data/local/tmp/foo.dat
 ====
 *A refused push fails with a non-zero exit code.*
 
-A device can refuse the destination path. Public cloud and trial devices run a restricted session that limits writes to the permitted directories, and any device refuses a write to a path it does not permit. When a push is refused, nothing is written to the device. See <<adb-shell-restricted-sessions,restricted sessions>>.
+A push is refused when the destination path isn't writable on the device. When a push is refused, nothing is written to the device.
 
 A refused push reports the reason and exits with a non-zero status. A successful push is unaffected and exits `0`.
 
@@ -682,17 +682,9 @@ Accepts all <<global-options,global options>>.
 ====
 *Public cloud and trial devices run a restricted shell.*
 
-Commands are checked against a deny-by-default whitelist before they reach the device, and the interactive shell is unavailable, so every invocation must name a command to run. Private cloud and Standalone deployments with dedicated devices are not restricted.
+The interactive shell is unavailable, so every invocation must name a command to run. Some dangerous operations are also restricted. Private cloud and Standalone deployments with dedicated devices are not restricted.
 
-A restricted session rejects control characters and these shell metacharacters anywhere in the input:
-
-----
-& ; | $ ` ( ) > < \ " ' * ? ~ { } # !
-----
-
-Pipes, redirection, command and variable substitution, backgrounding, globbing, and quoting are therefore unavailable on the device. Arguments cannot contain whitespace, and a command line cannot exceed 1024 characters. Individual commands further restrict which arguments and file paths they accept, so a whitelisted command can still reject an argument.
-
-Run `kobiton device shell --help` for the current list of allowed commands, permitted directories, and per-command restrictions.
+When a command is rejected, the CLI prints the reason to stderr and exits with a non-zero status.
 ====
 
 .Example
@@ -707,10 +699,17 @@ kobiton device shell -- logcat -d -t 200
 
 Both examples run on a restricted session.
 
-To list files on a device, use <<file-list,`kobiton file list`>>. A restricted session confines `shell ls` to the permitted directories, so `ls -l /sdcard` is rejected while `ls -l /sdcard/Download/` is accepted.
+To list files on a device, use <<file-list,`kobiton file list`>>.
 
 .Filter command output
-A restricted session rejects the pipe character, so filter locally and send only the command to the device:
+Quote the whole expression to run the filter on the device, so less output crosses the network:
+
+[source,shell]
+----
+kobiton device shell "dumpsys window displays | grep -E 'mCurrentFocus|mFocusedApp'"
+----
+
+To filter locally instead, don't quote the expression. The full command output then crosses the network:
 
 [source,shell]
 ----
@@ -721,13 +720,6 @@ kobiton device shell dumpsys window displays | grep -E 'mCurrentFocus|mFocusedAp
 ----
 mCurrentFocus=Window{272f9b1 u0 com.example.app/MainActivity}
 mFocusedApp=ActivityRecord{3d12396 u0 com.example.app/.MainActivity t2823}
-----
-
-On a dedicated device, quote the whole expression instead. The pipe then runs on the device, so less output crosses the network:
-
-[source,shell]
-----
-kobiton device shell "dumpsys window displays | grep -E 'mCurrentFocus|mFocusedApp'"
 ----
 
 === `device forward`
