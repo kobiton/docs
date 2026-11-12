@@ -34,33 +34,6 @@ Installing an iOS app built with an App Store distribution profile no longer fai
 // errors" until engineering confirms that case.
 // REVIEWER NOTE (KOB-55419): Customer-specific context in the ticket is intentionally excluded.
 
-// Source: KOB-55728 from PR #929
-// https://github.com/kobiton/docs/pull/929
-
-== Network Payload Capture options hidden for iOS Simulators
-
-Network Payload Capture is not supported on iOS Simulators, so its configuration options no longer appear for iOS Simulators in *Devices*.
-
-* The device details for an iOS Simulator no longer show the *Configuration* toggle and dropdown.
-* In Card view and List view, the dropdown next to *Launch* no longer includes *Use custom configuration* for iOS Simulators. If *Use custom configuration* was the only option, only the *Launch* button appears.
-* Launching an iOS Simulator from *Devices* never turns on Network Payload Capture, even if a configuration was selected earlier for another device.
-
-Real iOS devices, Android devices, and Android emulators are unchanged.
-
-For details, see xref:manual-testing:local-devices/capture-network-payload-data.adoc#_limitations[Network Payload Capture limitations].
-
-// REVIEWER NOTE (KOB-55728): Jira calls the device details window the "Device modal" and the
-// control the "Configuration toggle and dropdown". The test notes call it the "Use Configuration"
-// row. Confirm the exact UI labels before publication.
-//
-// REVIEWER NOTE (KOB-55728): Jira has no fix version or release label. Current-release signals
-// are the Wait For Deployment status, the populated release-note field, and the Release Email
-// channel selection. Confirm the target weekly release page.
-//
-// REVIEWER NOTE (KOB-55728): An unnamed Jira custom field on the ticket is set to "Internal".
-// The evidence package does not resolve the field name. Confirm that this value does not
-// exclude the change from public release notes.
-
 // Source: KOB-56321 from PR #928
 // https://github.com/kobiton/docs/pull/928
 
@@ -75,15 +48,6 @@ Fixed an issue on some iOS 15 devices where reading the device screen could fail
 Screen reads on other iOS versions are unchanged.
 
 // REVIEWER NOTE (KOB-56321): QA could not reproduce the original failure on four iOS 15 devices (15.4, 15.4.1, 15.5) before the fix; the fix build passed regression on iOS 15 through 27. Confirm the issue was customer-observable before publishing this entry.
-
-// Source: KOB-55401 from PR #927
-// https://github.com/kobiton/docs/pull/927
-
-== Readable device details for iOS Simulator sessions
-
-In the session *Overview* for an iOS Simulator session, a long *Model Name* value, such as `com.apple.CoreSimulator.SimDeviceType.iPhone-16`, now wraps within its own column in the *Virtual Device Info* card. Previously, the value ran into the *UDID* column, and the two values overlapped and couldn't be read.
-
-The *UDID* hover tooltip and copy behavior are unchanged.
 
 // Source: KOB-55810 from PR #926
 // https://github.com/kobiton/docs/pull/926
@@ -203,12 +167,6 @@ The device list now recognizes HarmonyOS devices alongside iOS and Android devic
 - HarmonyOS devices display a HarmonyOS icon in List View and the *Remove unused devices* window.
 - Device cards show the platform and OS version, such as `HarmonyOS 6.0.0`.
 - A *HarmonyOS* platform filter shows only HarmonyOS devices and displays the number of HarmonyOS devices. The filter appears only when your organization has at least one HarmonyOS device.
-
-// Source: KOB-52208 from PR #915
-// https://github.com/kobiton/docs/pull/915
-
-* Fixed an issue where `kobiton:stopAudioInjection` was ignored if the audio file was still downloading. The download now stops, and the audio is not played.
-// REVIEWER NOTE (KOB-52208): The fix requires updated deviceConnect and Bluetooth bridge builds. Confirm whether the entry should state a minimum version or note that both components must be updated.
 
 // Source: KOB-56015 from PR #914
 // https://github.com/kobiton/docs/pull/914
@@ -332,6 +290,51 @@ Changes to a session's name, description, or state made with `PUT /v1/sessions/{
 
 // REVIEWER NOTE (KOB-55961): Jira lists fix version 2026.11.06 and states the change works on Cloud and Standalone. Confirm the target release-notes page or pages for this entry.
 
+== Wait For Deployment
+
+// Source: KOB-55728 from PR #929
+// https://github.com/kobiton/docs/pull/929
+
+=== Network Payload Capture options hidden for iOS Simulators
+
+Network Payload Capture is not supported on iOS Simulators, so its configuration options no longer appear for iOS Simulators in *Devices*.
+
+* The device details for an iOS Simulator no longer show the *Configuration* toggle and dropdown.
+* In Card view and List view, the dropdown next to *Launch* no longer includes *Use custom configuration* for iOS Simulators. If *Use custom configuration* was the only option, only the *Launch* button appears.
+* Launching an iOS Simulator from *Devices* never turns on Network Payload Capture, even if a configuration was selected earlier for another device.
+
+Real iOS devices, Android devices, and Android emulators are unchanged.
+
+For details, see xref:manual-testing:local-devices/capture-network-payload-data.adoc#_limitations[Network Payload Capture limitations].
+
+// REVIEWER NOTE (KOB-55728): Jira calls the device details window the "Device modal" and the
+// control the "Configuration toggle and dropdown". The test notes call it the "Use Configuration"
+// row. Confirm the exact UI labels before publication.
+//
+// REVIEWER NOTE (KOB-55728): Jira has no fix version or release label. Current-release signals
+// are the Wait For Deployment status, the populated release-note field, and the Release Email
+// channel selection. Confirm the target weekly release page.
+//
+// REVIEWER NOTE (KOB-55728): An unnamed Jira custom field on the ticket is set to "Internal".
+// The evidence package does not resolve the field name. Confirm that this value does not
+// exclude the change from public release notes.
+
+// Source: KOB-55401 from PR #927
+// https://github.com/kobiton/docs/pull/927
+
+=== Readable device details for iOS Simulator sessions
+
+In the session *Overview* for an iOS Simulator session, a long *Model Name* value, such as `com.apple.CoreSimulator.SimDeviceType.iPhone-16`, now wraps within its own column in the *Virtual Device Info* card. Previously, the value ran into the *UDID* column, and the two values overlapped and couldn't be read.
+
+The *UDID* hover tooltip and copy behavior are unchanged.
+
+// Source: KOB-52208 from PR #915
+// https://github.com/kobiton/docs/pull/915
+
+* Fixed an issue where `kobiton:stopAudioInjection` was ignored if the audio file was still downloading. The download now stops, and the audio is not played.
+// REVIEWER NOTE (KOB-52208): The fix requires updated deviceConnect and Bluetooth bridge builds. Confirm whether the entry should state a minimum version or note that both components must be updated.
+
 == Component versions
 
-// Editor review required: component versions not yet verified.
+* deviceConnect 2611.12
+* Kobiton CLI 2611.9
