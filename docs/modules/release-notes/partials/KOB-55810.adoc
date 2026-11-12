@@ -1,0 +1,11 @@
+// Source: KOB-55810
+
+== Tap and type into hidden fields in iOS Xium sessions
+
+In iOS Xium sessions, tap, clear, and `sendKeys` commands now work on elements that iOS can't scroll into view on its own. This applies to a field covered by the keyboard, such as a PIN or password field on an iPad in landscape, in an app form that uses its own scrolling. Previously, these commands failed with a `kAXErrorCannotComplete` error.
+
+* When iOS can't scroll an element into view, the element's scrollable container is dragged until the element is reachable, and then the command runs.
+* If the element is still not reachable after three drag attempts, the command returns the original error.
+* Elements that are already visible, or that iOS can scroll into view, are not affected.
+
+// REVIEWER NOTE (KOB-55810): Confirm whether this fix also applies to basic Appium 2 sessions on iOS, or only to Xium sessions.
