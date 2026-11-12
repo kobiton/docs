@@ -1,0 +1,13 @@
+// Source: KOB-56321
+
+== iOS device stability
+
+- On some iOS 15 devices, reading the device screen could crash the on-device agent and force it to restart. This affected view trees captured during manual sessions, *Inspector* view tree reads, element searches, and network payload capture setup. Screen reads now complete without crashing the agent. Behavior on iOS 16 and later is unchanged.
+
+// REVIEWER NOTE (KOB-56321): The crash was reported on iOS 15.4.1. QA could not reproduce it on
+// four iOS 15 devices running builds without the fix, so the note says "some iOS 15 devices".
+// Regression on the fix build passed from iOS 15 through iOS 27.
+//
+// REVIEWER NOTE (KOB-56321): The fix ships in deviceConnect. The release comment lists a
+// deviceConnect build as a bulk update and notes that not every build applies to every ticket.
+// Confirm the deviceConnect version before naming it in the published notes.
