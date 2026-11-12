@@ -1,0 +1,8 @@
+// Source: KOB-55365
+
+== Accurate install errors for iOS apps built with an App Store distribution profile
+
+Installing an iOS app built with an App Store distribution profile no longer fails with an incorrect AD-403 error that asks you to re-upload a development build.
+
+* When the install fails, the error reported by the device is shown instead, such as a code signature verification failure.
+* When *App signing using Kobiton Certificate (iOS)* is turned off, these apps are no longer rejected before installation.
