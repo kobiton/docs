@@ -1,0 +1,27 @@
+// Source: KOB-55656
+
+== deviceConnect console: Kobiton and gigacap connection status
+
+- Added a connection status strip to the deviceConnect console header, next to the user menu. A dot and label for *Kobiton* and *gigacap* show whether the host machine is connected to each service. Hover over a service to see its state and the reason for it.
+- Each service shows one of these states: *Online*, *Offline*, *Error*, or *Not Configured*. *Kobiton* shows *Error* when the tenant credentials configured for the host are rejected, for example a wrong API key or a key that belongs to another account. A service shows *Not Configured* when the host is not set up to use it.
+- The status updates automatically when a connection changes. A page reload is not required.
+- While the console cannot reach deviceConnect, for example during a service restart, the dots turn gray. They return to the current state when deviceConnect is available again.
+- In browser windows narrower than 1200 pixels, only the dots are shown.
+
+// REVIEWER NOTE (KOB-55656): The release comment lists deviceConnect build 2611.120713.0 as
+// part of a bulk update and states that not all builds may apply to this ticket. Jira has no
+// fix version. Confirm the target release page (release label 2611.12) and whether the change
+// applies to Cloud, Hybrid, and Standalone/On-Prem deployments.
+//
+// REVIEWER NOTE (KOB-55656): An unnamed Jira custom field on the ticket is set to "Internal".
+// The evidence package does not resolve the field name. The release-docs field requests a
+// customer-facing release email entry. Confirm that "Internal" does not exclude this change
+// from public release notes.
+//
+// REVIEWER NOTE (KOB-55656): The status strip is shown to console users with System
+// Configuration access. Per the ticket, every console login currently has that access, so no
+// visibility condition is stated above. Confirm before publication.
+//
+// REVIEWER NOTE (KOB-55656): The deviceConnect console is an admin-docs surface. No existing
+// page in this repository documents the console, so no product-doc page was changed. Confirm
+// whether an admin-docs page should describe the status strip and its states.
