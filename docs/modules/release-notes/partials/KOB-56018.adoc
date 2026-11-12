@@ -1,0 +1,9 @@
+// Source: KOB-56018
+// REVIEWER NOTE (KOB-56018): The fix is in deviceConnect, and the reported case is a standalone deployment. Confirm whether this entry belongs in Standalone release notes, Cloud release notes, or both.
+// REVIEWER NOTE (KOB-56018): The affected host was recovered by a manual cleanup before the fix shipped. Confirm whether hosts that already show this issue need any action after the update, or whether the update alone restores the device list.
+=== deviceConnect
+
+* Fixed an issue where the device list in deviceConnect Console could stop loading. The issue occurred when an iOS device repeatedly failed to start and a newer provisioning profile from a different Apple Developer team was installed. Each retry re-signed the agent apps again instead of reusing the existing signed copy, which slowed the device list and API requests until they stalled. deviceConnect now reuses the signed copy unless a newer provisioning profile is available.
+* Improved provisioning profile selection when re-signing iOS apps. deviceConnect can now re-sign an app with a newer provisioning profile from a different Apple Developer team than the one the app was last signed with. Provisioning profiles that lack a capability the app requires are still not used.
+
+// REVIEWER NOTE (KOB-56018): Re-signing a customer app with a provisioning profile from a different Apple Developer team was not verified with a real second-team profile during testing. Confirm that a re-signed app installs and launches in this case before publishing the second bullet.
