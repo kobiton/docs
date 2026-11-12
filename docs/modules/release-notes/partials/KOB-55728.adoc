@@ -1,0 +1,25 @@
+// Source: KOB-55728
+
+== Network Payload Capture options hidden for iOS Simulators
+
+Network Payload Capture is not supported on iOS Simulators, so its configuration options no longer appear for iOS Simulators in *Devices*.
+
+* The device details for an iOS Simulator no longer show the *Configuration* toggle and dropdown.
+* In Card view and List view, the dropdown next to *Launch* no longer includes *Use custom configuration* for iOS Simulators. If *Use custom configuration* was the only option, only the *Launch* button appears.
+* Launching an iOS Simulator from *Devices* never turns on Network Payload Capture, even if a configuration was selected earlier for another device.
+
+Real iOS devices, Android devices, and Android emulators are unchanged.
+
+For details, see xref:manual-testing:local-devices/capture-network-payload-data.adoc#_limitations[Network Payload Capture limitations].
+
+// REVIEWER NOTE (KOB-55728): Jira calls the device details window the "Device modal" and the
+// control the "Configuration toggle and dropdown". The test notes call it the "Use Configuration"
+// row. Confirm the exact UI labels before publication.
+//
+// REVIEWER NOTE (KOB-55728): Jira has no fix version or release label. Current-release signals
+// are the Wait For Deployment status, the populated release-note field, and the Release Email
+// channel selection. Confirm the target weekly release page.
+//
+// REVIEWER NOTE (KOB-55728): An unnamed Jira custom field on the ticket is set to "Internal".
+// The evidence package does not resolve the field name. Confirm that this value does not
+// exclude the change from public release notes.
