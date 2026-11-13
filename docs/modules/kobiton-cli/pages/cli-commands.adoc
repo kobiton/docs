@@ -14,7 +14,7 @@ The `<SESSION_TOKEN>` value is returned when you create a CLI session. For detai
 
 Relying on the default `~/.kobiton/.session` file is convenient for single-user workflows but is not recommended for environments with concurrent or parallel executions, because it is overwritten each time a new CLI session is created.
 
-Each open session needs its own session token. When more than one session is open, pass the token for the session you want with `-a` or `KOBITON_SESSION_TOKEN`. If `-s` names a different session from the one the session token belongs to, the command stops with an error that identifies the token to pass, instead of acting on the wrong session.
+Each open session needs its own session token. When more than one session is open, pass the token for the session you want. For details, see xref:use-the-cli.adoc[Start using Kobiton CLI].
 
 == Synopsis
 
