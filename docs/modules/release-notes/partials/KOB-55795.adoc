@@ -1,0 +1,10 @@
+// Source: KOB-55795
+
+=== Device logs for terminated sessions
+
+Device logs are now available for sessions that end without a normal close, such as terminated sessions.
+
+* Device logs and device metrics for other sessions are unchanged and are available shortly after the session ends.
+* Device log entries and metrics that arrive long after a session ends are no longer added to that session.
+
+// REVIEWER NOTE (KOB-55795): The source evidence doesn't say how long after a session ends late entries are dropped, or whether the terminated-session behavior applies to every device type. Confirm with engineering before adding either detail.
