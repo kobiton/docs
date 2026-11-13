@@ -1,0 +1,136 @@
+= Read device identifiers in Appium scripts
+:navtitle: Read device identifiers in Appium scripts
+
+// Source: KOB-55417
+
+Use the `mobile: deviceIdentifiers` command in a Xium session to read the advertising ID, Android ID, and DRM ID of an Android device. A script can compare the identifiers the app under test reports with the values the device holds.
+
+// REVIEWER NOTE (KOB-55417): The source describes this as a Xium command. Confirm whether it is also available in basic Appium 2 sessions.
+
+== Supported identifiers
+
+[options="header"]
+|=======================
+|Identifier | `identifier` value | Scope | Requirements
+| Advertising ID (AAID) | `advertisingId` | The whole device. Every app on the device reads the same value. | None
+| Android ID (SSAID) | `androidId` | The device and the certificate that signed the app. | None
+| DRM ID (Widevine device unique ID) | `drmId` | One app. | The app is a debug build, is running, and is named in `appId`.
+|=======================
+
+The command is available on Android devices only.
+
+// REVIEWER NOTE (KOB-55417): iOS identifiers are tracked separately in KOB-56548 and are not documented on this page.
+
+== Parameters
+
+[options="header"]
+|=======================
+|Name | Required | Description
+| `identifier` | No | The identifier to read: `advertisingId`, `androidId`, or `drmId`. When omitted, every identifier the device can provide is read. The DRM ID is included only when `appId` is also set.
+| `appId` | Only for `drmId` | The package name of the app whose DRM ID to read, such as `io.appium.android.apis`.
+|=======================
+
+An `identifier` value outside this list returns an error before the device is accessed. Requesting `drmId` without `appId` also returns an error.
+
+== Read device identifiers
+
+.Example (JavaScript)
+[source,javascript]
+----
+// Read every identifier the device can provide
+const all = await driver.executeScript("mobile: deviceIdentifiers", []);
+
+// Read one identifier
+const aaid = await driver.executeScript(
+  "mobile: deviceIdentifiers", [{ identifier: "advertisingId" }]);
+
+// Read the DRM ID of a running debug build
+const drm = await driver.executeScript(
+  "mobile: deviceIdentifiers", [{ identifier: "drmId", appId: "io.appium.android.apis" }]);
+----
+
+== Response
+
+Over HTTP, the identifiers are returned under `value`, alongside `status` and `sessionId`. Client libraries such as WebdriverIO return the contents of `value` to the script.
+
+.Advertising ID
+[source,json]
+----
+{ "advertisingId": "a1b2c3d4-e5f6-4a7b-8c9d-0e1f2a3b4c5d" }
+----
+
+.Android ID
+[source,json]
+----
+{
+  "androidId": "a1b2c3d4e5f60718",
+  "signingCertificateName": "CN=Kobiton deviceConnect,OU=Unknown,O=Kobiton, Inc.,L=Unknown,ST=Unknown,C=US",
+  "signingCertificateSha256": "9f2c17a4bb3e5d8012c6ae47f0b19d53ca8e62f417d0b3a95e7c1486da20f3b7"
+}
+----
+
+.DRM ID
+[source,json]
+----
+{ "drmId": "4e81cab07d3f29615ba0c7e4d81f36a2907b5ce314df82a6b0e519c74d3a8f60" }
+----
+
+When `identifier` is omitted, all values are returned in one object. If `appId` is not set, `drmIdMessage` is returned in place of the DRM ID:
+
+[source,json]
+----
+{
+  "advertisingId": "a1b2c3d4-e5f6-4a7b-8c9d-0e1f2a3b4c5d",
+  "androidId": "a1b2c3d4e5f60718",
+  "signingCertificateName": "CN=Kobiton deviceConnect,OU=Unknown,O=Kobiton, Inc.,L=Unknown,ST=Unknown,C=US",
+  "signingCertificateSha256": "9f2c17a4bb3e5d8012c6ae47f0b19d53ca8e62f417d0b3a95e7c1486da20f3b7",
+  "drmIdMessage": "The DRM id needs 'appId', so nothing was read for it."
+}
+----
+
+=== Identifiers that cannot be read
+
+When an identifier cannot be read, a message key replaces it: `advertisingIdMessage`, `androidIdMessage`, or `drmIdMessage`. When several identifiers are requested, the values that were read are still returned. The command fails only when no identifier can be read.
+
+When a single identifier is requested and it cannot be read, the command returns an error.
+
+== Identifier behavior
+
+=== Advertising ID
+
+The advertising ID belongs to the whole device, so reinstalling an app does not change it. If ads personalization is turned off on the device, the value can be all zeros.
+
+=== Android ID
+
+The Android ID is derived from the device and the certificate that signed the app reading it. The value is read through the Kobiton agent on the device, so the response contains the Android ID for the agent's signing certificate. `signingCertificateName` and `signingCertificateSha256` identify that certificate.
+
+On Kobiton cloud devices, the agent is signed with a Kobiton certificate, so the returned value differs from the Android ID your production app reads on the same device.
+
+// REVIEWER NOTE (KOB-55417): The source describes a way to return the production Android ID by signing the agent with the customer's certificate. Confirm whether this option is supported for customers and, if so, document it in admin docs rather than on this page.
+
+=== DRM ID
+
+The DRM ID belongs to one app package. To read it, the app must meet these requirements:
+
+* The app is a debug build, with `android:debuggable="true"` set in the `<application>` element of `AndroidManifest.xml`.
+* The app is running when the command is sent.
+
+No changes to the app are required beyond the debug build.
+
+If the app is a release build, `drmIdMessage` contains:
+
+----
+The app com.example.app is not a debug build, so its DRM id cannot be read. Install a build with the debugger enabled to get this value.
+----
+
+If the app is not running, `drmIdMessage` contains:
+
+----
+No process named com.example.app is running, so its DRM id cannot be read. Launch the app first.
+----
+
+Reading the DRM ID usually takes 1 to 2 seconds. On older devices, it can take 40 seconds or longer. Set the HTTP timeout of your client library to allow for this. For more information, see xref:automation-testing:session-timeouts/about-http-timeouts-for-client-libraries.adoc[].
+
+Some devices running Android 9 return the same DRM ID for every app.
+
+// REVIEWER NOTE (KOB-55417): Engineering comments on the ticket recommend not promising DRM ID support to customers, while the implementation plan and testing notes include it. Confirm that DRM ID support is published.
