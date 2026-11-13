@@ -196,5 +196,3 @@ The following continue to work while private mode is on:
 * On iOS Safari, the first request after private mode is turned off can include the URL of the private page in its `Referer` header. This URL appears in the network capture.
 * Text that is still on screen when private mode is turned off is captured by the first step after it is turned off.
 * Automation sessions that use private mode are not marked as sensitive sessions and can be accessed by admins or other team members.
-
-// REVIEWER NOTE (KOB-55750): Two behaviors are pending a product decision and are not documented here: whether manual recording resumes when a script ends with private mode on in a manual session, and how Convert to Test Case handles sessions with private steps (private steps are currently dropped).
