@@ -5,4 +5,5 @@
 When more than one CLI session is open, commands now stop with an error if `-s` names a different session from the one the session token belongs to. Previously, a command could act on two sessions at once: some actions applied to the session named with `-s`, while others applied to the session in the saved token, which belongs to the most recently created session.
 
 * The error identifies the session token to pass, including when the token came from the saved `~/.kobiton/.session` file.
-* With a single session open, commands run without `-a` or `-s` work as before. Commands that don't use a session token, such as `session end`, `session terminate`, and `session delete`, are unchanged.
+* With a single session open, commands run without `-a` or `-s` work as before.
+* `session end`, `session terminate`, and `session delete` still act on the session named with `-s`.

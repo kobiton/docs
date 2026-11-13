@@ -43,7 +43,7 @@ These options are accepted by every command and subcommand.
 | `-a`, `--session-token` | `<SESSION_TOKEN>` | Authorization token returned by `session create`.
 | `-u`, `--udid` | `<UDID>` | UDID of the device to use.
 | `-p`, `--portal` | `<PORTAL>` | Portal base address (Kobiton API/portal endpoint).
-| `-s`, `--session-id` | `<SESSION_ID>` | Kobiton session ID returned by `session create`. Defaults to the session token's session. For commands that also use a session token, the session ID must match the session the token belongs to.
+| `-s`, `--session-id` | `<SESSION_ID>` | Kobiton session ID returned by `session create`. Defaults to the session token's session. For most commands, `-s` must match the token's session, or the command fails. `session end`, `session terminate`, `session delete`, and `session show` act on the session named with `-s`.
 | `-l`, `--log-level` | `<LOG_LEVEL>` | Log verbosity: `error`, `warn`, `info`, `debug`, `trace`. Default: `info`.
 | `-h`, `--help` | | Print help for the command or subcommand.
 | `-V`, `--version` | | Print version (top-level command only).
@@ -1112,7 +1112,7 @@ Accepts all <<global-options,global options>>.
 
 *Requires:*
 
-* `-s <SESSION_ID>`
+* `-s <SESSION_ID>`, or a session token (`-a <SESSION_TOKEN>` or `KOBITON_SESSION_TOKEN` environment variable) for the session
 
 .Example
 [source,shell]
@@ -1138,7 +1138,7 @@ Accepts all <<global-options,global options>>.
 
 *Requires:*
 
-* `-s <SESSION_ID>`
+* `-s <SESSION_ID>`, or a session token (`-a <SESSION_TOKEN>` or `KOBITON_SESSION_TOKEN` environment variable) for the session
 
 .Example
 [source,shell]
@@ -1164,7 +1164,7 @@ Accepts all <<global-options,global options>>.
 
 *Requires:*
 
-* `-s <SESSION_ID>`
+* `-s <SESSION_ID>`, or a session token (`-a <SESSION_TOKEN>` or `KOBITON_SESSION_TOKEN` environment variable) for the session
 
 .Example
 [source,shell]
@@ -1285,7 +1285,7 @@ Accepts all <<global-options,global options>>.
 
 *Requires:*
 
-* `-s <SESSION_ID>`
+* `-s <SESSION_ID>`, or a session token (`-a <SESSION_TOKEN>` or `KOBITON_SESSION_TOKEN` environment variable) for the session
 
 .Example
 [source,shell]
