@@ -1,9 +1,9 @@
-= Obfuscate private data in Appium script
-:navtitle: Obfuscate private data in Appium script
+= Use private mode in Appium scripts
+:navtitle: Use private mode in Appium scripts
 
 // Source: KOB-55750
 
-Use `kobiton:privateMode` to keep private data, such as passwords and payment details, out of the session record of a Xium or Appium 2 Basic automation session. While private mode is on, data from that part of the session is not recorded.
+Use `kobiton:privateMode` to keep private data, such as passwords and payment details, out of the session record of a Xium or basic Appium 2 automation session. While private mode is on, data from that part of the session is not recorded.
 
 == Private mode setting
 
@@ -28,7 +28,7 @@ const desiredCaps = {
 }
 ----
 
-// REVIEWER NOTE (KOB-55750): Testing found inconsistent results when kobiton:privateMode is sent only in W3C firstMatch (tracked separately as a known issue). Confirm whether to document a supported capability placement before publishing.
+If you build the W3C capabilities request yourself, put `kobiton:privateMode` in `alwaysMatch`. When the request has `alwaysMatch` and `kobiton:privateMode` is only in `firstMatch`, the session starts with private mode off or the request is rejected.
 
 == Turn on private mode during the session
 
@@ -56,7 +56,7 @@ After this command, session data is recorded again. You can turn private mode on
 
 == Examples
 
-The following JavaScript example uses `wd` to log in to a website, with private mode on while the username and password are entered.
+The following JavaScript example uses `wd` to sign in to a website, with private mode on while the username and password are entered.
 
 .Example (JavaScript)
 [source,javascript]
@@ -82,8 +82,8 @@ if (!username || !apiKey || !deviceUdid) {
 const kobitonServerConfig = {protocol, host, auth: `${username}:${apiKey}`}
 
 const desiredCaps = {
-  sessionName: 'Automation test data obfuscation',
-  sessionDescription: 'An automation test with private data to obfuscate',
+  sessionName: 'Automation test with private mode',
+  sessionDescription: 'An automation test that uses private mode for private data',
   udid: deviceUdid,
   noReset: true,
   fullReset: false,
@@ -179,9 +179,7 @@ While private mode is on, the following data is not recorded for that part of th
 
 Accessibility and performance analysis does not run on the private part of the session.
 
-// REVIEWER NOTE (KOB-55750): The Jira release-note field says step screenshots are black and command bodies show an obfuscated message during private mode. Later verification and the updated acceptance criteria say commands run while private mode is on are hidden. This draft follows the verified behavior. Confirm before publishing. The Session Explorer screenshots previously on this page showed obfuscated HTTP headers and Appium Inspector data and were removed because they no longer match; confirm whether replacement images are needed.
-
-// REVIEWER NOTE (KOB-55750): Accessibility and performance analysis behavior during private mode is stated in the acceptance criteria but could not be verified in testing. Confirm before publishing.
+// REVIEWER NOTE (KOB-55750): Accessibility and performance analysis behavior during private mode is stated in the acceptance criteria. TC-15 could not be judged in testing because the test environment returned no analysis results even for sessions without private mode. Confirm before publishing.
 
 The following continue to work while private mode is on:
 
@@ -192,14 +190,11 @@ The following continue to work while private mode is on:
 
 == Limitations
 
-* Only supported in Xium and Appium 2 Basic automation sessions.
+* Only supported in Xium and basic Appium 2 automation sessions.
 * Crash logs are kept while private mode is on and can contain app data.
 * When private mode is turned on by the capability, the device log can contain about 1 to 4 seconds of lines from the start of the session before private mode applies.
 * On iOS Safari, the first request after private mode is turned off can include the URL of the private page in its `Referer` header. This URL appears in the network capture.
 * Text that is still on screen when private mode is turned off is captured by the first step after it is turned off.
-* If the session ends within about 5 seconds after private mode is turned off, the command that turns it off and later steps might not be recorded. Keep the session running for at least 10 seconds after turning off private mode.
 * Automation sessions that use private mode are not marked as sensitive sessions and can be accessed by admins or other team members.
-
-// REVIEWER NOTE (KOB-55750): The limitation about sessions ending within about 5 seconds after private mode is turned off was tracked as a separate follow-up fix. Confirm whether it still applies in this release before publishing. The 10-second guidance comes from testing, where every case passed with 10 seconds between turning off private mode and ending the session.
 
 // REVIEWER NOTE (KOB-55750): Two behaviors are pending a product decision and are not documented here: whether manual recording resumes when a script ends with private mode on in a manual session, and how Convert to Test Case handles sessions with private steps (private steps are currently dropped).
