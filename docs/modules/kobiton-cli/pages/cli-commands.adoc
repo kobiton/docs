@@ -43,7 +43,7 @@ These options are accepted by every command and subcommand.
 | `-a`, `--session-token` | `<SESSION_TOKEN>` | Authorization token returned by `session create`.
 | `-u`, `--udid` | `<UDID>` | UDID of the device to use.
 | `-p`, `--portal` | `<PORTAL>` | Portal base address (Kobiton API/portal endpoint).
-| `-s`, `--session-id` | `<SESSION_ID>` | Kobiton session ID returned by `session create`. For commands that also use a session token, the session ID must match the session the token belongs to.
+| `-s`, `--session-id` | `<SESSION_ID>` | Kobiton session ID returned by `session create`. Defaults to the session token's session. For commands that also use a session token, the session ID must match the session the token belongs to.
 | `-l`, `--log-level` | `<LOG_LEVEL>` | Log verbosity: `error`, `warn`, `info`, `debug`, `trace`. Default: `info`.
 | `-h`, `--help` | | Print help for the command or subcommand.
 | `-V`, `--version` | | Print version (top-level command only).
@@ -160,7 +160,7 @@ Plus all <<global-options,global options>>.
 
 *Requires:*
 
-* `-s <SESSION_ID>`, and `-a <SESSION_TOKEN>` or the `KOBITON_SESSION_TOKEN` environment variable
+* `-a <SESSION_TOKEN>` or the `KOBITON_SESSION_TOKEN` environment variable
 * One of:
 ** `-n <NAME>`, or
 ** both `--app-id <APP_ID>` and `--app-version-id <APP_VERSION_ID>`
@@ -1190,11 +1190,9 @@ Accepts all <<global-options,global options>>.
 
 *Requires:*
 
-* *both* `-s <SESSION_ID>` and `KOBITON_SESSION_TOKEN` environment variable (or `-a <SESSION_TOKEN>`)
+* `-a <SESSION_TOKEN>` or `KOBITON_SESSION_TOKEN` environment variable
 
-The session token must belong to the session named with `-s`. If it belongs to a different session, the command fails and the session is not pinged.
-
-// REVIEWER NOTE (KOB-55761): Jira test results show `kobiton session ping` with no `-a` or `-s` pinging the session in the saved token, which suggests `-s` defaults to the token's session. Confirm whether `-s` is still required before updating the *Requires* list.
+If you pass `-s`, the session token must belong to that session. If it belongs to a different session, the command fails and the session is not pinged.
 
 .Example
 [source,shell]
