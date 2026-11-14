@@ -1,0 +1,74 @@
+= Launch a basic Appium 3 session on Kobiton
+:navtitle: Launch a basic Appium 3 session
+
+// Source: KOB-55958
+
+Basic Appium 3 runs alongside basic Appium 2. Appium 3 is opt-in: a session uses Appium 3 only when the `kobiton:runtime` capability is set to `appium3`. Sessions that use `appium`, `appium2`, or the default Xium runtime are not affected.
+
+// REVIEWER NOTE (KOB-55958): Confirm whether basic Appium 3 is available in Kobiton Cloud, Kobiton Standalone, or both, and add an availability statement if it differs.
+
+Appium 3 and its drivers include changes from Appium 2 that can affect existing scripts. Test your scripts on Appium 3 before switching production test runs.
+
+== Requirements
+
+* Kobiton username. Find this in your Kobiton profile.
+* Kobiton access key. See xref:profile:manage-your-api-credentials.adoc[Manage your API credentials].
+* A script with capabilities prepared for basic Appium sessions. See xref:basic-appium-server/launch-a-basic-appium-2-session.adoc#_modify_the_capabilities_in_your_appium_script[Modify the capabilities in your Appium script].
+
+== Start a basic Appium 3 session
+
+. Set `'kobiton:runtime'` to `'appium3'`.
+. Set `'appium:automationName'` to the driver for the session. Sessions without `appium:automationName` are refused.
+. Run the script.
+
+.Example
+[source,javascript]
+----
+const desiredCaps = {
+
+      'kobiton:runtime': 'appium3',
+      'appium:automationName': 'XCUITest',
+      'appium:bundleId': 'com.example.ToDoApp',
+      'kobiton:sessionName': 'Automation iOS Hybrid App',
+      'kobiton:app': 'kobiton-store:v657531',
+      'kobiton:deviceGroup': 'ORGANIZATION',
+      'appium:deviceName': '*',
+      'platformName': 'iOS'
+ }
+----
+
+== Supported drivers
+
+[cols="1,1"]
+|===
+|Driver |`appium:automationName`
+
+|XCUITest (iOS)
+|`XCUITest`
+
+|UiAutomator2 (Android)
+|`UiAutomator2`
+
+|Flutter
+|`Flutter`
+
+|Flutter Integration
+|`FlutterIntegration`
+|===
+
+// REVIEWER NOTE (KOB-55958): Flutter Integration driver sessions on Appium 3 are listed in the test plan but are not shown in the test report. Confirm before publishing.
+
+== Session behavior
+
+* Basic Appium 2 and basic Appium 3 sessions can run at the same time on different devices.
+* A second session on a device that is already in use is refused.
+* The first basic Appium session after deviceConnect starts or restarts takes longer to begin while the Appium server starts. Later sessions on the same host start without this delay.
+* Session artifacts, including video, device log, and commands, are available as they are for basic Appium 2 sessions.
+
+// REVIEWER NOTE (KOB-55958): Source evidence gives two different first-session start times (about 1 to 2 seconds in the ticket, 14 to 23 seconds in the test report). Confirm before adding a duration.
+
+== Notes and limitations
+
+* On a blank page in Safari, `getPageSource` returns an empty HTML document on Appium 3. On Appium 2, the same request returns `unknown error`. Results match after the page loads.
+
+// REVIEWER NOTE (KOB-55958): Confirm whether the basic Appium 2 limitations (device metrics, Appium Inspector data, network payload capture, AI features, and passcode-enabled iOS devices) also apply to basic Appium 3 sessions.

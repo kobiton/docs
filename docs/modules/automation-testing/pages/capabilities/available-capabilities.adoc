@@ -311,16 +311,33 @@ capabilities.setCapability("kobiton:passcodeType", "PIN");
 [#_runtime]
 === `kobiton:runtime`
 
-Configure the automation runtime that executes the test. Values are `xium` (Xium) or `appium` (xref:automation-testing:basic-appium-server/launch-a-basic-appium-2-session.adoc[basic Appium 2,window=read-later]). Default is `xium`.
+Configure the automation runtime that executes the test. Default is `xium`.
+
+// Source: KOB-55958
+[cols="1,2"]
+|===
+|Value |Runtime
+
+|`xium`
+|Xium
+
+|`appium` or `appium2`
+|xref:automation-testing:basic-appium-server/launch-a-basic-appium-2-session.adoc[Basic Appium 2,window=read-later]
+
+|`appium3`
+|xref:automation-testing:basic-appium-server/launch-a-basic-appium-3-session.adoc[Basic Appium 3,window=read-later]
+|===
+
+A session with an unrecognized value, such as `appium4`, is refused with an `Unknown runtime` error.
 
 * *Type:* `string`
-* *Required capabilities:* None
+* *Required capabilities:* `appium:automationName` when the value is `appium`, `appium2`, or `appium3`
 * *Optional capabilities:* None
 
 .Example
 [source,java]
 ----
-capabilities.setCapability("kobiton:runtime", "appium");
+capabilities.setCapability("kobiton:runtime", "appium3");
 ----
 
 [#_scriptlessCapture]
