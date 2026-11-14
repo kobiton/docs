@@ -1,0 +1,10 @@
+// Source: KOB-56323
+
+== Inspector and passcode setup on iOS devices
+
+- In manual sessions on iOS and iPadOS devices, *Inspector* now shows element boxes in the correct position as soon as an app opens. Previously, for several seconds after an app opened, element boxes could appear shifted and smaller than the elements on the screen. This occurred most often on iPads and on devices running iOS 15.
+- On iOS devices that use organization passcode (PIN) mode, setting and removing the device passcode in *Settings* no longer selects the wrong row. Previously, this could occur right after *Settings* opened, most often on devices running iOS 15.
+
+// REVIEWER NOTE (KOB-56323): The fix is delivered in a deviceConnect build. Confirm the
+// deviceConnect release that includes it, and whether Standalone and local deviceConnect
+// installations need that update to get the fix, before publishing.
