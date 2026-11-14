@@ -1,0 +1,14 @@
+// Source: KOB-55142
+
+== HarmonyOS devices recognized in the device list
+
+HarmonyOS devices and emulators connected through deviceConnect are now recognized and listed correctly in Kobiton Portal.
+
+* HarmonyOS devices and emulators show *HarmonyOS* as their platform and come online in the device list.
+* The OS version shows the HarmonyOS version reported by the device, such as 6.1.0.117, instead of the device model.
+* Real devices show their marketing name, such as HUAWEI Mate 80, instead of the model code.
+* Ending a session on a HarmonyOS device no longer fails during post-session cleanup.
+
+HarmonyOS devices that were connected before this release are updated the next time they reconnect.
+
+// REVIEWER NOTE (KOB-55142): Confirm this entry should publish now. Broader HarmonyOS device support is still in progress and may be limited to enabled organizations. The OS version and marketing-name fixes also depend on the deviceConnect release installed on the host, so confirm the deviceConnect version to list.
