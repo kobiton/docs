@@ -1,0 +1,13 @@
+// Source: KOB-55417
+
+== Read device identifiers on Android in Xium sessions
+
+Xium sessions now support the `mobile: deviceIdentifiers` command on Android devices. Scripts can read the identifiers a device carries and compare them with the values the app under test reports.
+
+* *Advertising ID (AAID):* Read for the whole device, with no requirements.
+* *Android ID (SSAID):* Returned with the name and SHA-256 fingerprint of the signing certificate the value belongs to. On Kobiton cloud devices, the value belongs to the Kobiton agent's certificate and differs from the value your production app reads.
+* *DRM ID:* Read for a named app when the app is a debug build and is running.
+
+Existing commands are unchanged. For details, see xref:automation-testing:scripting/read-device-identifiers-in-appium-script.adoc[].
+
+// REVIEWER NOTE (KOB-55417): Confirm that DRM ID support is published before this entry is released.
