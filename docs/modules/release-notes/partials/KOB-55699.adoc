@@ -1,0 +1,9 @@
+// Source: KOB-55699
+
+== Devices become available after Appium sessions end
+
+A device now becomes available automatically after an Appium session on it ends, even when the session doesn't finish ending cleanly. Previously, in rare cases, a device stayed reserved for an Appium session that had already ended. Every new session on that device then failed with `MH-400 ... is being used for appium auto testing` until the device was reset.
+
+When a Turbo Test session can't start because the device can't be booked, the test script now receives the booking error, such as a device-in-use error, instead of an empty `404` response.
+
+// REVIEWER NOTE (KOB-55699): This change returns the booking error to the test script only. The queued execution status message (`0 - No session was created.`) is not changed by this ticket; that change is tracked in KOB-55968. Do not describe a change to the queue status response.
