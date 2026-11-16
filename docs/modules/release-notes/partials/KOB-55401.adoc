@@ -1,0 +1,8 @@
+// Source: KOB-55401
+
+== Simulator model names no longer overlap the UDID in Session Overview
+
+In the *Virtual Device Info* card on the *Session Overview* page of an iOS simulator session, a long *Model Name* value now wraps inside its own column instead of running into the *UDID* column. Both values are readable.
+
+* Long values without spaces, such as `com.apple.CoreSimulator.SimDeviceType.iPhone-16`, wrap onto the next line within their column.
+* The *UDID* hover tooltip and copy work as before.
