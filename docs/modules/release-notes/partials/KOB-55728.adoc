@@ -1,0 +1,14 @@
+// Source: KOB-55728
+
+== Network Payload Capture options hidden for iOS Simulators
+
+Network Payload Capture configuration options no longer appear for iOS Simulators, because Network Payload Capture does not support iOS Simulators.
+
+* When you open an iOS Simulator in *Devices*, the Configuration toggle and dropdown are not shown.
+* In Card view and List view, the dropdown next to *Launch* no longer includes *Use custom configuration* for iOS Simulators. If that was the only option, only the *Launch* button is shown.
+* Launching an iOS Simulator from *Devices* never turns on Network Payload Capture, even if a configuration was selected earlier for another device.
+* Real iOS devices, real Android devices, and Android Emulators are unchanged.
+
+See xref:devices:local-devices/network-payload-capture/index.adoc[].
+
+// REVIEWER NOTE (KOB-55728): An unnamed Jira field on this ticket is set to "Internal", while the ticket also selects the customer-facing Release Email channel. Confirm the change is cleared for public release notes.
