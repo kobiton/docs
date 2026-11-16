@@ -1,0 +1,13 @@
+// Source: KOB-54303
+
+== Launch with network capture from the device list
+
+Launching a device with network capture from the device list now uses the same searchable profile picker as the device overview, so both launch paths behave the same way.
+
+* The launch menu option *Use custom configuration* is now *Launch with network capture*.
+* The dialog it opens is now titled *Network Capture*. Search saved profiles by name or domain, or select *+All requests *+* or *Custom*.
+* Selecting *Custom* shows a *Capture Filter* field in the dialog. The session doesn't launch until you enter at least one domain.
+* If the selected profile was deleted after you opened the dialog, the session doesn't launch. The dialog stays open, the selection is cleared, and a message shows that the profile no longer exists.
+* The previous non-searchable dropdown is removed.
+
+See xref:manual-testing:local-devices/capture-network-payload-data.adoc#_launch_with_network_capture_from_the_device_list[Launch with network capture from the device list].

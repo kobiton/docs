@@ -19,6 +19,25 @@ image:enable-npc-closeup.png[width=1000,alt="Enable Network Payload Capture from
 
 When you're ready, select *Launch Device* to start your manual session.
 
+// Source: KOB-54303
+== Launch with network capture from the device list
+
+You can also start a session with network capture from the launch menu in the device list or card view.
+
+. In *Devices*, find the device and open the menu next to its *Launch* button.
+. Select *Launch with network capture*.
+. In the *Network Capture* dialog, select *+All requests *+*, a saved profile, or *Custom*. To find a saved profile, search by its name or domain.
+. If you selected *Custom*, enter at least one domain in the *Capture Filter* field.
+. Select *Launch Device*.
+
+If *Custom* is selected and *Capture Filter* is empty, the session doesn't launch and the message `Enter at least one domain to capture.` is shown. The message clears when you start typing a domain.
+
+If the selected profile was deleted after you opened the dialog, the session doesn't launch. The dialog stays open, the selection is cleared, and the deleted profile is removed from the list. Select another option, then select *Launch Device* again.
+
+To close the dialog without launching a session, select *Cancel* or click outside the dialog.
+
+// REVIEWER NOTE (KOB-54303): The control that opens the launch menu is described in Jira only as the Launch button chevron or caret. Confirm the customer-facing name or keep the generic description.
+
 == Launch Session Explorer
 
 include::devices:partial$network-payload-capture/launch-session-explorer.adoc[]
