@@ -218,6 +218,7 @@ kobiton app uninstall -u 3e4e7fe7 com.example.app
 The application is uninstalled successfully
 ----
 
+[#_app_upload]
 === `app upload`
 
 Upload an application to the Kobiton App Repo.
@@ -723,6 +724,40 @@ kobiton device shell dumpsys window displays | grep -E 'mCurrentFocus|mFocusedAp
 mCurrentFocus=Window{272f9b1 u0 com.example.app/MainActivity}
 mFocusedApp=ActivityRecord{3d12396 u0 com.example.app/.MainActivity t2823}
 ----
+
+[#device-shell-instrumentation]
+.Set state with instrumentation, then verify it
+Run an instrumentation test with `am instrument` to put the app or the OS into a known state, then read that state back with `dumpsys`, all in the same session. For example, to check how your app schedules an alarm:
+
+. Upload the app and its test APK with <<_app_upload,`kobiton app upload`>>, then install both on the device with <<_app_install,`kobiton app install`>>.
+. List the instrumentation on the device to find the test package and its runner:
++
+[source,shell]
+----
+kobiton device shell pm list instrumentation
+----
+. Run the test class that sets the state. Pass the arguments after `--` so the CLI does not read `-w` and `-e` as its own options. The `-w` option waits for the test to finish and prints its result.
++
+[source,shell]
+----
+kobiton device shell -- am instrument -w -e class com.example.app.ScheduleReminderTest com.example.app.test/androidx.test.runner.AndroidJUnitRunner
+----
+. Read the state back from the system service that holds it. Scheduled alarms are in `dumpsys alarm`:
++
+[source,shell]
+----
+kobiton device shell "dumpsys alarm | grep com.example.app"
+----
+
+The <<test-run,`kobiton test run`>> command also runs instrumentation. Choose by what you need:
+
+* Use `device shell am instrument` to run one test class inside a session you are already using, so you can inspect the device with other shell commands before and after the test.
+* Use `test run` to run a test suite in its own session and get a session test report.
+
+[IMPORTANT]
+====
+A test that uses UiAutomation fails under `device shell am instrument` with `IllegalStateException: UiAutomationService ... already registered`. This includes UIAutomator tests and tests that use Espresso screenshot rules or `GrantPermissionRule`. Run these tests with <<test-run,`kobiton test run`>> instead.
+====
 
 === `device forward`
 
@@ -1298,9 +1333,12 @@ Status: COMPLETE
 
 Test runs and management.
 
+[#test-run]
 === `test run`
 
 Run a native framework automation session (XCUITest, UIAutomator, or Espresso). GameDriver is not supported.
+
+To run one Android test class inside a session you are already using, see <<device-shell-instrumentation,set state with instrumentation>>.
 
 .Syntax
 ----
