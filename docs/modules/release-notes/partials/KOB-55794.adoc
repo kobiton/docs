@@ -1,0 +1,10 @@
+// Source: KOB-55794
+
+== Network capture profiles reject blank Capture Filter entries
+
+Creating or updating a network capture profile through the Kobiton API now returns a `400` error when a *Capture Filter* entry is empty, contains only whitespace, or is `null`. The profile isn't created or changed. Valid entries, such as `*`, `kobiton.*`, and `api.kobiton.com/v2/*`, are accepted as before.
+
+* Profiles saved with a blank *Capture Filter* entry before this change still appear in the list, open, and can be selected when starting a session.
+* To save changes to one of these profiles in Kobiton Portal, remove the empty *Capture Filter* entry first. Otherwise, *Save* shows an error message and the profile isn't changed.
+
+// REVIEWER NOTE (KOB-55794): The labels "network capture profile" and "Capture Filter" come from the Settings rename tracked in related tickets. The published configuration page still uses "Configurations" and "base domains". Confirm the rename ships in the same release before publishing this entry.
