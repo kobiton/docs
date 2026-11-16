@@ -1,0 +1,66 @@
+// Source: KOB-55552
+= Kobiton for AWS Kiro
+:navtitle: AWS Kiro
+
+Kobiton for AWS Kiro connects Kiro to the Kobiton mobile testing platform through the Kobiton MCP server. After configuration, Kobiton MCP tools are available in Kiro.
+
+== Overview
+
+Kiro connects to the Kobiton MCP server as a direct MCP client and authenticates through OAuth. Device management, app information, test execution, and session review are available through natural language in Kiro.
+
+For the full list of available tools, see the xref:mcp/ai-plugin-mcp-ref.adoc[Kobiton AI plugin and tools reference,window=read-later].
+
+== Before you begin
+
+To use Kobiton for AWS Kiro, you need:
+
+- A Kobiton account
+- AWS Kiro installed on your machine
+
+== Set up the MCP server
+
+[NOTE]
+====
+These instructions apply to Kobiton Cloud only.
+====
+
+. Open AWS Kiro.
+. Press `Cmd + Shift + P` on macOS, or `Ctrl + Shift + P` on Windows and Linux, to open the Command Palette.
+. Search for `MCP` and select *Kiro: Open User MCP Config (JSON)*.
+. Add the following to `mcp.json`:
++
+[source,json]
+----
+{
+  "mcpServers": {
+    "kobiton": {
+      "url": "https://api.kobiton.com/mcp",
+      "disabled": false
+    }
+  }
+}
+----
+. Save `mcp.json`.
+. Open the Command Palette and select *Kiro: MCP: Enable All Servers*.
+. Open the Command Palette and select *Kiro: Focus on MCP Servers View*.
+. Locate *kobiton* in the MCP Servers panel and complete OAuth authentication when prompted.
+. Verify that the `kobiton` entry shows *Connected* and lists its available tools.
+
+Authentication uses OAuth. The `mcp.json` file does not require an API key or any other credentials.
+
+== Verify the connection
+
+Open the Kiro chat and send a prompt such as:
+
+[source]
+----
+List all available Android and iOS devices in my Kobiton organization, including their models and OS versions.
+----
+
+Kiro retrieves the device information from the Kobiton MCP server.
+
+== Limitations
+
+Kiro connects to the Kobiton MCP server as a direct MCP client and does not install the Kobiton `automate` plugin. The MCP tools work in Kiro. The plugin's bundled skills, slash commands, and CLI wrapper are tied to the plugin install and are not available in Kiro.
+
+For those features, use one of the plugin hosts listed in the xref:mcp/ai-plugin-mcp-ref.adoc[Kobiton AI plugin and tools reference,window=read-later].
