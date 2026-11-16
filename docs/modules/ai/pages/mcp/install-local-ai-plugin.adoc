@@ -42,8 +42,11 @@ Add `/mcp` at the end of the retrieved API base URL. This will be the MCP server
 
 If you are using the default Kobiton Cloud URL (`\https://api.kobiton.com/mcp`), you can install the plugin from the online marketplace. Refer to guidance from the respective AI assistance tool to install and authenticate.
 
+// Source: KOB-54435
 * xref:ai:mcp/codex.adoc[Codex]
 * xref:ai:mcp/copilot.adoc[Copilot]
+* xref:ai:mcp/cursor-cli.adoc[Cursor CLI]
+* xref:ai:mcp/cursor-ide.adoc[Cursor IDE]
 * xref:ai:mcp/gemini.adoc[Gemini]
 
 If you are using a custom environment, continue with this guide.
@@ -80,6 +83,9 @@ After retrieving the <<_get_your_mcp_server_url,custom MCP URL>>, edit the follo
 
 |Codex
 |`.codex/.mcp.json`
+
+|Cursor CLI / Cursor IDE
+|`.cursor/mcp.json`
 
 |===
 
@@ -135,6 +141,12 @@ For all files above, replace the default value of `url` with the custom MCP serv
 }
 ----
 
+// Source: KOB-54435
+[NOTE]
+====
+The examples above use the Codex configuration shape. Cursor's `.cursor/mcp.json` has no `type` field and uses `${env:NAME}` for environment variables instead of bare `${NAME}`. See xref:ai:mcp/cursor-cli.adoc#_api_key_authentication[Cursor CLI API key authentication] for a Cursor-shaped example.
+====
+
 == Install local plugin
 
 Run the install command for your platform in a command-line tool. Replace `/path/to/automate` with the actual path to the `automate` or `automate-main` folder.
@@ -160,6 +172,12 @@ Run the install command for your platform in a command-line tool. Replace `/path
 |`codex plugin marketplace add /path/to/automate`
 
 `codex plugin add automate@kobiton`
+
+|Cursor CLI
+|Inside the `agent` session: `/plugin marketplace add github.com/kobiton/automate`
+
+|Cursor IDE
+|In *Cursor Settings* > *Plugins*, paste `https://github.com/kobiton/automate` and install the *automate* plugin.
 
 |===
 
