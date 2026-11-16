@@ -5,6 +5,9 @@
 Cloud release notes are typically published weekly and summarize changes since the previous publication. Kobiton uses date-based release versioning, with releases identified by the build date in YYMM.DD format. Version information for individual software components is available in the Component versions section.
 ====
 
+// Source: KOB-56002 from PR #923
+// https://github.com/kobiton/docs/pull/923
+
 == New Individual Sessions report
 
 The Individual Sessions report lists every session started within a selected date range, one row per session, with session timing, user, team, device details, session minutes, type, and state.
@@ -15,6 +18,9 @@ The Individual Sessions report lists every session started within a selected dat
 - The table displays up to 100,000 rows. For larger result sets, narrow the filters or export the report to CSV.
 
 See xref:reporting:individual-sessions-report.adoc[].
+
+// Source: KOB-55750 from PR #917
+// https://github.com/kobiton/docs/pull/917
 
 == Private mode pauses recording in automation sessions
 
@@ -27,6 +33,9 @@ Turn on private mode in a Xium or basic Appium 2 automation session to pause rec
 
 For details and limitations, see xref:automation-testing:scripting/obfuscate-private-data-in-appium-script.adoc[].
 
+// Source: KOB-53795 from PR #905
+// https://github.com/kobiton/docs/pull/905
+
 == App uploads no longer stay in Parsing
 
 Each app upload now finishes parsing or ends in a parsing failure. In the Kobiton API, the app version `state` moves from `PARSING` to `OK` or `FAILURE_PARSING`.
@@ -36,6 +45,9 @@ Each app upload now finishes parsing or ends in a parsing failure. In the Kobito
 * An app or app version that is waiting to be parsed can be deleted from the Portal.
 * The option to delete an app in *Parsing* now appears after 1 hour instead of 15 minutes.
 
+// Source: KOB-55365 from PR #932
+// https://github.com/kobiton/docs/pull/932
+
 == Accurate install errors for iOS apps built with an App Store distribution profile
 
 Installing an iOS app built with an App Store distribution profile no longer returns an incorrect AD-403 error asking you to re-upload a development build.
@@ -43,17 +55,22 @@ Installing an iOS app built with an App Store distribution profile no longer ret
 * When the install fails, the error reported by the device is shown instead, such as a code signature verification failure.
 * When *App signing using Kobiton Certificate (iOS)* is turned off, these apps are no longer rejected before installation.
 
-== Live view stays current on Android devices with Lightning Mode off
+// Source: KOB-56015 from PR #914
+// https://github.com/kobiton/docs/pull/914
 
-In manual sessions on Android devices with *Lightning Mode* off, the live view now updates as the device screen changes. Previously, the live view could keep showing an earlier screen until you tapped it.
+== Improved screen updates in Android manual sessions
 
-* Screen changes that happen on their own, such as a running stopwatch, appear in the live view without a tap.
-* *Home*, *Back*, *Power*, and *Recent apps* on the session toolbar show their result in the live view right away.
-* After you tap the live view, it shows the screen the tap led to, not the screen from before the tap.
+Addressed an issue where the live view could lag behind session actions when Lightning Mode is turned off during a manual session.
+
+// Source: KOB-55512 from PR #912
+// https://github.com/kobiton/docs/pull/912
 
 == Standard W3C errors for Selenium Java clients in Xium sessions
 
 Xium automation sessions started with Selenium 3 or Selenium 4 Java clients, including Appium Java client 10, now return standard W3C WebDriver errors. For example, a missing element raises `NoSuchElementException` instead of a general `WebDriverException`, and client logs no longer show `incorrect JSON status mapping`. Sessions that use only `desiredCapabilities` and basic Appium 2 sessions are unchanged.
+
+// Source: KOB-55810 from PR #926
+// https://github.com/kobiton/docs/pull/926
 
 == Text entry into covered fields in iOS Xium sessions
 
@@ -63,14 +80,15 @@ In iOS Xium sessions, tapping, clearing, or typing into an element now succeeds 
 * If the element still can't be reached after three scroll attempts, the session returns the `kAXErrorCannotComplete` error.
 * Elements that are already visible, or that iOS can scroll into view, are not affected.
 
-== Accurate no-device messages for sessions started by device tags
+// Source: KOB-55783 from PR #908
+// https://github.com/kobiton/docs/pull/908
 
-When a session request selects devices by tag and no device is available, the reason in the error message is now based only on devices that have the requested tags. Previously, the reason could come from any device that matched the other capabilities, including devices without the requested tags.
+== More accurate messages when no devices are available
 
-* If a device with the requested tags matches the request but is in use, the message states that the matching devices are currently in use.
-* If no device matches the requested tags, the message states `There are no devices that satisfy your filter criteria`. Requests that previously returned a "currently in use" message because of a device without the requested tags now return this message instead.
+Addressed an issue where sessions requested by device tags could report that matching devices were in use when none matched the requested tags. Error messages now reflect only devices with the requested tags. This applies to Appium sessions using `kobiton:deviceTags` and Turbo Test sessions started by device tags.
 
-This applies to Appium sessions that use `kobiton:deviceTags` and to Turbo Test sessions started by device tags. Device selection is unchanged. A session started by device tags runs on the same device as before.
+// Source: KOB-55511 from PR #918
+// https://github.com/kobiton/docs/pull/918
 
 == More reliable WEBVIEW discovery in Android mixed sessions
 
@@ -78,9 +96,15 @@ On Android devices, each Appium session that runs during the same mixed session 
 
 Mixed sessions that include only one Appium session behave as before. iOS sessions are unaffected.
 
+// Source: KOB-56321 from PR #928
+// https://github.com/kobiton/docs/pull/928
+
 == Reliable screen reads on iOS 15 devices
 
 Screen reads now complete reliably on iOS 15 devices, including the XML hierarchy captured around each action in a manual session, Appium element searches and page source requests, and Network Payload Capture setup.
+
+// Source: KOB-55761 from PR #907
+// https://github.com/kobiton/docs/pull/907
 
 == Kobiton CLI prevents commands from acting on the wrong session
 
@@ -94,9 +118,15 @@ Previously, with more than one CLI session open, parts of a command that passed 
 
 For details, see xref:kobiton-cli:use-the-cli.adoc#_use_session_context_consistently[Use session context consistently].
 
+// Source: KOB-56011 from PR #901
+// https://github.com/kobiton/docs/pull/901
+
 == deviceConnect hosts reconnect after restart
 
 Restarted and newly started deviceConnect hosts now connect normally. Previously, hosts that restarted after the November 6, 2026 release could not reconnect, which left their devices offline.
+
+// Source: KOB-56018 from PR #922
+// https://github.com/kobiton/docs/pull/922
 
 == deviceConnect Console device list loads with provisioning profiles from more than one team
 
@@ -105,9 +135,15 @@ The device list in deviceConnect Console now loads, and other Console pages and 
 * When a newer provisioning profile from a different team covers the device, the agent apps are re-signed with that profile once, and the signed copy is reused after that.
 * Re-signing of your iOS apps can also use a newer provisioning profile from a different team than the one the app was last signed with. Profiles that lack a capability your app requires are still not used.
 
+// Source: KOB-55655 from PR #924
+// https://github.com/kobiton/docs/pull/924
+
 == New Android devices appear right away while USB debugging is unauthorized
 
 A new Android device connected to a deviceConnect host now appears in the device list right away, even before USB debugging is allowed on the device. Until you allow USB debugging, the device shows an error status, such as `Device inaccessible: Unauthorized` or `Device inaccessible: Authorizing`. Previously, the device could take up to 10 minutes to appear.
+
+// Source: KOB-55656 from PR #925
+// https://github.com/kobiton/docs/pull/925
 
 == deviceConnect Console connection status
 
