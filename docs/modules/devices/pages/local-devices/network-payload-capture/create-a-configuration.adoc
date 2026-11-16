@@ -1,30 +1,59 @@
-= Create a configuration for network payload capture
-:navtitle: Create a configuration
+= Create a network capture profile
+:navtitle: Create a profile
 
-Learn how to create a configuration to specify which domain(s) and data type(s) to capture network payload for your xref:manual-testing:local-devices/capture-network-payload-data.adoc[manual session] or xref:automation-testing:local-devices/capture-network-payload-data.adoc[automation session].
+// Source: KOB-54301
 
-== Create a configuration
+A network capture profile sets which traffic is captured during a xref:manual-testing:local-devices/capture-network-payload-data.adoc[manual session] or xref:automation-testing:local-devices/capture-network-payload-data.adoc[automation session].
+
+== Create a profile
 
 In Kobiton, select your profile, then choose *Settings*.
 
 image:profile:choose-settings-context.png[width=1000,alt="A context to choose Settings"]
 
+// REVIEWER NOTE (KOB-54301): The listing page labels in the next two steps (*Configurations*, *Add new configuration*) are renamed under KOB-54300. Confirm the final labels before publishing.
 Select *Configurations*.
 
 image:devices:network-payload-configurations.png[width="1000",alt="Select Configurations"]
 
-Select *Add new configuration*.
+Select *Add new configuration*. The *Create New Profile* page opens.
 
-Enter a name and an optional description.
+Enter a *Profile Name* and an optional description.
+
+The profile name can contain only letters, numbers, hyphens (-), and underscores (_), with no spaces. Each profile name must be unique, and the name is saved in lowercase.
 
 image:devices:network-payload-create-configuration-name.png[width="1000",alt="Input name and description for new configuration"]
 
-Enter your base domains, then choose one or more xref:devices:local-devices/network-payload-capture/supported-mime-types.adoc[MIME types] you want to capture.
+In *Capture Filter*, enter the hosts and patterns to capture. Separate multiple entries with commas or spaces.
 
-image:devices:network-payload-capture-settings.png[width="1000",alt="Enter base domains to capture and select MIME types"]
+[cols="1,2"]
+|===
+|Entry type |Examples
+
+|Host
+|`kobiton.com`, `localhost`, single-label hostnames
+
+|Wildcard pattern
+|`*`, `kobiton.*`, `portal.*.com`
+
+|Host and path
+|`api.kobiton.com/v2/*`
+|===
+
+Hosts keep the letter case you enter. An entry that is already in the list isn't added again. The comparison is case-sensitive, so `Kobiton.com` and `kobiton.com` are separate entries.
+
+You don't select content types. The profile captures the traffic that matches its capture filter.
+
+// REVIEWER NOTE (KOB-54301): The previous screenshot showed the removed content-type (MIME type) selection. Add a current screenshot of the Capture Filter field.
+
+// REVIEWER NOTE (KOB-54301): Source evidence states that wildcard and path entries capture no content on hosts that run the previous network capture version. Confirm whether a minimum deviceConnect version applies, and add it as a requirement if so.
 
 When you're finished, select *Save*.
 
+== Edit a profile
+
+Open the profile from *Settings* to change its *Capture Filter*. Editing a profile created before content-type selection was removed doesn't change the content types it captures.
+
 == Next steps
 
-Use the new configuration for Network Payload Capture during xref:manual-testing:local-devices/capture-network-payload-data.adoc[manual testing] or xref:automation-testing:local-devices/capture-network-payload-data.adoc[automation testing].
+Use the profile for network payload capture during xref:manual-testing:local-devices/capture-network-payload-data.adoc[manual testing] or xref:automation-testing:local-devices/capture-network-payload-data.adoc[automation testing].

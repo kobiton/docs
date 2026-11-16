@@ -1,0 +1,13 @@
+// Source: KOB-54301
+
+== Network capture profiles accept wildcard and path patterns
+
+Network capture profiles now save the wildcard and path patterns that were previously rejected, and the profile page is simpler.
+
+* Patterns such as `*`, `kobiton.*`, `portal.*.com`, and `api.kobiton.com/v2/*` can now be saved, so a profile can capture a whole domain or a path.
+* `localhost`, single-label hostnames, and hostnames with uppercase letters are also accepted.
+* The *Advanced Settings* section and its seven content-type checkboxes are removed. You no longer select content types. A profile captures the traffic that matches its filter.
+* The field is now named *Capture Filter*, and the profile page is now *Network Capture Profile*. In Session Overview, the capture panel is now *Network Capture Profile*, and its column is now *Capture Filter*.
+* Editing an existing profile doesn't change the content it captures.
+
+See xref:devices:local-devices/network-payload-capture/create-a-configuration.adoc[].
