@@ -1,0 +1,10 @@
+// Source: KOB-56407
+
+== Lightning mode and session video recover after an iOS device reconnects
+
+Fixed an issue in iOS manual sessions where, after the device's USB cable was unplugged and plugged back in, Lightning mode could not be turned back on without a page reload, and the session video showed the screen from before the unplug for about 2 minutes.
+
+* After the device reconnects, the live view and the session video show the device's current screen right away.
+* Lightning mode comes back without a page reload. If *Lightning Mode* is off after the device reconnects, turn it on to bring back the device's stream.
+
+// REVIEWER NOTE (KOB-56407): The fix was verified on iOS devices whose Lightning mode stream comes from the host directly, without a GEM. Confirm that this Lightning mode setup is available to customers in this release, and whether the entry needs to name that setup.
