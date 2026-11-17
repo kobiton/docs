@@ -1,0 +1,11 @@
+// Source: KOB-56373
+
+== Reliable Power button unlock for passcode-enabled iOS devices in Lightning mode
+
+In organizations that use passcode (PIN) mode, iOS manual sessions in Lightning mode now recover when you select *Power* twice. After the second *Power*, the device passcode is filled in automatically, the device unlocks, and the live view shows the device screen again.
+
+Previously, the device could stay locked and the live view could stay black. Unlocking the device another way, such as selecting *Home* and entering the passcode, did not bring the live view back.
+
+The live view stays dark between the first and second *Power* while the device screen is off.
+
+// REVIEWER NOTE (KOB-56373): The source scopes this fix to Lightning mode when the device host streams the session directly; other hosts keep their previous Power behavior. Confirm that this streaming path is available to customers in this release, and whether the note needs a host or deployment qualifier.
