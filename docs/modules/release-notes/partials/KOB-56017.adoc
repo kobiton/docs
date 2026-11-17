@@ -1,0 +1,7 @@
+// Source: KOB-56017
+
+== Lightning Mode stays on when the Android screen is still
+
+Lightning Mode no longer turns off by itself during Android manual sessions when nothing changes on the device screen. Previously, Lightning Mode could turn off after the screen stayed unchanged for about a minute or longer, such as while reading a test case or waiting for an app. The *Lightning Mode Diagnostics* panel then logged a `Video stream connection failed` error even though the connection was healthy.
+
+// REVIEWER NOTE (KOB-56017): The fix was tested only on Lightning Mode sessions streamed by deviceConnect, which depend on the related WebRTC viewer change (KOB-55540). Confirm that change ships in the same release, or merge this entry into its release note, before publishing.
