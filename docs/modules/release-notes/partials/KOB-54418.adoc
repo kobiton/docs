@@ -1,0 +1,10 @@
+// Source: KOB-54418
+
+== Interrupted MCP response streams are not resumed
+
+The Kobiton MCP server follows the MCP 2026-07-28 specification for interrupted responses. If a response stream breaks before the response is complete, the in-flight request is not resumed or redelivered.
+
+* SSE event IDs are not sent, and the `Last-Event-ID` header is ignored.
+* To recover, send the request again as a new request with a new request ID. The server handles it as an independent request.
+
+// REVIEWER NOTE (KOB-54418): The source lists this story as verification-only under the MCP 2026-07-28 release. Confirm whether the Kobiton MCP server previously supported stream resumability. If it did not, this entry describes current behavior rather than a change and may belong with the existing MCP 2026-07-28 release-note entry instead of standing alone.
