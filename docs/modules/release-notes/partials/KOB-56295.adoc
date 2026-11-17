@@ -1,0 +1,9 @@
+// Source: KOB-56295
+
+== Device sound returns after unlocking iOS devices in Lightning Mode
+
+Addressed an issue in iOS manual sessions in Lightning Mode where device sound could stop after the device was locked with *Power* and unlocked a few seconds later. The screen came back, but the live view and the session video stayed silent for the rest of the session, and turning Lightning Mode off and on or reloading the page did not restore the sound.
+
+Device sound now returns after each unlock, in both the live view and the session video.
+
+// REVIEWER NOTE (KOB-56295): The issue was reproduced and verified on a pre-release deviceConnect build of the Lightning Mode streaming path. Confirm that customers were exposed to this issue on a released build before publishing this entry as a fix.
