@@ -1,0 +1,11 @@
+// Source: KOB-55540
+
+== Lightning Mode on Android and iOS devices without a GEM
+
+Manual sessions on supported Android and iOS devices can stream in Lightning Mode directly from the device, without a Graphic Extension Manager (GEM). Devices that use a GEM keep their existing stream.
+
+* The *Video* tab in the session sidebar shows the stream codec and connection metrics.
+* A session's recorded video is encoded in the codec its viewers watched in. Sessions watched in HEVC are recorded as HEVC instead of H.264. Firefox, and Chrome on a computer without HEVC decoding, can't play these recordings on the session page.
+
+// REVIEWER NOTE (KOB-55540): Confirm availability. Jira states streaming without a GEM is turned on per deviceConnect host and stays off until enabled; confirm which hosts have it and whether customers can turn it on.
+// REVIEWER NOTE (KOB-55540): Confirm whether the HEVC recording behavior applies only to sessions streamed without a GEM or to all sessions, and whether the Video tab replaces the Lightning Mode Diagnostics panel for all sessions.
