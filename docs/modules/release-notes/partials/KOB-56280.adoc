@@ -1,0 +1,10 @@
+// Source: KOB-56280
+
+== Saving text with invalid Unicode characters
+
+Text that contains an unpaired Unicode surrogate character no longer causes a save to fail.
+
+* Fixed an issue where renaming a Test Suite, or saving other text, failed with a server error when the text contained an unpaired Unicode surrogate character. The text now saves, and the invalid character is stored as the Unicode replacement character (�).
+* Fixed an issue where session completion and usage were not recorded for some subscriptions.
+
+For details on editing a Test Suite, see xref:test-management:test-suites.adoc[Test Suites].
