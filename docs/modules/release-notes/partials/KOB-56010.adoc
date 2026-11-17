@@ -1,0 +1,12 @@
+// Source: KOB-56010
+
+== Lightning mode after a device language change on iOS
+
+- In manual sessions on iOS and iPadOS devices, Lightning mode now resumes after the device language is changed to a language other than English. Previously, the session showed only lower-frame-rate screenshots for the rest of the session, even after *Lightning Mode* was turned on again. Screenshots are shown while the device stream restarts.
+- If Lightning mode does not resume on its own, turn *Lightning Mode* on again to restore the device stream. On devices running iOS 16, Lightning mode does not resume on its own after a language change, so turn *Lightning Mode* on again each time.
+
+// REVIEWER NOTE (KOB-56010): The fix is delivered in a deviceConnect build and applies when
+// deviceConnect streams Lightning mode. The same symptom on other Lightning mode hosts is tracked
+// separately in KOB-54366 and is not fixed by this ticket. Confirm which deployments and which
+// deviceConnect release include the fix, and whether Standalone and local deviceConnect
+// installations need that update, before publishing.
