@@ -1,0 +1,12 @@
+// Source: KOB-55752
+
+== File push and pull commands in Xium sessions
+
+Xium sessions on Android and iOS devices now support the `mobile: pushFile` and `mobile: pullFile` commands. Scripts that transfer files run the same way in Xium and basic Appium 2 sessions, and no longer return a `not implemented` error in Xium.
+
+* `mobile: pushFile` saves a file to the device. Pass the destination path in `remotePath` and the Base64-encoded file content in `payload`.
+* `mobile: pullFile` returns the content of the file at `remotePath`. If the file does not exist, the command returns an error.
+* By default, files larger than 100 MB are refused by `mobile: pushFile`, `mobile: pullFile`, and the legacy `push_file` endpoint. The limit is set by the `WebDriverController.MaxFileTransferBytes` key in the deviceConnect `dc.ini` file.
+* File push and pull through Kobiton CLI are not affected by this limit.
+
+// REVIEWER NOTE (KOB-55752): Confirm which deployments can change the `dc.ini` limit (for example, Standalone or customer-managed deviceConnect hosts only) and that "legacy `push_file` endpoint" is the customer-recognizable name for the older push route.
