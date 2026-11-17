@@ -687,6 +687,8 @@ Accepts all <<global-options,global options>>.
 The interactive shell is unavailable, so every invocation must name a command to run. Some dangerous operations are also restricted. Private cloud and Standalone deployments with dedicated devices are not restricted.
 
 When a command is rejected, the CLI prints the reason to stderr and exits with a non-zero status.
+
+The same restriction applies to the *adb shell* control in manual sessions. For examples of commands that run on restricted devices, see xref:manual-testing:adb-commands.adoc#_public_devices[adb shell commands on public devices].
 ====
 
 .Example
