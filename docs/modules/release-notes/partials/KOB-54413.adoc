@@ -1,0 +1,11 @@
+// Source: KOB-54413
+
+== Change notifications for MCP 2026-07-28 clients
+
+AI clients that use the MCP 2026-07-28 specification now request change notifications from the Kobiton MCP server through `subscriptions/listen`. For these clients, `subscriptions/listen` replaces the HTTP GET endpoint and the `resources/subscribe` and `resources/unsubscribe` methods.
+
+* A client opts in to each notification type it needs: tool list changes, prompt list changes, resource list changes, and updates to subscribed resources. The server acknowledges the request with a subscription ID.
+* Progress and log notifications (`notifications/progress` and `notifications/message`) continue to arrive on the response stream of the request that produced them, not on `subscriptions/listen`.
+* AI clients that use earlier MCP versions are unaffected.
+
+// REVIEWER NOTE (KOB-54413): The ticket describes `subscriptions/listen` as a long-lived stream that delivers opted-in change notifications, but the implementation plan describes it as acknowledging the request and then completing the stream. Confirm whether clients receive list-change notifications on this stream before publishing, and keep this entry limited to the acknowledgment if they do not.
