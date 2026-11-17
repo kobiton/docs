@@ -1,0 +1,9 @@
+// Source: KOB-56014
+
+== Accurate session video timing in Lightning mode manual sessions
+
+Addressed an issue where the session video of a Lightning mode manual session could run ahead of the session. When the device screen stayed still, the video dropped those still stretches. Actions appeared in the video earlier than they happened, and the picture stopped changing partway through while the sound continued to the end.
+
+Session videos now play at the speed of the session on iOS and Android devices. Each step appears in the video at the time shown in Session Explorer, and the picture lasts as long as the sound.
+
+// REVIEWER NOTE (KOB-56014): The fix applies to session videos on device hosts where deviceConnect streams Lightning mode. Confirm whether the entry should name this host configuration, and whether it belongs in the Cloud release notes, the Standalone release notes, or both.
