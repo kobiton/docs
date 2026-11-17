@@ -1,0 +1,11 @@
+// Source: KOB-54411
+
+== Kobiton MCP server supports stateless requests
+
+The Kobiton MCP server now accepts stateless requests from MCP clients that use the MCP 2026-07-28 specification. These clients no longer need to start with an `initialize` handshake.
+
+- Each request carries its protocol version and client capabilities in the request `_meta` field.
+- Each result includes the server information in its `_meta` field.
+- Requests that specify an unsupported protocol version return an `UnsupportedProtocolVersionError` error.
+
+MCP clients that connect with the `initialize` handshake continue to work without changes.
