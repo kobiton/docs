@@ -1,0 +1,7 @@
+// Source: KOB-56009
+
+== Manual sessions
+
+- Fixed an issue on iOS devices in Lightning Mode where selecting the screen recording indicator in the status bar froze the live view for close to a minute before the device's stop-sharing dialog appeared. The live view now switches to screenshots right away and shows the dialog. Select *Cancel* to return to the device's video stream. If you select *Stop*, the session continues on screenshots until the video stream restarts.
+
+// REVIEWER NOTE (KOB-56009): The source evidence scopes this fix to iOS Lightning Mode sessions on hosts that stream Lightning Mode without a GEM. Confirm whether the entry needs that scope stated, or whether it applies to all iOS Lightning Mode sessions.
