@@ -1,0 +1,12 @@
+// Source: KOB-54414
+
+== Per-request logging for MCP 2026-07-28 clients
+
+For AI clients that use version 2026-07-28 of the Model Context Protocol (MCP), log messages from the Kobiton MCP server are now controlled per request.
+
+- Log messages are sent only for requests that set a log level in the `io.modelcontextprotocol/logLevel` field of `_meta`. Requests without this field receive no log messages.
+- The `ping` and `logging/setLevel` requests and the `notifications/roots/list_changed` notification are no longer supported for these clients.
+- Clients that use earlier MCP versions are not affected.
+
+// REVIEWER NOTE (KOB-54414): The Cloud November 6, 2026 release notes already announce support for MCP specification 2026-07-28. Decide whether to publish this entry separately or fold it into that existing section.
+// REVIEWER NOTE (KOB-54414): The ticket description states the removal without qualification, while the ticket's Impact notes say clients that use the earlier initialization handshake keep the previous protocol. Confirm that `ping` and `logging/setLevel` still work for earlier-version clients before publishing the last bullet.
