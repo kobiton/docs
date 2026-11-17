@@ -753,25 +753,27 @@ OK (2 tests)
 ----
 +
 The CLI exits with status `0` even when a test fails or the test process crashes, so confirm that the output reports `OK`.
-. Read the state back from the system service that holds it. Scheduled alarms are in `dumpsys alarm`. This command prints the first three lines of each alarm that belongs to the app:
+. Read the state back from the system service that holds it. Scheduled alarms are in `dumpsys alarm`. This command prints the first four lines of each alarm that belongs to the app:
 +
 [source,shell]
 ----
-kobiton device shell "dumpsys alarm | grep -A2 'Alarm{.*com.example.app}'"
+kobiton device shell "dumpsys alarm | grep -A3 'Alarm{.*com.example.app}'"
 ----
 +
-.Output
+.Output (Android 12)
 ----
     RTC_WAKEUP #26: Alarm{c3e4aff type 0 origWhen 1794892393133 whenElapsed 10327886077 com.example.app}
       tag=*walarm*:com.example.app.EXACT_REMINDER
       type=RTC_WAKEUP origWhen=2026-11-17 12:13:13.133 window=0 exactAllowReason=permission repeatInterval=0 count=0 flags=0x1
+      policyWhenElapsed: requester=+59m54s451ms app_standby=-5s545ms device_idle=-- battery_saver=-5s248ms gms_manager=--
 --
     RTC_WAKEUP #27: Alarm{199d0cc type 0 origWhen 1794892393176 whenElapsed 10327886120 com.example.app}
       tag=*walarm*:com.example.app.INEXACT_REMINDER
       type=RTC_WAKEUP origWhen=2026-11-17 12:13:13.176 window=+44m59s997ms repeatInterval=0 count=0 flags=0x0
+      policyWhenElapsed: requester=+59m54s494ms app_standby=-5s494ms device_idle=-- battery_saver=-5s248ms gms_manager=--
 ----
 +
-An exact alarm has `window=0` and an `exactAllowReason` value. An inexact alarm has a nonzero `window` and no `exactAllowReason`.
+An exact alarm has `window=0`, and an inexact alarm has a nonzero `window`. On Android 12 and later, an exact alarm also has an `exactAllowReason` value.
 
 The <<test-run,`kobiton test run`>> command also runs instrumentation. Choose by what you need:
 
