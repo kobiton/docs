@@ -1,0 +1,11 @@
+// Source: KOB-56397
+
+== Lightning mode session pauses on iOS devices
+
+On iOS devices with a passcode, the live view and the session recording now keep showing the last screen while the session is paused, for example after the device language changes. Previously, the live view showed the passcode being set up again on the device.
+
+Taps and other input sent while the *Session paused as we check the connection. It'll resume shortly.* message is displayed are now discarded. Previously, this input was held and then ran on the device all at once when the session resumed, which could change a setting by mistake.
+
+// REVIEWER NOTE (KOB-56397): Testing covered Lightning mode streamed directly by deviceConnect
+// on hosts without a GEM. Sessions on GEM hosts were out of scope. Confirm whether this entry
+// needs a host-type qualifier.
