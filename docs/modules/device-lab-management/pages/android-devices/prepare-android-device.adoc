@@ -137,6 +137,23 @@ Scroll down to the **Disable permission monitoring** option and turn it on. You 
 [NOTE]
 The option name describes what it turns off. Turning the option _on_ disables permission monitoring, which is what Kobiton requires.
 
+// Source: KOB-54010
+[#disable_adb_authorization_timeout]
+== Turn on _Disable adb authorization timeout_ (required)
+
+If this option is off, the USB debugging authorization between the device and its host expires after 7 days. The device goes offline, and the **Allow USB debugging** prompt displays on the device again.
+
+This option is available on Android 11 and later.
+
+Before you begin, xref:#enable_developer_mode[enable Developer mode and USB debugging].
+
+Open **Settings** and go to **Developer options**. On Pixel devices, this option is under **System**.
+
+Scroll down to the **Disable adb authorization timeout** option and turn it on. You can use the search function to quickly locate it. When the option is on, the toggle is blue.
+
+[NOTE]
+The option name describes what it turns off. Turning the option _on_ keeps the USB debugging authorization from expiring.
+
 == Disable passcode (required)
 
 [IMPORTANT]
