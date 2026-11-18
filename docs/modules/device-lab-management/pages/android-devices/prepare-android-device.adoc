@@ -42,13 +42,11 @@ Scroll down and select **About phone**. For some models, such as Google Pixel, t
 
 Select **Software information**.
 
-image:device-lab-management:device-lab-management-android-prepare-usb-debugging-settings.png[width=240, alt="The Settings app in the home screen"] -> image:device-lab-management:device-lab-management-android-prepare-usb-debugging-about-phone.png[width=240, alt="About Phone in Settings menu"] -> image:device-lab-management:device-lab-management-android-prepare-usb-debugging-software-information.png[width=240, alt="Software Information section inside About Phone"]
-
 Tap **Build number** seven times. A popup appears when you are close to enabling Developer mode. If a lock screen is set, enter your security credentials when prompted.
 
 Developer mode is now active.
 
-image:device-lab-management:device-lab-management-android-prepare-usb-debugging-build-number.png[width=240, alt="Taping on Build Number inside Software Information 7 times"] -> image:device-lab-management:device-lab-management-android-prepare-usb-debugging-dev-mode-activated.png[width=240, alt="Notification that the Developer Mode has been turned on"]
+image:device-lab-management:device-lab-management-android-prepare-usb-debugging-build-number.png[width=240, alt="Tapping Build number inside Software information seven times"]
 
 Navigate back to the Settings main screen. Tap the newly available **Developer options** item. For some models such as Google Pixel, this option is under **System**.
 
@@ -56,7 +54,7 @@ Scroll down to the **USB debugging** option and turn it on. You can use the sear
 
 Tap **OK** in the popup to confirm.
 
-image:device-lab-management:device-lab-management-android-prepare-developer-options.png[width=240, alt="Newly available Developer Options inside Settings"] -> image:device-lab-management:device-lab-management-android-prepare-usb-debugging-enable-usb-debugging.png[width=240, alt="Enable USD Debuggin inside Developer Options"] -> image:device-lab-management:device-lab-management-android-prepare-usb-debugging-enable-usb-debugging-confirmation.png[width=240, alt="Confirmation popup to allow USB Debugging"]
+image:device-lab-management:device-lab-management-android-prepare-developer-options.png[width=240, alt="Newly available Developer options entry inside Settings"] -> image:device-lab-management:device-lab-management-android-prepare-usb-debugging-enable-usb-debugging.png[width=240, alt="Enable USB debugging inside Developer options"]
 
 --
 
@@ -68,7 +66,7 @@ Select **About Phone**.
 
 Tap **MIUI Version** (or **OS version** on HyperOS) seven times.
 
-image:device-lab-management:device-lab-management-android-chinese-about-phone.png[width=240, alt="Going to About Phone in Settings"] -> image:device-lab-management:device-lab-management-android-chinese-miui.png[width=240, alt="Tapping the operating system version field several times"]
+image:device-lab-management:device-lab-management-android-chinese-miui.png[width=240, alt="Tapping the MIUI version row in the About phone list"]
 
 The message **You're now a developer!** displays. Developer mode is now active.
 
@@ -98,7 +96,7 @@ Scroll down to the **Default USB configuration** option. You can use the search 
 
 Choose **File transfer / Android Auto** or **Transferring files / Android Auto**, depending on the model.
 
-image:device-lab-management:device-lab-management-android-prepare-developer-options-2.png[width=240, alt="Developer options inside Settings"] -> image:device-lab-management:device-lab-management-android-prepare-default-usb-config.png[width=240, alt="The Default USB configuration menu under Developer options"] -> image:device-lab-management:device-lab-management-android-prepare-usb-file-transfer.png[width=240, alt="The option File transfer / Android Auto selected under USB configuration screen"]
+image:device-lab-management:device-lab-management-android-prepare-usb-file-transfer.png[width=240, alt="File transfer / Android Auto selected on the USB configuration screen"]
 
 [#disable_permission_monitoring]
 == Turn on **Disable permission monitoring** (required for automation on some models)
@@ -133,7 +131,7 @@ Select **Screen lock type**.
 
 Select **None**. Enter the device's passcode or lock pattern if required.
 
-image:device-lab-management:device-lab-management-android-prepare-disable-lockscreen.png[width=240, alt="Going to Lock screen option inside Settings"] -> image:device-lab-management:device-lab-management-android-prepare-disable-lockscreen-lockscreen-type.png[width=240, alt="Inside Lock Screen, going to Screen lock type"] -> image:device-lab-management:device-lab-management-android-prepare-disable-lockscreen-lockscreen-type-none.png[width=240, alt="In Screen lock types selecting the option None"]
+image:device-lab-management:device-lab-management-android-prepare-disable-lockscreen-lockscreen-type-none.png[width=240, alt="Selecting None in the Screen lock type list"]
 
 == Turn off **Auto Blocker** and **Block USB connections while locked** (Samsung devices with Android 14 and later)
 
@@ -178,8 +176,6 @@ Tap **Play Protect**, then tap the **Settings** icon.
 
 Turn off **Scan apps with Play Protect** and **Improve harmful app detection**.
 
-image:device-lab-management-android-prepare-play-protect-settings.png[width=240, alt="The Play Protect settings screen with the options Scan apps with Play Protect and Improve harmful app detection turned off"]
-
 For more information, see Google's https://support.google.com/googleplay/answer/2812853?hl=en[support article about Play Protect,window=_blank].
 
 == Prevent the screen from sleeping (optional)
@@ -188,17 +184,13 @@ Keeping the screen awake means testers do not need to re-wake the device during 
 
 In the **Settings** app, scroll down and select **Developer options**. For some models, such as Google Pixel, this option is under **System**.
 
-Find the **Stay awake** option and turn it on.
-
-image:device-lab-management:device-lab-management-android-prepare-developer-options.png[width=240, alt="Going to Developer Options to prevent screen from sleeping"] -> image:device-lab-management:device-lab-management-android-prepare-prevent-sleep-enable-stay-awake.png[width=240, alt="Enable Stay Awake inside the Developer Options"]
+Find the **Stay awake** option and turn it on. Stay awake keeps the screen on only while the device is charging.
 
 == Turn off auto-update for system software (optional)
 
 An in-progress OS update takes the device offline until it finishes.
 
 In the **Settings** app, tap **Software update**. Turn off **Auto download over Wi-Fi**.
-
-image:device-lab-management:device-lab-management-android-prepare-turn-off-auto-update-system-software-software-update.png[width=240, alt="Going to Software Update inside Settings"] -> image:device-lab-management:device-lab-management-android-prepare-turn-off-auto-update-system-software-turn-off-auto-download.png[width=240, alt="Disabling Auto download over wifi in Software Update"]
 
 == Turn off auto-update for apps (optional)
 
@@ -210,7 +202,7 @@ Expand **Network preferences**, then tap **Auto-update apps**.
 
 Select **Don't auto-update apps** in the popup. Tap **Done** to save the changes.
 
-image:device-lab-management:device-lab-management-android-prepare-turn-off-auto-update-apps-settings.png[width=240, alt="Going to Play Store Settings."] -> image:device-lab-management:device-lab-management-android-prepare-turn-off-auto-update-apps-auto-update.png[width=240, alt="Turning of Auto-updates for apps in Google Play Settings"] -> image:device-lab-management:device-lab-management-android-prepare-turn-off-auto-update-apps-do-not-auto-update-done.png[width=240, alt="Setting the Auto-update apps selection to Don't auto-update apps"]
+image:device-lab-management:device-lab-management-android-prepare-turn-off-auto-update-apps-settings.png[width=240, alt="Opening the Play Store More options menu to reach Settings"] -> image:device-lab-management:device-lab-management-android-prepare-turn-off-auto-update-apps-do-not-auto-update-done.png[width=240, alt="Don't auto-update apps selected in the Auto-update apps dialog"]
 
 == Turn off adaptive brightness (optional)
 
@@ -219,8 +211,6 @@ Turning off adaptive brightness lets Kobiton software keep the screen at minimum
 In the **Settings** app, select **Display**.
 
 Turn off **Adaptive brightness**.
-
-image:device-lab-management:device-lab-management-android-prepare-turn-off-adaptive-brightness-display.png[width=240, alt="Going to the Display option inside Settings"] -> image:device-lab-management:device-lab-management-android-prepare-turn-off-adaptive-brightness-disable.png[width=240, alt="Disabling Adaptive bringhtness inside the Display settings"]
 
 == Turn off text correction and prediction for keyboards (optional)
 
@@ -234,7 +224,7 @@ Tap **Samsung Keyboard settings**.
 
 Turn off **Predictive text**.
 
-image:device-lab-management:device-lab-management-android-prepare-disable-text-correction-samsung-general.png[width=240, alt="Going to General management option inside Settings"] -> image:device-lab-management:device-lab-management-android-prepare-disable-text-correction-samsung-keybaord.png[width=240, alt="Inside Genereal management selecting Samsung Keyboard settings"] -> image:device-lab-management:device-lab-management-android-prepare-disable-text-correction-samsung-predictive-text.png[width=240, alt="Inside Samsumg Keyboard settigs disabling Predictive text"]
+image:device-lab-management:device-lab-management-android-prepare-disable-text-correction-samsung-predictive-text.png[width=240, alt="Predictive text turned off in Samsung Keyboard settings"]
 
 === Google Pixel devices
 
@@ -244,15 +234,13 @@ Select **Languages & input**.
 
 Select **On-screen keyboard**.
 
-image:device-lab-management:device-lab-management-android-prepare-disable-text-correction-google-pixel-system.png[width=240, alt="Selecting System options inside Settings"] -> image:device-lab-management:device-lab-management-android-prepare-disable-text-correction-google-pixel-language-and-input.png[width=240, alt="Selecting Language & Input options in System settings"] -> image:device-lab-management:device-lab-management-android-prepare-disable-text-correction-google-pixel-on-screen-keyboard.png[width=240, alt="In Language & Input selecting On-screen keyboard"]
-
 Tap **Gboard**.
 
 Tap **Text correction**.
 
 Turn off **Auto-correction**.
 
-image:device-lab-management:device-lab-management-android-prepare-disable-text-correction-google-pixel-gboard.png[width=240, alt="Taping Gboard to enable/diable it according to use case"] -> image:device-lab-management:device-lab-management-android-prepare-disable-text-correction-google-pixel-text-correction.png[width=240, alt="In Settings selecting Text Correction"] -> image:device-lab-management:device-lab-management-android-prepare-disable-text-correction-google-pixel-auto-correct.png[width=240, alt="In Text Correction disabling Auto-correction"]
+image:device-lab-management:device-lab-management-android-prepare-disable-text-correction-google-pixel-auto-correct.png[width=240, alt="Auto-correction turned off in the Gboard Text correction screen"]
 
 The device is now prepared.
 
