@@ -1,0 +1,9 @@
+// Source: KOB-56322
+
+== Inspector data available after a slow app launch
+
+In iOS and Android automation sessions, inspector data is no longer lost for the rest of the session when an app is slow to start.
+
+Previously, after a script launched or relaunched an app that took a long time to start, most later steps in Session Explorer showed "There is no inspection data available for this screenshot." until the session ended. Now, only the steps captured while the app is not responding have no inspector data, and later steps show inspector data as expected.
+
+// REVIEWER NOTE (KOB-56322): Jira also states that a manual session inspector refresh on a slow app now shows no inspector data instead of a failed request. Confirm what users see in this case before adding it to the release note.
