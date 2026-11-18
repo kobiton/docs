@@ -1,0 +1,15 @@
+// Source: KOB-54744
+
+== Network payload capture setup errors on iOS
+
+When network payload capture can't be set up at the start of an iOS session, Kobiton Portal now shows an error notification. The session stays usable but doesn't capture network traffic.
+
+* The notification reads `Network capture setup failed. This session will run without capturing traffic.` and describes the cause and what to do next.
+* Select *Details* to view the error reported by the device.
+* The notification appears in manual sessions and in the live view of automation sessions, and appears again after a page reload.
+* A successful setup shows no notification.
+* Android devices don't show this notification.
+
+See xref:manual-testing:local-devices/capture-network-payload-data.adoc[].
+
+// REVIEWER NOTE (KOB-54744): Product has not decided whether Details stays visible to customers. Some raw errors shown under Details contain internal terms or host file paths. Confirm before publishing the Details bullet.
