@@ -1,0 +1,9 @@
+// Source: KOB-55797
+
+== Network payload capture
+
+- Fixed an issue where a network capture profile that failed to load opened as an empty, editable form with no error. Saving that form replaced the stored profile's name, Capture Filter, and content types with the values entered.
+- When you edit a network capture profile, *Save* is available only after the profile loads. If the profile can't be loaded, the message "Could not load this Network Capture Profile. Reload the page to try again." appears and *Save* stays disabled.
+
+// REVIEWER NOTE (KOB-55797): The ticket has no fix version or release label. Confirm the release page this entry belongs on.
+// REVIEWER NOTE (KOB-55797): This entry uses the Network Capture Profile and Capture Filter labels from the ticket. The published docs still describe these as configurations under Settings > Configurations. The rename ships with KOB-54300 and KOB-54301. Confirm those tickets ship in the same release, or adjust the labels.
