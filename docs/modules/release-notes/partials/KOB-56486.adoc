@@ -1,0 +1,7 @@
+// Source: KOB-56486
+
+== Faster recovery for iOS devices plugged back in during startup
+
+When an iOS device on a macOS deviceConnect host is unplugged and plugged back in while deviceConnect is still bringing it online, the device now comes back online within seconds. Previously, the device could take about a minute to recover.
+
+Unplugging an iOS device also no longer logs the closed device connection as an error or warning in the deviceConnect logs. These messages are now logged at debug level.
