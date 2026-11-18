@@ -1,0 +1,13 @@
+// Source: KOB-55839
+
+== Signing details for iOS app versions in the API
+
+Signing details are now read from the provisioning profile of each iOS app uploaded to App Repository and returned with the app version in the Kobiton API v2.
+
+* App version objects in API v2 responses, including an app's `latest_version` and `versions`, include a new `signing` object.
+* The `signing` object summarizes the provisioning profile type, whether the profile covers all devices or how many devices it covers, the team ID, and when the profile and the latest signing certificate expire.
+* Android app versions, and iOS app versions uploaded before this release, return `signing: null`.
+* Device UDIDs and certificate identity details are not returned.
+* Uploads work as before, including iOS apps without a provisioning profile.
+
+// REVIEWER NOTE (KOB-55839): API v2 app version responses gain a new key. Confirm whether to tell customers whose integrations validate responses against a strict schema to allow the new `signing` key.
