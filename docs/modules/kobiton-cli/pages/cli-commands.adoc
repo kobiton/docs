@@ -79,6 +79,9 @@ kobiton app run [OPTIONS] <APP_IDENTIFIER> [ARGS]...
 | `-e`, `--env` | `<KEY> <VALUE>` | Environment variable pair. Repeatable: `--env KEY VALUE`.
 |===
 
+// Source: KOB-56464
+The bundle ID is a positional argument. `-n` is not a valid flag for `app run` and prints usage text.
+
 Plus all <<global-options,global options>>.
 
 *Requires:*
@@ -889,7 +892,8 @@ PID NAME
 
 === `device log`
 
-Stream logs from the device. Use `Control + C` to stop the log stream.
+// Source: KOB-56464, KOB-56471
+Stream logs from every process on the device. The stream continues until stopped with `Control + C` or a bounded command like `timeout`. To show logs for one app, pipe the output through `grep`.
 
 .Syntax
 ----
@@ -908,9 +912,22 @@ Accepts all <<global-options,global options>>.
 kobiton device log
 ----
 
+.Filter output for one app
+[source,shell]
+----
+kobiton device log | grep com.example.app
+----
+
+.Bound the stream to 30 seconds
+[source,shell]
+----
+timeout 30 kobiton device log
+----
+
 === `device screen`
 
-Retrieve the device screen in `jpg` format. Pipe the output to a `.jpg` file to save the screenshot.
+// Source: KOB-56471
+Retrieve the device screen in `jpg` format. Pipe the output to a `.jpg` file to save the screenshot. `-o` is not supported; use shell redirection as shown.
 
 .Syntax
 ----
