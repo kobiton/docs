@@ -1,0 +1,14 @@
+// Source: KOB-56410
+
+== ZooKeeper reliability on Standalone
+
+Standalone deployments are better protected against ZooKeeper transaction log corruption, and administrators can recover from it with a single command.
+
+- During an update that restarts ZooKeeper, the existing ZooKeeper instance stops before the new instance starts. Previously, both instances could briefly run against the same data, which could corrupt the newest transaction log and prevent ZooKeeper and Kafka from starting. Existing installations receive this change when they update.
+- ZooKeeper is briefly unavailable during an update that restarts it. Kafka reconnects when ZooKeeper is available again.
+- ZooKeeper has up to 5 minutes to start before it is restarted, so a slow startup, such as replaying a large snapshot, is not interrupted.
+- If ZooKeeper fails to start with an `EOFException` on its newest transaction log, run `sudo kobictl fix zookeeper-txnlog`. The command moves the damaged log to a quarantine directory instead of deleting it, restarts ZooKeeper and Kafka, and clears a failed setup job that can otherwise stall the deployment.
+- The command makes no changes when the newest transaction log is healthy. It stops and reports the problem instead of recovering automatically when the damage is in an earlier log, or when Kafka reports an inconsistent cluster ID after it restarts, because automatic recovery could lose data in those cases.
+
+// REVIEWER NOTE (KOB-56410): The ticket has no fix version. Testing evidence references a 4.29.0S development build. Confirm the Standalone release this entry belongs to.
+// REVIEWER NOTE (KOB-56410): The recovery runbook named in the ticket lives with the installer, not the Admin Docs. If the Admin Docs will cover the manual recovery path, add the standard Admin Docs reference line.
