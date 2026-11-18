@@ -1,0 +1,16 @@
+// Source: KOB-56004
+== Apply Ubuntu security updates with `kobictl run os-patch`
+
+Standalone servers can apply Ubuntu security updates with `sudo kobictl run os-patch`. Packages pinned by the installed Standalone release are held during the update, so patching does not move them ahead of the versions the release requires.
+
+- `--dry-run` lists the packages that would be held and upgraded, without making changes.
+- `--yes` applies the updates without a confirmation prompt.
+- Holds are released after every run, including runs that fail or are interrupted. Packages held before the run stay held.
+- The hold list can be adjusted per server, for a single run or permanently.
+- When a kernel or NVIDIA driver update requires a restart, the run reports it. GPU workloads fail until the server restarts.
+- The run lists any package sources that could not be refreshed.
+
+For the complete procedure, refer to the Kobiton Admin Docs. If you need access, please contact your Account Manager.
+
+// REVIEWER NOTE (KOB-56004): Confirm the first Standalone release that includes `kobictl run os-patch`. The ticket lists no fix version.
+// REVIEWER NOTE (KOB-56004): The Admin Docs page for this command is planned as separate work. Confirm it is published before this entry references it.
