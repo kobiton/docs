@@ -1,0 +1,17 @@
+// Source: KOB-56380
+
+== Native element searches on the iOS home screen in Xium sessions
+
+In iOS Xium automation sessions, native element searches now find app icons on the home screen when the home screen shows widgets. Previously, an accessibility id or predicate search for an icon such as Settings could fail with a `No active application elements` error or return no matching element, and reading or tapping an icon found by XPath failed with the same error.
+
+* Accessibility id, predicate, and XPath searches find app icons on the home screen of iPhone and iPad devices. `getAttribute`, `getRect`, and `click` work on the found element.
+* Native element searches also succeed on the Wi-Fi sign-in sheet that iOS shows for captive networks.
+* A native element search waits up to 5 seconds for a result instead of stopping after 500 milliseconds. A slow screen read, such as on an iPad home screen with widgets, no longer returns a missing element.
+
+// REVIEWER NOTE (KOB-56380): The Jira impact field states that the 5-second native search wait
+// also applies to Android accessibility id and class searches, but QA has not tested Android.
+// Confirm whether the release note should mention Android.
+
+// REVIEWER NOTE (KOB-56380): The Jira deployment notes describe an optional deviceConnect setting,
+// WebDriverSession.NativeSearchTimeoutMs in dc.ini, that defaults to 5000. Confirm whether
+// Standalone release notes should tell admins this setting exists.
