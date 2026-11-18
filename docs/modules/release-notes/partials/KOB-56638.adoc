@@ -1,0 +1,14 @@
+// Source: KOB-56638
+
+== deviceConnect
+
+- The deviceConnect Linux packages (`.deb` and `.rpm`) now install a fixed Android Debug Bridge (`adb`) version, `36.0.2`, which matches the deviceConnect macOS package. Previously, the Linux packages installed the latest `adb` release available at build time. Linux host machines that updated to a build with `adb` `37.0.1` move to `36.0.2` on their next deviceConnect update.
+- The deviceConnect Linux packages no longer install the Android SDK command-line tools (`android/cmdline-tools`), which deviceConnect does not use.
+- The Android tools in the deviceConnect macOS package are unchanged.
+
+// REVIEWER NOTE (KOB-56638): The ticket also states the macOS package no longer carries
+// Linux-only files and is about 98 MB smaller. QA did not verify the size change, so it is
+// omitted here. Confirm before adding it.
+//
+// REVIEWER NOTE (KOB-56638): No fix version or release label is set on the ticket. Confirm
+// the release page this entry belongs on and the deviceConnect build number.
