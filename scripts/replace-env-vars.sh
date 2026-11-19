@@ -23,7 +23,7 @@ function replaceEnvVars() {
   local destFile="$1"
 
   if [[ "$KOBITON_ENVIRONMENT" == "standalone" ]]; then
-    # From step in Dockerfile, "mermaid.min.js" is placed in the directory "_/js/vendor/".
+    # The image (.dagger/main.go) puts "mermaid.min.js" in the directory "_/js/vendor/".
     sed -i -e 's~https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js~/_/js/vendor/mermaid.min.js~g' "$destFile"
   fi
 

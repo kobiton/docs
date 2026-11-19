@@ -4,6 +4,7 @@ import (
 	"context"
 	"dagger/ci/internal/dagger"
 	"fmt"
+	"strings"
 
 	"golang.org/x/sync/errgroup"
 )
@@ -22,7 +23,9 @@ type Ci struct {
 // "Release file ... is expired", which broke every CI run.
 func nodeBase() *dagger.Container {
 	return dag.Container(dagger.ContainerOpts{Platform: "linux/amd64"}).
-		From("node:20-bookworm-slim@sha256:2cf067cfed83d5ea958367df9f966191a942351a2df77d6f0193e162b5febfc0").
+		From("node:26-bookworm-slim@sha256:5df79989ed685e09f0a98019db4cebfb22fb9df1a53c0161664a011f7ff6b0f1").
+		// Node 26 images no longer bundle yarn, which the node module's WithYarn runs
+		WithExec([]string{"npm", "install", "-g", "yarn@1.22.22"}).
 		WithEnvVariable("DEBIAN_FRONTEND", "noninteractive").
 		WithEnvVariable("GIT_SSH_COMMAND", "ssh -o StrictHostKeyChecking=no").
 		WithExec([]string{"apt-get", "update"}).
@@ -129,7 +132,7 @@ func (m *Ci) Server(
 	path := fmt.Sprintf("/%s", site)
 
 	return dag.Container(dagger.ContainerOpts{Platform: "linux/amd64"}).
-		From("nginx:alpine@sha256:892bb2152464f0c5d8972593a5f5afaf8054552580b699d95f8ff4af08c2d33d").
+		From("nginx:1.30.7-alpine@sha256:bef154735288bc38d99fac41ae63730684bcc661503673a04a0f9bc526ba8598").
 		WithWorkdir(path).
 		WithDirectory(path, dir.Directory(site)).
 		WithFile(fmt.Sprintf("/%s/replace-env-vars.sh", site), m.Source.File("scripts/replace-env-vars.sh")).
@@ -182,12 +185,15 @@ func (m *Ci) Publish(
 
 	eg, ctx := errgroup.WithContext(ctx)
 
-	var out string
-	for _, r := range sites {
-		r := r
+	refs := make([]string, len(sites))
+	for i, r := range sites {
 		eg.Go(func() error {
 			ecrWithRepo := fmt.Sprintf("%s/%s:%s", ecrHost, r, imageTag)
-			out, _ = m.Server(r).WithRegistryAuth(ecrHost, "AWS", secret).Publish(ctx, ecrWithRepo)
+			ref, err := m.Server(r).WithRegistryAuth(ecrHost, "AWS", secret).Publish(ctx, ecrWithRepo)
+			if err != nil {
+				return fmt.Errorf("publish %s: %w", r, err)
+			}
+			refs[i] = ref
 			return nil
 		})
 	}
@@ -196,7 +202,7 @@ func (m *Ci) Publish(
 		return "", err
 	}
 
-	return out, nil
+	return strings.Join(refs, "\n"), nil
 }
 
 // AWS commands
