@@ -37,28 +37,23 @@ The fold and unfold icons in the manual session toolbar and the Session Explorer
 
 For details, see xref:manual-testing:device-controls.adoc#_fold_or_unfold_device[Fold or unfold device].
 
-// Source: KOB-56017 from PR #967
+== Lightning Mode improvements
+
+Lightning Mode provides more reliable streaming during Android and iOS manual sessions.
+
+On Android, Lightning Mode remains active during periods of inactivity.
+
+On iOS, Lightning Mode remains active when locking and unlocking the device using *Power*. The live view displays the lock screen and returns to the screen that was open before locking. The live view also adjusts automatically when the device rotates.
+
+Turning Lightning Mode off and back on restores the video stream and returns the iOS device to the home screen.
+
+// Sources:
+// KOB-56017 from PR #967
 // https://github.com/kobiton/docs/pull/967
-
-== Lightning Mode stays on when the Android screen is still
-
-In Android manual sessions, Lightning Mode remains active when the device screen is unchanged, such as while reading a test case or waiting for an app.
-
-// Source: KOB-56007 from PR #963
+// KOB-56007 from PR #963
 // https://github.com/kobiton/docs/pull/963
-
-== Lightning Mode stays on after locking an iOS device
-
-In iOS manual sessions, Lightning Mode now remains active when you lock and unlock the device using *Power*. The live view displays the lock screen while the device is locked and returns to the previous screen after unlocking.
-
-If you turn Lightning Mode off and back on during the session, the video stream resumes and the device returns to the home screen.
-
-// Source: KOB-55998 from PR #962
+// KOB-55998 from PR #962
 // https://github.com/kobiton/docs/pull/962
-
-== Live view rotates with the iOS device in Lightning Mode
-
-In iOS manual sessions with *Lightning Mode* turned on, the live view rotates to match the device's current orientation.
 
 // Source: KOB-56486 from PR #980
 // https://github.com/kobiton/docs/pull/980
@@ -67,37 +62,27 @@ In iOS manual sessions with *Lightning Mode* turned on, the live view rotates to
 
 iOS devices on macOS deviceConnect hosts recover quickly when they are unplugged and plugged back in while deviceConnect is still bringing them online.
 
-// Source: KOB-56380 from PR #984
+== Appium automation improvements
+
+Appium automation sessions include the following improvements:
+
+* *Native element searches:* On iOS, searches can find app icons on the home screen and elements on system sheets, including Wi-Fi sign-in sheets.
+
+* *Configurable idle wait:* On Android and iOS, `waitForIdleTimeout` controls how long taps and swipes wait for the device to become idle when `kobiton:waitForIdle` is `true`. The default timeout is 10 seconds. See xref:automation-testing:capabilities/available-capabilities.adoc#_waitForIdleTimeout[waitForIdleTimeout].
+
+* *File push and pull:* On Android and iOS, Appium automation sessions support `mobile: pushFile` and `mobile: pullFile`. The commands have a 100 MB file-size limit, which does not apply to file transfers through Kobiton CLI.
+
+* *Inspector data:* Inspector data remains available throughout Android and iOS automation sessions, including after interruptions during app startup.
+
+// Sources:
+// KOB-56380 from PR #984
 // https://github.com/kobiton/docs/pull/984
-
-== Improved native element searches in iOS Appium automation sessions
-
-In iOS Appium automation sessions, native element searches find app icons on the home screen and elements on iOS system sheets, such as the Wi-Fi sign-in sheet for captive networks. A native element search waits up to 5 seconds for a result.
-
-// Source: KOB-52867 from PR #978
+// KOB-52867 from PR #978
 // https://github.com/kobiton/docs/pull/978
-
-== Configurable idle wait in Appium automation sessions
-
-In Appium automation sessions on Android and iOS devices, the `waitForIdleTimeout` capability controls how long each tap or swipe waits for the device to become idle when `kobiton:waitForIdle` is set to `true`. The default is 10 seconds.
-
-For details, see xref:automation-testing:capabilities/available-capabilities.adoc#_waitForIdleTimeout[waitForIdleTimeout].
-
-// Source: KOB-55752 from PR #952
+// KOB-55752 from PR #952
 // https://github.com/kobiton/docs/pull/952
-
-== File push and pull commands in Appium automation sessions
-
-Appium automation sessions on Android and iOS devices now support the `mobile: pushFile` and `mobile: pullFile` commands.
-
-Files larger than 100 MB are refused. File push and pull through Kobiton CLI are not subject to this limit.
-
-// Source: KOB-56322 from PR #985
+// KOB-56322 from PR #985
 // https://github.com/kobiton/docs/pull/985
-
-== Improved inspector data availability in automation sessions
-
-In iOS and Android automation sessions, inspector data remains available throughout the session, even when an app is slow to start. Steps captured while the app is not responding have no inspector data; later steps show inspector data as expected.
 
 // Source: KOB-55839 from PR #982
 // https://github.com/kobiton/docs/pull/982
@@ -122,8 +107,6 @@ The Kobiton MCP server offers three improvements for AI clients that use the MCP
 * **Stateless requests:** Clients can connect without an `initialize` handshake. Each request carries its protocol version and client capabilities in the `_meta` field.
 * **Change-notification subscriptions:** Clients register change-notification subscriptions through `subscriptions/listen`, which replaces the HTTP GET endpoint and the `resources/subscribe` and `resources/unsubscribe` methods.
 * **Per-request logging:** Log messages are sent only for requests that set a log level in the `io.modelcontextprotocol/logLevel` field of `_meta`.
-
-Clients that use earlier MCP versions are unaffected.
 
 // Source: KOB-55447 from PR #960
 // https://github.com/kobiton/docs/pull/960
