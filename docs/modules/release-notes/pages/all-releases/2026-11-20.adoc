@@ -107,9 +107,9 @@ In organizations with passcode mode enabled, *Power* in the deviceConnect Consol
 // Source: KOB-56380 from PR #984
 // https://github.com/kobiton/docs/pull/984
 
-== Native element searches on the iOS home screen in Xium sessions
+== Improved native element searches in iOS Appium automation sessions
 
-In iOS Xium automation sessions, native element searches now find app icons on the home screen when the home screen shows widgets. Previously, an accessibility id or predicate search for an icon such as Settings could fail with a `No active application elements` error or return no matching element, and reading or tapping an icon found by XPath failed with the same error.
+In iOS Appium automation sessions, native element searches now find app icons on the home screen when the home screen shows widgets. Previously, an accessibility id or predicate search for an icon such as Settings could fail with a `No active application elements` error or return no matching element, and reading or tapping an icon found by XPath failed with the same error.
 
 * Accessibility id, predicate, and XPath searches find app icons on the home screen of iPhone and iPad devices. `getAttribute`, `getRect`, and `click` work on the found element.
 * Native element searches also succeed on the Wi-Fi sign-in sheet that iOS shows for captive networks.
@@ -118,9 +118,9 @@ In iOS Xium automation sessions, native element searches now find app icons on t
 // Source: KOB-52867 from PR #978
 // https://github.com/kobiton/docs/pull/978
 
-== Control the idle wait before taps and swipes in Xium sessions
+== Control the idle wait before taps and swipes in Appium automation sessions
 
-In Xium sessions on Android and iOS devices with `kobiton:waitForIdle` set to `true`, the idle wait before each tap or swipe now lasts up to the session's `waitForIdleTimeout` value instead of a fixed 5 seconds.
+In Appium automation sessions on Android and iOS devices with `kobiton:waitForIdle` set to `true`, the idle wait before each tap or swipe now lasts up to the session's `waitForIdleTimeout` value instead of a fixed 5 seconds.
 
 * Set the value when the session starts with `appium:waitForIdleTimeout` or inside the `appium:settings` capability. If both are set, the `appium:settings` value is used.
 * Change the value during the session with the Appium Settings API. Set it to `0` to skip the idle wait.
@@ -134,9 +134,9 @@ For details, see xref:automation-testing:capabilities/available-capabilities.ado
 // Source: KOB-55752 from PR #952
 // https://github.com/kobiton/docs/pull/952
 
-== File push and pull commands in Xium sessions
+== File push and pull commands in Appium automation sessions
 
-Xium sessions on Android and iOS devices now support the `mobile: pushFile` and `mobile: pullFile` commands. Scripts that transfer files run the same way in Xium and basic Appium 2 sessions, and no longer return a `not implemented` error in Xium.
+Appium automation sessions on Android and iOS devices now support the `mobile: pushFile` and `mobile: pullFile` commands. Scripts that transfer files run the same way in Appium automation and basic Appium 2 sessions, and no longer return a `not implemented` error in Appium automation.
 
 * `mobile: pushFile` saves a file to the device. Pass the destination path in `remotePath` and the Base64-encoded file content in `payload`.
 * `mobile: pullFile` returns the content of the file at `remotePath`. If the file does not exist, the command returns an error.
