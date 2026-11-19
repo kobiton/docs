@@ -1,0 +1,9 @@
+// Source: KOB-56636
+
+== Rotate Screen keeps working in manual sessions
+
+Addressed an issue where selecting *Rotate Screen* repeatedly in a manual session could leave the live screen in the previous orientation's shape. After that happened, *Rotate Screen* stopped turning the device.
+
+The live screen now takes the device's current shape after each rotation, and *Rotate Screen* continues to turn the device on every selection. This applies to Android and iOS devices.
+
+// REVIEWER NOTE (KOB-56636): The ticket limits the fix to one deviceConnect live video configuration, and other configurations were not affected. Confirm whether the entry needs a customer-facing qualifier for the affected devices.
