@@ -60,19 +60,17 @@ Turning Lightning Mode off and back on restores the video stream and returns the
 
 == Faster recovery for iOS devices plugged back in during startup
 
-iOS devices on macOS deviceConnect hosts recover quickly when they are unplugged and plugged back in while deviceConnect is still bringing them online.
+iOS devices on macOS deviceConnect hosts recover quickly when they are unplugged and plugged back in while deviceConnect is bringing them online.
 
 == Appium automation improvements
 
-Appium automation sessions include the following improvements:
+On iOS, native element searches can find app icons on the home screen and elements on system sheets, including Wi-Fi sign-in sheets.
 
-* *Native element searches:* On iOS, searches can find app icons on the home screen and elements on system sheets, including Wi-Fi sign-in sheets.
+On Android and iOS, the `waitForIdleTimeout` capability controls how long taps and swipes wait for the device to become idle when `kobiton:waitForIdle` is `true`. The default timeout is 10 seconds. See xref:automation-testing:capabilities/available-capabilities.adoc#_waitForIdleTimeout[waitForIdleTimeout].
 
-* *Configurable idle wait:* On Android and iOS, `waitForIdleTimeout` controls how long taps and swipes wait for the device to become idle when `kobiton:waitForIdle` is `true`. The default timeout is 10 seconds. See xref:automation-testing:capabilities/available-capabilities.adoc#_waitForIdleTimeout[waitForIdleTimeout].
+Appium automation sessions on Android and iOS support the `mobile: pushFile` and `mobile: pullFile` commands. These commands have a 100 MB file-size limit, which does not apply to file transfers through Kobiton CLI.
 
-* *File push and pull:* On Android and iOS, Appium automation sessions support `mobile: pushFile` and `mobile: pullFile`. The commands have a 100 MB file-size limit, which does not apply to file transfers through Kobiton CLI.
-
-* *Inspector data:* Inspector data remains available throughout Android and iOS automation sessions, including after interruptions during app startup.
+Inspector data remains available in subsequent automation steps after interruptions during app startup.
 
 // Sources:
 // KOB-56380 from PR #984
@@ -135,4 +133,8 @@ For details on editing a Test Suite, see xref:test-management:test-suites.adoc[T
 
 == Component versions
 
-// Editor review required: component versions not yet verified.
+* Portal 2611.18
+* deviceConnect 2611.18
+
+// deviceConnect 2611.18 confirmed via KOB-56666, KOB-56638, KOB-56320 released on build 2611.182345.0+master.5e1a3bf.
+// Portal 2611.18 not directly verified in Jira; align with deviceConnect per editor direction.
