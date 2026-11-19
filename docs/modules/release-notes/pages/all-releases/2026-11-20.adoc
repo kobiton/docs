@@ -57,13 +57,13 @@ Lightning Mode no longer turns off by itself during Android manual sessions when
 // Source: KOB-56007 from PR #963
 // https://github.com/kobiton/docs/pull/963
 
-== Lightning mode stays on after locking an iOS device
+== Lightning Mode stays on after locking an iOS device
 
-In a manual session on an iOS device in Lightning mode, selecting *Power* to lock and wake the device no longer drops the session out of Lightning mode or leaves the live view frozen on the last app screen.
+In a manual session on an iOS device in Lightning Mode, selecting *Power* to lock and wake the device no longer drops the session out of Lightning Mode or leaves the live view frozen on the last app screen.
 
 * While the device is locked, the live view shows the lock screen, and taps and swipes work, so you can unlock the device from the session.
 * The Screen Broadcast prompt no longer appears repeatedly while the device is locked.
-* After you unlock the device, live video resumes in Lightning mode.
+* After you unlock the device, live video resumes in Lightning Mode.
 * Turning *Lightning Mode* back on restores the live video stream from the device.
 
 [NOTE]
@@ -174,7 +174,7 @@ The Kobiton MCP server now accepts stateless requests from MCP clients that use 
 
 - Each request carries its protocol version and client capabilities in the request `_meta` field.
 - Each result includes the server information in its `_meta` field.
-- Requests that specify an unsupported protocol version return an `UnsupportedProtocolVersionError` error.
+- Requests that specify an unsupported protocol version return an `UnsupportedProtocolVersionError`.
 
 MCP clients that connect with the `initialize` handshake continue to work without changes.
 
