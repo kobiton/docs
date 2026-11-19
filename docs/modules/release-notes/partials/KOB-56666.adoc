@@ -1,0 +1,15 @@
+// Release-note partial: KOB-56666
+// Team: deviceConnect (Phoenix) | Jira status at draft time: Wait For Deployment
+// Release Notes field: Release Email (customer-facing) and Support Notes (internal)
+// Release label: not set on the ticket (no fixVersion). Confirm the target release before publishing.
+//
+// REVIEWER NOTE:
+// A previous embedded nginx update (KOB-54637) was held as "infra, no user-visible change"
+// on the 2026-08-21 page. This ticket differs: it addresses published upstream security
+// vulnerabilities, is labeled `security`, and its Release Notes field requests a
+// customer-facing Release Email entry. Confirm that the docs team wants this entry published.
+// Upstream advisories: https://nginx.org/en/security_advisories.html
+
+== deviceConnect
+
+- Updated the nginx web server bundled with deviceConnect on macOS host machines to version 1.30.7. This version addresses security vulnerabilities published by the nginx project for version 1.30.4. The update is installed automatically when a host machine is upgraded to this deviceConnect release. No configuration changes are required, and existing nginx settings are preserved. Linux host machines aren't affected because they use the nginx package provided by the operating system.
