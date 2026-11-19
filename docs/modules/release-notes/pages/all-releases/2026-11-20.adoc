@@ -22,13 +22,6 @@ The Usage Dashboard is now available to organization admins in the *Usage* categ
 * See top users and most-used devices ranked by testing minutes, with each user or device listed once and all of its teams shown in the *Team* column.
 * Export the dashboard as a CSV file.
 
-// Source: KOB-56666 from PR #986
-// https://github.com/kobiton/docs/pull/986
-
-== deviceConnect
-
-- Updated the nginx web server bundled with deviceConnect on macOS host machines to version 1.30.7. This version addresses security vulnerabilities published by the nginx project for version 1.30.4. The update is installed automatically when a host machine is upgraded to this deviceConnect release. No configuration changes are required, and existing nginx settings are preserved. Linux host machines aren't affected because they use the nginx package provided by the operating system.
-
 // Source: KOB-56322 from PR #985
 // https://github.com/kobiton/docs/pull/985
 
@@ -59,23 +52,6 @@ In iOS Xium automation sessions, native element searches now find app icons on t
 // WebDriverSession.NativeSearchTimeoutMs in dc.ini, that defaults to 5000. Confirm whether
 // Standalone release notes should tell admins this setting exists.
 
-// Source: KOB-54744 from PR #983
-// https://github.com/kobiton/docs/pull/983
-
-== Network payload capture setup errors on iOS
-
-When network payload capture can't be set up at the start of an iOS session, Kobiton Portal now shows an error notification. The session stays usable but doesn't capture network traffic.
-
-* The notification reads `Network capture setup failed. This session will run without capturing traffic.` and describes the cause and what to do next.
-* Select *Details* to view the error reported by the device.
-* The notification appears in manual sessions and in the live view of automation sessions, and appears again after a page reload.
-* A successful setup shows no notification.
-* Android devices don't show this notification.
-
-See xref:manual-testing:local-devices/capture-network-payload-data.adoc[].
-
-// REVIEWER NOTE (KOB-54744): Product has not decided whether Details stays visible to customers. Some raw errors shown under Details contain internal terms or host file paths. Confirm before publishing the Details bullet.
-
 // Source: KOB-55839 from PR #982
 // https://github.com/kobiton/docs/pull/982
 
@@ -91,17 +67,6 @@ Signing details are now read from the provisioning profile of each iOS app uploa
 
 // REVIEWER NOTE (KOB-55839): API v2 app version responses gain a new key. Confirm whether to tell customers whose integrations validate responses against a strict schema to allow the new `signing` key.
 
-// Source: KOB-55797 from PR #981
-// https://github.com/kobiton/docs/pull/981
-
-== Network payload capture
-
-- Fixed an issue where a network capture profile that failed to load opened as an empty, editable form with no error. Saving that form replaced the stored profile's name, Capture Filter, and content types with the values entered.
-- When you edit a network capture profile, *Save* is available only after the profile loads. If the profile can't be loaded, the message "Could not load this Network Capture Profile. Reload the page to try again." appears and *Save* stays disabled.
-
-// REVIEWER NOTE (KOB-55797): The ticket has no fix version or release label. Confirm the release page this entry belongs on.
-// REVIEWER NOTE (KOB-55797): This entry uses the Network Capture Profile and Capture Filter labels from the ticket. The published docs still describe these as configurations under Settings > Configurations. The rename ships with KOB-54300 and KOB-54301. Confirm those tickets ship in the same release, or adjust the labels.
-
 // Source: KOB-56486 from PR #980
 // https://github.com/kobiton/docs/pull/980
 
@@ -110,22 +75,6 @@ Signing details are now read from the provisioning profile of each iOS app uploa
 When an iOS device on a macOS deviceConnect host is unplugged and plugged back in while deviceConnect is still bringing it online, the device now comes back online within seconds. Previously, the device could take about a minute to recover.
 
 Unplugging an iOS device also no longer logs the closed device connection as an error or warning in the deviceConnect logs. These messages are now logged at debug level.
-
-// Source: KOB-56638 from PR #979
-// https://github.com/kobiton/docs/pull/979
-
-== deviceConnect
-
-- The deviceConnect Linux packages (`.deb` and `.rpm`) now install a fixed Android Debug Bridge (`adb`) version, `36.0.2`, which matches the deviceConnect macOS package. Previously, the Linux packages installed the latest `adb` release available at build time. Linux host machines that updated to a build with `adb` `37.0.1` move to `36.0.2` on their next deviceConnect update.
-- The deviceConnect Linux packages no longer install the Android SDK command-line tools (`android/cmdline-tools`), which deviceConnect does not use.
-- The Android tools in the deviceConnect macOS package are unchanged.
-
-// REVIEWER NOTE (KOB-56638): The ticket also states the macOS package no longer carries
-// Linux-only files and is about 98 MB smaller. QA did not verify the size change, so it is
-// omitted here. Confirm before adding it.
-//
-// REVIEWER NOTE (KOB-56638): No fix version or release label is set on the ticket. Confirm
-// the release page this entry belongs on and the deviceConnect build number.
 
 // Source: KOB-52867 from PR #978
 // https://github.com/kobiton/docs/pull/978
@@ -142,41 +91,6 @@ In Xium sessions on Android and iOS devices with `kobiton:waitForIdle` set to `t
 Basic Appium 2 sessions are not affected.
 
 For details, see xref:automation-testing:capabilities/available-capabilities.adoc#_waitForIdleTimeout[waitForIdleTimeout].
-
-// Source: KOB-56410 from PR #977
-// https://github.com/kobiton/docs/pull/977
-
-== ZooKeeper reliability on Standalone
-
-Standalone deployments are better protected against ZooKeeper transaction log corruption, and administrators can recover from it with a single command.
-
-- During an update that restarts ZooKeeper, the existing ZooKeeper instance stops before the new instance starts. Previously, both instances could briefly run against the same data, which could corrupt the newest transaction log and prevent ZooKeeper and Kafka from starting. Existing installations receive this change when they update.
-- ZooKeeper is briefly unavailable during an update that restarts it. Kafka reconnects when ZooKeeper is available again.
-- ZooKeeper has up to 5 minutes to start before it is restarted, so a slow startup, such as replaying a large snapshot, is not interrupted.
-- If ZooKeeper fails to start with an `EOFException` on its newest transaction log, run `sudo kobictl fix zookeeper-txnlog`. The command moves the damaged log to a quarantine directory instead of deleting it, restarts ZooKeeper and Kafka, and clears a failed setup job that can otherwise stall the deployment.
-- The command makes no changes when the newest transaction log is healthy. It stops and reports the problem instead of recovering automatically when the damage is in an earlier log, or when Kafka reports an inconsistent cluster ID after it restarts, because automatic recovery could lose data in those cases.
-
-// REVIEWER NOTE (KOB-56410): The ticket has no fix version. Testing evidence references a 4.29.0S development build. Confirm the Standalone release this entry belongs to.
-// REVIEWER NOTE (KOB-56410): The recovery runbook named in the ticket lives with the installer, not the Admin Docs. If the Admin Docs will cover the manual recovery path, add the standard Admin Docs reference line.
-
-// Source: KOB-56004 from PR #976
-// https://github.com/kobiton/docs/pull/976
-
-== Apply Ubuntu security updates with `kobictl run os-patch`
-
-Standalone servers can apply Ubuntu security updates with `sudo kobictl run os-patch`. Packages pinned by the installed Standalone release are held during the update, so patching does not move them ahead of the versions the release requires.
-
-- `--dry-run` lists the packages that would be held and upgraded, without making changes.
-- `--yes` applies the updates without a confirmation prompt.
-- Holds are released after every run, including runs that fail or are interrupted. Packages held before the run stay held.
-- The hold list can be adjusted per server, for a single run or permanently.
-- When a kernel or NVIDIA driver update requires a restart, the run reports it. GPU workloads fail until the server restarts.
-- The run lists any package sources that could not be refreshed.
-
-For the complete procedure, refer to the Kobiton Admin Docs. If you need access, please contact your Account Manager.
-
-// REVIEWER NOTE (KOB-56004): Confirm the first Standalone release that includes `kobictl run os-patch`. The ticket lists no fix version.
-// REVIEWER NOTE (KOB-56004): The Admin Docs page for this command is planned as separate work. Confirm it is published before this entry references it.
 
 // Source: KOB-56376 from PR #973
 // https://github.com/kobiton/docs/pull/973
@@ -324,47 +238,30 @@ Addressed an issue in iOS manual sessions with *Lightning Mode* turned on where 
 * The *Resolution* shown on the *Video* tab follows the rotation.
 * The session video in Session Explorer shows landscape parts in a landscape frame, matching the step screenshots.
 
-// Source: KOB-55812 from PR #961
-// https://github.com/kobiton/docs/pull/961
-
-== Manual sessions on iPhone Duo devices and simulators
-
-Manual sessions on iPhone Duo devices and iPhone Duo simulators now show the screen in use and respond to input on both the cover screen and the inner screen. Previously, the session stream was black while the device was folded, and taps missed their targets while it was unfolded.
-
-* The session stream, taps, and screenshots follow the screen in use, folded or unfolded.
-* Select *Fold device* or *Unfold device* on the session toolbar to change the posture. The control appears only on foldable devices.
-* *Inspector* highlights and element taps in apps line up with the screen in use.
-* On a real iPhone Duo, *Rotate Screen* is disabled. On iPhone Duo simulators, *Rotate Screen* rotates the screen in use.
-
-For details and limitations, see xref:manual-testing:foldable-devices.adoc#_iphone_duo[iPhone Duo].
-
 // Source: KOB-55447 from PR #960
 // https://github.com/kobiton/docs/pull/960
 
-== Tidy up lists offline simulators and emulators
+== Tidy up lists offline emulators
 
-Offline simulators and emulators now appear in the *Remove unused devices* window, opened from *Tidy up* in *Settings* > *Device Management*. Previously, a search for an offline simulator or emulator returned "No offline devices found."
+Offline emulators now appear in the *Remove unused devices* window, opened from *Tidy up* in *Settings* > *Device Management*. Previously, a search for an offline emulator returned "No offline devices found."
 
-* Offline simulators and emulators are listed alongside offline private devices.
+* Offline emulators are listed alongside offline private devices.
 * Select them and click *Confirm* to hide them from the device list.
-* All listed devices are selected by default. If your organization has many offline simulators or emulators, review the selection before you confirm.
+* All listed devices are selected by default. If your organization has many offline emulators, review the selection before you confirm.
 
 See xref:device-lab-management:tidy-up-devices.adoc[].
 
 // Source: KOB-56355 from PR #958
 // https://github.com/kobiton/docs/pull/958
 
-== Kobiton Status Page link available on Private Cloud
+== Kobiton Status Page link in the help widget
 
-The help widget on some Private Cloud deployments now includes a *Kobiton Status Page* link. Select it to check service status at https://status.kobiton.com/[status.kobiton.com^], which opens in a new tab.
+The help widget in Kobiton Portal includes a *Kobiton Status Page* link. Select it to check service status at https://status.kobiton.com/[status.kobiton.com^], which opens in a new tab.
 
-- The link appears after *Support* in the help widget, in the same position as on Kobiton Public Cloud.
-- If the link is not shown, it is not enabled for your Private Cloud deployment.
+- The link appears after *Support* in the help widget.
 - The link is not available on Standalone deployments.
 
 See xref:help-widget:index.adoc[].
-
-// REVIEWER NOTE (KOB-56355): This change applies to a single Private Cloud deployment. Confirm whether it belongs in the public Cloud release notes or should be communicated only to the affected customer.
 
 // Source: KOB-54413 from PR #957
 // https://github.com/kobiton/docs/pull/957
@@ -443,83 +340,6 @@ Xium sessions on Android and iOS devices now support the `mobile: pushFile` and 
 * File push and pull through Kobiton CLI are not affected by this limit.
 
 // REVIEWER NOTE (KOB-55752): Confirm which deployments can change the `dc.ini` limit (for example, Standalone or customer-managed deviceConnect hosts only) and that "legacy `push_file` endpoint" is the customer-recognizable name for the older push route.
-
-// Source: KOB-55794 from PR #948
-// https://github.com/kobiton/docs/pull/948
-
-== Network capture profiles reject blank Capture Filter entries
-
-Creating or updating a network capture profile through the Kobiton API now returns a `400` error when a *Capture Filter* entry is empty, contains only whitespace, or is `null`. The profile isn't created or changed. Valid entries, such as `*`, `kobiton.*`, and `api.kobiton.com/v2/*`, are accepted as before.
-
-* Profiles saved with a blank *Capture Filter* entry before this change still appear in the list, open, and can be selected when starting a session.
-* To save changes to one of these profiles in Kobiton Portal, remove the empty *Capture Filter* entry first. Otherwise, *Save* shows an error message and the profile isn't changed.
-
-// REVIEWER NOTE (KOB-55794): The labels "network capture profile" and "Capture Filter" come from the Settings rename tracked in related tickets. The published configuration page still uses "Configurations" and "base domains". Confirm the rename ships in the same release before publishing this entry.
-
-// Source: KOB-54303 from PR #947
-// https://github.com/kobiton/docs/pull/947
-
-== Launch with network capture from the device list
-
-Launching a device with network capture from the device list now uses the same searchable profile picker as the device overview, so both launch paths behave the same way.
-
-* The launch menu option *Use custom configuration* is now *Launch with network capture*.
-* The dialog it opens is now titled *Network Capture*. Search saved profiles by name or domain, or select *+All requests *+* or *Custom*.
-* Selecting *Custom* shows a *Capture Filter* field in the dialog. The session doesn't launch until you enter at least one domain.
-* If the selected profile was deleted after you opened the dialog, the session doesn't launch. The dialog stays open, the selection is cleared, and a message shows that the profile no longer exists.
-* The previous non-searchable dropdown is removed.
-
-See xref:manual-testing:local-devices/capture-network-payload-data.adoc#_launch_with_network_capture_from_the_device_list[Launch with network capture from the device list].
-
-// Source: KOB-54300 from PR #946
-// https://github.com/kobiton/docs/pull/946
-
-=== Network capture settings use profile naming
-
-The settings for network payload capture now refer to profiles instead of configurations.
-
-* The *Configurations* tab in *Settings* is now *Network Capture*.
-* The listing page title is *Network Capture Profiles*, and the add button is *Add New Profile*.
-* When no profiles exist, the empty-state message references the add button that appears on the page.
-* Deleting a profile shows "profile" in both the confirmation dialog and the success message.
-
-Existing profiles remain in the list with their names unchanged. Network payload capture behavior is unchanged.
-
-// Source: KOB-36354 from PR #945
-// https://github.com/kobiton/docs/pull/945
-
-== Network Payload Capture
-
-* Fixed an issue where you couldn't save a new Network Payload Capture configuration if another organization already used the same configuration name. Configuration names now only need to be unique within your organization, and names that differ only by letter case are still treated as the same name.
-
-// REVIEWER NOTE (KOB-36354): The ticket identifies the Cloud environment only. Confirm whether this fix also applies to a Standalone release before placing this entry in Standalone release notes.
-
-// Source: KOB-54301 from PR #944
-// https://github.com/kobiton/docs/pull/944
-
-== Network capture profiles accept wildcard and path patterns
-
-Network capture profiles now save the wildcard and path patterns that were previously rejected, and the profile page is simpler.
-
-* Patterns such as `*`, `kobiton.*`, `portal.*.com`, and `api.kobiton.com/v2/*` can now be saved, so a profile can capture a whole domain or a path.
-* `localhost`, single-label hostnames, and hostnames with uppercase letters are also accepted.
-* The *Advanced Settings* section and its seven content-type checkboxes are removed. You no longer select content types. A profile captures the traffic that matches its filter.
-* The field is now named *Capture Filter*, and the profile page is now *Network Capture Profile*. In Session Overview, the capture panel is now *Network Capture Profile*, and its column is now *Capture Filter*.
-* Editing an existing profile doesn't change the content it captures.
-
-See xref:devices:local-devices/network-payload-capture/create-a-configuration.adoc[].
-
-// Source: KOB-56320 from PR #943
-// https://github.com/kobiton/docs/pull/943
-
-== deviceConnect runs on .NET 11
-
-deviceConnect now runs on .NET 11 on macOS and Linux hosts.
-
-* The macOS installer includes the .NET runtime instead of the full .NET SDK, which makes the installer about 300 MB smaller.
-* Updating deviceConnect on an existing host moves it to .NET 11.
-
-// REVIEWER NOTE (KOB-56320): The Jira Release Notes field is empty and Bug Type is set to Internal, but Release Email is selected as a release-note destination. Confirm this change should appear in customer-facing release notes.
 
 // Source: KOB-56405 from PR #942
 // https://github.com/kobiton/docs/pull/942
