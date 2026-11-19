@@ -22,88 +22,30 @@ The Usage Dashboard is now available to organization admins in the *Usage* categ
 * See top users and most-used devices ranked by testing minutes, with each user or device listed once and all of its teams shown in the *Team* column.
 * Export the dashboard as a CSV file.
 
-// Source: KOB-56322 from PR #985
-// https://github.com/kobiton/docs/pull/985
+// Source: KOB-56355 from PR #958
+// https://github.com/kobiton/docs/pull/958
 
-== Inspector data available after a slow app launch
+== Kobiton Status Page link in the help widget
 
-In iOS and Android automation sessions, inspector data is no longer lost for the rest of the session when an app is slow to start.
+The help widget in Kobiton Portal includes a *Kobiton Status Page* link. Select it to check service status at https://status.kobiton.com/[status.kobiton.com^], which opens in a new tab.
 
-Previously, after a script launched or relaunched an app that took a long time to start, most later steps in Session Explorer showed "There is no inspection data available for this screenshot." until the session ended. Now, only the steps captured while the app is not responding have no inspector data, and later steps show inspector data as expected.
+- The link appears after *Support* in the help widget.
+- The link is not available on Standalone deployments.
 
-// REVIEWER NOTE (KOB-56322): Jira also states that a manual session inspector refresh on a slow app now shows no inspector data instead of a failed request. Confirm what users see in this case before adding it to the release note.
+See xref:help-widget:index.adoc[].
 
-// Source: KOB-56380 from PR #984
-// https://github.com/kobiton/docs/pull/984
+// Source: KOB-56405 from PR #942
+// https://github.com/kobiton/docs/pull/942
 
-== Native element searches on the iOS home screen in Xium sessions
+== Redrawn fold and unfold icons
 
-In iOS Xium automation sessions, native element searches now find app icons on the home screen when the home screen shows widgets. Previously, an accessibility id or predicate search for an icon such as Settings could fail with a `No active application elements` error or return no matching element, and reading or tapping an icon found by XPath failed with the same error.
+The fold and unfold icons in the manual session toolbar and the Session Explorer timeline are redrawn so they are easier to recognize at 100% browser zoom.
 
-* Accessibility id, predicate, and XPath searches find app icons on the home screen of iPhone and iPad devices. `getAttribute`, `getRect`, and `click` work on the found element.
-* Native element searches also succeed on the Wi-Fi sign-in sheet that iOS shows for captive networks.
-* A native element search waits up to 5 seconds for a result instead of stopping after 500 milliseconds. A slow screen read, such as on an iPad home screen with widgets, no longer returns a missing element.
+* When the device is unfolded, the toolbar shows the new *Fold device* icon. When the device is folded, the toolbar shows the new *Unfold device* icon. Tooltips and fold behavior are unchanged.
+* The toolbar icon is a darker gray, and the entire icon changes color on hover and while pressed.
+* *FOLD DEVICE* and *UNFOLD DEVICE* steps in the Session Explorer timeline use the same icons.
 
-// REVIEWER NOTE (KOB-56380): The Jira impact field states that the 5-second native search wait
-// also applies to Android accessibility id and class searches, but QA has not tested Android.
-// Confirm whether the release note should mention Android.
-
-// REVIEWER NOTE (KOB-56380): The Jira deployment notes describe an optional deviceConnect setting,
-// WebDriverSession.NativeSearchTimeoutMs in dc.ini, that defaults to 5000. Confirm whether
-// Standalone release notes should tell admins this setting exists.
-
-// Source: KOB-55839 from PR #982
-// https://github.com/kobiton/docs/pull/982
-
-== Signing details for iOS app versions in the API
-
-Signing details are now read from the provisioning profile of each iOS app uploaded to App Repository and returned with the app version in the Kobiton API v2.
-
-* App version objects in API v2 responses, including an app's `latest_version` and `versions`, include a new `signing` object.
-* The `signing` object summarizes the provisioning profile type, whether the profile covers all devices or how many devices it covers, the team ID, and when the profile and the latest signing certificate expire.
-* Android app versions, and iOS app versions uploaded before this release, return `signing: null`.
-* Device UDIDs and certificate identity details are not returned.
-* Uploads work as before, including iOS apps without a provisioning profile.
-
-// REVIEWER NOTE (KOB-55839): API v2 app version responses gain a new key. Confirm whether to tell customers whose integrations validate responses against a strict schema to allow the new `signing` key.
-
-// Source: KOB-56486 from PR #980
-// https://github.com/kobiton/docs/pull/980
-
-== Faster recovery for iOS devices plugged back in during startup
-
-When an iOS device on a macOS deviceConnect host is unplugged and plugged back in while deviceConnect is still bringing it online, the device now comes back online within seconds. Previously, the device could take about a minute to recover.
-
-Unplugging an iOS device also no longer logs the closed device connection as an error or warning in the deviceConnect logs. These messages are now logged at debug level.
-
-// Source: KOB-52867 from PR #978
-// https://github.com/kobiton/docs/pull/978
-
-== Control the idle wait before taps and swipes in Xium sessions
-
-In Xium sessions on Android and iOS devices with `kobiton:waitForIdle` set to `true`, the idle wait before each tap or swipe now lasts up to the session's `waitForIdleTimeout` value instead of a fixed 5 seconds.
-
-* Set the value when the session starts with `appium:waitForIdleTimeout` or inside the `appium:settings` capability. If both are set, the `appium:settings` value is used.
-* Change the value during the session with the Appium Settings API. Set it to `0` to skip the idle wait.
-* The value is in milliseconds on both Android and iOS devices.
-* When no value is set, the wait before each tap or swipe now lasts up to 10 seconds instead of 5 seconds.
-
-Basic Appium 2 sessions are not affected.
-
-For details, see xref:automation-testing:capabilities/available-capabilities.adoc#_waitForIdleTimeout[waitForIdleTimeout].
-
-// Source: KOB-56376 from PR #973
-// https://github.com/kobiton/docs/pull/973
-
-== Power unlocks passcode devices in the deviceConnect Console viewer
-
-In organizations with passcode mode enabled, *Power* in the deviceConnect Console device viewer now unlocks a locked device the same way *Power* does in a Portal manual session. The lock screen appears, the device passcode is filled in automatically, and the device opens on the Home screen.
-
-* Applies to Android, iOS, and iPadOS devices that use the organization passcode.
-* In organizations without passcode mode, *Power* turns the device screen off and on, and no passcode is entered.
-* *Power* in Portal manual sessions is unchanged.
-
-// REVIEWER NOTE (KOB-56376): The source ticket fixes Power in the new deviceConnect Console viewer, which belongs to a parent feature that is still in progress. Confirm the new viewer is available to customers in this release. If it is not, fold this behavior into the viewer's release note instead of publishing it as a separate entry.
+For details, see xref:manual-testing:device-controls.adoc#_fold_or_unfold_device[Fold or unfold device].
 
 // Source: KOB-55540 from PR #972
 // https://github.com/kobiton/docs/pull/972
@@ -118,55 +60,6 @@ Manual sessions on supported Android and iOS devices can stream in Lightning Mod
 // REVIEWER NOTE (KOB-55540): Confirm availability. Jira states streaming without a GEM is turned on per deviceConnect host and stays off until enabled; confirm which hosts have it and whether customers can turn it on.
 // REVIEWER NOTE (KOB-55540): Confirm whether the HEVC recording behavior applies only to sessions streamed without a GEM or to all sessions, and whether the Video tab replaces the Lightning Mode Diagnostics panel for all sessions.
 
-// Source: KOB-56295 from PR #971
-// https://github.com/kobiton/docs/pull/971
-
-== Device sound returns after unlocking iOS devices in Lightning Mode
-
-Addressed an issue in iOS manual sessions in Lightning Mode where device sound could stop after the device was locked with *Power* and unlocked a few seconds later. The screen came back, but the live view and the session video stayed silent for the rest of the session, and turning Lightning Mode off and on or reloading the page did not restore the sound.
-
-Device sound now returns after each unlock, in both the live view and the session video.
-
-// REVIEWER NOTE (KOB-56295): The issue was reproduced and verified on a pre-release deviceConnect build of the Lightning Mode streaming path. Confirm that customers were exposed to this issue on a released build before publishing this entry as a fix.
-
-// Source: KOB-56373 from PR #970
-// https://github.com/kobiton/docs/pull/970
-
-== Reliable Power button unlock for passcode-enabled iOS devices in Lightning mode
-
-In organizations that use passcode (PIN) mode, iOS manual sessions in Lightning mode now recover when you select *Power* twice. After the second *Power*, the device passcode is filled in automatically, the device unlocks, and the live view shows the device screen again.
-
-Previously, the device could stay locked and the live view could stay black. Unlocking the device another way, such as selecting *Home* and entering the passcode, did not bring the live view back.
-
-The live view stays dark between the first and second *Power* while the device screen is off.
-
-// REVIEWER NOTE (KOB-56373): The source scopes this fix to Lightning mode when the device host streams the session directly; other hosts keep their previous Power behavior. Confirm that this streaming path is available to customers in this release, and whether the note needs a host or deployment qualifier.
-
-// Source: KOB-56407 from PR #969
-// https://github.com/kobiton/docs/pull/969
-
-== Lightning mode and session video recover after an iOS device reconnects
-
-Fixed an issue in iOS manual sessions where, after the device's USB cable was unplugged and plugged back in, Lightning mode could not be turned back on without a page reload, and the session video showed the screen from before the unplug for about 2 minutes.
-
-* After the device reconnects, the live view and the session video show the device's current screen right away.
-* Lightning mode comes back without a page reload. If *Lightning Mode* is off after the device reconnects, turn it on to bring back the device's stream.
-
-// REVIEWER NOTE (KOB-56407): The fix was verified on iOS devices whose Lightning mode stream comes from the host directly, without a GEM. Confirm that this Lightning mode setup is available to customers in this release, and whether the entry needs to name that setup.
-
-// Source: KOB-56397 from PR #968
-// https://github.com/kobiton/docs/pull/968
-
-== Lightning mode session pauses on iOS devices
-
-On iOS devices with a passcode, the live view and the session recording now keep showing the last screen while the session is paused, for example after the device language changes. Previously, the live view showed the passcode being set up again on the device.
-
-Taps and other input sent while the *Session paused as we check the connection. It'll resume shortly.* message is displayed are now discarded. Previously, this input was held and then ran on the device all at once when the session resumed, which could change a setting by mistake.
-
-// REVIEWER NOTE (KOB-56397): Testing covered Lightning mode streamed directly by deviceConnect
-// on hosts without a GEM. Sessions on GEM hosts were out of scope. Confirm whether this entry
-// needs a host-type qualifier.
-
 // Source: KOB-56017 from PR #967
 // https://github.com/kobiton/docs/pull/967
 
@@ -175,40 +68,6 @@ Taps and other input sent while the *Session paused as we check the connection. 
 Lightning Mode no longer turns off by itself during Android manual sessions when nothing changes on the device screen. Previously, Lightning Mode could turn off after the screen stayed unchanged for about a minute or longer, such as while reading a test case or waiting for an app. The *Lightning Mode Diagnostics* panel then logged a `Video stream connection failed` error even though the connection was healthy.
 
 // REVIEWER NOTE (KOB-56017): The fix was tested only on Lightning Mode sessions streamed by deviceConnect, which depend on the related WebRTC viewer change (KOB-55540). Confirm that change ships in the same release, or merge this entry into its release note, before publishing.
-
-// Source: KOB-56014 from PR #966
-// https://github.com/kobiton/docs/pull/966
-
-== Accurate session video timing in Lightning mode manual sessions
-
-Addressed an issue where the session video of a Lightning mode manual session could run ahead of the session. When the device screen stayed still, the video dropped those still stretches. Actions appeared in the video earlier than they happened, and the picture stopped changing partway through while the sound continued to the end.
-
-Session videos now play at the speed of the session on iOS and Android devices. Each step appears in the video at the time shown in Session Explorer, and the picture lasts as long as the sound.
-
-// REVIEWER NOTE (KOB-56014): The fix applies to session videos on device hosts where deviceConnect streams Lightning mode. Confirm whether the entry should name this host configuration, and whether it belongs in the Cloud release notes, the Standalone release notes, or both.
-
-// Source: KOB-56010 from PR #965
-// https://github.com/kobiton/docs/pull/965
-
-== Lightning mode after a device language change on iOS
-
-- In manual sessions on iOS and iPadOS devices, Lightning mode now resumes after the device language is changed to a language other than English. Previously, the session showed only lower-frame-rate screenshots for the rest of the session, even after *Lightning Mode* was turned on again. Screenshots are shown while the device stream restarts.
-- If Lightning mode does not resume on its own, turn *Lightning Mode* on again to restore the device stream. On devices running iOS 16, Lightning mode does not resume on its own after a language change, so turn *Lightning Mode* on again each time.
-
-// REVIEWER NOTE (KOB-56010): The fix is delivered in a deviceConnect build and applies when
-// deviceConnect streams Lightning mode. The same symptom on other Lightning mode hosts is tracked
-// separately in KOB-54366 and is not fixed by this ticket. Confirm which deployments and which
-// deviceConnect release include the fix, and whether Standalone and local deviceConnect
-// installations need that update, before publishing.
-
-// Source: KOB-56009 from PR #964
-// https://github.com/kobiton/docs/pull/964
-
-== Manual sessions
-
-- Fixed an issue on iOS devices in Lightning Mode where selecting the screen recording indicator in the status bar froze the live view for close to a minute before the device's stop-sharing dialog appeared. The live view now switches to screenshots right away and shows the dialog. Select *Cancel* to return to the device's video stream. If you select *Stop*, the session continues on screenshots until the video stream restarts.
-
-// REVIEWER NOTE (KOB-56009): The source evidence scopes this fix to iOS Lightning Mode sessions on hosts that stream Lightning Mode without a GEM. Confirm whether the entry needs that scope stated, or whether it applies to all iOS Lightning Mode sessions.
 
 // Source: KOB-56007 from PR #963
 // https://github.com/kobiton/docs/pull/963
@@ -238,94 +97,145 @@ Addressed an issue in iOS manual sessions with *Lightning Mode* turned on where 
 * The *Resolution* shown on the *Video* tab follows the rotation.
 * The session video in Session Explorer shows landscape parts in a landscape frame, matching the step screenshots.
 
-// Source: KOB-55447 from PR #960
-// https://github.com/kobiton/docs/pull/960
+// Source: KOB-56373 from PR #970
+// https://github.com/kobiton/docs/pull/970
 
-== Tidy up lists offline emulators
+== Reliable Power button unlock for passcode-enabled iOS devices in Lightning mode
 
-Offline emulators now appear in the *Remove unused devices* window, opened from *Tidy up* in *Settings* > *Device Management*. Previously, a search for an offline emulator returned "No offline devices found."
+In organizations that use passcode (PIN) mode, iOS manual sessions in Lightning mode now recover when you select *Power* twice. After the second *Power*, the device passcode is filled in automatically, the device unlocks, and the live view shows the device screen again.
 
-* Offline emulators are listed alongside offline private devices.
-* Select them and click *Confirm* to hide them from the device list.
-* All listed devices are selected by default. If your organization has many offline emulators, review the selection before you confirm.
+Previously, the device could stay locked and the live view could stay black. Unlocking the device another way, such as selecting *Home* and entering the passcode, did not bring the live view back.
 
-See xref:device-lab-management:tidy-up-devices.adoc[].
+The live view stays dark between the first and second *Power* while the device screen is off.
 
-// Source: KOB-56355 from PR #958
-// https://github.com/kobiton/docs/pull/958
+// REVIEWER NOTE (KOB-56373): The source scopes this fix to Lightning mode when the device host streams the session directly; other hosts keep their previous Power behavior. Confirm that this streaming path is available to customers in this release, and whether the note needs a host or deployment qualifier.
 
-== Kobiton Status Page link in the help widget
+// Source: KOB-56295 from PR #971
+// https://github.com/kobiton/docs/pull/971
 
-The help widget in Kobiton Portal includes a *Kobiton Status Page* link. Select it to check service status at https://status.kobiton.com/[status.kobiton.com^], which opens in a new tab.
+== Device sound returns after unlocking iOS devices in Lightning Mode
 
-- The link appears after *Support* in the help widget.
-- The link is not available on Standalone deployments.
+Addressed an issue in iOS manual sessions in Lightning Mode where device sound could stop after the device was locked with *Power* and unlocked a few seconds later. The screen came back, but the live view and the session video stayed silent for the rest of the session, and turning Lightning Mode off and on or reloading the page did not restore the sound.
 
-See xref:help-widget:index.adoc[].
+Device sound now returns after each unlock, in both the live view and the session video.
 
-// Source: KOB-54413 from PR #957
-// https://github.com/kobiton/docs/pull/957
+// REVIEWER NOTE (KOB-56295): The issue was reproduced and verified on a pre-release deviceConnect build of the Lightning Mode streaming path. Confirm that customers were exposed to this issue on a released build before publishing this entry as a fix.
 
-== Change notifications for MCP 2026-07-28 clients
+// Source: KOB-56397 from PR #968
+// https://github.com/kobiton/docs/pull/968
 
-AI clients that use the MCP 2026-07-28 specification now request change notifications from the Kobiton MCP server through `subscriptions/listen`. For these clients, `subscriptions/listen` replaces the HTTP GET endpoint and the `resources/subscribe` and `resources/unsubscribe` methods.
+== Lightning mode session pauses on iOS devices
 
-* A client opts in to each notification type it needs: tool list changes, prompt list changes, resource list changes, and updates to subscribed resources. The server acknowledges the request with a subscription ID.
-* Progress and log notifications (`notifications/progress` and `notifications/message`) continue to arrive on the response stream of the request that produced them, not on `subscriptions/listen`.
-* AI clients that use earlier MCP versions are unaffected.
+On iOS devices with a passcode, the live view and the session recording now keep showing the last screen while the session is paused, for example after the device language changes. Previously, the live view showed the passcode being set up again on the device.
 
-// REVIEWER NOTE (KOB-54413): The ticket describes `subscriptions/listen` as a long-lived stream that delivers opted-in change notifications, but the implementation plan describes it as acknowledging the request and then completing the stream. Confirm whether clients receive list-change notifications on this stream before publishing, and keep this entry limited to the acknowledgment if they do not.
+Taps and other input sent while the *Session paused as we check the connection. It'll resume shortly.* message is displayed are now discarded. Previously, this input was held and then ran on the device all at once when the session resumed, which could change a setting by mistake.
 
-// Source: KOB-54418 from PR #956
-// https://github.com/kobiton/docs/pull/956
+// REVIEWER NOTE (KOB-56397): Testing covered Lightning mode streamed directly by deviceConnect
+// on hosts without a GEM. Sessions on GEM hosts were out of scope. Confirm whether this entry
+// needs a host-type qualifier.
 
-== Interrupted MCP response streams are not resumed
+// Source: KOB-56010 from PR #965
+// https://github.com/kobiton/docs/pull/965
 
-The Kobiton MCP server follows the MCP 2026-07-28 specification for interrupted responses. If a response stream breaks before the response is complete, the in-flight request is not resumed or redelivered.
+== Lightning mode after a device language change on iOS
 
-* SSE event IDs are not sent, and the `Last-Event-ID` header is ignored.
-* To recover, send the request again as a new request with a new request ID. The server handles it as an independent request.
+- In manual sessions on iOS and iPadOS devices, Lightning mode now resumes after the device language is changed to a language other than English. Previously, the session showed only lower-frame-rate screenshots for the rest of the session, even after *Lightning Mode* was turned on again. Screenshots are shown while the device stream restarts.
+- If Lightning mode does not resume on its own, turn *Lightning Mode* on again to restore the device stream. On devices running iOS 16, Lightning mode does not resume on its own after a language change, so turn *Lightning Mode* on again each time.
 
-// REVIEWER NOTE (KOB-54418): The source lists this story as verification-only under the MCP 2026-07-28 release. Confirm whether the Kobiton MCP server previously supported stream resumability. If it did not, this entry describes current behavior rather than a change and may belong with the existing MCP 2026-07-28 release-note entry instead of standing alone.
+// REVIEWER NOTE (KOB-56010): The fix is delivered in a deviceConnect build and applies when
+// deviceConnect streams Lightning mode. The same symptom on other Lightning mode hosts is tracked
+// separately in KOB-54366 and is not fixed by this ticket. Confirm which deployments and which
+// deviceConnect release include the fix, and whether Standalone and local deviceConnect
+// installations need that update, before publishing.
 
-// Source: KOB-54411 from PR #955
-// https://github.com/kobiton/docs/pull/955
+// Source: KOB-56009 from PR #964
+// https://github.com/kobiton/docs/pull/964
 
-== Kobiton MCP server supports stateless requests
+== Manual sessions
 
-The Kobiton MCP server now accepts stateless requests from MCP clients that use the MCP 2026-07-28 specification. These clients no longer need to start with an `initialize` handshake.
+- Fixed an issue on iOS devices in Lightning Mode where selecting the screen recording indicator in the status bar froze the live view for close to a minute before the device's stop-sharing dialog appeared. The live view now switches to screenshots right away and shows the dialog. Select *Cancel* to return to the device's video stream. If you select *Stop*, the session continues on screenshots until the video stream restarts.
 
-- Each request carries its protocol version and client capabilities in the request `_meta` field.
-- Each result includes the server information in its `_meta` field.
-- Requests that specify an unsupported protocol version return an `UnsupportedProtocolVersionError` error.
+// REVIEWER NOTE (KOB-56009): The source evidence scopes this fix to iOS Lightning Mode sessions on hosts that stream Lightning Mode without a GEM. Confirm whether the entry needs that scope stated, or whether it applies to all iOS Lightning Mode sessions.
 
-MCP clients that connect with the `initialize` handshake continue to work without changes.
+// Source: KOB-56407 from PR #969
+// https://github.com/kobiton/docs/pull/969
 
-// Source: KOB-54414 from PR #954
-// https://github.com/kobiton/docs/pull/954
+== Lightning mode and session video recover after an iOS device reconnects
 
-== Per-request logging for MCP 2026-07-28 clients
+Fixed an issue in iOS manual sessions where, after the device's USB cable was unplugged and plugged back in, Lightning mode could not be turned back on without a page reload, and the session video showed the screen from before the unplug for about 2 minutes.
 
-For AI clients that use version 2026-07-28 of the Model Context Protocol (MCP), log messages from the Kobiton MCP server are now controlled per request.
+* After the device reconnects, the live view and the session video show the device's current screen right away.
+* Lightning mode comes back without a page reload. If *Lightning Mode* is off after the device reconnects, turn it on to bring back the device's stream.
 
-- Log messages are sent only for requests that set a log level in the `io.modelcontextprotocol/logLevel` field of `_meta`. Requests without this field receive no log messages.
-- The `ping` and `logging/setLevel` requests and the `notifications/roots/list_changed` notification are no longer supported for these clients.
-- Clients that use earlier MCP versions are not affected.
+// REVIEWER NOTE (KOB-56407): The fix was verified on iOS devices whose Lightning mode stream comes from the host directly, without a GEM. Confirm that this Lightning mode setup is available to customers in this release, and whether the entry needs to name that setup.
 
-// REVIEWER NOTE (KOB-54414): The Cloud November 6, 2026 release notes already announce support for MCP specification 2026-07-28. Decide whether to publish this entry separately or fold it into that existing section.
-// REVIEWER NOTE (KOB-54414): The ticket description states the removal without qualification, while the ticket's Impact notes say clients that use the earlier initialization handshake keep the previous protocol. Confirm that `ping` and `logging/setLevel` still work for earlier-version clients before publishing the last bullet.
+// Source: KOB-56014 from PR #966
+// https://github.com/kobiton/docs/pull/966
 
-// Source: KOB-56280 from PR #953
-// https://github.com/kobiton/docs/pull/953
+== Accurate session video timing in Lightning mode manual sessions
 
-== Saving text with invalid Unicode characters
+Addressed an issue where the session video of a Lightning mode manual session could run ahead of the session. When the device screen stayed still, the video dropped those still stretches. Actions appeared in the video earlier than they happened, and the picture stopped changing partway through while the sound continued to the end.
 
-Text that contains an unpaired Unicode surrogate character no longer causes a save to fail.
+Session videos now play at the speed of the session on iOS and Android devices. Each step appears in the video at the time shown in Session Explorer, and the picture lasts as long as the sound.
 
-* Fixed an issue where renaming a Test Suite, or saving other text, failed with a server error when the text contained an unpaired Unicode surrogate character. The text now saves, and the invalid character is stored as the Unicode replacement character (�).
-* Fixed an issue where session completion and usage were not recorded for some subscriptions.
+// REVIEWER NOTE (KOB-56014): The fix applies to session videos on device hosts where deviceConnect streams Lightning mode. Confirm whether the entry should name this host configuration, and whether it belongs in the Cloud release notes, the Standalone release notes, or both.
 
-For details on editing a Test Suite, see xref:test-management:test-suites.adoc[Test Suites].
+// Source: KOB-56486 from PR #980
+// https://github.com/kobiton/docs/pull/980
+
+== Faster recovery for iOS devices plugged back in during startup
+
+When an iOS device on a macOS deviceConnect host is unplugged and plugged back in while deviceConnect is still bringing it online, the device now comes back online within seconds. Previously, the device could take about a minute to recover.
+
+Unplugging an iOS device also no longer logs the closed device connection as an error or warning in the deviceConnect logs. These messages are now logged at debug level.
+
+// Source: KOB-56376 from PR #973
+// https://github.com/kobiton/docs/pull/973
+
+== Power unlocks passcode devices in the deviceConnect Console viewer
+
+In organizations with passcode mode enabled, *Power* in the deviceConnect Console device viewer now unlocks a locked device the same way *Power* does in a Portal manual session. The lock screen appears, the device passcode is filled in automatically, and the device opens on the Home screen.
+
+* Applies to Android, iOS, and iPadOS devices that use the organization passcode.
+* In organizations without passcode mode, *Power* turns the device screen off and on, and no passcode is entered.
+* *Power* in Portal manual sessions is unchanged.
+
+// REVIEWER NOTE (KOB-56376): The source ticket fixes Power in the new deviceConnect Console viewer, which belongs to a parent feature that is still in progress. Confirm the new viewer is available to customers in this release. If it is not, fold this behavior into the viewer's release note instead of publishing it as a separate entry.
+
+// Source: KOB-56380 from PR #984
+// https://github.com/kobiton/docs/pull/984
+
+== Native element searches on the iOS home screen in Xium sessions
+
+In iOS Xium automation sessions, native element searches now find app icons on the home screen when the home screen shows widgets. Previously, an accessibility id or predicate search for an icon such as Settings could fail with a `No active application elements` error or return no matching element, and reading or tapping an icon found by XPath failed with the same error.
+
+* Accessibility id, predicate, and XPath searches find app icons on the home screen of iPhone and iPad devices. `getAttribute`, `getRect`, and `click` work on the found element.
+* Native element searches also succeed on the Wi-Fi sign-in sheet that iOS shows for captive networks.
+* A native element search waits up to 5 seconds for a result instead of stopping after 500 milliseconds. A slow screen read, such as on an iPad home screen with widgets, no longer returns a missing element.
+
+// REVIEWER NOTE (KOB-56380): The Jira impact field states that the 5-second native search wait
+// also applies to Android accessibility id and class searches, but QA has not tested Android.
+// Confirm whether the release note should mention Android.
+
+// REVIEWER NOTE (KOB-56380): The Jira deployment notes describe an optional deviceConnect setting,
+// WebDriverSession.NativeSearchTimeoutMs in dc.ini, that defaults to 5000. Confirm whether
+// Standalone release notes should tell admins this setting exists.
+
+// Source: KOB-52867 from PR #978
+// https://github.com/kobiton/docs/pull/978
+
+== Control the idle wait before taps and swipes in Xium sessions
+
+In Xium sessions on Android and iOS devices with `kobiton:waitForIdle` set to `true`, the idle wait before each tap or swipe now lasts up to the session's `waitForIdleTimeout` value instead of a fixed 5 seconds.
+
+* Set the value when the session starts with `appium:waitForIdleTimeout` or inside the `appium:settings` capability. If both are set, the `appium:settings` value is used.
+* Change the value during the session with the Appium Settings API. Set it to `0` to skip the idle wait.
+* The value is in milliseconds on both Android and iOS devices.
+* When no value is set, the wait before each tap or swipe now lasts up to 10 seconds instead of 5 seconds.
+
+Basic Appium 2 sessions are not affected.
+
+For details, see xref:automation-testing:capabilities/available-capabilities.adoc#_waitForIdleTimeout[waitForIdleTimeout].
 
 // Source: KOB-55752 from PR #952
 // https://github.com/kobiton/docs/pull/952
@@ -341,18 +251,114 @@ Xium sessions on Android and iOS devices now support the `mobile: pushFile` and 
 
 // REVIEWER NOTE (KOB-55752): Confirm which deployments can change the `dc.ini` limit (for example, Standalone or customer-managed deviceConnect hosts only) and that "legacy `push_file` endpoint" is the customer-recognizable name for the older push route.
 
-// Source: KOB-56405 from PR #942
-// https://github.com/kobiton/docs/pull/942
+// Source: KOB-56322 from PR #985
+// https://github.com/kobiton/docs/pull/985
 
-== Redrawn fold and unfold icons
+== Inspector data available after a slow app launch
 
-The fold and unfold icons in the manual session toolbar and the Session Explorer timeline are redrawn so they are easier to recognize at 100% browser zoom.
+In iOS and Android automation sessions, inspector data is no longer lost for the rest of the session when an app is slow to start.
 
-* When the device is unfolded, the toolbar shows the new *Fold device* icon. When the device is folded, the toolbar shows the new *Unfold device* icon. Tooltips and fold behavior are unchanged.
-* The toolbar icon is a darker gray, and the entire icon changes color on hover and while pressed.
-* *FOLD DEVICE* and *UNFOLD DEVICE* steps in the Session Explorer timeline use the same icons.
+Previously, after a script launched or relaunched an app that took a long time to start, most later steps in Session Explorer showed "There is no inspection data available for this screenshot." until the session ended. Now, only the steps captured while the app is not responding have no inspector data, and later steps show inspector data as expected.
 
-For details, see xref:manual-testing:device-controls.adoc#_fold_or_unfold_device[Fold or unfold device].
+// REVIEWER NOTE (KOB-56322): Jira also states that a manual session inspector refresh on a slow app now shows no inspector data instead of a failed request. Confirm what users see in this case before adding it to the release note.
+
+// Source: KOB-55839 from PR #982
+// https://github.com/kobiton/docs/pull/982
+
+== Signing details for iOS app versions in the API
+
+Signing details are now read from the provisioning profile of each iOS app uploaded to App Repository and returned with the app version in the Kobiton API v2.
+
+* App version objects in API v2 responses, including an app's `latest_version` and `versions`, include a new `signing` object.
+* The `signing` object summarizes the provisioning profile type, whether the profile covers all devices or how many devices it covers, the team ID, and when the profile and the latest signing certificate expire.
+* Android app versions, and iOS app versions uploaded before this release, return `signing: null`.
+* Device UDIDs and certificate identity details are not returned.
+* Uploads work as before, including iOS apps without a provisioning profile.
+
+// REVIEWER NOTE (KOB-55839): API v2 app version responses gain a new key. Confirm whether to tell customers whose integrations validate responses against a strict schema to allow the new `signing` key.
+
+// Source: KOB-54411 from PR #955
+// https://github.com/kobiton/docs/pull/955
+
+== Kobiton MCP server supports stateless requests
+
+The Kobiton MCP server now accepts stateless requests from MCP clients that use the MCP 2026-07-28 specification. These clients no longer need to start with an `initialize` handshake.
+
+- Each request carries its protocol version and client capabilities in the request `_meta` field.
+- Each result includes the server information in its `_meta` field.
+- Requests that specify an unsupported protocol version return an `UnsupportedProtocolVersionError` error.
+
+MCP clients that connect with the `initialize` handshake continue to work without changes.
+
+// Source: KOB-54413 from PR #957
+// https://github.com/kobiton/docs/pull/957
+
+== Change notifications for MCP 2026-07-28 clients
+
+AI clients that use the MCP 2026-07-28 specification now request change notifications from the Kobiton MCP server through `subscriptions/listen`. For these clients, `subscriptions/listen` replaces the HTTP GET endpoint and the `resources/subscribe` and `resources/unsubscribe` methods.
+
+* A client opts in to each notification type it needs: tool list changes, prompt list changes, resource list changes, and updates to subscribed resources. The server acknowledges the request with a subscription ID.
+* Progress and log notifications (`notifications/progress` and `notifications/message`) continue to arrive on the response stream of the request that produced them, not on `subscriptions/listen`.
+* AI clients that use earlier MCP versions are unaffected.
+
+// REVIEWER NOTE (KOB-54413): The ticket describes `subscriptions/listen` as a long-lived stream that delivers opted-in change notifications, but the implementation plan describes it as acknowledging the request and then completing the stream. Confirm whether clients receive list-change notifications on this stream before publishing, and keep this entry limited to the acknowledgment if they do not.
+
+// Source: KOB-54414 from PR #954
+// https://github.com/kobiton/docs/pull/954
+
+== Per-request logging for MCP 2026-07-28 clients
+
+For AI clients that use version 2026-07-28 of the Model Context Protocol (MCP), log messages from the Kobiton MCP server are now controlled per request.
+
+- Log messages are sent only for requests that set a log level in the `io.modelcontextprotocol/logLevel` field of `_meta`. Requests without this field receive no log messages.
+- The `ping` and `logging/setLevel` requests and the `notifications/roots/list_changed` notification are no longer supported for these clients.
+- Clients that use earlier MCP versions are not affected.
+
+// REVIEWER NOTE (KOB-54414): The Cloud November 6, 2026 release notes already announce support for MCP specification 2026-07-28. Decide whether to publish this entry separately or fold it into that existing section.
+// REVIEWER NOTE (KOB-54414): The ticket description states the removal without qualification, while the ticket's Impact notes say clients that use the earlier initialization handshake keep the previous protocol. Confirm that `ping` and `logging/setLevel` still work for earlier-version clients before publishing the last bullet.
+
+// Source: KOB-54418 from PR #956
+// https://github.com/kobiton/docs/pull/956
+
+== Interrupted MCP response streams are not resumed
+
+The Kobiton MCP server follows the MCP 2026-07-28 specification for interrupted responses. If a response stream breaks before the response is complete, the in-flight request is not resumed or redelivered.
+
+* SSE event IDs are not sent, and the `Last-Event-ID` header is ignored.
+* To recover, send the request again as a new request with a new request ID. The server handles it as an independent request.
+
+// REVIEWER NOTE (KOB-54418): The source lists this story as verification-only under the MCP 2026-07-28 release. Confirm whether the Kobiton MCP server previously supported stream resumability. If it did not, this entry describes current behavior rather than a change and may belong with the existing MCP 2026-07-28 release-note entry instead of standing alone.
+
+// Source: KOB-55447 from PR #960
+// https://github.com/kobiton/docs/pull/960
+
+== Tidy up lists offline emulators
+
+Offline emulators now appear in the *Remove unused devices* window, opened from *Tidy up* in *Settings* > *Device Management*. Previously, a search for an offline emulator returned "No offline devices found."
+
+* Offline emulators are listed alongside offline private devices.
+* Select them and click *Confirm* to hide them from the device list.
+* All listed devices are selected by default. If your organization has many offline emulators, review the selection before you confirm.
+
+See xref:device-lab-management:tidy-up-devices.adoc[].
+
+// Source: KOB-56280 from PR #953
+// https://github.com/kobiton/docs/pull/953
+
+== Session completion and usage recording for all subscriptions
+
+Fixed an issue where session completion and usage were not recorded for some subscriptions.
+
+// Source: KOB-56280 from PR #953
+// https://github.com/kobiton/docs/pull/953
+
+== Saving text with invalid Unicode characters
+
+Text that contains an unpaired Unicode surrogate character no longer causes a save to fail.
+
+* Fixed an issue where renaming a Test Suite, or saving other text, failed with a server error when the text contained an unpaired Unicode surrogate character. The text now saves, and the invalid character is stored as the Unicode replacement character (�).
+
+For details on editing a Test Suite, see xref:test-management:test-suites.adoc[Test Suites].
 
 == Component versions
 
