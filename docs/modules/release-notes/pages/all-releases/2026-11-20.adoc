@@ -76,9 +76,8 @@ If live video has to restart after the device is unlocked, the device returns to
 
 == Rotated screens keep a landscape frame in iOS Lightning Mode sessions
 
-Addressed an issue in iOS manual sessions with *Lightning Mode* turned on where rotating the device to landscape squeezed the screen into a portrait frame. This occurred while the session streamed screenshots instead of the device's own video, for example while the device showed its lock screen after *Power* was selected.
+In iOS manual sessions with *Lightning Mode* turned on, the live view now switches to a landscape frame at the device's aspect ratio when the device rotates to landscape, and back to portrait when the device rotates back. Previously, rotating the device to landscape squeezed the screen into a portrait frame while the session was streaming screenshots instead of the device's own video, for example while the device showed its lock screen after *Power* was selected.
 
-* The live view now switches to a landscape frame at the device's aspect ratio, and back to portrait when the device rotates back.
 * The *Resolution* shown on the *Video* tab follows the rotation.
 * The session video in Session Explorer shows landscape parts in a landscape frame, matching the step screenshots.
 
@@ -136,7 +135,7 @@ For details, see xref:automation-testing:capabilities/available-capabilities.ado
 
 == File push and pull commands in Appium automation sessions
 
-Appium automation sessions on Android and iOS devices now support the `mobile: pushFile` and `mobile: pullFile` commands. Scripts that transfer files run the same way in Appium automation and basic Appium 2 sessions, and no longer return a `not implemented` error in Appium automation.
+Appium automation sessions on Android and iOS devices now support the `mobile: pushFile` and `mobile: pullFile` commands, which previously returned a `not implemented` error.
 
 * `mobile: pushFile` saves a file to the device. Pass the destination path in `remotePath` and the Base64-encoded file content in `payload`.
 * `mobile: pullFile` returns the content of the file at `remotePath`. If the file does not exist, the command returns an error.
@@ -218,7 +217,7 @@ See xref:device-lab-management:tidy-up-devices.adoc[].
 
 == Session completion and usage recording
 
-Fixed an issue where session completion and usage were not recorded for some subscriptions.
+Session completion and usage are now recorded for every organization, including subscriptions with unusual usage counts.
 
 // Source: KOB-56280 from PR #953
 // https://github.com/kobiton/docs/pull/953
