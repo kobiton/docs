@@ -30,8 +30,6 @@ The Usage Dashboard replaces the previous Usage Report.
 
 == Lightning Mode improvements
 
-Lightning Mode provides more reliable streaming during Android and iOS manual sessions.
-
 On Android, Lightning Mode remains active during periods of inactivity.
 
 On iOS, Lightning Mode remains active when locking and unlocking the device using *Power*. The live view displays the lock screen and returns to the screen that was open before locking. The live view also adjusts automatically when the device rotates.
@@ -102,9 +100,9 @@ See xref:device-lab-management:tidy-up-devices.adoc[].
 // Source: KOB-56486 from PR #980
 // https://github.com/kobiton/docs/pull/980
 
-== Faster recovery for iOS devices plugged back in during startup
+== Improved iOS device reconnection
 
-iOS devices on macOS deviceConnect hosts recover quickly when they are unplugged and plugged back in while deviceConnect is bringing them online.
+iOS devices reconnect more quickly when disconnected and reconnected to a macOS deviceConnect host during device initialization.
 
 // Source: KOB-56405 from PR #942
 // https://github.com/kobiton/docs/pull/942
@@ -118,9 +116,9 @@ For details, see xref:manual-testing:device-controls.adoc#_fold_or_unfold_device
 // Source: KOB-56280 from PR #953
 // https://github.com/kobiton/docs/pull/953
 
-== Session completion and usage recording
+== Improved session completion recording
 
-Session completion and usage are recorded for every organization. Previously, these events could fail to be recorded for some organizations, which affected usage and billing data accuracy.
+Session completion and usage records are captured correctly for subscriptions with invalid usage counts, improving the accuracy of usage and billing data.
 
 // Source: KOB-56280 from PR #953
 // https://github.com/kobiton/docs/pull/953
