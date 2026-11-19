@@ -47,19 +47,6 @@ The fold and unfold icons in the manual session toolbar and the Session Explorer
 
 For details, see xref:manual-testing:device-controls.adoc#_fold_or_unfold_device[Fold or unfold device].
 
-// Source: KOB-55540 from PR #972
-// https://github.com/kobiton/docs/pull/972
-
-== Lightning Mode on Android and iOS devices without a GEM
-
-Manual sessions on supported Android and iOS devices can stream in Lightning Mode directly from the device, without a Graphic Extension Manager (GEM). Devices that use a GEM keep their existing stream.
-
-* The *Video* tab in the session sidebar shows the stream codec and connection metrics.
-* A session's recorded video is encoded in the codec its viewers watched in. Sessions watched in HEVC are recorded as HEVC instead of H.264. Firefox, and Chrome on a computer without HEVC decoding, can't play these recordings on the session page.
-
-// REVIEWER NOTE (KOB-55540): Confirm availability. Jira states streaming without a GEM is turned on per deviceConnect host and stays off until enabled; confirm which hosts have it and whether customers can turn it on.
-// REVIEWER NOTE (KOB-55540): Confirm whether the HEVC recording behavior applies only to sessions streamed without a GEM or to all sessions, and whether the Video tab replaces the Lightning Mode Diagnostics panel for all sessions.
-
 // Source: KOB-56017 from PR #967
 // https://github.com/kobiton/docs/pull/967
 
@@ -164,8 +151,6 @@ Xium sessions on Android and iOS devices now support the `mobile: pushFile` and 
 In iOS and Android automation sessions, inspector data is no longer lost for the rest of the session when an app is slow to start.
 
 Previously, after a script launched or relaunched an app that took a long time to start, most later steps in Session Explorer showed "There is no inspection data available for this screenshot." until the session ended. Now, only the steps captured while the app is not responding have no inspector data, and later steps show inspector data as expected.
-
-// REVIEWER NOTE (KOB-56322): Jira also states that a manual session inspector refresh on a slow app now shows no inspector data instead of a failed request. Confirm what users see in this case before adding it to the release note.
 
 // Source: KOB-55839 from PR #982
 // https://github.com/kobiton/docs/pull/982
