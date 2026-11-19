@@ -12,7 +12,7 @@ Cloud release notes are typically published weekly and summarize changes since t
 // Source: KOB-55633 from PR #987
 // https://github.com/kobiton/docs/pull/987
 
-=== Usage Dashboard replaces the Usage Report
+== Usage Dashboard replaces the Usage Report
 
 The Usage Dashboard is now available to organization admins in the *Usage* category of Analytics Reports. It replaces the previous Usage Report.
 
@@ -67,8 +67,6 @@ Manual sessions on supported Android and iOS devices can stream in Lightning Mod
 
 Lightning Mode no longer turns off by itself during Android manual sessions when nothing changes on the device screen. Previously, Lightning Mode could turn off after the screen stayed unchanged for about a minute or longer, such as while reading a test case or waiting for an app. The *Lightning Mode Diagnostics* panel then logged a `Video stream connection failed` error even though the connection was healthy.
 
-// REVIEWER NOTE (KOB-56017): The fix was tested only on Lightning Mode sessions streamed by deviceConnect, which depend on the related WebRTC viewer change (KOB-55540). Confirm that change ships in the same release, or merge this entry into its release note, before publishing.
-
 // Source: KOB-56007 from PR #963
 // https://github.com/kobiton/docs/pull/963
 
@@ -96,89 +94,6 @@ Addressed an issue in iOS manual sessions with *Lightning Mode* turned on where 
 * The live view now switches to a landscape frame at the device's aspect ratio, and back to portrait when the device rotates back.
 * The *Resolution* shown on the *Video* tab follows the rotation.
 * The session video in Session Explorer shows landscape parts in a landscape frame, matching the step screenshots.
-
-// Source: KOB-56373 from PR #970
-// https://github.com/kobiton/docs/pull/970
-
-== Reliable Power button unlock for passcode-enabled iOS devices in Lightning mode
-
-In organizations that use passcode (PIN) mode, iOS manual sessions in Lightning mode now recover when you select *Power* twice. After the second *Power*, the device passcode is filled in automatically, the device unlocks, and the live view shows the device screen again.
-
-Previously, the device could stay locked and the live view could stay black. Unlocking the device another way, such as selecting *Home* and entering the passcode, did not bring the live view back.
-
-The live view stays dark between the first and second *Power* while the device screen is off.
-
-// REVIEWER NOTE (KOB-56373): The source scopes this fix to Lightning mode when the device host streams the session directly; other hosts keep their previous Power behavior. Confirm that this streaming path is available to customers in this release, and whether the note needs a host or deployment qualifier.
-
-// Source: KOB-56295 from PR #971
-// https://github.com/kobiton/docs/pull/971
-
-== Device sound returns after unlocking iOS devices in Lightning Mode
-
-Addressed an issue in iOS manual sessions in Lightning Mode where device sound could stop after the device was locked with *Power* and unlocked a few seconds later. The screen came back, but the live view and the session video stayed silent for the rest of the session, and turning Lightning Mode off and on or reloading the page did not restore the sound.
-
-Device sound now returns after each unlock, in both the live view and the session video.
-
-// REVIEWER NOTE (KOB-56295): The issue was reproduced and verified on a pre-release deviceConnect build of the Lightning Mode streaming path. Confirm that customers were exposed to this issue on a released build before publishing this entry as a fix.
-
-// Source: KOB-56397 from PR #968
-// https://github.com/kobiton/docs/pull/968
-
-== Lightning mode session pauses on iOS devices
-
-On iOS devices with a passcode, the live view and the session recording now keep showing the last screen while the session is paused, for example after the device language changes. Previously, the live view showed the passcode being set up again on the device.
-
-Taps and other input sent while the *Session paused as we check the connection. It'll resume shortly.* message is displayed are now discarded. Previously, this input was held and then ran on the device all at once when the session resumed, which could change a setting by mistake.
-
-// REVIEWER NOTE (KOB-56397): Testing covered Lightning mode streamed directly by deviceConnect
-// on hosts without a GEM. Sessions on GEM hosts were out of scope. Confirm whether this entry
-// needs a host-type qualifier.
-
-// Source: KOB-56010 from PR #965
-// https://github.com/kobiton/docs/pull/965
-
-== Lightning mode after a device language change on iOS
-
-- In manual sessions on iOS and iPadOS devices, Lightning mode now resumes after the device language is changed to a language other than English. Previously, the session showed only lower-frame-rate screenshots for the rest of the session, even after *Lightning Mode* was turned on again. Screenshots are shown while the device stream restarts.
-- If Lightning mode does not resume on its own, turn *Lightning Mode* on again to restore the device stream. On devices running iOS 16, Lightning mode does not resume on its own after a language change, so turn *Lightning Mode* on again each time.
-
-// REVIEWER NOTE (KOB-56010): The fix is delivered in a deviceConnect build and applies when
-// deviceConnect streams Lightning mode. The same symptom on other Lightning mode hosts is tracked
-// separately in KOB-54366 and is not fixed by this ticket. Confirm which deployments and which
-// deviceConnect release include the fix, and whether Standalone and local deviceConnect
-// installations need that update, before publishing.
-
-// Source: KOB-56009 from PR #964
-// https://github.com/kobiton/docs/pull/964
-
-== Manual sessions
-
-- Fixed an issue on iOS devices in Lightning Mode where selecting the screen recording indicator in the status bar froze the live view for close to a minute before the device's stop-sharing dialog appeared. The live view now switches to screenshots right away and shows the dialog. Select *Cancel* to return to the device's video stream. If you select *Stop*, the session continues on screenshots until the video stream restarts.
-
-// REVIEWER NOTE (KOB-56009): The source evidence scopes this fix to iOS Lightning Mode sessions on hosts that stream Lightning Mode without a GEM. Confirm whether the entry needs that scope stated, or whether it applies to all iOS Lightning Mode sessions.
-
-// Source: KOB-56407 from PR #969
-// https://github.com/kobiton/docs/pull/969
-
-== Lightning mode and session video recover after an iOS device reconnects
-
-Fixed an issue in iOS manual sessions where, after the device's USB cable was unplugged and plugged back in, Lightning mode could not be turned back on without a page reload, and the session video showed the screen from before the unplug for about 2 minutes.
-
-* After the device reconnects, the live view and the session video show the device's current screen right away.
-* Lightning mode comes back without a page reload. If *Lightning Mode* is off after the device reconnects, turn it on to bring back the device's stream.
-
-// REVIEWER NOTE (KOB-56407): The fix was verified on iOS devices whose Lightning mode stream comes from the host directly, without a GEM. Confirm that this Lightning mode setup is available to customers in this release, and whether the entry needs to name that setup.
-
-// Source: KOB-56014 from PR #966
-// https://github.com/kobiton/docs/pull/966
-
-== Accurate session video timing in Lightning mode manual sessions
-
-Addressed an issue where the session video of a Lightning mode manual session could run ahead of the session. When the device screen stayed still, the video dropped those still stretches. Actions appeared in the video earlier than they happened, and the picture stopped changing partway through while the sound continued to the end.
-
-Session videos now play at the speed of the session on iOS and Android devices. Each step appears in the video at the time shown in Session Explorer, and the picture lasts as long as the sound.
-
-// REVIEWER NOTE (KOB-56014): The fix applies to session videos on device hosts where deviceConnect streams Lightning mode. Confirm whether the entry should name this host configuration, and whether it belongs in the Cloud release notes, the Standalone release notes, or both.
 
 // Source: KOB-56486 from PR #980
 // https://github.com/kobiton/docs/pull/980
@@ -213,14 +128,6 @@ In iOS Xium automation sessions, native element searches now find app icons on t
 * Native element searches also succeed on the Wi-Fi sign-in sheet that iOS shows for captive networks.
 * A native element search waits up to 5 seconds for a result instead of stopping after 500 milliseconds. A slow screen read, such as on an iPad home screen with widgets, no longer returns a missing element.
 
-// REVIEWER NOTE (KOB-56380): The Jira impact field states that the 5-second native search wait
-// also applies to Android accessibility id and class searches, but QA has not tested Android.
-// Confirm whether the release note should mention Android.
-
-// REVIEWER NOTE (KOB-56380): The Jira deployment notes describe an optional deviceConnect setting,
-// WebDriverSession.NativeSearchTimeoutMs in dc.ini, that defaults to 5000. Confirm whether
-// Standalone release notes should tell admins this setting exists.
-
 // Source: KOB-52867 from PR #978
 // https://github.com/kobiton/docs/pull/978
 
@@ -246,10 +153,8 @@ Xium sessions on Android and iOS devices now support the `mobile: pushFile` and 
 
 * `mobile: pushFile` saves a file to the device. Pass the destination path in `remotePath` and the Base64-encoded file content in `payload`.
 * `mobile: pullFile` returns the content of the file at `remotePath`. If the file does not exist, the command returns an error.
-* By default, files larger than 100 MB are refused by `mobile: pushFile`, `mobile: pullFile`, and the legacy `push_file` endpoint. The limit is set by the `WebDriverController.MaxFileTransferBytes` key in the deviceConnect `dc.ini` file.
+* By default, files larger than 100 MB are refused by `mobile: pushFile`, `mobile: pullFile`, and the legacy `push_file` endpoint.
 * File push and pull through Kobiton CLI are not affected by this limit.
-
-// REVIEWER NOTE (KOB-55752): Confirm which deployments can change the `dc.ini` limit (for example, Standalone or customer-managed deviceConnect hosts only) and that "legacy `push_file` endpoint" is the customer-recognizable name for the older push route.
 
 // Source: KOB-56322 from PR #985
 // https://github.com/kobiton/docs/pull/985
@@ -275,8 +180,6 @@ Signing details are now read from the provisioning profile of each iOS app uploa
 * Device UDIDs and certificate identity details are not returned.
 * Uploads work as before, including iOS apps without a provisioning profile.
 
-// REVIEWER NOTE (KOB-55839): API v2 app version responses gain a new key. Confirm whether to tell customers whose integrations validate responses against a strict schema to allow the new `signing` key.
-
 // Source: KOB-54411 from PR #955
 // https://github.com/kobiton/docs/pull/955
 
@@ -295,13 +198,11 @@ MCP clients that connect with the `initialize` handshake continue to work withou
 
 == Change notifications for MCP 2026-07-28 clients
 
-AI clients that use the MCP 2026-07-28 specification now request change notifications from the Kobiton MCP server through `subscriptions/listen`. For these clients, `subscriptions/listen` replaces the HTTP GET endpoint and the `resources/subscribe` and `resources/unsubscribe` methods.
+AI clients that use the MCP 2026-07-28 specification now register change-notification subscriptions with the Kobiton MCP server through `subscriptions/listen`. For these clients, `subscriptions/listen` replaces the HTTP GET endpoint and the `resources/subscribe` and `resources/unsubscribe` methods.
 
 * A client opts in to each notification type it needs: tool list changes, prompt list changes, resource list changes, and updates to subscribed resources. The server acknowledges the request with a subscription ID.
 * Progress and log notifications (`notifications/progress` and `notifications/message`) continue to arrive on the response stream of the request that produced them, not on `subscriptions/listen`.
 * AI clients that use earlier MCP versions are unaffected.
-
-// REVIEWER NOTE (KOB-54413): The ticket describes `subscriptions/listen` as a long-lived stream that delivers opted-in change notifications, but the implementation plan describes it as acknowledging the request and then completing the stream. Confirm whether clients receive list-change notifications on this stream before publishing, and keep this entry limited to the acknowledgment if they do not.
 
 // Source: KOB-54414 from PR #954
 // https://github.com/kobiton/docs/pull/954
@@ -313,21 +214,6 @@ For AI clients that use version 2026-07-28 of the Model Context Protocol (MCP), 
 - Log messages are sent only for requests that set a log level in the `io.modelcontextprotocol/logLevel` field of `_meta`. Requests without this field receive no log messages.
 - The `ping` and `logging/setLevel` requests and the `notifications/roots/list_changed` notification are no longer supported for these clients.
 - Clients that use earlier MCP versions are not affected.
-
-// REVIEWER NOTE (KOB-54414): The Cloud November 6, 2026 release notes already announce support for MCP specification 2026-07-28. Decide whether to publish this entry separately or fold it into that existing section.
-// REVIEWER NOTE (KOB-54414): The ticket description states the removal without qualification, while the ticket's Impact notes say clients that use the earlier initialization handshake keep the previous protocol. Confirm that `ping` and `logging/setLevel` still work for earlier-version clients before publishing the last bullet.
-
-// Source: KOB-54418 from PR #956
-// https://github.com/kobiton/docs/pull/956
-
-== Interrupted MCP response streams are not resumed
-
-The Kobiton MCP server follows the MCP 2026-07-28 specification for interrupted responses. If a response stream breaks before the response is complete, the in-flight request is not resumed or redelivered.
-
-* SSE event IDs are not sent, and the `Last-Event-ID` header is ignored.
-* To recover, send the request again as a new request with a new request ID. The server handles it as an independent request.
-
-// REVIEWER NOTE (KOB-54418): The source lists this story as verification-only under the MCP 2026-07-28 release. Confirm whether the Kobiton MCP server previously supported stream resumability. If it did not, this entry describes current behavior rather than a change and may belong with the existing MCP 2026-07-28 release-note entry instead of standing alone.
 
 // Source: KOB-55447 from PR #960
 // https://github.com/kobiton/docs/pull/960
@@ -345,7 +231,7 @@ See xref:device-lab-management:tidy-up-devices.adoc[].
 // Source: KOB-56280 from PR #953
 // https://github.com/kobiton/docs/pull/953
 
-== Session completion and usage recording for all subscriptions
+== Session completion and usage recording
 
 Fixed an issue where session completion and usage were not recorded for some subscriptions.
 
