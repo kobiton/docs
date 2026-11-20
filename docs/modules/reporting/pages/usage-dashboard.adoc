@@ -1,0 +1,61 @@
+= Usage Dashboard
+// Source: KOB-55633
+
+Analyze session activity over a selected date range, including total sessions, testing minutes, top users, most-used devices, and usage by team.
+
+== Availability
+
+The Usage Dashboard is available to organization ADMINs.
+
+== Open the dashboard
+
+Select *Analytics Reports*, then *Usage Dashboard*.
+
+// REVIEWER NOTE (KOB-55633): Confirm the navigation path. The ticket confirms the report title and the Usage category but not the menu labels used to reach it.
+
+== Use the dashboard
+
+Select a date range using *Begin Date* and *End Date* to review usage during that period.
+
+To filter by team, select a team from the *Team* dropdown.
+
+// REVIEWER NOTE (KOB-55633): Confirm whether the date range has a maximum length (the ticket mentions a 3-month maximum for Usage reports in passing) and whether the Team filter accepts one or multiple teams.
+
+== Export the dashboard
+
+Select *Export*, choose *Download as CSV* or *Download as PNG*, then select *Download*.
+
+The CSV file contains all dashboard sections in a single sheet.
+
+In PNG exports, the *UDID* column in *Most Used Devices* can overlap the *Serial Number* column. Use the CSV export to view all columns.
+
+== Understand the dashboard
+
+=== Summary metrics
+
+Four values appear at the top of the dashboard:
+
+* *Sessions*: Total sessions for the selected date range.
+* *Minutes*: Total testing minutes for the selected date range.
+* *Devices Used*: Number of unique devices used during the date range.
+* *Active Users*: Number of users active during the date range.
+
+=== Session Count By Type and Date
+
+Shows session counts across the selected date range, grouped by session type.
+
+=== Team Statistics
+
+Shows usage totals for each team.
+
+=== Top Users
+
+Shows users ranked by testing minutes, highest first. The *Team* column lists every team the user was active in during the date range.
+
+=== Most Used Devices
+
+Shows devices ranked by testing minutes, highest first. The *Team* column lists every team that used the device during the date range.
+
+Each user and each device appears in one row, even when they were active in more than one team.
+
+// REVIEWER NOTE (KOB-55633): Confirm whether activity from Kobiton personnel accounts should be mentioned. The ticket states these accounts are excluded from every section.
