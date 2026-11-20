@@ -17,7 +17,7 @@ Kobiton now supports iPhone Duo devices in manual sessions. You can interact wit
 * Select *Fold device* or *Unfold device* on the session toolbar to change the fold state.
 * *Inspector* highlights and element taps in apps align with the active screen.
 
-For details and known limitations, see xref:manual-testing.adoc#_iphone_duo[iPhone Duo].
+For details, see xref:manual-testing.adoc#_iphone_duo[iPhone Duo].
 
 == Analytics reports
 
@@ -139,6 +139,49 @@ See xref:help-widget:index.adoc[].
 == deviceConnect
 
 - Updated the nginx web server bundled with deviceConnect on macOS host machines to version 1.30.7. This version addresses security vulnerabilities published by the nginx project for version 1.30.4. The update is installed automatically when a host machine is upgraded to this deviceConnect release. No configuration changes are required, and existing nginx settings are preserved. Linux host machines aren't affected because they use the nginx package provided by the operating system.
+
+// Source: KOB-55958
+
+== Basic Appium 3 sessions and updated Appium 2 drivers
+
+Basic Appium 3 is now available alongside basic Appium 2. Appium 3 is opt-in only: a session uses Appium 3 only when `kobiton:runtime` is set to `appium3`. This release also updates the drivers for basic Appium 2, including major version updates to the XCUITest and UiAutomator2 drivers. Driver updates can change command or capability behavior, so test existing basic Appium 2 scripts after this release.
+
+*Highlights*
+
+* Set `kobiton:runtime` to `appium3` to run a session on Appium 3. See xref:automation-testing:basic-appium-server/launch-a-basic-appium-3-session.adoc[Launch a basic Appium 3 session].
+* `appium2` is now accepted as a `kobiton:runtime` value. It selects the same basic Appium 2 runtime as `appium`.
+* Scripts that use `appium` or `appium2`, and scripts that use the default Xium runtime, continue to run on their existing runtime.
+* Basic Appium 2 and basic Appium 3 sessions can run at the same time on different devices.
+* A session with an unrecognized `kobiton:runtime` value, such as `appium4`, is refused with an `Unknown runtime` error.
+
+*Appium component versions*
+
+[cols="1,1,1"]
+|===
+| |Basic Appium 2 |Basic Appium 3
+
+|Appium
+|2.19.0
+|3.9.0
+
+|XCUITest driver
+|9.10.5
+|12.22.8
+
+|UiAutomator2 driver
+|4.2.9
+|8.7.3
+
+|Flutter driver
+|2.19.0
+|4.1.0
+
+|Flutter Integration driver
+|1.5.1
+|2.0.3
+|===
+
+// REVIEWER NOTE (KOB-55958): Confirm whether the driver updates also affect sessions on the default Xium runtime, and whether this change applies to Cloud, Standalone, or both.
 
 ////
 // Source: KOB-55417
