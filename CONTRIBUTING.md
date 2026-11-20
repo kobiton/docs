@@ -683,22 +683,6 @@ Content.
 
 One day we'll create our own, but for now we use the [Microsoft Style Guide](https://learn.microsoft.com/en-us/style-guide/brand-voice-above-all-simple-human) to inform our style and voice.
 
-## Docker commands
+## Docker images
 
-We use [Docker](https://www.docker.com/) and [GitHub actions](https://docs.github.com/en/actions/learn-github-actions/understanding-github-actions) to publish content to [docs.kobiton.com](https://docs.kobiton.com/) and [portal.kobiton.com](https://portal.kobiton.com/).
-
-### Create an image for the docs
-
-To create a docker image for [docs.kobiton.com](https://docs.kobiton.com/), run:
-
-```shell
-docker build -t kobiton/docs:1.0 -f docker/docs/Dockerfile .
-```
-
-### Create an image for the portal
-
-To create a docker image for the help widget on [portal.kobiton.com](https://portal.kobiton.com/), run:
-
-```shell
-docker build -t kobiton/widget:1.0 -f docker/widget/Dockerfile .
-```
+Standalone installs serve the docs and the portal's help widget from Docker images, which CI builds with [Dagger](https://dagger.io/) on every push to `main`. [docs.kobiton.com](https://docs.kobiton.com/) is published separately and doesn't use them. To build or run the images yourself, see [`.dagger/README.md`](.dagger/README.md).

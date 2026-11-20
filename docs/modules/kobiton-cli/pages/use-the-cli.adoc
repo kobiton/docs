@@ -83,7 +83,9 @@ Many commands that operate on an active CLI session require session context. Pro
 
 The session token ensures each command is applied to the intended active session.
 
-If you are running multiple sessions concurrently, always provide the session context explicitly. This prevents commands from being applied to the wrong session when more than one session is active.
+If you are running multiple sessions concurrently, always provide the session context explicitly. Each open session needs its own session token. Pass it with `-a`, or set it in `KOBITON_SESSION_TOKEN`. If you provide neither, the CLI uses the token saved in `~/.kobiton/.session`, which belongs only to the most recently created session.
+
+If `-s` names a different session from the one the session token belongs to, most commands stop with an error that identifies the token to pass. For exceptions, see xref:cli-commands.adoc#global-options[Global options]. To resolve the error, pass the token returned by `kobiton session create` for the session named with `-s`.
 
 For interactive use, set `KOBITON_SESSION_TOKEN` once per terminal session.
 

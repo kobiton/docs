@@ -3,7 +3,7 @@
 
 Use the xref:manual-testing:device-controls.adoc#_fold_or_unfold_device[fold control] to fold and unfold book-style foldable Android devices, such as Samsung Galaxy Z Fold and Google Pixel Fold, during a manual session. The fold control does not support flip-style devices, such as Samsung Galaxy Z Flip.
 
-The following limitations apply to Portal 2610.15 or later, deviceConnect 2610.15 or later, and Standalone 4.27.2S or later.
+The fold control is also available for iPhone Duo devices. For iPhone Duo behavior, see <<_iphone_duo>>.
 
 == Supported sessions
 
@@ -44,6 +44,30 @@ The screenshot for a fold or unfold step is captured shortly after the change. I
 ** Select *Power* to turn on the screen and display the lock screen, then select *Power* again to unlock the device.
 ** Alternatively, turn off *Lightning Mode* in *Speedometer*. Video resumes at a lower frame rate.
 * *Starting a session on a folded device*: The session cannot be used. It displays only the cover screen's always-on display, and *Unfold device* and *Home* have no effect.
+
+[#_iphone_duo]
+== iPhone Duo
+
+// Source: KOB-55812
+// REVIEWER NOTE (KOB-55812): Confirm the minimum Portal and deviceConnect versions for this section.
+
+The fold control is available for physical iPhone Duo devices in manual sessions. The control appears only on foldable devices.
+
+The session stream, taps, and screenshots follow the screen in use: the cover screen while the device is folded, and the inner screen while it is unfolded.
+
+=== Rotation
+
+*Rotate Screen* is not supported on iPhone Duo devices, whether folded or unfolded.
+
+=== Folding from the home screen
+
+When the device is folded while the home screen is displayed, Control Center can appear on the stream for about a second before the home screen returns. Folding while an app is displayed doesn't show Control Center.
+
+=== Inspector
+
+*Inspector* highlights and element taps in apps line up with the screen in use. On the home screen, *Inspector* can highlight some app icons in the wrong position.
+
+// REVIEWER NOTE (KOB-55812): QA reported issues still open at release that are moving to a follow-up ticket: Appium can miss a visible element right after a fold or unfold; on a physical iPhone Duo, the app in front can return to the home screen after several fold and unfold changes. Decide whether to list them as limitations here.
 
 == Hosting foldable devices
 

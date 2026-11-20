@@ -58,7 +58,7 @@ When every device list in the response is empty, `listDevices` returns an `appli
 
 A favorite device can also appear in the private or cloud list, so the totals don't add up to a single device count.
 
-Devices returned with `is_cloud: true` have restricted shell-command access in CLI sessions. Devices returned with `is_cloud: false` are unrestricted.
+Devices returned with `is_cloud: true` have restricted shell-command access in CLI sessions. Devices returned with `is_cloud: false` are unrestricted. For commands that run on restricted devices, see xref:manual-testing:adb-commands.adoc#_public_devices[adb shell commands on public devices].
 
 For the `virtualUsb` filter on `listDevices`, the admin-only `listHostingMachines` and `configureHostingMachine` tools, and their response fields, see xref:mcp/virtualusb-mcp-tools.adoc[virtualUSB MCP tools]. For the same settings in Kobiton Portal, see xref:device-lab-management:device-management-page.adoc[].
 

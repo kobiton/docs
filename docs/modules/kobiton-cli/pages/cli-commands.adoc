@@ -6,13 +6,15 @@ Commands that operate on an active CLI session require session context.
 
 The CLI determines the session context using one of the following methods:
 
-* Use the session token stored in `~/.token/.session` (default). This file is automatically created or updated when you run `kobiton session create`, and commands will use the token for the *most recently created session*.
+* Use the session token stored in `~/.kobiton/.session` (default). This file is automatically created or updated when you run `kobiton session create`, and commands will use the token for the *most recently created session*.
 * Pass the session token with the command: `--session-token <SESSION_TOKEN>` (or `-a <SESSION_TOKEN>`)
 * Set the `KOBITON_SESSION_TOKEN` environment variable
 
 The `<SESSION_TOKEN>` value is returned when you create a CLI session. For details, see xref:use-the-cli.adoc[Start using Kobiton CLI].
 
-Relying on the default `~/.token/.session` file is convenient for single-user workflows but is not recommended for environments with concurrent or parallel executions, because it is overwritten each time a new CLI session is created.
+Relying on the default `~/.kobiton/.session` file is convenient for single-user workflows but is not recommended for environments with concurrent or parallel executions, because it is overwritten each time a new CLI session is created.
+
+Each open session needs its own session token. When more than one session is open, pass the token for the session you want. For details, see xref:use-the-cli.adoc[Start using Kobiton CLI].
 
 == Synopsis
 
@@ -41,7 +43,7 @@ These options are accepted by every command and subcommand.
 | `-a`, `--session-token` | `<SESSION_TOKEN>` | Authorization token returned by `session create`.
 | `-u`, `--udid` | `<UDID>` | UDID of the device to use.
 | `-p`, `--portal` | `<PORTAL>` | Portal base address (Kobiton API/portal endpoint).
-| `-s`, `--session-id` | `<SESSION_ID>` | Kobiton session ID returned by `session create`.
+| `-s`, `--session-id` | `<SESSION_ID>` | Kobiton session ID returned by `session create`. Defaults to the session token's session. For most commands, `-s` must match the token's session, or the command fails. `session end`, `session terminate`, `session delete`, and `session show` act on the session named with `-s`.
 | `-l`, `--log-level` | `<LOG_LEVEL>` | Log verbosity: `error`, `warn`, `info`, `debug`, `trace`. Default: `info`.
 | `-h`, `--help` | | Print help for the command or subcommand.
 | `-V`, `--version` | | Print version (top-level command only).
@@ -76,6 +78,9 @@ kobiton app run [OPTIONS] <APP_IDENTIFIER> [ARGS]...
 
 | `-e`, `--env` | `<KEY> <VALUE>` | Environment variable pair. Repeatable: `--env KEY VALUE`.
 |===
+
+// Source: KOB-56464
+The bundle ID is a positional argument. `-n` is not a valid flag for `app run` and prints usage text.
 
 Plus all <<global-options,global options>>.
 
@@ -158,7 +163,7 @@ Plus all <<global-options,global options>>.
 
 *Requires:*
 
-* `-s <SESSION_ID>`, and `-a <SESSION_TOKEN>` or the `KOBITON_SESSION_TOKEN` environment variable
+* `-a <SESSION_TOKEN>` or the `KOBITON_SESSION_TOKEN` environment variable
 * One of:
 ** `-n <NAME>`, or
 ** both `--app-id <APP_ID>` and `--app-version-id <APP_VERSION_ID>`
@@ -216,6 +221,7 @@ kobiton app uninstall -u 3e4e7fe7 com.example.app
 The application is uninstalled successfully
 ----
 
+[#_app_upload]
 === `app upload`
 
 Upload an application to the Kobiton App Repo.
@@ -485,7 +491,7 @@ Pushed 505031 bytes to /data/local/tmp/foo.dat
 ====
 *A refused push fails with a non-zero exit code.*
 
-A device can refuse the destination path. Public cloud and trial devices run a restricted session that limits writes to the permitted directories, and any device refuses a write to a path it does not permit. When a push is refused, nothing is written to the device. See <<adb-shell-restricted-sessions,restricted sessions>>.
+A push is refused when the destination path isn't writable on the device. When a push is refused, nothing is written to the device.
 
 A refused push reports the reason and exits with a non-zero status. A successful push is unaffected and exits `0`.
 
@@ -682,17 +688,11 @@ Accepts all <<global-options,global options>>.
 ====
 *Public cloud and trial devices run a restricted shell.*
 
-Commands are checked against a deny-by-default whitelist before they reach the device, and the interactive shell is unavailable, so every invocation must name a command to run. Private cloud and Standalone deployments with dedicated devices are not restricted.
+The interactive shell is unavailable, so every invocation must name a command to run. Some dangerous operations are also restricted. Private cloud and Standalone deployments with dedicated devices are not restricted.
 
-A restricted session rejects control characters and these shell metacharacters anywhere in the input:
+When a command is rejected, the CLI prints the reason to stderr and exits with a non-zero status.
 
-----
-& ; | $ ` ( ) > < \ " ' * ? ~ { } # !
-----
-
-Pipes, redirection, command and variable substitution, backgrounding, globbing, and quoting are therefore unavailable on the device. Arguments cannot contain whitespace, and a command line cannot exceed 1024 characters. Individual commands further restrict which arguments and file paths they accept, so a whitelisted command can still reject an argument.
-
-Run `kobiton device shell --help` for the current list of allowed commands, permitted directories, and per-command restrictions.
+The same restriction applies to the *adb shell* control in manual sessions. For examples of commands that run on restricted devices, see xref:manual-testing:adb-commands.adoc#_public_devices[adb shell commands on public devices].
 ====
 
 .Example
@@ -707,10 +707,17 @@ kobiton device shell -- logcat -d -t 200
 
 Both examples run on a restricted session.
 
-To list files on a device, use <<file-list,`kobiton file list`>>. A restricted session confines `shell ls` to the permitted directories, so `ls -l /sdcard` is rejected while `ls -l /sdcard/Download/` is accepted.
+To list files on a device, use <<file-list,`kobiton file list`>>.
 
 .Filter command output
-A restricted session rejects the pipe character, so filter locally and send only the command to the device:
+Quote the whole expression to run the filter on the device, so less output crosses the network:
+
+[source,shell]
+----
+kobiton device shell "dumpsys window displays | grep -E 'mCurrentFocus|mFocusedApp'"
+----
+
+To filter locally instead, don't quote the expression. The full command output then crosses the network:
 
 [source,shell]
 ----
@@ -723,16 +730,69 @@ mCurrentFocus=Window{272f9b1 u0 com.example.app/MainActivity}
 mFocusedApp=ActivityRecord{3d12396 u0 com.example.app/.MainActivity t2823}
 ----
 
-On a dedicated device, quote the whole expression instead. The pipe then runs on the device, so less output crosses the network:
+[#device-shell-instrumentation]
+.Set state with instrumentation, then verify it
+Run an instrumentation test with `am instrument` to put the app or the OS into a known state, then read that state back with `dumpsys`, all in the same session. For example, to check how your app schedules an alarm:
 
+. Upload the app and its test APK with <<_app_upload,`kobiton app upload`>>, then install both on the device with <<_app_install,`kobiton app install`>>.
+. List the instrumentation on the device to find the test package and its runner:
++
 [source,shell]
 ----
-kobiton device shell "dumpsys window displays | grep -E 'mCurrentFocus|mFocusedApp'"
+kobiton device shell pm list instrumentation
 ----
+. Run the test class that sets the state. Pass the arguments after `--` so the CLI does not read `-w` and `-e` as its own options. The `-w` option waits for the test to finish and prints its result.
++
+[source,shell]
+----
+kobiton device shell -- am instrument -w -e class com.example.app.ScheduleReminderTest com.example.app.test/androidx.test.runner.AndroidJUnitRunner
+----
++
+.Output
+----
+com.example.app.ScheduleReminderTest:..
+
+Time: 0.262
+
+OK (2 tests)
+----
++
+The CLI exits with status `0` even when a test fails or the test process crashes, so confirm that the output reports `OK`.
+. Read the state back from the system service that holds it. Scheduled alarms are in `dumpsys alarm`. This command prints the first four lines of each alarm that belongs to the app:
++
+[source,shell]
+----
+kobiton device shell "dumpsys alarm | grep -A3 'Alarm{.*com.example.app}'"
+----
++
+.Output (Android 12)
+----
+    RTC_WAKEUP #26: Alarm{c3e4aff type 0 origWhen 1794892393133 whenElapsed 10327886077 com.example.app}
+      tag=*walarm*:com.example.app.EXACT_REMINDER
+      type=RTC_WAKEUP origWhen=2026-11-17 12:13:13.133 window=0 exactAllowReason=permission repeatInterval=0 count=0 flags=0x1
+      policyWhenElapsed: requester=+59m54s451ms app_standby=-5s545ms device_idle=-- battery_saver=-5s248ms gms_manager=--
+--
+    RTC_WAKEUP #27: Alarm{199d0cc type 0 origWhen 1794892393176 whenElapsed 10327886120 com.example.app}
+      tag=*walarm*:com.example.app.INEXACT_REMINDER
+      type=RTC_WAKEUP origWhen=2026-11-17 12:13:13.176 window=+44m59s997ms repeatInterval=0 count=0 flags=0x0
+      policyWhenElapsed: requester=+59m54s494ms app_standby=-5s494ms device_idle=-- battery_saver=-5s248ms gms_manager=--
+----
++
+An exact alarm has `window=0`, and an inexact alarm has a nonzero `window`. On Android 12 and later, an exact alarm also has an `exactAllowReason` value.
+
+The <<test-run,`kobiton test run`>> command also runs instrumentation. Choose by what you need:
+
+* Use `device shell am instrument` to run one test class inside a session you are already using, so you can inspect the device with other shell commands before and after the test.
+* Use `test run` to run a test suite in its own session and get a session test report.
+
+[IMPORTANT]
+====
+A test that uses UiAutomation fails under `device shell am instrument` with `IllegalStateException: UiAutomationService ... already registered`. This includes UIAutomator tests and tests that use Espresso screenshot rules or `GrantPermissionRule`. Run these tests with <<test-run,`kobiton test run`>> instead.
+====
 
 === `device forward`
 
-Forward a local port to a service on the device. Address format is `tcp:<port>`. Transient network connection failures are retried for up to 5 minutes.
+Forward a local port to a service on the device. The local address uses the format `tcp:<port>`. The remote address uses `tcp:<port>`, or `localabstract:<socket-name>` for an abstract socket on an Android device. Transient network connection failures are retried for up to five minutes.
 
 .Syntax
 ----
@@ -745,7 +805,7 @@ kobiton device forward [OPTIONS] <LOCAL_ADDRESS> <REMOTE_ADDRESS>
 | Argument | Description
 
 | `<LOCAL_ADDRESS>` | Address on localhost, for example `tcp:8080`.
-| `<REMOTE_ADDRESS>` | Address on the device, for example `tcp:80`.
+| `<REMOTE_ADDRESS>` | Address on the device, for example `tcp:80` or `localabstract:chrome_devtools_remote`.
 |===
 
 .Options
@@ -761,7 +821,7 @@ Plus all <<global-options,global options>>.
 *Requires:*
 
 * `-a <SESSION_TOKEN>` or `KOBITON_SESSION_TOKEN` environment variable
-* `<LOCAL_ADDRESS>` and `<REMOTE_ADDRESS>` in `tcp:<port>` format
+* `<LOCAL_ADDRESS>` in `tcp:<port>` format, and `<REMOTE_ADDRESS>` in `tcp:<port>` or `localabstract:<socket-name>` format
 
 [NOTE]
 ====
@@ -778,6 +838,14 @@ kobiton device forward tcp:8080 tcp:80
 ----
 Listening on 127.0.0.1:8080.
 ----
+
+.Example: forward an Android socket
+[source,shell]
+----
+kobiton device forward tcp:9222 localabstract:chrome_devtools_remote
+----
+
+To use this forward with Chrome DevTools, see xref:debug-chrome-on-android.adoc[Debug Chrome on Android devices].
 
 === `device restart`
 
@@ -832,7 +900,8 @@ PID NAME
 
 === `device log`
 
-Stream logs from the device. Use `Control + C` to stop the log stream.
+// Source: KOB-56464, KOB-56471
+Stream logs from every process on the device. The stream continues until stopped with `Control + C` or a bounded command like `timeout`. To show logs for one app, pipe the output through `grep`.
 
 .Syntax
 ----
@@ -851,9 +920,22 @@ Accepts all <<global-options,global options>>.
 kobiton device log
 ----
 
+.Filter output for one app
+[source,shell]
+----
+kobiton device log | grep com.example.app
+----
+
+.Bound the stream to 30 seconds
+[source,shell]
+----
+timeout 30 kobiton device log
+----
+
 === `device screen`
 
-Retrieve the device screen in `jpg` format. Pipe the output to a `.jpg` file to save the screenshot.
+// Source: KOB-56471
+Retrieve the device screen in `jpg` format. Pipe the output to a `.jpg` file to save the screenshot. `-o` is not supported; use shell redirection as shown.
 
 .Syntax
 ----
@@ -1110,7 +1192,7 @@ Accepts all <<global-options,global options>>.
 
 *Requires:*
 
-* `-s <SESSION_ID>`
+* `-s <SESSION_ID>`, or a session token (`-a <SESSION_TOKEN>` or `KOBITON_SESSION_TOKEN` environment variable) for the session
 
 .Example
 [source,shell]
@@ -1136,7 +1218,7 @@ Accepts all <<global-options,global options>>.
 
 *Requires:*
 
-* `-s <SESSION_ID>`
+* `-s <SESSION_ID>`, or a session token (`-a <SESSION_TOKEN>` or `KOBITON_SESSION_TOKEN` environment variable) for the session
 
 .Example
 [source,shell]
@@ -1162,7 +1244,7 @@ Accepts all <<global-options,global options>>.
 
 *Requires:*
 
-* `-s <SESSION_ID>`
+* `-s <SESSION_ID>`, or a session token (`-a <SESSION_TOKEN>` or `KOBITON_SESSION_TOKEN` environment variable) for the session
 
 .Example
 [source,shell]
@@ -1188,7 +1270,9 @@ Accepts all <<global-options,global options>>.
 
 *Requires:*
 
-* *both* `-s <SESSION_ID>` and `KOBITON_SESSION_TOKEN` environment variable (or `-a <SESSION_TOKEN>`)
+* `-a <SESSION_TOKEN>` or `KOBITON_SESSION_TOKEN` environment variable
+
+If you pass `-s`, the session token must belong to that session. If it belongs to a different session, the command fails and the session is not pinged.
 
 .Example
 [source,shell]
@@ -1281,7 +1365,7 @@ Accepts all <<global-options,global options>>.
 
 *Requires:*
 
-* `-s <SESSION_ID>`
+* `-s <SESSION_ID>`, or a session token (`-a <SESSION_TOKEN>` or `KOBITON_SESSION_TOKEN` environment variable) for the session
 
 .Example
 [source,shell]
@@ -1302,9 +1386,12 @@ Status: COMPLETE
 
 Test runs and management.
 
+[#test-run]
 === `test run`
 
 Run a native framework automation session (XCUITest, UIAutomator, or Espresso). GameDriver is not supported.
+
+To run one Android test class inside a session you are already using, see <<device-shell-instrumentation,set state with instrumentation>>.
 
 .Syntax
 ----
