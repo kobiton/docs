@@ -1,0 +1,14 @@
+// Source: KOB-56698
+
+== Security updates for Standalone
+
+- The Kobiton Portal, user guide, and help widget images for Standalone deployments now use nginx 1.30.7. This update addresses known security vulnerabilities in the web server and system packages of the previous images.
+- The user guide and help widget move from the nginx 1.31.x mainline release to the 1.30.7 stable release, so security scanners may report a lower nginx version number for these images than before.
+- Web server configuration and served content are unchanged.
+
+// REVIEWER NOTE (KOB-56698): This ticket publishes the updated images, but rollout to Standalone is
+// tracked separately in KOB-56700, which is not yet complete. Confirm the Standalone release that
+// includes these images before publishing this entry.
+// REVIEWER NOTE (KOB-56698): Confirm that naming the nginx version publicly is acceptable. The
+// hosted API documentation and API v1 documentation changes are intentionally excluded because they
+// have no customer-visible effect or are tracked in a ticket that has not shipped.
