@@ -792,7 +792,7 @@ A test that uses UiAutomation fails under `device shell am instrument` with `Ill
 
 === `device forward`
 
-Forward a local port to a service on the device. Address format is `tcp:<port>`. Transient network connection failures are retried for up to 5 minutes.
+Forward a local port to a service on the device. The local address uses the format `tcp:<port>`. The remote address uses `tcp:<port>`, or `localabstract:<socket-name>` for an abstract socket on an Android device. Transient network connection failures are retried for up to five minutes.
 
 .Syntax
 ----
@@ -805,7 +805,7 @@ kobiton device forward [OPTIONS] <LOCAL_ADDRESS> <REMOTE_ADDRESS>
 | Argument | Description
 
 | `<LOCAL_ADDRESS>` | Address on localhost, for example `tcp:8080`.
-| `<REMOTE_ADDRESS>` | Address on the device, for example `tcp:80`.
+| `<REMOTE_ADDRESS>` | Address on the device, for example `tcp:80` or `localabstract:chrome_devtools_remote`.
 |===
 
 .Options
@@ -821,7 +821,7 @@ Plus all <<global-options,global options>>.
 *Requires:*
 
 * `-a <SESSION_TOKEN>` or `KOBITON_SESSION_TOKEN` environment variable
-* `<LOCAL_ADDRESS>` and `<REMOTE_ADDRESS>` in `tcp:<port>` format
+* `<LOCAL_ADDRESS>` in `tcp:<port>` format, and `<REMOTE_ADDRESS>` in `tcp:<port>` or `localabstract:<socket-name>` format
 
 [NOTE]
 ====
@@ -838,6 +838,14 @@ kobiton device forward tcp:8080 tcp:80
 ----
 Listening on 127.0.0.1:8080.
 ----
+
+.Example: forward an Android socket
+[source,shell]
+----
+kobiton device forward tcp:9222 localabstract:chrome_devtools_remote
+----
+
+To use this forward with Chrome DevTools, see xref:debug-chrome-on-android.adoc[Debug Chrome on Android devices].
 
 === `device restart`
 
