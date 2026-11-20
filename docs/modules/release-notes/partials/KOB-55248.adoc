@@ -1,0 +1,10 @@
+// Source: KOB-55248
+
+== Network payload capture setup no longer fails intermittently on iOS devices that use Option 2
+
+On iOS devices set up for network payload capture with Option 2 (manually import and trust the certificate), capture setup now completes when a session is launched from Kobiton Portal while an app is open on the device. Previously, setup could fail and the session ran without capturing network traffic.
+
+* Sessions on iOS and Android devices now start on the app that was open on the device, instead of on the home screen.
+* Network payload capture on Android devices is unchanged.
+
+See xref:devices:local-devices/network-payload-capture/index.adoc[].
