@@ -92,7 +92,7 @@ capabilities.setCapability("kobiton:app-install", "never");
 === `kobiton:baselineSessionId`
 
 [NOTE]
-This capability is only available in Xium sessions.
+This capability is only available in Appium automation sessions.
 
 Select a baseline session to use for xref:_flexCorrect[].
 
@@ -217,7 +217,7 @@ capabilities.setCapability("kobiton:deviceTagType", "public");
 === `kobiton:flexCorrect`
 
 [NOTE]
-This capability is only available in Xium sessions.
+This capability is only available in Appium automation sessions.
 
 Automatically correct element selection when running a script on different devices. For more information, see xref:automation-testing:capabilities/add-flexcorrect.adoc[window=read-later]
 
@@ -311,7 +311,7 @@ capabilities.setCapability("kobiton:passcodeType", "PIN");
 [#_runtime]
 === `kobiton:runtime`
 
-Configure the automation runtime that executes the test. Values are `xium` (Xium) or `appium` (xref:automation-testing:basic-appium-server/launch-a-basic-appium-2-session.adoc[basic Appium 2,window=read-later]). Default is `xium`.
+Configure the automation runtime that executes the test. Values are `xium` (Appium automation) or `appium` (xref:automation-testing:basic-appium-server/launch-a-basic-appium-2-session.adoc[basic Appium 2,window=read-later]). Default is `xium`.
 
 * *Type:* `string`
 * *Required capabilities:* None
@@ -329,7 +329,7 @@ capabilities.setCapability("kobiton:runtime", "appium");
 [NOTE]
 This capability replaces `kobiton:scriptlessEnable`, which continues to work identically. Setting both on the same session is safe and produces no conflict.
 
-Marks an automation session as convertible into a Test Case. When set on an initial Appium or Xium script, the resulting session bypasses cache and captures full metadata for later conversion. Setting this capability is optional but recommended for full conversion support, and required for xref:_accessibilityValidation[`kobiton:accessibilityValidation`].
+Marks an automation session as convertible into a Test Case. When set on an initial Appium or Appium automation script, the resulting session bypasses cache and captures full metadata for later conversion. Setting this capability is optional but recommended for full conversion support, and required for xref:_accessibilityValidation[`kobiton:accessibilityValidation`].
 
 * *Type:* `boolean`
 * *Required capabilities:* None
@@ -411,7 +411,7 @@ capabilities.setCapability("useConfiguration", "kobiton");
 
 Waits for the UI to become idle before continuing, equivalent to `appium:waitForQuiescence`. Default is `true` for iOS and `false` for Android.
 
-In Xium sessions on Android and iOS, the wait before each tap or swipe lasts up to the session's <<_waitForIdleTimeout,`waitForIdleTimeout`>> value. Default is `10000` milliseconds.
+In Appium automation sessions on Android and iOS, the wait before each tap or swipe lasts up to the session's <<_waitForIdleTimeout,`waitForIdleTimeout`>> value. Default is `10000` milliseconds.
 
 * *Type:* `boolean`
 * *Required capabilities:* None
@@ -427,7 +427,7 @@ capabilities.setCapability("kobiton:waitForIdle", true);
 === `kobiton:web-find`
 
 [NOTE]
-This capability is only available in Xium sessions.
+This capability is only available in Appium automation sessions.
 
 Default value is `null`. Set to `all` to search every available web context during an Appium find call. For more information, see xref:automation-testing:capabilities/add-web-find.adoc[window=read-later].
 
@@ -835,7 +835,7 @@ capabilities.setCapability("appium:username", "johndoe");
 === `waitForIdleTimeout`
 
 [NOTE]
-On Android devices, this capability is available in all automation sessions. On iOS devices, it is available only in Xium sessions. In basic Appium 2 sessions on iOS devices, the setting is ignored.
+On Android devices, this capability is available in all automation sessions. On iOS devices, it is available only in Appium automation sessions. In basic Appium 2 sessions on iOS devices, the setting is ignored.
 
 // REVIEWER NOTE (KOB-52867): Jira states basic Appium 2 sessions are unchanged and that the Appium XCUITest driver reads this value in seconds. Confirm whether "the setting is ignored" is still accurate for basic Appium 2 sessions on iOS devices.
 
@@ -844,9 +844,9 @@ The maximum time, in milliseconds, that the session waits for the app screen to 
 The wait applies at these points:
 
 * Before each UiAutomator element search on Android devices.
-* Before each tap or swipe in Xium sessions on Android and iOS devices, when <<_waitForIdle,`kobiton:waitForIdle`>> is `true`.
+* Before each tap or swipe in Appium automation sessions on Android and iOS devices, when <<_waitForIdle,`kobiton:waitForIdle`>> is `true`.
 
-In Xium sessions on iOS devices, set the value in milliseconds, not in seconds as the Appium XCUITest driver expects.
+In Appium automation sessions on iOS devices, set the value in milliseconds, not in seconds as the Appium XCUITest driver expects.
 
 Set to `0` to skip the idle wait. Use this value for apps that redraw continuously, such as apps with ongoing animations, where the screen never becomes idle and `-android uiautomator` locators return `no such element`.
 
@@ -860,7 +860,7 @@ Set to `0` to skip the idle wait. Use this value for apps that redraw continuous
 capabilities.setCapability("appium:waitForIdleTimeout", 0);
 ----
 
-In Xium sessions, the value can also be set inside the `appium:settings` capability. If the value is set in both places, the `appium:settings` value is used.
+In Appium automation sessions, the value can also be set inside the `appium:settings` capability. If the value is set in both places, the `appium:settings` value is used.
 
 .Example
 [source,java]
@@ -868,7 +868,7 @@ In Xium sessions, the value can also be set inside the `appium:settings` capabil
 capabilities.setCapability("appium:settings", Map.of("waitForIdleTimeout", 100));
 ----
 
-You can also change this value during the session with the Appium Settings API. The new value applies to later element searches in the same session and, in Xium sessions with `kobiton:waitForIdle` set to `true`, to later taps and swipes. When the session ends, the value returns to the default.
+You can also change this value during the session with the Appium Settings API. The new value applies to later element searches in the same session and, in Appium automation sessions with `kobiton:waitForIdle` set to `true`, to later taps and swipes. When the session ends, the value returns to the default.
 
 .Example
 [source,java]
