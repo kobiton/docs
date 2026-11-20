@@ -5,8 +5,6 @@
 
 Basic Appium 3 runs alongside basic Appium 2. Appium 3 is opt-in: a session uses Appium 3 only when the `kobiton:runtime` capability is set to `appium3`. Sessions that use `appium`, `appium2`, or the default Xium runtime are not affected.
 
-// REVIEWER NOTE (KOB-55958): Confirm whether basic Appium 3 is available in Kobiton Cloud, Kobiton Standalone, or both, and add an availability statement if it differs.
-
 Appium 3 and its drivers include changes from Appium 2 that can affect existing scripts. Test your scripts on Appium 3 before switching production test runs.
 
 == Requirements
@@ -37,26 +35,34 @@ const desiredCaps = {
  }
 ----
 
-== Supported drivers
+== Appium and driver versions
 
-[cols="1,1"]
+Basic Appium 2 and basic Appium 3 use the following Appium and driver versions:
+
+[cols="1,1,1"]
 |===
-|Driver |`appium:automationName`
+|Component |Basic Appium 2 |Basic Appium 3
 
-|XCUITest (iOS)
-|`XCUITest`
+|Appium
+|2.19.0
+|3.9.0
 
-|UiAutomator2 (Android)
-|`UiAutomator2`
+|XCUITest driver
+|9.10.5
+|12.22.8
 
-|Flutter
-|`Flutter`
+|UiAutomator2 driver
+|4.2.9
+|8.7.3
 
-|Flutter Integration
-|`FlutterIntegration`
+|Flutter driver
+|2.19.0
+|4.1.0
+
+|Flutter Integration driver
+|1.5.1
+|2.0.3
 |===
-
-// REVIEWER NOTE (KOB-55958): Flutter Integration driver sessions on Appium 3 are listed in the test plan but are not shown in the test report. Confirm before publishing.
 
 == Session behavior
 
@@ -65,10 +71,6 @@ const desiredCaps = {
 * The first basic Appium session after deviceConnect starts or restarts takes longer to begin while the Appium server starts. Later sessions on the same host start without this delay.
 * Session artifacts, including video, device log, and commands, are available as they are for basic Appium 2 sessions.
 
-// REVIEWER NOTE (KOB-55958): Source evidence gives two different first-session start times (about 1 to 2 seconds in the ticket, 14 to 23 seconds in the test report). Confirm before adding a duration.
-
 == Notes and limitations
 
 * On a blank page in Safari, `getPageSource` returns an empty HTML document on Appium 3. On Appium 2, the same request returns `unknown error`. Results match after the page loads.
-
-// REVIEWER NOTE (KOB-55958): Confirm whether the basic Appium 2 limitations (device metrics, Appium Inspector data, network payload capture, AI features, and passcode-enabled iOS devices) also apply to basic Appium 3 sessions.
