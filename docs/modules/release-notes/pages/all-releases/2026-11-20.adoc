@@ -136,65 +136,32 @@ See xref:help-widget:index.adoc[].
 
 // Source: KOB-56666
 
-== deviceConnect
+== Security updates for deviceConnect on macOS
 
-- Updated the nginx web server bundled with deviceConnect on macOS host machines to version 1.30.7. This version addresses security vulnerabilities published by the nginx project for version 1.30.4. The update is installed automatically when a host machine is upgraded to this deviceConnect release. No configuration changes are required, and existing nginx settings are preserved. Linux host machines aren't affected because they use the nginx package provided by the operating system.
+The nginx web server bundled with deviceConnect on macOS hosts has been updated from version 1.30.4 to 1.30.7 to address security vulnerabilities. The update is applied automatically when deviceConnect is upgraded. No configuration changes are required.
 
 // Source: KOB-55958
 
-== Basic Appium 3 sessions and updated Appium 2 drivers
+== Basic Appium 3 support
 
-Basic Appium 3 is now available alongside basic Appium 2. Appium 3 is opt-in only: a session uses Appium 3 only when `kobiton:runtime` is set to `appium3`. This release also updates the drivers for basic Appium 2, including major version updates to the XCUITest and UiAutomator2 drivers. Driver updates can change command or capability behavior, so test existing basic Appium 2 scripts after this release.
+Kobiton now supports basic Appium 3 sessions alongside basic Appium 2. Appium 3 is opt-in and does not change the default automation runtime.
 
-*Highlights*
+* Set `kobiton:runtime` to `appium3` to launch a basic Appium 3 session.
+* Basic Appium 2 and basic Appium 3 sessions can run simultaneously on different devices.
+* Basic Appium 2 drivers have also been updated, including major version updates for the XCUITest and UiAutomator2 drivers.
 
-* Set `kobiton:runtime` to `appium3` to run a session on Appium 3. See xref:automation-testing:basic-appium-server/launch-a-basic-appium-3-session.adoc[Launch a basic Appium 3 session].
-* `appium2` is now accepted as a `kobiton:runtime` value. It selects the same basic Appium 2 runtime as `appium`.
-* Scripts that use `appium` or `appium2`, and scripts that use the default Xium runtime, continue to run on their existing runtime.
-* Basic Appium 2 and basic Appium 3 sessions can run at the same time on different devices.
-* A session with an unrecognized `kobiton:runtime` value, such as `appium4`, is refused with an `Unknown runtime` error.
-
-*Appium component versions*
-
-[cols="1,1,1"]
-|===
-| |Basic Appium 2 |Basic Appium 3
-
-|Appium
-|2.19.0
-|3.9.0
-
-|XCUITest driver
-|9.10.5
-|12.22.8
-
-|UiAutomator2 driver
-|4.2.9
-|8.7.3
-
-|Flutter driver
-|2.19.0
-|4.1.0
-
-|Flutter Integration driver
-|1.5.1
-|2.0.3
-|===
-
-// REVIEWER NOTE (KOB-55958): Confirm whether the driver updates also affect sessions on the default Xium runtime, and whether this change applies to Cloud, Standalone, or both.
+For setup instructions and supported component versions, see xref:automation-testing:basic-appium-server/launch-a-basic-appium-3-session.adoc[Launch a basic Appium 3 session].
 
 ////
 // Source: KOB-55417
 
-== Read device identifiers on Android in Xium sessions
+== Retrieve Android device identifiers in Appium automation sessions
 
-Xium sessions now support the `mobile: deviceIdentifiers` command on Android devices. Scripts can read the identifiers a device carries and compare them with the values the app under test reports.
+The new `mobile: deviceIdentifiers` command retrieves the Advertising ID (AAID) and Android ID from Android devices. The Android ID is associated with the certificate that signs the Kobiton device agent, and the response includes the certificate name.
 
-* *Advertising ID (AAID):* Read for the whole device, with no requirements.
-* *Android ID (SSAID):* Returned with the name and SHA-256 fingerprint of the signing certificate the value belongs to. On Kobiton cloud devices, the value belongs to the Kobiton agent's certificate and differs from the value your production app reads.
-* *DRM ID:* Read for a named app when the app is a debug build and is running.
+The command can also retrieve an app's DRM ID when the app is a debug build and is running.
 
-Existing commands are unchanged. For details, see xref:automation-testing:scripting/read-device-identifiers-in-appium-script.adoc[].
+For details, see xref:automation-testing:scripting/read-device-identifiers-in-appium-script.adoc[].
 
 // REVIEWER NOTE (KOB-55417): Confirm that DRM ID support is published before this entry is released.
 ////
