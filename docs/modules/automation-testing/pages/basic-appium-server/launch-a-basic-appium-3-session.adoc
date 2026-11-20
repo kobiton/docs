@@ -1,0 +1,76 @@
+= Launch a basic Appium 3 session on Kobiton
+:navtitle: Launch a basic Appium 3 session
+
+// Source: KOB-55958
+
+Basic Appium 3 runs alongside basic Appium 2. Appium 3 is opt-in: a session uses Appium 3 only when the `kobiton:runtime` capability is set to `appium3`. Sessions that use `appium`, `appium2`, or the default Xium runtime are not affected.
+
+Appium 3 and its drivers include changes from Appium 2 that can affect existing scripts. Test your scripts on Appium 3 before switching production test runs.
+
+== Requirements
+
+* Kobiton username. Find this in your Kobiton profile.
+* Kobiton access key. See xref:profile:manage-your-api-credentials.adoc[Manage your API credentials].
+* A script with capabilities prepared for basic Appium sessions. See xref:basic-appium-server/launch-a-basic-appium-2-session.adoc#_modify_the_capabilities_in_your_appium_script[Modify the capabilities in your Appium script].
+
+== Start a basic Appium 3 session
+
+. Set `'kobiton:runtime'` to `'appium3'`.
+. Set `'appium:automationName'` to the driver for the session. Sessions without `appium:automationName` are refused.
+. Run the script.
+
+.Example
+[source,javascript]
+----
+const desiredCaps = {
+
+      'kobiton:runtime': 'appium3',
+      'appium:automationName': 'XCUITest',
+      'appium:bundleId': 'com.example.ToDoApp',
+      'kobiton:sessionName': 'Automation iOS Hybrid App',
+      'kobiton:app': 'kobiton-store:v657531',
+      'kobiton:deviceGroup': 'ORGANIZATION',
+      'appium:deviceName': '*',
+      'platformName': 'iOS'
+ }
+----
+
+== Appium and driver versions
+
+Basic Appium 2 and basic Appium 3 use the following Appium and driver versions:
+
+[cols="1,1,1"]
+|===
+|Component |Basic Appium 2 |Basic Appium 3
+
+|Appium
+|2.19.0
+|3.9.0
+
+|XCUITest driver
+|9.10.5
+|12.22.8
+
+|UiAutomator2 driver
+|4.2.9
+|8.7.3
+
+|Flutter driver
+|2.19.0
+|4.1.0
+
+|Flutter Integration driver
+|1.5.1
+|2.0.3
+|===
+
+== Session behavior
+
+* Basic Appium 2 and basic Appium 3 sessions can run at the same time on different devices.
+* A second session on a device that is already in use is refused.
+* The first basic Appium session after deviceConnect starts or restarts takes longer to begin while the Appium server starts. Later sessions on the same host start without this delay.
+* Session artifacts, including video, device log, and commands, are available as they are for basic Appium 2 sessions.
+
+== Notes and limitations
+
+* On a blank page in Safari, `getPageSource` returns an empty HTML document on Appium 3. On Appium 2, the same request returns `unknown error`. Results match after the page loads.

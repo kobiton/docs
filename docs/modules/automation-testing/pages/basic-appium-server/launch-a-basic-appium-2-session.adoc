@@ -16,7 +16,10 @@ The following modifications must be made to the capabilities of your existing Xi
 
 === Add _kobiton:runtime_
 
-Add the `'kobiton:runtime'` capability to your script’s desired capabilities list. The value of this capability must be `'appium'` to launch a basic Appium 2 session.
+Add the `'kobiton:runtime'` capability to your script’s desired capabilities list. Set the value to `'appium'` or `'appium2'` to launch a basic Appium 2 session. Both values select the same runtime.
+
+// Source: KOB-55958
+To run your script on Appium 3 instead, see xref:basic-appium-server/launch-a-basic-appium-3-session.adoc[Launch a basic Appium 3 session].
 
 === Specify _automationName_
 
@@ -99,9 +102,18 @@ include::automation-testing:partial$mixed-sessions-basic-appium-limitations.adoc
 
 === Check the current Appium Server version
 
-A Kobiton admin who has access to the Mac mini host can use the following Terminal command to check the Appium Server version:
+A Kobiton admin who has access to the Mac mini host can use the following Terminal commands to check the Appium Server version.
+
+For Appium 2:
 
 [source,bash]
 ----
-/usr/local/deviceconnect/appium-server/index.js --version
+/usr/local/deviceconnect/appium2/node_modules/appium/index.js --version
+----
+
+For Appium 3:
+
+[source,bash]
+----
+/usr/local/deviceconnect/appium3/node_modules/appium/index.js --version
 ----
