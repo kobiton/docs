@@ -104,11 +104,11 @@ image::device-lab-management:device-lab-management-add-ios-screen-changes-to-blu
 [IMPORTANT]
 .Note for air-gapped Mac mini hosts (no Internet access)
 ====
-To control the iOS devices, deviceConnect needs to mount a *Developer Disk Image* (DDI), which is a `.dmg` archive included with Xcode that contains executables and other files needed by Xcode to support debugging and testing on iOS devices.
+To control iOS devices, deviceConnect mounts a *Developer Disk Image* (DDI) on each device. The DDI is installed with Xcode and contains the files needed to debug and test apps on the device.
 
-For iOS 17 and later, rather than Xcode providing a different DDI for every iOS version and device architecture, there is a generic DDI that Xcode must "personalize" for each device. The personalization process requires an Internet connection, as Xcode must use Apple's notarization servers to sign the personalized image. Without an Internet connection, Xcode can't personalize a DDI.
+For iOS 17 and later, Xcode personalizes the DDI for each device through Apple servers. Personalization requires an Internet connection.
 
-If the Mac mini host does not have Internet connection, follow the section xref:#preload-ddi-air-gapped[preload DDI for air-gapped Mac mini] before continuing with this section.
+If the Mac mini host does not have an Internet connection, complete xref:#preload-ddi-air-gapped[Preload DDI for air-gapped Mac mini hosts] before continuing.
 
 ====
 
@@ -185,57 +185,62 @@ image::device-lab-management:device-lab-management-add-ios-screen-changes-to-blu
 [#preload-ddi-air-gapped]
 === Preload DDI for air-gapped Mac mini hosts
 
-[NOTE]
-This section applies only to Mac mini hosts without Internet access that host iOS 17 and above devices.
+// Source: KOB-53016
 
-Access any macOS machine with Internet access. This will be referred to as the Internet Mac.
+Mac mini hosts without Internet access cannot personalize a DDI. Personalize the DDI for each iOS and iPadOS 17 and later device on a Mac with Internet access, referred to as the Internet Mac, then copy the DDI to each air-gapped Mac mini host.
 
-[NOTE]
-Kobiton software, such as deviceConnect and deviceShare, does not need to be installed on the Internet Mac.
+.Requirements
+* A Mac with Internet access and *Xcode* installed. deviceConnect and deviceShare are not required on this Mac.
+* Xcode on the Internet Mac at the same version as the air-gapped Mac mini host, or later.
 
-Install *Xcode* on the Internet Mac.
-
-[IMPORTANT]
-Make sure the Xcode version on the Internet Mac *is the same or greater* than the version on the Mac mini host to transfer the DDI to.
-
-Unplug the iOS device from the air-gapped Mac (Standard mode) or the GEM (Lightning mode) and connect it to the Internet Mac.
-
-Open Xcode.
-
-Tap *Trust* in the *Trust This Computer* prompt on the iOS device. If the prompt reappears, tap *Trust* again until there are no more prompts.
-
-In the Xcode menu bar, select *Window → Devices and Simulators*. Select the iOS device under the *Devices* tab.
-
-The `Copying shared cache symbols...` message appears. Wait for this process to complete and the message to clear.
-
+.Personalize the DDI on the Internet Mac
+. Open *Xcode*. If Xcode prompts you to install additional components, install them.
+. Unplug the device from the air-gapped Mac mini host (Standard mode) or the GEM (Lightning mode), then connect it to the Internet Mac.
+. On the device, tap *Trust* in the *Trust This Computer* prompt. If the prompt reappears, tap *Trust* again.
+. In the Xcode menu bar, select *Window → Devices and Simulators*, then select the device on the *Devices* tab.
+. Wait for the `Copying shared cache symbols...` message to clear.
++
 image::device-lab-management:device-lab-management-ios-add-ios-copying-shared-cache-symbols.PNG[width=600,alt="Copying shared cache symbols"]
+. Unplug the device.
+. Repeat these steps for each iOS and iPadOS 17 and later device that the air-gapped Mac mini host will connect to.
 
-Unplug the device from the Internet Mac.
+.Copy the DDI to the air-gapped Mac mini host
+. On the Internet Mac, locate the DDI files for the installed Xcode version:
++
+[cols="1,2,2",options="header"]
+|===
+| Xcode version on the Internet Mac | Copy from the Internet Mac | Copy to the air-gapped Mac mini host
 
-Repeat the above processes for all iOS/iPadOS 17 and above devices to be hosted on the air-gapped Mac mini.
+| Xcode 26 and later
+| The `iOS_DDI` folder in `/Library/Developer/DeveloperDiskImages`
+| `/usr/local/deviceconnect`, so the folder path is `/usr/local/deviceconnect/iOS_DDI`
 
-Open *Finder* on the Internet Mac. Press *Shift + Command + G* on the keyboard, then input the following path depending on the version of Xcode:
+| Xcode 16.3 to 16.4
+| `iOS_DDI-version.plist` and `iOS_DDI.dmg` in `/Library/Developer/CoreDevice/CandidateDDIs`. If that folder does not exist, use `~/Library/Developer/CoreDevice/CandidateDDIs`.
+| `/Library/Developer/CoreDevice/CandidateDDIs`
 
-* `/Library/Developer/CoreDevice/CandidateDDIs` (Xcode 16.3 and above). If that folder does not exist, use `~/Library/Developer/CoreDevice/CandidateDDIs`.
+| Xcode 16 to 16.2
+| `iOS_DDI-version.plist` and `iOS_DDI.dmg` in `/Library/Developer/DeveloperDiskImages`
+| `/Library/Developer/DeveloperDiskImages`
 
-* `/Library/Developer/DeveloperDiskImages` (Xcode 16 to 16.2)
+| Earlier than Xcode 16
+| `iOS_DDI-version.plist` and `iOS_DDI.dmg` in `~/Library/Developer/DeveloperDiskImages`
+| `~/Library/Developer/DeveloperDiskImages`
+|===
++
+To confirm which DDI Xcode uses on the Internet Mac, run `xcrun devicectl list preferredDDI` and check the `hostDDI` path for the iOS platform.
+. Copy the files to the air-gapped Mac mini host. For Xcode 26 and later, sign in as the `deviceconnect` user and copy the entire `iOS_DDI` folder, not only its contents.
+. Repeat these steps for each air-gapped Mac mini host that connects to iOS and iPadOS 17 and later devices.
+. Connect the devices to the air-gapped Mac mini host or the GEM.
+. If a device was already connected to the host when you copied the DDI, open the device page in deviceConnect Console and select *Reboot*. The new DDI is mounted after the device restarts.
 
-* `~/Library/Developer/DeveloperDiskImages` (Xcode below 16)
-
-Copy the two files `iOS_DDI-version.plist` and `iOS_DDI.dmg` to the *air-gapped Mac mini* that will host the iOS devices. Put the copied files into the following folder on the air-gapped Mac mini:
-
-* `/Library/Developer/CoreDevice/CandidateDDIs` (Xcode 16.3 and above)
-
-* `/Library/Developer/DeveloperDiskImages` (Xcode 16 to 16.2)
-
-* `~/Library/Developer/DeveloperDiskImages` (Xcode below 16)
-
-Repeat the above process for all air-gapped Mac mini hosts with iOS/iPadOS 17 and above devices.
-
-Continue with connecting iOS devices to the air-gapped Mac mini hosts or the GEM.
+To confirm that the host uses a DDI copied from Xcode 26 or later, xref:deviceConnect/retrieve-deviceconnect-logs.adoc[retrieve the deviceConnect logs,window=read-later] and check for `Using directory DDI at /usr/local/deviceconnect/iOS_DDI`, followed by `Personalized DDI mounted.`
 
 [IMPORTANT]
-Apple has not published whether the personalized DDI will expire or how long it will last in an air-gapped environment. If connection errors occur and other troubleshooting steps do not resolve the issue, the personalized DDI may have expired, and you will need to repeat this process.
+Apple has not published whether a personalized DDI expires or how long it lasts in an air-gapped environment. If connection errors occur and other troubleshooting steps do not resolve the issue, repeat this procedure.
+
+// REVIEWER NOTE (KOB-53016): The Xcode 26 and later row was verified with Xcode 27.0. Confirm that Xcode 26 also places the iOS_DDI folder in /Library/Developer/DeveloperDiskImages.
+// REVIEWER NOTE (KOB-53016): Confirm whether iPhone 18 devices, which require the Cryptex DDI, can run on an air-gapped host after this procedure. The Cryptex install requests a signing ticket from Apple.
 
 [#_verify_device_is_available_in_kobiton]
 == Verify device is available in Kobiton

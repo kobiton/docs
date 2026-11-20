@@ -40,8 +40,8 @@ Kobiton software, such as deviceConnect and deviceShare, does not need to be ins
 See xref:ios-devices/add-ios-device.adoc#preload-ddi-air-gapped[Preload DDI for air-gapped Mac mini hosts,window=read-later]. The procedure covers three phases:
 
 * On the Internet Mac, connect the device over USB and open Xcode so the device establishes trust, validates its certificate, and receives its personalized DDI.
-* Copy the DDI files from the Internet Mac to the air-gapped Mac mini host.
-* Connect the device to the air-gapped host, then restart deviceConnect services so the host mounts the DDI.
+* Copy the DDI from the Internet Mac to the air-gapped Mac mini host. For Xcode 26 and later, copy the `iOS_DDI` folder to `/usr/local/deviceconnect`.
+* Connect the device to the air-gapped host. If the device was already connected, restart it from deviceConnect Console so the host mounts the new DDI.
 
 Repeat the procedure for every iOS 17 and above device and every air-gapped Mac mini host in the lab.
 
@@ -67,7 +67,11 @@ Apple changes the wording of these errors between Xcode versions. Match on the b
 
 | The DDI does not mount
 | The personalization signature is missing or expired on the device
-| Repeat xref:ios-devices/add-ios-device.adoc#preload-ddi-air-gapped[the preparation procedure,window=read-later], then xref:deviceConnect/restart-deviceconnect-services.adoc[restart deviceConnect services,window=read-later].
+| Repeat xref:ios-devices/add-ios-device.adoc#preload-ddi-air-gapped[the preparation procedure,window=read-later], then restart the device from deviceConnect Console.
+
+| deviceConnect logs `Can't find iOS device <UDID> with BoardID <board-id> and ChipID <chip-id>`
+| The DDI on the host does not support the device model. Newer device models require the DDI from a newer Xcode release.
+| Update Xcode on the Internet Mac, then repeat xref:ios-devices/add-ios-device.adoc#preload-ddi-air-gapped[the preparation procedure,window=read-later]. Hosts with Internet access download the latest DDI automatically, but air-gapped hosts do not.
 
 | A new device is not recognized
 | The device UDID is not included in the provisioning profile
