@@ -1,0 +1,11 @@
+// Source: KOB-55413
+
+== Apps install on iOS Simulators at the start of Appium sessions
+
+When an Appium session on an iOS Simulator installs an app at session start with the `appium:app` capability, the app now installs without an app re-signing check. Simulator builds don't need re-signing. Previously, the session could fail before the app was installed, with an error stating that app signing is temporarily unavailable for the device.
+
+Real iOS devices and Android devices keep the existing app re-signing behavior.
+
+// REVIEWER NOTE (KOB-55413): The ticket states that a related earlier change already stops this failure in most cases, so on current production the error may only appear when a simulator is not recorded as a virtual device. Confirm whether customers still see the error before keeping the "Previously" sentence.
+// REVIEWER NOTE (KOB-55413): The ticket also states that Appium sessions on an iOS Simulator now reject in-session installs of apps whose build type doesn't match the device, as manual sessions already do. Confirm whether to add this behavior to the entry.
+// REVIEWER NOTE (KOB-55413): Testing covered Appium sessions but not Xium sessions specifically. No fix version is set on the ticket. Confirm whether to name Xium and confirm the release page for this entry.
