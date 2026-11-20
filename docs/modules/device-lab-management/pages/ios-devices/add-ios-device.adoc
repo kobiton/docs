@@ -185,8 +185,6 @@ image::device-lab-management:device-lab-management-add-ios-screen-changes-to-blu
 [#preload-ddi-air-gapped]
 === Preload DDI for air-gapped Mac mini hosts
 
-// Source: KOB-53016
-
 Mac mini hosts without Internet access cannot personalize a DDI. Personalize the DDI for each iOS and iPadOS 17 and later device on a Mac with Internet access, referred to as the Internet Mac, then copy the DDI to each air-gapped Mac mini host.
 
 .Requirements
@@ -239,9 +237,6 @@ To confirm that the host uses a DDI copied from Xcode 26 or later, xref:deviceCo
 
 [IMPORTANT]
 Apple has not published whether a personalized DDI expires or how long it lasts in an air-gapped environment. If connection errors occur and other troubleshooting steps do not resolve the issue, repeat this procedure.
-
-// REVIEWER NOTE (KOB-53016): The Xcode 26 and later row was verified with Xcode 27.0. Confirm that Xcode 26 also places the iOS_DDI folder in /Library/Developer/DeveloperDiskImages.
-// REVIEWER NOTE (KOB-53016): Confirm whether iPhone 18 devices, which require the Cryptex DDI, can run on an air-gapped host after this procedure. The Cryptex install requests a signing ticket from Apple.
 
 [#_verify_device_is_available_in_kobiton]
 == Verify device is available in Kobiton
