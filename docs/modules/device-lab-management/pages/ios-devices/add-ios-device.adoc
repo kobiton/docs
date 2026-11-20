@@ -230,6 +230,7 @@ image::device-lab-management:device-lab-management-ios-add-ios-copying-shared-ca
 +
 To confirm which DDI Xcode uses on the Internet Mac, run `xcrun devicectl list preferredDDI` and check the `hostDDI` path for the iOS platform.
 . Copy the files to the air-gapped Mac mini host. For Xcode 26 and later, sign in as the `deviceconnect` user and copy the entire `iOS_DDI` folder, not only its contents.
+. xref:deviceConnect/restart-deviceconnect-services.adoc[Restart deviceConnect services,window=read-later] on the air-gapped Mac mini host. deviceConnect selects a DDI once after its services start, so a restart is required for the host to use the copied DDI.
 . Repeat these steps for each air-gapped Mac mini host that connects to iOS and iPadOS 17 and later devices.
 . Connect the devices to the air-gapped Mac mini host or the GEM.
 . If a device was already connected to the host when you copied the DDI, open the device page in deviceConnect Console and select *Reboot*. The new DDI is mounted after the device restarts.

@@ -41,7 +41,7 @@ See xref:ios-devices/add-ios-device.adoc#preload-ddi-air-gapped[Preload DDI for 
 
 * On the Internet Mac, connect the device over USB and open Xcode so the device establishes trust, validates its certificate, and receives its personalized DDI.
 * Copy the DDI from the Internet Mac to the air-gapped Mac mini host. For Xcode 26 and later, copy the `iOS_DDI` folder to `/usr/local/deviceconnect`.
-* Connect the device to the air-gapped host. If the device was already connected, restart it from deviceConnect Console so the host mounts the new DDI.
+* Restart deviceConnect services, then connect the device to the air-gapped host. If the device was already connected, restart it from deviceConnect Console so the host mounts the new DDI.
 
 Repeat the procedure for every iOS 17 and above device and every air-gapped Mac mini host in the lab.
 
@@ -67,7 +67,7 @@ Apple changes the wording of these errors between Xcode versions. Match on the b
 
 | The DDI does not mount
 | The personalization signature is missing or expired on the device
-| Repeat xref:ios-devices/add-ios-device.adoc#preload-ddi-air-gapped[the preparation procedure,window=read-later], then restart the device from deviceConnect Console.
+| Repeat xref:ios-devices/add-ios-device.adoc#preload-ddi-air-gapped[the preparation procedure,window=read-later], xref:deviceConnect/restart-deviceconnect-services.adoc[restart deviceConnect services,window=read-later], then restart the device from deviceConnect Console.
 
 | deviceConnect logs `Can't find iOS device <UDID> with BoardID <board-id> and ChipID <chip-id>`
 | The DDI on the host does not support the device model. Newer device models require the DDI from a newer Xcode release.
