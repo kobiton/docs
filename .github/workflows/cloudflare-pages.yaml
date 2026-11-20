@@ -34,6 +34,8 @@ jobs:
         run: yarn build-docs:ci
 
       - name: Deploy to Cloudflare Pages
+        # Dependabot runs get no Actions secrets, so the token is blank
+        if: github.actor != 'dependabot[bot]'
         id: deploy
         uses: cloudflare/wrangler-action@v3
         with:
@@ -43,6 +45,7 @@ jobs:
           command: pages deploy build/docs --project-name=docs
 
       - name: Create deployment and status
+        if: github.actor != 'dependabot[bot]'
         uses: actions/github-script@v8
         with:
           script: |
