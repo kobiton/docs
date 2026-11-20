@@ -1,0 +1,93 @@
+= Debug Chrome on Android devices
+:navtitle: Chrome DevTools on Android
+
+Use Chrome DevTools on your computer to inspect and debug web pages open in Google Chrome on an Android device. Kobiton CLI forwards the device's DevTools connection to a port on your computer, so no virtualUSB connection is required.
+
+This method applies to Google Chrome on Android devices only.
+
+== Requirements
+
+* Kobiton CLI. See xref:set-up-cli.adoc[].
+* Google Chrome on your computer.
+* An Android device with Google Chrome installed.
+
+== Open Chrome DevTools for a device
+
+. Create a CLI session on the device. See xref:use-the-cli.adoc#_create_a_cli_session[Create a CLI session].
+
+. Open the web page in Google Chrome on the device:
++
+[source,shell]
+----
+kobiton device shell "am start -a android.intent.action.VIEW -d <URL> com.android.chrome"
+----
++
+Replace `<URL>` with the address of the page to debug.
++
+The DevTools connection is available only while Chrome is running on the device.
+
+. Forward the device's DevTools connection to port `9222` on your computer:
++
+[source,shell]
+----
+kobiton device forward tcp:9222 localabstract:chrome_devtools_remote
+----
++
+.Output
+----
+Listening on 127.0.0.1:9222.
+----
++
+Keep this command running while you use DevTools.
+
+. In Google Chrome on your computer, go to `chrome://inspect/#devices`.
+
+. Make sure *Discover network targets* is selected.
++
+`localhost:9222` is in the *Configure...* list by default.
+
+. Wait for the device to appear under *Remote Target*. This can take up to about 40 seconds.
++
+The device's Chrome version and its open tabs are listed.
+
+. Under the tab to debug, click *inspect*.
++
+DevTools opens for the page running on the device.
+
+== Stop debugging
+
+. In the terminal running `kobiton device forward`, press Ctrl+C.
+
+. End the session:
++
+[source,shell]
+----
+kobiton session end -s <SESSION_ID>
+----
++
+Replace `<SESSION_ID>` with the session ID from step 1 of the previous procedure.
+
+[#_troubleshooting]
+== Troubleshooting
+
+=== No tabs appear under Remote Target
+
+If *Remote Target* appears with no Chrome version or tabs after about 40 seconds:
+
+* Make sure Chrome is open on the device.
+* Check that the forward reaches the device. Open `http://localhost:9222/json/list` in a browser on your computer. The response lists the tabs open on the device.
+
+If the response lists the tabs but `chrome://inspect` does not, the connection to the device is too slow for `chrome://inspect`. Use a device with a faster network connection.
+
+=== The previous device is still listed
+
+After you switch to another device on the same local port, `chrome://inspect` can continue to show the previous device's Chrome version and tabs. Reloading the page does not clear them.
+
+Use one of the following:
+
+* Restart Google Chrome on your computer.
+* Forward the new device to a different local port, for example `tcp:9223`. Then in `chrome://inspect/#devices`, click *Configure...* and add `localhost:9223`.
++
+The previous device's heading can remain on the page with no tabs under it.
+
+For command syntax and options, see xref:cli-commands.adoc[Kobiton CLI commands].
