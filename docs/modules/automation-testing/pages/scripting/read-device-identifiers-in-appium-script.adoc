@@ -1,23 +1,19 @@
 = Read device identifiers in Appium scripts
 :navtitle: Read device identifiers in Appium scripts
 
-// Source: KOB-55417
-
-Use the `mobile: deviceIdentifiers` command in an Appium automation session to read the advertising ID, Android ID, and DRM ID of an Android device. A script can compare the identifiers the app under test reports with the values the device holds.
-
-// REVIEWER NOTE (KOB-55417): Confirm whether this command is also available in basic Appium 2 sessions.
+Use the `mobile: deviceIdentifiers` command in a Xium automation session to read the advertising ID, Android ID, and DRM ID of an Android device. A script can compare the identifiers the app under test reports with the values the device holds.
 
 == Supported identifiers
 
 [options="header"]
 |=======================
 |Identifier | `identifier` value | Scope | Requirements
-| Advertising ID (AAID) | `advertisingId` | The whole device. Every app on the device reads the same value. | None
-| Android ID (SSAID) | `androidId` | The device and the certificate that signed the app. | None
+| Advertising ID (AAID) | `advertisingId` | The whole device. Every app on the device reads the same value. | Google Play services is installed on the device.
+| Android ID (SSAID) | `androidId` | The device and the certificate that signs the Kobiton agent. | None
 | DRM ID (Widevine device unique ID) | `drmId` | One app. | The app is a debug build, is running, and is named in `appId`.
 |=======================
 
-The command is available on Android devices only.
+The command is available only on Android devices in Xium automation sessions. Basic Appium 2 sessions do not support it.
 
 == Parameters
 
@@ -90,13 +86,25 @@ When `identifier` is omitted, all values are returned in one object. If `appId` 
 
 When an identifier cannot be read, a message key replaces it: `advertisingIdMessage`, `androidIdMessage`, or `drmIdMessage`. When several identifiers are requested, the values that were read are still returned. The command fails only when no identifier can be read.
 
-When a single identifier is requested and it cannot be read, the command returns an error.
+When a single identifier is requested and it cannot be read, the command returns an error that contains the same message text.
+
+An all-zero advertising ID is still returned, together with an `advertisingIdMessage` that explains why.
 
 == Identifier behavior
 
 === Advertising ID
 
-The advertising ID belongs to the whole device, so reinstalling an app does not change it. If ads personalization is turned off on the device, the value can be all zeros.
+The advertising ID belongs to the whole device, so reinstalling an app does not change it. If ads personalization is turned off on the device, the value is all zeros and `advertisingIdMessage` contains:
+
+----
+The advertising id is all zeros because this device limits ad tracking. Turn ads personalization on in Settings > Google > Ads.
+----
+
+If Google Play services is not installed or does not respond, the advertising ID cannot be read and `advertisingIdMessage` contains:
+
+----
+Google Play services did not answer the device agent, so no advertising id was read. A device without Play services carries none.
+----
 
 === Android ID
 
@@ -125,6 +133,12 @@ If the app is not running, `drmIdMessage` contains:
 No process named com.example.app is running, so its DRM id cannot be read. Launch the app first.
 ----
 
-Reading the DRM ID usually takes 1 to 2 seconds. On older devices, it can take 40 seconds or longer. Set the HTTP timeout of your client library to allow for this. For more information, see xref:automation-testing:session-timeouts/about-http-timeouts-for-client-libraries.adoc[].
+If the app is running more than once on the device, for example in both the personal and work profiles, `drmIdMessage` contains:
+
+----
+The app com.example.app is running 2 times on this device, so there is no single DRM id to read.
+----
+
+Reading the DRM ID usually takes 1 to 2 seconds. On older devices, it can take up to 60 seconds. If the read does not finish within 60 seconds, deviceConnect stops waiting and the read fails. Set the HTTP timeout of your client library to more than 60 seconds. For more information, see xref:automation-testing:session-timeouts/about-http-timeouts-for-client-libraries.adoc[].
 
 Some devices running Android 9 return the same DRM ID for every app.
