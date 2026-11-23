@@ -108,9 +108,11 @@ Google Play services did not answer the device agent, so no advertising id was r
 
 === Android ID
 
-The Android ID is derived from the device and the certificate that signed the app reading it. The value is read through the Kobiton agent on the device, so the response contains the Android ID for the agent's signing certificate. `signingCertificateName` and `signingCertificateSha256` identify that certificate.
+The Android ID is derived from the device and the certificate that signed the app reading it. The value is read through the Kobiton agent on the device, so the response contains the Android ID for the agent's signing certificate. `signingCertificateName` and `signingCertificateSha256` identify that certificate. The certificate is part of the deviceConnect configuration, so a script cannot change it.
 
-On Kobiton cloud devices, the agent is signed with a Kobiton certificate, so the returned value differs from the Android ID your production app reads on the same device.
+On Kobiton cloud devices, the agent is signed with a Kobiton certificate, so the returned value differs from the Android ID your app reads on the same device.
+
+To compare the returned value with the Android ID your app reads, the agent must be signed with the same certificate that signed your app. On Standalone and Hybrid deployments, your device lab administrator can sign the agent with your certificate.
 
 === DRM ID
 
