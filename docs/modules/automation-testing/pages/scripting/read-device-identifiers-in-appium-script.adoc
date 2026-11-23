@@ -1,0 +1,146 @@
+= Read device identifiers in Appium scripts
+:navtitle: Read device identifiers in Appium scripts
+
+Use the `mobile: deviceIdentifiers` command in a Xium automation session to read the advertising ID, Android ID, and DRM ID of an Android device. A script can compare the identifiers the app under test reports with the values the device holds.
+
+== Supported identifiers
+
+[options="header"]
+|=======================
+|Identifier | `identifier` value | Scope | Requirements
+| Advertising ID (AAID) | `advertisingId` | The whole device. Every app on the device reads the same value. | Google Play services is installed on the device.
+| Android ID (SSAID) | `androidId` | The device and the certificate that signs the Kobiton agent. | None
+| DRM ID (Widevine device unique ID) | `drmId` | One app. | The app is a debug build, is running, and is named in `appId`.
+|=======================
+
+The command is available only on Android devices in Xium automation sessions. Basic Appium 2 sessions do not support it.
+
+== Parameters
+
+[options="header"]
+|=======================
+|Name | Required | Description
+| `identifier` | No | The identifier to read: `advertisingId`, `androidId`, or `drmId`. When omitted, every identifier the device can provide is read. The DRM ID is included only when `appId` is also set.
+| `appId` | Only for `drmId` | The package name of the app whose DRM ID to read, such as `io.appium.android.apis`.
+|=======================
+
+An `identifier` value outside this list returns an error before the device is accessed. Requesting `drmId` without `appId` also returns an error.
+
+== Read device identifiers
+
+.Example (JavaScript)
+[source,javascript]
+----
+// Read every identifier the device can provide
+const all = await driver.executeScript("mobile: deviceIdentifiers", []);
+
+// Read one identifier
+const aaid = await driver.executeScript(
+  "mobile: deviceIdentifiers", [{ identifier: "advertisingId" }]);
+
+// Read the DRM ID of a running debug build
+const drm = await driver.executeScript(
+  "mobile: deviceIdentifiers", [{ identifier: "drmId", appId: "io.appium.android.apis" }]);
+----
+
+== Response
+
+Over HTTP, the identifiers are returned under `value`, alongside `status` and `sessionId`. Client libraries such as WebdriverIO return the contents of `value` to the script.
+
+.Advertising ID
+[source,json]
+----
+{ "advertisingId": "a1b2c3d4-e5f6-4a7b-8c9d-0e1f2a3b4c5d" }
+----
+
+.Android ID
+[source,json]
+----
+{
+  "androidId": "a1b2c3d4e5f60718",
+  "signingCertificateName": "CN=Kobiton deviceConnect,OU=Unknown,O=Kobiton\\, Inc.,L=Unknown,ST=Unknown,C=US",
+  "signingCertificateSha256": "9f2c17a4bb3e5d8012c6ae47f0b19d53ca8e62f417d0b3a95e7c1486da20f3b7"
+}
+----
+
+.DRM ID
+[source,json]
+----
+{ "drmId": "4e81cab07d3f29615ba0c7e4d81f36a2907b5ce314df82a6b0e519c74d3a8f60" }
+----
+
+When `identifier` is omitted, all values are returned in one object. If `appId` is not set, `drmIdMessage` is returned in place of the DRM ID:
+
+[source,json]
+----
+{
+  "advertisingId": "a1b2c3d4-e5f6-4a7b-8c9d-0e1f2a3b4c5d",
+  "androidId": "a1b2c3d4e5f60718",
+  "signingCertificateName": "CN=Kobiton deviceConnect,OU=Unknown,O=Kobiton\\, Inc.,L=Unknown,ST=Unknown,C=US",
+  "signingCertificateSha256": "9f2c17a4bb3e5d8012c6ae47f0b19d53ca8e62f417d0b3a95e7c1486da20f3b7",
+  "drmIdMessage": "The DRM id needs 'appId', so nothing was read for it."
+}
+----
+
+=== Identifiers that cannot be read
+
+When an identifier cannot be read, a message key replaces it: `advertisingIdMessage`, `androidIdMessage`, or `drmIdMessage`. When several identifiers are requested, the values that were read are still returned. The command fails only when no identifier can be read.
+
+When a single identifier is requested and it cannot be read, the command returns an error that contains the same message text.
+
+An all-zero advertising ID is still returned, together with an `advertisingIdMessage` that explains why.
+
+== Identifier behavior
+
+=== Advertising ID
+
+The advertising ID belongs to the whole device, so reinstalling an app does not change it. If ads personalization is turned off on the device, the value is all zeros and `advertisingIdMessage` contains:
+
+----
+The advertising id is all zeros because this device limits ad tracking. Turn ads personalization on in Settings > Google > Ads.
+----
+
+If Google Play services is not installed or does not respond, the advertising ID cannot be read and `advertisingIdMessage` contains:
+
+----
+Google Play services did not answer the device agent, so no advertising id was read. A device without Play services carries none.
+----
+
+=== Android ID
+
+The Android ID is derived from the device and the certificate that signed the app reading it. The value is read through the Kobiton agent on the device, so the response contains the Android ID for the agent's signing certificate. `signingCertificateName` and `signingCertificateSha256` identify that certificate. The certificate is part of the deviceConnect configuration, so a script cannot change it.
+
+On Kobiton cloud devices, the agent is signed with a Kobiton certificate, so the returned value differs from the Android ID your app reads on the same device.
+
+To compare the returned value with the Android ID your app reads, the agent must be signed with the same certificate that signed your app. On Standalone and Hybrid deployments, your device lab administrator can sign the agent with your certificate.
+
+=== DRM ID
+
+The DRM ID belongs to one app package. To read it, the app must meet these requirements:
+
+* The app is a debug build, with `android:debuggable="true"` set in the `<application>` element of `AndroidManifest.xml`.
+* The app is running when the command is sent.
+
+No changes to the app are required beyond the debug build.
+
+If the app is a release build, `drmIdMessage` contains:
+
+----
+The app com.example.app is not a debug build, so its DRM id cannot be read. Install a build with the debugger enabled to get this value.
+----
+
+If the app is not running, `drmIdMessage` contains:
+
+----
+No process named com.example.app is running, so its DRM id cannot be read. Launch the app first.
+----
+
+If the app is running more than once on the device, for example in both the personal and work profiles, `drmIdMessage` contains:
+
+----
+The app com.example.app is running 2 times on this device, so there is no single DRM id to read.
+----
+
+Reading the DRM ID usually takes 1 to 2 seconds. On older devices, it can take up to 60 seconds. If the read does not finish within 60 seconds, deviceConnect stops waiting and the read fails. Set the HTTP timeout of your client library to more than 60 seconds. For more information, see xref:automation-testing:session-timeouts/about-http-timeouts-for-client-libraries.adoc[].
+
+Some devices running Android 9 return the same DRM ID for every app.
