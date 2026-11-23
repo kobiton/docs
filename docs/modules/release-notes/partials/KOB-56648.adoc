@@ -1,0 +1,9 @@
+// Source: KOB-56648
+=== deviceConnect
+
+* Fixed an issue where macOS Local Network privacy blocked deviceConnect on macOS 15 and later after a deviceConnect update. Blocked connections to the Kobiton Portal or to Bluetooth modules on the host machine's subnet were reported only as `No route to host` or `Network unreachable`.
+* Added a message that names macOS Local Network privacy as the cause when it blocks deviceConnect, and points to *System Settings > Privacy & Security > Local Network*. The message appears as a banner in the deviceConnect Console and on its login page, and in the error for an affected Bluetooth module.
+
+After installing this update, macOS hosts that reach a Kobiton Portal or Bluetooth module on their own subnet ask once to allow `dc-services` to find devices on local networks. Choose *Allow*. Later deviceConnect updates keep this approval. Connections to Kobiton Cloud and other routed connections are not affected.
+
+// REVIEWER NOTE (KOB-56648): "Later deviceConnect updates keep this approval" is the intended outcome of the fix. QA confirmed it only through a simulated update, because no build with a newer .NET SDK exists yet. Confirm the wording before publishing.
