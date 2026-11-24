@@ -1,0 +1,8 @@
+// Source: KOB-56615
+
+== Appium 2 sessions start after a deviceConnect upgrade on macOS hosts
+
+* Fixed an issue where, after deviceConnect was upgraded on a macOS host, Appium 2 sessions that set `kobiton:runtime` to `appium` could fail to start on that host with a DC-500 error. Xium sessions and other sessions that don't set `kobiton:runtime` to `appium` were not affected.
+* Installing a deviceConnect build that includes this fix repairs an affected macOS host without a restart.
+
+// REVIEWER NOTE (KOB-56615): The ticket does not include a fix version or release label. Confirm the release that ships this fix, and whether the entry belongs in Cloud release notes, Standalone release notes, or both.
