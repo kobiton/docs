@@ -2,7 +2,7 @@
 :navtitle: TeamCity
 // Source: KOB-56725
 
-Run Appium tests on Kobiton devices from a TeamCity build pipeline. Your TeamCity build agent executes the test script, and the test session runs on a Kobiton device.
+Use a TeamCity build pipeline to run Appium tests on Android and iOS devices in Kobiton Portal. Your TeamCity build agent executes the test script, and the test session runs on the selected device.
 
 For TeamCity setup and project concepts, see link:https://www.jetbrains.com/help/teamcity/[TeamCity documentation^].
 
@@ -15,7 +15,7 @@ For TeamCity setup and project concepts, see link:https://www.jetbrains.com/help
 
 == Add your Kobiton credentials to the TeamCity project
 
-Your Appium script authenticates to Kobiton with two environment variables. Add them as project-level environment variable parameters so every build step in the project can read them.
+Your Appium script authenticates to the Kobiton API with two environment variables. Add them as project-level environment variable parameters so every build step in the project can read them.
 
 Add the following parameters to the project:
 
@@ -26,7 +26,7 @@ To keep the API key out of the build log, set the parameter type to password.
 
 == Configure the target device
 
-Your Appium script selects a Kobiton device using desired capabilities. Set each capability as a TeamCity environment variable parameter so you can change the target device without editing the script.
+Your Appium script selects a device using desired capabilities. Set each capability as a TeamCity environment variable parameter so you can change the target device without editing the script.
 
 . In Kobiton Portal, select *Devices*.
 . Hover over the device you want to target and select the gear icon to open its *Automation Settings*.
@@ -57,7 +57,7 @@ npm test
 ----
 . Save the build step.
 
-When the build runs, the step executes your test script against Kobiton using the credentials and capabilities set in the project's parameters.
+When the build runs, the step executes your test script using the credentials and capabilities set in the project's parameters.
 
 === Run the build step in a Docker container
 
