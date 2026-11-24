@@ -33,6 +33,21 @@ Select *Embed & Sign* for the SDK in the Embed dropdown menu.
 
 image::apps:apps-image-injection-sdk-ios-general-frameworks-embed-sign.png[width=800,alt="The Embed and Sign option selected in the Embed dropdown"]
 
+== React Native and Expo notes
+
+In a React Native iOS app, `KobitonSdk.framework` intercepts frames from `AVCaptureVideoDataOutput` at the framework level. JavaScript camera APIs that render a live preview from that output, including `expo-camera`, receive injected frames without any JavaScript or import changes.
+
+=== Expo managed workflow
+
+`expo prebuild` can regenerate native project files, including the iOS project and the Podfile, and overwrite manual changes. Integrate the framework through the project's Expo configuration or another persistent build mechanism so each prebuild reapplies it. CocoaPods vendored frameworks and Expo config plugins are relevant approaches. Kobiton does not publish an Expo config plugin for the framework.
+
+=== Capture limitations
+
+`KobitonSdk.framework` injects frames into `AVCaptureVideoDataOutput` only. The following capture paths common in React Native apps do not return injected frames:
+
+* `takePictureAsync` on `expo-camera` and similar APIs. These use `AVCapturePhotoOutput` for still-image capture, which Kobiton does not intercept. The returned image is the real camera frame.
+* Software-rendered screenshot APIs, such as `react-native-view-shot`. These cannot capture a Metal-composited video layer and return a black frame.
+
 == Build and Upload
 
 Build and export your project as an `.ipa` file.
