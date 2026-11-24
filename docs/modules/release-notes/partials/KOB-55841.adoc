@@ -1,0 +1,15 @@
+// Source: KOB-55841
+
+== Per-app re-sign mode for iOS apps in the Kobiton API
+
+The Kobiton API now stores a re-sign mode for each iOS app and returns the mode that applies to the app. The mode applies to every version of the app, including versions uploaded later.
+
+* Set an iOS app's re-sign mode with the new `PUT /v2/apps/{id}/resign-mode` endpoint. Accepted values are `ORG_DEFAULT`, `AUTO`, `ALWAYS`, and `NEVER`.
+* Every existing and newly uploaded iOS app starts with `ORG_DEFAULT`. While an app uses `ORG_DEFAULT`, its effective mode is the organization's default re-sign mode.
+* `GET /v2/apps` and `GET /v2/apps/{id}` return three new fields for iOS apps: `resign_mode`, `effective_mode`, and `inherited`. `GET /v1/apps` and `GET /v1/apps/{id}` return the same fields as `resignMode`, `effectiveMode`, and `inherited`. Apps on other platforms don't include these fields.
+* The app's uploader, an organization admin, or a user whose role has the *View all applications* permission can change the mode.
+* The endpoint returns `400` for an app that isn't an iOS app or for a value other than the four accepted values. It returns `404` if you can't see the app or aren't allowed to change it.
+
+If your API client validates responses against a strict schema, update the schema to allow the new fields on iOS apps.
+
+// REVIEWER NOTE (KOB-55841): The stored mode is not yet applied when an app is installed; install behavior changes in a later release (KOB-55842), and the Portal control is gated (KOB-55843). Confirm whether to publish this entry now as an API-only change or hold it for the release that applies the mode at install time. If published now, consider adding: "The re-sign mode doesn't change how apps are installed yet."
