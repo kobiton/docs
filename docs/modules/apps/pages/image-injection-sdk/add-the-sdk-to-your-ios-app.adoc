@@ -45,7 +45,7 @@ In a React Native iOS app, `KobitonSdk.framework` intercepts frames from `AVCapt
 
 `KobitonSdk.framework` injects frames into `AVCaptureVideoDataOutput` only. The following capture paths common in React Native apps do not return injected frames:
 
-* `takePictureAsync` on `expo-camera` and similar APIs. These use `AVCapturePhotoOutput` for still-image capture, which Kobiton does not intercept. The returned image is the real camera frame.
+* `takePictureAsync` on `expo-camera` and similar APIs. These use `AVCapturePhotoOutput` for still-image capture, which `KobitonSdk.framework` does not intercept. The returned image is the real camera frame.
 * Software-rendered screenshot APIs, such as `react-native-view-shot`. These cannot capture a Metal-composited video layer and return a black frame.
 
 == Build and Upload
