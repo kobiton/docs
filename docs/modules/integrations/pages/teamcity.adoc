@@ -1,0 +1,80 @@
+= TeamCity integration
+:navtitle: TeamCity
+// Source: KOB-56725
+
+Use a TeamCity build pipeline to run Appium tests on Android and iOS devices in Kobiton Portal. Your TeamCity build agent executes the test script, and the test session runs on the selected device.
+
+For TeamCity setup and project concepts, see link:https://www.jetbrains.com/help/teamcity/[TeamCity documentation^].
+
+== Requirements
+
+* A TeamCity server and a build agent you can configure.
+* An Appium test script in a Git repository that TeamCity can access. If you don't have one yet, see xref:automation-testing:index.adoc[Automation testing].
+* A runtime for your test script installed on the build agent. For example, Node.js for a JavaScript script or a JDK for a Java script. If you plan to run the build step in a container, install Docker on the build agent instead.
+* A Kobiton account and API key. See xref:profile:manage-your-api-credentials.adoc[Manage your API credentials].
+
+== Add your Kobiton credentials to the TeamCity project
+
+Your Appium script authenticates to the Kobiton API with two environment variables. Add them as project-level environment variable parameters so every build step in the project can read them.
+
+Add the following parameters to the project:
+
+* `KOBITON_USERNAME`: your Kobiton username.
+* `KOBITON_API_KEY`: your Kobiton API key.
+
+To keep the API key out of the build log, set the parameter type to password.
+
+== Configure the target device
+
+Your Appium script selects a device using desired capabilities. Set each capability as a TeamCity environment variable parameter so you can change the target device without editing the script.
+
+. In Kobiton Portal, select *Devices*.
+. Select the device's *vertical ellipses* to open the device information, then select *Automation Settings*.
+. Choose your script's language and app configuration, then copy the generated desired capabilities.
+. Add one environment variable parameter to your TeamCity project for each capability you want to parameterize. For example:
++
+** `KOBITON_DEVICE_PLATFORM_NAME` for `platformName`
+** `KOBITON_DEVICE_NAME` for `deviceName`
+** `KOBITON_SESSION_APPLICATION_URL` for `app`
+. Update your script to read each capability from its environment variable.
+
+For the full capability reference, see xref:automation-testing:capabilities/available-capabilities.adoc[Available capabilities] and xref:automation-testing:capabilities/auto-generate-capabilities.adoc[Auto-generate capabilities].
+
+== Add a build step that runs the test
+
+. In your TeamCity project, open or create a build configuration.
+. Add a build step with the following settings:
++
+** *Runner type*: Command Line
+** *Working directory*: the folder in your repository that contains your test script
+** *Run*: Custom script
+. In the *Custom script* field, enter the commands that install dependencies and run the test. For example:
++
+[source,bash]
+----
+npm install
+npm test
+----
+. Save the build step.
+
+When the build runs, the step executes your test script using the credentials and capabilities set in the project's parameters.
+
+=== Run the build step in a Docker container
+
+Use this option to run the test in a container with a specific runtime instead of the one installed on the build agent.
+
+In the build step, open *Docker Settings* and set:
+
+* *Run step within Docker container*: the image you want, such as `node:lts` or an image your project maintains.
+* *Docker image platform*: `Any`.
+
+== View test sessions in Kobiton
+
+Each build run produces one or more test sessions in Kobiton Portal.
+
+. In Kobiton Portal, select *Sessions*.
+. Select a session to view its logs, commands, and video.
+
+The TeamCity build log shows your test script's output.
+
+To fetch session details programmatically, use the link:https://api.kobiton.com/v2/docs[Kobiton API^].
