@@ -1,0 +1,12 @@
+// Source: KOB-52319
+
+== More reliable Lightning Mode connections
+
+Lightning Mode sessions on iOS and Android devices start and stay connected more reliably.
+
+* Lightning Mode no longer ends while it is starting, or about a second after it starts, when the browser repeats the final step of setting up the secure connection.
+* If the secure connection for the device stream can't be set up, the session now ends with an error instead of staying open with no video.
+* In browsers that support AES-GCM encryption, such as Chrome, the Lightning Mode stream now uses AES-GCM. Other browsers continue to use the same encryption as before.
+
+// REVIEWER NOTE (KOB-52319): Confirm the error message a user sees when the session ends because the secure connection can't be set up. The ticket gives only an internal error code.
+// REVIEWER NOTE (KOB-52319): Confirm which deployments receive this change (Cloud, Standalone, or both) before placing this entry in a release page.
