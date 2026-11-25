@@ -1,0 +1,8 @@
+// Source: KOB-55811
+
+== Accurate error message when a device is still being released
+
+Fixed an issue where starting an Appium session on a device that was still being released from the previous session returned `There are no devices that satisfy your filter criteria`, even though the device matched the requested capabilities.
+
+* While a matching device is still being released, the session request returns a message that the device is in a cleanup session. Retry the request after the device is released.
+* Appium Turbo Test sessions return a message that the device is in use when the matching device is in use by another session.
