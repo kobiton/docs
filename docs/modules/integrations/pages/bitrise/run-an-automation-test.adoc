@@ -108,20 +108,20 @@ By default, the step uses the device configuration in your test script. To overr
 
 === Scriptless Automation on a device bundle
 
-Instead of running your test script, the step can trigger xref:scriptless-automation:index.adoc[Scriptless Automation] on a xref:organization:device-bundles/create-a-device-bundle.adoc[device bundle]. For the Scriptless workflow itself, see xref:scriptless-automation:run-scriptless.adoc[Run a Scriptless test].
+After your test script runs, the step can also trigger xref:scriptless-automation:index.adoc[Scriptless Automation] on a xref:organization:device-bundles/create-a-device-bundle.adoc[device bundle]. Scriptless only runs when *Wait for execution* is `true`. For the Scriptless workflow itself, see xref:scriptless-automation:run-scriptless.adoc[Run a Scriptless test].
 
 [cols="1,3"]
 |===
 |Input |Description
 
 |*Trigger Scriptless on multiple devices*
-|`true` to run Scriptless Automation on the specified device bundle. `false` to run your test script instead.
+|`true` to also run Scriptless Automation on the specified device bundle after the test script. Requires *Wait for execution* set to `true`.
 
 |*Kobiton Device Bundle*
 |ID of the device bundle to run on. Required when Scriptless is enabled.
 
 |*Kobiton Scriptless Timeout*
-|Maximum execution time in seconds.
+|Maximum execution time in seconds. Defaults to `3600` when left empty.
 |===
 
 === Execution
@@ -131,11 +131,13 @@ Instead of running your test script, the step can trigger xref:scriptless-automa
 |Input |Description
 
 |*Wait for execution*
-|`true` to block the step until the test finishes and print the console log and result. `false` to return as soon as the test is queued. Defaults to `true`.
+|`true` to block the step for up to one hour until the test finishes and print the console log and result. `false` to return as soon as the test is submitted. Defaults to `true`.
 
 |*Log type*
 |`combined` for chronological output and error logs, `output` for output only, or `error` for error only. Defaults to `combined`.
 |===
+
+NOTE: The step exits successfully as long as the test submits and runs, even when the test itself fails. The Bitrise build status does not reflect the test result. Check `REPORT_URL` or the Kobiton Portal to confirm whether the test passed.
 
 == Outputs
 
@@ -149,7 +151,7 @@ After the step runs, the following outputs are available to later steps in the w
 |Kobiton Automation Test Executor job ID for this run.
 
 |`REPORT_URL`
-|URL of the TestNG report for this run.
+|URL of the TestNG report for this run. Set only when *Wait for execution* is `true` and the job finishes within the one-hour wait.
 
 |`SCRIPTLESS_AUTOMATION_PASSED`
 |Set when Scriptless Automation ran. Indicates whether the Scriptless run passed.
