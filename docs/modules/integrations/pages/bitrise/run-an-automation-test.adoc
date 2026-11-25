@@ -1,96 +1,158 @@
 = Run an automation test using Bitrise
 :navtitle: Run an automation test
+// Source: KOB-33032, KOB-33033
 
-Learn how to run an automation test using Bitrise.
+Use the *Execute Automation Test on Kobiton* Bitrise step to run an Appium test script stored in a Git repository against a device in Kobiton Portal. The step clones the repository, installs dependencies, and runs the test commands synchronously, then returns the Kobiton job ID and report URL.
 
-== Before you start
+== Requirements
 
-You'll need to complete the following:
+* A Bitrise project you can edit.
+* A Git repository that contains your Appium test script. See xref:integrations:upload-a-project-to-your-cloud-vcs.adoc[Upload a project to your cloud VCS].
+* A Kobiton account and API key. See xref:profile:manage-your-api-credentials.adoc[Manage your API credentials].
+* A Kobiton account used by Kobiton Automation Test Executor. For CI pipelines, use a xref:integrations:create-a-shared-kobiton-account-for-automation-tests.adoc[shared Kobiton account] rather than a personal account.
 
-* link:https://devcenter.bitrise.io/en/steps-and-workflows/introduction-to-workflows.html[Create a Bitrise workflow].
-* xref:integrations:upload-a-project-to-your-cloud-vcs.adoc[Upload a project to your cloud VCS].
+== Add the step to your workflow
 
-[#_get_your_credentials]
-== Get your credentials
+Add the step through Bitrise's workflow editor. The clone-and-run instructions in the step's source repository are for contributors who want to modify the step.
 
-Some credentials can be added while you're xref:_configure_your_build_steps[configuring your `pipeline.yml`], but others are easier to get beforehand. Save the following credentials to a secure location so you can easily add them to your `pipeline.yml` later:
+. In Bitrise, open the project and open its workflow editor.
+. Open the workflow you want to add the test to, and select the position where the test should run.
+. Add a step and search for *Execute Automation Test on Kobiton*.
+. Select the step to add it to the workflow.
 
-* *Kobiton API key:* get API key values from your list of xref:profile:manage-your-api-credentials.adoc[Kobiton API keys].
-* *Executor server credentials:* N/A
-* *Cloud repository credentials:* get the URL and SSH key for the xref:integrations:upload-a-project-to-your-cloud-vcs.adoc[project you uploaded].
+== Configure the step inputs
 
-== Add the workflow
+Set the following inputs on the step.
 
-Open link:https://app.bitrise.io/users/sign_in[Bitrise] and select *Workflows*.
-
-image:integrations:UNEDITED-bitrise-select-workflows.png[width="",alt=""]
-
-Next to your workflow, select the *edit* icon.
-
-image:integrations:bitrise-select-edit-closeup.png[width=1000,alt="Select Edit icon in Bitrise Workflows"]
-
-Select the *+* icon.
-
-image:integrations:bitrise-select-plus-icon-context.png[width=1000,alt="Select plus icon context"]
-
-Use the search bar to find and add *Execute Automation Test in Kobiton*.
-
-image:integrations:bitrise-select-execute-automation-context.png[width=1000,alt="Find and add Execute Automation Test in Kobiton"]
-
-== Add your credentials
-
-You'll be redirected to the workflow editor.
-
-image:integrations:added-in-the-workflow.png[width=1000,alt="Added info in the workflow"]
-
-In the *Input variables* pane, xref:_get_your_credentials[use your credentials] to fill out all the following fields:
-
-* *Kobiton Username*
-* *Kobiton API Key*
-* *Executor Server URL*
-* *Executor Username*
-* *Executor Password*
-* *Git Repository URL*
-* *Git Repository Branch*
-* *Git Repository SSH Key*
-
-[#_configure_your_build_steps]
-== Configure your build steps
-
-Build steps are project-specific, so fill out the remaining fields in the *Input variables* pane to best meet your project needs:
+=== Kobiton authentication
 
 [cols="1,3"]
 |===
-|Property|Description
+|Input |Description
 
-|Root Directory (Required)
-|The relative path to your project's root directory, such as `/`.
+|*Kobiton Username*
+|Your Kobiton username.
 
-|Command (Required)
-|The command(s) used to install your project dependencies and run your test scripts.
-
-|App ID
-|When testing your app (rather than your website), assign the app's existing Kobiton ID.
-
-|Use Custom Device
-|Set to `true` if you'd like to test a specific device.
-
-|Device Name
-|If `use-custom-device` is set to `true`, set to the device's name.
-
-|Device Platform Version
-|If `use-custom-device` is set to `true`, set to the device's platform version.
-
-|Device Platform
-|If `use-custom-device` is set to `true`, set to the device's platform.
-
-|Wait for Execution
-|Set to `true` if you want the pipeline to wait until the test is complete.
-
-|Log Type
-|Set to `combined` for chronological logs, `output` for output logs, `error` for error logs.
+|*Kobiton API Key*
+|Your Kobiton API key. Treat this as a secret.
 |===
 
-When you're finished, select *Save*.
+=== Kobiton Automation Test Executor
 
-image:integrations:bitrise-select-save-context.png[width=1000,alt="select Save button on Bitrise"]
+[cols="1,3"]
+|===
+|Input |Description
+
+|*Executor Server URL*
+|Kobiton Automation Test Executor URL. For production, use `https://executor.kobiton.com`.
+
+|*Kobiton Executor Username*
+|Username of the xref:integrations:create-a-shared-kobiton-account-for-automation-tests.adoc[shared Kobiton account] used by Kobiton Automation Test Executor.
+
+|*Kobiton Executor Password*
+|Password for that account. Treat this as a secret.
+|===
+
+=== Test source
+
+[cols="1,3"]
+|===
+|Input |Description
+
+|*Git repository URL*
+|URL of the Git repository that contains your test script.
+
+|*Git repository branch*
+|The branch to check out and run.
+
+|*Git repository SSH key*
+|SSH private key with access to the repository. Required when the repository is private. Treat this as a secret.
+
+|*Root directory*
+|Path inside the repository where the commands run. Defaults to `/`.
+
+|*Commands*
+|Shell commands that install dependencies and run the test. Defaults to `mvn test`.
+|===
+
+=== App under test
+
+[cols="1,3"]
+|===
+|Input |Description
+
+|*App*
+|The application path or URL used by your test script to install the app under test.
+|===
+
+=== Target a specific device
+
+By default, the step uses the device configuration in your test script. To override it from the step, enable *Use Custom Device* and set the device fields. Each value is passed to your script through the listed environment variable.
+
+[cols="1,3"]
+|===
+|Input |Description
+
+|*Use Custom Device*
+|`true` to override the device configuration from the step. `false` to use the configuration in your script.
+
+|*Kobiton Cloud Device Name*
+|Device name. Passed to your script as `KOBITON_DEVICE_NAME`.
+
+|*Device platform version*
+|Platform version. Passed to your script as `KOBITON_SESSION_PLATFORM_VERSION`.
+
+|*Device platform*
+|`android` or `ios`. Passed to your script as `KOBITON_DEVICE_PLATFORM_NAME`.
+|===
+
+=== Scriptless Automation on a device bundle
+
+After your test script runs, the step can also trigger xref:scriptless-automation:index.adoc[Scriptless Automation] on a xref:organization:device-bundles/create-a-device-bundle.adoc[device bundle]. Scriptless only runs when *Wait for execution* is `true`. For the Scriptless workflow itself, see xref:scriptless-automation:run-scriptless.adoc[Run a Scriptless test].
+
+[cols="1,3"]
+|===
+|Input |Description
+
+|*Trigger Scriptless on multiple devices*
+|`true` to also run Scriptless Automation on the specified device bundle after the test script. Requires *Wait for execution* set to `true`.
+
+|*Kobiton Device Bundle*
+|ID of the device bundle to run on. Required when Scriptless is enabled.
+
+|*Kobiton Scriptless Timeout*
+|Maximum execution time in seconds. Defaults to `3600` when left empty.
+|===
+
+=== Execution
+
+[cols="1,3"]
+|===
+|Input |Description
+
+|*Wait for execution*
+|`true` to block the step for up to one hour until the test finishes and print the console log and result. `false` to return as soon as the test is submitted. Defaults to `true`.
+
+|*Log type*
+|`combined` for chronological output and error logs, `output` for output only, or `error` for error only. Defaults to `combined`.
+|===
+
+NOTE: The step exits successfully as long as the test submits and runs, even when the test itself fails. The Bitrise build status does not reflect the test result. Check `REPORT_URL` or the Kobiton Portal to confirm whether the test passed.
+
+== Outputs
+
+After the step runs, the following outputs are available to later steps in the workflow.
+
+[cols="1,3"]
+|===
+|Output |Description
+
+|`JOB_ID`
+|Kobiton Automation Test Executor job ID for this run.
+
+|`REPORT_URL`
+|URL of the TestNG report for this run. Set only when *Wait for execution* is `true` and the job finishes within the one-hour wait.
+
+|`SCRIPTLESS_AUTOMATION_PASSED`
+|Set when Scriptless Automation ran. Indicates whether the Scriptless run passed.
+|===
