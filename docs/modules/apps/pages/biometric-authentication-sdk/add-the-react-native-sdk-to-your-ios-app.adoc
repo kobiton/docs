@@ -1,0 +1,39 @@
+= Add the React Native biometrics authentication SDK to your iOS app
+:navtitle: Add the React Native SDK to your iOS app
+// Source: KOB-52542
+
+Add the Kobiton biometrics authentication SDK to a React Native iOS app so you can test biometric authentication in manual and automated sessions on iOS.
+
+For a native iOS app, see xref:apps:biometric-authentication-sdk/add-the-sdk-to-your-ios-app.adoc[Add the SDK to your iOS app]. For React Native on Android, see xref:apps:biometric-authentication-sdk/add-the-react-native-sdk-to-your-android-app.adoc[Add the React Native SDK to your Android app].
+
+== Prerequisites
+
+* A React Native iOS project you can build.
+* Xcode 14.0 or later.
+* `KobitonLAContext.framework`. Download it from Kobiton Portal.
+
+== Add `KobitonLAContext.framework`
+
+How you embed the framework depends on whether your project uses a bare React Native workflow or an Expo managed workflow.
+
+=== Bare React Native
+
+Open the iOS project in Xcode and embed `KobitonLAContext.framework` as a signed framework. Follow the Xcode steps in xref:apps:biometric-authentication-sdk/add-the-sdk-to-your-ios-app.adoc#_add_kobitonlacontext_framework[Add KobitonLAContext.framework].
+
+=== Expo managed workflow
+
+`expo prebuild` can regenerate native project files, including the iOS project and the Podfile, and overwrite manual changes. Integrate the framework through the project's Expo configuration or another persistent build mechanism so each prebuild reapplies it. CocoaPods vendored frameworks and Expo config plugins are relevant approaches. Kobiton does not publish an Expo config plugin for the framework.
+
+== Add the Info.plist entry
+
+Add `NSFaceIDUsageDescription` to your project's `Info.plist` with a user-facing string that explains why your app uses Face ID.
+
+For Expo managed projects, set this entry through `app.json` or `app.config.js` so `expo prebuild` applies it on each run.
+
+== Replace LAContext with KobitonLAContext
+
+In the iOS code used by your app's biometric authentication path, replace `LocalAuthentication` imports with `KobitonLAContext` and replace `LAContext` instantiations with `KobitonLAContext`. In a React Native app, this code usually lives in a biometrics library or in a native module that bridges biometric authentication to JavaScript.
+
+== Verify your changes
+
+Build the app, upload the `.ipa` to the xref:apps:manage-apps.adoc#_upload_an_app[app repository], and start a manual test session. Launch your app, trigger a biometric prompt, and select *Pass* to confirm that the Kobiton session intercepts the biometric call.

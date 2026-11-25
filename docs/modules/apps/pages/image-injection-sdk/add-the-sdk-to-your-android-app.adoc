@@ -133,3 +133,9 @@ private val cameraManager: CameraManager by lazy {
 After all the above changes are made, package your app into an `.apk`, `.aab` or `.zip` file.
 
 Upload the app package to the xref:apps:upload-an-app/using-the-kobiton-portal.adoc[app repository] or to the cloud and xref:manual-testing:install-an-app.adoc[install the app] on a Kobiton device, then follow the guides to use image injection in a xref:manual-testing:test-your-app-camera.adoc[manual session] or an xref:automation-testing:scripting/add-image-injection-to-appium-script.adoc[automation session].
+
+== React Native and Expo notes
+
+`camera2.aar` replaces `android.hardware.camera2.*` at the framework level, so JavaScript camera APIs that use `camera2` under the hood receive injected frames without any JavaScript or import changes. This includes `expo-camera` and `expo-image-picker`. Complete the preceding procedure so the `.aar` is loaded and the `ImageInjectionClient` service is registered in `AndroidManifest.xml`.
+
+Custom native modules that read `camera2` directly still require the Kobiton-prefixed imports and the `CameraManager.getInstance(context)` initialization.
