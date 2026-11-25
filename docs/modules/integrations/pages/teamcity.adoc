@@ -29,7 +29,7 @@ To keep the API key out of the build log, set the parameter type to password.
 Your Appium script selects a device using desired capabilities. Set each capability as a TeamCity environment variable parameter so you can change the target device without editing the script.
 
 . In Kobiton Portal, select *Devices*.
-. Hover over the device you want to target and select the gear icon to open its *Automation Settings*.
+. Select the device's *vertical ellipses* to open the device information, then select *Automation Settings*.
 . Choose your script's language and app configuration, then copy the generated desired capabilities.
 . Add one environment variable parameter to your TeamCity project for each capability you want to parameterize. For example:
 +
@@ -66,13 +66,15 @@ Use this option to run the test in a container with a specific runtime instead o
 In the build step, open *Docker Settings* and set:
 
 * *Run step within Docker container*: the image you want, such as `node:lts` or an image your project maintains.
-* *Docker image platform*: match your build agent's platform.
+* *Docker image platform*: `Any`.
 
 == View test sessions in Kobiton
 
-Each build run produces a test session in Kobiton Portal.
+Each build run produces one or more test sessions in Kobiton Portal.
 
 . In Kobiton Portal, select *Sessions*.
 . Select a session to view its logs, commands, and video.
 
-The TeamCity build log shows the Appium command stream for the same session.
+The TeamCity build log shows your test script's output.
+
+To fetch session details programmatically, use the link:https://api.kobiton.com/v2/docs[Kobiton API^].
