@@ -1,0 +1,13 @@
+// Source: KOB-52318
+
+=== Lightning mode security update
+
+Gigacap now includes libnice 0.1.24, the networking library that Lightning mode uses to connect to devices. This version fixes a heap overflow vulnerability in TURN relay connections over TCP.
+
+Lightning mode sessions on iOS and Android devices work the same as before.
+
+// REVIEWER NOTE (KOB-52318): This change ships in the same Gigacap build as KOB-52319
+// (libsrtp update). Consider combining both into one security entry when assembling the release.
+// REVIEWER NOTE (KOB-52318): The ticket states the Gigacap package now requires GLib 2.56 or later.
+// Confirm whether customers who install or manage deviceConnect host software need this as a
+// stated requirement. If so, add it to this entry.
