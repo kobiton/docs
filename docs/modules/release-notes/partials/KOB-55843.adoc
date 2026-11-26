@@ -1,0 +1,14 @@
+// Source: KOB-55843
+
+== Provisioning profile details for iOS app versions
+
+The version details of an iOS app in *Apps* now include a *Signing* section that shows what the app's provisioning profile covers.
+
+* The *Signing* section shows the profile type, devices covered, profile expiration date, and entitlements.
+* For Ad Hoc and Development profiles, *Devices covered* shows how many of your lab's iOS devices are included in the profile.
+* Versions uploaded before signing analysis was available show `Not analyzed yet`.
+* In the Kobiton API, the `signing` object in v2 app and app version responses includes `devices_covered`, with `covered` and `total` device counts.
+
+For details, see xref:apps:app-metadata.adoc#_signing[Signing].
+
+// REVIEWER NOTE (KOB-55843): Source evidence conflicts on availability. The Release Notes field states the Signing section and devices_covered need no setting, while the ticket's change summary states the portal changes are behind a feature flag and devices_covered is null unless an API flag is on. Confirm both are visible to all organizations before publishing.
