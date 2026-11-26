@@ -1,0 +1,13 @@
+// Source: KOB-55691
+
+== iOS sessions use the app build that matches the device
+
+Automation sessions that install an app with `kobiton-store:<appId>` now select the newest version built for the device type. An iOS Simulator gets the newest Simulator build, and a real iOS device gets the newest real-device build. Previously, the newest version was used regardless of build type, which caused generic system errors or apps that never opened.
+
+* When an app has no build for the device type, or the requested version is built for a different device type, no session is created and nothing is installed. A message explains the build type mismatch instead of a generic install error.
+* Installing a build of the wrong type through the Kobiton CLI, the Kobiton API, or an app install command during an automation session now fails with the same message. Previously, some of these installs reported success even though the app could not run.
+* The behavior is consistent across Appium sessions and native XCUITest sessions.
+
+Android apps, and iOS apps whose build type matches the device, are unaffected.
+
+For details, see xref:automation-testing:capabilities/available-capabilities.adoc#_app_ios_build_types[iOS build types].
