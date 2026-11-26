@@ -160,6 +160,8 @@ When this capability is used, Kobiton searches for devices that have the specifi
 
 Tags can be _Org_ (available for the whole org) or _Me_ (only for the creator).
 
+A tag name matches _Org_ tags and your own _Me_ tags. Another user's _Me_ tag never matches, even when it has the same name as an _Org_ tag or one of your _Me_ tags.
+
 * *Type:* 2-dimensional `string` array
 * *Required capabilities:* None
 * *Optional capabilities:* `kobiton:deviceTagType`
@@ -202,7 +204,7 @@ var desiredCaps = {
 
 === `kobiton:deviceTagType`
 
-If `kobiton:deviceTags` is provided, set to either `private` (_Me_ tag) or `public` (_Org_ tag) to filter devices by a single tag type. If not set, returns matching device(s) with both tag types.
+If `kobiton:deviceTags` is provided, set to either `private` (your own _Me_ tags) or `public` (_Org_ tags) to filter devices by a single tag type. If not set, returns matching device(s) with both tag types.
 
 * *Type:* `string`
 * *Required capabilities:* `kobiton:deviceTags`
