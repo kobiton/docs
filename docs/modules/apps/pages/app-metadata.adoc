@@ -62,3 +62,22 @@ If you're at the toplevel of the app repository, this is the user who uploaded t
 == Source branch and commit
 
 Kobiton does not include source branch or commit information as app metadata. To distinguish uploaded builds by branch or commit, see xref:apps:upload-an-app/using-the-kobiton-api.adoc#_identify_builds_by_branch_or_commit[Identify builds by branch or commit].
+
+[#_signing]
+== Signing
+
+// Source: KOB-55843
+// REVIEWER NOTE (KOB-55843): Source evidence conflicts on whether the Signing section is visible to all organizations now or only after the iOS re-sign modes feature is enabled. Confirm availability before publishing.
+
+For iOS apps, the version details include a *Signing* section that shows what the app's provisioning profile covers. Android apps do not show this section.
+
+The *Signing* section includes:
+
+* *Profile type*: The type of provisioning profile the app is signed with, such as Ad Hoc, Development, or Enterprise.
+* *Devices covered*: For Ad Hoc and Development profiles, how many of your lab's iOS devices are included in the profile, such as `7 of 24 in your lab`. For Enterprise profiles, this shows `All devices`.
+* *Profile expires*: The date the provisioning profile expires. An expired profile is shown in red, such as `Expired Sep 20, 2026`.
+* *Entitlements*: The entitlements in the provisioning profile. When a profile has more than three entitlements, the first three are shown followed by the number of remaining entitlements, such as `+2 more`.
+
+Versions uploaded before signing analysis was available show `Not analyzed yet`.
+
+For details on how provisioning profiles and entitlements affect installs, see xref:device-lab-management:ios-devices/kobiton-ios-app-signing.adoc[].
