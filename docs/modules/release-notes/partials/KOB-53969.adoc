@@ -1,0 +1,15 @@
+// Source: KOB-53969
+// Release-note partial drafted by Robot Ranch (Town Crier). Draft for docs-team review; not approved for publication.
+// REVIEWER NOTE: Target release date and release label are not set in Jira (no fix version). Place this entry in the release page that ships the fix.
+
+== Device tag matching in automation sessions
+
+A device tag name now matches only tags that are visible to you: _Org_ tags and your own _Me_ tags. Another user's _Me_ tag never matches your session request, even when it has the same name as an _Org_ tag.
+
+* Fixed an issue where a session request that selected devices by several device tags found no device and timed out when one of the tag names was also used by another user's _Me_ tag in the same organization.
+* When `kobiton:deviceTagType` or the Turbo Test Execution `device_tag_type` parameter is set to `private`, only your own _Me_ tags match.
+* In the Kobiton API v2, the tag name filter of `GET /v2/devices` ignores other users' _Me_ tags, and `tags.private_tags` lists only your own _Me_ tags.
+
+A request that matched devices only through another user's _Me_ tag no longer matches those devices.
+
+For details, see xref:automation-testing:capabilities/available-capabilities.adoc#_kobitondevicetags[kobiton:deviceTags].
