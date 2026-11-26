@@ -703,6 +703,24 @@ capabilities.setCapability("app", "kobiton-store:000111");
 capabilities.setCapability("app", "https://kobiton.docsapp.net/apps/app_id");
 ----
 
+// Source: KOB-55691
+[#_app_ios_build_types]
+==== iOS build types
+
+An app in the app repository can hold both iOS Simulator builds and real-device builds. When `app` is set to `kobiton-store:<appId>` without a specific version, each iOS device gets the newest version of its own build type:
+
+* An iOS Simulator gets the newest Simulator build.
+* A real iOS device gets the newest real-device build.
+
+No session is created and no app is installed in either of these cases:
+
+* The app has no version of the device's build type.
+* The requested version is built for a different device type.
+
+Instead, a message states that the build is not compatible with the device and asks you to upload a build of the correct type.
+
+Android apps, and apps that are not installed from the app repository, are unaffected.
+
 === `autoWebview`
 
 Automatically switch to the WebView context when it becomes available.
