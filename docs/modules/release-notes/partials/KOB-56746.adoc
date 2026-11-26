@@ -1,0 +1,13 @@
+// Source: KOB-56746
+
+* *API response types:* Some API fields read from 64-bit database columns are now returned as JSON numbers instead of numeric strings. Integrations that parse these fields as strings should also accept numbers:
+** `GET /v2/test-cases/{testCaseId}`: `steps[].order_id`.
+** `GET /v2/validations` and `GET /v2/validations/flex-correct`: `items[].command_id` and `items[].test_step.order_id`.
+** `GET /v2/test-runs/{testRunId}` with revisit actions included: `order_id` on each revisit action, live remediation action and agent action.
+** The usage report endpoints under `/v1/predefined-report/usage-report/` (Appium script, crash, response time and accessibility validation): the `nQuantities` and `nScreens` counts.
+** The MCP tools that return the same data (`getTestCase`, `listFlexCorrects`).
++
+Command IDs in other API responses were already numbers and are unchanged.
+* *Test run details:* For a test run with 10 or more devices or test cases, `GET /v2/test-runs/{testRunId}` now lists them in their run order (1, 2, … 10) instead of text order (1, 10, 2, …).
+
+// REVIEWER NOTE (KOB-56746): The ticket has no fixVersion. Confirm the release window this entry belongs to before including it on a release page.
