@@ -1,0 +1,8 @@
+// Source: KOB-56208
+=== Analytics reports
+
+* Fixed an issue where long table values in PNG exports of analytics reports, such as iOS UDIDs in the *Most Used Devices* table of the Usage Dashboard, overlapped the next column.
+** Each table column is now sized to fit its values, and the image widens to fit the widest table.
+** A value that is too long for its column ends with an ellipsis (…) instead of overlapping the next column.
+** PNG exports are drawn at twice the previous resolution, so text stays sharp when zoomed.
+** CSV exports are unchanged.
