@@ -1,0 +1,9 @@
+// Source: KOB-55538
+
+== Scriptless automation improvements
+
+* Fixed an issue where a screen rotation captured in a baseline session was not replayed during a Scriptless test run. The device stayed in its original orientation, so later steps could not find their elements.
+** A rotation to landscape now rotates the device during the test run on Android and iOS. A rotation back to portrait is also replayed.
+** Existing test cases that include a rotation now replay it correctly, without re-recording.
+** Taps and swipes captured after a rotation land on the intended position.
+** If the app under test cannot rotate, the test run continues instead of stopping.
