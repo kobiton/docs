@@ -23,6 +23,16 @@ NOTE: Virtual devices are available for Cloud and Hybrid deployments only. They 
 image:manual-testing:virtual-devices-tab-context.png[width=1000,alt="The virtual devices tab in the device list"]
 . Find a virtual device, then select *Launch* to start the session.
 
+// Source: KOB-56786
+== Identify a virtual session
+
+Sessions on iOS simulators and Android emulators show a *Virtual Device* badge in the session header. Sessions on real devices do not show the badge.
+
+* *Manual session:* The badge appears after the OS version, before *More info*, for the whole session. On windows narrower than 768 pixels, the badge is hidden along with the device name and OS version.
+* *Session Explorer:* The badge appears after the OS version on both the *Explorer* and *Overview* tabs. Sessions recorded on virtual devices before the badge was introduced also show it.
+
+The badge is a label only. It has no tooltip or click action.
+
 == Find a virtual session in the session list
 
 After the session ends, search for `is:virtual` on the Sessions page to filter the list to virtual-device sessions.
